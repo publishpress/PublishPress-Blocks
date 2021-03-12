@@ -2625,7 +2625,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                 ),
                             ),
                             array(
-                                'title' => __('Vertical Alignment', 'advanced-gutenberg'),
+                                'title' => __('Horizontal Alignment', 'advanced-gutenberg'),
                                 'type'  => 'select',
                                 'name'  => 'hAlign',
                                 'options' => array(
