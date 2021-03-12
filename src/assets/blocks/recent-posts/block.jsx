@@ -4,7 +4,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpBlockEditor;
-    const { PanelBody, RangeControl, ToggleControl, TextControl, QueryControls, Spinner, ToolbarGroup, ToolbarButton, Placeholder } = wpComponents;
+    const { PanelBody, RangeControl, ToggleControl, TextControl, QueryControls, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder } = wpComponents;
     const { withSelect } = wpData;
     const { pickBy, isUndefined } = lodash;
     const { decodeEntities } = wpHtmlEntities;
@@ -31,11 +31,15 @@
 
             this.state = {
                 categoriesList: [],
+                tagsList: [],
                 catIdVsName: [],
+                tagNameVsId: [],
                 updating: false,
             }
 
             this.selectCategories = this.selectCategories.bind(this);
+            this.selectTags = this.selectTags.bind(this);
+            this.getTagIdsForTags = this.getTagIdsForTags.bind(this);
             this.getCategoryForBkwrdCompat = this.getCategoryForBkwrdCompat.bind(this);
 
         }
@@ -44,7 +48,7 @@
             const { attributes, setAttributes } = this.props;
             const currentBlockConfig = advgbDefaultConfig['advgb-recent-posts'];
 
-            const categoriesListQuery = {
+            const tagsAndcategoriesListQuery = {
                 per_page: -1,
                 hide_empty: true,
             };
@@ -66,7 +70,7 @@
             }
 
             wp.apiFetch( {
-                path: wp.url.addQueryArgs( 'wp/v2/categories', categoriesListQuery ),
+                path: wp.url.addQueryArgs( 'wp/v2/categories', tagsAndcategoriesListQuery ),
             } ).then( ( list ) => {
                 let suggestions = [];
                 let catIdVsName = [];
@@ -83,7 +87,27 @@
                       categories: categories,
                       category: ''
                 });
-            } )
+            } );
+
+            wp.apiFetch( {
+                path: wp.url.addQueryArgs( 'wp/v2/tags', tagsAndcategoriesListQuery ),
+            } ).then( ( list ) => {
+                let suggestions = [];
+                let tagNameVsId = [];
+                list.forEach(tag => {
+                    suggestions.push(tag.name);
+                    tagNameVsId[ tag.name ] = tag.id;
+                });
+
+                this.setState( { tagsList: suggestions, tagNameVsId: tagNameVsId } );
+
+                const tagIds = attributes.tags && attributes.tags.length > 0 ? this.getTagIdsForTags( attributes.tags ) : [];
+                setAttributes({
+                      tagIds: tagIds,
+                });
+
+            } );
+
         }
 
         componentWillUpdate( nextProps ) {
@@ -134,7 +158,7 @@
         }
 
         render() {
-            const { categoriesList } = this.state;
+            const { categoriesList, tagsList } = this.state;
             const { attributes, setAttributes, recentPosts } = this.props;
             const {
                 postView,
@@ -152,6 +176,7 @@
                 readMoreLbl,
                 isPreview,
                 categories,
+                tags,
             } = attributes;
 
             const inspectorControls = (
@@ -169,6 +194,17 @@
                                             }
                             }
                             onNumberOfItemsChange={ (value) => setAttributes( { numberOfPosts: value } ) }
+                        />
+                        <FormTokenField 
+                            multiple
+                            suggestions={ tagsList }
+                            value={ tags }
+                            label={ __( 'Tags', 'advanced-gutenberg' ) }
+                            placeholder={ __( 'Type a tag', 'advanced-gutenberg' ) }
+                            onChange={ ( value ) => {
+                                                this.selectTags(value);
+                                            }
+                            }
                         />
                         {postView === 'grid' &&
                         <RangeControl
@@ -410,6 +446,38 @@
             });
         }
 
+        selectTags(tokens) {
+            const { tagsList, tagNameVsId } = this.state;
+
+            var hasNoSuggestion = tokens.some(function (token) {
+                return typeof token === 'string' && !tagNameVsId[token];
+            });
+
+            if (hasNoSuggestion) {
+                return;
+            }
+
+            var tags = tokens.map(function (token) {
+                return typeof token === 'string' && tagNameVsId[token] ? token : token;
+            })
+
+            var tagIds = tokens.map(function (token) {
+                return typeof token === 'string' ? tagNameVsId[token] : token.id;
+            })
+
+            this.props.setAttributes({
+                tags: tags,
+                tagIds: tagIds,
+            });
+        }
+
+        getTagIdsForTags(tags) {
+            const { tagNameVsId } = this.state;
+            return tags.map( (tag) => {
+                return tagNameVsId[tag];
+            });
+        }
+
         getCategoryForBkwrdCompat(id) {
             const { catIdVsName } = this.state;
             return {
@@ -438,12 +506,13 @@
         },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { categories, category, order, orderBy, numberOfPosts, myToken } = props.attributes;
+            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken } = props.attributes;
 
-            const ids = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
+            const catIds = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
 
             const recentPostsQuery = pickBy( {
-                categories: ids,
+                categories: catIds,
+                tags: tagIds,
                 order,
                 orderby: orderBy,
                 per_page: numberOfPosts,
