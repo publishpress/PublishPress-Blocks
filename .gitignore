@@ -4,3 +4,4 @@ vendor/
 node_modules/
 blocks.js.map*
 frontend.js.map*
+.DS_Store*
