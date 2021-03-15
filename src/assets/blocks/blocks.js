@@ -23806,7 +23806,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         },
                                                         coauthor.display_name
                                                     ),
-                                                    React.createElement(
+                                                    coauthor_indx < post.coauthors.length - 1 && React.createElement(
                                                         "span",
                                                         null,
                                                         ", "

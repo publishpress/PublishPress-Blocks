@@ -136,12 +136,16 @@ function advgbRenderBlockRecentPosts($attributes)
             if (isset($attributes['displayAuthor']) && $attributes['displayAuthor']) {
 				$coauthors = advgbGetCoauthors( array( 'id' => $post->ID ) );
 				if ( ! empty( $coauthors ) ) {
+					$index = 0;
 					foreach ( $coauthors as $coauthor ) {
 						$postHtml .= sprintf(
-							'<a href="%1$s" class="advgb-post-author" target="_blank">%2$s</a><span>, </span>',
+							'<a href="%1$s" class="advgb-post-author" target="_blank">%2$s</a>',
 							$coauthor['link'],
 							$coauthor['display_name']
 						);
+						if ( $index++ < count( $coauthors ) - 1 ) {
+							$postHtml .= '<span>, </span>';
+						}
 					}
 				} else {
 					$postHtml .= sprintf(
@@ -343,8 +347,8 @@ add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
  */
 function advgbGetCoauthors( $post ) {
 	$coauthors = array();
-	if ( function_exists('get_coauthors') ){
-		$authors = get_coauthors( $post[ 'id' ] );
+	if ( function_exists('get_multiple_authors') ){
+		$authors = get_multiple_authors( $post[ 'id' ] );
 		foreach ($authors as $user) {
 			$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( $user->ID );
 			$coauthors[] = array( 'link' => $author->__get('link'), 'display_name' => $author->__get('name'));

@@ -364,7 +364,9 @@
                                                     >
                                                         { coauthor.display_name }
                                                     </a>
-                                                    <span>, </span>
+                                                    {coauthor_indx < post.coauthors.length - 1 && (
+                                                        <span>, </span>
+                                                    ) }
                                                 </Fragment>
                                             ) )
                                             }
