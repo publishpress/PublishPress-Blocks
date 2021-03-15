@@ -471,6 +471,7 @@
                                                 onChange={ (value) => this.updateItems(idx, { name: value } ) }
                                                 style={ { color: nameColor } }
                                                 placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
+                                                allowedFormats={ [ 'core/bold', 'core/italic' ] }
                                             />
                                             <RichText
                                                 tagName="p"
@@ -481,6 +482,7 @@
                                                 onChange={ (value) => this.updateItems(idx, { position: value } ) }
                                                 style={ { color: positionColor } }
                                                 placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
+                                                allowedFormats={ [ 'core/bold', 'core/italic' ] }
                                             />
                                             <RichText
                                                 tagName="p"
