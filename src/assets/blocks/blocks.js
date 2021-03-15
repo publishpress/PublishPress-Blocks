@@ -23794,7 +23794,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             "div",
                                             { className: "advgb-post-info" },
-                                            displayAuthor && React.createElement(
+                                            displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map(function (coauthor, coauthor_indx) {
+                                                return React.createElement(
+                                                    Fragment,
+                                                    null,
+                                                    React.createElement(
+                                                        "a",
+                                                        { href: coauthor.link,
+                                                            target: "_blank",
+                                                            className: "advgb-post-author"
+                                                        },
+                                                        coauthor.display_name
+                                                    ),
+                                                    React.createElement(
+                                                        "span",
+                                                        null,
+                                                        ", "
+                                                    )
+                                                );
+                                            }),
+                                            displayAuthor && (!post.coauthors || post.coauthors.length === 0) && React.createElement(
                                                 "a",
                                                 { href: post.author_meta.author_link,
                                                     target: "_blank",

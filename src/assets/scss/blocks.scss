@@ -2635,6 +2635,10 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     margin: 0;
 }
 
+.advgb-post-info span:last-child {
+    display: none;
+}
+
 /*Responsive for Columns*/
 @media screen and (min-width: 1088px) {
     .advgb-column.advgb-is-default-desktop {
