@@ -133,6 +133,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Formatting output for editable elements in frontend for Login/Register block
   * Fix: "Horizontal Alignment" label for Advanced Image default configuration
   * Fix: Email validation for Newsletter block
+  * Fix: Hours and minutes time record for Newsletter block
   * Remove: Non production files such as SCSS, JSX, etc.
   * Remove: Not required formatting for editable elements for Login/Register block
 
