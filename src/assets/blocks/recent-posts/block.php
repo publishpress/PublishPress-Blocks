@@ -134,11 +134,26 @@ function advgbRenderBlockRecentPosts($attributes)
             $postHtml .= '<div class="advgb-post-info">';
 
             if (isset($attributes['displayAuthor']) && $attributes['displayAuthor']) {
-                $postHtml .= sprintf(
-                    '<a href="%1$s" class="advgb-post-author" target="_blank">%2$s</a>',
-                    get_author_posts_url($post->post_author),
-                    get_the_author_meta('display_name', $post->post_author)
-                );
+				$coauthors = advgbGetCoauthors( array( 'id' => $post->ID ) );
+				if ( ! empty( $coauthors ) ) {
+					$index = 0;
+					foreach ( $coauthors as $coauthor ) {
+						$postHtml .= sprintf(
+							'<a href="%1$s" class="advgb-post-author" target="_blank">%2$s</a>',
+							$coauthor['link'],
+							$coauthor['display_name']
+						);
+						if ( $index++ < count( $coauthors ) - 1 ) {
+							$postHtml .= '<span>, </span>';
+						}
+					}
+				} else {
+					$postHtml .= sprintf(
+						'<a href="%1$s" class="advgb-post-author" target="_blank">%2$s</a>',
+						get_author_posts_url($post->post_author),
+						get_the_author_meta('display_name', $post->post_author)
+					);
+				}
             }
 
             if (isset($attributes['displayDate']) && $attributes['displayDate']) {
@@ -306,3 +321,38 @@ function advgbRegisterBlockRecentPosts()
 }
 
 add_action('init', 'advgbRegisterBlockRecentPosts');
+
+/**
+ * Register additional fields returned in REST.
+ *
+ * @return void
+ */
+function advgbRegisterCustomFields() {
+    register_rest_field( 'post',
+        'coauthors',
+        array(
+            'get_callback'  => 'advgbGetCoauthors',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+}
+add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
+
+
+/**
+ * Get the coauthors from the PublishPress Authors plugin if it is activated.
+ *
+ * @return array
+ */
+function advgbGetCoauthors( $post ) {
+	$coauthors = array();
+	if ( function_exists('get_multiple_authors') ){
+		$authors = get_multiple_authors( $post[ 'id' ] );
+		foreach ($authors as $user) {
+			$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( $user->ID );
+			$coauthors[] = array( 'link' => $author->__get('link'), 'display_name' => $author->__get('name'));
+		}
+	}
+    return $coauthors;
+}

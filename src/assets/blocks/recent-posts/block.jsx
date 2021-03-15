@@ -356,14 +356,29 @@
                                             <a href={ post.link } target="_blank">{ decodeEntities( post.title.rendered ) }</a>
                                         </h2>
                                         <div className="advgb-post-info">
-                                            {displayAuthor && (
+                                            {displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map( ( coauthor, coauthor_indx ) => (
+                                                <Fragment>
+                                                    <a href={ coauthor.link }
+                                                       target="_blank"
+                                                       className="advgb-post-author"
+                                                    >
+                                                        { coauthor.display_name }
+                                                    </a>
+                                                    {coauthor_indx < post.coauthors.length - 1 && (
+                                                        <span>, </span>
+                                                    ) }
+                                                </Fragment>
+                                            ) )
+                                            }
+                                            {displayAuthor && (!post.coauthors || post.coauthors.length === 0) && (
                                                 <a href={ post.author_meta.author_link }
                                                    target="_blank"
                                                    className="advgb-post-author"
                                                 >
                                                     { post.author_meta.display_name }
                                                 </a>
-                                            ) }
+                                            )
+                                            }
                                             {displayDate && (
                                                 <span className="advgb-post-date" >
                                                 { dateI18n( dateFormat, post.date_gmt ) }
