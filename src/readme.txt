@@ -128,6 +128,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 = 2.5.8 =
   * Add: Compressed CSS files only
   * Add: Tags support to Recent Posts block
+  * Add: PublishPress Authors support to Recent Posts block
   * Fix: Duplicated ID when duplicating Search Bar block
   * Fix: Formatting output for editable elements in frontend for Login/Register block
   * Fix: "Horizontal Alignment" label for Advanced Image default configuration
