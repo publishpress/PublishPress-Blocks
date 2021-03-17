@@ -1365,20 +1365,16 @@ hr.wp-block-separator {
     }
   }
 
+  // Frontpage layout
   &.frontpage-view {
 
     .advgb-recent-posts {
       display: grid;
       grid-gap: 20px;
-      grid-template-columns: 1fr 1fr 1fr;
+
 
       .advgb-recent-post {
         padding: 0;
-
-        &:nth-child(1) {
-          grid-row: 1;
-          grid-column: 1/4;
-        }
 
         .advgb-post-wrapper {
           margin-top: 20px;
@@ -1398,26 +1394,45 @@ hr.wp-block-separator {
       }
     }
 
-    /*.advgb-recent-post {
-      padding: 0;
+    // One post on top, the rest in 2 columns below
+    &.layout-1-2 .advgb-recent-posts {
+      grid-template-columns: 1fr 1fr;
 
-      .advgb-post-wrapper {
-        position: absolute;
-        bottom: 0;
+      .advgb-recent-post:nth-child(1) {
+        grid-row: 1;
+        grid-column: 1/3;
       }
+    }
 
-      .advgb-post-thumbnail {
+    // One post on top, the rest in 3 columns below
+    &.layout-1-3 .advgb-recent-posts {
+      grid-template-columns: 1fr 1fr 1fr;
 
-        a {
-          display: block;
-        }
-
-        img {
-          width: 100%;
-          height: auto;
-        }
+      .advgb-recent-post:nth-child(1) {
+        grid-row: 1;
+        grid-column: 1/4;
       }
-    }*/
+    }
+
+    // One post on top, the rest in 4 columns below
+    &.layout-1-4 .advgb-recent-posts {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+
+      .advgb-recent-post:nth-child(1) {
+        grid-row: 1;
+        grid-column: 1/5;
+      }
+    }
+
+    // One post on top, the rest in 5 columns below
+    &.layout-1-5 .advgb-recent-posts {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+      .advgb-recent-post:nth-child(1) {
+        grid-row: 1;
+        grid-column: 1/6;
+      }
+    }
   }
 }
 
@@ -2753,6 +2768,63 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     .advgb-columns.tbl-layout-stacked .advgb-column {
         width: 100% !important;
     }
+
+    .advgb-recent-posts-block {
+
+      // Frontpage layout
+      &.frontpage-view {
+
+        // One post on top, the rest in 2 columns below
+        &.tbl-layout-1-2 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr;
+
+          .advgb-recent-post:nth-child(1) {
+            grid-row: 1;
+            grid-column: 1/3;
+          }
+        }
+
+        // One post on top, the rest in 3 columns below
+        &.tbl-layout-1-3 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr 1fr;
+
+          .advgb-recent-post:nth-child(1) {
+            grid-row: 1;
+            grid-column: 1/4;
+          }
+        }
+
+        // One post on top, the rest in 4 columns below
+        &.tbl-layout-1-4 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+
+          .advgb-recent-post:nth-child(1) {
+            grid-row: 1;
+            grid-column: 1/5;
+          }
+        }
+
+        // One post on top, the rest in 5 columns below
+        &.tbl-layout-1-5 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+          .advgb-recent-post:nth-child(1) {
+            grid-row: 1;
+            grid-column: 1/6;
+          }
+        }
+
+        // Stacked
+        &.tbl-layout-stacked .advgb-recent-posts {
+          grid-template-columns: 1fr;
+
+          .advgb-recent-post:nth-child(1) {
+            grid-row: unset;
+            grid-column: unset;
+          }
+        }
+      }
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -2772,6 +2844,63 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 
     .advgb-columns.mbl-layout-stacked .advgb-column {
         width: 100% !important;
+    }
+
+    .advgb-recent-posts-block {
+
+      // Frontpage layout
+      &.frontpage-view {
+
+        // One post on top, the rest in 2 columns below
+        &.mbl-layout-1-2 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr;
+
+          .advgb-recent-post:nth-child(1) {
+            grid-row: 1;
+            grid-column: 1/3;
+          }
+        }
+
+        // One post on top, the rest in 3 columns below
+        &.mbl-layout-1-3 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr 1fr;
+
+          .advgb-recent-post:nth-child(1) {
+            grid-row: 1;
+            grid-column: 1/4;
+          }
+        }
+
+        // One post on top, the rest in 4 columns below
+        &.mbl-layout-1-4 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+
+          .advgb-recent-post:nth-child(1) {
+            grid-row: 1;
+            grid-column: 1/5;
+          }
+        }
+
+        // One post on top, the rest in 5 columns below
+        &.mbl-layout-1-5 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+          .advgb-recent-post:nth-child(1) {
+            grid-row: 1;
+            grid-column: 1/6;
+          }
+        }
+
+        // Stacked
+        &.mbl-layout-stacked .advgb-recent-posts {
+          grid-template-columns: 1fr;
+
+          .advgb-recent-post:nth-child(1) {
+            grid-row: unset;
+            grid-column: unset;
+          }
+        }
+      }
     }
 }
 
