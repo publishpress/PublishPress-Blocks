@@ -214,6 +214,8 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass = 'list-view';
     } elseif ($attributes['postView'] === 'slider') {
         $blockClass = 'slider-view';
+    } elseif ($attributes['postView'] === 'frontpage') {
+        $blockClass = 'frontpage-view';
     }
 
     if (isset($attributes['className'])) {
@@ -309,6 +311,9 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'number',
             ),
             'readMoreLbl' => array(
+                'type' => 'string',
+            ),
+            'frontpageLayout' => array(
                 'type' => 'string',
             ),
             'changed' => array(
