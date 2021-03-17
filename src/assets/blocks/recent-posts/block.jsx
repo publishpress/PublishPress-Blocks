@@ -28,6 +28,18 @@
         { layout: '1-3', icon: '1-3', title: __( 'One post on top, the rest in 3 columns below', 'advanced-gutenberg' ) },
         { layout: '1-4', icon: '1-4', title: __( 'One post on top, the rest in 4 columns below', 'advanced-gutenberg' ) },
         { layout: '1-5', icon: '1-5', title: __( 'One post on top, the rest in 5 columns below', 'advanced-gutenberg' ) },
+    ];
+
+    const FRONTPAGE_LAYOUTS_TABLET = [
+        { layout: '1-2', icon: '1-2', title: __( 'One post on top, the rest in 2 columns below', 'advanced-gutenberg' ) },
+        { layout: '1-3', icon: '1-3', title: __( 'One post on top, the rest in 3 columns below', 'advanced-gutenberg' ) },
+        { layout: '1-4', icon: '1-4', title: __( 'One post on top, the rest in 4 columns below', 'advanced-gutenberg' ) },
+        { layout: '1-5', icon: '1-5', title: __( 'One post on top, the rest in 5 columns below', 'advanced-gutenberg' ) },
+        { layout: 'stacked', icon: 'stacked', title: __( 'Stacked', 'advanced-gutenberg' ) },
+    ];
+
+    const FRONTPAGE_LAYOUTS_MOBILE = [
+        { layout: '1-2', icon: '1-2', title: __( 'One post on top, the rest in 2 columns below', 'advanced-gutenberg' ) },
         { layout: 'stacked', icon: 'stacked', title: __( 'Stacked', 'advanced-gutenberg' ) },
     ];
 
@@ -215,12 +227,10 @@
                             } ) }
                         </div>
                         <div className="advgb-recent-posts-select-layout on-inspector">
-                            {FRONTPAGE_LAYOUTS.map( (layout, index) => {
+                            {tabSelected === 'desktop' && FRONTPAGE_LAYOUTS.map( (layout, index) => {
                                 const layoutClasses = [
                                     'advgb-recent-posts-layout',
                                     tabSelected === 'desktop' && layout.layout === frontpageLayout && 'is-selected',
-                                    tabSelected === 'tablet' && layout.layout === frontpageLayoutT && 'is-selected',
-                                    tabSelected === 'mobile' && layout.layout === frontpageLayoutM && 'is-selected',
                                 ].filter( Boolean ).join( ' ' );
 
                                 return (
@@ -241,10 +251,32 @@
                                     </Tooltip>
                                 )
                             } ) }
-                            {tabSelected !== 'desktop' && FRONTPAGE_LAYOUTS.map( (layout, index) => {
+                            {tabSelected === 'tablet' && FRONTPAGE_LAYOUTS_TABLET.map( (layout, index) => {
                                 const layoutClasses = [
                                     'advgb-recent-posts-layout',
                                     tabSelected === 'tablet' && layout.layout === frontpageLayoutT && 'is-selected',
+                                ].filter( Boolean ).join( ' ' );
+
+                                return (
+                                    <Tooltip text={ layout.title } key={ index }>
+                                        <div className={ layoutClasses }
+                                             onClick={ () => {
+                                                 setAttributes( {
+                                                     ['frontpageLayout' + deviceLetter]: layout.layout
+                                                 } );
+                                                 this.setState( { random: Math.random() } );
+                                             } }
+                                        >
+                                            <img src={advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png'}
+                                                 alt={ layout.layout }
+                                            />
+                                        </div>
+                                    </Tooltip>
+                                )
+                            } ) }
+                            {tabSelected === 'mobile' && FRONTPAGE_LAYOUTS_MOBILE.map( (layout, index) => {
+                                const layoutClasses = [
+                                    'advgb-recent-posts-layout',
                                     tabSelected === 'mobile' && layout.layout === frontpageLayoutM && 'is-selected',
                                 ].filter( Boolean ).join( ' ' );
 
