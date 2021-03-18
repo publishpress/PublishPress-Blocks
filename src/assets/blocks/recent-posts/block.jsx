@@ -316,7 +316,7 @@
                         />
                     </PanelBody>
                     }
-                    <PanelBody title={ __( 'Block Settings', 'advanced-gutenberg' ) }>
+                    <PanelBody title={ __( 'Post Settings', 'advanced-gutenberg' ) }>
                         <QueryControls
                             { ...{ order, orderBy } }
                             categorySuggestions={ categoriesList }

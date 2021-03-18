@@ -23711,7 +23711,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         PanelBody,
-                        { title: __('Block Settings', 'advanced-gutenberg') },
+                        { title: __('Post Settings', 'advanced-gutenberg') },
                         React.createElement(QueryControls, _extends({ order: order, orderBy: orderBy }, {
                             categorySuggestions: categoriesList,
                             selectedCategories: categories,
