@@ -23391,7 +23391,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         ToolbarGroup = wpComponents.ToolbarGroup,
         ToolbarButton = wpComponents.ToolbarButton,
         Placeholder = wpComponents.Placeholder,
-        Tooltip = wpComponents.Tooltip;
+        Tooltip = wpComponents.Tooltip,
+        SelectControl = wpComponents.SelectControl;
     var withSelect = wpData.withSelect;
     var pickBy = lodash.pickBy,
         isUndefined = lodash.isUndefined;
@@ -23418,6 +23419,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var FRONTPAGE_LAYOUTS_TABLET = [{ layout: '1-2', icon: '1-2', title: __('One post on top, the rest in 2 columns below', 'advanced-gutenberg') }, { layout: '1-3', icon: '1-3', title: __('One post on top, the rest in 3 columns below', 'advanced-gutenberg') }, { layout: '1-4', icon: '1-4', title: __('One post on top, the rest in 4 columns below', 'advanced-gutenberg') }, { layout: '1-5', icon: '1-5', title: __('One post on top, the rest in 5 columns below', 'advanced-gutenberg') }, { layout: 'stacked', icon: 'stacked', title: __('Stacked', 'advanced-gutenberg') }];
 
     var FRONTPAGE_LAYOUTS_MOBILE = [{ layout: '1-2', icon: '1-2', title: __('One post on top, the rest in 2 columns below', 'advanced-gutenberg') }, { layout: 'stacked', icon: 'stacked', title: __('Stacked', 'advanced-gutenberg') }];
+
+    var GAP_OPTIONS = [{ label: __('None', 'advanced-gutenberg'), value: 0 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }];
 
     var initSlider = null;
 
@@ -23600,7 +23603,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     tags = attributes.tags,
                     frontpageLayout = attributes.frontpageLayout,
                     frontpageLayoutT = attributes.frontpageLayoutT,
-                    frontpageLayoutM = attributes.frontpageLayoutM;
+                    frontpageLayoutM = attributes.frontpageLayoutM,
+                    gap = attributes.gap;
 
 
                 var deviceLetter = '';
@@ -23695,7 +23699,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     )
                                 );
                             })
-                        )
+                        ),
+                        React.createElement(SelectControl, {
+                            label: __('Space between columns and rows', 'advanced-gutenberg'),
+                            value: gap,
+                            options: GAP_OPTIONS,
+                            onChange: function onChange(value) {
+                                return setAttributes({ gap: parseInt(value) });
+                            }
+                        })
                     ),
                     React.createElement(
                         PanelBody,
@@ -23847,7 +23859,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'frontpage'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap].filter(Boolean).join(' ');
 
                 var dateFormat = __experimentalGetSettings().formats.date;
 

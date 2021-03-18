@@ -217,6 +217,7 @@ function advgbRenderBlockRecentPosts($attributes)
     } elseif ($attributes['postView'] === 'frontpage') {
         $blockClass = 'frontpage-view';
         $blockClass .= ' layout-' . $attributes['frontpageLayout'];
+        $blockClass .= ' gap-' . $attributes['gap'];
         (isset($attributes['frontpageLayoutT']) && $attributes['frontpageLayoutT']) ? $blockClass .= ' tbl-layout-' . $attributes['frontpageLayoutT'] : '';
         (isset($attributes['frontpageLayoutM']) && $attributes['frontpageLayoutM']) ? $blockClass .= ' mbl-layout-' . $attributes['frontpageLayoutM'] : '';
     }
@@ -325,6 +326,10 @@ function advgbRegisterBlockRecentPosts()
             ),
             'frontpageLayoutM' => array(
                 'type' => 'string',
+            ),
+            'gap' => array(
+                'type' => 'number',
+                'default' => 10,
             ),
             'changed' => array(
                 'type' => 'boolean',

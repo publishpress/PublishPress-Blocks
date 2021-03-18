@@ -4,7 +4,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpBlockEditor;
-    const { PanelBody, RangeControl, ToggleControl, TextControl, QueryControls, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip } = wpComponents;
+    const { PanelBody, RangeControl, ToggleControl, TextControl, QueryControls, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
     const { withSelect } = wpData;
     const { pickBy, isUndefined } = lodash;
     const { decodeEntities } = wpHtmlEntities;
@@ -41,6 +41,15 @@
     const FRONTPAGE_LAYOUTS_MOBILE = [
         { layout: '1-2', icon: '1-2', title: __( 'One post on top, the rest in 2 columns below', 'advanced-gutenberg' ) },
         { layout: 'stacked', icon: 'stacked', title: __( 'Stacked', 'advanced-gutenberg' ) },
+    ];
+
+    const GAP_OPTIONS = [
+        {label: __( 'None', 'advanced-gutenberg' ), value: 0},
+        {label: '10px', value: 10},
+        {label: '20px', value: 20},
+        {label: '30px', value: 30},
+        {label: '40px', value: 40},
+        {label: '50px', value: 50},
     ];
 
     let initSlider = null;
@@ -199,6 +208,7 @@
                 categories,
                 tags,
                 frontpageLayout, frontpageLayoutT, frontpageLayoutM,
+                gap
             } = attributes;
 
             let deviceLetter = '';
@@ -298,6 +308,12 @@
                                 )
                             } ) }
                         </div>
+                        <SelectControl
+                            label={ __( 'Space between columns and rows', 'advanced-gutenberg' ) }
+                            value={ gap }
+                            options={ GAP_OPTIONS }
+                            onChange={ (value) => setAttributes( { gap: parseInt(value) } ) }
+                        />
                     </PanelBody>
                     }
                     <PanelBody title={ __( 'Block Settings', 'advanced-gutenberg' ) }>
@@ -448,6 +464,7 @@
                 postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout,
                 postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT,
                 postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM,
+                postView === 'frontpage' && gap && 'gap-' + gap,
             ].filter( Boolean ).join( ' ' );
 
             const dateFormat = __experimentalGetSettings().formats.date;
