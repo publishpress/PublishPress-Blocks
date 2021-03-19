@@ -218,6 +218,7 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass = 'frontpage-view';
         $blockClass .= ' layout-' . $attributes['frontpageLayout'];
         $blockClass .= ' gap-' . $attributes['gap'];
+        $blockClass .= ' style-' . $attributes['frontendStyle'];
         (isset($attributes['frontpageLayoutT']) && $attributes['frontpageLayoutT']) ? $blockClass .= ' tbl-layout-' . $attributes['frontpageLayoutT'] : '';
         (isset($attributes['frontpageLayoutM']) && $attributes['frontpageLayoutM']) ? $blockClass .= ' mbl-layout-' . $attributes['frontpageLayoutM'] : '';
     }
@@ -330,6 +331,10 @@ function advgbRegisterBlockRecentPosts()
             'gap' => array(
                 'type' => 'number',
                 'default' => 10,
+            ),
+            'frontendStyle' => array(
+                'type' => 'string',
+                'default' => 'default',
             ),
             'changed' => array(
                 'type' => 'boolean',
