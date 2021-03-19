@@ -1511,6 +1511,11 @@ hr.wp-block-separator {
           padding: 20px;
           bottom: 0;
 
+          .advgb-post-info {
+            font-size: 0.8em;
+            line-height: 1.4em;
+          }
+
           * {
             color: #fff;
             text-shadow: 0 0 1px #666;
@@ -1618,6 +1623,10 @@ hr.wp-block-separator {
           .advgb-post-info {
             font-size: 0.8em;
             line-height: 1.4em;
+          }
+
+          .advgb-post-content {
+            margin-bottom: 0;
           }
 
           a {
