@@ -1593,6 +1593,64 @@ hr.wp-block-separator {
         }
       }
     }
+
+    // Boxed style
+    &.style-boxed .advgb-recent-posts {
+
+      .advgb-recent-post {
+        box-shadow: 0 0 3px #ccc;
+
+        &:nth-child(1) {
+
+          .advgb-post-wrapper {
+
+            .advgb-post-title {
+
+            }
+
+            .advgb-post-info {
+
+            }
+          }
+        }
+
+        .advgb-post-thumbnail {
+          width: 100%;
+
+          a {
+
+            img {
+
+            }
+          }
+        }
+
+        .advgb-post-wrapper {
+          width: 100%;
+          padding: 20px;
+          margin: 0;
+
+          .advgb-post-info {
+
+          }
+
+          * {
+
+          }
+
+          a {
+            font-weight: bold;
+            text-decoration: none;
+
+            &:hover,
+            &:focus,
+            &:active {
+              text-decoration: none;
+            }
+          }
+        }
+      }
+    }
   }
 }
 

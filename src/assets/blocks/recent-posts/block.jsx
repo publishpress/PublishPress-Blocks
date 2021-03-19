@@ -316,6 +316,7 @@
                             options={ [
                                 { label: __( 'Default', 'advanced-gutenberg' ), value: 'default' },
                                 { label: __( 'Headline', 'advanced-gutenberg' ), value: 'headline' },
+                                { label: __( 'Boxed', 'advanced-gutenberg' ), value: 'boxed' },
                                 { label: __( 'Newspaper', 'advanced-gutenberg' ), value: 'newspaper' },
                             ] }
                             onChange={ ( value ) => setAttributes( { frontendStyle: value } ) }
