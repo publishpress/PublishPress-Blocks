@@ -23416,6 +23416,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var FRONTPAGE_LAYOUTS = [{ layout: '1-2', icon: '1-2', title: __('One leading post, the rest in 2 columns', 'advanced-gutenberg') }, { layout: '1-3', icon: '1-3', title: __('One leading post, the rest in 3 columns', 'advanced-gutenberg') }, { layout: '1-4', icon: '1-4', title: __('One leading post, the rest in 4 columns', 'advanced-gutenberg') }, { layout: '1-5', icon: '1-5', title: __('One leading post, the rest in 5 columns', 'advanced-gutenberg') }];
 
+    // @TODO fix duplicated code from FRONTPAGE_LAYOUTS
     var FRONTPAGE_LAYOUTS_TABLET = [{ layout: '1-2', icon: '1-2', title: __('One leading post, the rest in 2 columns', 'advanced-gutenberg') }, { layout: '1-3', icon: '1-3', title: __('One leading post, the rest in 3 columns', 'advanced-gutenberg') }, { layout: '1-4', icon: '1-4', title: __('One leading post, the rest in 4 columns', 'advanced-gutenberg') }, { layout: '1-5', icon: '1-5', title: __('One leading post, the rest in 5 columns', 'advanced-gutenberg') }, { layout: 'stacked', icon: 'stacked', title: __('Stacked', 'advanced-gutenberg') }];
 
     var FRONTPAGE_LAYOUTS_MOBILE = [{ layout: '1-2', icon: '1-2', title: __('One leading post, the rest in 2 columns', 'advanced-gutenberg') }, { layout: 'stacked', icon: 'stacked', title: __('Stacked', 'advanced-gutenberg') }];

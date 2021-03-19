@@ -30,6 +30,7 @@
         { layout: '1-5', icon: '1-5', title: __( 'One leading post, the rest in 5 columns', 'advanced-gutenberg' ) },
     ];
 
+    // @TODO fix duplicated code from FRONTPAGE_LAYOUTS
     const FRONTPAGE_LAYOUTS_TABLET = [
         { layout: '1-2', icon: '1-2', title: __( 'One leading post, the rest in 2 columns', 'advanced-gutenberg' ) },
         { layout: '1-3', icon: '1-3', title: __( 'One leading post, the rest in 3 columns', 'advanced-gutenberg' ) },
