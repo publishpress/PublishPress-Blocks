@@ -45,6 +45,7 @@
 
     const GAP_OPTIONS = [
         { label: __( 'None', 'advanced-gutenberg' ), value: 0},
+        { label: '5px', value: 5 },
         { label: '10px', value: 10 },
         { label: '20px', value: 20 },
         { label: '30px', value: 30 },

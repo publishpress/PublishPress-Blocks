@@ -1395,6 +1395,10 @@ hr.wp-block-separator {
     }
 
     // Gap
+    &.gap-5 .advgb-recent-posts {
+      grid-gap: 5px;
+    }
+
     &.gap-10 .advgb-recent-posts {
       grid-gap: 10px;
     }

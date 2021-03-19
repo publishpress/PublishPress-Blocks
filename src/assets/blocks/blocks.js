@@ -23420,7 +23420,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var FRONTPAGE_LAYOUTS_MOBILE = [{ layout: '1-2', icon: '1-2', title: __('One leading post, the rest in 2 columns', 'advanced-gutenberg') }, { layout: 'stacked', icon: 'stacked', title: __('Stacked', 'advanced-gutenberg') }];
 
-    var GAP_OPTIONS = [{ label: __('None', 'advanced-gutenberg'), value: 0 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }];
+    var GAP_OPTIONS = [{ label: __('None', 'advanced-gutenberg'), value: 0 }, { label: '5px', value: 5 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }];
 
     var initSlider = null;
 
