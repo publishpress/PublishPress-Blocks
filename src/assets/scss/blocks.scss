@@ -1534,6 +1534,64 @@ hr.wp-block-separator {
     // Newspaper style
     &.style-newspaper .advgb-recent-posts {
 
+      .advgb-recent-post {
+        display: flex;
+        flex-wrap: wrap-reverse;
+
+        &:nth-child(1) {
+          border-bottom: 6px solid #333;
+
+          .advgb-post-wrapper {
+
+            .advgb-post-title {
+              display: inline-block;
+            }
+
+            .advgb-post-info {
+              float: right;
+              margin-top: 0;
+            }
+          }
+        }
+
+        .advgb-post-thumbnail {
+          margin-top: 10px;
+          width: 100%;
+
+          a {
+
+            img {
+              -webkit-filter: grayscale(100%);
+              filter: grayscale(100%);
+            }
+          }
+        }
+
+        .advgb-post-wrapper {
+          margin-top: 0;
+          width: 100%;
+
+          .advgb-post-info {
+            font-size: 0.8em;
+          }
+
+          * {
+            color: #333;
+          }
+
+          a {
+            font-weight: bold;
+            text-decoration: none;
+
+            &:hover,
+            &:focus,
+            &:active {
+              color: #666;
+              text-decoration: none;
+            }
+          }
+        }
+      }
     }
   }
 }
