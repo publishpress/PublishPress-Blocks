@@ -1599,20 +1599,6 @@ hr.wp-block-separator {
       .advgb-recent-post {
         box-shadow: 0 0 3px #ccc;
 
-        &:nth-child(1) {
-
-          .advgb-post-wrapper {
-
-            .advgb-post-title {
-
-            }
-
-            .advgb-post-info {
-
-            }
-          }
-        }
-
         .advgb-post-thumbnail {
           width: 100%;
 
@@ -1630,11 +1616,8 @@ hr.wp-block-separator {
           margin: 0;
 
           .advgb-post-info {
-
-          }
-
-          * {
-
+            font-size: 0.8em;
+            line-height: 1.4em;
           }
 
           a {
