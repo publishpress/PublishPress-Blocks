@@ -215,6 +215,13 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass = 'list-view';
     } elseif ($attributes['postView'] === 'slider') {
         $blockClass = 'slider-view';
+    } elseif ($attributes['postView'] === 'frontpage') {
+        $blockClass = 'frontpage-view';
+        $blockClass .= ' layout-' . $attributes['frontpageLayout'];
+        $blockClass .= ' gap-' . $attributes['gap'];
+        $blockClass .= ' style-' . $attributes['frontendStyle'];
+        (isset($attributes['frontpageLayoutT']) && $attributes['frontpageLayoutT']) ? $blockClass .= ' tbl-layout-' . $attributes['frontpageLayoutT'] : '';
+        (isset($attributes['frontpageLayoutM']) && $attributes['frontpageLayoutM']) ? $blockClass .= ' mbl-layout-' . $attributes['frontpageLayoutM'] : '';
     }
 
     if (isset($attributes['className'])) {
@@ -311,6 +318,24 @@ function advgbRegisterBlockRecentPosts()
             ),
             'readMoreLbl' => array(
                 'type' => 'string',
+            ),
+            'frontpageLayout' => array(
+                'type' => 'string',
+                'default' => '1-3',
+            ),
+            'frontpageLayoutT' => array(
+                'type' => 'string',
+            ),
+            'frontpageLayoutM' => array(
+                'type' => 'string',
+            ),
+            'gap' => array(
+                'type' => 'number',
+                'default' => 10,
+            ),
+            'frontendStyle' => array(
+                'type' => 'string',
+                'default' => 'default',
             ),
             'changed' => array(
                 'type' => 'boolean',
