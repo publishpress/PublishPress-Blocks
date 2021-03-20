@@ -339,7 +339,10 @@ function advgbRegisterBlockRecentPosts()
             'changed' => array(
                 'type' => 'boolean',
                 'default' => false,
-            )
+            ),
+            'postType' => array(
+                'type' => 'string',
+            ),
         ),
         'render_callback' => 'advgbRenderBlockRecentPosts',
     ));
