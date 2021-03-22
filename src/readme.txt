@@ -136,6 +136,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Email validation for Newsletter block
   * Fix: Hours and minutes time record for Newsletter block
   * Fix: Allowed formats for name and position fields in Testimonial block
+  * Fix: Cyrillic text output in frontend for Recent Posts block
   * Remove: Non production files such as SCSS, JSX, etc.
   * Remove: Not required formatting for editable elements for Login/Register block
 
