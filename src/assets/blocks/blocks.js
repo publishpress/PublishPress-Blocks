@@ -14536,7 +14536,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { title: __('Row Settings', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(ToggleControl, {
                                     label: __('Columns Wrapped', 'advanced-gutenberg'),
-                                    help: __('If your columns is overflown, it will be separated to a new line (eg: Use this with Columns Spacing).', 'advanced-gutenberg'),
+                                    help: __('If your columns overflow they available space, they will be placed on a new line.', 'advanced-gutenberg'),
                                     checked: columnsWrapped,
                                     onChange: function onChange() {
                                         return setAttributes({ columnsWrapped: !columnsWrapped });
