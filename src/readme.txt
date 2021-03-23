@@ -150,6 +150,14 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 1. Advanced table manager: manage tables in Gutenberg with several styling options
 1. Google Maps Gutenberg Block
 1. Latest posts and WooCommerce products blocks
+1. Columns Manager block with flexible column sizes for desktop, tablet and mobile
+1. Images Slider block with customizable text
+1. Customizable Login/Register Form block
+1. Recent Posts block with a lot of features, including views, support for multiple categories and tags
+1. Search Bar block is a great alternative to default search form
+1. Social Links block
+1. Testimonial block support columns and slider views
+1. Advanced Buttons block
 
 == Changelog ==
 
