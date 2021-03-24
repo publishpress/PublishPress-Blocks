@@ -365,6 +365,16 @@ function advgbRegisterCustomFields() {
             'schema'            => null,
         )
     );
+
+    register_rest_field( 'page',
+        'author_meta',
+        array(
+            'get_callback'  => 'advgbGetAuthorMeta',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
 }
 add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
 
@@ -384,4 +394,14 @@ function advgbGetCoauthors( $post ) {
 		}
 	}
     return $coauthors;
+}
+
+
+/**
+ * Populate the author_meta for pages.
+ *
+ * @return array
+ */
+function advgbGetAuthorMeta( $page ) {
+	return array( 'author_link' => get_author_posts_url( $page['author'] ), 'display_name' => get_the_author_meta( 'display_name', $page['author'] ) );
 }

@@ -547,7 +547,7 @@
                                                 </Fragment>
                                             ) )
                                             }
-                                            {displayAuthor && (!post.coauthors || post.coauthors.length === 0) && post.author_meta && (
+                                            {displayAuthor && (!post.coauthors || post.coauthors.length === 0) && (
                                                 <a href={ post.author_meta.author_link }
                                                    target="_blank"
                                                    className="advgb-post-author"
