@@ -48,7 +48,8 @@ HTML;
         return '';
     }
 
-    $text = substr($text, 0, $length);
+	$text = mb_convert_encoding($text, 'UTF-8','HTML-ENTITIES');
+	$text = mb_substr($text, 0, $length, 'UTF-8');
 
     return $text;
 }
