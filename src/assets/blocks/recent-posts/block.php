@@ -84,14 +84,21 @@ function advgbRenderBlockRecentPosts($attributes)
 	}
 
 	$args = array(
+			'post_type' => $attributes['postType'],
             'numberposts' => empty($attributes['numberOfPosts'])?8:$attributes['numberOfPosts'],
             'post_status' => 'publish',
             'order' => empty($attributes['order'])?'desc':$attributes['order'],
             'orderby' => empty($attributes['orderBy'])?'date':$attributes['orderBy'],
-            'category__in' => is_array( $categories ) ? array_map( 'intval', $categories ) : $categories,
-            'tax_query' => $tax_query,
             'suppress_filters' => false,
         );
+
+	// use tax for anything but pages...
+	if ( ! in_array( $attributes['postType'], array( 'page' ), true ) ) {
+		$args = wp_parse_args( $args, array(
+            'category__in' => is_array( $categories ) ? array_map( 'intval', $categories ) : $categories,
+            'tax_query' => $tax_query,
+		) );
+	}
 
     $recent_posts = wp_get_recent_posts( $args, OBJECT );
 
