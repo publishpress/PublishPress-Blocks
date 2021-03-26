@@ -23438,6 +23438,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 tagsList: [],
                 catIdVsName: [],
                 tagNameVsId: [],
+                postTypeList: [{ label: __('Post'), value: 'post' }, { label: __('Page'), value: 'page' }],
                 updating: false,
                 tabSelected: 'desktop'
             };
@@ -23446,7 +23447,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             _this.selectTags = _this.selectTags.bind(_this);
             _this.getTagIdsForTags = _this.getTagIdsForTags.bind(_this);
             _this.getCategoryForBkwrdCompat = _this.getCategoryForBkwrdCompat.bind(_this);
-
             return _this;
         }
 
@@ -23581,6 +23581,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _state = this.state,
                     categoriesList = _state.categoriesList,
                     tagsList = _state.tagsList,
+                    postTypeList = _state.postTypeList,
                     tabSelected = _state.tabSelected;
                 var _props4 = this.props,
                     attributes = _props4.attributes,
@@ -23608,6 +23609,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     gap = attributes.gap,
                     frontendStyle = attributes.frontendStyle;
 
+
+                var postType = attributes.postType;
+                if (postType === undefined) {
+                    postType = 'post';
+                }
 
                 var deviceLetter = '';
                 if (tabSelected === 'tablet') deviceLetter = 'T';
@@ -23722,8 +23728,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         PanelBody,
                         { title: __('Post Settings', 'advanced-gutenberg') },
+                        React.createElement(SelectControl, {
+                            label: __('Post Type', 'advanced-gutenberg'),
+                            value: postType,
+                            options: postTypeList,
+                            onChange: function onChange(value) {
+                                return setAttributes({ postType: value });
+                            }
+                        }),
                         React.createElement(QueryControls, _extends({ order: order, orderBy: orderBy }, {
-                            categorySuggestions: categoriesList,
+                            categorySuggestions: postType === 'post' ? categoriesList : null,
                             selectedCategories: categories,
                             numberOfItems: numberOfPosts,
                             onOrderChange: function onOrderChange(value) {
@@ -23739,7 +23753,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ numberOfPosts: value });
                             }
                         })),
-                        React.createElement(FormTokenField, {
+                        postType === 'post' && React.createElement(FormTokenField, {
                             multiple: true,
                             suggestions: tagsList,
                             value: tags,
@@ -24121,7 +24135,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 order = _props$attributes.order,
                 orderBy = _props$attributes.orderBy,
                 numberOfPosts = _props$attributes.numberOfPosts,
-                myToken = _props$attributes.myToken;
+                myToken = _props$attributes.myToken,
+                postType = _props$attributes.postType;
 
 
             var catIds = categories && categories.length > 0 ? categories.map(function (cat) {
@@ -24140,7 +24155,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             });
 
             return {
-                recentPosts: getEntityRecords('postType', 'post', recentPostsQuery)
+                recentPosts: getEntityRecords('postType', postType ? postType : 'post', recentPostsQuery)
             };
         })(RecentPostsEdit),
         save: function save() {
