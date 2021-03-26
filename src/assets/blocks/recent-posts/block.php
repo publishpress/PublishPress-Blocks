@@ -132,6 +132,14 @@ function advgbRenderBlockRecentPosts($attributes)
                 );
             }
 
+            // Display placeholder for Frontpage view with Headline style when Image is disabled
+            if ($attributes['displayFeaturedImage'] === false && $attributes['postView'] === 'frontpage' && $attributes['frontendStyle'] === 'headline') {
+                $postHtml .= sprintf(
+                    '<div class="advgb-post-thumbnail"><a href="%1$s"></a></div>',
+                    get_permalink($post->ID)
+                );
+            }
+
             $postHtml .= '<div class="advgb-post-wrapper">';
 
             $postHtml .= sprintf(
@@ -230,6 +238,10 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass .= ' style-' . $attributes['frontendStyle'];
         (isset($attributes['frontpageLayoutT']) && $attributes['frontpageLayoutT']) ? $blockClass .= ' tbl-layout-' . $attributes['frontpageLayoutT'] : '';
         (isset($attributes['frontpageLayoutM']) && $attributes['frontpageLayoutM']) ? $blockClass .= ' mbl-layout-' . $attributes['frontpageLayoutM'] : '';
+    }
+
+    if($attributes['displayFeaturedImage'] === false) {
+        $blockClass .= ' no-image';
     }
 
     if (isset($attributes['className'])) {
