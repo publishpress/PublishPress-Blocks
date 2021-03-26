@@ -522,19 +522,19 @@
                         <div className="advgb-recent-posts">
                             {recentPosts.map( ( post, index ) => (
                                 <article key={ index } className="advgb-recent-post" >
-                                {displayFeaturedImage && (
-                                    <div className="advgb-post-thumbnail">
-                                        <a href={ post.link } target="_blank">
-                                            <img src={ post.featured_img ? post.featured_img : advgbBlocks.post_thumb } alt={ __( 'Post Image', 'advanced-gutenberg' ) } />
-                                        </a>
-                                    </div>
-                                ) }
-                                { /* Display placeholder for Frontpage view with Headline style when Image is disabled */ }
-                                {displayFeaturedImage === false && postView === 'frontpage' && frontendStyle === 'headline' && (
-                                    <div className="advgb-post-thumbnail">
-                                        <a href={ post.link } target="_blank"></a>
-                                    </div>
-                                ) }
+                                    {displayFeaturedImage && (
+                                        <div className="advgb-post-thumbnail">
+                                            <a href={ post.link } target="_blank">
+                                                <img src={ post.featured_img ? post.featured_img : advgbBlocks.post_thumb } alt={ __( 'Post Image', 'advanced-gutenberg' ) } />
+                                            </a>
+                                        </div>
+                                    ) }
+                                    { /* Display placeholder for Frontpage view with Headline style when Image is disabled */ }
+                                    {displayFeaturedImage === false && postView === 'frontpage' && frontendStyle === 'headline' && (
+                                        <div className="advgb-post-thumbnail">
+                                            <a href={ post.link } target="_blank"></a>
+                                        </div>
+                                    ) }
                                     <div className="advgb-post-wrapper">
                                         <h2 className="advgb-post-title">
                                             <a href={ post.link } target="_blank">{ decodeEntities( post.title.rendered ) }</a>
