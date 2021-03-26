@@ -496,7 +496,6 @@
                 postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM,
                 postView === 'frontpage' && gap && 'gap-' + gap,
                 postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle,
-                displayFeaturedImage === false && 'no-image',
             ].filter( Boolean ).join( ' ' );
 
             const dateFormat = __experimentalGetSettings().formats.date;
@@ -527,12 +526,6 @@
                                             <a href={ post.link } target="_blank">
                                                 <img src={ post.featured_img ? post.featured_img : advgbBlocks.post_thumb } alt={ __( 'Post Image', 'advanced-gutenberg' ) } />
                                             </a>
-                                        </div>
-                                    ) }
-                                    { /* Display placeholder for Frontpage view with Headline style when Image is disabled */ }
-                                    {displayFeaturedImage === false && postView === 'frontpage' && frontendStyle === 'headline' && (
-                                        <div className="advgb-post-thumbnail">
-                                            <a href={ post.link } target="_blank"></a>
                                         </div>
                                     ) }
                                     <div className="advgb-post-wrapper">
