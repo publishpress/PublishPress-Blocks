@@ -83,8 +83,9 @@ function advgbRenderBlockRecentPosts($attributes)
 			);
 	}
 
+	$post_type = isset($attributes['postType']) ? $attributes['postType'] : 'post';
 	$args = array(
-			'post_type' => $attributes['postType'],
+			'post_type' => $post_type,
             'numberposts' => empty($attributes['numberOfPosts'])?8:$attributes['numberOfPosts'],
             'post_status' => 'publish',
             'order' => empty($attributes['order'])?'desc':$attributes['order'],
@@ -93,7 +94,7 @@ function advgbRenderBlockRecentPosts($attributes)
         );
 
 	// use tax for anything but pages...
-	if ( ! in_array( $attributes['postType'], array( 'page' ), true ) ) {
+	if ( ! in_array( $post_type, array( 'page' ), true ) ) {
 		$args = wp_parse_args( $args, array(
             'category__in' => is_array( $categories ) ? array_map( 'intval', $categories ) : $categories,
             'tax_query' => $tax_query,
