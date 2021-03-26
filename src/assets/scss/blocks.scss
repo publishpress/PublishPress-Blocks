@@ -1375,9 +1375,14 @@ hr.wp-block-separator {
 
       .advgb-recent-post {
         padding: 0;
+        overflow: hidden;
 
         .advgb-post-wrapper {
           margin-top: 20px;
+
+          > *:last-child {
+            margin-bottom: 0;
+          }
         }
 
         .advgb-post-thumbnail {
@@ -1391,6 +1396,15 @@ hr.wp-block-separator {
             height: auto;
           }
         }
+      }
+    }
+
+    // No featured image
+    &.no-image .advgb-recent-posts .advgb-recent-post {
+
+      .advgb-post-thumbnail {
+        min-height: 350px;
+        background: #999;
       }
     }
 

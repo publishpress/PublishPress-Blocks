@@ -23883,7 +23883,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'frontpage'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle, displayFeaturedImage === false && 'no-image'].filter(Boolean).join(' ');
 
                 var dateFormat = __experimentalGetSettings().formats.date;
 
@@ -23926,6 +23926,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             { href: post.link, target: "_blank" },
                                             React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
                                         )
+                                    ),
+                                    displayFeaturedImage === false && postView === 'frontpage' && frontendStyle === 'headline' && React.createElement(
+                                        "div",
+                                        { className: "advgb-post-thumbnail" },
+                                        React.createElement("a", { href: post.link, target: "_blank" })
                                     ),
                                     React.createElement(
                                         "div",
