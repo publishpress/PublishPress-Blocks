@@ -23606,8 +23606,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     frontpageLayoutT = attributes.frontpageLayoutT,
                     frontpageLayoutM = attributes.frontpageLayoutM,
                     gap = attributes.gap,
-                    frontendStyle = attributes.frontendStyle;
+                    frontendStyle = attributes.frontendStyle,
+                    excludeCurrentPost = attributes.excludeCurrentPost;
 
+
+                var isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
 
                 var deviceLetter = '';
                 if (tabSelected === 'tablet') deviceLetter = 'T';
@@ -23815,6 +23818,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             value: postTextExcerptLength,
                             onChange: function onChange(value) {
                                 return setAttributes({ postTextExcerptLength: value });
+                            }
+                        }),
+                        isInPost && React.createElement(ToggleControl, {
+                            label: __('Exclude current post', 'advanced-gutenberg'),
+                            checked: excludeCurrentPost,
+                            onChange: function onChange() {
+                                return setAttributes({ excludeCurrentPost: !excludeCurrentPost });
                             }
                         })
                     )
@@ -24121,20 +24131,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 order = _props$attributes.order,
                 orderBy = _props$attributes.orderBy,
                 numberOfPosts = _props$attributes.numberOfPosts,
-                myToken = _props$attributes.myToken;
+                myToken = _props$attributes.myToken,
+                excludeCurrentPost = _props$attributes.excludeCurrentPost;
 
 
             var catIds = categories && categories.length > 0 ? categories.map(function (cat) {
                 return cat.id;
             }) : [];
 
+            var postId = wp.data.select('core/editor').getCurrentPostId();
             var recentPostsQuery = pickBy({
                 categories: catIds,
                 tags: tagIds,
                 order: order,
                 orderby: orderBy,
                 per_page: numberOfPosts,
-                token: myToken
+                token: myToken,
+                exclude: excludeCurrentPost ? postId : 0
             }, function (value) {
                 return !isUndefined(value);
             });

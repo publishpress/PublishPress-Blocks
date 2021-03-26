@@ -63,6 +63,8 @@ HTML;
  */
 function advgbRenderBlockRecentPosts($attributes)
 {
+	global $post;
+
 	$categories = empty($attributes['categories'])? array() :$attributes['categories'];
 	if ( ! empty( $categories ) ) {
 		$categories = array_column( $categories, 'id' );
@@ -91,6 +93,7 @@ function advgbRenderBlockRecentPosts($attributes)
             'category__in' => is_array( $categories ) ? array_map( 'intval', $categories ) : $categories,
             'tax_query' => $tax_query,
             'suppress_filters' => false,
+			'exclude' => isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ? $post->ID : 0
         );
 
     $recent_posts = wp_get_recent_posts( $args, OBJECT );
@@ -340,7 +343,11 @@ function advgbRegisterBlockRecentPosts()
             'changed' => array(
                 'type' => 'boolean',
                 'default' => false,
-            )
+            ),
+            'excludeCurrentPost' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
         ),
         'render_callback' => 'advgbRenderBlockRecentPosts',
     ));
