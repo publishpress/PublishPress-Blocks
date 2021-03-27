@@ -435,6 +435,7 @@
                         {isInPost && postType === 'post' &&
                         <ToggleControl
                             label={ __( 'Exclude current post', 'advanced-gutenberg' ) }
+                            help={ __( 'If this post is listed in the block, you can exclude it.', 'advanced-gutenberg' ) }
                             checked={ excludeCurrentPost }
                             onChange={ () => setAttributes( { excludeCurrentPost: !excludeCurrentPost } ) }
                         />

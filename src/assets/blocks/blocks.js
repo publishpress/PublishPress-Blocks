@@ -23836,6 +23836,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         }),
                         isInPost && postType === 'post' && React.createElement(ToggleControl, {
                             label: __('Exclude current post', 'advanced-gutenberg'),
+                            help: __('If this post is listed in the block, you can exclude it.', 'advanced-gutenberg'),
                             checked: excludeCurrentPost,
                             onChange: function onChange() {
                                 return setAttributes({ excludeCurrentPost: !excludeCurrentPost });
