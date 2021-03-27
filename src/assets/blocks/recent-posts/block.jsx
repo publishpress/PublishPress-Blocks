@@ -65,6 +65,10 @@
                 tagsList: [],
                 catIdVsName: [],
                 tagNameVsId: [],
+                postTypeList: [
+                { label: __( 'Post' ), value: 'post' },
+                { label: __( 'Page' ), value: 'page' },
+                ],
                 updating: false,
                 tabSelected: 'desktop',
             }
@@ -73,7 +77,6 @@
             this.selectTags = this.selectTags.bind(this);
             this.getTagIdsForTags = this.getTagIdsForTags.bind(this);
             this.getCategoryForBkwrdCompat = this.getCategoryForBkwrdCompat.bind(this);
-
         }
 
         componentWillMount() {
@@ -190,7 +193,7 @@
         }
 
         render() {
-            const { categoriesList, tagsList, tabSelected } = this.state;
+            const { categoriesList, tagsList, postTypeList, tabSelected } = this.state;
             const { attributes, setAttributes, recentPosts } = this.props;
             const {
                 postView,
@@ -216,6 +219,11 @@
             } = attributes;
 
             const isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
+
+            let postType = attributes.postType;
+            if(postType === undefined){
+                postType = 'post';
+            }
 
             let deviceLetter = '';
             if (tabSelected === 'tablet') deviceLetter = 'T';
@@ -334,9 +342,15 @@
                     </PanelBody>
                     }
                     <PanelBody title={ __( 'Post Settings', 'advanced-gutenberg' ) }>
+                        <SelectControl
+                            label={ __( 'Post Type', 'advanced-gutenberg' ) }
+                            value={ postType }
+                            options={ postTypeList }
+                            onChange={ (value) => setAttributes( { postType: value } ) }
+                        />
                         <QueryControls
                             { ...{ order, orderBy } }
-                            categorySuggestions={ categoriesList }
+                            categorySuggestions={ postType === 'post' ? categoriesList : null }
                             selectedCategories={ categories }
                             numberOfItems={ numberOfPosts }
                             onOrderChange={ ( value ) => setAttributes( { order: value } ) }
@@ -347,17 +361,19 @@
                             }
                             onNumberOfItemsChange={ (value) => setAttributes( { numberOfPosts: value } ) }
                         />
-                        <FormTokenField
-                            multiple
-                            suggestions={ tagsList }
-                            value={ tags }
-                            label={ __( 'Tags', 'advanced-gutenberg' ) }
-                            placeholder={ __( 'Type a tag', 'advanced-gutenberg' ) }
-                            onChange={ ( value ) => {
-                                                this.selectTags(value);
-                                            }
-                            }
-                        />
+                        { postType === 'post' &&
+                            <FormTokenField
+                                multiple
+                                suggestions={ tagsList }
+                                value={ tags }
+                                label={ __( 'Tags', 'advanced-gutenberg' ) }
+                                placeholder={ __( 'Type a tag', 'advanced-gutenberg' ) }
+                                onChange={ ( value ) => {
+                                                    this.selectTags(value);
+                                                }
+                                }
+                            />
+                        }
                         {postView === 'grid' &&
                         <RangeControl
                             label={ __( 'Columns', 'advanced-gutenberg' ) }
@@ -416,7 +432,7 @@
                             onChange={ ( value ) => setAttributes( { postTextExcerptLength: value } ) }
                         />
                         }
-                        {isInPost &&
+                        {isInPost && postType === 'post' &&
                         <ToggleControl
                             label={ __( 'Exclude current post', 'advanced-gutenberg' ) }
                             checked={ excludeCurrentPost }
@@ -490,6 +506,7 @@
                 postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM,
                 postView === 'frontpage' && gap && 'gap-' + gap,
                 postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle,
+                displayFeaturedImage === false && 'no-image',
             ].filter( Boolean ).join( ' ' );
 
             const dateFormat = __experimentalGetSettings().formats.date;
@@ -520,6 +537,12 @@
                                             <a href={ post.link } target="_blank">
                                                 <img src={ post.featured_img ? post.featured_img : advgbBlocks.post_thumb } alt={ __( 'Post Image', 'advanced-gutenberg' ) } />
                                             </a>
+                                        </div>
+                                    ) }
+                                    { /* Display placeholder for Frontpage view with Headline style when Image is disabled */ }
+                                    {displayFeaturedImage === false && postView === 'frontpage' && frontendStyle === 'headline' && (
+                                        <div className="advgb-post-thumbnail">
+                                            <a href={ post.link } target="_blank"></a>
                                         </div>
                                     ) }
                                     <div className="advgb-post-wrapper">
@@ -671,6 +694,7 @@
                 name: catIdVsName[id]
             };
         }
+
     }
 
     registerBlockType( 'advgb/recent-posts', {
@@ -692,7 +716,7 @@
         },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, excludeCurrentPost } = props.attributes;
+            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost } = props.attributes;
 
             const catIds = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
 
@@ -708,7 +732,7 @@
             }, ( value ) => !isUndefined( value ) );
 
             return {
-                recentPosts: getEntityRecords( 'postType', 'post', recentPostsQuery ),
+                recentPosts: getEntityRecords( 'postType', postType ? postType : 'post', recentPostsQuery ),
             }
         } )( RecentPostsEdit ),
         save: function () { // Render in PHP

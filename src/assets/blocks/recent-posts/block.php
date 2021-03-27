@@ -85,16 +85,24 @@ function advgbRenderBlockRecentPosts($attributes)
 			);
 	}
 
+	$post_type = isset($attributes['postType']) ? $attributes['postType'] : 'post';
 	$args = array(
+			'post_type' => $post_type,
             'numberposts' => empty($attributes['numberOfPosts'])?8:$attributes['numberOfPosts'],
             'post_status' => 'publish',
             'order' => empty($attributes['order'])?'desc':$attributes['order'],
             'orderby' => empty($attributes['orderBy'])?'date':$attributes['orderBy'],
+            'suppress_filters' => false,
+			'exclude' => $post_type === 'post' && isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ? $post->ID : 0
+        );
+
+	// use tax for anything but pages...
+	if ( ! in_array( $post_type, array( 'page' ), true ) ) {
+		$args = wp_parse_args( $args, array(
             'category__in' => is_array( $categories ) ? array_map( 'intval', $categories ) : $categories,
             'tax_query' => $tax_query,
-            'suppress_filters' => false,
-			'exclude' => isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ? $post->ID : 0
-        );
+		) );
+	}
 
     $recent_posts = wp_get_recent_posts( $args, OBJECT );
 
@@ -124,6 +132,14 @@ function advgbRenderBlockRecentPosts($attributes)
                     '<div class="advgb-post-thumbnail"><a href="%1$s">%2$s</a></div>',
                     get_permalink($post->ID),
                     $postThumb
+                );
+            }
+
+            // Display placeholder for Frontpage view with Headline style when Image is disabled
+            if ($attributes['displayFeaturedImage'] === false && $attributes['postView'] === 'frontpage' && $attributes['frontendStyle'] === 'headline') {
+                $postHtml .= sprintf(
+                    '<div class="advgb-post-thumbnail"><a href="%1$s"></a></div>',
+                    get_permalink($post->ID)
                 );
             }
 
@@ -225,6 +241,10 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass .= ' style-' . $attributes['frontendStyle'];
         (isset($attributes['frontpageLayoutT']) && $attributes['frontpageLayoutT']) ? $blockClass .= ' tbl-layout-' . $attributes['frontpageLayoutT'] : '';
         (isset($attributes['frontpageLayoutM']) && $attributes['frontpageLayoutM']) ? $blockClass .= ' mbl-layout-' . $attributes['frontpageLayoutM'] : '';
+    }
+
+    if($attributes['displayFeaturedImage'] === false) {
+        $blockClass .= ' no-image';
     }
 
     if (isset($attributes['className'])) {
@@ -348,6 +368,9 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'boolean',
                 'default' => false,
             ),
+            'postType' => array(
+                'type' => 'string',
+            ),
         ),
         'render_callback' => 'advgbRenderBlockRecentPosts',
     ));
@@ -369,6 +392,16 @@ function advgbRegisterCustomFields() {
             'schema'            => null,
         )
     );
+
+    register_rest_field( 'page',
+        'author_meta',
+        array(
+            'get_callback'  => 'advgbGetAuthorMeta',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
 }
 add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
 
@@ -388,4 +421,14 @@ function advgbGetCoauthors( $post ) {
 		}
 	}
     return $coauthors;
+}
+
+
+/**
+ * Populate the author_meta for pages.
+ *
+ * @return array
+ */
+function advgbGetAuthorMeta( $page ) {
+	return array( 'author_link' => get_author_posts_url( $page['author'] ), 'display_name' => get_the_author_meta( 'display_name', $page['author'] ) );
 }

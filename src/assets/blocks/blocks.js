@@ -23438,6 +23438,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 tagsList: [],
                 catIdVsName: [],
                 tagNameVsId: [],
+                postTypeList: [{ label: __('Post'), value: 'post' }, { label: __('Page'), value: 'page' }],
                 updating: false,
                 tabSelected: 'desktop'
             };
@@ -23446,7 +23447,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             _this.selectTags = _this.selectTags.bind(_this);
             _this.getTagIdsForTags = _this.getTagIdsForTags.bind(_this);
             _this.getCategoryForBkwrdCompat = _this.getCategoryForBkwrdCompat.bind(_this);
-
             return _this;
         }
 
@@ -23581,6 +23581,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _state = this.state,
                     categoriesList = _state.categoriesList,
                     tagsList = _state.tagsList,
+                    postTypeList = _state.postTypeList,
                     tabSelected = _state.tabSelected;
                 var _props4 = this.props,
                     attributes = _props4.attributes,
@@ -23611,6 +23612,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
                 var isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
+
+                var postType = attributes.postType;
+                if (postType === undefined) {
+                    postType = 'post';
+                }
 
                 var deviceLetter = '';
                 if (tabSelected === 'tablet') deviceLetter = 'T';
@@ -23725,8 +23731,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         PanelBody,
                         { title: __('Post Settings', 'advanced-gutenberg') },
+                        React.createElement(SelectControl, {
+                            label: __('Post Type', 'advanced-gutenberg'),
+                            value: postType,
+                            options: postTypeList,
+                            onChange: function onChange(value) {
+                                return setAttributes({ postType: value });
+                            }
+                        }),
                         React.createElement(QueryControls, _extends({ order: order, orderBy: orderBy }, {
-                            categorySuggestions: categoriesList,
+                            categorySuggestions: postType === 'post' ? categoriesList : null,
                             selectedCategories: categories,
                             numberOfItems: numberOfPosts,
                             onOrderChange: function onOrderChange(value) {
@@ -23742,7 +23756,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ numberOfPosts: value });
                             }
                         })),
-                        React.createElement(FormTokenField, {
+                        postType === 'post' && React.createElement(FormTokenField, {
                             multiple: true,
                             suggestions: tagsList,
                             value: tags,
@@ -23820,7 +23834,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ postTextExcerptLength: value });
                             }
                         }),
-                        isInPost && React.createElement(ToggleControl, {
+                        isInPost && postType === 'post' && React.createElement(ToggleControl, {
                             label: __('Exclude current post', 'advanced-gutenberg'),
                             checked: excludeCurrentPost,
                             onChange: function onChange() {
@@ -23879,7 +23893,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'frontpage'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle, displayFeaturedImage === false && 'no-image'].filter(Boolean).join(' ');
 
                 var dateFormat = __experimentalGetSettings().formats.date;
 
@@ -23922,6 +23936,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             { href: post.link, target: "_blank" },
                                             React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
                                         )
+                                    ),
+                                    displayFeaturedImage === false && postView === 'frontpage' && frontendStyle === 'headline' && React.createElement(
+                                        "div",
+                                        { className: "advgb-post-thumbnail" },
+                                        React.createElement("a", { href: post.link, target: "_blank" })
                                     ),
                                     React.createElement(
                                         "div",
@@ -24132,6 +24151,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 orderBy = _props$attributes.orderBy,
                 numberOfPosts = _props$attributes.numberOfPosts,
                 myToken = _props$attributes.myToken,
+                postType = _props$attributes.postType,
                 excludeCurrentPost = _props$attributes.excludeCurrentPost;
 
 
@@ -24153,7 +24173,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             });
 
             return {
-                recentPosts: getEntityRecords('postType', 'post', recentPostsQuery)
+                recentPosts: getEntityRecords('postType', postType ? postType : 'post', recentPostsQuery)
             };
         })(RecentPostsEdit),
         save: function save() {
