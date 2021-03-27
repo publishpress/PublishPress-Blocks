@@ -167,6 +167,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: PublishPress Authors support to Recent Posts block
   * Add: Frontpage view with responsive, styles and gap support to Recent Posts block
   * Add: Page support to Recent Posts block
+  * Add: Exclude current post support to Recent Posts block
   * Fix: Duplicated ID when duplicating Search Bar block
   * Fix: Formatting output for editable elements in frontend for Login/Register block
   * Fix: "Horizontal Alignment" label for Advanced Image default configuration
