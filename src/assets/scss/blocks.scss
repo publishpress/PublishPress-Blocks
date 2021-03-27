@@ -1493,6 +1493,8 @@ hr.wp-block-separator {
           a {
 
             &:before {
+              z-index: 1;
+              pointer-events: visible;
               bottom: 0;
               content: "";
               display: block;
@@ -1504,7 +1506,6 @@ hr.wp-block-separator {
             }
 
             &:last-child:before {
-              z-index: 1;
               background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.6) 100%);
               background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.6) 100%);
               background: -webkit-gradient(linear, left top, left bottom, color-stop(30%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0.6)));
@@ -1518,9 +1519,9 @@ hr.wp-block-separator {
         }
 
         .advgb-post-wrapper {
+          z-index: 2;
           position: absolute;
           pointer-events: none;
-          z-index: 1;
           width: 100%;
           padding: 20px;
           bottom: 0;
@@ -1538,6 +1539,7 @@ hr.wp-block-separator {
           a {
             font-weight: bold;
             text-decoration: none;
+            pointer-events: visible;
 
             &:hover,
             &:focus,
