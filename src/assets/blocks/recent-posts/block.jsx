@@ -215,7 +215,10 @@
                 frontpageLayout, frontpageLayoutT, frontpageLayoutM,
                 gap,
                 frontendStyle,
+                excludeCurrentPost
             } = attributes;
+
+            const isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
 
             let postType = attributes.postType;
             if(postType === undefined){
@@ -427,6 +430,13 @@
                             max={ 300 }
                             value={ postTextExcerptLength }
                             onChange={ ( value ) => setAttributes( { postTextExcerptLength: value } ) }
+                        />
+                        }
+                        {isInPost && postType === 'post' &&
+                        <ToggleControl
+                            label={ __( 'Exclude current post', 'advanced-gutenberg' ) }
+                            checked={ excludeCurrentPost }
+                            onChange={ () => setAttributes( { excludeCurrentPost: !excludeCurrentPost } ) }
                         />
                         }
                     </PanelBody>
@@ -706,10 +716,11 @@
         },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType } = props.attributes;
+            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost } = props.attributes;
 
             const catIds = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
 
+            const postId = wp.data.select('core/editor').getCurrentPostId();
             const recentPostsQuery = pickBy( {
                 categories: catIds,
                 tags: tagIds,
@@ -717,6 +728,7 @@
                 orderby: orderBy,
                 per_page: numberOfPosts,
                 token: myToken,
+                exclude: excludeCurrentPost ? postId : 0
             }, ( value ) => !isUndefined( value ) );
 
             return {

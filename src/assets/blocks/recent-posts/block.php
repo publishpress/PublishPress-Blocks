@@ -63,6 +63,8 @@ HTML;
  */
 function advgbRenderBlockRecentPosts($attributes)
 {
+	global $post;
+
 	$categories = empty($attributes['categories'])? array() :$attributes['categories'];
 	if ( ! empty( $categories ) ) {
 		$categories = array_column( $categories, 'id' );
@@ -91,6 +93,7 @@ function advgbRenderBlockRecentPosts($attributes)
             'order' => empty($attributes['order'])?'desc':$attributes['order'],
             'orderby' => empty($attributes['orderBy'])?'date':$attributes['orderBy'],
             'suppress_filters' => false,
+			'exclude' => $post_type === 'post' && isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ? $post->ID : 0
         );
 
 	// use tax for anything but pages...
@@ -358,6 +361,10 @@ function advgbRegisterBlockRecentPosts()
                 'default' => 'default',
             ),
             'changed' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'excludeCurrentPost' => array(
                 'type' => 'boolean',
                 'default' => false,
             ),
