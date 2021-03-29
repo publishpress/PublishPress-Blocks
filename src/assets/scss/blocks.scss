@@ -2967,6 +2967,28 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     margin: 0;
 }
 
+.advgb-post-tax {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+    overflow: hidden;
+    max-height: 50px;
+    margin: 5px 0;
+}
+
+.advgb-post-tax-term {
+    a {
+	       text-decoration: none !important;
+    }
+}
+
+.advgb-post-category {
+    .advgb-post-tax-term {
+        border: 1px solid;
+        padding: 3px;
+    }
+}
+
 /*Responsive for Columns*/
 @media screen and (min-width: 1088px) {
     .advgb-column.advgb-is-default-desktop {

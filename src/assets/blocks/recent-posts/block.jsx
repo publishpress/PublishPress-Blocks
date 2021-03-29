@@ -1,10 +1,10 @@
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
-    const { Component, Fragment } = wpElement;
+    const { Component, Fragment, RawHTML } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpBlockEditor;
-    const { PanelBody, RangeControl, ToggleControl, TextControl, QueryControls, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
+    const { PanelBody, RangeControl, ToggleControl, TextControl, QueryControls, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl, RadioControl } = wpComponents;
     const { withSelect } = wpData;
     const { pickBy, isUndefined } = lodash;
     const { decodeEntities } = wpHtmlEntities;
@@ -215,7 +215,9 @@
                 frontpageLayout, frontpageLayoutT, frontpageLayoutM,
                 gap,
                 frontendStyle,
-                excludeCurrentPost
+                excludeCurrentPost,
+                showCategories,
+                showTags,
             } = attributes;
 
             const isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
@@ -373,6 +375,31 @@
                                                 }
                                 }
                             />
+                        }
+
+                        { postType === 'post' && 
+                            <Fragment>
+                                <RadioControl
+                                    label={ __( 'Category Visibility', 'advanced-gutenberg' ) }
+                                    selected={ showCategories }
+                                    options={ [
+                                        { label: __( 'Hide', 'advanced-gutenberg' ), value: 'hide' },
+                                        { label: __( 'Show', 'advanced-gutenberg' ), value: 'show' },
+                                        { label: __( 'Show & Link', 'advanced-gutenberg' ), value: 'link' },
+                                    ] }
+                                    onChange={ ( value ) => { setAttributes( { showCategories: value } ) } }
+                                />
+                                <RadioControl
+                                    label={ __( 'Tag Visibility', 'advanced-gutenberg' ) }
+                                    selected={ showTags }
+                                    options={ [
+                                        { label: __( 'Hide', 'advanced-gutenberg' ), value: 'hide' },
+                                        { label: __( 'Show', 'advanced-gutenberg' ), value: 'show' },
+                                        { label: __( 'Show & Link', 'advanced-gutenberg' ), value: 'link' },
+                                    ] }
+                                    onChange={ ( value ) => { setAttributes( { showTags: value } ) } }
+                                />
+                            </Fragment>
                         }
                         {postView === 'grid' &&
                         <RangeControl
@@ -578,6 +605,28 @@
                                                 <span className="advgb-post-date" >
                                                 { dateI18n( dateFormat, post.date_gmt ) }
                                             </span>
+                                            ) }
+                                        </div>
+                                        <div className="advgb-post-tax-info">
+                                            {showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories && (
+                                                <div className="advgb-post-tax advgb-post-category">
+                                                {showCategories === 'show' && post.tax_additional.categories.unlinked.map( ( cat, index ) => (
+                                                    <RawHTML>{ cat }</RawHTML>
+                                                ) )}
+                                                {showCategories === 'link' && post.tax_additional.categories.linked.map( ( cat, index ) => (
+                                                    <RawHTML>{ cat }</RawHTML>
+                                                ) )}
+                                                </div>
+                                            ) }
+                                            {showTags !== 'hide' && post.tax_additional && post.tax_additional.tags && (
+                                                <div className="advgb-post-tax advgb-post-tag">
+                                                {showTags === 'show' && post.tax_additional.tags.unlinked.map( ( tag, index ) => (
+                                                    <RawHTML>{ tag }</RawHTML>
+                                                ) )}
+                                                {showTags === 'link' && post.tax_additional.tags.linked.map( ( tag, index ) => (
+                                                    <RawHTML>{ tag }</RawHTML>
+                                                ) )}
+                                                </div>
                                             ) }
                                         </div>
                                         <div className="advgb-post-content">
