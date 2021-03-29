@@ -23376,7 +23376,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     wpBlockEditor = wp.blockEditor || wp.editor;
     var __ = wpI18n.__;
     var Component = wpElement.Component,
-        Fragment = wpElement.Fragment;
+        Fragment = wpElement.Fragment,
+        RawHTML = wpElement.RawHTML;
     var registerBlockType = wpBlocks.registerBlockType;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
@@ -23392,7 +23393,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         ToolbarButton = wpComponents.ToolbarButton,
         Placeholder = wpComponents.Placeholder,
         Tooltip = wpComponents.Tooltip,
-        SelectControl = wpComponents.SelectControl;
+        SelectControl = wpComponents.SelectControl,
+        RadioControl = wpComponents.RadioControl;
     var withSelect = wpData.withSelect;
     var pickBy = lodash.pickBy,
         isUndefined = lodash.isUndefined;
@@ -23608,7 +23610,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     frontpageLayoutM = attributes.frontpageLayoutM,
                     gap = attributes.gap,
                     frontendStyle = attributes.frontendStyle,
-                    excludeCurrentPost = attributes.excludeCurrentPost;
+                    excludeCurrentPost = attributes.excludeCurrentPost,
+                    showCategories = attributes.showCategories,
+                    showTags = attributes.showTags;
 
 
                 var isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
@@ -23766,6 +23770,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 _this3.selectTags(value);
                             }
                         }),
+                        postType === 'post' && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(RadioControl, {
+                                label: __('Category Visibility', 'advanced-gutenberg'),
+                                selected: showCategories,
+                                options: [{ label: __('Hide', 'advanced-gutenberg'), value: 'hide' }, { label: __('Show', 'advanced-gutenberg'), value: 'show' }, { label: __('Show & Link', 'advanced-gutenberg'), value: 'link' }],
+                                onChange: function onChange(value) {
+                                    setAttributes({ showCategories: value });
+                                }
+                            }),
+                            React.createElement(RadioControl, {
+                                label: __('Tag Visibility', 'advanced-gutenberg'),
+                                selected: showTags,
+                                options: [{ label: __('Hide', 'advanced-gutenberg'), value: 'hide' }, { label: __('Show', 'advanced-gutenberg'), value: 'show' }, { label: __('Show & Link', 'advanced-gutenberg'), value: 'link' }],
+                                onChange: function onChange(value) {
+                                    setAttributes({ showTags: value });
+                                }
+                            })
+                        ),
                         postView === 'grid' && React.createElement(RangeControl, {
                             label: __('Columns', 'advanced-gutenberg'),
                             value: columns,
@@ -23989,6 +24013,46 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 "span",
                                                 { className: "advgb-post-date" },
                                                 dateI18n(dateFormat, post.date_gmt)
+                                            )
+                                        ),
+                                        React.createElement(
+                                            "div",
+                                            { className: "advgb-post-tax-info" },
+                                            showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories && React.createElement(
+                                                "div",
+                                                { className: "advgb-post-tax advgb-post-category" },
+                                                showCategories === 'show' && post.tax_additional.categories.unlinked.map(function (cat, index) {
+                                                    return React.createElement(
+                                                        RawHTML,
+                                                        null,
+                                                        cat
+                                                    );
+                                                }),
+                                                showCategories === 'link' && post.tax_additional.categories.linked.map(function (cat, index) {
+                                                    return React.createElement(
+                                                        RawHTML,
+                                                        null,
+                                                        cat
+                                                    );
+                                                })
+                                            ),
+                                            showTags !== 'hide' && post.tax_additional && post.tax_additional.tags && React.createElement(
+                                                "div",
+                                                { className: "advgb-post-tax advgb-post-tag" },
+                                                showTags === 'show' && post.tax_additional.tags.unlinked.map(function (tag, index) {
+                                                    return React.createElement(
+                                                        RawHTML,
+                                                        null,
+                                                        tag
+                                                    );
+                                                }),
+                                                showTags === 'link' && post.tax_additional.tags.linked.map(function (tag, index) {
+                                                    return React.createElement(
+                                                        RawHTML,
+                                                        null,
+                                                        tag
+                                                    );
+                                                })
                                             )
                                         ),
                                         React.createElement(
