@@ -377,7 +377,7 @@
                             />
                         }
 
-                        { postType === 'post' && 
+                        { postType === 'post' &&
                             <Fragment>
                                 <RadioControl
                                     label={ __( 'Category Visibility', 'advanced-gutenberg' ) }

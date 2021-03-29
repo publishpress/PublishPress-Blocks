@@ -193,9 +193,9 @@ function advgbRenderBlockRecentPosts($attributes)
 					$postHtml .= '<div class="advgb-post-tax advgb-post-category">';
 					foreach ( $categories as $category ) {
 						if ( 'link' === $attributes['showCategories'] ) {
-							$postHtml .= sprintf( '<div class="advgb-post-tax-term"><a href="%s">%s</a></div>', esc_url( get_category_link( $category ) ), esc_html( $category->name ) );
+							$postHtml .= sprintf( '<div><a class="advgb-post-tax-term" href="%s">%s</a></div>', esc_url( get_category_link( $category ) ), esc_html( $category->name ) );
 						} else {
-							$postHtml .= sprintf( '<div class="advgb-post-tax-term">%s</div>', esc_html( $category->name ) );
+							$postHtml .= sprintf( '<div><span class="advgb-post-tax-term">%s</span></div>', esc_html( $category->name ) );
 						}
 					}
 					$postHtml .= '</div>';
@@ -208,9 +208,9 @@ function advgbRenderBlockRecentPosts($attributes)
 					$postHtml .= '<div class="advgb-post-tax advgb-post-tag">';
 					foreach ( $tags as $tag ) {
 						if ( 'link' === $attributes['showTags'] ) {
-							$postHtml .= sprintf( '<div class="advgb-post-tax-term"><a href="%s">%s</a></div>', esc_url( get_tag_link( $tag ) ), esc_html( $tag->name ) );
+							$postHtml .= sprintf( '<div><a class="advgb-post-tax-term" href="%s">%s</a></div>', esc_url( get_tag_link( $tag ) ), esc_html( $tag->name ) );
 						} else {
-							$postHtml .= sprintf( '<div class="advgb-post-tax-term">%s</div>', esc_html( $tag->name ) );
+							$postHtml .= sprintf( '<div><span class="advgb-post-tax-term">%s</span></div>', esc_html( $tag->name ) );
 						}
 					}
 					$postHtml .= '</div>';
@@ -468,8 +468,8 @@ function advgbGetAdditionalTaxInfo( $post ) {
 	if ( ! empty( $categories ) ) {
 		$cats = array( 'linked' => array(), 'unlinked' => array() );
 		foreach ( $categories as $category ) {
-			$cats['linked'][] = sprintf( '<div class="advgb-post-tax-term"><a href="%s">%s</a></div>', esc_url( get_category_link( $category ) ), esc_html( $category->name ) );
-			$cats['unlinked'][] = sprintf( '<div class="advgb-post-tax-term">%s</div>', esc_html( $category->name ) );
+			$cats['linked'][] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_category_link( $category ) ), esc_html( $category->name ) );
+			$cats['unlinked'][] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $category->name ) );
 		}
 		$info['categories'] = $cats;
 	}
@@ -478,8 +478,8 @@ function advgbGetAdditionalTaxInfo( $post ) {
 	if ( ! empty( $tags ) ) {
 		$cats = array( 'linked' => array(), 'unlinked' => array() );
 		foreach ( $tags as $tag ) {
-			$cats['linked'][] = sprintf( '<div class="advgb-post-tax-term"><a href="%s">%s</a></div>', esc_url( get_tag_link( $category ) ), esc_html( $tag->name ) );
-			$cats['unlinked'][] = sprintf( '<div class="advgb-post-tax-term">%s</div>', esc_html( $tag->name ) );
+			$cats['linked'][] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_tag_link( $category ) ), esc_html( $tag->name ) );
+			$cats['unlinked'][] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $tag->name ) );
 		}
 		$info['tags'] = $cats;
 	}
