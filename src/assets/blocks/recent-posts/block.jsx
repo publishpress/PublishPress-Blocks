@@ -28,6 +28,11 @@
         { layout: '1-3', icon: '1-3', title: __( 'One leading post, the rest in 3 columns', 'advanced-gutenberg' ) },
         { layout: '1-4', icon: '1-4', title: __( 'One leading post, the rest in 4 columns', 'advanced-gutenberg' ) },
         { layout: '1-5', icon: '1-5', title: __( 'One leading post, the rest in 5 columns', 'advanced-gutenberg' ) },
+        { layout: 'stacked', icon: 'stacked', title: __( 'Stacked', 'advanced-gutenberg' ) },
+        { layout: '2-2', icon: '2-2', title: __( 'All posts in 2 columns grid', 'advanced-gutenberg' ) },
+        { layout: '3-3', icon: '3-3', title: __( 'All posts in 3 columns grid', 'advanced-gutenberg' ) },
+        { layout: '4-4', icon: '4-4', title: __( 'All posts in 4 columns grid', 'advanced-gutenberg' ) },
+        { layout: '5-5', icon: '5-5', title: __( 'All posts in 5 columns grid', 'advanced-gutenberg' ) },
     ];
 
     // @TODO fix duplicated code from FRONTPAGE_LAYOUTS
@@ -37,11 +42,16 @@
         { layout: '1-4', icon: '1-4', title: __( 'One leading post, the rest in 4 columns', 'advanced-gutenberg' ) },
         { layout: '1-5', icon: '1-5', title: __( 'One leading post, the rest in 5 columns', 'advanced-gutenberg' ) },
         { layout: 'stacked', icon: 'stacked', title: __( 'Stacked', 'advanced-gutenberg' ) },
+        { layout: '2-2', icon: '2-2', title: __( 'All posts in 2 columns grid', 'advanced-gutenberg' ) },
+        { layout: '3-3', icon: '3-3', title: __( 'All posts in 3 columns grid', 'advanced-gutenberg' ) },
+        { layout: '4-4', icon: '4-4', title: __( 'All posts in 4 columns grid', 'advanced-gutenberg' ) },
+        { layout: '5-5', icon: '5-5', title: __( 'All posts in 5 columns grid', 'advanced-gutenberg' ) },
     ];
 
     const FRONTPAGE_LAYOUTS_MOBILE = [
         { layout: '1-2', icon: '1-2', title: __( 'One leading post, the rest in 2 columns', 'advanced-gutenberg' ) },
         { layout: 'stacked', icon: 'stacked', title: __( 'Stacked', 'advanced-gutenberg' ) },
+        { layout: '2-2', icon: '2-2', title: __( 'All posts in 2 columns grid', 'advanced-gutenberg' ) },
     ];
 
     const GAP_OPTIONS = [
