@@ -23932,7 +23932,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle, displayFeaturedImage === false && 'no-image'].filter(Boolean).join(' ');
 
                 var formats = __experimentalGetSettings().formats;
-                var format = displayDate && displayTime ? formats.datetime : displayDate ? formats.date : formats.time;
+                var format = displayDate ? displayTime ? formats.datetime : formats.date : '';
 
                 return isPreview ? React.createElement("img", { alt: __('Recent Posts', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
                     Fragment,
@@ -24021,7 +24021,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 },
                                                 post.author_meta.display_name
                                             ),
-                                            (displayDate || displayTime) && React.createElement(
+                                            displayDate && React.createElement(
                                                 "span",
                                                 { className: "advgb-post-datetime" },
                                                 dateI18n(format, post.date_gmt)

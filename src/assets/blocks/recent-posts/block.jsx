@@ -558,7 +558,7 @@
 
 
             const formats = __experimentalGetSettings().formats;
-            let format = displayDate && displayTime ? formats.datetime : (displayDate ? formats.date : formats.time);
+            let format = displayDate ? (displayTime ? formats.datetime : formats.date) : '';
 
             return (
                 isPreview ?
@@ -622,7 +622,7 @@
                                                 </a>
                                             )
                                             }
-                                            {(displayDate || displayTime) && (
+                                            {displayDate && (
                                                 <span className="advgb-post-datetime" >
                                                 { dateI18n( format, post.date_gmt ) }
                                             </span>
