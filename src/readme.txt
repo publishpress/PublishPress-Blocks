@@ -181,6 +181,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Cyrillic text output in frontend for Recent Posts block
   * Remove: Non production files such as SCSS, JSX, etc.
   * Remove: Not required formatting for editable elements for Login/Register block
+  * Remove: Static font-size for post titles for Recent Posts block
 
 = 2.5.7 =
  * Add: Separate pages for Settings and Default block settings
