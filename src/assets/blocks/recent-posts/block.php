@@ -189,6 +189,40 @@ function advgbRenderBlockRecentPosts($attributes)
 
             $postHtml .= '</div>'; // end advgb-post-info
 
+            $postHtml .= '<div class="advgb-post-tax-info">';
+
+			if ( isset( $attributes['showCategories'] ) && 'hide' !== $attributes['showCategories'] ) {
+				$categories = get_the_category( $post->ID );
+				if ( ! empty( $categories ) ) {
+					$postHtml .= '<div class="advgb-post-tax advgb-post-category">';
+					foreach ( $categories as $category ) {
+						if ( 'link' === $attributes['showCategories'] ) {
+							$postHtml .= sprintf( '<div><a class="advgb-post-tax-term" href="%s">%s</a></div>', esc_url( get_category_link( $category ) ), esc_html( $category->name ) );
+						} else {
+							$postHtml .= sprintf( '<div><span class="advgb-post-tax-term">%s</span></div>', esc_html( $category->name ) );
+						}
+					}
+					$postHtml .= '</div>';
+				}
+			}
+
+			if ( isset( $attributes['showTags'] ) && 'hide' !== $attributes['showTags'] ) {
+				$tags = get_the_tags( $post->ID );
+				if ( ! empty( $tags ) ) {
+					$postHtml .= '<div class="advgb-post-tax advgb-post-tag">';
+					foreach ( $tags as $tag ) {
+						if ( 'link' === $attributes['showTags'] ) {
+							$postHtml .= sprintf( '<div><a class="advgb-post-tax-term" href="%s">%s</a></div>', esc_url( get_tag_link( $tag ) ), esc_html( $tag->name ) );
+						} else {
+							$postHtml .= sprintf( '<div><span class="advgb-post-tax-term">%s</span></div>', esc_html( $tag->name ) );
+						}
+					}
+					$postHtml .= '</div>';
+				}
+			}
+
+            $postHtml .= '</div>'; // end advgb-post-tax-info
+
             $postHtml .= '<div class="advgb-post-content">';
 
             if (isset($attributes['displayExcerpt']) && $attributes['displayExcerpt']) {
@@ -379,6 +413,14 @@ function advgbRegisterBlockRecentPosts()
             'postType' => array(
                 'type' => 'string',
             ),
+            'showCategories' => array(
+                'type' => 'string',
+                'default' => 'hide',
+            ),
+            'showTags' => array(
+                'type' => 'string',
+                'default' => 'hide',
+            ),
         ),
         'render_callback' => 'advgbRenderBlockRecentPosts',
     ));
@@ -410,9 +452,47 @@ function advgbRegisterCustomFields() {
         )
     );
 
+    register_rest_field( 'post',
+        'tax_additional',
+        array(
+            'get_callback'  => 'advgbGetAdditionalTaxInfo',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
 }
 add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
 
+/**
+ * Populates the HTML corresponding to the categories and tags in case they need to be shown in the post.
+ *
+ * @return array
+ */
+function advgbGetAdditionalTaxInfo( $post ) {
+	$info = array();
+
+	$categories = get_the_category( $post['id'] );
+	if ( ! empty( $categories ) ) {
+		$cats = array( 'linked' => array(), 'unlinked' => array() );
+		foreach ( $categories as $category ) {
+			$cats['linked'][] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_category_link( $category ) ), esc_html( $category->name ) );
+			$cats['unlinked'][] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $category->name ) );
+		}
+		$info['categories'] = $cats;
+	}
+
+	$tags = get_the_tags( $post['id'] );
+	if ( ! empty( $tags ) ) {
+		$cats = array( 'linked' => array(), 'unlinked' => array() );
+		foreach ( $tags as $tag ) {
+			$cats['linked'][] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_tag_link( $category ) ), esc_html( $tag->name ) );
+			$cats['unlinked'][] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $tag->name ) );
+		}
+		$info['tags'] = $cats;
+	}
+	return $info;
+}
 
 /**
  * Get the coauthors from the PublishPress Authors plugin if it is activated.

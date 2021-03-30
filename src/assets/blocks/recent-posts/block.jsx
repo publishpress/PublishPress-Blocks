@@ -1,7 +1,7 @@
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
-    const { Component, Fragment } = wpElement;
+    const { Component, Fragment, RawHTML } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpBlockEditor;
     const { PanelBody, RangeControl, ToggleControl, TextControl, QueryControls, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
@@ -28,6 +28,11 @@
         { layout: '1-3', icon: '1-3', title: __( 'One leading post, the rest in 3 columns', 'advanced-gutenberg' ) },
         { layout: '1-4', icon: '1-4', title: __( 'One leading post, the rest in 4 columns', 'advanced-gutenberg' ) },
         { layout: '1-5', icon: '1-5', title: __( 'One leading post, the rest in 5 columns', 'advanced-gutenberg' ) },
+        { layout: 'stacked', icon: 'stacked', title: __( 'Stacked', 'advanced-gutenberg' ) },
+        { layout: '2-2', icon: '2-2', title: __( 'All posts in 2 columns grid', 'advanced-gutenberg' ) },
+        { layout: '3-3', icon: '3-3', title: __( 'All posts in 3 columns grid', 'advanced-gutenberg' ) },
+        { layout: '4-4', icon: '4-4', title: __( 'All posts in 4 columns grid', 'advanced-gutenberg' ) },
+        { layout: '5-5', icon: '5-5', title: __( 'All posts in 5 columns grid', 'advanced-gutenberg' ) },
     ];
 
     // @TODO fix duplicated code from FRONTPAGE_LAYOUTS
@@ -37,11 +42,16 @@
         { layout: '1-4', icon: '1-4', title: __( 'One leading post, the rest in 4 columns', 'advanced-gutenberg' ) },
         { layout: '1-5', icon: '1-5', title: __( 'One leading post, the rest in 5 columns', 'advanced-gutenberg' ) },
         { layout: 'stacked', icon: 'stacked', title: __( 'Stacked', 'advanced-gutenberg' ) },
+        { layout: '2-2', icon: '2-2', title: __( 'All posts in 2 columns grid', 'advanced-gutenberg' ) },
+        { layout: '3-3', icon: '3-3', title: __( 'All posts in 3 columns grid', 'advanced-gutenberg' ) },
+        { layout: '4-4', icon: '4-4', title: __( 'All posts in 4 columns grid', 'advanced-gutenberg' ) },
+        { layout: '5-5', icon: '5-5', title: __( 'All posts in 5 columns grid', 'advanced-gutenberg' ) },
     ];
 
     const FRONTPAGE_LAYOUTS_MOBILE = [
         { layout: '1-2', icon: '1-2', title: __( 'One leading post, the rest in 2 columns', 'advanced-gutenberg' ) },
         { layout: 'stacked', icon: 'stacked', title: __( 'Stacked', 'advanced-gutenberg' ) },
+        { layout: '2-2', icon: '2-2', title: __( 'All posts in 2 columns grid', 'advanced-gutenberg' ) },
     ];
 
     const GAP_OPTIONS = [
@@ -216,7 +226,9 @@
                 frontpageLayout, frontpageLayoutT, frontpageLayoutM,
                 gap,
                 frontendStyle,
-                excludeCurrentPost
+                excludeCurrentPost,
+                showCategories,
+                showTags,
             } = attributes;
 
             const isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
@@ -375,6 +387,8 @@
                                 }
                             />
                         }
+                    </PanelBody>
+                    <PanelBody title={ __( 'Display Settings', 'advanced-gutenberg' ) }>
                         {postView === 'grid' &&
                         <RangeControl
                             label={ __( 'Columns', 'advanced-gutenberg' ) }
@@ -399,6 +413,30 @@
                             checked={ displayDate }
                             onChange={ () => setAttributes( { displayDate: !displayDate } ) }
                         />
+                        { postType === 'post' &&
+                            <Fragment>
+                                <SelectControl
+                                    label={ __( 'Display Category', 'advanced-gutenberg' ) }
+                                    value={ showCategories }
+                                    options={ [
+                                        { label: __( 'Hide', 'advanced-gutenberg' ), value: 'hide' },
+                                        { label: __( 'Show', 'advanced-gutenberg' ), value: 'show' },
+                                        { label: __( 'Show & Link', 'advanced-gutenberg' ), value: 'link' },
+                                    ] }
+                                    onChange={ ( value ) => { setAttributes( { showCategories: value } ) } }
+                                />
+                                <SelectControl
+                                    label={ __( 'Display Tags', 'advanced-gutenberg' ) }
+                                    value={ showTags }
+                                    options={ [
+                                        { label: __( 'Hide', 'advanced-gutenberg' ), value: 'hide' },
+                                        { label: __( 'Show', 'advanced-gutenberg' ), value: 'show' },
+                                        { label: __( 'Show & Link', 'advanced-gutenberg' ), value: 'link' },
+                                    ] }
+                                    onChange={ ( value ) => { setAttributes( { showTags: value } ) } }
+                                />
+                            </Fragment>
+                        }
                         <ToggleControl
                             label={ __( 'Display Post Time', 'advanced-gutenberg' ) }
                             checked={ displayTime }
@@ -586,6 +624,28 @@
                                                 <span className="advgb-post-datetime" >
                                                 { dateI18n( format, post.date_gmt ) }
                                             </span>
+                                            ) }
+                                        </div>
+                                        <div className="advgb-post-tax-info">
+                                            {showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories && (
+                                                <div className="advgb-post-tax advgb-post-category">
+                                                {showCategories === 'show' && post.tax_additional.categories.unlinked.map( ( cat, index ) => (
+                                                    <RawHTML>{ cat }</RawHTML>
+                                                ) )}
+                                                {showCategories === 'link' && post.tax_additional.categories.linked.map( ( cat, index ) => (
+                                                    <RawHTML>{ cat }</RawHTML>
+                                                ) )}
+                                                </div>
+                                            ) }
+                                            {showTags !== 'hide' && post.tax_additional && post.tax_additional.tags && (
+                                                <div className="advgb-post-tax advgb-post-tag">
+                                                {showTags === 'show' && post.tax_additional.tags.unlinked.map( ( tag, index ) => (
+                                                    <RawHTML>{ tag }</RawHTML>
+                                                ) )}
+                                                {showTags === 'link' && post.tax_additional.tags.linked.map( ( tag, index ) => (
+                                                    <RawHTML>{ tag }</RawHTML>
+                                                ) )}
+                                                </div>
                                             ) }
                                         </div>
                                         <div className="advgb-post-content">
