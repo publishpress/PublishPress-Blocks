@@ -23364,6 +23364,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _queryControls = __webpack_require__(/*! ./query-controls.jsx */ "./src/assets/blocks/recent-posts/query-controls.jsx");
+
+var _queryControls2 = _interopRequireDefault(_queryControls);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23386,7 +23392,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         RangeControl = wpComponents.RangeControl,
         ToggleControl = wpComponents.ToggleControl,
         TextControl = wpComponents.TextControl,
-        QueryControls = wpComponents.QueryControls,
         FormTokenField = wpComponents.FormTokenField,
         Spinner = wpComponents.Spinner,
         ToolbarGroup = wpComponents.ToolbarGroup,
@@ -23744,7 +23749,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ postType: value });
                             }
                         }),
-                        React.createElement(QueryControls, _extends({ order: order, orderBy: orderBy }, {
+                        React.createElement(_queryControls2.default, _extends({ order: order, orderBy: orderBy }, {
                             categorySuggestions: postType === 'post' ? categoriesList : null,
                             selectedCategories: categories,
                             numberOfItems: numberOfPosts,
@@ -24275,6 +24280,199 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data, lodash, wp.htmlEntities, wp.date);
+
+/***/ }),
+
+/***/ "./src/assets/blocks/recent-posts/query-controls.jsx":
+/*!***********************************************************!*\
+  !*** ./src/assets/blocks/recent-posts/query-controls.jsx ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+var __ = wp.i18n.__;
+var _wp$element = wp.element,
+    Component = _wp$element.Component,
+    Fragment = _wp$element.Fragment;
+var _wp$components = wp.components,
+    TreeSelect = _wp$components.TreeSelect,
+    SelectControl = _wp$components.SelectControl,
+    FormTokenField = _wp$components.FormTokenField,
+    RangeControl = _wp$components.RangeControl;
+var _lodash = lodash,
+    pickBy = _lodash.pickBy,
+    isUndefined = _lodash.isUndefined;
+var _lodash2 = lodash,
+    groupBy = _lodash2.groupBy;
+
+/**
+ * Returns terms in a tree form.
+ *
+ * @param {Array} flatTerms  Array of terms in flat format.
+ *
+ * @return {Array} Array of terms in tree format.
+ */
+
+function buildTermsTree(flatTerms) {
+    var flatTermsWithParentAndChildren = flatTerms.map(function (term) {
+        return _extends({
+            children: [],
+            parent: null
+        }, term);
+    });
+
+    var termsByParent = groupBy(flatTermsWithParentAndChildren, 'parent');
+    if (termsByParent.null && termsByParent.null.length) {
+        return flatTermsWithParentAndChildren;
+    }
+    var fillWithChildren = function fillWithChildren(terms) {
+        return terms.map(function (term) {
+            var children = termsByParent[term.id];
+            return _extends({}, term, {
+                children: children && children.length ? fillWithChildren(children) : []
+            });
+        });
+    };
+
+    return fillWithChildren(termsByParent['0'] || []);
+}
+
+function AuthorSelect(_ref) {
+    var label = _ref.label,
+        noOptionLabel = _ref.noOptionLabel,
+        authorList = _ref.authorList,
+        selectedAuthorId = _ref.selectedAuthorId,
+        onChange = _ref.onChange;
+
+    var termsTree = buildTermsTree(authorList);
+    return React.createElement(TreeSelect, _extends({ label: label, noOptionLabel: noOptionLabel, onChange: onChange }, {
+        tree: termsTree,
+        selectedId: selectedAuthorId
+    }));
+}
+
+function CategorySelect(_ref2) {
+    var label = _ref2.label,
+        noOptionLabel = _ref2.noOptionLabel,
+        categoriesList = _ref2.categoriesList,
+        selectedCategoryId = _ref2.selectedCategoryId,
+        onChange = _ref2.onChange,
+        props = _objectWithoutProperties(_ref2, ['label', 'noOptionLabel', 'categoriesList', 'selectedCategoryId', 'onChange']);
+
+    var termsTree = buildTermsTree(categoriesList);
+    return React.createElement(TreeSelect, _extends({ label: label, noOptionLabel: noOptionLabel, onChange: onChange }, {
+        tree: termsTree,
+        selectedId: selectedCategoryId
+    }, props));
+}
+
+var DEFAULT_MIN_ITEMS = 1;
+var DEFAULT_MAX_ITEMS = 100;
+var MAX_CATEGORIES_SUGGESTIONS = 20;
+
+function AdvQueryControls(_ref3) {
+    var authorList = _ref3.authorList,
+        selectedAuthorId = _ref3.selectedAuthorId,
+        categoriesList = _ref3.categoriesList,
+        selectedCategoryId = _ref3.selectedCategoryId,
+        categorySuggestions = _ref3.categorySuggestions,
+        selectedCategories = _ref3.selectedCategories,
+        numberOfItems = _ref3.numberOfItems,
+        order = _ref3.order,
+        orderBy = _ref3.orderBy,
+        _ref3$maxItems = _ref3.maxItems,
+        maxItems = _ref3$maxItems === undefined ? DEFAULT_MAX_ITEMS : _ref3$maxItems,
+        _ref3$minItems = _ref3.minItems,
+        minItems = _ref3$minItems === undefined ? DEFAULT_MIN_ITEMS : _ref3$minItems,
+        onCategoryChange = _ref3.onCategoryChange,
+        onAuthorChange = _ref3.onAuthorChange,
+        onNumberOfItemsChange = _ref3.onNumberOfItemsChange,
+        onOrderChange = _ref3.onOrderChange,
+        onOrderByChange = _ref3.onOrderByChange;
+
+    return [onOrderChange && onOrderByChange && React.createElement(SelectControl, {
+        key: 'query-controls-order-select',
+        label: __('Order by'),
+        value: orderBy + '/' + order,
+        options: [{
+            label: __('Newest to oldest'),
+            value: 'date/desc'
+        }, {
+            label: __('Oldest to newest'),
+            value: 'date/asc'
+        }, {
+            /* translators: label for ordering posts by title in ascending order */
+            label: __('A → Z'),
+            value: 'title/asc'
+        }, {
+            /* translators: label for ordering posts by title in descending order */
+            label: __('Z → A'),
+            value: 'title/desc'
+        }],
+        onChange: function onChange(value) {
+            var _value$split = value.split('/'),
+                _value$split2 = _slicedToArray(_value$split, 2),
+                newOrderBy = _value$split2[0],
+                newOrder = _value$split2[1];
+
+            if (newOrder !== order) {
+                onOrderChange(newOrder);
+            }
+            if (newOrderBy !== orderBy) {
+                onOrderByChange(newOrderBy);
+            }
+        }
+    }), categoriesList && onCategoryChange && React.createElement(CategorySelect, {
+        key: 'query-controls-category-select',
+        categoriesList: categoriesList,
+        label: __('Category'),
+        noOptionLabel: __('All'),
+        selectedCategoryId: selectedCategoryId,
+        onChange: onCategoryChange
+    }), onAuthorChange && React.createElement(AuthorSelect, {
+        key: 'query-controls-author-select',
+        authorList: authorList,
+        label: __('Author'),
+        noOptionLabel: __('All'),
+        selectedAuthorId: selectedAuthorId,
+        onChange: onAuthorChange
+    }), onNumberOfItemsChange && React.createElement(RangeControl, {
+        key: 'query-controls-range-control',
+        label: __('Number of items'),
+        value: numberOfItems,
+        onChange: onNumberOfItemsChange,
+        min: minItems,
+        max: maxItems,
+        required: true
+    }), categorySuggestions && onCategoryChange && React.createElement(FormTokenField, {
+        key: 'query-controls-categories-select',
+        label: __('Categories'),
+        value: selectedCategories && selectedCategories.map(function (item) {
+            return {
+                id: item.id,
+                value: item.name || item.value
+            };
+        }),
+        suggestions: Object.keys(categorySuggestions),
+        onChange: onCategoryChange,
+        maxSuggestions: MAX_CATEGORIES_SUGGESTIONS
+    })];
+}
+
+exports.default = AdvQueryControls;
 
 /***/ }),
 
@@ -28499,9 +28697,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./src/assets/blocks/0-adv-components/components.jsx ./src/assets/blocks/0-adv-components/icon-class.jsx ./src/assets/blocks/accordion/block.jsx ./src/assets/blocks/advaccordion/accordion.jsx ./src/assets/blocks/advaccordion/block.jsx ./src/assets/blocks/advbutton/block.jsx ./src/assets/blocks/advicon/block.jsx ./src/assets/blocks/advimage/block.jsx ./src/assets/blocks/advlist/block.jsx ./src/assets/blocks/advtable/block.jsx ./src/assets/blocks/advtabs/block.jsx ./src/assets/blocks/advtabs/tab.jsx ./src/assets/blocks/advvideo/block.jsx ./src/assets/blocks/columns/block.jsx ./src/assets/blocks/columns/column.jsx ./src/assets/blocks/contact-form/block.jsx ./src/assets/blocks/container/block.jsx ./src/assets/blocks/count-up/block.jsx ./src/assets/blocks/customstyles/custom-styles.jsx ./src/assets/blocks/editor-sidebar/sidebar.jsx ./src/assets/blocks/images-slider/block.jsx ./src/assets/blocks/infobox/block.jsx ./src/assets/blocks/login-form/block.jsx ./src/assets/blocks/map/block.jsx ./src/assets/blocks/newsletter/block.jsx ./src/assets/blocks/recent-posts/block.jsx ./src/assets/blocks/search-bar/block.jsx ./src/assets/blocks/social-links/block.jsx ./src/assets/blocks/summary/block.jsx ./src/assets/blocks/tabs/block.jsx ./src/assets/blocks/testimonial/block.jsx ./src/assets/blocks/woo-products/block.jsx ./src/assets/js/editor.jsx ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./src/assets/blocks/0-adv-components/components.jsx ./src/assets/blocks/0-adv-components/icon-class.jsx ./src/assets/blocks/accordion/block.jsx ./src/assets/blocks/advaccordion/accordion.jsx ./src/assets/blocks/advaccordion/block.jsx ./src/assets/blocks/advbutton/block.jsx ./src/assets/blocks/advicon/block.jsx ./src/assets/blocks/advimage/block.jsx ./src/assets/blocks/advlist/block.jsx ./src/assets/blocks/advtable/block.jsx ./src/assets/blocks/advtabs/block.jsx ./src/assets/blocks/advtabs/tab.jsx ./src/assets/blocks/advvideo/block.jsx ./src/assets/blocks/columns/block.jsx ./src/assets/blocks/columns/column.jsx ./src/assets/blocks/contact-form/block.jsx ./src/assets/blocks/container/block.jsx ./src/assets/blocks/count-up/block.jsx ./src/assets/blocks/customstyles/custom-styles.jsx ./src/assets/blocks/editor-sidebar/sidebar.jsx ./src/assets/blocks/images-slider/block.jsx ./src/assets/blocks/infobox/block.jsx ./src/assets/blocks/login-form/block.jsx ./src/assets/blocks/map/block.jsx ./src/assets/blocks/newsletter/block.jsx ./src/assets/blocks/recent-posts/block.jsx ./src/assets/blocks/recent-posts/query-controls.jsx ./src/assets/blocks/search-bar/block.jsx ./src/assets/blocks/social-links/block.jsx ./src/assets/blocks/summary/block.jsx ./src/assets/blocks/tabs/block.jsx ./src/assets/blocks/testimonial/block.jsx ./src/assets/blocks/woo-products/block.jsx ./src/assets/js/editor.jsx ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28531,6 +28729,7 @@ __webpack_require__(/*! ./src/assets/blocks/login-form/block.jsx */"./src/assets
 __webpack_require__(/*! ./src/assets/blocks/map/block.jsx */"./src/assets/blocks/map/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/newsletter/block.jsx */"./src/assets/blocks/newsletter/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/recent-posts/block.jsx */"./src/assets/blocks/recent-posts/block.jsx");
+__webpack_require__(/*! ./src/assets/blocks/recent-posts/query-controls.jsx */"./src/assets/blocks/recent-posts/query-controls.jsx");
 __webpack_require__(/*! ./src/assets/blocks/search-bar/block.jsx */"./src/assets/blocks/search-bar/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/social-links/block.jsx */"./src/assets/blocks/social-links/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/summary/block.jsx */"./src/assets/blocks/summary/block.jsx");
