@@ -187,7 +187,7 @@ function advgbRenderBlockRecentPosts($attributes)
                 );
             }
 
-            if ($attributes['postType'] === 'post' && isset($attributes['displayCommentCount']) && $attributes['displayCommentCount']) {
+            if ($post_type === 'post' && isset($attributes['displayCommentCount']) && $attributes['displayCommentCount']) {
 				$count = get_comments_number( $post );
 				$postHtml .= sprintf(
 					'<span class="advgb-post-comments"><span class="dashicons dashicons-admin-comments"></span>(%d)</span>',
