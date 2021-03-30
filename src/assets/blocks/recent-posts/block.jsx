@@ -1,10 +1,12 @@
+import AdvQueryControls from './query-controls.jsx';
+
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment, RawHTML } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpBlockEditor;
-    const { PanelBody, RangeControl, ToggleControl, TextControl, QueryControls, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
+    const { PanelBody, RangeControl, ToggleControl, TextControl, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
     const { withSelect } = wpData;
     const { pickBy, isUndefined } = lodash;
     const { decodeEntities } = wpHtmlEntities;
@@ -362,7 +364,7 @@
                             options={ postTypeList }
                             onChange={ (value) => setAttributes( { postType: value } ) }
                         />
-                        <QueryControls
+                        <AdvQueryControls
                             { ...{ order, orderBy } }
                             categorySuggestions={ postType === 'post' ? categoriesList : null }
                             selectedCategories={ categories }
@@ -380,7 +382,7 @@
                                 multiple
                                 suggestions={ tagsList }
                                 value={ tags }
-                                label={ __( 'Tags', 'advanced-gutenberg' ) }
+                                label={ __( 'Show content with these Tags', 'advanced-gutenberg' ) }
                                 placeholder={ __( 'Type a tag', 'advanced-gutenberg' ) }
                                 onChange={ ( value ) => {
                                                     this.selectTags(value);
