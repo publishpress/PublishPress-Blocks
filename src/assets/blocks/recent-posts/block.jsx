@@ -413,11 +413,13 @@
                             checked={ displayDate }
                             onChange={ () => setAttributes( { displayDate: !displayDate } ) }
                         />
+                        { displayDate &&
                         <ToggleControl
                             label={ __( 'Display Post Time', 'advanced-gutenberg' ) }
                             checked={ displayTime }
                             onChange={ () => setAttributes( { displayTime: !displayTime } ) }
                         />
+                        }
                         { postType === 'post' &&
                             <Fragment>
                                 <SelectControl

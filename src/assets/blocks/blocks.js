@@ -23804,7 +23804,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayDate: !displayDate });
                             }
                         }),
-                        React.createElement(ToggleControl, {
+                        displayDate && React.createElement(ToggleControl, {
                             label: __('Display Post Time', 'advanced-gutenberg'),
                             checked: displayTime,
                             onChange: function onChange() {
