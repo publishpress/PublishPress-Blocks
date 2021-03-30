@@ -23804,6 +23804,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayDate: !displayDate });
                             }
                         }),
+                        React.createElement(ToggleControl, {
+                            label: __('Display Post Time', 'advanced-gutenberg'),
+                            checked: displayTime,
+                            onChange: function onChange() {
+                                return setAttributes({ displayTime: !displayTime });
+                            }
+                        }),
                         postType === 'post' && React.createElement(
                             Fragment,
                             null,
@@ -23824,13 +23831,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             })
                         ),
-                        React.createElement(ToggleControl, {
-                            label: __('Display Post Time', 'advanced-gutenberg'),
-                            checked: displayTime,
-                            onChange: function onChange() {
-                                return setAttributes({ displayTime: !displayTime });
-                            }
-                        }),
                         React.createElement(ToggleControl, {
                             label: __('Display Read More Link', 'advanced-gutenberg'),
                             checked: displayReadMore,

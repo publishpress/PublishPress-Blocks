@@ -413,6 +413,11 @@
                             checked={ displayDate }
                             onChange={ () => setAttributes( { displayDate: !displayDate } ) }
                         />
+                        <ToggleControl
+                            label={ __( 'Display Post Time', 'advanced-gutenberg' ) }
+                            checked={ displayTime }
+                            onChange={ () => setAttributes( { displayTime: !displayTime } ) }
+                        />
                         { postType === 'post' &&
                             <Fragment>
                                 <SelectControl
@@ -437,11 +442,6 @@
                                 />
                             </Fragment>
                         }
-                        <ToggleControl
-                            label={ __( 'Display Post Time', 'advanced-gutenberg' ) }
-                            checked={ displayTime }
-                            onChange={ () => setAttributes( { displayTime: !displayTime } ) }
-                        />
                         <ToggleControl
                             label={ __( 'Display Read More Link', 'advanced-gutenberg' ) }
                             checked={ displayReadMore }
