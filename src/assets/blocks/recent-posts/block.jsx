@@ -229,6 +229,7 @@
                 excludeCurrentPost,
                 showCategories,
                 showTags,
+                displayCommentCount,
             } = attributes;
 
             const isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
@@ -486,6 +487,11 @@
                             onChange={ () => setAttributes( { excludeCurrentPost: !excludeCurrentPost } ) }
                         />
                         }
+                        <ToggleControl
+                            label={ __( 'Display comment counts', 'advanced-gutenberg' ) }
+                            checked={ displayCommentCount }
+                            onChange={ () => setAttributes( { displayCommentCount: !displayCommentCount } ) }
+                        />
                     </PanelBody>
                 </InspectorControls>
             );
@@ -626,6 +632,11 @@
                                                 <span className="advgb-post-datetime" >
                                                 { dateI18n( format, post.date_gmt ) }
                                             </span>
+                                            ) }
+                                            {displayCommentCount && (
+                                                <div className="advgb-post-comments" >
+                                                    { post.comment_count }
+                                                </div>
                                             ) }
                                         </div>
                                         <div className="advgb-post-tax-info">

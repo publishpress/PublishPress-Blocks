@@ -23612,7 +23612,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     frontendStyle = attributes.frontendStyle,
                     excludeCurrentPost = attributes.excludeCurrentPost,
                     showCategories = attributes.showCategories,
-                    showTags = attributes.showTags;
+                    showTags = attributes.showTags,
+                    displayCommentCount = attributes.displayCommentCount;
 
 
                 var isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
@@ -23876,6 +23877,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onChange: function onChange() {
                                 return setAttributes({ excludeCurrentPost: !excludeCurrentPost });
                             }
+                        }),
+                        React.createElement(ToggleControl, {
+                            label: __('Display comment counts', 'advanced-gutenberg'),
+                            checked: displayCommentCount,
+                            onChange: function onChange() {
+                                return setAttributes({ displayCommentCount: !displayCommentCount });
+                            }
                         })
                     )
                 );
@@ -24025,6 +24033,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 "span",
                                                 { className: "advgb-post-datetime" },
                                                 dateI18n(format, post.date_gmt)
+                                            ),
+                                            displayCommentCount && React.createElement(
+                                                "div",
+                                                { className: "advgb-post-comments" },
+                                                post.comment_count
                                             )
                                         ),
                                         React.createElement(

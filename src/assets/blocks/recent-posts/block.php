@@ -187,6 +187,14 @@ function advgbRenderBlockRecentPosts($attributes)
                 );
             }
 
+            if (isset($attributes['displayCommentCount']) && $attributes['displayCommentCount']) {
+				$count = get_comments_number( $post );
+				$postHtml .= sprintf(
+					'<div class="advgb-post-comments">%d</div>',
+					$count
+				);
+			}
+
             $postHtml .= '</div>'; // end advgb-post-info
 
             $postHtml .= '<div class="advgb-post-tax-info">';
@@ -421,6 +429,10 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'string',
                 'default' => 'hide',
             ),
+            'displayCommentCount' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
         ),
         'render_callback' => 'advgbRenderBlockRecentPosts',
     ));
@@ -461,8 +473,21 @@ function advgbRegisterCustomFields() {
         )
     );
 
+    register_rest_field( 'post',
+        'comment_count',
+        array(
+            'get_callback'  => 'advgbGetComments',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
 }
 add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
+
+function advgbGetComments( $post ) {
+	return get_comments_number( $post['id'] );
+}
 
 /**
  * Populates the HTML corresponding to the categories and tags in case they need to be shown in the post.
