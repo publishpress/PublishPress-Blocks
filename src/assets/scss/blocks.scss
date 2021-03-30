@@ -1213,7 +1213,8 @@ hr.wp-block-separator {
 }
 
 .advgb-post-tax {
-  margin-bottom: 13px;
+  margin-bottom: 4px;
+  line-height: 2em;
 
   > div {
     display: inline-block;
@@ -1246,6 +1247,7 @@ hr.wp-block-separator {
     > div {
 
       .advgb-post-tax-term {
+        font-size: 0.9em;
         text-transform: uppercase;
       }
     }
