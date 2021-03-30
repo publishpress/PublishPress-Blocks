@@ -1523,6 +1523,26 @@ hr.wp-block-separator {
       }
     }
 
+    // All posts in 2 columns grid
+    &.layout-2-2 .advgb-recent-posts {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    // All posts in 3 columns grid
+    &.layout-3-3 .advgb-recent-posts {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    // All posts in 4 columns grid
+    &.layout-4-4 .advgb-recent-posts {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    // All posts in 5 columns grid
+    &.layout-5-5 .advgb-recent-posts {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+
     // Headline style
     &.style-headline .advgb-recent-posts {
 
@@ -3092,8 +3112,36 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
         // Stacked
         &.tbl-layout-stacked .advgb-recent-posts {
           grid-template-columns: 1fr;
+        }
 
-          .advgb-recent-post:nth-child(1) {
+        // All posts in 2 columns grid
+        &.tbl-layout-2-2 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        // All posts in 3 columns grid
+        &.tbl-layout-3-3 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        // All posts in 4 columns grid
+        &.tbl-layout-4-4 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+
+        // All posts in 5 columns grid
+        &.tbl-layout-5-5 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        }
+
+        // Reset 1st post
+        &.tbl-layout-stacked,
+        &.tbl-layout-2-2,
+        &.tbl-layout-3-3,
+        &.tbl-layout-4-4,
+        &.tbl-layout-5-5 {
+
+          .advgb-recent-posts .advgb-recent-post:nth-child(1) {
             grid-row: unset;
             grid-column: unset;
           }
@@ -3169,8 +3217,36 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
         // Stacked
         &.mbl-layout-stacked .advgb-recent-posts {
           grid-template-columns: 1fr;
+        }
 
-          .advgb-recent-post:nth-child(1) {
+        // All posts in 2 columns grid
+        &.mbl-layout-2-2 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        // All posts in 3 columns grid
+        &.mbl-layout-3-3 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        // All posts in 4 columns grid
+        &.mbl-layout-4-4 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+
+        // All posts in 5 columns grid
+        &.mbl-layout-5-5 .advgb-recent-posts {
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        }
+
+        // Reset 1st post
+        &.mbl-layout-stacked,
+        &.mbl-layout-2-2,
+        &.mbl-layout-3-3,
+        &.mbl-layout-4-4,
+        &.mbl-layout-5-5 {
+
+          .advgb-recent-posts .advgb-recent-post:nth-child(1) {
             grid-row: unset;
             grid-column: unset;
           }
