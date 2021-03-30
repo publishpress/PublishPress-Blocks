@@ -1649,6 +1649,7 @@ hr.wp-block-separator {
           }
 
           a {
+            transition: all 0.2s linear;
             font-weight: bold;
             text-decoration: none;
             pointer-events: visible;
@@ -1658,6 +1659,7 @@ hr.wp-block-separator {
             &:active {
               color: #fff;
               text-decoration: none;
+              opacity: 0.8;
             }
           }
         }
