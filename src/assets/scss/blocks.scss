@@ -1279,21 +1279,30 @@ hr.wp-block-separator {
       }
     }
 
+    .advgb-post-info {
+
+      > span,
+      > a {
+        margin-right: 5px;
+      }
+    }
+
     .advgb-post-title {
       margin: 0;
+    }
+
+    .advgb-post-comments {
+      line-height: 1.4em;
+      .dashicons {
+        //
+      }
     }
 
     .advgb-post-datetime:not(:first-child):before {
       content: "-";
       display: inline-block;
-      margin: 0 5px;
+      margin: 0 5px 0 0;
     }
-
-    .advgb-post-comments:before {
-        content: "\f101";
-        font-family: dashicons;
-    }
-
   }
 
   .advgb-post-wrapper > * {

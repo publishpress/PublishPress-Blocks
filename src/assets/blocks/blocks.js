@@ -23812,6 +23812,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayTime: !displayTime });
                             }
                         }),
+                        postType === 'post' && React.createElement(ToggleControl, {
+                            label: __('Display Comment Counts', 'advanced-gutenberg'),
+                            checked: displayCommentCount,
+                            onChange: function onChange() {
+                                return setAttributes({ displayCommentCount: !displayCommentCount });
+                            }
+                        }),
                         postType === 'post' && React.createElement(
                             Fragment,
                             null,
@@ -23876,13 +23883,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             checked: excludeCurrentPost,
                             onChange: function onChange() {
                                 return setAttributes({ excludeCurrentPost: !excludeCurrentPost });
-                            }
-                        }),
-                        React.createElement(ToggleControl, {
-                            label: __('Display comment counts', 'advanced-gutenberg'),
-                            checked: displayCommentCount,
-                            onChange: function onChange() {
-                                return setAttributes({ displayCommentCount: !displayCommentCount });
                             }
                         })
                     )
@@ -24034,10 +24034,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 { className: "advgb-post-datetime" },
                                                 dateI18n(format, post.date_gmt)
                                             ),
-                                            displayCommentCount && React.createElement(
-                                                "div",
+                                            postType === 'post' && displayCommentCount && React.createElement(
+                                                "span",
                                                 { className: "advgb-post-comments" },
-                                                post.comment_count
+                                                React.createElement("span", { "class": "dashicons dashicons-admin-comments" }),
+                                                "(",
+                                                post.comment_count,
+                                                ")"
                                             )
                                         ),
                                         React.createElement(

@@ -421,6 +421,13 @@
                             onChange={ () => setAttributes( { displayTime: !displayTime } ) }
                         />
                         }
+                        {postType === 'post' &&
+                        <ToggleControl
+                            label={ __( 'Display Comment Counts', 'advanced-gutenberg' ) }
+                            checked={ displayCommentCount }
+                            onChange={ () => setAttributes( { displayCommentCount: !displayCommentCount } ) }
+                        />
+                        }
                         { postType === 'post' &&
                             <Fragment>
                                 <SelectControl
@@ -487,11 +494,6 @@
                             onChange={ () => setAttributes( { excludeCurrentPost: !excludeCurrentPost } ) }
                         />
                         }
-                        <ToggleControl
-                            label={ __( 'Display comment counts', 'advanced-gutenberg' ) }
-                            checked={ displayCommentCount }
-                            onChange={ () => setAttributes( { displayCommentCount: !displayCommentCount } ) }
-                        />
                     </PanelBody>
                 </InspectorControls>
             );
@@ -633,10 +635,11 @@
                                                 { dateI18n( format, post.date_gmt ) }
                                             </span>
                                             ) }
-                                            {displayCommentCount && (
-                                                <div className="advgb-post-comments" >
-                                                    { post.comment_count }
-                                                </div>
+                                            {postType === 'post' && displayCommentCount && (
+                                                <span className="advgb-post-comments" >
+                                                    <span class="dashicons dashicons-admin-comments"></span>
+                                                    ({ post.comment_count })
+                                                </span>
                                             ) }
                                         </div>
                                         <div className="advgb-post-tax-info">
