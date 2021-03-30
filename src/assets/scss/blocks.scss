@@ -1292,6 +1292,12 @@ hr.wp-block-separator {
       display: inline-block;
       margin: 0 5px;
     }
+
+    .advgb-post-comments:before {
+        content: "\f101";
+        font-family: dashicons;
+    }
+
   }
 
   .advgb-post-wrapper > * {
