@@ -214,6 +214,7 @@
                 displayFeaturedImage,
                 displayAuthor,
                 displayDate,
+                displayTime,
                 displayExcerpt,
                 postTextAsExcerpt,
                 postTextExcerptLength,
@@ -437,6 +438,11 @@
                             </Fragment>
                         }
                         <ToggleControl
+                            label={ __( 'Display Post Time', 'advanced-gutenberg' ) }
+                            checked={ displayTime }
+                            onChange={ () => setAttributes( { displayTime: !displayTime } ) }
+                        />
+                        <ToggleControl
                             label={ __( 'Display Read More Link', 'advanced-gutenberg' ) }
                             checked={ displayReadMore }
                             onChange={ () => setAttributes( { displayReadMore: !displayReadMore } ) }
@@ -548,7 +554,9 @@
                 displayFeaturedImage === false && 'no-image',
             ].filter( Boolean ).join( ' ' );
 
-            const dateFormat = __experimentalGetSettings().formats.date;
+
+            const formats = __experimentalGetSettings().formats;
+            let format = displayDate && displayTime ? formats.datetime : (displayDate ? formats.date : formats.time);
 
             return (
                 isPreview ?
@@ -612,9 +620,9 @@
                                                 </a>
                                             )
                                             }
-                                            {displayDate && (
-                                                <span className="advgb-post-date" >
-                                                { dateI18n( dateFormat, post.date_gmt ) }
+                                            {(displayDate || displayTime) && (
+                                                <span className="advgb-post-datetime" >
+                                                { dateI18n( format, post.date_gmt ) }
                                             </span>
                                             ) }
                                         </div>

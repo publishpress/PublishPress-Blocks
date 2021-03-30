@@ -176,10 +176,14 @@ function advgbRenderBlockRecentPosts($attributes)
 				}
             }
 
-            if (isset($attributes['displayDate']) && $attributes['displayDate']) {
+            $displayDate = isset($attributes['displayDate']) && $attributes['displayDate'];
+            $displayTime = isset($attributes['displayTime']) && $attributes['displayTime'];
+			$format = $displayDate && $displayTime ? get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) : ($displayDate ? get_option( 'date_format' ) : get_option( 'time_format' ));
+
+            if ( $displayDate || $displayTime ) {
                 $postHtml .= sprintf(
-                    '<span class="advgb-post-date">%1$s</span>',
-                    get_the_date('', $post->ID)
+                    '<span class="advgb-post-datetime">%1$s</span>',
+                    get_the_date( $format, $post->ID)
                 );
             }
 
@@ -351,6 +355,10 @@ function advgbRegisterBlockRecentPosts()
                 'default' => false,
             ),
             'displayDate' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'displayTime' => array(
                 'type' => 'boolean',
                 'default' => false,
             ),

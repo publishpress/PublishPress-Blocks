@@ -1287,7 +1287,7 @@ hr.wp-block-separator {
       margin: 0;
     }
 
-    .advgb-post-date:not(:first-child):before {
+    .advgb-post-datetime:not(:first-child):before {
       content: "-";
       display: inline-block;
       margin: 0 5px;
