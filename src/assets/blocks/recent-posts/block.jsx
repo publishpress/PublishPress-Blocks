@@ -382,7 +382,7 @@ import AdvQueryControls from './query-controls.jsx';
                                 multiple
                                 suggestions={ tagsList }
                                 value={ tags }
-                                label={ __( 'Tags', 'advanced-gutenberg' ) }
+                                label={ __( 'Show content with these Tags', 'advanced-gutenberg' ) }
                                 placeholder={ __( 'Type a tag', 'advanced-gutenberg' ) }
                                 onChange={ ( value ) => {
                                                     this.selectTags(value);

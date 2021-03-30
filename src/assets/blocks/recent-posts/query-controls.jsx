@@ -173,7 +173,7 @@ function AdvQueryControls({
         categorySuggestions && onCategoryChange && (
             <FormTokenField
                 key="query-controls-categories-select"
-                label={__('Categories')}
+                label={__('Show content with these Categories')}
                 value={
                     selectedCategories &&
                     selectedCategories.map((item) => ({

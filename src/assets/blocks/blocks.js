@@ -23770,7 +23770,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             multiple: true,
                             suggestions: tagsList,
                             value: tags,
-                            label: __('Tags', 'advanced-gutenberg'),
+                            label: __('Show content with these Tags', 'advanced-gutenberg'),
                             placeholder: __('Type a tag', 'advanced-gutenberg'),
                             onChange: function onChange(value) {
                                 _this3.selectTags(value);
@@ -24459,7 +24459,7 @@ function AdvQueryControls(_ref3) {
         required: true
     }), categorySuggestions && onCategoryChange && React.createElement(FormTokenField, {
         key: 'query-controls-categories-select',
-        label: __('Categories'),
+        label: __('Show content with these Categories'),
         value: selectedCategories && selectedCategories.map(function (item) {
             return {
                 id: item.id,
