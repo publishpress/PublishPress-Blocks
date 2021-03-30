@@ -23393,8 +23393,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         ToolbarButton = wpComponents.ToolbarButton,
         Placeholder = wpComponents.Placeholder,
         Tooltip = wpComponents.Tooltip,
-        SelectControl = wpComponents.SelectControl,
-        RadioControl = wpComponents.RadioControl;
+        SelectControl = wpComponents.SelectControl;
     var withSelect = wpData.withSelect;
     var pickBy = lodash.pickBy,
         isUndefined = lodash.isUndefined;
@@ -23769,27 +23768,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onChange: function onChange(value) {
                                 _this3.selectTags(value);
                             }
-                        }),
-                        postType === 'post' && React.createElement(
-                            Fragment,
-                            null,
-                            React.createElement(RadioControl, {
-                                label: __('Category Visibility', 'advanced-gutenberg'),
-                                selected: showCategories,
-                                options: [{ label: __('Hide', 'advanced-gutenberg'), value: 'hide' }, { label: __('Show', 'advanced-gutenberg'), value: 'show' }, { label: __('Show & Link', 'advanced-gutenberg'), value: 'link' }],
-                                onChange: function onChange(value) {
-                                    setAttributes({ showCategories: value });
-                                }
-                            }),
-                            React.createElement(RadioControl, {
-                                label: __('Tag Visibility', 'advanced-gutenberg'),
-                                selected: showTags,
-                                options: [{ label: __('Hide', 'advanced-gutenberg'), value: 'hide' }, { label: __('Show', 'advanced-gutenberg'), value: 'show' }, { label: __('Show & Link', 'advanced-gutenberg'), value: 'link' }],
-                                onChange: function onChange(value) {
-                                    setAttributes({ showTags: value });
-                                }
-                            })
-                        ),
+                        })
+                    ),
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Display Settings', 'advanced-gutenberg') },
                         postView === 'grid' && React.createElement(RangeControl, {
                             label: __('Columns', 'advanced-gutenberg'),
                             value: columns,
@@ -23820,6 +23803,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayDate: !displayDate });
                             }
                         }),
+                        postType === 'post' && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(SelectControl, {
+                                label: __('Display Category', 'advanced-gutenberg'),
+                                value: showCategories,
+                                options: [{ label: __('Hide', 'advanced-gutenberg'), value: 'hide' }, { label: __('Show', 'advanced-gutenberg'), value: 'show' }, { label: __('Show & Link', 'advanced-gutenberg'), value: 'link' }],
+                                onChange: function onChange(value) {
+                                    setAttributes({ showCategories: value });
+                                }
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Display Tags', 'advanced-gutenberg'),
+                                value: showTags,
+                                options: [{ label: __('Hide', 'advanced-gutenberg'), value: 'hide' }, { label: __('Show', 'advanced-gutenberg'), value: 'show' }, { label: __('Show & Link', 'advanced-gutenberg'), value: 'link' }],
+                                onChange: function onChange(value) {
+                                    setAttributes({ showTags: value });
+                                }
+                            })
+                        ),
                         React.createElement(ToggleControl, {
                             label: __('Display Read More Link', 'advanced-gutenberg'),
                             checked: displayReadMore,

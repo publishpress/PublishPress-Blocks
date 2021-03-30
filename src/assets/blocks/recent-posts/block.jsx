@@ -4,7 +4,7 @@
     const { Component, Fragment, RawHTML } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpBlockEditor;
-    const { PanelBody, RangeControl, ToggleControl, TextControl, QueryControls, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl, RadioControl } = wpComponents;
+    const { PanelBody, RangeControl, ToggleControl, TextControl, QueryControls, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
     const { withSelect } = wpData;
     const { pickBy, isUndefined } = lodash;
     const { decodeEntities } = wpHtmlEntities;
@@ -386,31 +386,8 @@
                                 }
                             />
                         }
-
-                        { postType === 'post' &&
-                            <Fragment>
-                                <RadioControl
-                                    label={ __( 'Category Visibility', 'advanced-gutenberg' ) }
-                                    selected={ showCategories }
-                                    options={ [
-                                        { label: __( 'Hide', 'advanced-gutenberg' ), value: 'hide' },
-                                        { label: __( 'Show', 'advanced-gutenberg' ), value: 'show' },
-                                        { label: __( 'Show & Link', 'advanced-gutenberg' ), value: 'link' },
-                                    ] }
-                                    onChange={ ( value ) => { setAttributes( { showCategories: value } ) } }
-                                />
-                                <RadioControl
-                                    label={ __( 'Tag Visibility', 'advanced-gutenberg' ) }
-                                    selected={ showTags }
-                                    options={ [
-                                        { label: __( 'Hide', 'advanced-gutenberg' ), value: 'hide' },
-                                        { label: __( 'Show', 'advanced-gutenberg' ), value: 'show' },
-                                        { label: __( 'Show & Link', 'advanced-gutenberg' ), value: 'link' },
-                                    ] }
-                                    onChange={ ( value ) => { setAttributes( { showTags: value } ) } }
-                                />
-                            </Fragment>
-                        }
+                    </PanelBody>
+                    <PanelBody title={ __( 'Display Settings', 'advanced-gutenberg' ) }>
                         {postView === 'grid' &&
                         <RangeControl
                             label={ __( 'Columns', 'advanced-gutenberg' ) }
@@ -435,6 +412,30 @@
                             checked={ displayDate }
                             onChange={ () => setAttributes( { displayDate: !displayDate } ) }
                         />
+                        { postType === 'post' &&
+                            <Fragment>
+                                <SelectControl
+                                    label={ __( 'Display Category', 'advanced-gutenberg' ) }
+                                    value={ showCategories }
+                                    options={ [
+                                        { label: __( 'Hide', 'advanced-gutenberg' ), value: 'hide' },
+                                        { label: __( 'Show', 'advanced-gutenberg' ), value: 'show' },
+                                        { label: __( 'Show & Link', 'advanced-gutenberg' ), value: 'link' },
+                                    ] }
+                                    onChange={ ( value ) => { setAttributes( { showCategories: value } ) } }
+                                />
+                                <SelectControl
+                                    label={ __( 'Display Tags', 'advanced-gutenberg' ) }
+                                    value={ showTags }
+                                    options={ [
+                                        { label: __( 'Hide', 'advanced-gutenberg' ), value: 'hide' },
+                                        { label: __( 'Show', 'advanced-gutenberg' ), value: 'show' },
+                                        { label: __( 'Show & Link', 'advanced-gutenberg' ), value: 'link' },
+                                    ] }
+                                    onChange={ ( value ) => { setAttributes( { showTags: value } ) } }
+                                />
+                            </Fragment>
+                        }
                         <ToggleControl
                             label={ __( 'Display Read More Link', 'advanced-gutenberg' ) }
                             checked={ displayReadMore }
