@@ -428,6 +428,7 @@ import AdvQueryControls from './query-controls.jsx';
                                 { label: __( 'For the first 5 posts', 'advanced-gutenberg' ), value: 5 },
                             ] }
                             onChange={ ( value ) => { setAttributes( { displayFeaturedImageFor: value } ) } }
+                            className="advgb-child-select"
                         />
                         }
                         <ToggleControl

@@ -23811,7 +23811,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             options: [{ label: __('For all posts', 'advanced-gutenberg'), value: 'all' }, { label: __('For the first post', 'advanced-gutenberg'), value: 1 }, { label: __('For the first 2 posts', 'advanced-gutenberg'), value: 2 }, { label: __('For the first 3 posts', 'advanced-gutenberg'), value: 3 }, { label: __('For the first 4 posts', 'advanced-gutenberg'), value: 4 }, { label: __('For the first 5 posts', 'advanced-gutenberg'), value: 5 }],
                             onChange: function onChange(value) {
                                 setAttributes({ displayFeaturedImageFor: value });
-                            }
+                            },
+                            className: "advgb-child-select"
                         }),
                         React.createElement(ToggleControl, {
                             label: __('Display Post Author', 'advanced-gutenberg'),
