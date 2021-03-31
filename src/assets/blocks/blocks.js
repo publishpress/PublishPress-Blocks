@@ -23606,6 +23606,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     numberOfPosts = attributes.numberOfPosts,
                     columns = attributes.columns,
                     displayFeaturedImage = attributes.displayFeaturedImage,
+                    displayFeaturedImageFor = attributes.displayFeaturedImageFor,
                     displayAuthor = attributes.displayAuthor,
                     displayDate = attributes.displayDate,
                     postDate = attributes.postDate,
@@ -23805,6 +23806,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayFeaturedImage: !displayFeaturedImage });
                             }
                         }),
+                        displayFeaturedImage && React.createElement(SelectControl, {
+                            value: displayFeaturedImageFor,
+                            options: [{ label: __('For all posts', 'advanced-gutenberg'), value: 'all' }, { label: __('For the first post', 'advanced-gutenberg'), value: 1 }, { label: __('For the first 2 posts', 'advanced-gutenberg'), value: 2 }, { label: __('For the first 3 posts', 'advanced-gutenberg'), value: 3 }, { label: __('For the first 4 posts', 'advanced-gutenberg'), value: 4 }, { label: __('For the first 5 posts', 'advanced-gutenberg'), value: 5 }],
+                            onChange: function onChange(value) {
+                                setAttributes({ displayFeaturedImageFor: value });
+                            }
+                        }),
                         React.createElement(ToggleControl, {
                             label: __('Display Post Author', 'advanced-gutenberg'),
                             checked: displayAuthor,
@@ -23964,7 +23972,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'frontpage'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle, displayFeaturedImage === false && 'no-image'].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle].filter(Boolean).join(' ');
 
                 var formats = __experimentalGetSettings().formats;
                 var format = postDate !== 'hide' ? displayTime ? formats.datetime : formats.date : '';
@@ -24000,20 +24008,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     "article",
                                     { key: index, className: "advgb-recent-post" },
-                                    displayFeaturedImage && React.createElement(
-                                        "div",
-                                        { className: "advgb-post-thumbnail" },
-                                        React.createElement(
-                                            "a",
-                                            { href: post.link, target: "_blank" },
-                                            React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
-                                        )
-                                    ),
-                                    displayFeaturedImage === false && postView === 'frontpage' && frontendStyle === 'headline' && React.createElement(
-                                        "div",
-                                        { className: "advgb-post-thumbnail" },
-                                        React.createElement("a", { href: post.link, target: "_blank" })
-                                    ),
+                                    function () {
+                                        if (displayFeaturedImage && (displayFeaturedImageFor === 'all' || index < displayFeaturedImageFor)) {
+                                            return React.createElement(
+                                                "div",
+                                                { className: "advgb-post-thumbnail" },
+                                                React.createElement(
+                                                    "a",
+                                                    { href: post.link, target: "_blank" },
+                                                    React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
+                                                )
+                                            );
+                                        } else if (postView === 'frontpage' && frontendStyle === 'headline') {
+                                            return React.createElement(
+                                                "div",
+                                                { className: "advgb-post-thumbnail advgb-post-thumbnail-no-image" },
+                                                React.createElement("a", { href: post.link, target: "_blank" })
+                                            );
+                                        } else {
+                                            {/* Nothing to do here */}
+                                        }
+                                    }(),
                                     React.createElement(
                                         "div",
                                         { className: "advgb-post-wrapper" },
