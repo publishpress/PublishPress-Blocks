@@ -321,10 +321,6 @@ function advgbRenderBlockRecentPosts($attributes)
         esc_attr($blockClass)
     );
 
-    /*echo '<pre>';
-    var_dump($attributes);
-    echo '</pre>';*/
-
     return $blockHtml;
 }
 
