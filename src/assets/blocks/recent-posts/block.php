@@ -183,7 +183,7 @@ function advgbRenderBlockRecentPosts($attributes)
 
 			if ( $postDate !== 'hide' ) {
 				$format = $displayTime ? ( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ) : get_option( 'date_format' );
-				
+
 				if ( $postDateFormat === 'absolute' ) {
 					if ( $postDate === 'created' ) {
 						$postDateDisplay = get_the_date( $format, $post->ID);
@@ -191,10 +191,11 @@ function advgbRenderBlockRecentPosts($attributes)
 						$postDateDisplay = get_the_modified_date( $format, $post->ID);
 					}
 				} else {
+                    // Relative date format
 					if ( $postDate === 'created' ) {
-						$postDateDisplay = human_time_diff( get_the_date( 'U', $post->ID ) ) . ' ' . __( 'ago', 'advanced-gutenberg');
+						$postDateDisplay = __( 'Posted', 'advanced-gutenberg') . ' ' . human_time_diff( get_the_date( 'U', $post->ID ) ) . ' ' . __( 'ago', 'advanced-gutenberg');
 					} else {
-						$postDateDisplay = human_time_diff( get_the_modified_date( 'U', $post->ID ) ) . ' ' . __( 'ago', 'advanced-gutenberg');
+						$postDateDisplay = __( 'Updated', 'advanced-gutenberg') . ' ' .human_time_diff( get_the_modified_date( 'U', $post->ID ) ) . ' ' . __( 'ago', 'advanced-gutenberg');
 					}
 				}
 			}
@@ -528,9 +529,9 @@ add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
  * @return array
  */
 function advgbGetRelativeDates( $post ) {
-	return array( 
-		'created' => human_time_diff( get_the_date( 'U', $post['id'] ) ) . ' ' . __( 'ago', 'advanced-gutenberg'),
-		'modified' => human_time_diff( get_the_modified_date( 'U', $post['id'] ) ) . ' ' . __( 'ago', 'advanced-gutenberg')
+	return array(
+		'created' => __( 'Posted', 'advanced-gutenberg') . ' ' .human_time_diff( get_the_date( 'U', $post['id'] ) ) . ' ' . __( 'ago', 'advanced-gutenberg'),
+		'modified' => __( 'Updated', 'advanced-gutenberg') . ' ' .human_time_diff( get_the_modified_date( 'U', $post['id'] ) ) . ' ' . __( 'ago', 'advanced-gutenberg')
 	);
 }
 
