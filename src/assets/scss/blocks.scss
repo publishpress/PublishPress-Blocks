@@ -1672,6 +1672,7 @@ hr.wp-block-separator {
       .advgb-recent-post {
         display: flex;
         flex-wrap: wrap-reverse;
+        align-self: start;
 
         /*&:nth-child(1) {
           border-bottom: 6px solid #333;
