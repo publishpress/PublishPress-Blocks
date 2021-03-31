@@ -485,6 +485,32 @@ function advgbRegisterCustomFields() {
 }
 add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
 
+/**
+ * Allow more orderBy values for posts.
+ *
+ * @return array
+ */
+function advgbAllowPostQueryVars( $query_params ) {
+	$query_params['orderby']['enum'][] = 'rand';
+	$query_params['orderby']['enum'][] = 'comment_count';
+	$query_params['orderby']['enum'][] = 'menu_order';
+	return $query_params;
+}
+add_filter( 'rest_post_collection_params', 'advgbAllowPostQueryVars' );
+
+/**
+ * Allow more orderBy values for pages.
+ *
+ * @return array
+ */
+function advgbAllowPageQueryVars( $query_params ) {
+	$query_params['orderby']['enum'][] = 'author';
+	$query_params['orderby']['enum'][] = 'rand';
+	$query_params['orderby']['enum'][] = 'menu_order';
+	return $query_params;
+}
+add_filter( 'rest_page_collection_params', 'advgbAllowPageQueryVars' );
+
 function advgbGetComments( $post ) {
 	return get_comments_number( $post['id'] );
 }
