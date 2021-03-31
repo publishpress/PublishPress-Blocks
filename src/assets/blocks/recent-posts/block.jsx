@@ -155,6 +155,13 @@ import AdvQueryControls from './query-controls.jsx';
 
             } );
 
+            // migrate from displayDate to postDate
+            let postDateDisplay = attributes.displayDate ? 'created' : attributes.postDate;
+            setAttributes({
+                  postDate: postDateDisplay,
+                  displayDate: false,
+            });
+
         }
 
         componentWillUpdate( nextProps ) {
@@ -216,6 +223,8 @@ import AdvQueryControls from './query-controls.jsx';
                 displayFeaturedImage,
                 displayAuthor,
                 displayDate,
+                postDate,
+                postDateFormat,
                 displayTime,
                 displayExcerpt,
                 postTextAsExcerpt,
@@ -411,17 +420,35 @@ import AdvQueryControls from './query-controls.jsx';
                             checked={ displayAuthor }
                             onChange={ () => setAttributes( { displayAuthor: !displayAuthor } ) }
                         />
-                        <ToggleControl
+                        <SelectControl
                             label={ __( 'Display Post Date', 'advanced-gutenberg' ) }
-                            checked={ displayDate }
-                            onChange={ () => setAttributes( { displayDate: !displayDate } ) }
+                            value={ postDate }
+                            options={ [
+                                { label: __( 'Hide', 'advanced-gutenberg' ), value: 'hide' },
+                                { label: __( 'Created Date', 'advanced-gutenberg' ), value: 'created' },
+                                { label: __( 'Updated Date', 'advanced-gutenberg' ), value: 'updated' },
+                            ] }
+                            onChange={ ( value ) => { setAttributes( { postDate: value } ) } }
                         />
-                        { displayDate &&
-                        <ToggleControl
-                            label={ __( 'Display Post Time', 'advanced-gutenberg' ) }
-                            checked={ displayTime }
-                            onChange={ () => setAttributes( { displayTime: !displayTime } ) }
-                        />
+                        { postDate !== 'hide' &&
+                            <Fragment>
+                                <SelectControl
+                                    label={ __( 'Post Date Format', 'advanced-gutenberg' ) }
+                                    value={ postDateFormat }
+                                    options={ [
+                                        { label: __( 'Absolute', 'advanced-gutenberg' ), value: 'absolute' },
+                                        { label: __( 'Relative', 'advanced-gutenberg' ), value: 'relative' },
+                                    ] }
+                                    onChange={ ( value ) => { setAttributes( { postDateFormat: value } ) } }
+                                />
+                            {postDateFormat === 'absolute' &&
+                                <ToggleControl
+                                    label={ __( 'Display Post Time', 'advanced-gutenberg' ) }
+                                    checked={ displayTime }
+                                    onChange={ () => setAttributes( { displayTime: !displayTime } ) }
+                                />
+                            }
+                            </Fragment>   
                         }
                         {postType === 'post' &&
                         <ToggleControl
@@ -566,9 +593,8 @@ import AdvQueryControls from './query-controls.jsx';
                 displayFeaturedImage === false && 'no-image',
             ].filter( Boolean ).join( ' ' );
 
-
             const formats = __experimentalGetSettings().formats;
-            let format = displayDate ? (displayTime ? formats.datetime : formats.date) : '';
+            let format = postDate !== 'hide' ? (displayTime ? formats.datetime : formats.date) : '';
 
             return (
                 isPreview ?
@@ -632,10 +658,13 @@ import AdvQueryControls from './query-controls.jsx';
                                                 </a>
                                             )
                                             }
-                                            {displayDate && (
+                                            {postDate !== 'hide' && (
                                                 <span className="advgb-post-datetime" >
-                                                { dateI18n( format, post.date_gmt ) }
-                                            </span>
+                                                { postDateFormat === 'absolute' 
+                                                    ? ( dateI18n( format, postDate === 'created' ? post.date_gmt : post.modified_gmt ) ) 
+                                                    : ( postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified ) 
+                                                }
+                                                </span>
                                             ) }
                                             {postType === 'post' && displayCommentCount && (
                                                 <span className="advgb-post-comments" >
