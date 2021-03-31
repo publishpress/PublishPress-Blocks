@@ -113,12 +113,15 @@ function advgbRenderBlockRecentPosts($attributes)
     $postHtml = '';
 
     if (!empty($recent_posts)) {
-        foreach ($recent_posts as $post) {
+        foreach ($recent_posts as $key=>$post) {
             $postThumbID = get_post_thumbnail_id($post->ID);
 
             $postHtml .= '<article class="advgb-recent-post">';
 
-            if (isset($attributes['displayFeaturedImage']) && $attributes['displayFeaturedImage']) {
+            if (
+                isset($attributes['displayFeaturedImage']) && $attributes['displayFeaturedImage']
+                && ($attributes['displayFeaturedImageFor'] === 'all' || $key < $attributes['displayFeaturedImageFor'])
+            ) {
                 $postThumb = '<img src="' . $rp_default_thumb['url'] . '" />';
                 if ($postThumbID) {
                     $postThumb = wp_get_attachment_image($postThumbID, 'large');
@@ -133,14 +136,13 @@ function advgbRenderBlockRecentPosts($attributes)
                     get_permalink($post->ID),
                     $postThumb
                 );
-            }
-
-            // Display placeholder for Frontpage view with Headline style when Image is disabled
-            if ($attributes['displayFeaturedImage'] === false && $attributes['postView'] === 'frontpage' && $attributes['frontendStyle'] === 'headline') {
+            } elseif ($attributes['postView'] === 'frontpage' && $attributes['frontendStyle'] === 'headline') {
                 $postHtml .= sprintf(
-                    '<div class="advgb-post-thumbnail"><a href="%1$s"></a></div>',
+                    '<div class="advgb-post-thumbnail advgb-post-thumbnail-no-image"><a href="%1$s"></a></div>',
                     get_permalink($post->ID)
                 );
+            } else {
+                // Nothing to do here
             }
 
             $postHtml .= '<div class="advgb-post-wrapper">';
@@ -309,10 +311,6 @@ function advgbRenderBlockRecentPosts($attributes)
         (isset($attributes['frontpageLayoutM']) && $attributes['frontpageLayoutM']) ? $blockClass .= ' mbl-layout-' . $attributes['frontpageLayoutM'] : '';
     }
 
-    if($attributes['displayFeaturedImage'] === false) {
-        $blockClass .= ' no-image';
-    }
-
     if (isset($attributes['className'])) {
         $blockClass .= ' ' . $attributes['className'];
     }
@@ -374,6 +372,10 @@ function advgbRegisterBlockRecentPosts()
             'displayFeaturedImage' => array(
                 'type' => 'boolean',
                 'default' => true,
+            ),
+            'displayFeaturedImageFor' => array(
+                'type' => 'string',
+                'default' => 'all',
             ),
             'displayAuthor' => array(
                 'type' => 'boolean',

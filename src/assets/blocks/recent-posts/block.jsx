@@ -221,6 +221,7 @@ import AdvQueryControls from './query-controls.jsx';
                 numberOfPosts,
                 columns,
                 displayFeaturedImage,
+                displayFeaturedImageFor,
                 displayAuthor,
                 displayDate,
                 postDate,
@@ -415,6 +416,21 @@ import AdvQueryControls from './query-controls.jsx';
                             checked={ displayFeaturedImage }
                             onChange={ () => setAttributes( { displayFeaturedImage: !displayFeaturedImage } ) }
                         />
+                        {displayFeaturedImage &&
+                        <SelectControl
+                            value={ displayFeaturedImageFor }
+                            options={ [
+                                { label: __( 'For all posts', 'advanced-gutenberg' ), value: 'all' },
+                                { label: __( 'For the first post', 'advanced-gutenberg' ), value: 1 },
+                                { label: __( 'For the first 2 posts', 'advanced-gutenberg' ), value: 2 },
+                                { label: __( 'For the first 3 posts', 'advanced-gutenberg' ), value: 3 },
+                                { label: __( 'For the first 4 posts', 'advanced-gutenberg' ), value: 4 },
+                                { label: __( 'For the first 5 posts', 'advanced-gutenberg' ), value: 5 },
+                            ] }
+                            onChange={ ( value ) => { setAttributes( { displayFeaturedImageFor: value } ) } }
+                            className="advgb-child-select"
+                        />
+                        }
                         <ToggleControl
                             label={ __( 'Display Post Author', 'advanced-gutenberg' ) }
                             checked={ displayAuthor }
@@ -590,7 +606,6 @@ import AdvQueryControls from './query-controls.jsx';
                 postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM,
                 postView === 'frontpage' && gap && 'gap-' + gap,
                 postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle,
-                displayFeaturedImage === false && 'no-image',
             ].filter( Boolean ).join( ' ' );
 
             const formats = __experimentalGetSettings().formats;
@@ -617,19 +632,27 @@ import AdvQueryControls from './query-controls.jsx';
                         <div className="advgb-recent-posts">
                             {recentPosts.map( ( post, index ) => (
                                 <article key={ index } className="advgb-recent-post" >
-                                    {displayFeaturedImage && (
-                                        <div className="advgb-post-thumbnail">
-                                            <a href={ post.link } target="_blank">
-                                                <img src={ post.featured_img ? post.featured_img : advgbBlocks.post_thumb } alt={ __( 'Post Image', 'advanced-gutenberg' ) } />
-                                            </a>
-                                        </div>
-                                    ) }
-                                    { /* Display placeholder for Frontpage view with Headline style when Image is disabled */ }
-                                    {displayFeaturedImage === false && postView === 'frontpage' && frontendStyle === 'headline' && (
-                                        <div className="advgb-post-thumbnail">
-                                            <a href={ post.link } target="_blank"></a>
-                                        </div>
-                                    ) }
+
+                                    {(() => {
+                                        if( displayFeaturedImage && ( displayFeaturedImageFor === 'all' || index < displayFeaturedImageFor ) ) {
+                                            return(
+                                                <div className="advgb-post-thumbnail">
+                                                    <a href={ post.link } target="_blank">
+                                                        <img src={ post.featured_img ? post.featured_img : advgbBlocks.post_thumb } alt={ __( 'Post Image', 'advanced-gutenberg' ) } />
+                                                    </a>
+                                                </div>
+                                            )
+                                        } else if( postView === 'frontpage' && frontendStyle === 'headline' ) {
+                                            return (
+                                                <div className="advgb-post-thumbnail advgb-post-thumbnail-no-image">
+                                                    <a href={ post.link } target="_blank"></a>
+                                                </div>
+                                            )
+                                        } else {
+                                            { /* Nothing to do here */ }
+                                        }
+                                    })()}
+
                                     <div className="advgb-post-wrapper">
                                         <h2 className="advgb-post-title">
                                             <a href={ post.link } target="_blank">{ decodeEntities( post.title.rendered ) }</a>
@@ -662,7 +685,7 @@ import AdvQueryControls from './query-controls.jsx';
                                                 <span className="advgb-post-datetime" >
                                                 { postDateFormat === 'absolute'
                                                     ? ( dateI18n( format, postDate === 'created' ? post.date_gmt : post.modified_gmt ) )
-                                                    : ( postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified ) 
+                                                    : ( postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified )
                                                 }
                                                 </span>
                                             ) }

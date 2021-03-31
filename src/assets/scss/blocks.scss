@@ -59,6 +59,10 @@
             margin: 0 auto;
         }
     }
+
+    .advgb-child-select {
+      margin-left: 47px;
+    }
 }
 
 .advgb-editor-width-large #editor {
@@ -1463,12 +1467,9 @@ hr.wp-block-separator {
     }
 
     // No featured image
-    &.no-image .advgb-recent-posts .advgb-recent-post {
-
-      .advgb-post-thumbnail {
-        min-height: 350px;
-        background: #999;
-      }
+    .advgb-recent-posts .advgb-recent-post .advgb-post-thumbnail.advgb-post-thumbnail-no-image {
+      min-height: 350px;
+      background: #999;
     }
 
     // Gap

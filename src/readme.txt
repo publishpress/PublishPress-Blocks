@@ -174,6 +174,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Comment count support to Recent Posts block
   * Add: AdvQueryControls component with minor customizations
   * Add: Modified and Posted date with relative format support to Recent Posts block
+  * Add: Setting to display Featured Images for the first posts only to Recent Posts block
   * Fix: Duplicated ID when duplicating Search Bar block
   * Fix: Formatting output for editable elements in frontend for Login/Register block
   * Fix: "Horizontal Alignment" label for Advanced Image default configuration
