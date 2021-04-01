@@ -153,6 +153,10 @@ function advgbRenderBlockRecentPosts($attributes)
                 get_the_title($post->ID)
             );
 
+            if (isset($attributes['textAfterTitle']) && !empty($attributes['textAfterTitle'])) {
+				$postHtml .= sprintf( '<div class="advgb-text-after-title">%s</div>', wp_kses_post( $attributes['textAfterTitle'] ) );
+			}
+
             $postHtml .= '<div class="advgb-post-info">';
 
             if (isset($attributes['displayAuthor']) && $attributes['displayAuthor']) {
@@ -272,6 +276,10 @@ function advgbRenderBlockRecentPosts($attributes)
                     $introText
                 );
             }
+
+            if (isset($attributes['textBeforeReadmore']) && !empty($attributes['textBeforeReadmore'])) {
+				$postHtml .= sprintf( '<div class="advgb-text-before-readmore">%s</div>', wp_kses_post( $attributes['textBeforeReadmore'] ) );
+			}
 
             if (isset($attributes['displayReadMore']) && $attributes['displayReadMore']) {
                 $readMoreText = __('Read More', 'advanced-gutenberg');
@@ -455,6 +463,12 @@ function advgbRegisterBlockRecentPosts()
             'displayCommentCount' => array(
                 'type' => 'boolean',
                 'default' => false,
+            ),
+            'textAfterTitle' => array(
+                'type' => 'string',
+            ),
+            'textBeforeReadmore' => array(
+                'type' => 'string',
             ),
 			// deprecrated attributes...
             'displayDate' => array(

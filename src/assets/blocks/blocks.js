@@ -23392,6 +23392,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         RangeControl = wpComponents.RangeControl,
         ToggleControl = wpComponents.ToggleControl,
         TextControl = wpComponents.TextControl,
+        TextareaControl = wpComponents.TextareaControl,
         FormTokenField = wpComponents.FormTokenField,
         Spinner = wpComponents.Spinner,
         ToolbarGroup = wpComponents.ToolbarGroup,
@@ -23628,7 +23629,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     excludeCurrentPost = attributes.excludeCurrentPost,
                     showCategories = attributes.showCategories,
                     showTags = attributes.showTags,
-                    displayCommentCount = attributes.displayCommentCount;
+                    displayCommentCount = attributes.displayCommentCount,
+                    textAfterTitle = attributes.textAfterTitle,
+                    textBeforeReadmore = attributes.textBeforeReadmore;
 
 
                 var isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
@@ -23920,6 +23923,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onChange: function onChange() {
                                 return setAttributes({ excludeCurrentPost: !excludeCurrentPost });
                             }
+                        }),
+                        React.createElement(TextareaControl, {
+                            label: __('Text after title', 'advanced-gutenberg'),
+                            help: __('Include text/HTML after title', 'advanced-gutenberg'),
+                            value: textAfterTitle,
+                            onChange: function onChange(value) {
+                                return setAttributes({ textAfterTitle: value });
+                            }
+                        }),
+                        React.createElement(TextareaControl, {
+                            label: __('Text before read more', 'advanced-gutenberg'),
+                            help: __('Include text/HTML before read more', 'advanced-gutenberg'),
+                            value: textBeforeReadmore,
+                            onChange: function onChange(value) {
+                                return setAttributes({ textBeforeReadmore: value });
+                            }
                         })
                     )
                 );
@@ -24043,6 +24062,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             )
                                         ),
                                         React.createElement(
+                                            RawHTML,
+                                            { className: "advgb-text-after-title" },
+                                            textAfterTitle
+                                        ),
+                                        React.createElement(
                                             "div",
                                             { className: "advgb-post-info" },
                                             displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map(function (coauthor, coauthor_indx) {
@@ -24133,6 +24157,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 dangerouslySetInnerHTML: {
                                                     __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.raw
                                                 } }),
+                                            React.createElement(
+                                                "div",
+                                                { className: "advgb-text-before-readmore" },
+                                                React.createElement(
+                                                    RawHTML,
+                                                    null,
+                                                    textBeforeReadmore
+                                                )
+                                            ),
                                             displayReadMore && React.createElement(
                                                 "div",
                                                 { className: "advgb-post-readmore" },

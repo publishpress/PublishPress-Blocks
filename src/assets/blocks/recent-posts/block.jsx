@@ -6,7 +6,7 @@ import AdvQueryControls from './query-controls.jsx';
     const { Component, Fragment, RawHTML } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpBlockEditor;
-    const { PanelBody, RangeControl, ToggleControl, TextControl, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
+    const { PanelBody, RangeControl, ToggleControl, TextControl, TextareaControl, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
     const { withSelect } = wpData;
     const { pickBy, isUndefined } = lodash;
     const { decodeEntities } = wpHtmlEntities;
@@ -242,6 +242,8 @@ import AdvQueryControls from './query-controls.jsx';
                 showCategories,
                 showTags,
                 displayCommentCount,
+                textAfterTitle,
+                textBeforeReadmore,
             } = attributes;
 
             const isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
@@ -539,6 +541,18 @@ import AdvQueryControls from './query-controls.jsx';
                             onChange={ () => setAttributes( { excludeCurrentPost: !excludeCurrentPost } ) }
                         />
                         }
+                        <TextareaControl
+                            label={ __( 'Text after title', 'advanced-gutenberg' ) }
+                            help={ __( 'Include text/HTML after title', 'advanced-gutenberg' ) }
+                            value={ textAfterTitle }
+                            onChange={ ( value ) => setAttributes( { textAfterTitle: value } ) }
+                        />
+                        <TextareaControl
+                            label={ __( 'Text before read more', 'advanced-gutenberg' ) }
+                            help={ __( 'Include text/HTML before read more', 'advanced-gutenberg' ) }
+                            value={ textBeforeReadmore }
+                            onChange={ ( value ) => setAttributes( { textBeforeReadmore: value } ) }
+                        />
                     </PanelBody>
                 </InspectorControls>
             );
@@ -657,6 +671,7 @@ import AdvQueryControls from './query-controls.jsx';
                                         <h2 className="advgb-post-title">
                                             <a href={ post.link } target="_blank">{ decodeEntities( post.title.rendered ) }</a>
                                         </h2>
+                                        <RawHTML className="advgb-text-after-title">{ textAfterTitle }</RawHTML>
                                         <div className="advgb-post-info">
                                             {displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map( ( coauthor, coauthor_indx ) => (
                                                 <Fragment>
@@ -725,6 +740,7 @@ import AdvQueryControls from './query-controls.jsx';
                                                          __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.raw
                                                      } } />
                                             ) }
+                                            <div className="advgb-text-before-readmore"><RawHTML>{ textBeforeReadmore }</RawHTML></div>         
                                             {displayReadMore && (
                                                 <div className="advgb-post-readmore">
                                                     <a href={ post.link } target="_blank">{ readMoreLbl ? readMoreLbl : __( 'Read More', 'advanced-gutenberg' ) }</a>
