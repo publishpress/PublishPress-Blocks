@@ -4739,6 +4739,54 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                                 foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
                                                     //echo '--------' . $inner_block['blockName'] . '(5th level)<br>';
                                                     $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
+
+                                                    // Sixth level
+                                                    if(isset($inner_block['innerBlocks'])){
+                                                        foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
+                                                            //echo '--------' . $inner_block['blockName'] . '(6th level)<br>';
+                                                            $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
+
+                                                            // Seventh level
+                                                            if(isset($inner_block['innerBlocks'])){
+                                                                foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
+                                                                    //echo '--------' . $inner_block['blockName'] . '(7th level)<br>';
+                                                                    $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
+
+                                                                    // Eighth level
+                                                                    if(isset($inner_block['innerBlocks'])){
+                                                                        foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
+                                                                            //echo '--------' . $inner_block['blockName'] . '(8th level)<br>';
+                                                                            $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
+
+                                                                            // Nineth level
+                                                                            if(isset($inner_block['innerBlocks'])){
+                                                                                foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
+                                                                                    //echo '--------' . $inner_block['blockName'] . '(9th level)<br>';
+                                                                                    $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
+
+                                                                                    // Tenth level
+                                                                                    if(isset($inner_block['innerBlocks'])){
+                                                                                        foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
+                                                                                            //echo '--------' . $inner_block['blockName'] . '(10th level)<br>';
+                                                                                            $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
+
+                                                                                            // Eleventh level
+                                                                                            if(isset($inner_block['innerBlocks'])){
+                                                                                                foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
+                                                                                                    //echo '--------' . $inner_block['blockName'] . '(11th level)<br>';
+                                                                                                    $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
