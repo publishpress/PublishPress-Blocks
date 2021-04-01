@@ -185,6 +185,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Cyrillic text output in frontend for Recent Posts block
   * Fix: Broken Advanced Tabs block in frontend when using an HTML Anchor
   * Fix: Columns Manager and Columns blocks edit inside Advanced Tabs
+  * Fix: Support for nested blocks until 11th level
   * Remove: Non production files such as SCSS, JSX, etc.
   * Remove: Not required formatting for editable elements for Login/Register block
   * Remove: Static font-size for post titles for Recent Posts block
