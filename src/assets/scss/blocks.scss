@@ -1711,6 +1711,10 @@ hr.wp-block-separator {
             font-size: 0.8em;
           }
 
+          * {
+            //color: #333;
+          }
+
           a {
             font-weight: bold;
             text-decoration: none;
@@ -1718,14 +1722,9 @@ hr.wp-block-separator {
             &:hover,
             &:focus,
             &:active {
+              //color: #666;
               text-decoration: none;
             }
-          }
-
-          .advgb-post-content .advgb-post-excerpt {
-            column-count: 2;
-            column-gap: 50px;
-            column-rule: 1px solid #ddd;
           }
         }
       }
