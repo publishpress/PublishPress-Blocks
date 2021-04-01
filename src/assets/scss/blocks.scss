@@ -1011,7 +1011,7 @@ div.advgb-tab-body {
     padding: 20px;
 }
 .edit-post-visual-editor .advgb-tabs-wrapper .block-editor-button-block-appender {
-    display: none;
+    /* display: none; Why this was set as none? */
 }
 
 .advgb-tab-body-wrapper {
