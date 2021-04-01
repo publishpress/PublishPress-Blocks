@@ -113,12 +113,15 @@ function advgbRenderBlockRecentPosts($attributes)
     $postHtml = '';
 
     if (!empty($recent_posts)) {
-        foreach ($recent_posts as $post) {
+        foreach ($recent_posts as $key=>$post) {
             $postThumbID = get_post_thumbnail_id($post->ID);
 
             $postHtml .= '<article class="advgb-recent-post">';
 
-            if (isset($attributes['displayFeaturedImage']) && $attributes['displayFeaturedImage']) {
+            if (
+                isset($attributes['displayFeaturedImage']) && $attributes['displayFeaturedImage']
+                && ($attributes['displayFeaturedImageFor'] === 'all' || $key < $attributes['displayFeaturedImageFor'])
+            ) {
                 $postThumb = '<img src="' . $rp_default_thumb['url'] . '" />';
                 if ($postThumbID) {
                     $postThumb = wp_get_attachment_image($postThumbID, 'large');
@@ -133,14 +136,13 @@ function advgbRenderBlockRecentPosts($attributes)
                     get_permalink($post->ID),
                     $postThumb
                 );
-            }
-
-            // Display placeholder for Frontpage view with Headline style when Image is disabled
-            if ($attributes['displayFeaturedImage'] === false && $attributes['postView'] === 'frontpage' && $attributes['frontendStyle'] === 'headline') {
+            } elseif ($attributes['postView'] === 'frontpage' && $attributes['frontendStyle'] === 'headline') {
                 $postHtml .= sprintf(
-                    '<div class="advgb-post-thumbnail"><a href="%1$s"></a></div>',
+                    '<div class="advgb-post-thumbnail advgb-post-thumbnail-no-image"><a href="%1$s"></a></div>',
                     get_permalink($post->ID)
                 );
+            } else {
+                // Nothing to do here
             }
 
             $postHtml .= '<div class="advgb-post-wrapper">';
@@ -176,14 +178,34 @@ function advgbRenderBlockRecentPosts($attributes)
 				}
             }
 
-            $displayDate = isset($attributes['displayDate']) && $attributes['displayDate'];
+            $postDate = isset($attributes['displayDate']) && $attributes['displayDate'] ? 'created' : (isset($attributes['postDate']) ? $attributes['postDate'] : 'hide');
+            $postDateFormat = isset($attributes['postDateFormat']) ? $attributes['postDateFormat'] : '';
             $displayTime = isset($attributes['displayTime']) && $attributes['displayTime'];
-			$format = $displayDate ? ( $displayTime ? get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) : get_option( 'date_format' ) ) : '';
+			$postDateDisplay = null;
 
-            if ( $displayDate ) {
+			if ( $postDate !== 'hide' ) {
+				$format = $displayTime ? ( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ) : get_option( 'date_format' );
+
+				if ( $postDateFormat === 'absolute' ) {
+					if ( $postDate === 'created' ) {
+						$postDateDisplay = get_the_date( $format, $post->ID);
+					} else {
+						$postDateDisplay = get_the_modified_date( $format, $post->ID);
+					}
+				} else {
+                    // Relative date format
+					if ( $postDate === 'created' ) {
+						$postDateDisplay = __( 'Posted', 'advanced-gutenberg') . ' ' . human_time_diff( get_the_date( 'U', $post->ID ) ) . ' ' . __( 'ago', 'advanced-gutenberg');
+					} else {
+						$postDateDisplay = __( 'Updated', 'advanced-gutenberg') . ' ' .human_time_diff( get_the_modified_date( 'U', $post->ID ) ) . ' ' . __( 'ago', 'advanced-gutenberg');
+					}
+				}
+			}
+
+            if ( ! empty( $postDateDisplay ) ) {
                 $postHtml .= sprintf(
                     '<span class="advgb-post-datetime">%1$s</span>',
-                    get_the_date( $format, $post->ID)
+                    $postDateDisplay
                 );
             }
 
@@ -289,10 +311,6 @@ function advgbRenderBlockRecentPosts($attributes)
         (isset($attributes['frontpageLayoutM']) && $attributes['frontpageLayoutM']) ? $blockClass .= ' mbl-layout-' . $attributes['frontpageLayoutM'] : '';
     }
 
-    if($attributes['displayFeaturedImage'] === false) {
-        $blockClass .= ' no-image';
-    }
-
     if (isset($attributes['className'])) {
         $blockClass .= ' ' . $attributes['className'];
     }
@@ -331,9 +349,6 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'string',
                 'default' => 'date',
             ),
-            'category' => array(
-                'type' => 'string',
-            ),
             'categories' => array(
                 'type' => 'array',
                 'items' => array(
@@ -358,13 +373,21 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'boolean',
                 'default' => true,
             ),
+            'displayFeaturedImageFor' => array(
+                'type' => 'string',
+                'default' => 'all',
+            ),
             'displayAuthor' => array(
                 'type' => 'boolean',
                 'default' => false,
             ),
-            'displayDate' => array(
-                'type' => 'boolean',
-                'default' => false,
+            'postDate' => array(
+                'type' => 'string',
+                'default' => 'hide',
+            ),
+            'postDateFormat' => array(
+                'type' => 'string',
+                'default' => 'absolute',
             ),
             'displayTime' => array(
                 'type' => 'boolean',
@@ -433,6 +456,14 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'boolean',
                 'default' => false,
             ),
+			// deprecrated attributes...
+            'displayDate' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'category' => array(
+                'type' => 'string',
+            ),
         ),
         'render_callback' => 'advgbRenderBlockRecentPosts',
     ));
@@ -482,6 +513,15 @@ function advgbRegisterCustomFields() {
         )
     );
 
+    register_rest_field( 'post',
+        'relative_dates',
+        array(
+            'get_callback'  => 'advgbGetRelativeDates',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
 }
 add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
 
@@ -511,6 +551,23 @@ function advgbAllowPageQueryVars( $query_params ) {
 }
 add_filter( 'rest_page_collection_params', 'advgbAllowPageQueryVars' );
 
+/**
+ * Returns the relative dates of the post.
+ *
+ * @return array
+ */
+function advgbGetRelativeDates( $post ) {
+	return array(
+		'created' => __( 'Posted', 'advanced-gutenberg') . ' ' .human_time_diff( get_the_date( 'U', $post['id'] ) ) . ' ' . __( 'ago', 'advanced-gutenberg'),
+		'modified' => __( 'Updated', 'advanced-gutenberg') . ' ' .human_time_diff( get_the_modified_date( 'U', $post['id'] ) ) . ' ' . __( 'ago', 'advanced-gutenberg')
+	);
+}
+
+/**
+ * Returns the number of comments against the post;
+ *
+ * @return int
+ */
 function advgbGetComments( $post ) {
 	return get_comments_number( $post['id'] );
 }

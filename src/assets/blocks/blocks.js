@@ -23525,6 +23525,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         tagIds: tagIds
                     });
                 });
+
+                // migrate from displayDate to postDate
+                var postDateDisplay = attributes.displayDate ? 'created' : attributes.postDate;
+                setAttributes({
+                    postDate: postDateDisplay,
+                    displayDate: false
+                });
             }
         }, {
             key: "componentWillUpdate",
@@ -23599,8 +23606,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     numberOfPosts = attributes.numberOfPosts,
                     columns = attributes.columns,
                     displayFeaturedImage = attributes.displayFeaturedImage,
+                    displayFeaturedImageFor = attributes.displayFeaturedImageFor,
                     displayAuthor = attributes.displayAuthor,
                     displayDate = attributes.displayDate,
+                    postDate = attributes.postDate,
+                    postDateFormat = attributes.postDateFormat,
                     displayTime = attributes.displayTime,
                     displayExcerpt = attributes.displayExcerpt,
                     postTextAsExcerpt = attributes.postTextAsExcerpt,
@@ -23796,6 +23806,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayFeaturedImage: !displayFeaturedImage });
                             }
                         }),
+                        displayFeaturedImage && React.createElement(SelectControl, {
+                            value: displayFeaturedImageFor,
+                            options: [{ label: __('For all posts', 'advanced-gutenberg'), value: 'all' }, { label: __('For the first post', 'advanced-gutenberg'), value: 1 }, { label: __('For the first 2 posts', 'advanced-gutenberg'), value: 2 }, { label: __('For the first 3 posts', 'advanced-gutenberg'), value: 3 }, { label: __('For the first 4 posts', 'advanced-gutenberg'), value: 4 }, { label: __('For the first 5 posts', 'advanced-gutenberg'), value: 5 }],
+                            onChange: function onChange(value) {
+                                setAttributes({ displayFeaturedImageFor: value });
+                            },
+                            className: "advgb-child-select"
+                        }),
                         React.createElement(ToggleControl, {
                             label: __('Display Post Author', 'advanced-gutenberg'),
                             checked: displayAuthor,
@@ -23803,20 +23821,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayAuthor: !displayAuthor });
                             }
                         }),
-                        React.createElement(ToggleControl, {
+                        React.createElement(SelectControl, {
                             label: __('Display Post Date', 'advanced-gutenberg'),
-                            checked: displayDate,
-                            onChange: function onChange() {
-                                return setAttributes({ displayDate: !displayDate });
+                            value: postDate,
+                            options: [{ label: __('Hide', 'advanced-gutenberg'), value: 'hide' }, { label: __('Created Date', 'advanced-gutenberg'), value: 'created' }, { label: __('Updated Date', 'advanced-gutenberg'), value: 'updated' }],
+                            onChange: function onChange(value) {
+                                setAttributes({ postDate: value });
                             }
                         }),
-                        displayDate && React.createElement(ToggleControl, {
-                            label: __('Display Post Time', 'advanced-gutenberg'),
-                            checked: displayTime,
-                            onChange: function onChange() {
-                                return setAttributes({ displayTime: !displayTime });
-                            }
-                        }),
+                        postDate !== 'hide' && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(SelectControl, {
+                                label: __('Post Date Format', 'advanced-gutenberg'),
+                                value: postDateFormat,
+                                options: [{ label: __('Absolute', 'advanced-gutenberg'), value: 'absolute' }, { label: __('Relative', 'advanced-gutenberg'), value: 'relative' }],
+                                onChange: function onChange(value) {
+                                    setAttributes({ postDateFormat: value });
+                                }
+                            }),
+                            postDateFormat === 'absolute' && React.createElement(ToggleControl, {
+                                label: __('Display Post Time', 'advanced-gutenberg'),
+                                checked: displayTime,
+                                onChange: function onChange() {
+                                    return setAttributes({ displayTime: !displayTime });
+                                }
+                            })
+                        ),
                         postType === 'post' && React.createElement(ToggleControl, {
                             label: __('Display Comment Counts', 'advanced-gutenberg'),
                             checked: displayCommentCount,
@@ -23942,10 +23973,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'frontpage'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle, displayFeaturedImage === false && 'no-image'].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle].filter(Boolean).join(' ');
 
                 var formats = __experimentalGetSettings().formats;
-                var format = displayDate ? displayTime ? formats.datetime : formats.date : '';
+                var format = postDate !== 'hide' ? displayTime ? formats.datetime : formats.date : '';
 
                 return isPreview ? React.createElement("img", { alt: __('Recent Posts', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
                     Fragment,
@@ -23978,20 +24009,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     "article",
                                     { key: index, className: "advgb-recent-post" },
-                                    displayFeaturedImage && React.createElement(
-                                        "div",
-                                        { className: "advgb-post-thumbnail" },
-                                        React.createElement(
-                                            "a",
-                                            { href: post.link, target: "_blank" },
-                                            React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
-                                        )
-                                    ),
-                                    displayFeaturedImage === false && postView === 'frontpage' && frontendStyle === 'headline' && React.createElement(
-                                        "div",
-                                        { className: "advgb-post-thumbnail" },
-                                        React.createElement("a", { href: post.link, target: "_blank" })
-                                    ),
+                                    function () {
+                                        if (displayFeaturedImage && (displayFeaturedImageFor === 'all' || index < displayFeaturedImageFor)) {
+                                            return React.createElement(
+                                                "div",
+                                                { className: "advgb-post-thumbnail" },
+                                                React.createElement(
+                                                    "a",
+                                                    { href: post.link, target: "_blank" },
+                                                    React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
+                                                )
+                                            );
+                                        } else if (postView === 'frontpage' && frontendStyle === 'headline') {
+                                            return React.createElement(
+                                                "div",
+                                                { className: "advgb-post-thumbnail advgb-post-thumbnail-no-image" },
+                                                React.createElement("a", { href: post.link, target: "_blank" })
+                                            );
+                                        } else {
+                                            {/* Nothing to do here */}
+                                        }
+                                    }(),
                                     React.createElement(
                                         "div",
                                         { className: "advgb-post-wrapper" },
@@ -24034,10 +24072,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 },
                                                 post.author_meta.display_name
                                             ),
-                                            displayDate && React.createElement(
+                                            postDate !== 'hide' && React.createElement(
                                                 "span",
                                                 { className: "advgb-post-datetime" },
-                                                dateI18n(format, post.date_gmt)
+                                                postDateFormat === 'absolute' ? dateI18n(format, postDate === 'created' ? post.date_gmt : post.modified_gmt) : postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified
                                             ),
                                             postType === 'post' && displayCommentCount && React.createElement(
                                                 "span",

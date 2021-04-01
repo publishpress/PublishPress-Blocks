@@ -155,6 +155,13 @@ import AdvQueryControls from './query-controls.jsx';
 
             } );
 
+            // migrate from displayDate to postDate
+            let postDateDisplay = attributes.displayDate ? 'created' : attributes.postDate;
+            setAttributes({
+                  postDate: postDateDisplay,
+                  displayDate: false,
+            });
+
         }
 
         componentWillUpdate( nextProps ) {
@@ -214,8 +221,11 @@ import AdvQueryControls from './query-controls.jsx';
                 numberOfPosts,
                 columns,
                 displayFeaturedImage,
+                displayFeaturedImageFor,
                 displayAuthor,
                 displayDate,
+                postDate,
+                postDateFormat,
                 displayTime,
                 displayExcerpt,
                 postTextAsExcerpt,
@@ -406,22 +416,55 @@ import AdvQueryControls from './query-controls.jsx';
                             checked={ displayFeaturedImage }
                             onChange={ () => setAttributes( { displayFeaturedImage: !displayFeaturedImage } ) }
                         />
+                        {displayFeaturedImage &&
+                        <SelectControl
+                            value={ displayFeaturedImageFor }
+                            options={ [
+                                { label: __( 'For all posts', 'advanced-gutenberg' ), value: 'all' },
+                                { label: __( 'For the first post', 'advanced-gutenberg' ), value: 1 },
+                                { label: __( 'For the first 2 posts', 'advanced-gutenberg' ), value: 2 },
+                                { label: __( 'For the first 3 posts', 'advanced-gutenberg' ), value: 3 },
+                                { label: __( 'For the first 4 posts', 'advanced-gutenberg' ), value: 4 },
+                                { label: __( 'For the first 5 posts', 'advanced-gutenberg' ), value: 5 },
+                            ] }
+                            onChange={ ( value ) => { setAttributes( { displayFeaturedImageFor: value } ) } }
+                            className="advgb-child-select"
+                        />
+                        }
                         <ToggleControl
                             label={ __( 'Display Post Author', 'advanced-gutenberg' ) }
                             checked={ displayAuthor }
                             onChange={ () => setAttributes( { displayAuthor: !displayAuthor } ) }
                         />
-                        <ToggleControl
+                        <SelectControl
                             label={ __( 'Display Post Date', 'advanced-gutenberg' ) }
-                            checked={ displayDate }
-                            onChange={ () => setAttributes( { displayDate: !displayDate } ) }
+                            value={ postDate }
+                            options={ [
+                                { label: __( 'Hide', 'advanced-gutenberg' ), value: 'hide' },
+                                { label: __( 'Created Date', 'advanced-gutenberg' ), value: 'created' },
+                                { label: __( 'Updated Date', 'advanced-gutenberg' ), value: 'updated' },
+                            ] }
+                            onChange={ ( value ) => { setAttributes( { postDate: value } ) } }
                         />
-                        { displayDate &&
-                        <ToggleControl
-                            label={ __( 'Display Post Time', 'advanced-gutenberg' ) }
-                            checked={ displayTime }
-                            onChange={ () => setAttributes( { displayTime: !displayTime } ) }
-                        />
+                        { postDate !== 'hide' &&
+                            <Fragment>
+                                <SelectControl
+                                    label={ __( 'Post Date Format', 'advanced-gutenberg' ) }
+                                    value={ postDateFormat }
+                                    options={ [
+                                        { label: __( 'Absolute', 'advanced-gutenberg' ), value: 'absolute' },
+                                        { label: __( 'Relative', 'advanced-gutenberg' ), value: 'relative' },
+                                    ] }
+                                    onChange={ ( value ) => { setAttributes( { postDateFormat: value } ) } }
+                                />
+                            {postDateFormat === 'absolute' &&
+                                <ToggleControl
+                                    label={ __( 'Display Post Time', 'advanced-gutenberg' ) }
+                                    checked={ displayTime }
+                                    onChange={ () => setAttributes( { displayTime: !displayTime } ) }
+                                />
+                            }
+                            </Fragment>
                         }
                         {postType === 'post' &&
                         <ToggleControl
@@ -563,12 +606,10 @@ import AdvQueryControls from './query-controls.jsx';
                 postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM,
                 postView === 'frontpage' && gap && 'gap-' + gap,
                 postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle,
-                displayFeaturedImage === false && 'no-image',
             ].filter( Boolean ).join( ' ' );
 
-
             const formats = __experimentalGetSettings().formats;
-            let format = displayDate ? (displayTime ? formats.datetime : formats.date) : '';
+            let format = postDate !== 'hide' ? (displayTime ? formats.datetime : formats.date) : '';
 
             return (
                 isPreview ?
@@ -591,19 +632,27 @@ import AdvQueryControls from './query-controls.jsx';
                         <div className="advgb-recent-posts">
                             {recentPosts.map( ( post, index ) => (
                                 <article key={ index } className="advgb-recent-post" >
-                                    {displayFeaturedImage && (
-                                        <div className="advgb-post-thumbnail">
-                                            <a href={ post.link } target="_blank">
-                                                <img src={ post.featured_img ? post.featured_img : advgbBlocks.post_thumb } alt={ __( 'Post Image', 'advanced-gutenberg' ) } />
-                                            </a>
-                                        </div>
-                                    ) }
-                                    { /* Display placeholder for Frontpage view with Headline style when Image is disabled */ }
-                                    {displayFeaturedImage === false && postView === 'frontpage' && frontendStyle === 'headline' && (
-                                        <div className="advgb-post-thumbnail">
-                                            <a href={ post.link } target="_blank"></a>
-                                        </div>
-                                    ) }
+
+                                    {(() => {
+                                        if( displayFeaturedImage && ( displayFeaturedImageFor === 'all' || index < displayFeaturedImageFor ) ) {
+                                            return(
+                                                <div className="advgb-post-thumbnail">
+                                                    <a href={ post.link } target="_blank">
+                                                        <img src={ post.featured_img ? post.featured_img : advgbBlocks.post_thumb } alt={ __( 'Post Image', 'advanced-gutenberg' ) } />
+                                                    </a>
+                                                </div>
+                                            )
+                                        } else if( postView === 'frontpage' && frontendStyle === 'headline' ) {
+                                            return (
+                                                <div className="advgb-post-thumbnail advgb-post-thumbnail-no-image">
+                                                    <a href={ post.link } target="_blank"></a>
+                                                </div>
+                                            )
+                                        } else {
+                                            { /* Nothing to do here */ }
+                                        }
+                                    })()}
+
                                     <div className="advgb-post-wrapper">
                                         <h2 className="advgb-post-title">
                                             <a href={ post.link } target="_blank">{ decodeEntities( post.title.rendered ) }</a>
@@ -632,10 +681,13 @@ import AdvQueryControls from './query-controls.jsx';
                                                 </a>
                                             )
                                             }
-                                            {displayDate && (
+                                            {postDate !== 'hide' && (
                                                 <span className="advgb-post-datetime" >
-                                                { dateI18n( format, post.date_gmt ) }
-                                            </span>
+                                                { postDateFormat === 'absolute'
+                                                    ? ( dateI18n( format, postDate === 'created' ? post.date_gmt : post.modified_gmt ) )
+                                                    : ( postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified )
+                                                }
+                                                </span>
                                             ) }
                                             {postType === 'post' && displayCommentCount && (
                                                 <span className="advgb-post-comments" >

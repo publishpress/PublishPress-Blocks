@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.7
-Stable tag: 2.5.8b6
+Stable tag: 2.5.8b7
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -173,6 +173,8 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Better organization for settings to Recent Posts block
   * Add: Comment count support to Recent Posts block
   * Add: AdvQueryControls component with minor customizations
+  * Add: Modified and Posted date with relative format support to Recent Posts block
+  * Add: Setting to display Featured Images for the first posts only to Recent Posts block
   * Fix: Duplicated ID when duplicating Search Bar block
   * Fix: Formatting output for editable elements in frontend for Login/Register block
   * Fix: "Horizontal Alignment" label for Advanced Image default configuration
