@@ -24298,7 +24298,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('latest posts', 'advanced-gutenberg'), __('posts slide', 'advanced-gutenberg'), __('posts grid', 'advanced-gutenberg')],
+        keywords: [__('latest posts', 'advanced-gutenberg'), __('posts slide', 'advanced-gutenberg'), __('posts grid', 'advanced-gutenberg'), __('posts', 'advanced-gutenberg'), __('pages', 'advanced-gutenberg')],
         supports: {
             html: false
         },

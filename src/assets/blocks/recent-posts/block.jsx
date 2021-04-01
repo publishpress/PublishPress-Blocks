@@ -740,7 +740,7 @@ import AdvQueryControls from './query-controls.jsx';
                                                          __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.raw
                                                      } } />
                                             ) }
-                                            <div className="advgb-text-before-readmore"><RawHTML>{ textBeforeReadmore }</RawHTML></div>         
+                                            <div className="advgb-text-before-readmore"><RawHTML>{ textBeforeReadmore }</RawHTML></div>
                                             {displayReadMore && (
                                                 <div className="advgb-post-readmore">
                                                     <a href={ post.link } target="_blank">{ readMoreLbl ? readMoreLbl : __( 'Read More', 'advanced-gutenberg' ) }</a>
@@ -860,7 +860,13 @@ import AdvQueryControls from './query-controls.jsx';
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'latest posts', 'advanced-gutenberg' ), __( 'posts slide', 'advanced-gutenberg' ), __( 'posts grid', 'advanced-gutenberg' ) ],
+        keywords: [
+            __( 'latest posts', 'advanced-gutenberg' ),
+            __( 'posts slide', 'advanced-gutenberg' ),
+            __( 'posts grid', 'advanced-gutenberg' ),
+            __( 'posts', 'advanced-gutenberg' ),
+            __( 'pages', 'advanced-gutenberg' )
+        ],
         supports: {
             html: false,
         },
