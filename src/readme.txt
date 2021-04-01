@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.7
-Stable tag: 2.5.8b7
+Stable tag: 2.5.8b8
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -183,6 +183,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Hours and minutes time record for Newsletter block
   * Fix: Allowed formats for name and position fields in Testimonial block
   * Fix: Cyrillic text output in frontend for Recent Posts block
+  * Fix: Broken Advanced Tabs block in frontend when using an HTML Anchor
   * Remove: Non production files such as SCSS, JSX, etc.
   * Remove: Not required formatting for editable elements for Login/Register block
   * Remove: Static font-size for post titles for Recent Posts block
