@@ -23625,7 +23625,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     frontpageLayoutT = attributes.frontpageLayoutT,
                     frontpageLayoutM = attributes.frontpageLayoutM,
                     gap = attributes.gap,
-                    frontendStyle = attributes.frontendStyle,
+                    frontpageStyle = attributes.frontpageStyle,
                     sliderStyle = attributes.sliderStyle,
                     excludeCurrentPost = attributes.excludeCurrentPost,
                     showCategories = attributes.showCategories,
@@ -23749,10 +23749,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(SelectControl, {
                             label: __('Style', 'advanced-gutenberg'),
-                            value: frontendStyle,
+                            value: frontpageStyle,
                             options: [{ label: __('Default', 'advanced-gutenberg'), value: 'default' }, { label: __('Headline', 'advanced-gutenberg'), value: 'headline' }, { label: __('Boxed', 'advanced-gutenberg'), value: 'boxed' }, { label: __('Newspaper', 'advanced-gutenberg'), value: 'newspaper' }],
                             onChange: function onChange(value) {
-                                return setAttributes({ frontendStyle: value });
+                                return setAttributes({ frontpageStyle: value });
                             }
                         }),
                         React.createElement(SelectControl, {
@@ -24005,7 +24005,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'frontpage'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle].filter(Boolean).join(' ');
 
                 var formats = __experimentalGetSettings().formats;
                 var format = postDate !== 'hide' ? displayTime ? formats.datetime : formats.date : '';
@@ -24052,7 +24052,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
                                                 )
                                             );
-                                        } else if (postView === 'frontpage' && frontendStyle === 'headline' || postView === 'slider' && sliderStyle === 'headline') {
+                                        } else if (postView === 'frontpage' && frontpageStyle === 'headline' || postView === 'slider' && sliderStyle === 'headline') {
                                             return React.createElement(
                                                 "div",
                                                 { className: "advgb-post-thumbnail advgb-post-thumbnail-no-image" },

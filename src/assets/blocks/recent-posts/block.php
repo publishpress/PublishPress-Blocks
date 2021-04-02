@@ -136,7 +136,7 @@ function advgbRenderBlockRecentPosts($attributes)
                     get_permalink($post->ID),
                     $postThumb
                 );
-            } elseif ( ($attributes['postView'] === 'frontpage' && $attributes['frontendStyle'] === 'headline') || ($attributes['postView'] === 'slider' && $attributes['sliderStyle'] === 'headline') ) {
+            } elseif ( ($attributes['postView'] === 'frontpage' && $attributes['frontpageStyle'] === 'headline') || ($attributes['postView'] === 'slider' && $attributes['sliderStyle'] === 'headline') ) {
                 $postHtml .= sprintf(
                     '<div class="advgb-post-thumbnail advgb-post-thumbnail-no-image"><a href="%1$s"></a></div>',
                     get_permalink($post->ID)
@@ -315,7 +315,7 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass = 'frontpage-view';
         $blockClass .= ' layout-' . $attributes['frontpageLayout'];
         $blockClass .= ' gap-' . $attributes['gap'];
-        $blockClass .= ' style-' . $attributes['frontendStyle'];
+        $blockClass .= ' style-' . $attributes['frontpageStyle'];
         (isset($attributes['frontpageLayoutT']) && $attributes['frontpageLayoutT']) ? $blockClass .= ' tbl-layout-' . $attributes['frontpageLayoutT'] : '';
         (isset($attributes['frontpageLayoutM']) && $attributes['frontpageLayoutM']) ? $blockClass .= ' mbl-layout-' . $attributes['frontpageLayoutM'] : '';
     }
@@ -438,7 +438,7 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'number',
                 'default' => 10,
             ),
-            'frontendStyle' => array(
+            'frontpageStyle' => array(
                 'type' => 'string',
                 'default' => 'default',
             ),

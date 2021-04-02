@@ -237,7 +237,7 @@ import AdvQueryControls from './query-controls.jsx';
                 tags,
                 frontpageLayout, frontpageLayoutT, frontpageLayoutM,
                 gap,
-                frontendStyle,
+                frontpageStyle,
                 sliderStyle,
                 excludeCurrentPost,
                 showCategories,
@@ -366,14 +366,14 @@ import AdvQueryControls from './query-controls.jsx';
                         </div>
                         <SelectControl
                             label={ __( 'Style', 'advanced-gutenberg' ) }
-                            value={ frontendStyle }
+                            value={ frontpageStyle }
                             options={ [
                                 { label: __( 'Default', 'advanced-gutenberg' ), value: 'default' },
                                 { label: __( 'Headline', 'advanced-gutenberg' ), value: 'headline' },
                                 { label: __( 'Boxed', 'advanced-gutenberg' ), value: 'boxed' },
                                 { label: __( 'Newspaper', 'advanced-gutenberg' ), value: 'newspaper' },
                             ] }
-                            onChange={ ( value ) => setAttributes( { frontendStyle: value } ) }
+                            onChange={ ( value ) => setAttributes( { frontpageStyle: value } ) }
                         />
                         <SelectControl
                             label={ __( 'Space between columns and rows', 'advanced-gutenberg' ) }
@@ -634,7 +634,7 @@ import AdvQueryControls from './query-controls.jsx';
                 postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT,
                 postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM,
                 postView === 'frontpage' && gap && 'gap-' + gap,
-                postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle,
+                postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle,
             ].filter( Boolean ).join( ' ' );
 
             const formats = __experimentalGetSettings().formats;
@@ -671,7 +671,7 @@ import AdvQueryControls from './query-controls.jsx';
                                                     </a>
                                                 </div>
                                             )
-                                        } else if( ( postView === 'frontpage' && frontendStyle === 'headline' ) || ( postView === 'slider' && sliderStyle === 'headline' ) ) {
+                                        } else if( ( postView === 'frontpage' && frontpageStyle === 'headline' ) || ( postView === 'slider' && sliderStyle === 'headline' ) ) {
                                             return (
                                                 <div className="advgb-post-thumbnail advgb-post-thumbnail-no-image">
                                                     <a href={ post.link } target="_blank"></a>
