@@ -1453,11 +1453,12 @@ hr.wp-block-separator {
 
           a {
             width: 100%;
+            overflow: hidden;
 
             &:before {
               z-index: 1;
               pointer-events: visible;
-              bottom: 0;
+              bottom: 7px;
               content: "";
               display: block;
               height: 100%;
@@ -1477,6 +1478,7 @@ hr.wp-block-separator {
               transition: transform 0.5s ease, opacity 0.3s;
               -webkit-transition: -webkit-transform 0.5s ease, opacity 0.3s;
               width: 100%;
+              height: auto;
             }
           }
         }
@@ -1522,6 +1524,19 @@ hr.wp-block-separator {
           }
         }
       }
+
+      // No featured image - Slider
+      .advgb-recent-post .advgb-post-thumbnail {
+
+        &.advgb-post-thumbnail-no-image {
+          min-height: 400px;
+          background: #999;
+        }
+
+        a:before {
+          bottom: 0;
+        }
+      }
     }
   }
 
@@ -1559,7 +1574,7 @@ hr.wp-block-separator {
       }
     }
 
-    // No featured image
+    // No featured image - Frontpage
     .advgb-recent-posts .advgb-recent-post .advgb-post-thumbnail.advgb-post-thumbnail-no-image {
       min-height: 350px;
       background: #999;
