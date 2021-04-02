@@ -136,7 +136,7 @@ function advgbRenderBlockRecentPosts($attributes)
                     get_permalink($post->ID),
                     $postThumb
                 );
-            } elseif ($attributes['postView'] === 'frontpage' && $attributes['frontendStyle'] === 'headline') {
+            } elseif ( ($attributes['postView'] === 'frontpage' || $attributes['postView'] === 'slider') && $attributes['frontendStyle'] === 'headline') {
                 $postHtml .= sprintf(
                     '<div class="advgb-post-thumbnail advgb-post-thumbnail-no-image"><a href="%1$s"></a></div>',
                     get_permalink($post->ID)
@@ -310,6 +310,7 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass = 'list-view';
     } elseif ($attributes['postView'] === 'slider') {
         $blockClass = 'slider-view';
+        $blockClass .= ' style-' . $attributes['sliderStyle'];
     } elseif ($attributes['postView'] === 'frontpage') {
         $blockClass = 'frontpage-view';
         $blockClass .= ' layout-' . $attributes['frontpageLayout'];
@@ -438,6 +439,10 @@ function advgbRegisterBlockRecentPosts()
                 'default' => 10,
             ),
             'frontendStyle' => array(
+                'type' => 'string',
+                'default' => 'default',
+            ),
+            'sliderStyle' => array(
                 'type' => 'string',
                 'default' => 'default',
             ),
