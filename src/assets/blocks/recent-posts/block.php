@@ -136,7 +136,7 @@ function advgbRenderBlockRecentPosts($attributes)
                     get_permalink($post->ID),
                     $postThumb
                 );
-            } elseif ( ($attributes['postView'] === 'frontpage' || $attributes['postView'] === 'slider') && $attributes['frontendStyle'] === 'headline') {
+            } elseif ( ($attributes['postView'] === 'frontpage' && $attributes['frontendStyle'] === 'headline') || ($attributes['postView'] === 'slider' && $attributes['sliderStyle'] === 'headline') ) {
                 $postHtml .= sprintf(
                     '<div class="advgb-post-thumbnail advgb-post-thumbnail-no-image"><a href="%1$s"></a></div>',
                     get_permalink($post->ID)

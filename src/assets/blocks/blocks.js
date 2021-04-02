@@ -24052,7 +24052,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
                                                 )
                                             );
-                                        } else if ((postView === 'frontpage' || postView === 'slider') && frontendStyle === 'headline') {
+                                        } else if (postView === 'frontpage' && frontendStyle === 'headline' || postView === 'slider' && sliderStyle === 'headline') {
                                             return React.createElement(
                                                 "div",
                                                 { className: "advgb-post-thumbnail advgb-post-thumbnail-no-image" },

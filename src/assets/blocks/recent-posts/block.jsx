@@ -671,7 +671,7 @@ import AdvQueryControls from './query-controls.jsx';
                                                     </a>
                                                 </div>
                                             )
-                                        } else if( ( postView === 'frontpage' || postView === 'slider' ) && frontendStyle === 'headline' ) {
+                                        } else if( ( postView === 'frontpage' && frontendStyle === 'headline' ) || ( postView === 'slider' && sliderStyle === 'headline' ) ) {
                                             return (
                                                 <div className="advgb-post-thumbnail advgb-post-thumbnail-no-image">
                                                     <a href={ post.link } target="_blank"></a>
