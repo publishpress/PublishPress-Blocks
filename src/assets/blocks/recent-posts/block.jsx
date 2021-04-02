@@ -238,6 +238,7 @@ import AdvQueryControls from './query-controls.jsx';
                 frontpageLayout, frontpageLayoutT, frontpageLayoutM,
                 gap,
                 frontendStyle,
+                sliderStyle,
                 excludeCurrentPost,
                 showCategories,
                 showTags,
@@ -259,6 +260,19 @@ import AdvQueryControls from './query-controls.jsx';
 
             const inspectorControls = (
                 <InspectorControls>
+                    {postView === 'slider' &&
+                    <PanelBody title={ __( 'Slider View Settings', 'advanced-gutenberg' ) }>
+                        <SelectControl
+                            label={ __( 'Style', 'advanced-gutenberg' ) }
+                            value={ sliderStyle }
+                            options={ [
+                                { label: __( 'Default', 'advanced-gutenberg' ), value: 'default' },
+                                { label: __( 'Headline', 'advanced-gutenberg' ), value: 'headline' },
+                            ] }
+                            onChange={ ( value ) => setAttributes( { sliderStyle: value } ) }
+                        />
+                    </PanelBody>
+                    }
                     {postView === 'frontpage' &&
                     <PanelBody title={ __( 'Frontpage View Settings', 'advanced-gutenberg' ) }>
                         <div className="advgb-recent-posts-responsive-items">
@@ -614,6 +628,7 @@ import AdvQueryControls from './query-controls.jsx';
                 postView === 'grid' && 'grid-view',
                 postView === 'list' && 'list-view',
                 postView === 'slider' && 'slider-view',
+                postView === 'slider' && sliderStyle && 'style-' + sliderStyle,
                 postView === 'frontpage' && 'frontpage-view',
                 postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout,
                 postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT,
@@ -656,7 +671,7 @@ import AdvQueryControls from './query-controls.jsx';
                                                     </a>
                                                 </div>
                                             )
-                                        } else if( postView === 'frontpage' && frontendStyle === 'headline' ) {
+                                        } else if( ( postView === 'frontpage' && frontendStyle === 'headline' ) || ( postView === 'slider' && sliderStyle === 'headline' ) ) {
                                             return (
                                                 <div className="advgb-post-thumbnail advgb-post-thumbnail-no-image">
                                                     <a href={ post.link } target="_blank"></a>
