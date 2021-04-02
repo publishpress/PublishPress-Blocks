@@ -1440,7 +1440,7 @@ hr.wp-block-separator {
         text-align: center;
 
         .advgb-post-thumbnail {
-          //overflow: hidden;
+          overflow: hidden;
 
           &:hover {
 
@@ -1454,11 +1454,12 @@ hr.wp-block-separator {
           a {
             width: 100%;
             overflow: hidden;
+            display: block;
 
             &:before {
               z-index: 1;
               pointer-events: visible;
-              bottom: 7px;
+              bottom: 0;
               content: "";
               display: block;
               height: 100%;
@@ -1525,16 +1526,20 @@ hr.wp-block-separator {
         }
       }
 
+      .slick-dots {
+        bottom: -32px;
+      }
+
       // No featured image - Slider
       .advgb-recent-post .advgb-post-thumbnail {
 
         &.advgb-post-thumbnail-no-image {
           min-height: 400px;
           background: #999;
-        }
 
-        a:before {
-          bottom: 0;
+          a:before {
+            //bottom: 0;
+          }
         }
       }
     }
