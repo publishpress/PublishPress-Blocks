@@ -1208,6 +1208,10 @@ hr.wp-block-separator {
 }
 
 /*Recent Posts styles*/
+#editor .advgb-recent-posts-block.slider-view.style-headline .advgb-recent-posts .slick-dots {
+  bottom: -57px;
+}
+
 .advgb-recent-posts-block {
     padding-bottom: 1px;
 }
