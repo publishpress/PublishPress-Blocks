@@ -85,13 +85,27 @@ function advgbRenderBlockRecentPosts($attributes)
 			);
 	}
 
+	$orderBy = empty($attributes['orderBy'])?'date':$attributes['orderBy'];
+
+	// 'id' in https://developer.wordpress.org/rest-api/reference/posts/#list-posts
+	// BUT
+	// 'ID' in https://developer.wordpress.org/reference/classes/wp_query/parse_query/
+	if ( $orderBy === 'id' ) {
+		$orderBy = 'ID';
+	}
+
+	// if multiple authors, use the first author in the list.
+	if ( $orderBy === 'author' ) {
+		advgbMultipleAuthorSort();
+	}
+
 	$post_type = isset($attributes['postType']) ? $attributes['postType'] : 'post';
 	$args = array(
 			'post_type' => $post_type,
             'numberposts' => empty($attributes['numberOfPosts'])?8:$attributes['numberOfPosts'],
             'post_status' => 'publish',
             'order' => empty($attributes['order'])?'desc':$attributes['order'],
-            'orderby' => empty($attributes['orderBy'])?'date':$attributes['orderBy'],
+            'orderby' => $orderBy,
             'suppress_filters' => false,
 			'exclude' => $post_type === 'post' && isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ? $post->ID : 0
         );
@@ -628,3 +642,23 @@ function advgbGetCoauthors( $post ) {
 function advgbGetAuthorMeta( $page ) {
 	return array( 'author_link' => get_author_posts_url( $page['author'] ), 'display_name' => get_the_author_meta( 'display_name', $page['author'] ) );
 }
+
+/**
+ * If multiple authors are defined using PublishPress Authors plugin, use the first author in the list.
+ */
+function advgbMultipleAuthorSort() {
+	if ( function_exists('get_multiple_authors') ){
+		add_action('pre_get_posts', function( $query )  {
+			if ( is_admin() ) {
+				return $query;
+			}
+
+			$query->set('orderby', 'meta_value');
+			$query->set('meta_key', 'ppma_authors_name');
+
+			return $query;
+		
+		} );
+	}
+}
+advgbMultipleAuthorSort();
