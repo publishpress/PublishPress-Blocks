@@ -12,15 +12,14 @@ Gutenberg is good, and with PublishPress Blocks, it’s great! The blocks includ
 
 == Description ==
 
-Gutenberg is good, and with PublishPress Blocks, it’s great! [PublishPress Blocks](https://publishpress.com/blocks/) has everything you need to build professional websites with WordPress. The blocks include layout options, sliders, buttons, icons, image galleries, maps, tabs, testimonials, accordions, and much more.
+Gutenberg is good, and with [PublishPress Blocks](https://publishpress.com/blocks/), it’s great! PublishPress Blocks has everything you need to build professional websites with WordPress. The blocks include layout options, sliders, buttons, icons, image galleries, maps, tabs, testimonials, accordions, and much more.
 
 - [See the block demos](https://demo.publishpress.com/).
 - [Browse the documentation and videos](https://publishpress.com/knowledge-base/installation/).
-- [Join the Facebook group for PublishPress Blocks](https://www.facebook.com/groups/publishingwithwordpress).
 
 ## 4 Powerful features in PublishPress Blocks
 
-1. **Many extra blocks**: The new blocks include accordions, galleries, sliders, tabs, maps, tables, recent posts, and more.
+1. **Over 20 extra blocks**: The new blocks include accordions, galleries, sliders, tabs, maps, tables, recent posts, and more.
 2. **Permissions for blocks**: You can control who can use each block, including default WordPress blocks.
 3. **Custom CSS for blocks**: You can add your own custom, reusable CSS styles for your blocks.
 4. **Block layout options**: Choose from dozens of layouts. Each one is customizable for desktop, tablet and mobile devices.
@@ -29,29 +28,29 @@ Gutenberg is good, and with PublishPress Blocks, it’s great! [PublishPress Blo
 
 PublishPress Blocks has everything you need to build professional websites with WordPress. Here's an introduction to the blocks available with the PublishPress Blocks plugin:
 
-- **Accordion block**: [See the Accordion demo](https://demo.publishpress.com/advanced-accordion/).
-- **Button block**: [See the Button demo](https://demo.publishpress.com/advanced-button/).
-- **Icon block**: [See the Icon demo](https://demo.publishpress.com/advanced-icon/).
-- **Image block**: [See the Image demo](https://demo.publishpress.com/advanced-image/).
-- **List block**: [See the List demo](https://demo.publishpress.com/advanced-list/).
-- **Table block**: [See the Table demo](https://demo.publishpress.com/advanced-table/).
-- **Tabs block**: [See the Tabs demo](https://demo.publishpress.com/advanced-tabs/).
-- **Video block**: [See the Video demo](https://demo.publishpress.com/advanced-video/).
-- **Columns Manager block**: [See the Columns Manager demo](https://demo.publishpress.com/columns-manager/).
-- **Contact Form block**: [See the Contact Form demo](https://demo.publishpress.com/contact-form/).
-- **Count Up block**: [See the Count Up demo](https://demo.publishpress.com/count-up/).
-- **Gallery block**: [See the Gallery demo](https://demo.publishpress.com/gallery/).
-- **Images Slider block**: [See the Images Slider demo](https://demo.publishpress.com/images-slider/).
-- **Info Box block**: [See the Info Box demo](https://demo.publishpress.com/info-box/).
-- **Login / Register Form block**: [See the Login / Register Form demo](https://demo.publishpress.com/login-register-form/).
-- **Google Maps block**: [See the Google Maps demo](https://demo.publishpress.com/map/).
-- **Newsletter block**: [See the Newsletter demo](https://demo.publishpress.com/newsletter/).
-- **Recent Posts block**: [See the Recent Posts demo](https://demo.publishpress.com/recent-posts/).
-- **Search bar block**: [See the Search bar demo](https://demo.publishpress.com/search-bar/).
-- **Social Links block**: [See the Social Links demo](https://demo.publishpress.com/social-links/).
-- **Summary block**: [See the Summary demo](https://demo.publishpress.com/summary).
-- **Testimonial block**: [See the Testimonial demo](https://demo.publishpress.com/testimonial/).
-- **WooCommerce block**: [See the WooCommerce demo](https://demo.publishpress.com/woo-products/).
+- **Accordion block**: [demo](https://demo.publishpress.com/advanced-accordion/).
+- **Button block**: [demo](https://demo.publishpress.com/advanced-button/).
+- **Icon block**: [demo](https://demo.publishpress.com/advanced-icon/).
+- **Image block**: [demo](https://demo.publishpress.com/advanced-image/).
+- **List block**: [demo](https://demo.publishpress.com/advanced-list/).
+- **Table block**: [demo](https://demo.publishpress.com/advanced-table/).
+- **Tabs block**: [demo](https://demo.publishpress.com/advanced-tabs/).
+- **Video block**: [demo](https://demo.publishpress.com/advanced-video/).
+- **Columns Manager block**: [demo](https://demo.publishpress.com/columns-manager/).
+- **Contact Form block**: [demo](https://demo.publishpress.com/contact-form/).
+- **Count Up block**: [demo](https://demo.publishpress.com/count-up/).
+- **Gallery block**: [demo](https://demo.publishpress.com/gallery/).
+- **Images Slider block**: [demo](https://demo.publishpress.com/images-slider/).
+- **Info Box block**: [demo](https://demo.publishpress.com/info-box/).
+- **Login / Register Form block**: [demo](https://demo.publishpress.com/login-register-form/).
+- **Google Maps block**: [demo](https://demo.publishpress.com/map/).
+- **Newsletter block**: [demo](https://demo.publishpress.com/newsletter/).
+- **Recent Posts block**: [demo](https://demo.publishpress.com/recent-posts/).
+- **Search bar block**: [demo](https://demo.publishpress.com/search-bar/).
+- **Social Links block**: [demo](https://demo.publishpress.com/social-links/).
+- **Summary block**: [demo](https://demo.publishpress.com/summary).
+- **Testimonial block**: [demo](https://demo.publishpress.com/testimonial/).
+- **WooCommerce block**: [demo](https://demo.publishpress.com/woo-products/).
 
 ## Feature #2. Permissions for Blocks
 
