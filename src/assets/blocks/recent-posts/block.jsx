@@ -391,7 +391,7 @@ import AdvQueryControls from './query-controls.jsx';
                             onChange={ (value) => setAttributes( { postType: value } ) }
                         />
                         <AdvQueryControls
-                            { ...{ order, orderBy } }
+                            { ...{ order, orderBy, postType } }
                             categorySuggestions={ postType === 'post' ? categoriesList : null }
                             selectedCategories={ categories }
                             numberOfItems={ numberOfPosts }
