@@ -171,11 +171,12 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Display Categories and Tags to Recent Posts block
   * Add: Better organization for settings to Recent Posts block
   * Add: Comment count support to Recent Posts block
-  * Add: AdvQueryControls component with minor customizations
+  * Add: AdvQueryControls component with customizations
   * Add: Modified and Posted date with relative format support to Recent Posts block
   * Add: Setting to display Featured Images for the first posts only to Recent Posts block
   * Add: Allow custom text/HTML after post title and before Read more to Recent Posts block
   * Add: Slider view styles support to Recent Posts block
+  * Add: More options for the order of posts to Recent Posts block: by author, modified date, ID and random
   * Fix: Duplicated ID when duplicating Search Bar block
   * Fix: Formatting output for editable elements in frontend for Login/Register block
   * Fix: "Horizontal Alignment" label for Advanced Image default configuration
