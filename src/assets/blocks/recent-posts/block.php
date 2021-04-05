@@ -130,12 +130,9 @@ function advgbRenderBlockRecentPosts($attributes)
         foreach ($recent_posts as $key=>$post) {
             $postThumbID = get_post_thumbnail_id($post->ID);
 
-            $postHtml .= '<article class="advgb-recent-post">';
+            $postHtml .= '<article class="advgb-recent-post' . ( advgbCheckImageStatus( $attributes, $key ) ? '' : ' advgb-recent-post--no-image' ) . '">';
 
-            if (
-                isset($attributes['displayFeaturedImage']) && $attributes['displayFeaturedImage']
-                && ($attributes['displayFeaturedImageFor'] === 'all' || $key < $attributes['displayFeaturedImageFor'])
-            ) {
+            if ( advgbCheckImageStatus( $attributes, $key ) ) {
                 $postThumb = '<img src="' . $rp_default_thumb['url'] . '" />';
                 if ($postThumbID) {
                     $postThumb = wp_get_attachment_image($postThumbID, 'large');
@@ -676,7 +673,7 @@ function advgbMultipleAuthorSort() {
 			$query->set('meta_key', 'ppma_authors_name');
 
 			return $query;
-		
+
 		} );
 	}
 }
@@ -696,3 +693,20 @@ function advgbMultipleAuthorSortREST( $args, $request ) {
 	return $args;
 }
 add_filter( 'rest_post_query', 'advgbMultipleAuthorSortREST', 10, 2 );
+
+/**
+ * Check if Featured image is enable for each post
+ *
+ * @return boolean
+ */
+function advgbCheckImageStatus( $attributes, $key )  {
+    if(
+        isset($attributes['displayFeaturedImage']) && $attributes['displayFeaturedImage']
+        && ($attributes['displayFeaturedImageFor'] === 'all'
+        || $key < $attributes['displayFeaturedImageFor'])
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+}
