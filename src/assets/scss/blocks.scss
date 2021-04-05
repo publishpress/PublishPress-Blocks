@@ -1880,6 +1880,11 @@ hr.wp-block-separator {
         }
       }
 
+      // Stacked style - Vertically align all posts with image
+      &.layout-stacked .advgb-recent-post:not(.advgb-recent-post--no-image) {
+        align-items: center;
+      }
+
       // Settings for layouts with same column size
       &.layout-2-2,
       &.layout-3-3,
