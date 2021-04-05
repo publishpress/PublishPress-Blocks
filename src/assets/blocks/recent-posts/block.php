@@ -680,4 +680,19 @@ function advgbMultipleAuthorSort() {
 		} );
 	}
 }
-advgbMultipleAuthorSort();
+
+/**
+ * Populate the correct arguments in REST for sorting by author.
+ *
+ * The results depends on whether PublishPress Authors plugin is activated.
+ *
+ * @return array
+ */
+function advgbMultipleAuthorSortREST( $args, $request ) {
+	if ( isset( $request['orderby'] ) && 'author' === $request['orderby'] && function_exists('get_multiple_authors') ) {
+		$args['meta_key'] = 'ppma_authors_name';
+		$args['orderby'] = 'meta_value';
+	}
+	return $args;
+}
+add_filter( 'rest_post_query', 'advgbMultipleAuthorSortREST', 10, 2 );
