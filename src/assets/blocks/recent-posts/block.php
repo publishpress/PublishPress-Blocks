@@ -93,7 +93,7 @@ function advgbRenderBlockRecentPosts($attributes)
             'order' => empty($attributes['order'])?'desc':$attributes['order'],
             'orderby' => empty($attributes['orderBy'])?'date':$attributes['orderBy'],
             'suppress_filters' => false,
-			'exclude' => $post_type === 'post' && isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ? $post->ID : 0
+			'exclude' => $post_type === 'post' && isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ? $post->ID : 0,
         );
 
 	// use tax for anything but pages...
@@ -104,7 +104,7 @@ function advgbRenderBlockRecentPosts($attributes)
 		) );
 	}
 
-    $recent_posts = wp_get_recent_posts( $args, OBJECT );
+    $recent_posts = wp_get_recent_posts( apply_filters( 'advgb_get_recent_posts_args', $args, $attributes, $post_type ), OBJECT );
 
     $saved_settings    = get_option('advgb_settings');
     $default_thumb     = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
@@ -475,6 +475,9 @@ function advgbRegisterBlockRecentPosts()
             'textBeforeReadmore' => array(
                 'type' => 'string',
             ),
+            'author' => array(
+                'type' => 'string',
+            ),
 			// deprecrated attributes...
             'displayDate' => array(
                 'type' => 'boolean',
@@ -621,3 +624,50 @@ function advgbGetCoauthors( $post ) {
 function advgbGetAuthorMeta( $page ) {
 	return array( 'author_link' => get_author_posts_url( $page['author'] ), 'display_name' => get_the_author_meta( 'display_name', $page['author'] ) );
 }
+
+/**
+ * Populate the correct arguments for filtering by author.
+ *
+ * The results depends on whether PublishPress Authors plugin is activated.
+ *
+ * @return array
+ */
+function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
+	if ( isset( $attributes['author'] ) && ! empty( $attributes['author'] ) ) {
+		if ( ! function_exists('get_multiple_authors') ){
+			$args['author'] = $attributes['author'];
+		} else {
+			$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( $attributes['author'] );
+			$meta_query = array(
+				'key' => 'ppma_authors_name',
+				'value' => $author->__get( 'display_name' ),
+				'compare' => 'LIKE',
+			);
+			$args['meta_query'][] = $meta_query;
+		}
+	}
+	return $args;
+}
+add_filter( 'advgb_get_recent_posts_args', 'advgbGetAuthorFilter', 10, 3 );
+
+/**
+ * Populate the correct arguments in REST for filtering by author.
+ *
+ * The results depends on whether PublishPress Authors plugin is activated.
+ *
+ * @return array
+ */
+function advgbGetAuthorFilterREST( $args, $request ) {
+	if ( isset( $request['author'] ) && ! empty( $request['author'] ) && function_exists('get_multiple_authors') ) {
+			$author = $request['author'];
+			$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( reset( $author ) );
+			$args['meta_key'] = 'ppma_authors_name';
+			$args['meta_value'] = $author->__get( 'display_name' );
+			$args['meta_compare'] = 'LIKE';
+			unset( $args['author'] );
+			unset( $args['author__in'] );
+	}
+	return $args;
+}
+add_filter( 'rest_post_query', 'advgbGetAuthorFilterREST', 10, 2 );
+add_filter( 'rest_page_query', 'advgbGetAuthorFilterREST', 10, 2 );
