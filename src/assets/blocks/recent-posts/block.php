@@ -150,7 +150,7 @@ function advgbRenderBlockRecentPosts($attributes)
                     get_permalink($post->ID),
                     $postThumb
                 );
-            } elseif ($attributes['postView'] === 'frontpage' && $attributes['frontendStyle'] === 'headline') {
+            } elseif ( ($attributes['postView'] === 'frontpage' && $attributes['frontpageStyle'] === 'headline') || ($attributes['postView'] === 'slider' && $attributes['sliderStyle'] === 'headline') ) {
                 $postHtml .= sprintf(
                     '<div class="advgb-post-thumbnail advgb-post-thumbnail-no-image"><a href="%1$s"></a></div>',
                     get_permalink($post->ID)
@@ -166,6 +166,10 @@ function advgbRenderBlockRecentPosts($attributes)
                 get_permalink($post->ID),
                 get_the_title($post->ID)
             );
+
+            if (isset($attributes['textAfterTitle']) && !empty($attributes['textAfterTitle'])) {
+				$postHtml .= sprintf( '<div class="advgb-text-after-title">%s</div>', wp_kses_post( $attributes['textAfterTitle'] ) );
+			}
 
             $postHtml .= '<div class="advgb-post-info">';
 
@@ -287,6 +291,10 @@ function advgbRenderBlockRecentPosts($attributes)
                 );
             }
 
+            if (isset($attributes['textBeforeReadmore']) && !empty($attributes['textBeforeReadmore'])) {
+				$postHtml .= sprintf( '<div class="advgb-text-before-readmore">%s</div>', wp_kses_post( $attributes['textBeforeReadmore'] ) );
+			}
+
             if (isset($attributes['displayReadMore']) && $attributes['displayReadMore']) {
                 $readMoreText = __('Read More', 'advanced-gutenberg');
                 if (isset($attributes['readMoreLbl']) && $attributes['readMoreLbl']) {
@@ -316,11 +324,12 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass = 'list-view';
     } elseif ($attributes['postView'] === 'slider') {
         $blockClass = 'slider-view';
+        $blockClass .= ' style-' . $attributes['sliderStyle'];
     } elseif ($attributes['postView'] === 'frontpage') {
         $blockClass = 'frontpage-view';
         $blockClass .= ' layout-' . $attributes['frontpageLayout'];
         $blockClass .= ' gap-' . $attributes['gap'];
-        $blockClass .= ' style-' . $attributes['frontendStyle'];
+        $blockClass .= ' style-' . $attributes['frontpageStyle'];
         (isset($attributes['frontpageLayoutT']) && $attributes['frontpageLayoutT']) ? $blockClass .= ' tbl-layout-' . $attributes['frontpageLayoutT'] : '';
         (isset($attributes['frontpageLayoutM']) && $attributes['frontpageLayoutM']) ? $blockClass .= ' mbl-layout-' . $attributes['frontpageLayoutM'] : '';
     }
@@ -443,7 +452,11 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'number',
                 'default' => 10,
             ),
-            'frontendStyle' => array(
+            'frontpageStyle' => array(
+                'type' => 'string',
+                'default' => 'default',
+            ),
+            'sliderStyle' => array(
                 'type' => 'string',
                 'default' => 'default',
             ),
@@ -469,6 +482,12 @@ function advgbRegisterBlockRecentPosts()
             'displayCommentCount' => array(
                 'type' => 'boolean',
                 'default' => false,
+            ),
+            'textAfterTitle' => array(
+                'type' => 'string',
+            ),
+            'textBeforeReadmore' => array(
+                'type' => 'string',
             ),
 			// deprecrated attributes...
             'displayDate' => array(

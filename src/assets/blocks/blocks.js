@@ -23392,6 +23392,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         RangeControl = wpComponents.RangeControl,
         ToggleControl = wpComponents.ToggleControl,
         TextControl = wpComponents.TextControl,
+        TextareaControl = wpComponents.TextareaControl,
         FormTokenField = wpComponents.FormTokenField,
         Spinner = wpComponents.Spinner,
         ToolbarGroup = wpComponents.ToolbarGroup,
@@ -23624,11 +23625,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     frontpageLayoutT = attributes.frontpageLayoutT,
                     frontpageLayoutM = attributes.frontpageLayoutM,
                     gap = attributes.gap,
-                    frontendStyle = attributes.frontendStyle,
+                    frontpageStyle = attributes.frontpageStyle,
+                    sliderStyle = attributes.sliderStyle,
                     excludeCurrentPost = attributes.excludeCurrentPost,
                     showCategories = attributes.showCategories,
                     showTags = attributes.showTags,
-                    displayCommentCount = attributes.displayCommentCount;
+                    displayCommentCount = attributes.displayCommentCount,
+                    textAfterTitle = attributes.textAfterTitle,
+                    textBeforeReadmore = attributes.textBeforeReadmore;
 
 
                 var isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
@@ -23645,6 +23649,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var inspectorControls = React.createElement(
                     InspectorControls,
                     null,
+                    postView === 'slider' && React.createElement(
+                        PanelBody,
+                        { title: __('Slider View Settings', 'advanced-gutenberg') },
+                        React.createElement(SelectControl, {
+                            label: __('Style', 'advanced-gutenberg'),
+                            value: sliderStyle,
+                            options: [{ label: __('Default', 'advanced-gutenberg'), value: 'default' }, { label: __('Headline', 'advanced-gutenberg'), value: 'headline' }],
+                            onChange: function onChange(value) {
+                                return setAttributes({ sliderStyle: value });
+                            }
+                        })
+                    ),
                     postView === 'frontpage' && React.createElement(
                         PanelBody,
                         { title: __('Frontpage View Settings', 'advanced-gutenberg') },
@@ -23733,10 +23749,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(SelectControl, {
                             label: __('Style', 'advanced-gutenberg'),
-                            value: frontendStyle,
+                            value: frontpageStyle,
                             options: [{ label: __('Default', 'advanced-gutenberg'), value: 'default' }, { label: __('Headline', 'advanced-gutenberg'), value: 'headline' }, { label: __('Boxed', 'advanced-gutenberg'), value: 'boxed' }, { label: __('Newspaper', 'advanced-gutenberg'), value: 'newspaper' }],
                             onChange: function onChange(value) {
-                                return setAttributes({ frontendStyle: value });
+                                return setAttributes({ frontpageStyle: value });
                             }
                         }),
                         React.createElement(SelectControl, {
@@ -23920,6 +23936,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onChange: function onChange() {
                                 return setAttributes({ excludeCurrentPost: !excludeCurrentPost });
                             }
+                        }),
+                        React.createElement(TextareaControl, {
+                            label: __('Text after title', 'advanced-gutenberg'),
+                            help: __('Include text/HTML after title', 'advanced-gutenberg'),
+                            value: textAfterTitle,
+                            onChange: function onChange(value) {
+                                return setAttributes({ textAfterTitle: value });
+                            }
+                        }),
+                        React.createElement(TextareaControl, {
+                            label: __('Text before read more', 'advanced-gutenberg'),
+                            help: __('Include text/HTML before read more', 'advanced-gutenberg'),
+                            value: textBeforeReadmore,
+                            onChange: function onChange(value) {
+                                return setAttributes({ textBeforeReadmore: value });
+                            }
                         })
                     )
                 );
@@ -23973,7 +24005,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'frontpage'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle].filter(Boolean).join(' ');
 
                 var formats = __experimentalGetSettings().formats;
                 var format = postDate !== 'hide' ? displayTime ? formats.datetime : formats.date : '';
@@ -24020,7 +24052,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
                                                 )
                                             );
-                                        } else if (postView === 'frontpage' && frontendStyle === 'headline') {
+                                        } else if (postView === 'frontpage' && frontpageStyle === 'headline' || postView === 'slider' && sliderStyle === 'headline') {
                                             return React.createElement(
                                                 "div",
                                                 { className: "advgb-post-thumbnail advgb-post-thumbnail-no-image" },
@@ -24041,6 +24073,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 { href: post.link, target: "_blank" },
                                                 decodeEntities(post.title.rendered)
                                             )
+                                        ),
+                                        React.createElement(
+                                            RawHTML,
+                                            { className: "advgb-text-after-title" },
+                                            textAfterTitle
                                         ),
                                         React.createElement(
                                             "div",
@@ -24133,6 +24170,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 dangerouslySetInnerHTML: {
                                                     __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.raw
                                                 } }),
+                                            React.createElement(
+                                                "div",
+                                                { className: "advgb-text-before-readmore" },
+                                                React.createElement(
+                                                    RawHTML,
+                                                    null,
+                                                    textBeforeReadmore
+                                                )
+                                            ),
                                             displayReadMore && React.createElement(
                                                 "div",
                                                 { className: "advgb-post-readmore" },
@@ -24265,7 +24311,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('latest posts', 'advanced-gutenberg'), __('posts slide', 'advanced-gutenberg'), __('posts grid', 'advanced-gutenberg')],
+        keywords: [__('latest posts', 'advanced-gutenberg'), __('posts slide', 'advanced-gutenberg'), __('posts grid', 'advanced-gutenberg'), __('posts', 'advanced-gutenberg'), __('pages', 'advanced-gutenberg')],
         supports: {
             html: false
         },

@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.7
-Stable tag: 2.5.8b7
+Stable tag: 2.5.8b9
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -12,15 +12,14 @@ Gutenberg is good, and with PublishPress Blocks, it’s great! The blocks includ
 
 == Description ==
 
-Gutenberg is good, and with PublishPress Blocks, it’s great! [PublishPress Blocks](https://publishpress.com/blocks/) has everything you need to build professional websites with WordPress. The blocks include layout options, sliders, buttons, icons, image galleries, maps, tabs, testimonials, accordions, and much more.
+Gutenberg is good, and with [PublishPress Blocks](https://publishpress.com/blocks/), it’s great! PublishPress Blocks has everything you need to build professional websites with WordPress. The blocks include layout options, sliders, buttons, icons, image galleries, maps, tabs, testimonials, accordions, and much more.
 
 - [See the block demos](https://demo.publishpress.com/).
 - [Browse the documentation and videos](https://publishpress.com/knowledge-base/installation/).
-- [Join the Facebook group for PublishPress Blocks](https://www.facebook.com/groups/publishingwithwordpress).
 
 ## 4 Powerful features in PublishPress Blocks
 
-1. **Many extra blocks**: The new blocks include accordions, galleries, sliders, tabs, maps, tables, recent posts, and more.
+1. **Over 20 extra blocks**: The new blocks include accordions, galleries, sliders, tabs, maps, tables, recent posts, and more.
 2. **Permissions for blocks**: You can control who can use each block, including default WordPress blocks.
 3. **Custom CSS for blocks**: You can add your own custom, reusable CSS styles for your blocks.
 4. **Block layout options**: Choose from dozens of layouts. Each one is customizable for desktop, tablet and mobile devices.
@@ -29,29 +28,29 @@ Gutenberg is good, and with PublishPress Blocks, it’s great! [PublishPress Blo
 
 PublishPress Blocks has everything you need to build professional websites with WordPress. Here's an introduction to the blocks available with the PublishPress Blocks plugin:
 
-- **Accordion block**: [See the Accordion demo](https://demo.publishpress.com/advanced-accordion/).
-- **Button block**: [See the Button demo](https://demo.publishpress.com/advanced-button/).
-- **Icon block**: [See the Icon demo](https://demo.publishpress.com/advanced-icon/).
-- **Image block**: [See the Image demo](https://demo.publishpress.com/advanced-image/).
-- **List block**: [See the List demo](https://demo.publishpress.com/advanced-list/).
-- **Table block**: [See the Table demo](https://demo.publishpress.com/advanced-table/).
-- **Tabs block**: [See the Tabs demo](https://demo.publishpress.com/advanced-tabs/).
-- **Video block**: [See the Video demo](https://demo.publishpress.com/advanced-video/).
-- **Columns Manager block**: [See the Columns Manager demo](https://demo.publishpress.com/columns-manager/).
-- **Contact Form block**: [See the Contact Form demo](https://demo.publishpress.com/contact-form/).
-- **Count Up block**: [See the Count Up demo](https://demo.publishpress.com/count-up/).
-- **Gallery block**: [See the Gallery demo](https://demo.publishpress.com/gallery/).
-- **Images Slider block**: [See the Images Slider demo](https://demo.publishpress.com/images-slider/).
-- **Info Box block**: [See the Info Box demo](https://demo.publishpress.com/info-box/).
-- **Login / Register Form block**: [See the Login / Register Form demo](https://demo.publishpress.com/login-register-form/).
-- **Google Maps block**: [See the Google Maps demo](https://demo.publishpress.com/map/).
-- **Newsletter block**: [See the Newsletter demo](https://demo.publishpress.com/newsletter/).
-- **Recent Posts block**: [See the Recent Posts demo](https://demo.publishpress.com/recent-posts/).
-- **Search bar block**: [See the Search bar demo](https://demo.publishpress.com/search-bar/).
-- **Social Links block**: [See the Social Links demo](https://demo.publishpress.com/social-links/).
-- **Summary block**: [See the Summary demo](https://demo.publishpress.com/summary).
-- **Testimonial block**: [See the Testimonial demo](https://demo.publishpress.com/testimonial/).
-- **WooCommerce block**: [See the WooCommerce demo](https://demo.publishpress.com/woo-products/).
+- **Accordion block**: [demo](https://demo.publishpress.com/advanced-accordion/).
+- **Button block**: [demo](https://demo.publishpress.com/advanced-button/).
+- **Icon block**: [demo](https://demo.publishpress.com/advanced-icon/).
+- **Image block**: [demo](https://demo.publishpress.com/advanced-image/).
+- **List block**: [demo](https://demo.publishpress.com/advanced-list/).
+- **Table block**: [demo](https://demo.publishpress.com/advanced-table/).
+- **Tabs block**: [demo](https://demo.publishpress.com/advanced-tabs/).
+- **Video block**: [demo](https://demo.publishpress.com/advanced-video/).
+- **Columns Manager block**: [demo](https://demo.publishpress.com/columns-manager/).
+- **Contact Form block**: [demo](https://demo.publishpress.com/contact-form/).
+- **Count Up block**: [demo](https://demo.publishpress.com/count-up/).
+- **Gallery block**: [demo](https://demo.publishpress.com/gallery/).
+- **Images Slider block**: [demo](https://demo.publishpress.com/images-slider/).
+- **Info Box block**: [demo](https://demo.publishpress.com/info-box/).
+- **Login / Register Form block**: [demo](https://demo.publishpress.com/login-register-form/).
+- **Google Maps block**: [demo](https://demo.publishpress.com/map/).
+- **Newsletter block**: [demo](https://demo.publishpress.com/newsletter/).
+- **Recent Posts block**: [demo](https://demo.publishpress.com/recent-posts/).
+- **Search bar block**: [demo](https://demo.publishpress.com/search-bar/).
+- **Social Links block**: [demo](https://demo.publishpress.com/social-links/).
+- **Summary block**: [demo](https://demo.publishpress.com/summary).
+- **Testimonial block**: [demo](https://demo.publishpress.com/testimonial/).
+- **WooCommerce block**: [demo](https://demo.publishpress.com/woo-products/).
 
 ## Feature #2. Permissions for Blocks
 
@@ -175,6 +174,8 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: AdvQueryControls component with minor customizations
   * Add: Modified and Posted date with relative format support to Recent Posts block
   * Add: Setting to display Featured Images for the first posts only to Recent Posts block
+  * Add: Allow custom text/HTML after post title and before Read more to Recent Posts block
+  * Add: Slider view styles support to Recent Posts block
   * Fix: Duplicated ID when duplicating Search Bar block
   * Fix: Formatting output for editable elements in frontend for Login/Register block
   * Fix: "Horizontal Alignment" label for Advanced Image default configuration
@@ -182,6 +183,9 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Hours and minutes time record for Newsletter block
   * Fix: Allowed formats for name and position fields in Testimonial block
   * Fix: Cyrillic text output in frontend for Recent Posts block
+  * Fix: Broken Advanced Tabs block in frontend when using an HTML Anchor
+  * Fix: Columns Manager and Columns blocks edit inside Advanced Tabs
+  * Fix: Support for nested blocks until 11th level
   * Remove: Non production files such as SCSS, JSX, etc.
   * Remove: Not required formatting for editable elements for Login/Register block
   * Remove: Static font-size for post titles for Recent Posts block

@@ -6,7 +6,7 @@ import AdvQueryControls from './query-controls.jsx';
     const { Component, Fragment, RawHTML } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpBlockEditor;
-    const { PanelBody, RangeControl, ToggleControl, TextControl, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
+    const { PanelBody, RangeControl, ToggleControl, TextControl, TextareaControl, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
     const { withSelect } = wpData;
     const { pickBy, isUndefined } = lodash;
     const { decodeEntities } = wpHtmlEntities;
@@ -237,11 +237,14 @@ import AdvQueryControls from './query-controls.jsx';
                 tags,
                 frontpageLayout, frontpageLayoutT, frontpageLayoutM,
                 gap,
-                frontendStyle,
+                frontpageStyle,
+                sliderStyle,
                 excludeCurrentPost,
                 showCategories,
                 showTags,
                 displayCommentCount,
+                textAfterTitle,
+                textBeforeReadmore,
             } = attributes;
 
             const isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
@@ -257,6 +260,19 @@ import AdvQueryControls from './query-controls.jsx';
 
             const inspectorControls = (
                 <InspectorControls>
+                    {postView === 'slider' &&
+                    <PanelBody title={ __( 'Slider View Settings', 'advanced-gutenberg' ) }>
+                        <SelectControl
+                            label={ __( 'Style', 'advanced-gutenberg' ) }
+                            value={ sliderStyle }
+                            options={ [
+                                { label: __( 'Default', 'advanced-gutenberg' ), value: 'default' },
+                                { label: __( 'Headline', 'advanced-gutenberg' ), value: 'headline' },
+                            ] }
+                            onChange={ ( value ) => setAttributes( { sliderStyle: value } ) }
+                        />
+                    </PanelBody>
+                    }
                     {postView === 'frontpage' &&
                     <PanelBody title={ __( 'Frontpage View Settings', 'advanced-gutenberg' ) }>
                         <div className="advgb-recent-posts-responsive-items">
@@ -350,14 +366,14 @@ import AdvQueryControls from './query-controls.jsx';
                         </div>
                         <SelectControl
                             label={ __( 'Style', 'advanced-gutenberg' ) }
-                            value={ frontendStyle }
+                            value={ frontpageStyle }
                             options={ [
                                 { label: __( 'Default', 'advanced-gutenberg' ), value: 'default' },
                                 { label: __( 'Headline', 'advanced-gutenberg' ), value: 'headline' },
                                 { label: __( 'Boxed', 'advanced-gutenberg' ), value: 'boxed' },
                                 { label: __( 'Newspaper', 'advanced-gutenberg' ), value: 'newspaper' },
                             ] }
-                            onChange={ ( value ) => setAttributes( { frontendStyle: value } ) }
+                            onChange={ ( value ) => setAttributes( { frontpageStyle: value } ) }
                         />
                         <SelectControl
                             label={ __( 'Space between columns and rows', 'advanced-gutenberg' ) }
@@ -539,6 +555,18 @@ import AdvQueryControls from './query-controls.jsx';
                             onChange={ () => setAttributes( { excludeCurrentPost: !excludeCurrentPost } ) }
                         />
                         }
+                        <TextareaControl
+                            label={ __( 'Text after title', 'advanced-gutenberg' ) }
+                            help={ __( 'Include text/HTML after title', 'advanced-gutenberg' ) }
+                            value={ textAfterTitle }
+                            onChange={ ( value ) => setAttributes( { textAfterTitle: value } ) }
+                        />
+                        <TextareaControl
+                            label={ __( 'Text before read more', 'advanced-gutenberg' ) }
+                            help={ __( 'Include text/HTML before read more', 'advanced-gutenberg' ) }
+                            value={ textBeforeReadmore }
+                            onChange={ ( value ) => setAttributes( { textBeforeReadmore: value } ) }
+                        />
                     </PanelBody>
                 </InspectorControls>
             );
@@ -600,12 +628,13 @@ import AdvQueryControls from './query-controls.jsx';
                 postView === 'grid' && 'grid-view',
                 postView === 'list' && 'list-view',
                 postView === 'slider' && 'slider-view',
+                postView === 'slider' && sliderStyle && 'style-' + sliderStyle,
                 postView === 'frontpage' && 'frontpage-view',
                 postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout,
                 postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT,
                 postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM,
                 postView === 'frontpage' && gap && 'gap-' + gap,
-                postView === 'frontpage' && frontendStyle && 'style-' + frontendStyle,
+                postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle,
             ].filter( Boolean ).join( ' ' );
 
             const formats = __experimentalGetSettings().formats;
@@ -642,7 +671,7 @@ import AdvQueryControls from './query-controls.jsx';
                                                     </a>
                                                 </div>
                                             )
-                                        } else if( postView === 'frontpage' && frontendStyle === 'headline' ) {
+                                        } else if( ( postView === 'frontpage' && frontpageStyle === 'headline' ) || ( postView === 'slider' && sliderStyle === 'headline' ) ) {
                                             return (
                                                 <div className="advgb-post-thumbnail advgb-post-thumbnail-no-image">
                                                     <a href={ post.link } target="_blank"></a>
@@ -657,6 +686,7 @@ import AdvQueryControls from './query-controls.jsx';
                                         <h2 className="advgb-post-title">
                                             <a href={ post.link } target="_blank">{ decodeEntities( post.title.rendered ) }</a>
                                         </h2>
+                                        <RawHTML className="advgb-text-after-title">{ textAfterTitle }</RawHTML>
                                         <div className="advgb-post-info">
                                             {displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map( ( coauthor, coauthor_indx ) => (
                                                 <Fragment>
@@ -725,6 +755,7 @@ import AdvQueryControls from './query-controls.jsx';
                                                          __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.raw
                                                      } } />
                                             ) }
+                                            <div className="advgb-text-before-readmore"><RawHTML>{ textBeforeReadmore }</RawHTML></div>
                                             {displayReadMore && (
                                                 <div className="advgb-post-readmore">
                                                     <a href={ post.link } target="_blank">{ readMoreLbl ? readMoreLbl : __( 'Read More', 'advanced-gutenberg' ) }</a>
@@ -844,7 +875,13 @@ import AdvQueryControls from './query-controls.jsx';
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'latest posts', 'advanced-gutenberg' ), __( 'posts slide', 'advanced-gutenberg' ), __( 'posts grid', 'advanced-gutenberg' ) ],
+        keywords: [
+            __( 'latest posts', 'advanced-gutenberg' ),
+            __( 'posts slide', 'advanced-gutenberg' ),
+            __( 'posts grid', 'advanced-gutenberg' ),
+            __( 'posts', 'advanced-gutenberg' ),
+            __( 'pages', 'advanced-gutenberg' )
+        ],
         supports: {
             html: false,
         },
