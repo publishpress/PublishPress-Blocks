@@ -23750,7 +23750,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(SelectControl, {
                             label: __('Style', 'advanced-gutenberg'),
                             value: frontpageStyle,
-                            options: [{ label: __('Default', 'advanced-gutenberg'), value: 'default' }, { label: __('Headline', 'advanced-gutenberg'), value: 'headline' }, { label: __('Boxed', 'advanced-gutenberg'), value: 'boxed' }, { label: __('Newspaper', 'advanced-gutenberg'), value: 'newspaper' }],
+                            options: [{ label: __('Default', 'advanced-gutenberg'), value: 'default' }, { label: __('Headline', 'advanced-gutenberg'), value: 'headline' }, { label: __('Boxed', 'advanced-gutenberg'), value: 'boxed' }],
                             onChange: function onChange(value) {
                                 return setAttributes({ frontpageStyle: value });
                             }
