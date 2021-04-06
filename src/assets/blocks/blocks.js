@@ -23784,7 +23784,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ postType: value });
                             }
                         }),
-                        React.createElement(_queryControls2.default, _extends({ order: order, orderBy: orderBy, authorList: authorList, selectedAuthorId: selectedAuthorId }, {
+                        React.createElement(_queryControls2.default, _extends({ order: order, orderBy: orderBy, authorList: authorList, postType: postType, selectedAuthorId: selectedAuthorId }, {
                             categorySuggestions: postType === 'post' ? categoriesList : null,
                             selectedCategories: categories,
                             numberOfItems: numberOfPosts,
@@ -24052,9 +24052,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             recentPosts.map(function (post, index) {
                                 return React.createElement(
                                     "article",
-                                    { key: index, className: "advgb-recent-post" },
+                                    { key: index,
+                                        className: "advgb-recent-post " + (_this3.getDisplayImageStatus(attributes, index) ? "" : "advgb-recent-post--no-image")
+                                    },
                                     function () {
-                                        if (displayFeaturedImage && (displayFeaturedImageFor === 'all' || index < displayFeaturedImageFor)) {
+                                        if (_this3.getDisplayImageStatus(attributes, index)) {
                                             return React.createElement(
                                                 "div",
                                                 { className: "advgb-post-thumbnail" },
@@ -24278,6 +24280,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     name: catIdVsName[id]
                 };
             }
+        }, {
+            key: "getDisplayImageStatus",
+            value: function getDisplayImageStatus(attributes, index) {
+                return attributes.displayFeaturedImage && (attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor);
+            }
         }], [{
             key: "extractContent",
             value: function extractContent(html, length) {
@@ -24491,6 +24498,7 @@ function AdvQueryControls(_ref3) {
         numberOfItems = _ref3.numberOfItems,
         order = _ref3.order,
         orderBy = _ref3.orderBy,
+        postType = _ref3.postType,
         _ref3$maxItems = _ref3.maxItems,
         maxItems = _ref3$maxItems === undefined ? DEFAULT_MAX_ITEMS : _ref3$maxItems,
         _ref3$minItems = _ref3.minItems,
@@ -24501,25 +24509,62 @@ function AdvQueryControls(_ref3) {
         onOrderChange = _ref3.onOrderChange,
         onOrderByChange = _ref3.onOrderByChange;
 
+    var orderParams = [{
+        label: __('Created: Newest to oldest'),
+        value: 'date/desc'
+    }, {
+        label: __('Created: Oldest to newest'),
+        value: 'date/asc'
+    }, {
+        /* translators: label for ordering posts by title in ascending order */
+        label: __('A → Z'),
+        value: 'title/asc'
+    }, {
+        /* translators: label for ordering posts by title in descending order */
+        label: __('Z → A'),
+        value: 'title/desc'
+    }, {
+        label: __('Author') + ' ' + __('A → Z'),
+        value: 'author/asc'
+    }, {
+        label: __('Author') + ' ' + __('Z → A'),
+        value: 'author/desc'
+    }, {
+        label: __('Modified: Newest to oldest'),
+        value: 'modified/desc'
+    }, {
+        label: __('Modified: Oldest to newest'),
+        value: 'modified/asc'
+    }, {
+        label: __('Post ID Descending'),
+        value: 'id/desc'
+    }, {
+        label: __('Post ID Ascending'),
+        value: 'id/asc'
+    }, {
+        label: __('Randomize'),
+        value: 'rand/asc'
+    }, {
+        label: __('Menu Order'),
+        value: 'menu_order/asc'
+    }];
+
+    // post supports more orderBy parameters
+    if (postType === 'post') {
+        orderParams = _.union(orderParams, [{
+            label: __('Comments, decreasing order'),
+            value: 'comment_count/desc'
+        }, {
+            label: __('Comments, increasing order'),
+            value: 'comment_count/asc'
+        }]);
+    }
+
     return [onOrderChange && onOrderByChange && React.createElement(SelectControl, {
         key: 'query-controls-order-select',
         label: __('Order by'),
         value: orderBy + '/' + order,
-        options: [{
-            label: __('Newest to oldest'),
-            value: 'date/desc'
-        }, {
-            label: __('Oldest to newest'),
-            value: 'date/asc'
-        }, {
-            /* translators: label for ordering posts by title in ascending order */
-            label: __('A → Z'),
-            value: 'title/asc'
-        }, {
-            /* translators: label for ordering posts by title in descending order */
-            label: __('Z → A'),
-            value: 'title/desc'
-        }],
+        options: orderParams,
         onChange: function onChange(value) {
             var _value$split = value.split('/'),
                 _value$split2 = _slicedToArray(_value$split, 2),

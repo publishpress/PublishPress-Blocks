@@ -94,6 +94,7 @@ function AdvQueryControls({
                               numberOfItems,
                               order,
                               orderBy,
+                              postType,
                               maxItems = DEFAULT_MAX_ITEMS,
                               minItems = DEFAULT_MIN_ITEMS,
                               onCategoryChange,
@@ -102,19 +103,13 @@ function AdvQueryControls({
                               onOrderChange,
                               onOrderByChange,
                           }) {
-    return [
-        onOrderChange && onOrderByChange && (
-            <SelectControl
-                key="query-controls-order-select"
-                label={__('Order by')}
-                value={`${orderBy}/${order}`}
-                options={[
+    let orderParams = [
                     {
-                        label: __('Newest to oldest'),
+                        label: __('Created: Newest to oldest'),
                         value: 'date/desc',
                     },
                     {
-                        label: __('Oldest to newest'),
+                        label: __('Created: Oldest to newest'),
                         value: 'date/asc',
                     },
                     {
@@ -127,7 +122,61 @@ function AdvQueryControls({
                         label: __('Z → A'),
                         value: 'title/desc',
                     },
-                ]}
+                    {
+                        label: __('Author') + ' ' + __('A → Z'),
+                        value: 'author/asc',
+                    },
+                    {
+                        label: __('Author') + ' ' + __('Z → A'),
+                        value: 'author/desc',
+                    },
+                    {
+                        label: __('Modified: Newest to oldest'),
+                        value: 'modified/desc',
+                    },
+                    {
+                        label: __('Modified: Oldest to newest'),
+                        value: 'modified/asc',
+                    },
+                    {
+                        label: __('Post ID Descending'),
+                        value: 'id/desc',
+                    },
+                    {
+                        label: __('Post ID Ascending'),
+                        value: 'id/asc',
+                    },
+                    {
+                        label: __('Randomize'),
+                        value: 'rand/asc',
+                    },
+                    {
+                        label: __('Menu Order'),
+                        value: 'menu_order/asc',
+                    },
+    ];
+
+    // post supports more orderBy parameters
+    if ( postType === 'post' ) {
+        orderParams = _.union(orderParams, [
+                    {
+                        label: __('Comments, decreasing order'),
+                        value: 'comment_count/desc',
+                    },
+                    {
+                        label: __('Comments, increasing order'),
+                        value: 'comment_count/asc',
+                    },
+        ]);
+    }
+
+    return [
+        onOrderChange && onOrderByChange && (
+            <SelectControl
+                key="query-controls-order-select"
+                label={__('Order by')}
+                value={`${orderBy}/${order}`}
+                options={ orderParams }
                 onChange={(value) => {
                     const [newOrderBy, newOrder] = value.split('/');
                     if (newOrder !== order) {

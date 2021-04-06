@@ -399,7 +399,7 @@ import AdvQueryControls from './query-controls.jsx';
                             onChange={ (value) => setAttributes( { postType: value } ) }
                         />
                         <AdvQueryControls
-                            { ...{ order, orderBy, authorList, selectedAuthorId } }
+                            { ...{ order, orderBy, authorList, postType, selectedAuthorId } }
                             categorySuggestions={ postType === 'post' ? categoriesList : null }
                             selectedCategories={ categories }
                             numberOfItems={ numberOfPosts }
@@ -669,10 +669,12 @@ import AdvQueryControls from './query-controls.jsx';
                         {this.state.updating && <div className="advgb-recent-posts-loading" />}
                         <div className="advgb-recent-posts">
                             {recentPosts.map( ( post, index ) => (
-                                <article key={ index } className="advgb-recent-post" >
+                                <article key={ index }
+                                className={`advgb-recent-post ${ this.getDisplayImageStatus( attributes, index ) ? "" : "advgb-recent-post--no-image"}` }
+                                >
 
                                     {(() => {
-                                        if( displayFeaturedImage && ( displayFeaturedImageFor === 'all' || index < displayFeaturedImageFor ) ) {
+                                        if( this.getDisplayImageStatus( attributes, index ) ) {
                                             return(
                                                 <div className="advgb-post-thumbnail">
                                                     <a href={ post.link } target="_blank">
@@ -872,6 +874,12 @@ import AdvQueryControls from './query-controls.jsx';
                 id: id,
                 name: catIdVsName[id]
             };
+        }
+
+        getDisplayImageStatus(attributes, index) {
+            return(
+                attributes.displayFeaturedImage && ( attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor)
+            )
         }
 
     }

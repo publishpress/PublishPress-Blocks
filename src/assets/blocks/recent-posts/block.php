@@ -85,13 +85,27 @@ function advgbRenderBlockRecentPosts($attributes)
 			);
 	}
 
+	$orderBy = empty($attributes['orderBy'])?'date':$attributes['orderBy'];
+
+	// 'id' in https://developer.wordpress.org/rest-api/reference/posts/#list-posts
+	// BUT
+	// 'ID' in https://developer.wordpress.org/reference/classes/wp_query/parse_query/
+	if ( $orderBy === 'id' ) {
+		$orderBy = 'ID';
+	}
+
+	// if multiple authors, use the first author in the list.
+	if ( $orderBy === 'author' ) {
+		advgbMultipleAuthorSort();
+	}
+
 	$post_type = isset($attributes['postType']) ? $attributes['postType'] : 'post';
 	$args = array(
 			'post_type' => $post_type,
             'numberposts' => empty($attributes['numberOfPosts'])?8:$attributes['numberOfPosts'],
             'post_status' => 'publish',
             'order' => empty($attributes['order'])?'desc':$attributes['order'],
-            'orderby' => empty($attributes['orderBy'])?'date':$attributes['orderBy'],
+            'orderby' => $orderBy,
             'suppress_filters' => false,
 			'exclude' => $post_type === 'post' && isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ? $post->ID : 0,
         );
@@ -116,12 +130,9 @@ function advgbRenderBlockRecentPosts($attributes)
         foreach ($recent_posts as $key=>$post) {
             $postThumbID = get_post_thumbnail_id($post->ID);
 
-            $postHtml .= '<article class="advgb-recent-post">';
+            $postHtml .= '<article class="advgb-recent-post' . ( advgbCheckImageStatus( $attributes, $key ) ? '' : ' advgb-recent-post--no-image' ) . '">';
 
-            if (
-                isset($attributes['displayFeaturedImage']) && $attributes['displayFeaturedImage']
-                && ($attributes['displayFeaturedImageFor'] === 'all' || $key < $attributes['displayFeaturedImageFor'])
-            ) {
+            if ( advgbCheckImageStatus( $attributes, $key ) ) {
                 $postThumb = '<img src="' . $rp_default_thumb['url'] . '" />';
                 if ($postThumbID) {
                     $postThumb = wp_get_attachment_image($postThumbID, 'large');
@@ -548,6 +559,32 @@ function advgbRegisterCustomFields() {
 add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
 
 /**
+ * Allow more orderBy values for posts.
+ *
+ * @return array
+ */
+function advgbAllowPostQueryVars( $query_params ) {
+	$query_params['orderby']['enum'][] = 'rand';
+	$query_params['orderby']['enum'][] = 'comment_count';
+	$query_params['orderby']['enum'][] = 'menu_order';
+	return $query_params;
+}
+add_filter( 'rest_post_collection_params', 'advgbAllowPostQueryVars' );
+
+/**
+ * Allow more orderBy values for pages.
+ *
+ * @return array
+ */
+function advgbAllowPageQueryVars( $query_params ) {
+	$query_params['orderby']['enum'][] = 'author';
+	$query_params['orderby']['enum'][] = 'rand';
+	$query_params['orderby']['enum'][] = 'menu_order';
+	return $query_params;
+}
+add_filter( 'rest_page_collection_params', 'advgbAllowPageQueryVars' );
+
+/**
  * Returns the relative dates of the post.
  *
  * @return array
@@ -651,7 +688,28 @@ function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
 add_filter( 'advgb_get_recent_posts_args', 'advgbGetAuthorFilter', 10, 3 );
 
 /**
- * Populate the correct arguments in REST for filtering by author.
+ * Populate the correct arguments for filtering by author.
+ *
+ * If multiple authors are defined using PublishPress Authors plugin, use the first author in the list.
+ */
+function advgbMultipleAuthorSort() {
+	if ( function_exists('get_multiple_authors') ){
+		add_action('pre_get_posts', function( $query )  {
+			if ( is_admin() ) {
+				return $query;
+			}
+
+			$query->set('orderby', 'meta_value');
+			$query->set('meta_key', 'ppma_authors_name');
+
+			return $query;
+
+		} );
+	}
+}
+
+/**
+ * Populate the correct arguments in REST for sorting by author.
  *
  * The results depends on whether PublishPress Authors plugin is activated.
  *
@@ -671,3 +729,36 @@ function advgbGetAuthorFilterREST( $args, $request ) {
 }
 add_filter( 'rest_post_query', 'advgbGetAuthorFilterREST', 10, 2 );
 add_filter( 'rest_page_query', 'advgbGetAuthorFilterREST', 10, 2 );
+
+/**
+ * Populate the correct arguments in REST for filtering by author.
+ *
+ * The results depends on whether PublishPress Authors plugin is activated.
+ *
+ * @return array
+ */
+function advgbMultipleAuthorSortREST( $args, $request ) {
+	if ( isset( $request['orderby'] ) && 'author' === $request['orderby'] && function_exists('get_multiple_authors') ) {
+		$args['meta_key'] = 'ppma_authors_name';
+		$args['orderby'] = 'meta_value';
+	}
+	return $args;
+}
+add_filter( 'rest_post_query', 'advgbMultipleAuthorSortREST', 10, 2 );
+
+/**
+ * Check if Featured image is enable for each post
+ *
+ * @return boolean
+ */
+function advgbCheckImageStatus( $attributes, $key )  {
+    if(
+        isset($attributes['displayFeaturedImage']) && $attributes['displayFeaturedImage']
+        && ($attributes['displayFeaturedImageFor'] === 'all'
+        || $key < $attributes['displayFeaturedImageFor'])
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+}
