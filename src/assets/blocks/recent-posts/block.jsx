@@ -66,6 +66,10 @@ import AdvQueryControls from './query-controls.jsx';
         { label: '50px', value: 50 },
     ];
 
+    const NEWSPAPER_LAYOUTS = [
+        { layout: 'stacked', icon: 'stacked', title: __( 'Stacked', 'advanced-gutenberg' ) },
+    ];
+
     let initSlider = null;
 
     class RecentPostsEdit extends Component {
@@ -239,6 +243,7 @@ import AdvQueryControls from './query-controls.jsx';
                 gap,
                 frontpageStyle,
                 sliderStyle,
+                newspaperLayout,
                 excludeCurrentPost,
                 showCategories,
                 showTags,
@@ -382,6 +387,38 @@ import AdvQueryControls from './query-controls.jsx';
                         />
                     </PanelBody>
                     }
+
+                    {postView === 'newspaper' &&
+                    <PanelBody title={ __( 'Newspaper View Settings', 'advanced-gutenberg' ) }>
+                        <div className="advgb-recent-posts-select-layout on-inspector">
+                            {NEWSPAPER_LAYOUTS.map( (layout, index) => {
+                                const layoutClasses = [
+                                    'advgb-recent-posts-layout',
+                                    layout.layout === newspaperLayout && 'is-selected',
+                                ].filter( Boolean ).join( ' ' );
+
+                                return (
+                                    <Tooltip text={ layout.title } key={ index }>
+                                        <div
+                                            className={ layoutClasses }
+                                            onClick={ () => {
+                                                setAttributes( {
+                                                    newspaperLayout: layout.layout
+                                                } );
+                                                this.setState( { random: Math.random() } );
+                                            } }
+                                        >
+                                            <img src={advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png'}
+                                                 alt={ layout.layout }
+                                            />
+                                        </div>
+                                    </Tooltip>
+                                )
+                            } ) }
+                        </div>
+                    </PanelBody>
+                    }
+
                     <PanelBody title={ __( 'Post Settings', 'advanced-gutenberg' ) }>
                         <SelectControl
                             label={ __( 'Post Type', 'advanced-gutenberg' ) }
@@ -618,6 +655,12 @@ import AdvQueryControls from './query-controls.jsx';
                     onClick: () => setAttributes( { postView: 'frontpage' } ),
                     isActive: postView === 'frontpage',
                 },
+                {
+                    icon: 'admin-site-alt3',
+                    title: __( 'Newspaper View', 'advanced-gutenberg' ),
+                    onClick: () => setAttributes( { postView: 'newspaper' } ),
+                    isActive: postView === 'newspaper',
+                },
             ];
 
             const blockClassName = [
@@ -634,6 +677,8 @@ import AdvQueryControls from './query-controls.jsx';
                 postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM,
                 postView === 'frontpage' && gap && 'gap-' + gap,
                 postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle,
+                postView === 'newspaper' && 'newspaper-view',
+                postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout,
             ].filter( Boolean ).join( ' ' );
 
             const formats = __experimentalGetSettings().formats;
