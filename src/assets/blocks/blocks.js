@@ -24530,9 +24530,6 @@ function AdvQueryControls(_ref3) {
     }, {
         label: __('Randomize'),
         value: 'rand/asc'
-    }, {
-        label: __('Menu Order'),
-        value: 'menu_order/asc'
     }];
 
     // post supports more orderBy parameters
