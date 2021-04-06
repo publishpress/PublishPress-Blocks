@@ -24040,9 +24040,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             recentPosts.map(function (post, index) {
                                 return React.createElement(
                                     "article",
-                                    { key: index, className: "advgb-recent-post" },
+                                    { key: index,
+                                        className: "advgb-recent-post " + (_this3.getDisplayImageStatus(attributes, index) ? "" : "advgb-recent-post--no-image")
+                                    },
                                     function () {
-                                        if (displayFeaturedImage && (displayFeaturedImageFor === 'all' || index < displayFeaturedImageFor)) {
+                                        if (_this3.getDisplayImageStatus(attributes, index)) {
                                             return React.createElement(
                                                 "div",
                                                 { className: "advgb-post-thumbnail" },
@@ -24265,6 +24267,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     id: id,
                     name: catIdVsName[id]
                 };
+            }
+        }, {
+            key: "getDisplayImageStatus",
+            value: function getDisplayImageStatus(attributes, index) {
+                return attributes.displayFeaturedImage && (attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor);
             }
         }], [{
             key: "extractContent",
