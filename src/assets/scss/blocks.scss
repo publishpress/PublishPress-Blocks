@@ -3373,7 +3373,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 
           // Stacked layout - Vertically align all posts with image
           &.tbl-layout-stacked .advgb-recent-posts .advgb-recent-post:not(.advgb-recent-post--no-image) {
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 2fr 1fr !important;
             align-items: center;
           }
         }
@@ -3488,13 +3488,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 
           // Move image below
           .advgb-recent-posts .advgb-recent-post {
-            grid-template-columns: 1fr;
-            //overflow: hidden;
-          }
-
-          // Stacked layout - Vertically align all posts with image
-          &.mbl-layout-stacked .advgb-recent-posts .advgb-recent-post {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr !important;
           }
         }
       }
