@@ -1788,13 +1788,13 @@ hr.wp-block-separator {
 
         .advgb-recent-post {
           display: grid;
-          grid-template-columns: 2fr 1fr;
+          grid-template-columns: 1fr;
           grid-gap: 20px;
           overflow: visible;
 
-          &.advgb-recent-post--no-image {
+          /*&.advgb-recent-post--no-image {
             grid-template-columns: 1fr;
-          }
+          }*/
 
           .advgb-post-thumbnail {
             order: 2;
@@ -1862,7 +1862,7 @@ hr.wp-block-separator {
       &.layout-1-4,
       &.layout-1-5 {
 
-        .advgb-recent-post {
+        .advgb-recent-posts .advgb-recent-post {
 
           // First post with image
           &:not(.advgb-recent-post--no-image):nth-child(1) {
@@ -1880,8 +1880,9 @@ hr.wp-block-separator {
         }
       }
 
-      // Stacked style - Vertically align all posts with image
-      &.layout-stacked .advgb-recent-post:not(.advgb-recent-post--no-image) {
+      // Stacked layout - Vertically align all posts with image
+      &.layout-stacked .advgb-recent-posts .advgb-recent-post:not(.advgb-recent-post--no-image) {
+        grid-template-columns: 2fr 1fr;
         align-items: center;
       }
 
@@ -1891,7 +1892,7 @@ hr.wp-block-separator {
       &.layout-4-4,
       &.layout-5-5 {
 
-        .advgb-recent-post {
+        .advgb-recent-posts .advgb-recent-post {
           grid-template-columns: 1fr;
         }
       }
@@ -3366,6 +3367,16 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
             grid-column: unset;
           }
         }
+
+        // Newspaper style
+        &.style-newspaper {
+
+          // Stacked layout - Vertically align all posts with image
+          &.tbl-layout-stacked .advgb-recent-posts .advgb-recent-post:not(.advgb-recent-post--no-image) {
+            grid-template-columns: 2fr 1fr;
+            align-items: center;
+          }
+        }
       }
     }
 }
@@ -3472,9 +3483,19 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
           }
         }
 
-        // Newspaper style - Move image below
-        &.style-newspaper .advgb-recent-posts .advgb-recent-post {
-          grid-template-columns: 1fr !important;
+        // Newspaper style
+        &.style-newspaper {
+
+          // Move image below
+          .advgb-recent-posts .advgb-recent-post {
+            grid-template-columns: 1fr;
+            //overflow: hidden;
+          }
+
+          // Stacked layout - Vertically align all posts with image
+          &.mbl-layout-stacked .advgb-recent-posts .advgb-recent-post {
+            grid-template-columns: 1fr;
+          }
         }
       }
     }
