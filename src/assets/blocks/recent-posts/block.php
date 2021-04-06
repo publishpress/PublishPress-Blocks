@@ -552,6 +552,15 @@ function advgbRegisterCustomFields() {
         )
     );
 
+    register_rest_field( 'page',
+        'relative_dates',
+        array(
+            'get_callback'  => 'advgbGetRelativeDates',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
 }
 add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
 
