@@ -1788,17 +1788,16 @@ hr.wp-block-separator {
 
         .advgb-recent-post {
           display: grid;
-          //grid-template-columns: 2fr 1fr;
+          grid-template-columns: 2fr 1fr;
           grid-gap: 20px;
           overflow: visible;
 
-          /*&.advgb-recent-post--no-image {
+          &.advgb-recent-post--no-image {
             grid-template-columns: 1fr;
-          }*/
+          }
 
           .advgb-post-thumbnail {
             order: 2;
-            align-self: end;
           }
 
           .advgb-post-wrapper {
@@ -1823,7 +1822,7 @@ hr.wp-block-separator {
         }
       }
 
-      /*/ Border bottom
+      // Border bottom
       .advgb-recent-post:after {
         content: '';
         position: absolute;
@@ -1854,7 +1853,7 @@ hr.wp-block-separator {
 
       &.gap-50 .advgb-recent-post:after {
         bottom: -25px;
-      }*/
+      }
 
       // Settings for layouts with leading post
       &.layout-stacked,
@@ -1863,51 +1862,20 @@ hr.wp-block-separator {
       &.layout-1-4,
       &.layout-1-5 {
 
-        // Border bottom for first post
-        .advgb-recent-post:nth-child(1):after {
-          content: '';
-          position: absolute;
-          left: 0;
-          right: 0;
-          border-top: 1px solid #ccc;
-        }
+        .advgb-recent-post {
 
-        &.gap-5 .advgb-recent-post:after {
-          bottom: -2px;
-        }
+          // First post with image
+          &:not(.advgb-recent-post--no-image):nth-child(1) {
+            grid-template-columns: 2fr 3fr;
+            align-items: center;
+          }
 
-        &.gap-10 .advgb-recent-post:after {
-          bottom: -5px;
-        }
+          // Rest of the posts
+          &:not(:nth-child(1)) {
 
-        &.gap-20 .advgb-recent-post:after {
-          bottom: -10px;
-        }
-
-        &.gap-30 .advgb-recent-post:after {
-          bottom: -15px;
-        }
-
-        &.gap-40 .advgb-recent-post:after {
-          bottom: -20px;
-        }
-
-        &.gap-50 .advgb-recent-post:after {
-          bottom: -25px;
-        }
-
-        // First post with image
-        .advgb-recent-post:not(.advgb-recent-post--no-image):nth-child(1) {
-          grid-template-columns: 2fr 3fr;
-          align-items: center;
-        }
-
-        // Rest of the posts
-        .advgb-recent-post:not(:nth-child(1)) {
-          grid-template-columns: 1fr;
-
-          .advgb-post-wrapper .advgb-post-title {
-            font-size: 1.5em;
+            .advgb-post-wrapper .advgb-post-title {
+              font-size: 1.5em;
+            }
           }
         }
       }
