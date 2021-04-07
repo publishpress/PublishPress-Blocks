@@ -1885,16 +1885,16 @@ hr.wp-block-separator {
     }
 
     // One leading post in the left, 2 posts in the right
-    @include recent-posts-newspaper-2-columns(desktop, 2);
+    @include recent-posts-np-1(desktop, 2);
 
     // One leading post in the left, 3 posts in the right
-    @include recent-posts-newspaper-2-columns(desktop, 3);
+    @include recent-posts-np-1(desktop, 3);
 
     // One leading post in the left, 4 posts in the right
-    @include recent-posts-newspaper-2-columns(desktop, 4);
+    @include recent-posts-np-1(desktop, 4);
 
     // One leading post in the left, 5 posts in the right
-    @include recent-posts-newspaper-2-columns(desktop, 5);
+    @include recent-posts-np-1(desktop, 5);
   }
 }
 
@@ -3424,10 +3424,10 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
       &.newspaper-view {
 
         // Convert the 2 columns into one with image above and text below
-        @include recent-posts-newspaper-2-columns(mobile, 2);
-        @include recent-posts-newspaper-2-columns(mobile, 3);
-        @include recent-posts-newspaper-2-columns(mobile, 4);
-        @include recent-posts-newspaper-2-columns(mobile, 5);
+        @include recent-posts-np-1(mobile, 2);
+        @include recent-posts-np-1(mobile, 3);
+        @include recent-posts-np-1(mobile, 4);
+        @include recent-posts-np-1(mobile, 5);
       }
     }
 }

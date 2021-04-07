@@ -218,8 +218,8 @@
     }
 }
 
-/* Recent Posts - Newspaper view */
-@mixin recent-posts-newspaper-2-columns($device: desktop, $right-posts: 3) {
+/* Recent Posts - Newspaper view, layout 1 */
+@mixin recent-posts-np-1($device: desktop, $right-posts: 3) {
 
   $border-color: #ddd;
 
