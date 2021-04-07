@@ -217,3 +217,141 @@
         }
     }
 }
+
+/* Recent Posts - Newspaper view */
+@mixin recent-posts-newspaper-2-columns($device: desktop, $right-posts: 3) {
+
+  $border-color: #ddd;
+
+  @if $device == desktop {
+
+    &.layout-1-#{$right-posts} {
+
+      .advgb-recent-posts {
+        position: relative;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-gap: 40px;
+        overflow: hidden;
+
+        .advgb-recent-post {
+          position: relative;
+          z-index: 2;
+          overflow: visible;
+
+          .advgb-post-wrapper {
+
+            .advgb-post-info {
+
+              span {
+                opacity: 0.6;
+              }
+            }
+          }
+
+          // Secondary posts
+          &:nth-child(n+2) {
+            grid-column: 2 / span 2;
+
+            .advgb-post-wrapper {
+
+              .advgb-post-title {
+                font-size: 1.5em;
+              }
+            }
+
+            &:not(.advgb-recent-post--no-image) {
+              display: grid;
+              grid-template-columns: 2fr 1fr;
+              grid-gap: 20px;
+
+              .advgb-post-wrapper {
+                order: 1;
+              }
+
+              .advgb-post-thumbnail {
+                order: 2;
+              }
+            }
+
+            &:after {
+              right: 0;
+              left: 0;
+              bottom: -20px;
+              border-bottom: 1px solid $border-color;
+              position: absolute;
+              width: 100%;
+              content: '';
+            }
+          }
+
+          // Leading post
+          &:nth-child(1) {
+            grid-row: 1 / span #{$right-posts};
+
+            &:after {
+              right: -20px;
+              top: 0;
+              border-right: 1px solid $border-color;
+              position: absolute;
+              height: 100%;
+              content: '';
+            }
+          }
+        }
+      }
+    }
+
+  } @else if $device == tablet {
+
+    // Nothing to do here
+
+  } @else if $device == mobile {
+
+    &.layout-1-#{$right-posts} {
+
+      .advgb-recent-posts {
+        grid-template-columns: 1fr;
+
+        .advgb-recent-post {
+
+          // Secondary posts
+          &:nth-child(n+2) {
+            grid-column: unset;
+
+            &:not(.advgb-recent-post--no-image) {
+              grid-template-columns: 1fr;
+
+              .advgb-post-wrapper {
+                order: 2;
+              }
+
+              .advgb-post-thumbnail {
+                order: 1;
+              }
+            }
+          }
+
+          // Leading post
+          &:nth-child(1) {
+            grid-row: unset;
+
+            &:after {
+              border-right: none;
+              height: unset;
+              top: unset;
+              right: 0;
+              left: 0;
+              bottom: -20px;
+              border-bottom: 1px solid $border-color;
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+
+  } else {
+    // Nothing to do here
+  }
+}

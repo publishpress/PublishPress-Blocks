@@ -329,6 +329,9 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass .= ' style-' . $attributes['frontpageStyle'];
         (isset($attributes['frontpageLayoutT']) && $attributes['frontpageLayoutT']) ? $blockClass .= ' tbl-layout-' . $attributes['frontpageLayoutT'] : '';
         (isset($attributes['frontpageLayoutM']) && $attributes['frontpageLayoutM']) ? $blockClass .= ' mbl-layout-' . $attributes['frontpageLayoutM'] : '';
+    } elseif ($attributes['postView'] === 'newspaper') {
+        $blockClass = 'newspaper-view';
+        $blockClass .= ' layout-' . $attributes['newspaperLayout'];
     }
 
     if (isset($attributes['className'])) {
@@ -456,6 +459,10 @@ function advgbRegisterBlockRecentPosts()
             'sliderStyle' => array(
                 'type' => 'string',
                 'default' => 'default',
+            ),
+            'newspaperLayout' => array(
+                'type' => 'string',
+                'default' => '1-3',
             ),
             'changed' => array(
                 'type' => 'boolean',
