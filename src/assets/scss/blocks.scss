@@ -1902,6 +1902,12 @@ hr.wp-block-separator {
 
     // One leading post on top, below the rest of posts
     @include recent-posts-np-2(desktop);
+
+    // One leading post on top, below 2 columns with 1 post in the left and 2 posts in the right
+    @include recent-posts-np-3(desktop, 2);
+
+    // One leading post on top, below 2 columns with 1 post in the left and 3 posts in the right
+    @include recent-posts-np-3(desktop, 3);
   }
 }
 
@@ -3442,7 +3448,11 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
         @include recent-posts-np-1(mobile, 3);
         @include recent-posts-np-1(mobile, 4);
         @include recent-posts-np-1(mobile, 5);
+
+        // Convert the 2 columns into one with text above and image below
         @include recent-posts-np-2(mobile);
+        @include recent-posts-np-3(mobile, 2);
+        @include recent-posts-np-3(mobile, 3);
       }
     }
 }
