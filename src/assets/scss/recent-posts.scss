@@ -673,32 +673,14 @@
       }
     }
 
-    // One leading post in the left, 1 post in the right
-    @include recent-posts-np-1(desktop, 1);
-
-    // One leading post in the left, 2 posts in the right
-    @include recent-posts-np-1(desktop, 2);
-
-    // One leading post in the left, 3 posts in the right
-    @include recent-posts-np-1(desktop, 3);
-
-    // One leading post in the left, 4 posts in the right
-    @include recent-posts-np-1(desktop, 4);
-
-    // One leading post in the left, 5 posts in the right
-    @include recent-posts-np-1(desktop, 5);
+    // One leading post in the left, NaN post in the right
+    @include recent-posts-np-1(desktop);
 
     // One leading post on top, below the rest of posts
     @include recent-posts-np-2(desktop);
 
-    // One leading post on top, below 2 columns with 1 post in the left and 1 post in the right
-    @include recent-posts-np-3(desktop, 1);
-
-    // One leading post on top, below 2 columns with 1 post in the left and 2 posts in the right
-    @include recent-posts-np-3(desktop, 2);
-
-    // One leading post on top, below 2 columns with 1 post in the left and 3 posts in the right
-    @include recent-posts-np-3(desktop, 3);
+    // One leading post on top, below 2 columns with 1 post in the left and NaN post in the right
+    @include recent-posts-np-3(desktop);
   }
 }
 
@@ -793,9 +775,7 @@
 
       // Leading post text and image use 50% width
       @include recent-posts-np-2(tablet);
-      @include recent-posts-np-3(tablet, 1);
-      @include recent-posts-np-3(tablet, 2);
-      @include recent-posts-np-3(tablet, 3);
+      @include recent-posts-np-3(tablet);
     }
   }
 }
