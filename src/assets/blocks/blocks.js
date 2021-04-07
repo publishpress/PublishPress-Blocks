@@ -23430,7 +23430,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var GAP_OPTIONS = [{ label: __('None', 'advanced-gutenberg'), value: 0 }, { label: '5px', value: 5 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }];
 
-    var NEWSPAPER_LAYOUTS = [{ layout: 'stacked', icon: 'stacked', title: __('Stacked', 'advanced-gutenberg') }];
+    var NEWSPAPER_LAYOUTS = [{ layout: '1-2', icon: '1-2-np', title: __('One leading post in the left, 2 posts in the right', 'advanced-gutenberg') }, { layout: '1-3', icon: '1-3-np', title: __('One leading post in the left, 3 posts in the right', 'advanced-gutenberg') }, { layout: '1-4', icon: '1-4-np', title: __('One leading post in the left, 4 posts in the right', 'advanced-gutenberg') }, { layout: '1-5', icon: '1-5-np', title: __('One leading post in the left, 5 posts in the right', 'advanced-gutenberg') }];
 
     var initSlider = null;
 

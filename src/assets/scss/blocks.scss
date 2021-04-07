@@ -1,3 +1,5 @@
+@import "mixins";
+
 .clearfix:after, .clearfix:before {
     content: '';
     display: block;
@@ -1343,7 +1345,7 @@ hr.wp-block-separator {
       background-color: rgba(0,0,0,0.7);
   }
 
-  // Grid layout
+  // Grid view
   &.grid-view {
 
     .advgb-recent-posts {
@@ -1393,7 +1395,7 @@ hr.wp-block-separator {
     }
   }
 
-  // List layout
+  // List view
   &.list-view .advgb-recent-posts .advgb-recent-post {
     display: grid;
     grid-template-columns: 30% 1fr;
@@ -1420,7 +1422,7 @@ hr.wp-block-separator {
     }
   }
 
-  // Slider layout
+  // Slider view
   &.slider-view {
 
     &.loading .advgb-recent-posts {
@@ -1546,7 +1548,7 @@ hr.wp-block-separator {
     }
   }
 
-  // Frontpage layout
+  // Frontpage view
   &.frontpage-view {
 
     .advgb-recent-posts {
@@ -1832,6 +1834,67 @@ hr.wp-block-separator {
         }
       }
     }
+  }
+
+  // Newspaper view
+  &.newspaper-view {
+
+    .advgb-recent-posts {
+
+
+      .advgb-recent-post {
+        padding: 0;
+
+        .advgb-post-wrapper {
+
+          .advgb-post-title {
+            margin: 0;
+            padding: 0;
+          }
+
+          .advgb-post-info {
+            font-size: 0.8em;
+            line-height: 1.4em;
+
+            .advgb-post-comments {
+
+              .dashicons {
+                line-height: 1em;
+              }
+            }
+          }
+
+          > * {
+            margin-bottom: 0;
+          }
+        }
+
+        .advgb-post-thumbnail {
+          margin-bottom: 20px;
+
+          a {
+            display: block;
+          }
+
+          img {
+            width: 100%;
+            height: auto;
+          }
+        }
+      }
+    }
+
+    // One leading post in the left, 2 posts in the right
+    @include recent-posts-newspaper-2-columns(desktop, 2);
+
+    // One leading post in the left, 3 posts in the right
+    @include recent-posts-newspaper-2-columns(desktop, 3);
+
+    // One leading post in the left, 4 posts in the right
+    @include recent-posts-newspaper-2-columns(desktop, 4);
+
+    // One leading post in the left, 5 posts in the right
+    @include recent-posts-newspaper-2-columns(desktop, 5);
   }
 }
 
@@ -3355,6 +3418,16 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
             grid-column: unset;
           }
         }
+      }
+
+      // Newspaper view
+      &.newspaper-view {
+
+        // Convert the 2 columns into one with image above and text below
+        @include recent-posts-newspaper-2-columns(mobile, 2);
+        @include recent-posts-newspaper-2-columns(mobile, 3);
+        @include recent-posts-newspaper-2-columns(mobile, 4);
+        @include recent-posts-newspaper-2-columns(mobile, 5);
       }
     }
 }
