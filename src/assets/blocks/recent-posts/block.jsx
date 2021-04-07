@@ -67,11 +67,13 @@ import AdvQueryControls from './query-controls.jsx';
     ];
 
     const NEWSPAPER_LAYOUTS = [
+        { layout: 'np-1-1', icon: 'np-1-1', title: __( 'One leading post in the left, 1 posts in the right', 'advanced-gutenberg' ) },
         { layout: 'np-1-2', icon: 'np-1-2', title: __( 'One leading post in the left, 2 posts in the right', 'advanced-gutenberg' ) },
         { layout: 'np-1-3', icon: 'np-1-3', title: __( 'One leading post in the left, 3 posts in the right', 'advanced-gutenberg' ) },
         { layout: 'np-1-4', icon: 'np-1-4', title: __( 'One leading post in the left, 4 posts in the right', 'advanced-gutenberg' ) },
         { layout: 'np-1-5', icon: 'np-1-5', title: __( 'One leading post in the left, 5 posts in the right', 'advanced-gutenberg' ) },
         { layout: 'np-2', icon: 'np-2', title: __( 'One leading post on top, below the rest of posts', 'advanced-gutenberg' ) },
+        { layout: 'np-3-1', icon: 'np-3-1', title: __( 'One leading post on top, below 2 columns with 1 post in the left and 1 post in the right', 'advanced-gutenberg' ) },
         { layout: 'np-3-2', icon: 'np-3-2', title: __( 'One leading post on top, below 2 columns with 1 post in the left and 2 posts in the right', 'advanced-gutenberg' ) },
         { layout: 'np-3-3', icon: 'np-3-3', title: __( 'One leading post on top, below 2 columns with 1 post in the left and 3 posts in the right', 'advanced-gutenberg' ) },
     ];
