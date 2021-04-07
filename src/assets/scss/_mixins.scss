@@ -225,7 +225,7 @@
 
   @if $device == desktop {
 
-    &.layout-1-#{$right-posts} {
+    &.layout-np-1-#{$right-posts} {
 
       .advgb-recent-posts {
         position: relative;
@@ -308,7 +308,7 @@
 
   } @else if $device == mobile {
 
-    &.layout-1-#{$right-posts} {
+    &.layout-np-1-#{$right-posts} {
 
       .advgb-recent-posts {
         grid-template-columns: 1fr;

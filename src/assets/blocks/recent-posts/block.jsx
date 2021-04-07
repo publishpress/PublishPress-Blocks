@@ -67,10 +67,10 @@ import AdvQueryControls from './query-controls.jsx';
     ];
 
     const NEWSPAPER_LAYOUTS = [
-        { layout: '1-2', icon: '1-2-np', title: __( 'One leading post in the left, 2 posts in the right', 'advanced-gutenberg' ) },
-        { layout: '1-3', icon: '1-3-np', title: __( 'One leading post in the left, 3 posts in the right', 'advanced-gutenberg' ) },
-        { layout: '1-4', icon: '1-4-np', title: __( 'One leading post in the left, 4 posts in the right', 'advanced-gutenberg' ) },
-        { layout: '1-5', icon: '1-5-np', title: __( 'One leading post in the left, 5 posts in the right', 'advanced-gutenberg' ) },
+        { layout: 'np-1-2', icon: 'np-1-2', title: __( 'One leading post in the left, 2 posts in the right', 'advanced-gutenberg' ) },
+        { layout: 'np-1-3', icon: 'np-1-3', title: __( 'One leading post in the left, 3 posts in the right', 'advanced-gutenberg' ) },
+        { layout: 'np-1-4', icon: 'np-1-4', title: __( 'One leading post in the left, 4 posts in the right', 'advanced-gutenberg' ) },
+        { layout: 'np-1-5', icon: 'np-1-5', title: __( 'One leading post in the left, 5 posts in the right', 'advanced-gutenberg' ) },
     ];
 
     let initSlider = null;
