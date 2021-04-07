@@ -150,10 +150,6 @@ function AdvQueryControls({
                         label: __('Randomize'),
                         value: 'rand/asc',
                     },
-                    {
-                        label: __('Menu Order'),
-                        value: 'menu_order/asc',
-                    },
     ];
 
     // post supports more orderBy parameters
