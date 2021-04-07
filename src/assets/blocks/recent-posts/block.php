@@ -462,7 +462,7 @@ function advgbRegisterBlockRecentPosts()
             ),
             'newspaperLayout' => array(
                 'type' => 'string',
-                'default' => '1-3',
+                'default' => 'np-1-3',
             ),
             'changed' => array(
                 'type' => 'boolean',
