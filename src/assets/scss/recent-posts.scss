@@ -890,17 +890,11 @@
     &.newspaper-view {
 
       // Convert the 2 columns into one with image above and text below
-      @include recent-posts-np-1(mobile, 1);
-      @include recent-posts-np-1(mobile, 2);
-      @include recent-posts-np-1(mobile, 3);
-      @include recent-posts-np-1(mobile, 4);
-      @include recent-posts-np-1(mobile, 5);
+      @include recent-posts-np-1(mobile);
 
       // Convert the 2 columns into one with text above and image below
       @include recent-posts-np-2(mobile);
-      @include recent-posts-np-3(mobile, 1);
-      @include recent-posts-np-3(mobile, 2);
-      @include recent-posts-np-3(mobile, 3);
+      @include recent-posts-np-3(mobile);
     }
   }
 }
