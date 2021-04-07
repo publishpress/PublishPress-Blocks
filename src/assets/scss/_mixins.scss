@@ -549,6 +549,10 @@
             display: grid;
             grid-gap: 20px;
 
+            &.advgb-recent-post--no-image {
+              grid-template-columns: 1fr;
+            }
+
             &:after {
               right: -20px;
               top: 0;
