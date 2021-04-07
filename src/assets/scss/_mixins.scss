@@ -239,16 +239,6 @@
           z-index: 2;
           overflow: visible;
 
-          .advgb-post-wrapper {
-
-            .advgb-post-info {
-
-              span {
-                opacity: 0.6;
-              }
-            }
-          }
-
           // Secondary posts
           &:nth-child(n+2) {
             grid-column: 2 / span 2;
@@ -346,6 +336,142 @@
               border-bottom: 1px solid $border-color;
               width: 100%;
             }
+          }
+        }
+      }
+    }
+
+  } else {
+    // Nothing to do here
+  }
+}
+
+/* Recent Posts - Newspaper view, layout 2 */
+@mixin recent-posts-np-2($device: desktop) {
+
+  $border-color: #ddd;
+
+  @if $device == desktop {
+
+    &.layout-np-2 {
+
+      .advgb-recent-posts {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 40px;
+        overflow: hidden;
+
+        .advgb-recent-post {
+          position: relative;
+          z-index: 2;
+          overflow: visible;
+
+          .advgb-post-thumbnail {
+            margin-bottom: 0;
+          }
+
+          // Secondary posts
+          &:nth-child(n+2) {
+
+            .advgb-post-wrapper {
+
+              .advgb-post-title {
+                font-size: 1.5em;
+              }
+            }
+
+            &:not(.advgb-recent-post--no-image) {
+              display: grid;
+              grid-template-columns: 3fr 1fr;
+              grid-gap: 20px;
+              align-items: center;
+
+              .advgb-post-wrapper {
+                order: 1;
+              }
+
+              .advgb-post-thumbnail {
+                order: 2;
+              }
+            }
+
+            &:after {
+              right: 0;
+              left: 0;
+              bottom: -20px;
+              border-bottom: 1px solid $border-color;
+              position: absolute;
+              width: 100%;
+              content: '';
+            }
+          }
+
+          // Leading post
+          &:nth-child(1) {
+            grid-template-columns: 2fr 3fr;
+            display: grid;
+            grid-gap: 20px;
+            align-items: center;
+
+            .advgb-post-wrapper {
+              order: 1;
+            }
+
+            .advgb-post-thumbnail {
+              order: 2;
+            }
+
+            &:after {
+              right: 0;
+              left: 0;
+              bottom: -20px;
+              border-bottom: 1px solid $border-color;
+              position: absolute;
+              width: 100%;
+              content: '';
+            }
+          }
+        }
+      }
+    }
+
+  } @else if $device == tablet {
+
+    &.layout-np-2 {
+
+      .advgb-recent-posts {
+
+        .advgb-recent-post {
+
+          // Leading post
+          &:nth-child(1) {
+            grid-template-columns: 1fr 1fr;
+          }
+        }
+      }
+    }
+
+  } @else if $device == mobile {
+
+    &.layout-np-2 {
+
+      .advgb-recent-posts {
+
+        .advgb-recent-post {
+
+          // Secondary posts
+          &:nth-child(n+2) {
+            grid-template-columns: 1fr;
+
+            &:not(.advgb-recent-post--no-image) {
+              grid-template-columns: 1fr;
+            }
+          }
+
+          // Leading post
+          &:nth-child(1) {
+            grid-template-columns: 1fr;
           }
         }
       }

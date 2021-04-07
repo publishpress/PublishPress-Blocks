@@ -1862,6 +1862,10 @@ hr.wp-block-separator {
                 line-height: 1em;
               }
             }
+
+            span {
+              opacity: 0.6;
+            }
           }
 
           > * {
@@ -1895,6 +1899,9 @@ hr.wp-block-separator {
 
     // One leading post in the left, 5 posts in the right
     @include recent-posts-np-1(desktop, 5);
+
+    // One leading post on top, below the rest
+    @include recent-posts-np-2(desktop);
   }
 }
 
@@ -3314,6 +3321,13 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
           }
         }
       }
+
+      // Newspaper view
+      &.newspaper-view {
+
+        // One leading post on top, below the rest
+        @include recent-posts-np-2(tablet);
+      }
     }
 }
 
@@ -3428,6 +3442,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
         @include recent-posts-np-1(mobile, 3);
         @include recent-posts-np-1(mobile, 4);
         @include recent-posts-np-1(mobile, 5);
+        @include recent-posts-np-2(mobile);
       }
     }
 }
