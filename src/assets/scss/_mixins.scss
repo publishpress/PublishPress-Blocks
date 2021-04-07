@@ -590,7 +590,19 @@
 
   } @else if $device == tablet {
 
-    // Nothing to do here
+    &.layout-np-3-#{$right-posts} {
+
+      .advgb-recent-posts {
+
+        .advgb-recent-post {
+
+          // Leading post
+          &:nth-child(1) {
+            grid-template-columns: 1fr 1fr;
+          }
+        }
+      }
+    }
 
   } @else if $device == mobile {
 

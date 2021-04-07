@@ -3331,8 +3331,10 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
       // Newspaper view
       &.newspaper-view {
 
-        // One leading post on top, below the rest of posts
+        // Leading post text and image use 50% width
         @include recent-posts-np-2(tablet);
+        @include recent-posts-np-3(tablet, 2);
+        @include recent-posts-np-3(tablet, 3);
       }
     }
 }
