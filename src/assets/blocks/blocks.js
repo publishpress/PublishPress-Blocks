@@ -23449,7 +23449,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 tagNameVsId: [],
                 postTypeList: [{ label: __('Post'), value: 'post' }, { label: __('Page'), value: 'page' }],
                 updating: false,
-                tabSelected: 'desktop'
+                tabSelected: 'desktop',
+                authorList: []
             };
 
             _this.selectCategories = _this.selectCategories.bind(_this);
@@ -23529,6 +23530,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     });
                 });
 
+                wp.apiFetch({
+                    path: wp.url.addQueryArgs('advgb/v1/authors')
+                }).then(function (list) {
+                    _this2.setState({ authorList: list });
+                });
+
                 // migrate from displayDate to postDate
                 var postDateDisplay = attributes.displayDate ? 'created' : attributes.postDate;
                 setAttributes({
@@ -23598,7 +23605,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     categoriesList = _state.categoriesList,
                     tagsList = _state.tagsList,
                     postTypeList = _state.postTypeList,
-                    tabSelected = _state.tabSelected;
+                    tabSelected = _state.tabSelected,
+                    authorList = _state.authorList;
                 var _props4 = this.props,
                     attributes = _props4.attributes,
                     setAttributes = _props4.setAttributes,
@@ -23635,7 +23643,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     showTags = attributes.showTags,
                     displayCommentCount = attributes.displayCommentCount,
                     textAfterTitle = attributes.textAfterTitle,
-                    textBeforeReadmore = attributes.textBeforeReadmore;
+                    textBeforeReadmore = attributes.textBeforeReadmore,
+                    selectedAuthorId = attributes.author;
 
 
                 var isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
@@ -23809,7 +23818,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ postType: value });
                             }
                         }),
-                        React.createElement(_queryControls2.default, _extends({ order: order, orderBy: orderBy, postType: postType }, {
+                        React.createElement(_queryControls2.default, _extends({ order: order, orderBy: orderBy, authorList: authorList, postType: postType, selectedAuthorId: selectedAuthorId }, {
                             categorySuggestions: postType === 'post' ? categoriesList : null,
                             selectedCategories: categories,
                             numberOfItems: numberOfPosts,
@@ -23821,6 +23830,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             },
                             onCategoryChange: function onCategoryChange(value) {
                                 _this3.selectCategories(value);
+                            },
+                            onAuthorChange: function onAuthorChange(value) {
+                                return setAttributes({ author: value });
                             },
                             onNumberOfItemsChange: function onNumberOfItemsChange(value) {
                                 return setAttributes({ numberOfPosts: value });
@@ -24382,7 +24394,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 numberOfPosts = _props$attributes.numberOfPosts,
                 myToken = _props$attributes.myToken,
                 postType = _props$attributes.postType,
-                excludeCurrentPost = _props$attributes.excludeCurrentPost;
+                excludeCurrentPost = _props$attributes.excludeCurrentPost,
+                author = _props$attributes.author;
 
 
             var catIds = categories && categories.length > 0 ? categories.map(function (cat) {
@@ -24397,7 +24410,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 orderby: orderBy,
                 per_page: numberOfPosts,
                 token: myToken,
-                exclude: excludeCurrentPost ? postId : 0
+                exclude: excludeCurrentPost ? postId : 0,
+                author: author
             }, function (value) {
                 return !isUndefined(value);
             });

@@ -95,6 +95,7 @@ import AdvQueryControls from './query-controls.jsx';
                 ],
                 updating: false,
                 tabSelected: 'desktop',
+                authorList: [],
             }
 
             this.selectCategories = this.selectCategories.bind(this);
@@ -167,6 +168,12 @@ import AdvQueryControls from './query-controls.jsx';
 
             } );
 
+            wp.apiFetch( {
+                path: wp.url.addQueryArgs( 'advgb/v1/authors' ),
+            } ).then( ( list ) => {
+                this.setState( { authorList: list } );
+            } );
+
             // migrate from displayDate to postDate
             let postDateDisplay = attributes.displayDate ? 'created' : attributes.postDate;
             setAttributes({
@@ -224,7 +231,7 @@ import AdvQueryControls from './query-controls.jsx';
         }
 
         render() {
-            const { categoriesList, tagsList, postTypeList, tabSelected } = this.state;
+            const { categoriesList, tagsList, postTypeList, tabSelected, authorList } = this.state;
             const { attributes, setAttributes, recentPosts } = this.props;
             const {
                 postView,
@@ -258,6 +265,7 @@ import AdvQueryControls from './query-controls.jsx';
                 displayCommentCount,
                 textAfterTitle,
                 textBeforeReadmore,
+                author: selectedAuthorId,
             } = attributes;
 
             const isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
@@ -435,7 +443,7 @@ import AdvQueryControls from './query-controls.jsx';
                             onChange={ (value) => setAttributes( { postType: value } ) }
                         />
                         <AdvQueryControls
-                            { ...{ order, orderBy, postType } }
+                            { ...{ order, orderBy, authorList, postType, selectedAuthorId } }
                             categorySuggestions={ postType === 'post' ? categoriesList : null }
                             selectedCategories={ categories }
                             numberOfItems={ numberOfPosts }
@@ -445,6 +453,7 @@ import AdvQueryControls from './query-controls.jsx';
                                                 this.selectCategories(value);
                                             }
                             }
+                            onAuthorChange={ ( value ) => setAttributes( { author: value } ) }
                             onNumberOfItemsChange={ (value) => setAttributes( { numberOfPosts: value } ) }
                         />
                         { postType === 'post' &&
@@ -952,7 +961,7 @@ import AdvQueryControls from './query-controls.jsx';
         },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost } = props.attributes;
+            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, author } = props.attributes;
 
             const catIds = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
 
@@ -964,7 +973,8 @@ import AdvQueryControls from './query-controls.jsx';
                 orderby: orderBy,
                 per_page: numberOfPosts,
                 token: myToken,
-                exclude: excludeCurrentPost ? postId : 0
+                exclude: excludeCurrentPost ? postId : 0,
+                author: author
             }, ( value ) => !isUndefined( value ) );
 
             return {
