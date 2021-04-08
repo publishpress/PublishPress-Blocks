@@ -107,8 +107,19 @@ function advgbRenderBlockRecentPosts($attributes)
             'order' => empty($attributes['order'])?'desc':$attributes['order'],
             'orderby' => $orderBy,
             'suppress_filters' => false,
-			'exclude' => $post_type === 'post' && isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ? $post->ID : 0
         );
+
+	if( isset( $attributes['include'] ) && ! empty( $attributes['include'] ) ) {
+		$args['post_name__in'] = $attributes['include'];
+	}
+
+	if( isset( $attributes['exclude'] ) && ! empty( $attributes['exclude'] ) ) {
+		$args['post__not_in'] = advgbGetPostIdsForTitles( $attributes['exclude'], $post_type );
+	}
+
+	if( isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ) {
+		$args['post__not_in'] = array_merge( $args['post__not_in'], array( $post->ID ) );
+	}
 
 	// use tax for anything but pages...
 	if ( ! in_array( $post_type, array( 'page' ), true ) ) {
@@ -735,4 +746,13 @@ function advgbCheckImageStatus( $attributes, $key )  {
     } else {
         return false;
     }
+}
+
+
+function advgbGetPostIdsForTitles( $titles, $post_type ) {
+	$ids = array();
+	if ( ! empty( $titles ) ) {
+		return get_posts( array( 'post_name__in' => $titles, 'post_type' => $post_type, 'fields' => 'ids' ) );
+	}
+	return $ids;
 }
