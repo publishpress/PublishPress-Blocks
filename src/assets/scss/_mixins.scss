@@ -546,7 +546,7 @@
             .advgb-post-wrapper {
 
               .advgb-post-title {
-                font-size: 1.2em;
+                font-size: 1.1em;
               }
             }
 
@@ -576,6 +576,13 @@
 
             &.advgb-recent-post--no-image {
               grid-template-columns: 1fr;
+            }
+
+            .advgb-post-wrapper {
+
+              .advgb-post-title {
+                font-size: 1.5em;
+              }
             }
 
             &:after {
