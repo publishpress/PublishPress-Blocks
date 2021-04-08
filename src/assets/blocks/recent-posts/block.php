@@ -329,6 +329,9 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass .= ' style-' . $attributes['frontpageStyle'];
         (isset($attributes['frontpageLayoutT']) && $attributes['frontpageLayoutT']) ? $blockClass .= ' tbl-layout-' . $attributes['frontpageLayoutT'] : '';
         (isset($attributes['frontpageLayoutM']) && $attributes['frontpageLayoutM']) ? $blockClass .= ' mbl-layout-' . $attributes['frontpageLayoutM'] : '';
+    } elseif ($attributes['postView'] === 'newspaper') {
+        $blockClass = 'newspaper-view';
+        $blockClass .= ' layout-' . $attributes['newspaperLayout'];
     }
 
     if (isset($attributes['className'])) {
@@ -457,6 +460,10 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'string',
                 'default' => 'default',
             ),
+            'newspaperLayout' => array(
+                'type' => 'string',
+                'default' => 'np-1-3',
+            ),
             'changed' => array(
                 'type' => 'boolean',
                 'default' => false,
@@ -555,6 +562,15 @@ function advgbRegisterCustomFields() {
         )
     );
 
+    register_rest_field( 'page',
+        'relative_dates',
+        array(
+            'get_callback'  => 'advgbGetRelativeDates',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
 }
 add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
 
@@ -566,7 +582,6 @@ add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
 function advgbAllowPostQueryVars( $query_params ) {
 	$query_params['orderby']['enum'][] = 'rand';
 	$query_params['orderby']['enum'][] = 'comment_count';
-	$query_params['orderby']['enum'][] = 'menu_order';
 	return $query_params;
 }
 add_filter( 'rest_post_collection_params', 'advgbAllowPostQueryVars' );
@@ -579,7 +594,6 @@ add_filter( 'rest_post_collection_params', 'advgbAllowPostQueryVars' );
 function advgbAllowPageQueryVars( $query_params ) {
 	$query_params['orderby']['enum'][] = 'author';
 	$query_params['orderby']['enum'][] = 'rand';
-	$query_params['orderby']['enum'][] = 'menu_order';
 	return $query_params;
 }
 add_filter( 'rest_page_collection_params', 'advgbAllowPageQueryVars' );

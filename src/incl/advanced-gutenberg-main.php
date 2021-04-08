@@ -445,6 +445,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array(),
                     ADVANCED_GUTENBERG_VERSION
                 );
+                wp_enqueue_style(
+                    'advgb_recent_posts_styles',
+                    plugins_url('assets/css/recent-posts.css', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
+                );
 
                 // Pro
                 if(defined('ADVANCED_GUTENBERG_PRO')) {
@@ -1505,7 +1511,15 @@ if(!class_exists('AdvancedGutenbergMain')) {
             );
             wp_register_style(
                 'advgb_columns_styles',
-                plugins_url('assets/css/columns.css', dirname(__FILE__))
+                plugins_url('assets/css/columns.css', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_style(
+                'advgb_recent_posts_styles',
+                plugins_url('assets/css/recent-posts.css', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
             );
 
             wp_register_script(
@@ -4570,6 +4584,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array($this, 'decodeHtmlEntity'),
                     $content
                 );
+            }
+
+            if (strpos($content, 'advgb-recent-posts-block') !== false) {
+                wp_enqueue_style('advgb_recent_posts_styles');
             }
 
             if (strpos($content, 'advgb-recent-posts-block slider-view') !== false) {

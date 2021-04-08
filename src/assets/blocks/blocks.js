@@ -23430,6 +23430,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var GAP_OPTIONS = [{ label: __('None', 'advanced-gutenberg'), value: 0 }, { label: '5px', value: 5 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }];
 
+    var NEWSPAPER_LAYOUTS = [{ layout: 'np-1-1', icon: 'np-1-1', title: __('One leading post in the left, 1 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-2', icon: 'np-1-2', title: __('One leading post in the left, 2 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-3', icon: 'np-1-3', title: __('One leading post in the left, 3 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-4', icon: 'np-1-4', title: __('One leading post in the left, 4 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-5', icon: 'np-1-5', title: __('One leading post in the left, 5 posts in the right', 'advanced-gutenberg') }, { layout: 'np-2', icon: 'np-2', title: __('One leading post on top, below the rest of posts', 'advanced-gutenberg') }, { layout: 'np-3-1', icon: 'np-3-1', title: __('One leading post on top, below 2 columns with 1 post in the left and 1 post in the right', 'advanced-gutenberg') }, { layout: 'np-3-2', icon: 'np-3-2', title: __('One leading post on top, below 2 columns with 1 post in the left and 2 posts in the right', 'advanced-gutenberg') }, { layout: 'np-3-3', icon: 'np-3-3', title: __('One leading post on top, below 2 columns with 1 post in the left and 3 posts in the right', 'advanced-gutenberg') }];
+
     var initSlider = null;
 
     var RecentPostsEdit = function (_Component) {
@@ -23635,6 +23637,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     gap = attributes.gap,
                     frontpageStyle = attributes.frontpageStyle,
                     sliderStyle = attributes.sliderStyle,
+                    newspaperLayout = attributes.newspaperLayout,
                     excludeCurrentPost = attributes.excludeCurrentPost,
                     showCategories = attributes.showCategories,
                     showTags = attributes.showTags,
@@ -23759,7 +23762,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(SelectControl, {
                             label: __('Style', 'advanced-gutenberg'),
                             value: frontpageStyle,
-                            options: [{ label: __('Default', 'advanced-gutenberg'), value: 'default' }, { label: __('Headline', 'advanced-gutenberg'), value: 'headline' }, { label: __('Boxed', 'advanced-gutenberg'), value: 'boxed' }, { label: __('Newspaper', 'advanced-gutenberg'), value: 'newspaper' }],
+                            options: [{ label: __('Default', 'advanced-gutenberg'), value: 'default' }, { label: __('Headline', 'advanced-gutenberg'), value: 'headline' }, { label: __('Boxed', 'advanced-gutenberg'), value: 'boxed' }],
                             onChange: function onChange(value) {
                                 return setAttributes({ frontpageStyle: value });
                             }
@@ -23772,6 +23775,37 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ gap: parseInt(value) });
                             }
                         })
+                    ),
+                    postView === 'newspaper' && React.createElement(
+                        PanelBody,
+                        { title: __('Newspaper View Settings', 'advanced-gutenberg') },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-recent-posts-select-layout on-inspector" },
+                            NEWSPAPER_LAYOUTS.map(function (layout, index) {
+                                var layoutClasses = ['advgb-recent-posts-layout', layout.layout === newspaperLayout && 'is-selected'].filter(Boolean).join(' ');
+
+                                return React.createElement(
+                                    Tooltip,
+                                    { text: layout.title, key: index },
+                                    React.createElement(
+                                        "div",
+                                        {
+                                            className: layoutClasses,
+                                            onClick: function onClick() {
+                                                setAttributes({
+                                                    newspaperLayout: layout.layout
+                                                });
+                                                _this3.setState({ random: Math.random() });
+                                            }
+                                        },
+                                        React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
+                                            alt: layout.layout
+                                        })
+                                    )
+                                );
+                            })
+                        )
                     ),
                     React.createElement(
                         PanelBody,
@@ -24015,9 +24049,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         return setAttributes({ postView: 'frontpage' });
                     },
                     isActive: postView === 'frontpage'
+                }, {
+                    icon: 'admin-site-alt3',
+                    title: __('Newspaper View', 'advanced-gutenberg'),
+                    onClick: function onClick() {
+                        return setAttributes({ postView: 'newspaper' });
+                    },
+                    isActive: postView === 'newspaper'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && 'newspaper-view', postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout].filter(Boolean).join(' ');
 
                 var formats = __experimentalGetSettings().formats;
                 var format = postDate !== 'hide' ? displayTime ? formats.datetime : formats.date : '';
@@ -24544,9 +24585,6 @@ function AdvQueryControls(_ref3) {
     }, {
         label: __('Randomize'),
         value: 'rand/asc'
-    }, {
-        label: __('Menu Order'),
-        value: 'menu_order/asc'
     }];
 
     // post supports more orderBy parameters
