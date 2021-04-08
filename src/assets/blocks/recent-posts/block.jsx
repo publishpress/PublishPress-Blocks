@@ -169,7 +169,7 @@ import AdvQueryControls from './query-controls.jsx';
             } );
 
             wp.apiFetch( {
-                path: wp.url.addQueryArgs( 'wp/v2/users', { per_page: -1, who: 'authors'} ),
+                path: wp.url.addQueryArgs( 'advgb/v1/authors' ),
             } ).then( ( list ) => {
                 this.setState( { authorList: list } );
             } );

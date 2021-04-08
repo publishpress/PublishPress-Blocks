@@ -23531,7 +23531,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 wp.apiFetch({
-                    path: wp.url.addQueryArgs('wp/v2/users', { per_page: -1, who: 'authors' })
+                    path: wp.url.addQueryArgs('advgb/v1/authors')
                 }).then(function (list) {
                     _this2.setState({ authorList: list });
                 });
