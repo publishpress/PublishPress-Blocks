@@ -24551,56 +24551,56 @@ function AdvQueryControls(_ref3) {
         onOrderByChange = _ref3.onOrderByChange;
 
     var orderParams = [{
-        label: __('Created: Newest to oldest'),
+        label: __('Created: Newest to oldest', 'advanced-gutenberg'),
         value: 'date/desc'
     }, {
-        label: __('Created: Oldest to newest'),
+        label: __('Created: Oldest to newest', 'advanced-gutenberg'),
         value: 'date/asc'
     }, {
         /* translators: label for ordering posts by title in ascending order */
-        label: __('A → Z'),
+        label: __('A → Z', 'advanced-gutenberg'),
         value: 'title/asc'
     }, {
         /* translators: label for ordering posts by title in descending order */
-        label: __('Z → A'),
+        label: __('Z → A', 'advanced-gutenberg'),
         value: 'title/desc'
     }, {
-        label: __('Author') + ' ' + __('A → Z'),
+        label: __('Author', 'advanced-gutenberg') + ' ' + __('A → Z', 'advanced-gutenberg'),
         value: 'author/asc'
     }, {
-        label: __('Author') + ' ' + __('Z → A'),
+        label: __('Author', 'advanced-gutenberg') + ' ' + __('Z → A', 'advanced-gutenberg'),
         value: 'author/desc'
     }, {
-        label: __('Modified: Newest to oldest'),
+        label: __('Modified: Newest to oldest', 'advanced-gutenberg'),
         value: 'modified/desc'
     }, {
-        label: __('Modified: Oldest to newest'),
+        label: __('Modified: Oldest to newest', 'advanced-gutenberg'),
         value: 'modified/asc'
     }, {
-        label: __('Post ID Descending'),
+        label: __('Post ID Descending', 'advanced-gutenberg'),
         value: 'id/desc'
     }, {
-        label: __('Post ID Ascending'),
+        label: __('Post ID Ascending', 'advanced-gutenberg'),
         value: 'id/asc'
     }, {
-        label: __('Randomize'),
+        label: __('Randomize', 'advanced-gutenberg'),
         value: 'rand/asc'
     }];
 
     // post supports more orderBy parameters
     if (postType === 'post') {
         orderParams = _.union(orderParams, [{
-            label: __('Comments, decreasing order'),
+            label: __('Comments, decreasing order', 'advanced-gutenberg'),
             value: 'comment_count/desc'
         }, {
-            label: __('Comments, increasing order'),
+            label: __('Comments, increasing order', 'advanced-gutenberg'),
             value: 'comment_count/asc'
         }]);
     }
 
     return [onOrderChange && onOrderByChange && React.createElement(SelectControl, {
         key: 'query-controls-order-select',
-        label: __('Order by'),
+        label: __('Order by', 'advanced-gutenberg'),
         value: orderBy + '/' + order,
         options: orderParams,
         onChange: function onChange(value) {
@@ -24619,20 +24619,20 @@ function AdvQueryControls(_ref3) {
     }), categoriesList && onCategoryChange && React.createElement(CategorySelect, {
         key: 'query-controls-category-select',
         categoriesList: categoriesList,
-        label: __('Category'),
-        noOptionLabel: __('All'),
+        label: __('Category', 'advanced-gutenberg'),
+        noOptionLabel: __('All', 'advanced-gutenberg'),
         selectedCategoryId: selectedCategoryId,
         onChange: onCategoryChange
     }), onAuthorChange && React.createElement(AuthorSelect, {
         key: 'query-controls-author-select',
         authorList: authorList,
-        label: __('Author'),
-        noOptionLabel: __('All'),
+        label: __('Author', 'advanced-gutenberg'),
+        noOptionLabel: __('All', 'advanced-gutenberg'),
         selectedAuthorId: selectedAuthorId,
         onChange: onAuthorChange
     }), onNumberOfItemsChange && React.createElement(RangeControl, {
         key: 'query-controls-range-control',
-        label: __('Number of items'),
+        label: __('Number of items', 'advanced-gutenberg'),
         value: numberOfItems,
         onChange: onNumberOfItemsChange,
         min: minItems,
@@ -24640,7 +24640,7 @@ function AdvQueryControls(_ref3) {
         required: true
     }), categorySuggestions && onCategoryChange && React.createElement(FormTokenField, {
         key: 'query-controls-categories-select',
-        label: __('Show content with these Categories'),
+        label: __('Show content with these Categories', 'advanced-gutenberg'),
         value: selectedCategories && selectedCategories.map(function (item) {
             return {
                 id: item.id,
