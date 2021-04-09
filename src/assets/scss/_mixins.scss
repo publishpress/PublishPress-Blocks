@@ -230,11 +230,11 @@
     &.layout-np-1-3,
     &.layout-np-1-4,
     &.layout-np-1-5,
-    &.layout-np-1-1-a,
-    &.layout-np-1-2-a,
-    &.layout-np-1-3-a,
-    &.layout-np-1-4-a,
-    &.layout-np-1-5-a {
+    &.layout-np-1-1-r,
+    &.layout-np-1-2-r,
+    &.layout-np-1-3-r,
+    &.layout-np-1-4-r,
+    &.layout-np-1-5-r {
 
       .advgb-recent-posts {
         position: relative;
@@ -317,12 +317,12 @@
       }
     }
 
-    // A variation - Move leading post to the right
-    &.layout-np-1-1-a,
-    &.layout-np-1-2-a,
-    &.layout-np-1-3-a,
-    &.layout-np-1-4-a,
-    &.layout-np-1-5-a {
+    // Reverse variation - Move leading post to the right
+    &.layout-np-1-1-r,
+    &.layout-np-1-2-r,
+    &.layout-np-1-3-r,
+    &.layout-np-1-4-r,
+    &.layout-np-1-5-r {
 
       .advgb-recent-posts {
         grid-template-columns: 2fr 3fr;
@@ -351,7 +351,7 @@
 
     @for $i from 1 through 5 {
 
-      &.layout-np-1-#{$i}-a {
+      &.layout-np-1-#{$i}-r {
 
         .advgb-recent-posts {
 
@@ -377,11 +377,11 @@
     &.layout-np-1-3,
     &.layout-np-1-4,
     &.layout-np-1-5,
-    &.layout-np-1-1-a,
-    &.layout-np-1-2-a,
-    &.layout-np-1-3-a,
-    &.layout-np-1-4-a,
-    &.layout-np-1-5-a {
+    &.layout-np-1-1-r,
+    &.layout-np-1-2-r,
+    &.layout-np-1-3-r,
+    &.layout-np-1-4-r,
+    &.layout-np-1-5-r {
 
       .advgb-recent-posts {
         grid-template-columns: 1fr;
@@ -425,11 +425,11 @@
     }
 
     // A variation - Move leading post to the right
-    &.layout-np-1-1-a,
-    &.layout-np-1-2-a,
-    &.layout-np-1-3-a,
-    &.layout-np-1-4-a,
-    &.layout-np-1-5-a {
+    &.layout-np-1-1-r,
+    &.layout-np-1-2-r,
+    &.layout-np-1-3-r,
+    &.layout-np-1-4-r,
+    &.layout-np-1-5-r {
 
       .advgb-recent-posts {
 
