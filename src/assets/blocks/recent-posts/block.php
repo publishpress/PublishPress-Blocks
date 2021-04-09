@@ -118,7 +118,7 @@ function advgbRenderBlockRecentPosts($attributes)
 	}
 
 	if( isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ) {
-		$args['post__not_in'] = array_merge( $args['post__not_in'], array( $post->ID ) );
+		$args['post__not_in'] = isset( $args['post__not_in'] ) ? array_merge( $args['post__not_in'], array( $post->ID ) ) : array( $post->ID );
 	}
 
 	// use tax for anything but pages...
@@ -129,7 +129,7 @@ function advgbRenderBlockRecentPosts($attributes)
 		) );
 	}
 
-    $recent_posts = wp_get_recent_posts( $args, OBJECT );
+    $recent_posts = wp_get_recent_posts( apply_filters( 'advgb_get_recent_posts_args', $args, $attributes, $post_type ), OBJECT );
 
     $saved_settings    = get_option('advgb_settings');
     $default_thumb     = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
@@ -516,6 +516,9 @@ function advgbRegisterBlockRecentPosts()
                     'type' => 'string'
                 )
             ),
+            'author' => array(
+                'type' => 'string',
+            ),
 			// deprecrated attributes...
             'displayDate' => array(
                 'type' => 'boolean',
@@ -537,19 +540,11 @@ add_action('init', 'advgbRegisterBlockRecentPosts');
  * @return void
  */
 function advgbRegisterCustomFields() {
+	// POST fields
     register_rest_field( 'post',
         'coauthors',
         array(
             'get_callback'  => 'advgbGetCoauthors',
-            'update_callback'   => null,
-            'schema'            => null,
-        )
-    );
-
-    register_rest_field( 'page',
-        'author_meta',
-        array(
-            'get_callback'  => 'advgbGetAuthorMeta',
             'update_callback'   => null,
             'schema'            => null,
         )
@@ -582,6 +577,25 @@ function advgbRegisterCustomFields() {
         )
     );
 
+	// PAGE fields
+    register_rest_field( 'page',
+        'coauthors',
+        array(
+            'get_callback'  => 'advgbGetCoauthors',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
+    register_rest_field( 'page',
+        'author_meta',
+        array(
+            'get_callback'  => 'advgbGetAuthorMeta',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
     register_rest_field( 'page',
         'relative_dates',
         array(
@@ -590,6 +604,15 @@ function advgbRegisterCustomFields() {
             'schema'            => null,
         )
     );
+
+	// custom routes
+	register_rest_route( 'advgb/v1', '/authors/', array(
+		'methods' => 'GET',
+		'callback' => 'advgbGetAllAuthors',
+		'permission_callback' => function () {
+			return current_user_can( 'edit_others_posts' );
+		},
+  ) );
 
 }
 add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
@@ -680,6 +703,9 @@ function advgbGetCoauthors( $post ) {
 		$authors = get_multiple_authors( $post[ 'id' ] );
 		foreach ($authors as $user) {
 			$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( $user->ID );
+			if ( ! $author ) {
+				$author = MultipleAuthors\Classes\Objects\Author::get_by_term_id( $user->ID );
+			}
 			$coauthors[] = array( 'link' => $author->__get('link'), 'display_name' => $author->__get('name'));
 		}
 	}
@@ -697,6 +723,42 @@ function advgbGetAuthorMeta( $page ) {
 }
 
 /**
+ * Populate the correct arguments for filtering by author.
+ *
+ * The results depends on whether PublishPress Authors plugin is activated.
+ *
+ * @return array
+ */
+function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
+	if ( isset( $attributes['author'] ) && ! empty( $attributes['author'] ) ) {
+		if ( ! function_exists('get_multiple_authors') ){
+			$args['author'] = $attributes['author'];
+		} else {
+			$user_id = $attributes['author'];
+			$name = $user_id;
+			if ( intval( $user_id ) > -1 ) {
+				$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( $user_id );
+				$name = $author->__get( 'display_name' );
+			} else {
+				$author = MultipleAuthors\Classes\Objects\Author::get_by_term_id( $user_id );
+				$name = $author->__get( 'display_name' );
+			}
+
+			$meta_query = array(
+				'key' => 'ppma_authors_name',
+				'value' => $name,
+				'compare' => 'LIKE',
+			);
+			$args['meta_query'][] = $meta_query;
+		}
+	}
+	return $args;
+}
+add_filter( 'advgb_get_recent_posts_args', 'advgbGetAuthorFilter', 10, 3 );
+
+/**
+ * Populate the correct arguments for filtering by author.
+ *
  * If multiple authors are defined using PublishPress Authors plugin, use the first author in the list.
  */
 function advgbMultipleAuthorSort() {
@@ -717,6 +779,36 @@ function advgbMultipleAuthorSort() {
 
 /**
  * Populate the correct arguments in REST for sorting by author.
+ *
+ * The results depends on whether PublishPress Authors plugin is activated.
+ *
+ * @return array
+ */
+function advgbGetAuthorFilterREST( $args, $request ) {
+	if ( isset( $request['author'] ) && ! empty( $request['author'] ) && function_exists('get_multiple_authors') ) {
+			$author = $request['author'];
+			$user_id = reset( $author );
+			$name = $user_id;
+			if ( intval( $user_id ) > -1 ) {
+				$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( $user_id );
+				$name = $author->__get( 'display_name' );
+			} else {
+				$author = MultipleAuthors\Classes\Objects\Author::get_by_term_id( $user_id );
+				$name = $author->__get( 'display_name' );
+			}
+			$args['meta_key'] = 'ppma_authors_name';
+			$args['meta_value'] = $name;
+			$args['meta_compare'] = 'LIKE';
+			unset( $args['author'] );
+			unset( $args['author__in'] );
+	}
+	return $args;
+}
+add_filter( 'rest_post_query', 'advgbGetAuthorFilterREST', 10, 2 );
+add_filter( 'rest_page_query', 'advgbGetAuthorFilterREST', 10, 2 );
+
+/**
+ * Populate the correct arguments in REST for filtering by author.
  *
  * The results depends on whether PublishPress Authors plugin is activated.
  *
@@ -748,11 +840,42 @@ function advgbCheckImageStatus( $attributes, $key )  {
     }
 }
 
-
+/**
+ * Returns post ids corresponding to post titles.
+ *
+ * @return array
+ */
 function advgbGetPostIdsForTitles( $titles, $post_type ) {
 	$ids = array();
 	if ( ! empty( $titles ) ) {
 		return get_posts( array( 'post_name__in' => $titles, 'post_type' => $post_type, 'fields' => 'ids' ) );
 	}
 	return $ids;
+}
+
+/**
+ * Returns all valid authors (including those defined by PublishPress Authors plugin).
+ *
+ * @return array
+ */
+function advgbGetAllAuthors( WP_REST_Request $request ) {
+	$authors = array();
+	$users = get_users( array( 'per_page' => -1, 'who' => 'authors', 'fields' => 'all' ) );
+	foreach ( $users as $user ) {
+		$author = $user->data;
+		$author->id = $author->ID;
+		$author->name = $author->display_name;
+		$authors[ $author->name ] = $author;
+	}
+
+	if ( function_exists( 'multiple_authors_get_all_authors' ) ) {
+		$coauthors = multiple_authors_get_all_authors();
+		foreach ( $coauthors as $coauthor ) {
+			$name = $coauthor->__get( 'display_name' );
+			if ( ! array_key_exists( $name, $authors ) ) {
+				$authors[ $name ] = (object) array( 'name' => $name, 'id' => $coauthor->__get( 'ID' ) );
+			}
+		}
+	}
+	return array_values( $authors );
 }
