@@ -702,10 +702,7 @@ function advgbGetCoauthors( $post ) {
 	if ( function_exists('get_multiple_authors') ){
 		$authors = get_multiple_authors( $post[ 'id' ] );
 		foreach ($authors as $user) {
-			$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( $user->ID );
-			if ( ! $author ) {
-				$author = MultipleAuthors\Classes\Objects\Author::get_by_term_id( $user->ID );
-			}
+			$author = advgbGetAuthorByID( $user->ID );
 			$coauthors[] = array( 'link' => $author->__get('link'), 'display_name' => $author->__get('name'));
 		}
 	}
@@ -736,11 +733,8 @@ function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
 		} else {
 			$user_id = $attributes['author'];
 			$name = $user_id;
-			if ( intval( $user_id ) > -1 ) {
-				$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( $user_id );
-				$name = $author->__get( 'display_name' );
-			} else {
-				$author = MultipleAuthors\Classes\Objects\Author::get_by_term_id( $user_id );
+			$author = advgbGetAuthorByID( $user_id );
+			if ( $author ) {
 				$name = $author->__get( 'display_name' );
 			}
 
@@ -789,11 +783,8 @@ function advgbGetAuthorFilterREST( $args, $request ) {
 			$author = $request['author'];
 			$user_id = reset( $author );
 			$name = $user_id;
-			if ( intval( $user_id ) > -1 ) {
-				$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( $user_id );
-				$name = $author->__get( 'display_name' );
-			} else {
-				$author = MultipleAuthors\Classes\Objects\Author::get_by_term_id( $user_id );
+			$author = advgbGetAuthorByID( $user_id );
+			if ( $author ) {
 				$name = $author->__get( 'display_name' );
 			}
 			$args['meta_key'] = 'ppma_authors_name';
@@ -878,4 +869,26 @@ function advgbGetAllAuthors( WP_REST_Request $request ) {
 		}
 	}
 	return array_values( $authors );
+}
+
+/**
+ * Wrapper method to fetch an author on the basis of it's ID.
+ *
+ * This ID can either be the WP_User ID (positive integer) or guest author ID (negative integer).
+ * 
+ * @return Author|false
+ */
+function advgbGetAuthorByID( $id ) {
+	$author = null;
+	if ( method_exists( 'MultipleAuthors\Classes\Objects\Author', 'get_by_id' ) ) {
+		error_log("mila...");
+		$author = MultipleAuthors\Classes\Objects\Author::get_by_id( $id );
+	} else {
+		if ( intval( $id ) > -1 ) {
+			$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( $id );
+		} else {
+			$author = MultipleAuthors\Classes\Objects\Author::get_by_term_id( $id );
+		}
+	}
+	return $author;
 }
