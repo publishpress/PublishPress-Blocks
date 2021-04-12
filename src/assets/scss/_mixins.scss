@@ -273,7 +273,7 @@
               }
             }
 
-            &:after {
+            &:not(:last-of-type):after {
               right: 0;
               left: 0;
               bottom: -20px;
@@ -502,7 +502,7 @@
               }
             }
 
-            &:after {
+            &:not(:last-of-type):after {
               right: 0;
               left: 0;
               bottom: -20px;
@@ -638,7 +638,7 @@
               grid-gap: 20px;
             }
 
-            &:after {
+            &:not(:last-of-type):after {
               right: 0;
               left: 0;
               bottom: -20px;
