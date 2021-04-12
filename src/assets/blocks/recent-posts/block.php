@@ -703,7 +703,9 @@ function advgbGetCoauthors( $post ) {
 		$authors = get_multiple_authors( $post[ 'id' ] );
 		foreach ($authors as $user) {
 			$author = advgbGetAuthorByID( $user->ID );
-			$coauthors[] = array( 'link' => $author->__get('link'), 'display_name' => $author->__get('name'));
+			if ( $author ) {
+				$coauthors[] = array( 'link' => $author->__get('link'), 'display_name' => $author->__get('name'));
+			}
 		}
 	}
     return $coauthors;
@@ -732,18 +734,14 @@ function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
 			$args['author'] = $attributes['author'];
 		} else {
 			$user_id = $attributes['author'];
-			$name = $user_id;
 			$author = advgbGetAuthorByID( $user_id );
 			if ( $author ) {
-				$name = $author->__get( 'display_name' );
+				$args['meta_query'][] = array(
+					'key' => 'ppma_authors_name',
+					'value' => $author->__get( 'display_name' ),
+					'compare' => 'LIKE',
+				);
 			}
-
-			$meta_query = array(
-				'key' => 'ppma_authors_name',
-				'value' => $name,
-				'compare' => 'LIKE',
-			);
-			$args['meta_query'][] = $meta_query;
 		}
 	}
 	return $args;
@@ -782,16 +780,14 @@ function advgbGetAuthorFilterREST( $args, $request ) {
 	if ( isset( $request['author'] ) && ! empty( $request['author'] ) && function_exists('get_multiple_authors') ) {
 			$author = $request['author'];
 			$user_id = reset( $author );
-			$name = $user_id;
 			$author = advgbGetAuthorByID( $user_id );
 			if ( $author ) {
-				$name = $author->__get( 'display_name' );
+				$args['meta_key'] = 'ppma_authors_name';
+				$args['meta_value'] = $author->__get( 'display_name' );
+				$args['meta_compare'] = 'LIKE';
+				unset( $args['author'] );
+				unset( $args['author__in'] );
 			}
-			$args['meta_key'] = 'ppma_authors_name';
-			$args['meta_value'] = $name;
-			$args['meta_compare'] = 'LIKE';
-			unset( $args['author'] );
-			unset( $args['author__in'] );
 	}
 	return $args;
 }
@@ -879,9 +875,8 @@ function advgbGetAllAuthors( WP_REST_Request $request ) {
  * @return Author|false
  */
 function advgbGetAuthorByID( $id ) {
-	$author = null;
+	$author = false;
 	if ( method_exists( 'MultipleAuthors\Classes\Objects\Author', 'get_by_id' ) ) {
-		error_log("mila...");
 		$author = MultipleAuthors\Classes\Objects\Author::get_by_id( $id );
 	} else {
 		if ( intval( $id ) > -1 ) {
