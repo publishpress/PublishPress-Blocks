@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.7
-Stable tag: 2.5.8b14
+Stable tag: 2.6.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -160,7 +160,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 == Changelog ==
 
-= 2.5.8 =
+= 2.6.0 =
   * Add: Compressed CSS files only
   * Add: Tags support to Recent Posts block
   * Add: PublishPress Authors support to Recent Posts block
