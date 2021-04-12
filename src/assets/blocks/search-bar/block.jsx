@@ -81,9 +81,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             const { clientId, attributes, setAttributes } = this.props;
             const { searchBtnId } = attributes;
 
-            if (!searchBtnId) {
-                setAttributes( { searchBtnId: `advgb-search-btn-${clientId}` } )
-            }
+            setAttributes( { searchBtnId: `advgb-search-btn-${clientId}` } );
         }
 
 

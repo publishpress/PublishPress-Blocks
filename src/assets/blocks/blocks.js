@@ -3039,7 +3039,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/** @license React v16.13.1
+/** @license React v16.14.0
  * react.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -3059,7 +3059,7 @@ if (true) {
 var _assign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
 var checkPropTypes = __webpack_require__(/*! prop-types/checkPropTypes */ "./node_modules/prop-types/checkPropTypes.js");
 
-var ReactVersion = '16.13.1';
+var ReactVersion = '16.14.0';
 
 // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
 // nor polyfill, then a plain number is used for performance.
@@ -14536,7 +14536,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { title: __('Row Settings', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(ToggleControl, {
                                     label: __('Columns Wrapped', 'advanced-gutenberg'),
-                                    help: __('If your columns is overflown, it will be separated to a new line (eg: Use this with Columns Spacing).', 'advanced-gutenberg'),
+                                    help: __('If your columns overflow they available space, they will be placed on a new line.', 'advanced-gutenberg'),
                                     checked: columnsWrapped,
                                     onChange: function onChange() {
                                         return setAttributes({ columnsWrapped: !columnsWrapped });
@@ -19951,7 +19951,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return null;
                             },
                             placeholder: __('Text…', 'advanced-gutenberg'),
-                            keepPlaceholderOnFocus: true
+                            keepPlaceholderOnFocus: true,
+                            allowedFormats: ['core/bold', 'core/italic']
                         }),
                         React.createElement(RichText, {
                             tagName: "a",
@@ -19968,7 +19969,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return null;
                             },
                             placeholder: __('Register…', 'advanced-gutenberg'),
-                            keepPlaceholderOnFocus: true
+                            keepPlaceholderOnFocus: true,
+                            allowedFormats: ['core/bold', 'core/italic']
                         })
                     ),
                     React.createElement(
@@ -19987,7 +19989,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 },
                                 style: { color: textColor },
                                 placeholder: __('Welcome text…', 'advanced-gutenberg'),
-                                keepPlaceholderOnFocus: true
+                                keepPlaceholderOnFocus: true,
+                                allowedFormats: ['core/bold', 'core/italic']
                             })
                         ),
                         React.createElement(
@@ -20010,7 +20013,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return null;
                                     },
                                     placeholder: __('Username label…', 'advanced-gutenberg'),
-                                    keepPlaceholderOnFocus: true
+                                    keepPlaceholderOnFocus: true,
+                                    allowedFormats: ['core/bold', 'core/italic']
                                 })
                             ),
                             React.createElement(
@@ -20058,7 +20062,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return null;
                                     },
                                     placeholder: __('Password label…', 'advanced-gutenberg'),
-                                    keepPlaceholderOnFocus: true
+                                    keepPlaceholderOnFocus: true,
+                                    allowedFormats: ['core/bold', 'core/italic']
                                 })
                             ),
                             React.createElement(
@@ -20117,7 +20122,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 return null;
                                             },
                                             placeholder: __('Remember me…', 'advanced-gutenberg'),
-                                            keepPlaceholderOnFocus: true
+                                            keepPlaceholderOnFocus: true,
+                                            allowedFormats: ['core/bold', 'core/italic']
                                         })
                                     )
                                 )
@@ -20148,7 +20154,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             return null;
                                         },
                                         placeholder: __('Login…', 'advanced-gutenberg'),
-                                        keepPlaceholderOnFocus: true
+                                        keepPlaceholderOnFocus: true,
+                                        allowedFormats: ['core/bold', 'core/italic']
                                     })
                                 )
                             )
@@ -20174,7 +20181,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return null;
                                     },
                                     placeholder: __('Lost password…', 'advanced-gutenberg'),
-                                    keepPlaceholderOnFocus: true
+                                    keepPlaceholderOnFocus: true,
+                                    allowedFormats: ['core/bold', 'core/italic']
                                 })
                             )
                         )
@@ -20209,7 +20217,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return null;
                                 },
                                 placeholder: __('Back…', 'advanced-gutenberg'),
-                                keepPlaceholderOnFocus: true
+                                keepPlaceholderOnFocus: true,
+                                allowedFormats: ['core/bold', 'core/italic']
                             })
                         )
                     ),
@@ -20229,7 +20238,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 },
                                 style: { color: textColor },
                                 placeholder: __('Register…', 'advanced-gutenberg'),
-                                keepPlaceholderOnFocus: true
+                                keepPlaceholderOnFocus: true,
+                                allowedFormats: ['core/bold', 'core/italic']
                             })
                         ),
                         React.createElement(
@@ -20252,7 +20262,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return null;
                                     },
                                     placeholder: __('Username label…', 'advanced-gutenberg'),
-                                    keepPlaceholderOnFocus: true
+                                    keepPlaceholderOnFocus: true,
+                                    allowedFormats: ['core/bold', 'core/italic']
                                 })
                             ),
                             React.createElement(
@@ -20300,7 +20311,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return null;
                                     },
                                     placeholder: __('Email label…', 'advanced-gutenberg'),
-                                    keepPlaceholderOnFocus: true
+                                    keepPlaceholderOnFocus: true,
+                                    allowedFormats: ['core/bold', 'core/italic']
                                 })
                             ),
                             React.createElement(
@@ -20357,7 +20369,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             return null;
                                         },
                                         placeholder: __('Register…', 'advanced-gutenberg'),
-                                        keepPlaceholderOnFocus: true
+                                        keepPlaceholderOnFocus: true,
+                                        allowedFormats: ['core/bold', 'core/italic']
                                     })
                                 )
                             )
@@ -20927,6 +20940,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         supports: {
             anchor: true
+
         },
         edit: LoginFormEdit,
         save: function save(_ref3) {
@@ -21018,21 +21032,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     { className: "advgb-register-link-wrapper advgb-header-navigation",
                         style: { backgroundColor: headerBgColor }
                     },
-                    React.createElement(
-                        "span",
-                        { className: "advgb-register-text",
-                            style: { color: textColor }
-                        },
-                        registerText
-                    ),
-                    React.createElement(
-                        "a",
-                        { href: "#",
-                            className: "advgb-register-link",
-                            style: { color: submitBgColor }
-                        },
-                        registerLinkText
-                    )
+                    React.createElement(RichText.Content, {
+                        tagName: "span",
+                        className: "advgb-register-text",
+                        value: registerText,
+                        style: { color: textColor }
+                    }),
+                    React.createElement(RichText.Content, {
+                        tagName: "a",
+                        href: "#",
+                        className: "advgb-register-link",
+                        value: registerLinkText,
+                        style: { color: submitBgColor }
+                    })
                 ),
                 React.createElement(
                     "form",
@@ -21044,13 +21056,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             "div",
                             { className: "advgb-lores-form-header" },
                             !!showLogo && logoElmSave,
-                            React.createElement(
-                                "h3",
-                                { className: "advgb-lores-form-welcome",
-                                    style: { color: textColor }
-                                },
-                                welcomeText
-                            )
+                            React.createElement(RichText.Content, {
+                                tagName: "h3",
+                                className: "advgb-lores-form-welcome",
+                                value: welcomeText,
+                                style: { color: textColor }
+                            })
                         ),
                         React.createElement(
                             "div",
@@ -21060,11 +21071,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-lores-field-label" },
-                                React.createElement(
-                                    "label",
-                                    { htmlFor: "advgb-login-user", style: { color: textColor } },
-                                    loginText
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "label",
+                                    htmlFor: "advgb-login-user",
+                                    value: loginText,
+                                    style: { color: textColor }
+                                })
                             ),
                             React.createElement(
                                 "div",
@@ -21101,11 +21113,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-lores-field-label" },
-                                React.createElement(
-                                    "label",
-                                    { htmlFor: "advgb-login-password", style: { color: textColor } },
-                                    passwordText
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "label",
+                                    htmlFor: "advgb-login-password",
+                                    value: passwordText,
+                                    style: { color: textColor }
+                                })
                             ),
                             React.createElement(
                                 "div",
@@ -21150,30 +21163,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     "div",
                                     { style: { color: submitBgColor }, className: "remember-me-switch" },
-                                    React.createElement(
-                                        "span",
-                                        { style: { color: textColor } },
-                                        rememberMeText
-                                    )
+                                    React.createElement(RichText.Content, {
+                                        tagName: "span",
+                                        style: { color: textColor },
+                                        value: rememberMeText
+                                    })
                                 )
                             ),
                             React.createElement(
                                 "div",
                                 { className: "advgb-lores-submit advgb-login-submit" },
-                                React.createElement(
-                                    "button",
-                                    { className: "advgb-lores-submit-button " + submitButtonId,
-                                        type: "submit",
-                                        name: "wp-submit",
-                                        style: {
-                                            borderColor: submitColor,
-                                            color: submitColor,
-                                            backgroundColor: submitBgColor,
-                                            borderRadius: submitRadius
-                                        }
-                                    },
-                                    loginSubmitLabel
-                                ),
+                                React.createElement(RichText.Content, {
+                                    tagName: "button",
+                                    value: loginSubmitLabel,
+                                    className: "advgb-lores-submit-button " + submitButtonId,
+                                    type: "submit",
+                                    name: "wp-submit",
+                                    style: {
+                                        borderColor: submitColor,
+                                        color: submitColor,
+                                        backgroundColor: submitBgColor,
+                                        borderRadius: submitRadius
+                                    }
+                                }),
                                 React.createElement("input", { type: "hidden", name: "redirect_to", "data-redirect": redirect, className: "redirect_to", value: redirectLink }),
                                 React.createElement("input", { type: "hidden", name: "testcookie", value: "1" }),
                                 React.createElement("input", { type: "hidden", name: "advgb_login_form", value: "1" })
@@ -21185,14 +21197,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-lost-password" },
-                                React.createElement(
-                                    "a",
-                                    { href: "#",
-                                        className: "advgb-lost-password-link",
-                                        style: { color: submitBgColor }
-                                    },
-                                    lostPasswordText
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "a",
+                                    href: "#",
+                                    className: "advgb-lost-password",
+                                    style: { color: submitBgColor },
+                                    value: lostPasswordText
+                                })
                             )
                         )
                     )
@@ -21216,13 +21227,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-back-to-login-link",
                             style: { color: submitBgColor }
                         },
-                        React.createElement(
-                            "span",
-                            { className: "advgb-register-text",
-                                style: { color: submitBgColor }
-                            },
-                            backToLoginText
-                        )
+                        React.createElement(RichText.Content, {
+                            tagName: "span",
+                            className: "advgb-register-text",
+                            style: { color: submitBgColor },
+                            value: backToLoginText
+                        })
                     )
                 ),
                 React.createElement(
@@ -21235,13 +21245,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             "div",
                             { className: "advgb-lores-form-header" },
                             !!showLogo && regLogoElmSave,
-                            React.createElement(
-                                "h3",
-                                { className: "advgb-lores-form-welcome",
-                                    style: { color: textColor }
-                                },
-                                registerWelcome
-                            )
+                            React.createElement(RichText.Content, {
+                                tagName: "h3",
+                                className: "advgb-lores-form-welcome",
+                                style: { color: textColor },
+                                value: registerWelcome
+                            })
                         ),
                         React.createElement(
                             "div",
@@ -21251,11 +21260,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-lores-field-label" },
-                                React.createElement(
-                                    "label",
-                                    { htmlFor: "advgb-register-username", style: { color: textColor } },
-                                    userText
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "label",
+                                    htmlFor: "advgb-register-username",
+                                    style: { color: textColor },
+                                    value: userText
+                                })
                             ),
                             React.createElement(
                                 "div",
@@ -21292,11 +21302,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-lores-field-label" },
-                                React.createElement(
-                                    "label",
-                                    { htmlFor: "advgb-register-email", style: { color: textColor } },
-                                    emailText
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "label",
+                                    htmlFor: "advgb-register-email",
+                                    style: { color: textColor },
+                                    value: emailText
+                                })
                             ),
                             React.createElement(
                                 "div",
@@ -21332,20 +21343,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-lores-submit advgb-register-submit" },
-                                React.createElement(
-                                    "button",
-                                    { className: "advgb-lores-submit-button " + submitButtonId,
-                                        type: "submit",
-                                        name: "wp-submit",
-                                        style: {
-                                            borderColor: submitColor,
-                                            color: submitColor,
-                                            backgroundColor: submitBgColor,
-                                            borderRadius: submitRadius
-                                        }
-                                    },
-                                    registerSubmitLabel
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "button",
+                                    value: registerSubmitLabel,
+                                    className: "advgb-lores-submit-button " + submitButtonId,
+                                    type: "submit",
+                                    name: "wp-submit",
+                                    style: {
+                                        borderColor: submitColor,
+                                        color: submitColor,
+                                        backgroundColor: submitBgColor,
+                                        borderRadius: submitRadius
+                                    }
+                                })
                             )
                         )
                     )
@@ -23354,6 +23364,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _queryControls = __webpack_require__(/*! ./query-controls.jsx */ "./src/assets/blocks/recent-posts/query-controls.jsx");
+
+var _queryControls2 = _interopRequireDefault(_queryControls);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -23364,7 +23382,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     wpBlockEditor = wp.blockEditor || wp.editor;
     var __ = wpI18n.__;
     var Component = wpElement.Component,
-        Fragment = wpElement.Fragment;
+        Fragment = wpElement.Fragment,
+        RawHTML = wpElement.RawHTML;
     var registerBlockType = wpBlocks.registerBlockType;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
@@ -23373,11 +23392,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         RangeControl = wpComponents.RangeControl,
         ToggleControl = wpComponents.ToggleControl,
         TextControl = wpComponents.TextControl,
-        QueryControls = wpComponents.QueryControls,
+        TextareaControl = wpComponents.TextareaControl,
+        FormTokenField = wpComponents.FormTokenField,
         Spinner = wpComponents.Spinner,
         ToolbarGroup = wpComponents.ToolbarGroup,
         ToolbarButton = wpComponents.ToolbarButton,
-        Placeholder = wpComponents.Placeholder;
+        Placeholder = wpComponents.Placeholder,
+        Tooltip = wpComponents.Tooltip,
+        SelectControl = wpComponents.SelectControl;
     var withSelect = wpData.withSelect;
     var pickBy = lodash.pickBy,
         isUndefined = lodash.isUndefined;
@@ -23399,6 +23421,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var previewImageData = 'data:image/png;base64,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';
 
+    var FRONTPAGE_LAYOUTS = [{ layout: '1-2', icon: '1-2', title: __('The leading post on top, the rest in 2 columns below', 'advanced-gutenberg') }, { layout: '1-3', icon: '1-3', title: __('The leading post on top, the rest in 3 columns below', 'advanced-gutenberg') }, { layout: '1-4', icon: '1-4', title: __('The leading post on top, the rest in 4 columns below', 'advanced-gutenberg') }, { layout: '1-5', icon: '1-5', title: __('The leading post on top, the rest in 5 columns below', 'advanced-gutenberg') }, { layout: 'stacked', icon: 'stacked', title: __('Stacked', 'advanced-gutenberg') }, { layout: '2-2', icon: '2-2', title: __('All posts in 2 columns grid', 'advanced-gutenberg') }, { layout: '3-3', icon: '3-3', title: __('All posts in 3 columns grid', 'advanced-gutenberg') }, { layout: '4-4', icon: '4-4', title: __('All posts in 4 columns grid', 'advanced-gutenberg') }, { layout: '5-5', icon: '5-5', title: __('All posts in 5 columns grid', 'advanced-gutenberg') }];
+
+    // @TODO fix duplicated code from FRONTPAGE_LAYOUTS
+    var FRONTPAGE_LAYOUTS_TABLET = [{ layout: '1-2', icon: '1-2', title: __('The leading post on top, the rest in 2 columns below', 'advanced-gutenberg') }, { layout: '1-3', icon: '1-3', title: __('The leading post on top, the rest in 3 columns below', 'advanced-gutenberg') }, { layout: '1-4', icon: '1-4', title: __('The leading post on top, the rest in 4 columns below', 'advanced-gutenberg') }, { layout: '1-5', icon: '1-5', title: __('The leading post on top, the rest in 5 columns below', 'advanced-gutenberg') }, { layout: 'stacked', icon: 'stacked', title: __('Stacked', 'advanced-gutenberg') }, { layout: '2-2', icon: '2-2', title: __('All posts in 2 columns grid', 'advanced-gutenberg') }, { layout: '3-3', icon: '3-3', title: __('All posts in 3 columns grid', 'advanced-gutenberg') }, { layout: '4-4', icon: '4-4', title: __('All posts in 4 columns grid', 'advanced-gutenberg') }, { layout: '5-5', icon: '5-5', title: __('All posts in 5 columns grid', 'advanced-gutenberg') }];
+
+    var FRONTPAGE_LAYOUTS_MOBILE = [{ layout: '1-2', icon: '1-2', title: __('The leading post on top, the rest in 2 columns below', 'advanced-gutenberg') }, { layout: 'stacked', icon: 'stacked', title: __('Stacked', 'advanced-gutenberg') }, { layout: '2-2', icon: '2-2', title: __('All posts in 2 columns grid', 'advanced-gutenberg') }];
+
+    var GAP_OPTIONS = [{ label: __('None', 'advanced-gutenberg'), value: 0 }, { label: '5px', value: 5 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }];
+
+    var NEWSPAPER_LAYOUTS = [{ layout: 'np-1-1', icon: 'np-1-1', title: __('The leading post in the left, 1 post in the right', 'advanced-gutenberg') }, { layout: 'np-1-2', icon: 'np-1-2', title: __('The leading post in the left, 2 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-3', icon: 'np-1-3', title: __('The leading post in the left, 3 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-4', icon: 'np-1-4', title: __('The leading post in the left, 4 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-5', icon: 'np-1-5', title: __('The leading post in the left, 5 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-1-r', icon: 'np-1-1-r', title: __('The leading post in the right, 1 post in the left', 'advanced-gutenberg') }, { layout: 'np-1-2-r', icon: 'np-1-2-r', title: __('The leading post in the right, 2 posts in the left', 'advanced-gutenberg') }, { layout: 'np-1-3-r', icon: 'np-1-3-r', title: __('The leading post in the right, 3 posts in the left', 'advanced-gutenberg') }, { layout: 'np-1-4-r', icon: 'np-1-4-r', title: __('The leading post in the right, 4 posts in the left', 'advanced-gutenberg') }, { layout: 'np-1-5-r', icon: 'np-1-5-r', title: __('The leading post in the right, 5 posts in the left', 'advanced-gutenberg') }, { layout: 'np-2', icon: 'np-2', title: __('The leading post on top, the rest of posts below', 'advanced-gutenberg') }, { layout: 'np-3-1', icon: 'np-3-1', title: __('The leading post on top, below 2 columns with 1 post in the left and 1 post in the right', 'advanced-gutenberg') }, { layout: 'np-3-2', icon: 'np-3-2', title: __('The leading post on top, below 2 columns with 1 post in the left and 2 posts in the right', 'advanced-gutenberg') }, { layout: 'np-3-3', icon: 'np-3-3', title: __('The leading post on top, below 2 columns with 1 post in the left and 3 posts in the right', 'advanced-gutenberg') }];
+
     var initSlider = null;
 
     var RecentPostsEdit = function (_Component) {
@@ -23411,13 +23444,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             _this.state = {
                 categoriesList: [],
+                tagsList: [],
                 catIdVsName: [],
-                updating: false
+                tagNameVsId: [],
+                postTypeList: [{ label: __('Post'), value: 'post' }, { label: __('Page'), value: 'page' }],
+                updating: false,
+                tabSelected: 'desktop',
+                authorList: []
             };
 
             _this.selectCategories = _this.selectCategories.bind(_this);
+            _this.selectTags = _this.selectTags.bind(_this);
+            _this.getTagIdsForTags = _this.getTagIdsForTags.bind(_this);
             _this.getCategoryForBkwrdCompat = _this.getCategoryForBkwrdCompat.bind(_this);
-
             return _this;
         }
 
@@ -23432,7 +23471,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var currentBlockConfig = advgbDefaultConfig['advgb-recent-posts'];
 
-                var categoriesListQuery = {
+                var tagsAndcategoriesListQuery = {
                     per_page: -1,
                     hide_empty: true
                 };
@@ -23454,7 +23493,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 wp.apiFetch({
-                    path: wp.url.addQueryArgs('wp/v2/categories', categoriesListQuery)
+                    path: wp.url.addQueryArgs('wp/v2/categories', tagsAndcategoriesListQuery)
                 }).then(function (list) {
                     var suggestions = [];
                     var catIdVsName = [];
@@ -23471,6 +23510,37 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         categories: categories,
                         category: ''
                     });
+                });
+
+                wp.apiFetch({
+                    path: wp.url.addQueryArgs('wp/v2/tags', tagsAndcategoriesListQuery)
+                }).then(function (list) {
+                    var suggestions = [];
+                    var tagNameVsId = [];
+                    list.forEach(function (tag) {
+                        suggestions.push(tag.name);
+                        tagNameVsId[tag.name] = tag.id;
+                    });
+
+                    _this2.setState({ tagsList: suggestions, tagNameVsId: tagNameVsId });
+
+                    var tagIds = attributes.tags && attributes.tags.length > 0 ? _this2.getTagIdsForTags(attributes.tags) : [];
+                    setAttributes({
+                        tagIds: tagIds
+                    });
+                });
+
+                wp.apiFetch({
+                    path: wp.url.addQueryArgs('advgb/v1/authors')
+                }).then(function (list) {
+                    _this2.setState({ authorList: list });
+                });
+
+                // migrate from displayDate to postDate
+                var postDateDisplay = attributes.displayDate ? 'created' : attributes.postDate;
+                setAttributes({
+                    postDate: postDateDisplay,
+                    displayDate: false
                 });
             }
         }, {
@@ -23531,7 +23601,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this3 = this;
 
-                var categoriesList = this.state.categoriesList;
+                var _state = this.state,
+                    categoriesList = _state.categoriesList,
+                    tagsList = _state.tagsList,
+                    postTypeList = _state.postTypeList,
+                    tabSelected = _state.tabSelected,
+                    authorList = _state.authorList;
                 var _props4 = this.props,
                     attributes = _props4.attributes,
                     setAttributes = _props4.setAttributes,
@@ -23542,25 +23617,209 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     numberOfPosts = attributes.numberOfPosts,
                     columns = attributes.columns,
                     displayFeaturedImage = attributes.displayFeaturedImage,
+                    displayFeaturedImageFor = attributes.displayFeaturedImageFor,
                     displayAuthor = attributes.displayAuthor,
                     displayDate = attributes.displayDate,
+                    postDate = attributes.postDate,
+                    postDateFormat = attributes.postDateFormat,
+                    displayTime = attributes.displayTime,
                     displayExcerpt = attributes.displayExcerpt,
                     postTextAsExcerpt = attributes.postTextAsExcerpt,
                     postTextExcerptLength = attributes.postTextExcerptLength,
                     displayReadMore = attributes.displayReadMore,
                     readMoreLbl = attributes.readMoreLbl,
                     isPreview = attributes.isPreview,
-                    categories = attributes.categories;
+                    categories = attributes.categories,
+                    tags = attributes.tags,
+                    frontpageLayout = attributes.frontpageLayout,
+                    frontpageLayoutT = attributes.frontpageLayoutT,
+                    frontpageLayoutM = attributes.frontpageLayoutM,
+                    gap = attributes.gap,
+                    frontpageStyle = attributes.frontpageStyle,
+                    sliderStyle = attributes.sliderStyle,
+                    newspaperLayout = attributes.newspaperLayout,
+                    excludeCurrentPost = attributes.excludeCurrentPost,
+                    showCategories = attributes.showCategories,
+                    showTags = attributes.showTags,
+                    displayCommentCount = attributes.displayCommentCount,
+                    textAfterTitle = attributes.textAfterTitle,
+                    textBeforeReadmore = attributes.textBeforeReadmore,
+                    selectedAuthorId = attributes.author;
 
+
+                var isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
+
+                var postType = attributes.postType;
+                if (postType === undefined) {
+                    postType = 'post';
+                }
+
+                var deviceLetter = '';
+                if (tabSelected === 'tablet') deviceLetter = 'T';
+                if (tabSelected === 'mobile') deviceLetter = 'M';
 
                 var inspectorControls = React.createElement(
                     InspectorControls,
                     null,
+                    postView === 'slider' && React.createElement(
+                        PanelBody,
+                        { title: __('Slider View Settings', 'advanced-gutenberg') },
+                        React.createElement(SelectControl, {
+                            label: __('Style', 'advanced-gutenberg'),
+                            value: sliderStyle,
+                            options: [{ label: __('Default', 'advanced-gutenberg'), value: 'default' }, { label: __('Headline', 'advanced-gutenberg'), value: 'headline' }],
+                            onChange: function onChange(value) {
+                                return setAttributes({ sliderStyle: value });
+                            }
+                        })
+                    ),
+                    postView === 'frontpage' && React.createElement(
+                        PanelBody,
+                        { title: __('Frontpage View Settings', 'advanced-gutenberg') },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-recent-posts-responsive-items" },
+                            ['desktop', 'tablet', 'mobile'].map(function (device, index) {
+                                var itemClasses = ["advgb-recent-posts-responsive-item", tabSelected === device && 'is-selected'].filter(Boolean).join(' ');
+
+                                return React.createElement(
+                                    "div",
+                                    { className: itemClasses,
+                                        key: index,
+                                        onClick: function onClick() {
+                                            return _this3.setState({ tabSelected: device });
+                                        }
+                                    },
+                                    device
+                                );
+                            })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-recent-posts-select-layout on-inspector" },
+                            tabSelected === 'desktop' && FRONTPAGE_LAYOUTS.map(function (layout, index) {
+                                var layoutClasses = ['advgb-recent-posts-layout', tabSelected === 'desktop' && layout.layout === frontpageLayout && 'is-selected'].filter(Boolean).join(' ');
+
+                                return React.createElement(
+                                    Tooltip,
+                                    { text: layout.title, key: index },
+                                    React.createElement(
+                                        "div",
+                                        {
+                                            className: layoutClasses,
+                                            onClick: function onClick() {
+                                                setAttributes(_defineProperty({}, 'frontpageLayout' + deviceLetter, layout.layout));
+                                                _this3.setState({ random: Math.random() });
+                                            }
+                                        },
+                                        React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
+                                            alt: layout.layout
+                                        })
+                                    )
+                                );
+                            }),
+                            tabSelected === 'tablet' && FRONTPAGE_LAYOUTS_TABLET.map(function (layout, index) {
+                                var layoutClasses = ['advgb-recent-posts-layout', tabSelected === 'tablet' && layout.layout === frontpageLayoutT && 'is-selected'].filter(Boolean).join(' ');
+
+                                return React.createElement(
+                                    Tooltip,
+                                    { text: layout.title, key: index },
+                                    React.createElement(
+                                        "div",
+                                        { className: layoutClasses,
+                                            onClick: function onClick() {
+                                                setAttributes(_defineProperty({}, 'frontpageLayout' + deviceLetter, layout.layout));
+                                                _this3.setState({ random: Math.random() });
+                                            }
+                                        },
+                                        React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
+                                            alt: layout.layout
+                                        })
+                                    )
+                                );
+                            }),
+                            tabSelected === 'mobile' && FRONTPAGE_LAYOUTS_MOBILE.map(function (layout, index) {
+                                var layoutClasses = ['advgb-recent-posts-layout', tabSelected === 'mobile' && layout.layout === frontpageLayoutM && 'is-selected'].filter(Boolean).join(' ');
+
+                                return React.createElement(
+                                    Tooltip,
+                                    { text: layout.title, key: index },
+                                    React.createElement(
+                                        "div",
+                                        { className: layoutClasses,
+                                            onClick: function onClick() {
+                                                setAttributes(_defineProperty({}, 'frontpageLayout' + deviceLetter, layout.layout));
+                                                _this3.setState({ random: Math.random() });
+                                            }
+                                        },
+                                        React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
+                                            alt: layout.layout
+                                        })
+                                    )
+                                );
+                            })
+                        ),
+                        React.createElement(SelectControl, {
+                            label: __('Style', 'advanced-gutenberg'),
+                            value: frontpageStyle,
+                            options: [{ label: __('Default', 'advanced-gutenberg'), value: 'default' }, { label: __('Headline', 'advanced-gutenberg'), value: 'headline' }, { label: __('Boxed', 'advanced-gutenberg'), value: 'boxed' }],
+                            onChange: function onChange(value) {
+                                return setAttributes({ frontpageStyle: value });
+                            }
+                        }),
+                        React.createElement(SelectControl, {
+                            label: __('Space between columns and rows', 'advanced-gutenberg'),
+                            value: gap,
+                            options: GAP_OPTIONS,
+                            onChange: function onChange(value) {
+                                return setAttributes({ gap: parseInt(value) });
+                            }
+                        })
+                    ),
+                    postView === 'newspaper' && React.createElement(
+                        PanelBody,
+                        { title: __('Newspaper View Settings', 'advanced-gutenberg') },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-recent-posts-select-layout on-inspector" },
+                            NEWSPAPER_LAYOUTS.map(function (layout, index) {
+                                var layoutClasses = ['advgb-recent-posts-layout', layout.layout === newspaperLayout && 'is-selected'].filter(Boolean).join(' ');
+
+                                return React.createElement(
+                                    Tooltip,
+                                    { text: layout.title, key: index },
+                                    React.createElement(
+                                        "div",
+                                        {
+                                            className: layoutClasses,
+                                            onClick: function onClick() {
+                                                setAttributes({
+                                                    newspaperLayout: layout.layout
+                                                });
+                                                _this3.setState({ random: Math.random() });
+                                            }
+                                        },
+                                        React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
+                                            alt: layout.layout
+                                        })
+                                    )
+                                );
+                            })
+                        )
+                    ),
                     React.createElement(
                         PanelBody,
-                        { title: __('Block Settings', 'advanced-gutenberg') },
-                        React.createElement(QueryControls, _extends({ order: order, orderBy: orderBy }, {
-                            categorySuggestions: categoriesList,
+                        { title: __('Post Settings', 'advanced-gutenberg') },
+                        React.createElement(SelectControl, {
+                            label: __('Post Type', 'advanced-gutenberg'),
+                            value: postType,
+                            options: postTypeList,
+                            onChange: function onChange(value) {
+                                return setAttributes({ postType: value });
+                            }
+                        }),
+                        React.createElement(_queryControls2.default, _extends({ order: order, orderBy: orderBy, authorList: authorList, postType: postType, selectedAuthorId: selectedAuthorId }, {
+                            categorySuggestions: postType === 'post' ? categoriesList : null,
                             selectedCategories: categories,
                             numberOfItems: numberOfPosts,
                             onOrderChange: function onOrderChange(value) {
@@ -23572,10 +23831,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onCategoryChange: function onCategoryChange(value) {
                                 _this3.selectCategories(value);
                             },
+                            onAuthorChange: function onAuthorChange(value) {
+                                return setAttributes({ author: value });
+                            },
                             onNumberOfItemsChange: function onNumberOfItemsChange(value) {
                                 return setAttributes({ numberOfPosts: value });
                             }
                         })),
+                        postType === 'post' && React.createElement(FormTokenField, {
+                            multiple: true,
+                            suggestions: tagsList,
+                            value: tags,
+                            label: __('Show content with these Tags', 'advanced-gutenberg'),
+                            placeholder: __('Type a tag', 'advanced-gutenberg'),
+                            onChange: function onChange(value) {
+                                _this3.selectTags(value);
+                            }
+                        })
+                    ),
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Display Settings', 'advanced-gutenberg') },
                         postView === 'grid' && React.createElement(RangeControl, {
                             label: __('Columns', 'advanced-gutenberg'),
                             value: columns,
@@ -23592,6 +23868,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayFeaturedImage: !displayFeaturedImage });
                             }
                         }),
+                        displayFeaturedImage && React.createElement(SelectControl, {
+                            value: displayFeaturedImageFor,
+                            options: [{ label: __('For all posts', 'advanced-gutenberg'), value: 'all' }, { label: __('For the first post', 'advanced-gutenberg'), value: 1 }, { label: __('For the first 2 posts', 'advanced-gutenberg'), value: 2 }, { label: __('For the first 3 posts', 'advanced-gutenberg'), value: 3 }, { label: __('For the first 4 posts', 'advanced-gutenberg'), value: 4 }, { label: __('For the first 5 posts', 'advanced-gutenberg'), value: 5 }],
+                            onChange: function onChange(value) {
+                                setAttributes({ displayFeaturedImageFor: value });
+                            },
+                            className: "advgb-child-select"
+                        }),
                         React.createElement(ToggleControl, {
                             label: __('Display Post Author', 'advanced-gutenberg'),
                             checked: displayAuthor,
@@ -23599,13 +23883,60 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayAuthor: !displayAuthor });
                             }
                         }),
-                        React.createElement(ToggleControl, {
+                        React.createElement(SelectControl, {
                             label: __('Display Post Date', 'advanced-gutenberg'),
-                            checked: displayDate,
-                            onChange: function onChange() {
-                                return setAttributes({ displayDate: !displayDate });
+                            value: postDate,
+                            options: [{ label: __('Hide', 'advanced-gutenberg'), value: 'hide' }, { label: __('Created Date', 'advanced-gutenberg'), value: 'created' }, { label: __('Updated Date', 'advanced-gutenberg'), value: 'updated' }],
+                            onChange: function onChange(value) {
+                                setAttributes({ postDate: value });
                             }
                         }),
+                        postDate !== 'hide' && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(SelectControl, {
+                                label: __('Post Date Format', 'advanced-gutenberg'),
+                                value: postDateFormat,
+                                options: [{ label: __('Absolute', 'advanced-gutenberg'), value: 'absolute' }, { label: __('Relative', 'advanced-gutenberg'), value: 'relative' }],
+                                onChange: function onChange(value) {
+                                    setAttributes({ postDateFormat: value });
+                                }
+                            }),
+                            postDateFormat === 'absolute' && React.createElement(ToggleControl, {
+                                label: __('Display Post Time', 'advanced-gutenberg'),
+                                checked: displayTime,
+                                onChange: function onChange() {
+                                    return setAttributes({ displayTime: !displayTime });
+                                }
+                            })
+                        ),
+                        postType === 'post' && React.createElement(ToggleControl, {
+                            label: __('Display Comment Counts', 'advanced-gutenberg'),
+                            checked: displayCommentCount,
+                            onChange: function onChange() {
+                                return setAttributes({ displayCommentCount: !displayCommentCount });
+                            }
+                        }),
+                        postType === 'post' && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(SelectControl, {
+                                label: __('Display Category', 'advanced-gutenberg'),
+                                value: showCategories,
+                                options: [{ label: __('Hide', 'advanced-gutenberg'), value: 'hide' }, { label: __('Show', 'advanced-gutenberg'), value: 'show' }, { label: __('Show & Link', 'advanced-gutenberg'), value: 'link' }],
+                                onChange: function onChange(value) {
+                                    setAttributes({ showCategories: value });
+                                }
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Display Tags', 'advanced-gutenberg'),
+                                value: showTags,
+                                options: [{ label: __('Hide', 'advanced-gutenberg'), value: 'hide' }, { label: __('Show', 'advanced-gutenberg'), value: 'show' }, { label: __('Show & Link', 'advanced-gutenberg'), value: 'link' }],
+                                onChange: function onChange(value) {
+                                    setAttributes({ showTags: value });
+                                }
+                            })
+                        ),
                         React.createElement(ToggleControl, {
                             label: __('Display Read More Link', 'advanced-gutenberg'),
                             checked: displayReadMore,
@@ -23642,6 +23973,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             value: postTextExcerptLength,
                             onChange: function onChange(value) {
                                 return setAttributes({ postTextExcerptLength: value });
+                            }
+                        }),
+                        isInPost && postType === 'post' && React.createElement(ToggleControl, {
+                            label: __('Exclude current post', 'advanced-gutenberg'),
+                            help: __('If this post is listed in the block, you can exclude it.', 'advanced-gutenberg'),
+                            checked: excludeCurrentPost,
+                            onChange: function onChange() {
+                                return setAttributes({ excludeCurrentPost: !excludeCurrentPost });
+                            }
+                        }),
+                        React.createElement(TextareaControl, {
+                            label: __('Text after title', 'advanced-gutenberg'),
+                            help: __('Include text/HTML after title', 'advanced-gutenberg'),
+                            value: textAfterTitle,
+                            onChange: function onChange(value) {
+                                return setAttributes({ textAfterTitle: value });
+                            }
+                        }),
+                        React.createElement(TextareaControl, {
+                            label: __('Text before read more', 'advanced-gutenberg'),
+                            help: __('Include text/HTML before read more', 'advanced-gutenberg'),
+                            value: textBeforeReadmore,
+                            onChange: function onChange(value) {
+                                return setAttributes({ textBeforeReadmore: value });
                             }
                         })
                     )
@@ -23687,11 +24042,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         return setAttributes({ postView: 'slider' });
                     },
                     isActive: postView === 'slider'
+                }, {
+                    icon: 'table-row-before',
+                    title: __('Frontpage View', 'advanced-gutenberg'),
+                    onClick: function onClick() {
+                        return setAttributes({ postView: 'frontpage' });
+                    },
+                    isActive: postView === 'frontpage'
+                }, {
+                    icon: 'admin-site-alt3',
+                    title: __('Newspaper View', 'advanced-gutenberg'),
+                    onClick: function onClick() {
+                        return setAttributes({ postView: 'newspaper' });
+                    },
+                    isActive: postView === 'newspaper'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view'].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view', postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && 'frontpage-view', postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && 'newspaper-view', postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout].filter(Boolean).join(' ');
 
-                var dateFormat = __experimentalGetSettings().formats.date;
+                var formats = __experimentalGetSettings().formats;
+                var format = postDate !== 'hide' ? displayTime ? formats.datetime : formats.date : '';
 
                 return isPreview ? React.createElement("img", { alt: __('Recent Posts', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
                     Fragment,
@@ -23723,16 +24093,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             recentPosts.map(function (post, index) {
                                 return React.createElement(
                                     "article",
-                                    { key: index, className: "advgb-recent-post" },
-                                    displayFeaturedImage && React.createElement(
-                                        "div",
-                                        { className: "advgb-post-thumbnail" },
-                                        React.createElement(
-                                            "a",
-                                            { href: post.link, target: "_blank" },
-                                            React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
-                                        )
-                                    ),
+                                    { key: index,
+                                        className: "advgb-recent-post " + (_this3.getDisplayImageStatus(attributes, index) ? "" : "advgb-recent-post--no-image")
+                                    },
+                                    function () {
+                                        if (_this3.getDisplayImageStatus(attributes, index)) {
+                                            return React.createElement(
+                                                "div",
+                                                { className: "advgb-post-thumbnail" },
+                                                React.createElement(
+                                                    "a",
+                                                    { href: post.link, target: "_blank" },
+                                                    React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
+                                                )
+                                            );
+                                        } else if (postView === 'frontpage' && frontpageStyle === 'headline' || postView === 'slider' && sliderStyle === 'headline') {
+                                            return React.createElement(
+                                                "div",
+                                                { className: "advgb-post-thumbnail advgb-post-thumbnail-no-image" },
+                                                React.createElement("a", { href: post.link, target: "_blank" })
+                                            );
+                                        } else {
+                                            {/* Nothing to do here */}
+                                        }
+                                    }(),
                                     React.createElement(
                                         "div",
                                         { className: "advgb-post-wrapper" },
@@ -23746,9 +24130,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             )
                                         ),
                                         React.createElement(
+                                            RawHTML,
+                                            { className: "advgb-text-after-title" },
+                                            textAfterTitle
+                                        ),
+                                        React.createElement(
                                             "div",
                                             { className: "advgb-post-info" },
-                                            displayAuthor && React.createElement(
+                                            displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map(function (coauthor, coauthor_indx) {
+                                                return React.createElement(
+                                                    Fragment,
+                                                    null,
+                                                    React.createElement(
+                                                        "a",
+                                                        { href: coauthor.link,
+                                                            target: "_blank",
+                                                            className: "advgb-post-author"
+                                                        },
+                                                        coauthor.display_name
+                                                    ),
+                                                    coauthor_indx < post.coauthors.length - 1 && React.createElement(
+                                                        "span",
+                                                        null,
+                                                        ", "
+                                                    )
+                                                );
+                                            }),
+                                            displayAuthor && (!post.coauthors || post.coauthors.length === 0) && React.createElement(
                                                 "a",
                                                 { href: post.author_meta.author_link,
                                                     target: "_blank",
@@ -23756,10 +24164,58 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 },
                                                 post.author_meta.display_name
                                             ),
-                                            displayDate && React.createElement(
+                                            postDate !== 'hide' && React.createElement(
                                                 "span",
-                                                { className: "advgb-post-date" },
-                                                dateI18n(dateFormat, post.date_gmt)
+                                                { className: "advgb-post-datetime" },
+                                                postDateFormat === 'absolute' ? dateI18n(format, postDate === 'created' ? post.date_gmt : post.modified_gmt) : postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified
+                                            ),
+                                            postType === 'post' && displayCommentCount && React.createElement(
+                                                "span",
+                                                { className: "advgb-post-comments" },
+                                                React.createElement("span", { "class": "dashicons dashicons-admin-comments" }),
+                                                "(",
+                                                post.comment_count,
+                                                ")"
+                                            )
+                                        ),
+                                        React.createElement(
+                                            "div",
+                                            { className: "advgb-post-tax-info" },
+                                            showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories && React.createElement(
+                                                "div",
+                                                { className: "advgb-post-tax advgb-post-category" },
+                                                showCategories === 'show' && post.tax_additional.categories.unlinked.map(function (cat, index) {
+                                                    return React.createElement(
+                                                        RawHTML,
+                                                        null,
+                                                        cat
+                                                    );
+                                                }),
+                                                showCategories === 'link' && post.tax_additional.categories.linked.map(function (cat, index) {
+                                                    return React.createElement(
+                                                        RawHTML,
+                                                        null,
+                                                        cat
+                                                    );
+                                                })
+                                            ),
+                                            showTags !== 'hide' && post.tax_additional && post.tax_additional.tags && React.createElement(
+                                                "div",
+                                                { className: "advgb-post-tax advgb-post-tag" },
+                                                showTags === 'show' && post.tax_additional.tags.unlinked.map(function (tag, index) {
+                                                    return React.createElement(
+                                                        RawHTML,
+                                                        null,
+                                                        tag
+                                                    );
+                                                }),
+                                                showTags === 'link' && post.tax_additional.tags.linked.map(function (tag, index) {
+                                                    return React.createElement(
+                                                        RawHTML,
+                                                        null,
+                                                        tag
+                                                    );
+                                                })
                                             )
                                         ),
                                         React.createElement(
@@ -23769,6 +24225,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 dangerouslySetInnerHTML: {
                                                     __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.raw
                                                 } }),
+                                            React.createElement(
+                                                "div",
+                                                { className: "advgb-text-before-readmore" },
+                                                React.createElement(
+                                                    RawHTML,
+                                                    null,
+                                                    textBeforeReadmore
+                                                )
+                                            ),
                                             displayReadMore && React.createElement(
                                                 "div",
                                                 { className: "advgb-post-readmore" },
@@ -23809,6 +24274,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
         }, {
+            key: "selectTags",
+            value: function selectTags(tokens) {
+                var _state2 = this.state,
+                    tagsList = _state2.tagsList,
+                    tagNameVsId = _state2.tagNameVsId;
+
+
+                var hasNoSuggestion = tokens.some(function (token) {
+                    return typeof token === 'string' && !tagNameVsId[token];
+                });
+
+                if (hasNoSuggestion) {
+                    return;
+                }
+
+                var tags = tokens.map(function (token) {
+                    return typeof token === 'string' && tagNameVsId[token] ? token : token;
+                });
+
+                var tagIds = tokens.map(function (token) {
+                    return typeof token === 'string' ? tagNameVsId[token] : token.id;
+                });
+
+                this.props.setAttributes({
+                    tags: tags,
+                    tagIds: tagIds
+                });
+            }
+        }, {
+            key: "getTagIdsForTags",
+            value: function getTagIdsForTags(tags) {
+                var tagNameVsId = this.state.tagNameVsId;
+
+                return tags.map(function (tag) {
+                    return tagNameVsId[tag];
+                });
+            }
+        }, {
             key: "getCategoryForBkwrdCompat",
             value: function getCategoryForBkwrdCompat(id) {
                 var catIdVsName = this.state.catIdVsName;
@@ -23817,6 +24320,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     id: id,
                     name: catIdVsName[id]
                 };
+            }
+        }, {
+            key: "getDisplayImageStatus",
+            value: function getDisplayImageStatus(attributes, index) {
+                return attributes.displayFeaturedImage && (attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor);
             }
         }], [{
             key: "extractContent",
@@ -23863,7 +24371,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('latest posts', 'advanced-gutenberg'), __('posts slide', 'advanced-gutenberg'), __('posts grid', 'advanced-gutenberg')],
+        keywords: [__('latest posts', 'advanced-gutenberg'), __('posts slide', 'advanced-gutenberg'), __('posts grid', 'advanced-gutenberg'), __('posts', 'advanced-gutenberg'), __('pages', 'advanced-gutenberg')],
         supports: {
             html: false
         },
@@ -23878,29 +24386,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var _props$attributes = props.attributes,
                 categories = _props$attributes.categories,
+                tagIds = _props$attributes.tagIds,
+                tags = _props$attributes.tags,
                 category = _props$attributes.category,
                 order = _props$attributes.order,
                 orderBy = _props$attributes.orderBy,
                 numberOfPosts = _props$attributes.numberOfPosts,
-                myToken = _props$attributes.myToken;
+                myToken = _props$attributes.myToken,
+                postType = _props$attributes.postType,
+                excludeCurrentPost = _props$attributes.excludeCurrentPost,
+                author = _props$attributes.author;
 
 
-            var ids = categories && categories.length > 0 ? categories.map(function (cat) {
+            var catIds = categories && categories.length > 0 ? categories.map(function (cat) {
                 return cat.id;
             }) : [];
 
+            var postId = wp.data.select('core/editor').getCurrentPostId();
             var recentPostsQuery = pickBy({
-                categories: ids,
+                categories: catIds,
+                tags: tagIds,
                 order: order,
                 orderby: orderBy,
                 per_page: numberOfPosts,
-                token: myToken
+                token: myToken,
+                exclude: excludeCurrentPost ? postId : 0,
+                author: author
             }, function (value) {
                 return !isUndefined(value);
             });
 
             return {
-                recentPosts: getEntityRecords('postType', 'post', recentPostsQuery)
+                recentPosts: getEntityRecords('postType', postType ? postType : 'post', recentPostsQuery)
             };
         })(RecentPostsEdit),
         save: function save() {
@@ -23909,6 +24426,234 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data, lodash, wp.htmlEntities, wp.date);
+
+/***/ }),
+
+/***/ "./src/assets/blocks/recent-posts/query-controls.jsx":
+/*!***********************************************************!*\
+  !*** ./src/assets/blocks/recent-posts/query-controls.jsx ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+var __ = wp.i18n.__;
+var _wp$element = wp.element,
+    Component = _wp$element.Component,
+    Fragment = _wp$element.Fragment;
+var _wp$components = wp.components,
+    TreeSelect = _wp$components.TreeSelect,
+    SelectControl = _wp$components.SelectControl,
+    FormTokenField = _wp$components.FormTokenField,
+    RangeControl = _wp$components.RangeControl;
+var _lodash = lodash,
+    pickBy = _lodash.pickBy,
+    isUndefined = _lodash.isUndefined;
+var _lodash2 = lodash,
+    groupBy = _lodash2.groupBy;
+
+/**
+ * Returns terms in a tree form.
+ *
+ * @param {Array} flatTerms  Array of terms in flat format.
+ *
+ * @return {Array} Array of terms in tree format.
+ */
+
+function buildTermsTree(flatTerms) {
+    var flatTermsWithParentAndChildren = flatTerms.map(function (term) {
+        return _extends({
+            children: [],
+            parent: null
+        }, term);
+    });
+
+    var termsByParent = groupBy(flatTermsWithParentAndChildren, 'parent');
+    if (termsByParent.null && termsByParent.null.length) {
+        return flatTermsWithParentAndChildren;
+    }
+    var fillWithChildren = function fillWithChildren(terms) {
+        return terms.map(function (term) {
+            var children = termsByParent[term.id];
+            return _extends({}, term, {
+                children: children && children.length ? fillWithChildren(children) : []
+            });
+        });
+    };
+
+    return fillWithChildren(termsByParent['0'] || []);
+}
+
+function AuthorSelect(_ref) {
+    var label = _ref.label,
+        noOptionLabel = _ref.noOptionLabel,
+        authorList = _ref.authorList,
+        selectedAuthorId = _ref.selectedAuthorId,
+        onChange = _ref.onChange;
+
+    var termsTree = buildTermsTree(authorList);
+    return React.createElement(TreeSelect, _extends({ label: label, noOptionLabel: noOptionLabel, onChange: onChange }, {
+        tree: termsTree,
+        selectedId: selectedAuthorId
+    }));
+}
+
+function CategorySelect(_ref2) {
+    var label = _ref2.label,
+        noOptionLabel = _ref2.noOptionLabel,
+        categoriesList = _ref2.categoriesList,
+        selectedCategoryId = _ref2.selectedCategoryId,
+        onChange = _ref2.onChange,
+        props = _objectWithoutProperties(_ref2, ['label', 'noOptionLabel', 'categoriesList', 'selectedCategoryId', 'onChange']);
+
+    var termsTree = buildTermsTree(categoriesList);
+    return React.createElement(TreeSelect, _extends({ label: label, noOptionLabel: noOptionLabel, onChange: onChange }, {
+        tree: termsTree,
+        selectedId: selectedCategoryId
+    }, props));
+}
+
+var DEFAULT_MIN_ITEMS = 1;
+var DEFAULT_MAX_ITEMS = 100;
+var MAX_CATEGORIES_SUGGESTIONS = 20;
+
+function AdvQueryControls(_ref3) {
+    var authorList = _ref3.authorList,
+        selectedAuthorId = _ref3.selectedAuthorId,
+        categoriesList = _ref3.categoriesList,
+        selectedCategoryId = _ref3.selectedCategoryId,
+        categorySuggestions = _ref3.categorySuggestions,
+        selectedCategories = _ref3.selectedCategories,
+        numberOfItems = _ref3.numberOfItems,
+        order = _ref3.order,
+        orderBy = _ref3.orderBy,
+        postType = _ref3.postType,
+        _ref3$maxItems = _ref3.maxItems,
+        maxItems = _ref3$maxItems === undefined ? DEFAULT_MAX_ITEMS : _ref3$maxItems,
+        _ref3$minItems = _ref3.minItems,
+        minItems = _ref3$minItems === undefined ? DEFAULT_MIN_ITEMS : _ref3$minItems,
+        onCategoryChange = _ref3.onCategoryChange,
+        onAuthorChange = _ref3.onAuthorChange,
+        onNumberOfItemsChange = _ref3.onNumberOfItemsChange,
+        onOrderChange = _ref3.onOrderChange,
+        onOrderByChange = _ref3.onOrderByChange;
+
+    var orderParams = [{
+        label: __('Created: Newest to oldest', 'advanced-gutenberg'),
+        value: 'date/desc'
+    }, {
+        label: __('Created: Oldest to newest', 'advanced-gutenberg'),
+        value: 'date/asc'
+    }, {
+        /* translators: label for ordering posts by title in ascending order */
+        label: __('A → Z', 'advanced-gutenberg'),
+        value: 'title/asc'
+    }, {
+        /* translators: label for ordering posts by title in descending order */
+        label: __('Z → A', 'advanced-gutenberg'),
+        value: 'title/desc'
+    }, {
+        label: __('Author', 'advanced-gutenberg') + ' ' + __('A → Z', 'advanced-gutenberg'),
+        value: 'author/asc'
+    }, {
+        label: __('Author', 'advanced-gutenberg') + ' ' + __('Z → A', 'advanced-gutenberg'),
+        value: 'author/desc'
+    }, {
+        label: __('Modified: Newest to oldest', 'advanced-gutenberg'),
+        value: 'modified/desc'
+    }, {
+        label: __('Modified: Oldest to newest', 'advanced-gutenberg'),
+        value: 'modified/asc'
+    }, {
+        label: __('Post ID Descending', 'advanced-gutenberg'),
+        value: 'id/desc'
+    }, {
+        label: __('Post ID Ascending', 'advanced-gutenberg'),
+        value: 'id/asc'
+    }, {
+        label: __('Randomize', 'advanced-gutenberg'),
+        value: 'rand/asc'
+    }];
+
+    // post supports more orderBy parameters
+    if (postType === 'post') {
+        orderParams = _.union(orderParams, [{
+            label: __('Comments, decreasing order', 'advanced-gutenberg'),
+            value: 'comment_count/desc'
+        }, {
+            label: __('Comments, increasing order', 'advanced-gutenberg'),
+            value: 'comment_count/asc'
+        }]);
+    }
+
+    return [onOrderChange && onOrderByChange && React.createElement(SelectControl, {
+        key: 'query-controls-order-select',
+        label: __('Order by', 'advanced-gutenberg'),
+        value: orderBy + '/' + order,
+        options: orderParams,
+        onChange: function onChange(value) {
+            var _value$split = value.split('/'),
+                _value$split2 = _slicedToArray(_value$split, 2),
+                newOrderBy = _value$split2[0],
+                newOrder = _value$split2[1];
+
+            if (newOrder !== order) {
+                onOrderChange(newOrder);
+            }
+            if (newOrderBy !== orderBy) {
+                onOrderByChange(newOrderBy);
+            }
+        }
+    }), categoriesList && onCategoryChange && React.createElement(CategorySelect, {
+        key: 'query-controls-category-select',
+        categoriesList: categoriesList,
+        label: __('Category', 'advanced-gutenberg'),
+        noOptionLabel: __('All', 'advanced-gutenberg'),
+        selectedCategoryId: selectedCategoryId,
+        onChange: onCategoryChange
+    }), onAuthorChange && React.createElement(AuthorSelect, {
+        key: 'query-controls-author-select',
+        authorList: authorList,
+        label: __('Author', 'advanced-gutenberg'),
+        noOptionLabel: __('All', 'advanced-gutenberg'),
+        selectedAuthorId: selectedAuthorId,
+        onChange: onAuthorChange
+    }), onNumberOfItemsChange && React.createElement(RangeControl, {
+        key: 'query-controls-range-control',
+        label: __('Number of items', 'advanced-gutenberg'),
+        value: numberOfItems,
+        onChange: onNumberOfItemsChange,
+        min: minItems,
+        max: maxItems,
+        required: true
+    }), categorySuggestions && onCategoryChange && React.createElement(FormTokenField, {
+        key: 'query-controls-categories-select',
+        label: __('Show content with these Categories', 'advanced-gutenberg'),
+        value: selectedCategories && selectedCategories.map(function (item) {
+            return {
+                id: item.id,
+                value: item.name || item.value
+            };
+        }),
+        suggestions: Object.keys(categorySuggestions),
+        onChange: onCategoryChange,
+        maxSuggestions: MAX_CATEGORIES_SUGGESTIONS
+    })];
+}
+
+exports.default = AdvQueryControls;
 
 /***/ }),
 
@@ -24037,9 +24782,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var searchBtnId = attributes.searchBtnId;
 
 
-                if (!searchBtnId) {
-                    setAttributes({ searchBtnId: "advgb-search-btn-" + clientId });
-                }
+                setAttributes({ searchBtnId: "advgb-search-btn-" + clientId });
             }
         }, {
             key: "render",
@@ -27037,7 +27780,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 return _this2.updateItems(idx, { name: value });
                                             },
                                             style: { color: nameColor },
-                                            placeholder: __('Text…', 'advanced-gutenberg')
+                                            placeholder: __('Text…', 'advanced-gutenberg'),
+                                            allowedFormats: ['core/bold', 'core/italic']
                                         }),
                                         React.createElement(RichText, {
                                             tagName: "p",
@@ -27051,7 +27795,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 return _this2.updateItems(idx, { position: value });
                                             },
                                             style: { color: positionColor },
-                                            placeholder: __('Text…', 'advanced-gutenberg')
+                                            placeholder: __('Text…', 'advanced-gutenberg'),
+                                            allowedFormats: ['core/bold', 'core/italic']
                                         }),
                                         React.createElement(RichText, {
                                             tagName: "p",
@@ -28133,9 +28878,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./src/assets/blocks/0-adv-components/components.jsx ./src/assets/blocks/0-adv-components/icon-class.jsx ./src/assets/blocks/accordion/block.jsx ./src/assets/blocks/advaccordion/accordion.jsx ./src/assets/blocks/advaccordion/block.jsx ./src/assets/blocks/advbutton/block.jsx ./src/assets/blocks/advicon/block.jsx ./src/assets/blocks/advimage/block.jsx ./src/assets/blocks/advlist/block.jsx ./src/assets/blocks/advtable/block.jsx ./src/assets/blocks/advtabs/block.jsx ./src/assets/blocks/advtabs/tab.jsx ./src/assets/blocks/advvideo/block.jsx ./src/assets/blocks/columns/block.jsx ./src/assets/blocks/columns/column.jsx ./src/assets/blocks/contact-form/block.jsx ./src/assets/blocks/container/block.jsx ./src/assets/blocks/count-up/block.jsx ./src/assets/blocks/customstyles/custom-styles.jsx ./src/assets/blocks/editor-sidebar/sidebar.jsx ./src/assets/blocks/images-slider/block.jsx ./src/assets/blocks/infobox/block.jsx ./src/assets/blocks/login-form/block.jsx ./src/assets/blocks/map/block.jsx ./src/assets/blocks/newsletter/block.jsx ./src/assets/blocks/recent-posts/block.jsx ./src/assets/blocks/search-bar/block.jsx ./src/assets/blocks/social-links/block.jsx ./src/assets/blocks/summary/block.jsx ./src/assets/blocks/tabs/block.jsx ./src/assets/blocks/testimonial/block.jsx ./src/assets/blocks/woo-products/block.jsx ./src/assets/js/editor.jsx ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./src/assets/blocks/0-adv-components/components.jsx ./src/assets/blocks/0-adv-components/icon-class.jsx ./src/assets/blocks/accordion/block.jsx ./src/assets/blocks/advaccordion/accordion.jsx ./src/assets/blocks/advaccordion/block.jsx ./src/assets/blocks/advbutton/block.jsx ./src/assets/blocks/advicon/block.jsx ./src/assets/blocks/advimage/block.jsx ./src/assets/blocks/advlist/block.jsx ./src/assets/blocks/advtable/block.jsx ./src/assets/blocks/advtabs/block.jsx ./src/assets/blocks/advtabs/tab.jsx ./src/assets/blocks/advvideo/block.jsx ./src/assets/blocks/columns/block.jsx ./src/assets/blocks/columns/column.jsx ./src/assets/blocks/contact-form/block.jsx ./src/assets/blocks/container/block.jsx ./src/assets/blocks/count-up/block.jsx ./src/assets/blocks/customstyles/custom-styles.jsx ./src/assets/blocks/editor-sidebar/sidebar.jsx ./src/assets/blocks/images-slider/block.jsx ./src/assets/blocks/infobox/block.jsx ./src/assets/blocks/login-form/block.jsx ./src/assets/blocks/map/block.jsx ./src/assets/blocks/newsletter/block.jsx ./src/assets/blocks/recent-posts/block.jsx ./src/assets/blocks/recent-posts/query-controls.jsx ./src/assets/blocks/search-bar/block.jsx ./src/assets/blocks/social-links/block.jsx ./src/assets/blocks/summary/block.jsx ./src/assets/blocks/tabs/block.jsx ./src/assets/blocks/testimonial/block.jsx ./src/assets/blocks/woo-products/block.jsx ./src/assets/js/editor.jsx ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28165,6 +28910,7 @@ __webpack_require__(/*! ./src/assets/blocks/login-form/block.jsx */"./src/assets
 __webpack_require__(/*! ./src/assets/blocks/map/block.jsx */"./src/assets/blocks/map/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/newsletter/block.jsx */"./src/assets/blocks/newsletter/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/recent-posts/block.jsx */"./src/assets/blocks/recent-posts/block.jsx");
+__webpack_require__(/*! ./src/assets/blocks/recent-posts/query-controls.jsx */"./src/assets/blocks/recent-posts/query-controls.jsx");
 __webpack_require__(/*! ./src/assets/blocks/search-bar/block.jsx */"./src/assets/blocks/search-bar/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/social-links/block.jsx */"./src/assets/blocks/social-links/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/summary/block.jsx */"./src/assets/blocks/summary/block.jsx");

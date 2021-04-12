@@ -59,6 +59,11 @@
             margin: 0 auto;
         }
     }
+
+    .advgb-child-select {
+      margin-left: 47px;
+      max-width: 200px;
+    }
 }
 
 .advgb-editor-width-large #editor {
@@ -1007,7 +1012,7 @@ div.advgb-tab-body {
     padding: 20px;
 }
 .edit-post-visual-editor .advgb-tabs-wrapper .block-editor-button-block-appender {
-    display: none;
+    /* display: none; Why this was set as none? */
 }
 
 .advgb-tab-body-wrapper {
@@ -1204,141 +1209,8 @@ hr.wp-block-separator {
 }
 
 /*Recent Posts styles*/
-.advgb-recent-posts-block {
-    padding-bottom: 1px;
-}
-
-.advgb-recent-posts-block h2.advgb-post-title {
-    font-size: 1.2em;
-}
-
-.advgb-recent-posts-block.grid-view .advgb-recent-posts {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
-    display: -ms-flexbox;
-    -ms-flex-wrap: wrap;
-}
-
-.advgb-recent-posts-block.grid-view.columns-1 .advgb-recent-posts {
-    grid-template-columns: 1fr;
-}
-
-.advgb-recent-posts-block.grid-view.columns-3 .advgb-recent-posts {
-    grid-template-columns: 1fr 1fr 1fr;
-}
-
-.advgb-recent-posts-block.grid-view.columns-4 .advgb-recent-posts {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-.advgb-recent-posts-block.grid-view.columns-1 .advgb-recent-posts .advgb-recent-post {
-    flex-basis: calc(100% - 10px);
-}
-.advgb-recent-posts-block.grid-view.columns-2 .advgb-recent-posts .advgb-recent-post {
-    flex-basis: calc(50% - 10px);
-}
-.advgb-recent-posts-block.grid-view.columns-3 .advgb-recent-posts .advgb-recent-post {
-    flex-basis: calc(33.3% - 10px);
-}
-.advgb-recent-posts-block.grid-view.columns-4 .advgb-recent-posts .advgb-recent-post {
-    flex-basis: calc(25% - 10px);
-}
-
-.advgb-recent-posts-block.list-view .advgb-recent-posts .advgb-recent-post {
-    display: grid;
-    grid-template-columns: 30% 1fr;
-    grid-gap: 20px;
-    margin-bottom: 20px;
-    padding-bottom: 5px;
-    display: -ms-flexbox;
-}
-
-.advgb-recent-posts-block.list-view .advgb-recent-posts .advgb-recent-post .advgb-post-thumbnail {
-    flex-basis: 30%;
-    padding: 5px;
-}
-
-.advgb-recent-posts-block.list-view .advgb-recent-posts .advgb-recent-post .advgb-post-wrapper {
-    flex-basis: calc(70% - 10px);
-}
-
-.advgb-recent-posts-block.list-view .advgb-recent-posts .advgb-recent-post:not(:last-child) {
-    border-bottom: 1px solid #ccc;
-}
-
-.advgb-recent-posts .advgb-recent-post {
-    position: relative;
-    padding: 5px;
-}
-
-.advgb-recent-posts .advgb-recent-post .advgb-post-thumbnail a {
-    display: inline-block;
-    max-width: 100%;
-}
-
-.advgb-recent-posts .advgb-recent-post .advgb-post-thumbnail img {
-    vertical-align: middle;
-}
-
-.advgb-recent-post .advgb-post-title {
-    margin: 0;
-}
-
-.advgb-recent-posts-block.list-view .advgb-recent-post .advgb-post-wrapper:first-child {
-    grid-column: 1 / span 2;
-}
-
-.advgb-recent-posts-block.grid-view .advgb-recent-post .advgb-post-wrapper:not(:first-child) {
-    margin-top: 10px;
-}
-
-.advgb-post-wrapper > * {
-    margin: 10px 0;
-}
-
-.advgb-post-readmore {
-    margin-top: 10px;
-}
-
-.advgb-recent-post .advgb-post-date:not(:first-child):before {
-    content: "-";
-    display: inline-block;
-    margin: 0 5px;
-}
-
-.advgb-recent-posts-loading,
-.advgb-ajax-loading:before {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 9;
-    background-color: rgba(240, 240, 240, 0.7);
-    background-image: url("../../images/loading.gif");
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.advgb-ajax-loading:before {
-    content: '';
-    display: block;
-    background-color: rgba(0,0,0,0.7);
-}
-
-.advgb-recent-posts-block.slider-view.loading .advgb-recent-posts {
-    max-height: 500px;
-    overflow: hidden;
-}
-
-.advgb-recent-posts-block.slider-view .advgb-recent-post {
-    text-align: center;
-}
-
-.advgb-recent-posts-block.slider-view .advgb-recent-post .advgb-post-thumbnail img {
-    height: 400px;
-    width: auto;
+#editor .advgb-recent-posts-block.slider-view.style-headline .advgb-recent-posts .slick-dots {
+  bottom: -57px;
 }
 
 /*Woo Products styles*/
@@ -1724,7 +1596,7 @@ button.advgb-form-submit:hover:after {
     width: 25px;
     height: 25px;
     margin: 12px 3px;
-    background-image: url(../../images/loading.gif);
+    background-image: url(../images/loading.gif);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -2129,14 +2001,11 @@ form .advgb-grecaptcha > div {
     font-size: 20px;
 }
 
-.advgb-columns-select-layout,
+.advgb-recent-posts-responsive-items,
 .advgb-columns-responsive-items {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-}
 
-.advgb-columns-responsive-items .advgb-columns-responsive-item {
+  .advgb-recent-posts-responsive-item,
+  .advgb-columns-responsive-item {
     flex-grow: 1;
     flex-basis: 33.3%;
     padding: 5px;
@@ -2144,29 +2013,44 @@ form .advgb-grecaptcha > div {
     text-transform: capitalize;
     background-color: #eee;
     cursor: pointer;
+
+      &.is-selected {
+        background-color: #2196f3;
+        color: #fff;
+      }
+  }
 }
 
-.advgb-columns-responsive-items .advgb-columns-responsive-item.is-selected {
-    background-color: #2196f3;
-    color: #fff;
-}
+.advgb-recent-posts-select-layout,
+.advgb-recent-posts-responsive-items,
+.advgb-columns-select-layout,
+.advgb-columns-responsive-items {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
 
-.advgb-columns-select-layout .advgb-columns-layout {
+  .advgb-recent-posts-layout,
+  .advgb-columns-layout {
     margin: 5px;
     flex-basis: 100px;
     text-align: center;
     cursor: pointer;
     line-height: 1;
     opacity: 0.3;
-}
 
-.advgb-columns-select-layout.on-inspector .advgb-columns-layout {
-    flex-basis: calc(33.3% - 10px);
-}
+    &:hover,
+    &.is-selected {
+        opacity: 1;
+    }
+  }
 
-.advgb-columns-select-layout .advgb-columns-layout:hover,
-.advgb-columns-select-layout .advgb-columns-layout.is-selected {
-    opacity: 1;
+  &.on-inspector {
+
+    .advgb-recent-posts-layout,
+    .advgb-columns-layout {
+        flex-basis: calc(33.3% - 10px);
+    }
+  }
 }
 
 .advgb-controls-title {
