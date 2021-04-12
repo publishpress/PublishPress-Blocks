@@ -300,8 +300,9 @@ import AdvQueryControls from './query-controls.jsx';
                 author: selectedAuthorId,
             } = attributes;
 
+            let recentPosts = this.props.recentPosts;
             // for some reason, 'include' causes duplicate posts to be returned
-            const recentPosts = uniqWith( recentPostsList, isEqual );
+            recentPosts = recentPostsList ? uniqWith( recentPostsList, isEqual ) : null;
 
             const isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
 

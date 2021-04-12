@@ -23681,9 +23681,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     exclude = attributes.exclude,
                     selectedAuthorId = attributes.author;
 
-                // for some reason, 'include' causes duplicate posts to be returned
 
-                var recentPosts = uniqWith(recentPostsList, isEqual);
+                var recentPosts = this.props.recentPosts;
+                // for some reason, 'include' causes duplicate posts to be returned
+                recentPosts = recentPostsList ? uniqWith(recentPostsList, isEqual) : null;
 
                 var isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
 
