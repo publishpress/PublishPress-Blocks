@@ -55,7 +55,7 @@ HTML;
 }
 
 /**
- * Render content for Recent Posts block
+ * Render content for Content Display block
  *
  * @param array $attributes Attributes of the block
  *
@@ -348,7 +348,7 @@ function advgbRenderBlockRecentPosts($attributes)
 }
 
 /**
- * Register block Recent Posts
+ * Register block Content Display
  *
  * @return void
  */
