@@ -160,6 +160,9 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 == Changelog ==
 
+= 2.6.1 =
+  * Add: Load PublishPress Blocks category as first in Gutenberg editor
+
 = 2.6.0 =
   * Add: Compressed CSS files only
   * Add: Tags support to Recent Posts block
