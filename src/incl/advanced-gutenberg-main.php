@@ -4766,6 +4766,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 global $wp_version;
                 if($wp_version >= 5.5) {
 
+                    // Check blocks in 2nd level and beyond
                     $style_html .= $this->advgb_getNestedBlocksStyles($block);
                 }
             }
