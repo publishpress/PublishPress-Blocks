@@ -163,6 +163,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 = 2.6.1 =
   * Add: Load PublishPress Blocks category as first in Gutenberg editor
   * Add: "Content Display" as new name for Recent Posts block
+  * Remove: "ADVGB" from Content Display and WooProducts blocks when loading in editor
 
 = 2.6.0 =
   * Add: Compressed CSS files only
