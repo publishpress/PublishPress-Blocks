@@ -24006,7 +24006,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // If no posts found we show this notice
                 if (!hasPosts) {
-                    return isPreview ? React.createElement("img", { alt: __('Recent Posts', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
+                    return isPreview ? React.createElement("img", { alt: __('Content Display', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
                         Fragment,
                         null,
                         inspectorControls,
@@ -24014,9 +24014,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             Placeholder,
                             {
                                 icon: advRecentPostsBlockIcon,
-                                label: __('ADVGB Recent Posts Block', 'advanced-gutenberg')
+                                label: __('Content Display Block', 'advanced-gutenberg')
                             },
-                            !Array.isArray(recentPosts) ? React.createElement(Spinner, null) : __('No posts found! Try to change category or publish posts.', 'advanced-gutenberg')
+                            !Array.isArray(recentPosts) ? React.createElement(Spinner, null) : __('No posts found! Try to change filters or publish posts.', 'advanced-gutenberg')
                         )
                     );
                 }
@@ -24063,7 +24063,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var formats = __experimentalGetSettings().formats;
                 var format = postDate !== 'hide' ? displayTime ? formats.datetime : formats.date : '';
 
-                return isPreview ? React.createElement("img", { alt: __('Recent Posts', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
+                return isPreview ? React.createElement("img", { alt: __('Content Display', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
                     Fragment,
                     null,
                     inspectorControls,
@@ -24364,14 +24364,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }(Component);
 
     registerBlockType('advgb/recent-posts', {
-        title: __('Recent Posts', 'advanced-gutenberg'),
-        description: __('Display your recent posts in slider or grid view with beautiful styles.', 'advanced-gutenberg'),
+        title: __('Content Display', 'advanced-gutenberg'),
+        description: __('Display your posts in grid, list, slider, frontpage and newspaper view with beautiful layouts, styles and several settings and filters. This block was previously called "Recent Posts".', 'advanced-gutenberg'),
         icon: {
             src: advRecentPostsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('latest posts', 'advanced-gutenberg'), __('posts slide', 'advanced-gutenberg'), __('posts grid', 'advanced-gutenberg'), __('posts', 'advanced-gutenberg'), __('pages', 'advanced-gutenberg')],
+        keywords: [__('recent posts', 'advanced-gutenberg'), __('latest posts', 'advanced-gutenberg'), __('posts slide', 'advanced-gutenberg'), __('posts grid', 'advanced-gutenberg'), __('posts', 'advanced-gutenberg'), __('pages', 'advanced-gutenberg')],
         supports: {
             html: false
         },
