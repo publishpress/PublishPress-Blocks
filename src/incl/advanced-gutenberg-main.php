@@ -4459,7 +4459,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 			$style_html = implode('', $style_html);
 
 			error_log("level = $level");
-			//echo '<code>' . gettype($style_html) . '</code>'; // This output is correct!
+			//echo '<code>' . $style_html . '</code>'; // This output is correct!
 
 			return $style_html;
 		}
@@ -4767,7 +4767,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 if($wp_version >= 5.5) {
 
                     // Check blocks in 2nd level and beyond
-                    $style_html .= $this->advgb_getNestedBlocksStyles($block);
+                    $style_html .= $this->advgb_getNestedBlocksStyles($block); // This output is empty!
                 }
             }
 
