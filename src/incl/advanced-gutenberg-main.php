@@ -225,13 +225,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function addAdvBlocksCategory($categories)
         {
             return array_merge(
-                $categories,
                 array(
                     array(
                         'slug' => 'advgb-category',
                         'title' => __('PublishPress Blocks', 'advanced-gutenberg'),
                     ),
-                )
+                ),
+                $categories
             );
         }
 
