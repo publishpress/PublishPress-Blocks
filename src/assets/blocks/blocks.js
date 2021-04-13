@@ -28635,7 +28635,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             Placeholder,
                             {
                                 icon: advProductsBlockIcon,
-                                label: __('ADVGB Woo Products Block', 'advanced-gutenberg')
+                                label: __('Woo Products Block', 'advanced-gutenberg')
                             },
                             React.createElement(
                                 "div",
