@@ -23619,9 +23619,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     this.setState({ postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function () {
                         // the saved attribute will be called 'include'/'exclude' and contain post titles
                         // we have to convert them into post Ids when the component is loaded the first time
-                        if (!attributes.includeIds && attributes.include) {
-                            this.selectPostByTitle(attributes.include, 'include');
-                        }
                         if (!attributes.excludeIds && attributes.exclude) {
                             this.selectPostByTitle(attributes.exclude, 'exclude');
                         }
@@ -23677,14 +23674,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayCommentCount = attributes.displayCommentCount,
                     textAfterTitle = attributes.textAfterTitle,
                     textBeforeReadmore = attributes.textBeforeReadmore,
-                    include = attributes.include,
                     exclude = attributes.exclude,
                     selectedAuthorId = attributes.author;
 
 
                 var recentPosts = this.props.recentPosts;
-                // for some reason, 'include' causes duplicate posts to be returned
-                recentPosts = recentPostsList ? uniqWith(recentPostsList, isEqual) : null;
 
                 var isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
 
@@ -24020,16 +24014,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             checked: excludeCurrentPost,
                             onChange: function onChange() {
                                 return setAttributes({ excludeCurrentPost: !excludeCurrentPost });
-                            }
-                        }),
-                        React.createElement(FormTokenField, {
-                            multiple: true,
-                            suggestions: postSuggestions,
-                            value: include,
-                            label: __('Include these posts', 'advanced-gutenberg'),
-                            placeholder: __('Search by title', 'advanced-gutenberg'),
-                            onChange: function onChange(value) {
-                                return _this3.selectPostByTitle(value, 'include');
                             }
                         }),
                         React.createElement(FormTokenField, {
@@ -24406,7 +24390,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "updatePostType",
             value: function updatePostType(type) {
-                this.props.setAttributes({ postType: type, include: [], includeIds: [], exclude: [], excludeIds: [], updatePostSuggestions: true });
+                this.props.setAttributes({ postType: type, exclude: [], excludeIds: [], updatePostSuggestions: true });
             }
         }, {
             key: "getDisplayImageStatus",
@@ -24483,7 +24467,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 postType = _props$attributes.postType,
                 excludeCurrentPost = _props$attributes.excludeCurrentPost,
                 excludeIds = _props$attributes.excludeIds,
-                includeIds = _props$attributes.includeIds,
                 author = _props$attributes.author;
 
 
@@ -24500,14 +24483,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 per_page: numberOfPosts,
                 token: myToken,
                 exclude: excludeCurrentPost ? excludeIds ? union(excludeIds, [postId]) : postId : excludeIds,
-                include: includeIds,
                 author: author
             }, function (value) {
                 return !isUndefined(value) && !(isArray(value) && (isNull(value) || value.length === 0));
             });
 
             // generate posts without filters for post suggestions
-            var postSuggestionsQuery = omit(recentPostsQuery, ['include', 'exclude', 'categories', 'tags']);
+            var postSuggestionsQuery = omit(recentPostsQuery, ['exclude', 'categories', 'tags']);
             var updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
 
             return {
