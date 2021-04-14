@@ -24167,7 +24167,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             postDate !== 'hide' && React.createElement(
                                                 "span",
                                                 { className: "advgb-post-datetime" },
-                                                postDateFormat === 'absolute' ? dateI18n(format, postDate === 'created' ? post.date_gmt : post.modified_gmt) : postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified
+                                                postDateFormat === 'absolute' ? (postDate === 'created' ? __('Posted on', 'advanced-gutenberg') : __('Updated on', 'advanced-gutenberg')) + ' ' + dateI18n(format, postDate === 'created' ? post.date_gmt : post.modified_gmt) : postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified
                                             ),
                                             postType === 'post' && displayCommentCount && React.createElement(
                                                 "span",

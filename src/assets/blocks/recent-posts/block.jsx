@@ -782,7 +782,11 @@ import AdvQueryControls from './query-controls.jsx';
                                             {postDate !== 'hide' && (
                                                 <span className="advgb-post-datetime" >
                                                 { postDateFormat === 'absolute'
-                                                    ? ( dateI18n( format, postDate === 'created' ? post.date_gmt : post.modified_gmt ) )
+                                                    ? (
+                                                        (
+                                                            postDate === 'created' ? __( 'Posted on', 'advanced-gutenberg' ) : __( 'Updated on', 'advanced-gutenberg' )
+                                                        ) + ' ' + dateI18n( format, postDate === 'created' ? post.date_gmt : post.modified_gmt )
+                                                    )
                                                     : ( postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified )
                                                 }
                                                 </span>
