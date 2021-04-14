@@ -4841,7 +4841,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             if ($styles_tag) {
-                $content .= '<style class="advgb-styles-renderer">'.$styles_tag.'</style>';
+                wp_add_inline_style(
+                    'advgb_blocks_styles',
+                    $styles_tag
+                );
             }
 
             return $content;
