@@ -947,7 +947,7 @@ import AdvQueryControls from './query-controls.jsx';
 
     registerBlockType( 'advgb/recent-posts', {
         title: __( 'Content Display', 'advanced-gutenberg' ),
-        description: __( 'Display your posts in grid, list, slider, frontpage and newspaper view with beautiful layouts, styles and several settings and filters. This block was previously called "Recent Posts".', 'advanced-gutenberg' ),
+        description: __( 'Displays your content in grid, list, slider, frontpage, and newspaper views with beautiful layouts and styles.', 'advanced-gutenberg' ),
         icon: {
             src: advRecentPostsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
