@@ -668,17 +668,17 @@ import AdvQueryControls from './query-controls.jsx';
             if (!hasPosts) {
                 return (
                     isPreview ?
-                        <img alt={__('Recent Posts', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
+                        <img alt={__('Content Display', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
                         :
                     <Fragment>
                         { inspectorControls }
                         <Placeholder
                             icon={ advRecentPostsBlockIcon }
-                            label={ __( 'ADVGB Recent Posts Block', 'advanced-gutenberg' ) }
+                            label={ __( 'Content Display Block', 'advanced-gutenberg' ) }
                         >
                             { ! Array.isArray( recentPosts ) ?
                                 <Spinner /> :
-                                __( 'No posts found! Try to change category or publish posts.', 'advanced-gutenberg' )
+                                __( 'No posts found! Try to change filters or publish posts.', 'advanced-gutenberg' )
                             }
                         </Placeholder>
                     </Fragment>
@@ -741,7 +741,7 @@ import AdvQueryControls from './query-controls.jsx';
 
             return (
                 isPreview ?
-                    <img alt={__('Recent Posts', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
+                    <img alt={__('Content Display', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
                     :
                 <Fragment>
                     { inspectorControls }
@@ -998,14 +998,15 @@ import AdvQueryControls from './query-controls.jsx';
     }
 
     registerBlockType( 'advgb/recent-posts', {
-        title: __( 'Recent Posts', 'advanced-gutenberg' ),
-        description: __( 'Display your recent posts in slider or grid view with beautiful styles.', 'advanced-gutenberg' ),
+        title: __( 'Content Display', 'advanced-gutenberg' ),
+        description: __( 'Display your posts in grid, list, slider, frontpage and newspaper view with beautiful layouts, styles and several settings and filters. This block was previously called "Recent Posts".', 'advanced-gutenberg' ),
         icon: {
             src: advRecentPostsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
         keywords: [
+            __( 'recent posts', 'advanced-gutenberg' ),
             __( 'latest posts', 'advanced-gutenberg' ),
             __( 'posts slide', 'advanced-gutenberg' ),
             __( 'posts grid', 'advanced-gutenberg' ),
