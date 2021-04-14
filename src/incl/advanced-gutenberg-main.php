@@ -4439,7 +4439,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 		 * @param   integer $level      Nested block level
 		 * @return  string              CSS Styles
 		 */
-		public function advgb_getNestedBlocksStyles($block, $level = 2, $style_html = array()){
+		public function advgb_getNestedBlocksStyles($block, $level = 2, &$style_html = array()){
 
 			if(isset($block['innerBlocks'])){
 				foreach($block['innerBlocks'] as $key => $inner_block){
@@ -4448,17 +4448,18 @@ if(!class_exists('AdvancedGutenbergMain')) {
 					$new_style_html = $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
 
 					// Add the styles to the array
-					array_push($style_html, $new_style_html);
+					$style_html[] = $new_style_html;
 					//echo str_repeat("--", $level) . $inner_block['blockName'] . ' [ ' . $level . ' ]<br>';
 
-					self::advgb_getNestedBlocksStyles($inner_block, $level + 1);
+					self::advgb_getNestedBlocksStyles($inner_block, $level + 1, $style_html);
 				}
 			}
 
-			// Convert array to string
-			$style_html = implode('', $style_html);
+			if( ! is_string( $style_html ) ) {
+				// Convert array to string
+				$style_html =  implode('', array_unique($style_html));
+			}
 
-			error_log("level = $level");
 			//echo '<code>' . $style_html . '</code>'; // This output is correct!
 
 			return $style_html;
