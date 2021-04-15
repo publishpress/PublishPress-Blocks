@@ -477,7 +477,7 @@ import AdvQueryControls from './query-controls.jsx';
                         }
                     </PanelBody>
                     <PanelBody title={ __( 'Display Settings', 'advanced-gutenberg' ) }>
-                        {postView === 'grid' &&
+                        { ( ( postView === 'grid' ) || ( postView === 'masonry' ) ) &&
                         <RangeControl
                             label={ __( 'Columns', 'advanced-gutenberg' ) }
                             value={ columns }
@@ -692,23 +692,25 @@ import AdvQueryControls from './query-controls.jsx';
                     onClick: () => setAttributes( { postView: 'newspaper' } ),
                     isActive: postView === 'newspaper',
                 },
+                {
+                    icon: 'tagcloud',
+                    title: __( 'Masonry View', 'advanced-gutenberg' ),
+                    onClick: () => setAttributes( { postView: 'masonry' } ),
+                    isActive: postView === 'masonry',
+                },
             ];
 
             const blockClassName = [
                 'advgb-recent-posts-block',
                 this.state.updating && 'loading',
-                postView === 'grid' && 'columns-' + columns,
-                postView === 'grid' && 'grid-view',
-                postView === 'list' && 'list-view',
-                postView === 'slider' && 'slider-view',
+                ( ( postView === 'grid' ) || ( postView === 'masonry' ) ) && 'columns-' + columns,
+                postView && postView + '-view',
                 postView === 'slider' && sliderStyle && 'style-' + sliderStyle,
-                postView === 'frontpage' && 'frontpage-view',
                 postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout,
                 postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT,
                 postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM,
                 postView === 'frontpage' && gap && 'gap-' + gap,
                 postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle,
-                postView === 'newspaper' && 'newspaper-view',
                 postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout,
             ].filter( Boolean ).join( ' ' );
 

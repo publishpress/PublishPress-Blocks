@@ -341,6 +341,8 @@ function advgbRenderBlockRecentPosts($attributes)
     } elseif ($attributes['postView'] === 'newspaper') {
         $blockClass = 'newspaper-view';
         $blockClass .= ' layout-' . $attributes['newspaperLayout'];
+    } elseif ($attributes['postView'] === 'masonry') {
+        $blockClass = 'masonry-view columns-' . $attributes['columns'];
     }
 
     if (isset($attributes['className'])) {
