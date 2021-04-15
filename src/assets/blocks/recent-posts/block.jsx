@@ -737,6 +737,9 @@ import AdvQueryControls from './query-controls.jsx';
                                                     <a href={ post.link } target="_blank">
                                                         <img src={ post.featured_img ? post.featured_img : advgbBlocks.post_thumb } alt={ __( 'Post Image', 'advanced-gutenberg' ) } />
                                                     </a>
+                                                    <div class="advgb-post-caption">
+                                                        { post.featured_img_caption }
+                                                    </div>
                                                 </div>
                                             )
                                         } else if( ( postView === 'frontpage' && frontpageStyle === 'headline' ) || ( postView === 'slider' && sliderStyle === 'headline' ) ) {

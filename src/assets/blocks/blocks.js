@@ -24105,6 +24105,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     "a",
                                                     { href: post.link, target: "_blank" },
                                                     React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
+                                                ),
+                                                React.createElement(
+                                                    "div",
+                                                    { "class": "advgb-post-caption" },
+                                                    post.featured_img_caption
                                                 )
                                             );
                                         } else if (postView === 'frontpage' && frontpageStyle === 'headline' || postView === 'slider' && sliderStyle === 'headline') {
