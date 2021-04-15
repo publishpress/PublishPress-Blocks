@@ -134,10 +134,8 @@ function advgbRenderBlockRecentPosts($attributes)
 
             if ( advgbCheckImageStatus( $attributes, $key ) ) {
                 $postThumb = '<img src="' . $rp_default_thumb['url'] . '" />';
-
                 if ($postThumbID) {
                     $postThumb = wp_get_attachment_image($postThumbID, 'large');
-
                     if( get_the_post_thumbnail_caption( $post->ID ) && $attributes['displayFeaturedImageCaption']) {
                         $postThumbCaption = sprintf(
                             '<div class="advgb-post-caption">%1$s</div>',
