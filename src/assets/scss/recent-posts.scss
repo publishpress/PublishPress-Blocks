@@ -68,6 +68,15 @@
       a {
         display: inline-block;
         max-width: 100%;
+
+        &:hover,
+        &:focus,
+        &:active {
+
+          .advgb-post-caption {
+            text-decoration: none;
+          }
+        }
       }
 
       img {
@@ -75,10 +84,12 @@
       }
 
       .advgb-post-caption {
+        display: block;
         font-size: 0.8em;
-        opacity: 0.7;
         line-height: 1.3em;
         margin-top: 10px;
+        color: #666;
+        text-decoration: none;
       }
     }
 
@@ -225,9 +236,17 @@
     .advgb-recent-post {
       text-align: center;
 
-      .advgb-post-thumbnail img {
-        height: 400px;
-        width: auto;
+      .advgb-post-thumbnail {
+
+        img {
+          height: 400px;
+          width: auto;
+        }
+
+        .advgb-post-caption {
+          margin-bottom: 10px;
+          text-align: center;
+        }
       }
     }
 
@@ -280,6 +299,16 @@
               width: 100%;
               height: auto;
             }
+          }
+
+          .advgb-post-caption {
+            margin: 0;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            padding: 10px;
           }
         }
 
@@ -361,6 +390,7 @@
         }
 
         .advgb-post-thumbnail {
+          position: relative;
 
           a {
             display: block;
@@ -369,6 +399,16 @@
           img {
             width: 100%;
             height: auto;
+          }
+
+          .advgb-post-caption {
+            margin: 0;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            padding: 10px;
           }
         }
       }
@@ -583,13 +623,6 @@
 
         .advgb-post-thumbnail {
           width: 100%;
-
-          a {
-
-            img {
-
-            }
-          }
         }
 
         .advgb-post-wrapper {
@@ -656,7 +689,7 @@
             }
 
             span {
-              opacity: 0.6;
+              color: #666;
             }
           }
 
@@ -667,6 +700,7 @@
 
         .advgb-post-thumbnail {
           margin-bottom: 20px;
+          position: relative;
 
           a {
             display: block;

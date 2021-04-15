@@ -138,7 +138,7 @@ function advgbRenderBlockRecentPosts($attributes)
                     $postThumb = wp_get_attachment_image($postThumbID, 'large');
                     if( get_the_post_thumbnail_caption( $post->ID ) && $attributes['displayFeaturedImageCaption']) {
                         $postThumbCaption = sprintf(
-                            '<div class="advgb-post-caption">%1$s</div>',
+                            '<span class="advgb-post-caption">%1$s</span>',
                             get_the_post_thumbnail_caption( $post->ID )
                         );
                     } else {
@@ -151,7 +151,7 @@ function advgbRenderBlockRecentPosts($attributes)
                 }
 
                 $postHtml .= sprintf(
-                    '<div class="advgb-post-thumbnail"><a href="%1$s">%2$s</a>%3$s</div>',
+                    '<div class="advgb-post-thumbnail"><a href="%1$s">%2$s%3$s</a></div>',
                     get_permalink($post->ID),
                     $postThumb,
                     $postThumbCaption
