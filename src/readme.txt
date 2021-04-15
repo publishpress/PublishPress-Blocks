@@ -164,7 +164,8 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Load PublishPress Blocks category as first in Gutenberg editor
   * Add: "Content Display" as new name for Recent Posts block
   * Add: "Posted on" and "Updated on" labels before modified date
-  * Fix: Load block's CSS through wp_add_inline_style function
+  * Add: Caption support to Content Display block
+  * Fix: Load dynamic block's CSS through wp_add_inline_style function
   * Remove: "ADVGB" from Content Display and WooProducts blocks when loading in editor
 
 = 2.6.0 =
