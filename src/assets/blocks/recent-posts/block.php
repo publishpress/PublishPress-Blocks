@@ -138,7 +138,7 @@ function advgbRenderBlockRecentPosts($attributes)
                 if ($postThumbID) {
                     $postThumb  = wp_get_attachment_image($postThumbID, 'large');
 
-                    if( get_the_post_thumbnail_caption( $post->ID ) ) {
+                    if( get_the_post_thumbnail_caption( $post->ID ) && $attributes['displayFeaturedImageCaption']) {
                         $postThumbCaption = sprintf(
                             '<div class="advgb-post-caption">%1$s</div>',
                             get_the_post_thumbnail_caption( $post->ID )
@@ -410,6 +410,10 @@ function advgbRegisterBlockRecentPosts()
             'displayFeaturedImageFor' => array(
                 'type' => 'string',
                 'default' => 'all',
+            ),
+            'displayFeaturedImageCaption' => array(
+                'type' => 'boolean',
+                'default' => false,
             ),
             'displayAuthor' => array(
                 'type' => 'boolean',
