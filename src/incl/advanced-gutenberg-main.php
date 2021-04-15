@@ -4455,14 +4455,15 @@ if(!class_exists('AdvancedGutenbergMain')) {
 				}
 			}
 
-			if( ! is_string( $style_html ) ) {
+			$final_styles = $style_html;
+			if( ! is_string( $final_styles ) ) {
 				// Convert array to string
-				$style_html =  implode('', array_unique($style_html));
+				$final_styles = implode( '', array_unique( $style_html ) );
 			}
 
-			//echo '<code>' . $style_html . '</code>'; // This output is correct!
+			//echo '<code>' . $final_styles . '</code>'; // This output is correct!
 
-			return $style_html;
+			return $final_styles;
 		}
 
         /**
