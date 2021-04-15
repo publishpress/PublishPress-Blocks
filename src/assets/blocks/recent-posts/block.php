@@ -136,6 +136,14 @@ function advgbRenderBlockRecentPosts($attributes)
                 $postThumb = '<img src="' . $rp_default_thumb['url'] . '" />';
                 if ($postThumbID) {
                     $postThumb = wp_get_attachment_image($postThumbID, 'large');
+                    if( get_the_post_thumbnail_caption( $post->ID ) && $attributes['displayFeaturedImageCaption']) {
+                        $postThumbCaption = sprintf(
+                            '<div class="advgb-post-caption">%1$s</div>',
+                            get_the_post_thumbnail_caption( $post->ID )
+                        );
+                    } else {
+                        $postThumbCaption = '';
+                    }
                 } else {
                     if ($rp_default_thumb['id']) {
                         $postThumb = wp_get_attachment_image($rp_default_thumb['id'], 'large');
@@ -143,9 +151,10 @@ function advgbRenderBlockRecentPosts($attributes)
                 }
 
                 $postHtml .= sprintf(
-                    '<div class="advgb-post-thumbnail"><a href="%1$s">%2$s</a></div>',
+                    '<div class="advgb-post-thumbnail"><a href="%1$s">%2$s</a>%3$s</div>',
                     get_permalink($post->ID),
-                    $postThumb
+                    $postThumb,
+                    $postThumbCaption
                 );
             } elseif ( ($attributes['postView'] === 'frontpage' && $attributes['frontpageStyle'] === 'headline') || ($attributes['postView'] === 'slider' && $attributes['sliderStyle'] === 'headline') ) {
                 $postHtml .= sprintf(
@@ -400,6 +409,10 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'string',
                 'default' => 'all',
             ),
+            'displayFeaturedImageCaption' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
             'displayAuthor' => array(
                 'type' => 'boolean',
                 'default' => false,
@@ -554,6 +567,15 @@ function advgbRegisterCustomFields() {
         )
     );
 
+    register_rest_field( 'post',
+        'featured_img_caption',
+        array(
+            'get_callback'  => 'advgbGetImageCaption',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
 	// PAGE fields
     register_rest_field( 'page',
         'coauthors',
@@ -577,6 +599,15 @@ function advgbRegisterCustomFields() {
         'relative_dates',
         array(
             'get_callback'  => 'advgbGetRelativeDates',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
+    register_rest_field( 'page',
+        'featured_img_caption',
+        array(
+            'get_callback'  => 'advgbGetImageCaption',
             'update_callback'   => null,
             'schema'            => null,
         )
@@ -628,6 +659,15 @@ function advgbGetRelativeDates( $post ) {
 		'created' => __( 'Posted', 'advanced-gutenberg') . ' ' . human_time_diff( get_the_date( 'U', $post['id'] ) ) . ' ' . __( 'ago', 'advanced-gutenberg'),
 		'modified' => __( 'Updated', 'advanced-gutenberg') . ' ' . human_time_diff( get_the_modified_date( 'U', $post['id'] ) ) . ' ' . __( 'ago', 'advanced-gutenberg')
 	);
+}
+
+/**
+ * Returns the featured image caption
+ *
+ * @return string
+ */
+function advgbGetImageCaption( $post ) {
+	return get_the_post_thumbnail_caption( $post['id'] );
 }
 
 /**

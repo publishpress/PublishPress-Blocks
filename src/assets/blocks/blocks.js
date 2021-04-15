@@ -23618,6 +23618,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     columns = attributes.columns,
                     displayFeaturedImage = attributes.displayFeaturedImage,
                     displayFeaturedImageFor = attributes.displayFeaturedImageFor,
+                    displayFeaturedImageCaption = attributes.displayFeaturedImageCaption,
                     displayAuthor = attributes.displayAuthor,
                     displayDate = attributes.displayDate,
                     postDate = attributes.postDate,
@@ -23876,6 +23877,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             },
                             className: "advgb-child-select"
                         }),
+                        displayFeaturedImage && React.createElement(ToggleControl, {
+                            label: __('Display Caption', 'advanced-gutenberg'),
+                            checked: displayFeaturedImageCaption,
+                            onChange: function onChange() {
+                                return setAttributes({ displayFeaturedImageCaption: !displayFeaturedImageCaption });
+                            },
+                            className: "advgb-child-toggle"
+                        }),
                         React.createElement(ToggleControl, {
                             label: __('Display Post Author', 'advanced-gutenberg'),
                             checked: displayAuthor,
@@ -24105,6 +24114,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     "a",
                                                     { href: post.link, target: "_blank" },
                                                     React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
+                                                ),
+                                                displayFeaturedImageCaption && React.createElement(
+                                                    "div",
+                                                    { "class": "advgb-post-caption" },
+                                                    post.featured_img_caption
                                                 )
                                             );
                                         } else if (postView === 'frontpage' && frontpageStyle === 'headline' || postView === 'slider' && sliderStyle === 'headline') {

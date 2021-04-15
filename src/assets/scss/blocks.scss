@@ -60,8 +60,12 @@
         }
     }
 
-    .advgb-child-select {
+    .advgb-child-select,
+    .advgb-child-toggle {
       margin-left: 47px;
+    }
+
+    .advgb-child-select {
       max-width: 200px;
     }
 }

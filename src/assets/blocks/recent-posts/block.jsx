@@ -246,6 +246,7 @@ import AdvQueryControls from './query-controls.jsx';
                 columns,
                 displayFeaturedImage,
                 displayFeaturedImageFor,
+                displayFeaturedImageCaption,
                 displayAuthor,
                 displayDate,
                 postDate,
@@ -505,6 +506,14 @@ import AdvQueryControls from './query-controls.jsx';
                             className="advgb-child-select"
                         />
                         }
+                        {displayFeaturedImage &&
+                        <ToggleControl
+                            label={ __( 'Display Caption', 'advanced-gutenberg' ) }
+                            checked={ displayFeaturedImageCaption }
+                            onChange={ () => setAttributes( { displayFeaturedImageCaption: !displayFeaturedImageCaption } ) }
+                            className="advgb-child-toggle"
+                        />
+                        }
                         <ToggleControl
                             label={ __( 'Display Post Author', 'advanced-gutenberg' ) }
                             checked={ displayAuthor }
@@ -737,6 +746,11 @@ import AdvQueryControls from './query-controls.jsx';
                                                     <a href={ post.link } target="_blank">
                                                         <img src={ post.featured_img ? post.featured_img : advgbBlocks.post_thumb } alt={ __( 'Post Image', 'advanced-gutenberg' ) } />
                                                     </a>
+                                                    {displayFeaturedImageCaption && (
+                                                        <div class="advgb-post-caption">
+                                                            { post.featured_img_caption }
+                                                        </div>
+                                                    )}
                                                 </div>
                                             )
                                         } else if( ( postView === 'frontpage' && frontpageStyle === 'headline' ) || ( postView === 'slider' && sliderStyle === 'headline' ) ) {
