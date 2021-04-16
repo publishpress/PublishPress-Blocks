@@ -797,3 +797,24 @@
     // Nothing to do here
   }
 }
+
+/* Recent Posts - Masonry view */
+@mixin recent-posts-ms($device: desktop) {
+
+  @if $device == desktop {
+
+    @for $i from 1 through 4 {
+
+      &.columns-#{$i} .advgb-recent-posts {
+        columns: #{$i};
+      }
+    }
+
+  } @else if $device == tablet {
+
+  } @else if $device == mobile {
+
+  } else {
+    // Nothing to do here
+  }
+}

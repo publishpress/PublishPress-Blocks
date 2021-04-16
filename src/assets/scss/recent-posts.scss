@@ -728,8 +728,10 @@
   &.masonry-view {
     padding-bottom: 0;
 
+    // Columns
+    @include recent-posts-ms(desktop);
+
     .advgb-recent-posts {
-      columns: 3;
       column-gap: 20px;
       width: 100%;
       margin-left: -20px;
