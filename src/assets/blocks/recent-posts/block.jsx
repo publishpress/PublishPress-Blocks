@@ -8,7 +8,7 @@ import AdvQueryControls from './query-controls.jsx';
     const { InspectorControls, BlockControls } = wpBlockEditor;
     const { PanelBody, RangeControl, ToggleControl, TextControl, TextareaControl, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
     const { withSelect } = wpData;
-    const { pickBy, isUndefined } = lodash;
+    const { pickBy, isUndefined, isArray, isNull, uniqWith, isEqual, omit, union } = lodash;
     const { decodeEntities } = wpHtmlEntities;
     const { dateI18n, __experimentalGetSettings } = wpDate;
 
@@ -100,6 +100,7 @@ import AdvQueryControls from './query-controls.jsx';
                 ],
                 updating: false,
                 tabSelected: 'desktop',
+                updatePostSuggestions: true,
                 authorList: [],
             }
 
@@ -107,6 +108,8 @@ import AdvQueryControls from './query-controls.jsx';
             this.selectTags = this.selectTags.bind(this);
             this.getTagIdsForTags = this.getTagIdsForTags.bind(this);
             this.getCategoryForBkwrdCompat = this.getCategoryForBkwrdCompat.bind(this);
+            this.selectPostByTitle = this.selectPostByTitle.bind(this);
+            this.updatePostType = this.updatePostType.bind(this);
         }
 
         componentWillMount() {
@@ -185,13 +188,12 @@ import AdvQueryControls from './query-controls.jsx';
                   postDate: postDateDisplay,
                   displayDate: false,
             });
-
         }
 
         componentWillUpdate( nextProps ) {
             const { recentPosts: nextPosts } = nextProps;
             const { postView: nextView } = nextProps.attributes;
-            const { attributes, clientId, recentPosts } = this.props;
+            const { attributes, clientId, recentPosts} = this.props;
             const $ = jQuery;
 
             if (nextView !== 'slider' || (nextPosts && recentPosts && nextPosts.length !== recentPosts.length) ) {
@@ -211,12 +213,13 @@ import AdvQueryControls from './query-controls.jsx';
                     clearTimeout(initSlider);
                 }
             }
+
         }
 
         componentDidUpdate( prevProps ) {
             const that = this;
-            const { attributes, clientId } = this.props;
-            const { postView } = attributes;
+            const { attributes, clientId, postList } = this.props;
+            const { postView, updatePostSuggestions } = attributes;
             const $ = jQuery;
 
             if (postView === 'slider') {
@@ -233,11 +236,30 @@ import AdvQueryControls from './query-controls.jsx';
             } else {
                 $(`#block-${clientId} .advgb-recent-posts.slick-initialized`).slick('unslick');
             }
+
+            // this.state.updatePostSuggestions: corresponds to componentDidMount
+            if(postList && (updatePostSuggestions || this.state.updatePostSuggestions)){
+                let postSuggestions = [];
+                let postTitleVsIdMap = [];
+                postList.forEach( post => {
+                    postSuggestions.push(post.title.rendered);
+                    postTitleVsIdMap[ post.title.rendered ] = post.id;
+                });
+                this.props.setAttributes( { updatePostSuggestions: false } );
+                this.setState( { postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function(){
+                    // the saved attribute will be called 'include'/'exclude' and contain post titles
+                    // we have to convert them into post Ids when the component is loaded the first time
+                    if(!attributes.excludeIds && attributes.exclude){
+                        this.selectPostByTitle( attributes.exclude, 'exclude' );
+                    }
+                });
+            }
+
         }
 
         render() {
-            const { categoriesList, tagsList, postTypeList, tabSelected, authorList } = this.state;
-            const { attributes, setAttributes, recentPosts } = this.props;
+            const { categoriesList, tagsList, postTypeList, tabSelected, authorList, postSuggestions } = this.state;
+            const { attributes, setAttributes, recentPosts: recentPostsList } = this.props;
             const {
                 postView,
                 order,
@@ -271,8 +293,11 @@ import AdvQueryControls from './query-controls.jsx';
                 displayCommentCount,
                 textAfterTitle,
                 textBeforeReadmore,
+                exclude,
                 author: selectedAuthorId,
             } = attributes;
+
+            let recentPosts = this.props.recentPosts;
 
             const isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
 
@@ -446,7 +471,7 @@ import AdvQueryControls from './query-controls.jsx';
                             label={ __( 'Post Type', 'advanced-gutenberg' ) }
                             value={ postType }
                             options={ postTypeList }
-                            onChange={ (value) => setAttributes( { postType: value } ) }
+                            onChange={ (value) => this.updatePostType(value) }
                         />
                         <AdvQueryControls
                             { ...{ order, orderBy, authorList, postType, selectedAuthorId } }
@@ -622,6 +647,14 @@ import AdvQueryControls from './query-controls.jsx';
                             onChange={ () => setAttributes( { excludeCurrentPost: !excludeCurrentPost } ) }
                         />
                         }
+                        <FormTokenField
+                            multiple
+                            suggestions={ postSuggestions }
+                            value={ exclude }
+                            label={ __( 'Exclude these posts', 'advanced-gutenberg' ) }
+                            placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
+                            onChange={ ( value ) => this.selectPostByTitle( value, 'exclude') }
+                        />
                         <TextareaControl
                             label={ __( 'Text after title', 'advanced-gutenberg' ) }
                             help={ __( 'Include text/HTML after title', 'advanced-gutenberg' ) }
@@ -951,6 +984,29 @@ import AdvQueryControls from './query-controls.jsx';
             };
         }
 
+        selectPostByTitle(tokens, type) {
+            const { postTitleVsIdMap } = this.state;
+
+            var hasNoSuggestion = tokens.some(function (token) {
+                return typeof token === 'string' && !postTitleVsIdMap[token];
+            });
+
+            if (hasNoSuggestion) {
+                return;
+            }
+
+            var ids = tokens.map(function (token) {
+                return typeof token === 'string' ? postTitleVsIdMap[token] : token.id;
+            })
+
+            const typeForQuery = type + 'Ids';
+            this.props.setAttributes({ [type]: tokens, [typeForQuery]: ids });
+        }
+
+        updatePostType(type) {
+            this.props.setAttributes( { postType: type, exclude: [], excludeIds: [], updatePostSuggestions: true } );
+        }
+
         getDisplayImageStatus(attributes, index) {
             return(
                 attributes.displayFeaturedImage && ( attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor)
@@ -985,7 +1041,7 @@ import AdvQueryControls from './query-controls.jsx';
         },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, author } = props.attributes;
+            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, excludeIds, author } = props.attributes;
 
             const catIds = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
 
@@ -997,12 +1053,18 @@ import AdvQueryControls from './query-controls.jsx';
                 orderby: orderBy,
                 per_page: numberOfPosts,
                 token: myToken,
-                exclude: excludeCurrentPost ? postId : 0,
-                author: author
-            }, ( value ) => !isUndefined( value ) );
+                exclude: excludeCurrentPost ? (excludeIds ? union( excludeIds, [ postId ] ) : postId ) : excludeIds,
+                author: author,
+            }, ( value ) => !isUndefined( value ) && !(isArray(value) && (isNull(value) || value.length === 0)) );
+
+            // generate posts without filters for post suggestions
+            const postSuggestionsQuery = omit( recentPostsQuery, [ 'exclude', 'categories', 'tags', 'per_page' ] );
+            let updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
 
             return {
                 recentPosts: getEntityRecords( 'postType', postType ? postType : 'post', recentPostsQuery ),
+                postList: updatePostSuggestions ? getEntityRecords( 'postType', postType ? postType : 'post', postSuggestionsQuery ) : null,
+                updatePostSuggestions: updatePostSuggestions,
             }
         } )( RecentPostsEdit ),
         save: function () { // Render in PHP

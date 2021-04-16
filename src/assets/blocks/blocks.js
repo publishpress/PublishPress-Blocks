@@ -23402,7 +23402,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         SelectControl = wpComponents.SelectControl;
     var withSelect = wpData.withSelect;
     var pickBy = lodash.pickBy,
-        isUndefined = lodash.isUndefined;
+        isUndefined = lodash.isUndefined,
+        isArray = lodash.isArray,
+        isNull = lodash.isNull,
+        uniqWith = lodash.uniqWith,
+        isEqual = lodash.isEqual,
+        omit = lodash.omit,
+        union = lodash.union;
     var decodeEntities = wpHtmlEntities.decodeEntities;
     var dateI18n = wpDate.dateI18n,
         __experimentalGetSettings = wpDate.__experimentalGetSettings;
@@ -23450,6 +23456,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 postTypeList: [{ label: __('Post'), value: 'post' }, { label: __('Page'), value: 'page' }],
                 updating: false,
                 tabSelected: 'desktop',
+                updatePostSuggestions: true,
                 authorList: []
             };
 
@@ -23457,6 +23464,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             _this.selectTags = _this.selectTags.bind(_this);
             _this.getTagIdsForTags = _this.getTagIdsForTags.bind(_this);
             _this.getCategoryForBkwrdCompat = _this.getCategoryForBkwrdCompat.bind(_this);
+            _this.selectPostByTitle = _this.selectPostByTitle.bind(_this);
+            _this.updatePostType = _this.updatePostType.bind(_this);
             return _this;
         }
 
@@ -23576,8 +23585,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var that = this;
                 var _props3 = this.props,
                     attributes = _props3.attributes,
-                    clientId = _props3.clientId;
-                var postView = attributes.postView;
+                    clientId = _props3.clientId,
+                    postList = _props3.postList;
+                var postView = attributes.postView,
+                    updatePostSuggestions = attributes.updatePostSuggestions;
 
                 var $ = jQuery;
 
@@ -23595,6 +23606,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 } else {
                     $("#block-" + clientId + " .advgb-recent-posts.slick-initialized").slick('unslick');
                 }
+
+                // this.state.updatePostSuggestions: corresponds to componentDidMount
+                if (postList && (updatePostSuggestions || this.state.updatePostSuggestions)) {
+                    var postSuggestions = [];
+                    var postTitleVsIdMap = [];
+                    postList.forEach(function (post) {
+                        postSuggestions.push(post.title.rendered);
+                        postTitleVsIdMap[post.title.rendered] = post.id;
+                    });
+                    this.props.setAttributes({ updatePostSuggestions: false });
+                    this.setState({ postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function () {
+                        // the saved attribute will be called 'include'/'exclude' and contain post titles
+                        // we have to convert them into post Ids when the component is loaded the first time
+                        if (!attributes.excludeIds && attributes.exclude) {
+                            this.selectPostByTitle(attributes.exclude, 'exclude');
+                        }
+                    });
+                }
             }
         }, {
             key: "render",
@@ -23606,11 +23635,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     tagsList = _state.tagsList,
                     postTypeList = _state.postTypeList,
                     tabSelected = _state.tabSelected,
-                    authorList = _state.authorList;
+                    authorList = _state.authorList,
+                    postSuggestions = _state.postSuggestions;
                 var _props4 = this.props,
                     attributes = _props4.attributes,
                     setAttributes = _props4.setAttributes,
-                    recentPosts = _props4.recentPosts;
+                    recentPostsList = _props4.recentPosts;
                 var postView = attributes.postView,
                     order = attributes.order,
                     orderBy = attributes.orderBy,
@@ -23645,8 +23675,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayCommentCount = attributes.displayCommentCount,
                     textAfterTitle = attributes.textAfterTitle,
                     textBeforeReadmore = attributes.textBeforeReadmore,
+                    exclude = attributes.exclude,
                     selectedAuthorId = attributes.author;
 
+
+                var recentPosts = this.props.recentPosts;
 
                 var isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
 
@@ -23816,7 +23849,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             value: postType,
                             options: postTypeList,
                             onChange: function onChange(value) {
-                                return setAttributes({ postType: value });
+                                return _this3.updatePostType(value);
                             }
                         }),
                         React.createElement(_queryControls2.default, _extends({ order: order, orderBy: orderBy, authorList: authorList, postType: postType, selectedAuthorId: selectedAuthorId }, {
@@ -23990,6 +24023,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             checked: excludeCurrentPost,
                             onChange: function onChange() {
                                 return setAttributes({ excludeCurrentPost: !excludeCurrentPost });
+                            }
+                        }),
+                        React.createElement(FormTokenField, {
+                            multiple: true,
+                            suggestions: postSuggestions,
+                            value: exclude,
+                            label: __('Exclude these posts', 'advanced-gutenberg'),
+                            placeholder: __('Search by title', 'advanced-gutenberg'),
+                            onChange: function onChange(value) {
+                                return _this3.selectPostByTitle(value, 'exclude');
                             }
                         }),
                         React.createElement(TextareaControl, {
@@ -24336,6 +24379,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 };
             }
         }, {
+            key: "selectPostByTitle",
+            value: function selectPostByTitle(tokens, type) {
+                var _props$setAttributes;
+
+                var postTitleVsIdMap = this.state.postTitleVsIdMap;
+
+
+                var hasNoSuggestion = tokens.some(function (token) {
+                    return typeof token === 'string' && !postTitleVsIdMap[token];
+                });
+
+                if (hasNoSuggestion) {
+                    return;
+                }
+
+                var ids = tokens.map(function (token) {
+                    return typeof token === 'string' ? postTitleVsIdMap[token] : token.id;
+                });
+
+                var typeForQuery = type + 'Ids';
+                this.props.setAttributes((_props$setAttributes = {}, _defineProperty(_props$setAttributes, type, tokens), _defineProperty(_props$setAttributes, typeForQuery, ids), _props$setAttributes));
+            }
+        }, {
+            key: "updatePostType",
+            value: function updatePostType(type) {
+                this.props.setAttributes({ postType: type, exclude: [], excludeIds: [], updatePostSuggestions: true });
+            }
+        }, {
             key: "getDisplayImageStatus",
             value: function getDisplayImageStatus(attributes, index) {
                 return attributes.displayFeaturedImage && (attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor);
@@ -24409,6 +24480,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 myToken = _props$attributes.myToken,
                 postType = _props$attributes.postType,
                 excludeCurrentPost = _props$attributes.excludeCurrentPost,
+                excludeIds = _props$attributes.excludeIds,
                 author = _props$attributes.author;
 
 
@@ -24424,14 +24496,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 orderby: orderBy,
                 per_page: numberOfPosts,
                 token: myToken,
-                exclude: excludeCurrentPost ? postId : 0,
+                exclude: excludeCurrentPost ? excludeIds ? union(excludeIds, [postId]) : postId : excludeIds,
                 author: author
             }, function (value) {
-                return !isUndefined(value);
+                return !isUndefined(value) && !(isArray(value) && (isNull(value) || value.length === 0));
             });
 
+            // generate posts without filters for post suggestions
+            var postSuggestionsQuery = omit(recentPostsQuery, ['exclude', 'categories', 'tags', 'per_page']);
+            var updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
+
             return {
-                recentPosts: getEntityRecords('postType', postType ? postType : 'post', recentPostsQuery)
+                recentPosts: getEntityRecords('postType', postType ? postType : 'post', recentPostsQuery),
+                postList: updatePostSuggestions ? getEntityRecords('postType', postType ? postType : 'post', postSuggestionsQuery) : null,
+                updatePostSuggestions: updatePostSuggestions
             };
         })(RecentPostsEdit),
         save: function save() {
