@@ -729,7 +729,7 @@
     padding-bottom: 0;
 
     // Columns
-    @include recent-posts-ms(desktop);
+    @include recent-posts-ms();
 
     .advgb-recent-posts {
       column-gap: 20px;
@@ -888,6 +888,13 @@
       @include recent-posts-np-2(tablet);
       @include recent-posts-np-3(tablet);
     }
+
+    // Masonry view
+    &.masonry-view {
+
+      // Columns
+      @include recent-posts-ms('tbl-');
+    }
   }
 }
 
@@ -986,6 +993,13 @@
       // Convert the 2 columns into one with text above and image below
       @include recent-posts-np-2(mobile);
       @include recent-posts-np-3(mobile);
+    }
+
+    // Masonry view
+    &.masonry-view {
+
+      // Columns
+      @include recent-posts-ms('mbl-');
     }
   }
 }

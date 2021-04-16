@@ -23616,6 +23616,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     orderBy = attributes.orderBy,
                     numberOfPosts = attributes.numberOfPosts,
                     columns = attributes.columns,
+                    columnsT = attributes.columnsT,
+                    columnsM = attributes.columnsM,
                     displayFeaturedImage = attributes.displayFeaturedImage,
                     displayFeaturedImageFor = attributes.displayFeaturedImageFor,
                     displayFeaturedImageCaption = attributes.displayFeaturedImageCaption,
@@ -23862,6 +23864,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ columns: value });
                             }
                         }),
+                        postView === 'masonry' && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(RangeControl, {
+                                label: __('Columns (Tablet)', 'advanced-gutenberg'),
+                                value: columnsT,
+                                min: 1,
+                                max: 4,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ columnsT: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Columns (Mobile)', 'advanced-gutenberg'),
+                                value: columnsM,
+                                min: 1,
+                                max: 4,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ columnsM: value });
+                                }
+                            })
+                        ),
                         React.createElement(ToggleControl, {
                             label: __('Display Featured Image', 'advanced-gutenberg'),
                             checked: displayFeaturedImage,
@@ -24074,7 +24098,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'masonry'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', (postView === 'grid' || postView === 'masonry') && 'columns-' + columns, postView && postView + '-view', postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', (postView === 'grid' || postView === 'masonry') && 'columns-' + columns, postView && postView + '-view', postView === 'masonry' && 'tbl-' + columnsT + ' ' + 'mbl-' + columnsM, postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout].filter(Boolean).join(' ');
 
                 var formats = __experimentalGetSettings().formats;
                 var format = postDate !== 'hide' ? displayTime ? formats.datetime : formats.date : '';

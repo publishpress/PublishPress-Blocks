@@ -244,6 +244,8 @@ import AdvQueryControls from './query-controls.jsx';
                 orderBy,
                 numberOfPosts,
                 columns,
+                columnsT,
+                columnsM,
                 displayFeaturedImage,
                 displayFeaturedImageFor,
                 displayFeaturedImageCaption,
@@ -486,6 +488,24 @@ import AdvQueryControls from './query-controls.jsx';
                             onChange={ (value) => setAttributes( { columns: value } ) }
                         />
                         }
+                        { postView === 'masonry' &&
+                        <Fragment>
+                            <RangeControl
+                                label={ __( 'Columns (Tablet)', 'advanced-gutenberg' ) }
+                                value={ columnsT }
+                                min={ 1 }
+                                max={ 4 }
+                                onChange={ (value) => setAttributes( { columnsT: value } ) }
+                            />
+                            <RangeControl
+                                label={ __( 'Columns (Mobile)', 'advanced-gutenberg' ) }
+                                value={ columnsM }
+                                min={ 1 }
+                                max={ 4 }
+                                onChange={ (value) => setAttributes( { columnsM: value } ) }
+                            />
+                        </Fragment>
+                        }
                         <ToggleControl
                             label={ __( 'Display Featured Image', 'advanced-gutenberg' ) }
                             checked={ displayFeaturedImage }
@@ -705,6 +725,7 @@ import AdvQueryControls from './query-controls.jsx';
                 this.state.updating && 'loading',
                 ( ( postView === 'grid' ) || ( postView === 'masonry' ) ) && 'columns-' + columns,
                 postView && postView + '-view',
+                postView === 'masonry' && 'tbl-' + columnsT + ' ' + 'mbl-' + columnsM,
                 postView === 'slider' && sliderStyle && 'style-' + sliderStyle,
                 postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout,
                 postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT,
