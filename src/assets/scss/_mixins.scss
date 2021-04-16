@@ -803,7 +803,7 @@
 
 /*
  * Recent Posts - Masonry view
- * $prefix: 'tbl' for tablet, 'mbl-' for mobile
+ * $prefix: 'tbl-' for tablet, 'mbl-' for mobile
  */
 @mixin recent-posts-ms($prefix: '') {
 
