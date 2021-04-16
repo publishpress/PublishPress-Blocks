@@ -2,7 +2,7 @@
 Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
-Tested up to: 5.7
+Tested up to: 5.7.1
 Stable tag: 2.6.1b1
 Requires PHP: 5.6
 License: GPLv2 or later
@@ -165,6 +165,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: "Content Display" as new name for Recent Posts block
   * Add: "Posted on" and "Updated on" labels before modified date
   * Add: Caption support to Content Display block
+  * Add: Exclusion support to Content Display block
   * Fix: Load dynamic block's CSS through wp_add_inline_style function
   * Remove: "ADVGB" from Content Display and WooProducts blocks when loading in editor
 
