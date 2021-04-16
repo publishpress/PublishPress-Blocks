@@ -23648,6 +23648,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     columns = attributes.columns,
                     displayFeaturedImage = attributes.displayFeaturedImage,
                     displayFeaturedImageFor = attributes.displayFeaturedImageFor,
+                    displayFeaturedImageCaption = attributes.displayFeaturedImageCaption,
                     displayAuthor = attributes.displayAuthor,
                     displayDate = attributes.displayDate,
                     postDate = attributes.postDate,
@@ -23909,6 +23910,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             },
                             className: "advgb-child-select"
                         }),
+                        displayFeaturedImage && React.createElement(ToggleControl, {
+                            label: __('Display Caption', 'advanced-gutenberg'),
+                            checked: displayFeaturedImageCaption,
+                            onChange: function onChange() {
+                                return setAttributes({ displayFeaturedImageCaption: !displayFeaturedImageCaption });
+                            },
+                            className: "advgb-child-toggle"
+                        }),
                         React.createElement(ToggleControl, {
                             label: __('Display Post Author', 'advanced-gutenberg'),
                             checked: displayAuthor,
@@ -24147,7 +24156,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 React.createElement(
                                                     "a",
                                                     { href: post.link, target: "_blank" },
-                                                    React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
+                                                    React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') }),
+                                                    displayFeaturedImageCaption && post.featured_img_caption.length > 0 && React.createElement(
+                                                        "span",
+                                                        { "class": "advgb-post-caption" },
+                                                        post.featured_img_caption
+                                                    )
                                                 )
                                             );
                                         } else if (postView === 'frontpage' && frontpageStyle === 'headline' || postView === 'slider' && sliderStyle === 'headline') {
@@ -24210,7 +24224,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             postDate !== 'hide' && React.createElement(
                                                 "span",
                                                 { className: "advgb-post-datetime" },
-                                                postDateFormat === 'absolute' ? dateI18n(format, postDate === 'created' ? post.date_gmt : post.modified_gmt) : postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified
+                                                postDateFormat === 'absolute' ? (postDate === 'created' ? __('Posted on', 'advanced-gutenberg') : __('Updated on', 'advanced-gutenberg')) + ' ' + dateI18n(format, postDate === 'created' ? post.date_gmt : post.modified_gmt) : postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified
                                             ),
                                             postType === 'post' && displayCommentCount && React.createElement(
                                                 "span",
@@ -24436,7 +24450,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/recent-posts', {
         title: __('Content Display', 'advanced-gutenberg'),
-        description: __('Display your posts in grid, list, slider, frontpage and newspaper view with beautiful layouts, styles and several settings and filters. This block was previously called "Recent Posts".', 'advanced-gutenberg'),
+        description: __('Displays your content in grid, list, slider, frontpage, and newspaper views with beautiful layouts and styles.', 'advanced-gutenberg'),
         icon: {
             src: advRecentPostsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined

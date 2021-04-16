@@ -268,6 +268,7 @@ import AdvQueryControls from './query-controls.jsx';
                 columns,
                 displayFeaturedImage,
                 displayFeaturedImageFor,
+                displayFeaturedImageCaption,
                 displayAuthor,
                 displayDate,
                 postDate,
@@ -530,6 +531,14 @@ import AdvQueryControls from './query-controls.jsx';
                             className="advgb-child-select"
                         />
                         }
+                        {displayFeaturedImage &&
+                        <ToggleControl
+                            label={ __( 'Display Caption', 'advanced-gutenberg' ) }
+                            checked={ displayFeaturedImageCaption }
+                            onChange={ () => setAttributes( { displayFeaturedImageCaption: !displayFeaturedImageCaption } ) }
+                            className="advgb-child-toggle"
+                        />
+                        }
                         <ToggleControl
                             label={ __( 'Display Post Author', 'advanced-gutenberg' ) }
                             checked={ displayAuthor }
@@ -769,6 +778,11 @@ import AdvQueryControls from './query-controls.jsx';
                                                 <div className="advgb-post-thumbnail">
                                                     <a href={ post.link } target="_blank">
                                                         <img src={ post.featured_img ? post.featured_img : advgbBlocks.post_thumb } alt={ __( 'Post Image', 'advanced-gutenberg' ) } />
+                                                        {displayFeaturedImageCaption && post.featured_img_caption.length > 0 && (
+                                                            <span class="advgb-post-caption">
+                                                                { post.featured_img_caption }
+                                                            </span>
+                                                        )}
                                                     </a>
                                                 </div>
                                             )
@@ -815,7 +829,11 @@ import AdvQueryControls from './query-controls.jsx';
                                             {postDate !== 'hide' && (
                                                 <span className="advgb-post-datetime" >
                                                 { postDateFormat === 'absolute'
-                                                    ? ( dateI18n( format, postDate === 'created' ? post.date_gmt : post.modified_gmt ) )
+                                                    ? (
+                                                        (
+                                                            postDate === 'created' ? __( 'Posted on', 'advanced-gutenberg' ) : __( 'Updated on', 'advanced-gutenberg' )
+                                                        ) + ' ' + dateI18n( format, postDate === 'created' ? post.date_gmt : post.modified_gmt )
+                                                    )
                                                     : ( postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified )
                                                 }
                                                 </span>
@@ -999,7 +1017,7 @@ import AdvQueryControls from './query-controls.jsx';
 
     registerBlockType( 'advgb/recent-posts', {
         title: __( 'Content Display', 'advanced-gutenberg' ),
-        description: __( 'Display your posts in grid, list, slider, frontpage and newspaper view with beautiful layouts, styles and several settings and filters. This block was previously called "Recent Posts".', 'advanced-gutenberg' ),
+        description: __( 'Displays your content in grid, list, slider, frontpage, and newspaper views with beautiful layouts and styles.', 'advanced-gutenberg' ),
         icon: {
             src: advRecentPostsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
