@@ -1058,7 +1058,7 @@ import AdvQueryControls from './query-controls.jsx';
             }, ( value ) => !isUndefined( value ) && !(isArray(value) && (isNull(value) || value.length === 0)) );
 
             // generate posts without filters for post suggestions
-            const postSuggestionsQuery = omit( recentPostsQuery, [ 'exclude', 'categories', 'tags' ] );
+            const postSuggestionsQuery = omit( recentPostsQuery, [ 'exclude', 'categories', 'tags', 'per_page' ] );
             let updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
 
             return {

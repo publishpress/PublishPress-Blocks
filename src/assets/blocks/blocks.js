@@ -24503,7 +24503,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             });
 
             // generate posts without filters for post suggestions
-            var postSuggestionsQuery = omit(recentPostsQuery, ['exclude', 'categories', 'tags']);
+            var postSuggestionsQuery = omit(recentPostsQuery, ['exclude', 'categories', 'tags', 'per_page']);
             var updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
 
             return {

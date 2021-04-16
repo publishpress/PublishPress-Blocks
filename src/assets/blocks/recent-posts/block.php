@@ -141,6 +141,7 @@ function advgbRenderBlockRecentPosts($attributes)
 
             if ( advgbCheckImageStatus( $attributes, $key ) ) {
                 $postThumb = '<img src="' . $rp_default_thumb['url'] . '" />';
+				$postThumbCaption = '';
                 if ($postThumbID) {
                     $postThumb = wp_get_attachment_image($postThumbID, 'large');
                     if( get_the_post_thumbnail_caption( $post->ID ) && $attributes['displayFeaturedImageCaption']) {
@@ -863,11 +864,16 @@ function advgbCheckImageStatus( $attributes, $key )  {
  * @return array
  */
 function advgbGetPostIdsForTitles( $titles, $post_type ) {
-	$ids = array();
+	global $wpdb;
 	if ( ! empty( $titles ) ) {
-		return get_posts( array( 'post_name__in' => $titles, 'post_type' => $post_type, 'fields' => 'ids' ) );
+		// don't use post_name__in here because the title may be different from the slug
+		$placeholders = implode( ',', array_fill(0, count($titles), '%s') );
+		$params = $titles;
+		$params[] = $post_type;
+		$query = $wpdb->prepare( "SELECT DISTINCT ID FROM {$wpdb->posts} WHERE post_title IN ($placeholders) AND post_type = '%s'", $params);
+		return $wpdb->get_col( $query );
 	}
-	return $ids;
+	return array();
 }
 
 /**
