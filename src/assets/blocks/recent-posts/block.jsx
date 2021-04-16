@@ -723,9 +723,9 @@ import AdvQueryControls from './query-controls.jsx';
             const blockClassName = [
                 'advgb-recent-posts-block',
                 this.state.updating && 'loading',
-                ( ( postView === 'grid' ) || ( postView === 'masonry' ) ) && 'columns-' + columns,
                 postView && postView + '-view',
-                postView === 'masonry' && 'tbl-' + columnsT + ' ' + 'mbl-' + columnsM,
+                ( ( postView === 'grid' ) || ( postView === 'masonry' ) ) && 'columns-' + columns,
+                postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM,
                 postView === 'slider' && sliderStyle && 'style-' + sliderStyle,
                 postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout,
                 postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT,
