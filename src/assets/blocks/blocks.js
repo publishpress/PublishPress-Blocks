@@ -23810,6 +23810,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             })
                         )
                     ),
+                    postView === 'masonry' && React.createElement(
+                        PanelBody,
+                        { title: __('Masonry View Settings', 'advanced-gutenberg') },
+                        React.createElement(SelectControl, {
+                            label: __('Space between columns and rows', 'advanced-gutenberg'),
+                            value: gap,
+                            options: GAP_OPTIONS,
+                            onChange: function onChange(value) {
+                                return setAttributes({ gap: parseInt(value) });
+                            }
+                        })
+                    ),
                     React.createElement(
                         PanelBody,
                         { title: __('Post Settings', 'advanced-gutenberg') },
@@ -24098,7 +24110,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'masonry'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView && postView + '-view', (postView === 'grid' || postView === 'masonry') && 'columns-' + columns, postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM, postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, postView === 'frontpage' && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView && postView + '-view', (postView === 'grid' || postView === 'masonry') && 'columns-' + columns, postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM, postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, (postView === 'frontpage' || postView === 'masonry') && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout].filter(Boolean).join(' ');
 
                 var formats = __experimentalGetSettings().formats;
                 var format = postDate !== 'hide' ? displayTime ? formats.datetime : formats.date : '';

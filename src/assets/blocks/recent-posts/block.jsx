@@ -443,6 +443,17 @@ import AdvQueryControls from './query-controls.jsx';
                     </PanelBody>
                     }
 
+                    {postView === 'masonry' &&
+                    <PanelBody title={ __( 'Masonry View Settings', 'advanced-gutenberg' ) }>
+                        <SelectControl
+                            label={ __( 'Space between columns and rows', 'advanced-gutenberg' ) }
+                            value={ gap }
+                            options={ GAP_OPTIONS }
+                            onChange={ (value) => setAttributes( { gap: parseInt(value) } ) }
+                        />
+                    </PanelBody>
+                    }
+
                     <PanelBody title={ __( 'Post Settings', 'advanced-gutenberg' ) }>
                         <SelectControl
                             label={ __( 'Post Type', 'advanced-gutenberg' ) }
@@ -730,7 +741,7 @@ import AdvQueryControls from './query-controls.jsx';
                 postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout,
                 postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT,
                 postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM,
-                postView === 'frontpage' && gap && 'gap-' + gap,
+                ( ( postView === 'frontpage' ) || ( postView === 'masonry' ) ) && gap && 'gap-' + gap,
                 postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle,
                 postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout,
             ].filter( Boolean ).join( ' ' );
