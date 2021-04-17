@@ -107,8 +107,15 @@ function advgbRenderBlockRecentPosts($attributes)
             'order' => empty($attributes['order'])?'desc':$attributes['order'],
             'orderby' => $orderBy,
             'suppress_filters' => false,
-			'exclude' => $post_type === 'post' && isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ? $post->ID : 0,
         );
+
+	if( isset( $attributes['exclude'] ) && ! empty( $attributes['exclude'] ) ) {
+		$args['post__not_in'] = advgbGetPostIdsForTitles( $attributes['exclude'], $post_type );
+	}
+
+	if( isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ) {
+		$args['post__not_in'] = isset( $args['post__not_in'] ) ? array_merge( $args['post__not_in'], array( $post->ID ) ) : array( $post->ID );
+	}
 
 	// use tax for anything but pages...
 	if ( ! in_array( $post_type, array( 'page' ), true ) ) {
@@ -134,6 +141,7 @@ function advgbRenderBlockRecentPosts($attributes)
 
             if ( advgbCheckImageStatus( $attributes, $key ) ) {
                 $postThumb = '<img src="' . $rp_default_thumb['url'] . '" />';
+				$postThumbCaption = '';
                 if ($postThumbID) {
                     $postThumb = wp_get_attachment_image($postThumbID, 'large');
                     if( get_the_post_thumbnail_caption( $post->ID ) && $attributes['displayFeaturedImageCaption']) {
@@ -516,6 +524,12 @@ function advgbRegisterBlockRecentPosts()
             'textBeforeReadmore' => array(
                 'type' => 'string',
             ),
+            'exclude' => array(
+                'type' => 'array',
+                'items' => array(
+                    'type' => 'string'
+                )
+            ),
             'author' => array(
                 'type' => 'string',
             ),
@@ -729,11 +743,10 @@ function advgbGetCoauthors( $post ) {
 	if ( function_exists('get_multiple_authors') ){
 		$authors = get_multiple_authors( $post[ 'id' ] );
 		foreach ($authors as $user) {
-			$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( $user->ID );
-			if ( ! $author ) {
-				$author = MultipleAuthors\Classes\Objects\Author::get_by_term_id( $user->ID );
+			$author = advgbGetAuthorByID( $user->ID );
+			if ( $author ) {
+				$coauthors[] = array( 'link' => $author->__get('link'), 'display_name' => $author->__get('name'));
 			}
-			$coauthors[] = array( 'link' => $author->__get('link'), 'display_name' => $author->__get('name'));
 		}
 	}
     return $coauthors;
@@ -762,21 +775,14 @@ function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
 			$args['author'] = $attributes['author'];
 		} else {
 			$user_id = $attributes['author'];
-			$name = $user_id;
-			if ( intval( $user_id ) > -1 ) {
-				$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( $user_id );
-				$name = $author->__get( 'display_name' );
-			} else {
-				$author = MultipleAuthors\Classes\Objects\Author::get_by_term_id( $user_id );
-				$name = $author->__get( 'display_name' );
+			$author = advgbGetAuthorByID( $user_id );
+			if ( $author ) {
+				$args['meta_query'][] = array(
+					'key' => 'ppma_authors_name',
+					'value' => $author->__get( 'display_name' ),
+					'compare' => 'LIKE',
+				);
 			}
-
-			$meta_query = array(
-				'key' => 'ppma_authors_name',
-				'value' => $name,
-				'compare' => 'LIKE',
-			);
-			$args['meta_query'][] = $meta_query;
 		}
 	}
 	return $args;
@@ -815,19 +821,14 @@ function advgbGetAuthorFilterREST( $args, $request ) {
 	if ( isset( $request['author'] ) && ! empty( $request['author'] ) && function_exists('get_multiple_authors') ) {
 			$author = $request['author'];
 			$user_id = reset( $author );
-			$name = $user_id;
-			if ( intval( $user_id ) > -1 ) {
-				$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( $user_id );
-				$name = $author->__get( 'display_name' );
-			} else {
-				$author = MultipleAuthors\Classes\Objects\Author::get_by_term_id( $user_id );
-				$name = $author->__get( 'display_name' );
+			$author = advgbGetAuthorByID( $user_id );
+			if ( $author ) {
+				$args['meta_key'] = 'ppma_authors_name';
+				$args['meta_value'] = $author->__get( 'display_name' );
+				$args['meta_compare'] = 'LIKE';
+				unset( $args['author'] );
+				unset( $args['author__in'] );
 			}
-			$args['meta_key'] = 'ppma_authors_name';
-			$args['meta_value'] = $name;
-			$args['meta_compare'] = 'LIKE';
-			unset( $args['author'] );
-			unset( $args['author__in'] );
 	}
 	return $args;
 }
@@ -868,6 +869,24 @@ function advgbCheckImageStatus( $attributes, $key )  {
 }
 
 /**
+ * Returns post ids corresponding to post titles.
+ *
+ * @return array
+ */
+function advgbGetPostIdsForTitles( $titles, $post_type ) {
+	global $wpdb;
+	if ( ! empty( $titles ) ) {
+		// don't use post_name__in here because the title may be different from the slug
+		$placeholders = implode( ',', array_fill(0, count($titles), '%s') );
+		$params = $titles;
+		$params[] = $post_type;
+		$query = $wpdb->prepare( "SELECT DISTINCT ID FROM {$wpdb->posts} WHERE post_title IN ($placeholders) AND post_type = '%s'", $params);
+		return $wpdb->get_col( $query );
+	}
+	return array();
+}
+
+/**
  * Returns all valid authors (including those defined by PublishPress Authors plugin).
  *
  * @return array
@@ -892,4 +911,25 @@ function advgbGetAllAuthors( WP_REST_Request $request ) {
 		}
 	}
 	return array_values( $authors );
+}
+
+/**
+ * Wrapper method to fetch an author on the basis of it's ID.
+ *
+ * This ID can either be the WP_User ID (positive integer) or guest author ID (negative integer).
+ * 
+ * @return Author|false
+ */
+function advgbGetAuthorByID( $id ) {
+	$author = false;
+	if ( method_exists( 'MultipleAuthors\Classes\Objects\Author', 'get_by_id' ) ) {
+		$author = MultipleAuthors\Classes\Objects\Author::get_by_id( $id );
+	} else {
+		if ( intval( $id ) > -1 ) {
+			$author = MultipleAuthors\Classes\Objects\Author::get_by_user_id( $id );
+		} else {
+			$author = MultipleAuthors\Classes\Objects\Author::get_by_term_id( $id );
+		}
+	}
+	return $author;
 }

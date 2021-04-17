@@ -2,7 +2,7 @@
 Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
-Tested up to: 5.7
+Tested up to: 5.7.1
 Stable tag: 2.6.1b1
 Requires PHP: 5.6
 License: GPLv2 or later
