@@ -478,7 +478,6 @@ import AdvQueryControls from './query-controls.jsx';
                         />
                     </PanelBody>
                     }
-
                     <PanelBody title={ __( 'Post Settings', 'advanced-gutenberg' ) }>
                         <SelectControl
                             label={ __( 'Post Type', 'advanced-gutenberg' ) }
@@ -501,7 +500,6 @@ import AdvQueryControls from './query-controls.jsx';
                             onNumberOfItemsChange={ (value) => setAttributes( { numberOfPosts: value } ) }
                         />
                     </PanelBody>
-
                     <PanelBody title={ __( 'Filters', 'advanced-gutenberg' ) }>
                         { postType === 'post' &&
                             <FormTokenField
