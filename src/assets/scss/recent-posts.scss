@@ -734,6 +734,7 @@
     .advgb-recent-posts {
       column-gap: 0;
       width: 100%;
+      box-sizing: content-box;
 
       .advgb-recent-post {
         box-shadow: 0px 5px 7px 1px rgba(0,10,20,0.15);
@@ -742,6 +743,7 @@
         display: inline-block;
         width: 100%;
         transition: all 0.2s ease-in-out;
+        box-sizing: border-box;
 
         .advgb-post-thumbnail {
           width: 100%;
@@ -759,7 +761,7 @@
           width: 100%;
           padding: 20px;
           margin: 0;
-          overflow-wrap: break-word;
+          word-break: break-word;
 
           .advgb-post-info {
             font-size: 0.8em;
