@@ -478,7 +478,6 @@ import AdvQueryControls from './query-controls.jsx';
                         />
                     </PanelBody>
                     }
-
                     <PanelBody title={ __( 'Post Settings', 'advanced-gutenberg' ) }>
                         <SelectControl
                             label={ __( 'Post Type', 'advanced-gutenberg' ) }
@@ -500,6 +499,8 @@ import AdvQueryControls from './query-controls.jsx';
                             onAuthorChange={ ( value ) => setAttributes( { author: value } ) }
                             onNumberOfItemsChange={ (value) => setAttributes( { numberOfPosts: value } ) }
                         />
+                    </PanelBody>
+                    <PanelBody title={ __( 'Filters', 'advanced-gutenberg' ) }>
                         { postType === 'post' &&
                             <FormTokenField
                                 multiple
@@ -513,7 +514,24 @@ import AdvQueryControls from './query-controls.jsx';
                                 }
                             />
                         }
+                        {isInPost && postType === 'post' &&
+                        <ToggleControl
+                            label={ __( 'Exclude current post', 'advanced-gutenberg' ) }
+                            help={ __( 'If this post is listed in the block, you can exclude it.', 'advanced-gutenberg' ) }
+                            checked={ excludeCurrentPost }
+                            onChange={ () => setAttributes( { excludeCurrentPost: !excludeCurrentPost } ) }
+                        />
+                        }
+                        <FormTokenField
+                            multiple
+                            suggestions={ postSuggestions }
+                            value={ exclude }
+                            label={ __( 'Exclude these posts', 'advanced-gutenberg' ) }
+                            placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
+                            onChange={ ( value ) => this.selectPostByTitle( value, 'exclude') }
+                        />
                     </PanelBody>
+
                     <PanelBody title={ __( 'Display Settings', 'advanced-gutenberg' ) }>
                         { ( ( postView === 'grid' ) || ( postView === 'masonry' ) ) &&
                         <RangeControl
@@ -670,22 +688,6 @@ import AdvQueryControls from './query-controls.jsx';
                             onChange={ ( value ) => setAttributes( { postTextExcerptLength: value } ) }
                         />
                         }
-                        {isInPost && postType === 'post' &&
-                        <ToggleControl
-                            label={ __( 'Exclude current post', 'advanced-gutenberg' ) }
-                            help={ __( 'If this post is listed in the block, you can exclude it.', 'advanced-gutenberg' ) }
-                            checked={ excludeCurrentPost }
-                            onChange={ () => setAttributes( { excludeCurrentPost: !excludeCurrentPost } ) }
-                        />
-                        }
-                        <FormTokenField
-                            multiple
-                            suggestions={ postSuggestions }
-                            value={ exclude }
-                            label={ __( 'Exclude these posts', 'advanced-gutenberg' ) }
-                            placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
-                            onChange={ ( value ) => this.selectPostByTitle( value, 'exclude') }
-                        />
                         <TextareaControl
                             label={ __( 'Text after title', 'advanced-gutenberg' ) }
                             help={ __( 'Include text/HTML after title', 'advanced-gutenberg' ) }
