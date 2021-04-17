@@ -165,6 +165,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: "Content Display" as new name for Recent Posts block
   * Add: "Posted on" and "Updated on" labels before modified date
   * Add: Caption support to Content Display block
+  * Add: Exclusion support to Content Display block
   * Add: Masonry view with responsive support to Content Display block
   * Fix: Load dynamic block's CSS through wp_add_inline_style function
   * Remove: "ADVGB" from Content Display and WooProducts blocks when loading in editor
