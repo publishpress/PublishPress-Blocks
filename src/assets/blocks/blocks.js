@@ -23885,7 +23885,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onNumberOfItemsChange: function onNumberOfItemsChange(value) {
                                 return setAttributes({ numberOfPosts: value });
                             }
-                        })),
+                        }))
+                    ),
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Filters', 'advanced-gutenberg') },
                         postType === 'post' && React.createElement(FormTokenField, {
                             multiple: true,
                             suggestions: tagsList,
@@ -23894,6 +23898,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             placeholder: __('Type a tag', 'advanced-gutenberg'),
                             onChange: function onChange(value) {
                                 _this3.selectTags(value);
+                            }
+                        }),
+                        isInPost && postType === 'post' && React.createElement(ToggleControl, {
+                            label: __('Exclude current post', 'advanced-gutenberg'),
+                            help: __('If this post is listed in the block, you can exclude it.', 'advanced-gutenberg'),
+                            checked: excludeCurrentPost,
+                            onChange: function onChange() {
+                                return setAttributes({ excludeCurrentPost: !excludeCurrentPost });
+                            }
+                        }),
+                        React.createElement(FormTokenField, {
+                            multiple: true,
+                            suggestions: postSuggestions,
+                            value: exclude,
+                            label: __('Exclude these posts', 'advanced-gutenberg'),
+                            placeholder: __('Search by title', 'advanced-gutenberg'),
+                            onChange: function onChange(value) {
+                                return _this3.selectPostByTitle(value, 'exclude');
                             }
                         })
                     ),
@@ -24051,24 +24073,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             value: postTextExcerptLength,
                             onChange: function onChange(value) {
                                 return setAttributes({ postTextExcerptLength: value });
-                            }
-                        }),
-                        isInPost && postType === 'post' && React.createElement(ToggleControl, {
-                            label: __('Exclude current post', 'advanced-gutenberg'),
-                            help: __('If this post is listed in the block, you can exclude it.', 'advanced-gutenberg'),
-                            checked: excludeCurrentPost,
-                            onChange: function onChange() {
-                                return setAttributes({ excludeCurrentPost: !excludeCurrentPost });
-                            }
-                        }),
-                        React.createElement(FormTokenField, {
-                            multiple: true,
-                            suggestions: postSuggestions,
-                            value: exclude,
-                            label: __('Exclude these posts', 'advanced-gutenberg'),
-                            placeholder: __('Search by title', 'advanced-gutenberg'),
-                            onChange: function onChange(value) {
-                                return _this3.selectPostByTitle(value, 'exclude');
                             }
                         }),
                         React.createElement(TextareaControl, {
