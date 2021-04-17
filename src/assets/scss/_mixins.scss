@@ -64,7 +64,10 @@
     }
 }
 
-/* Columns Manager */
+/*
+ * Columns Manager
+ * $prefix: 'tbl-' for tablet, 'mbl-' for mobile
+ */
 @mixin colums-width-variants($prefix: '') {
 
     // 2 Columns layout variants
@@ -795,5 +798,20 @@
 
   } else {
     // Nothing to do here
+  }
+}
+
+/*
+ * Recent Posts - Masonry view
+ * $prefix: 'tbl-' for tablet, 'mbl-' for mobile
+ */
+@mixin recent-posts-ms($prefix: '') {
+
+  // Columns 1 to 4
+  @for $i from 1 through 4 {
+
+    &.#{$prefix}columns-#{$i} .advgb-recent-posts {
+      columns: #{$i};
+    }
   }
 }

@@ -266,6 +266,8 @@ import AdvQueryControls from './query-controls.jsx';
                 orderBy,
                 numberOfPosts,
                 columns,
+                columnsT,
+                columnsM,
                 displayFeaturedImage,
                 displayFeaturedImageFor,
                 displayFeaturedImageCaption,
@@ -466,6 +468,17 @@ import AdvQueryControls from './query-controls.jsx';
                     </PanelBody>
                     }
 
+                    {postView === 'masonry' &&
+                    <PanelBody title={ __( 'Masonry View Settings', 'advanced-gutenberg' ) }>
+                        <SelectControl
+                            label={ __( 'Space between columns and rows', 'advanced-gutenberg' ) }
+                            value={ gap }
+                            options={ GAP_OPTIONS }
+                            onChange={ (value) => setAttributes( { gap: parseInt(value) } ) }
+                        />
+                    </PanelBody>
+                    }
+
                     <PanelBody title={ __( 'Post Settings', 'advanced-gutenberg' ) }>
                         <SelectControl
                             label={ __( 'Post Type', 'advanced-gutenberg' ) }
@@ -502,7 +515,7 @@ import AdvQueryControls from './query-controls.jsx';
                         }
                     </PanelBody>
                     <PanelBody title={ __( 'Display Settings', 'advanced-gutenberg' ) }>
-                        {postView === 'grid' &&
+                        { ( ( postView === 'grid' ) || ( postView === 'masonry' ) ) &&
                         <RangeControl
                             label={ __( 'Columns', 'advanced-gutenberg' ) }
                             value={ columns }
@@ -510,6 +523,24 @@ import AdvQueryControls from './query-controls.jsx';
                             max={ 4 }
                             onChange={ (value) => setAttributes( { columns: value } ) }
                         />
+                        }
+                        { postView === 'masonry' &&
+                        <Fragment>
+                            <RangeControl
+                                label={ __( 'Columns (Tablet)', 'advanced-gutenberg' ) }
+                                value={ columnsT }
+                                min={ 1 }
+                                max={ 4 }
+                                onChange={ (value) => setAttributes( { columnsT: value } ) }
+                            />
+                            <RangeControl
+                                label={ __( 'Columns (Mobile)', 'advanced-gutenberg' ) }
+                                value={ columnsM }
+                                min={ 1 }
+                                max={ 4 }
+                                onChange={ (value) => setAttributes( { columnsM: value } ) }
+                            />
+                        </Fragment>
                         }
                         <ToggleControl
                             label={ __( 'Display Featured Image', 'advanced-gutenberg' ) }
@@ -725,23 +756,26 @@ import AdvQueryControls from './query-controls.jsx';
                     onClick: () => setAttributes( { postView: 'newspaper' } ),
                     isActive: postView === 'newspaper',
                 },
+                {
+                    icon: 'tagcloud',
+                    title: __( 'Masonry View', 'advanced-gutenberg' ),
+                    onClick: () => setAttributes( { postView: 'masonry' } ),
+                    isActive: postView === 'masonry',
+                },
             ];
 
             const blockClassName = [
                 'advgb-recent-posts-block',
                 this.state.updating && 'loading',
-                postView === 'grid' && 'columns-' + columns,
-                postView === 'grid' && 'grid-view',
-                postView === 'list' && 'list-view',
-                postView === 'slider' && 'slider-view',
+                postView && postView + '-view',
+                ( ( postView === 'grid' ) || ( postView === 'masonry' ) ) && 'columns-' + columns,
+                postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM,
                 postView === 'slider' && sliderStyle && 'style-' + sliderStyle,
-                postView === 'frontpage' && 'frontpage-view',
                 postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout,
                 postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT,
                 postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM,
-                postView === 'frontpage' && gap && 'gap-' + gap,
+                ( ( postView === 'frontpage' ) || ( postView === 'masonry' ) ) && gap && 'gap-' + gap,
                 postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle,
-                postView === 'newspaper' && 'newspaper-view',
                 postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout,
             ].filter( Boolean ).join( ' ' );
 

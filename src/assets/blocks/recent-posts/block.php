@@ -349,6 +349,8 @@ function advgbRenderBlockRecentPosts($attributes)
     } elseif ($attributes['postView'] === 'newspaper') {
         $blockClass = 'newspaper-view';
         $blockClass .= ' layout-' . $attributes['newspaperLayout'];
+    } elseif ($attributes['postView'] === 'masonry') {
+        $blockClass = 'masonry-view columns-' . $attributes['columns'] . ' tbl-columns-' . $attributes['columnsT'] . ' mbl-columns-' . $attributes['columnsM'] . ' gap-' . $attributes['gap'];
     }
 
     if (isset($attributes['className'])) {
@@ -408,6 +410,14 @@ function advgbRegisterBlockRecentPosts()
             'columns' => array(
                 'type' => 'number',
                 'default' => 2,
+            ),
+            'columnsT' => array(
+                'type' => 'number',
+                'default' => 2,
+            ),
+            'columnsM' => array(
+                'type' => 'number',
+                'default' => 1,
             ),
             'displayFeaturedImage' => array(
                 'type' => 'boolean',

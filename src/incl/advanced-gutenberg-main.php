@@ -1446,8 +1446,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_register_script(
                     'slick_js',
                     plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
-                    array('jquery')
+                    array('jquery'),
+                    ADVANCED_GUTENBERG_VERSION
                 );
+
                 $saved_settings = get_option('advgb_settings');
                 if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
                     wp_add_inline_style(
@@ -1531,7 +1533,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_register_script(
                 'slick_js',
                 plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
-                array('jquery')
+                array('jquery'),
+                ADVANCED_GUTENBERG_VERSION
             );
 
             $saved_settings = get_option('advgb_settings');
