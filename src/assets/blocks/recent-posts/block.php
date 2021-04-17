@@ -109,6 +109,10 @@ function advgbRenderBlockRecentPosts($attributes)
             'suppress_filters' => false,
         );
 
+	if( isset( $attributes['include'] ) && ! empty( $attributes['include'] ) ) {
+		$args['post__in'] = advgbGetPostIdsForTitles( $attributes['include'], $post_type );
+	}
+
 	if( isset( $attributes['exclude'] ) && ! empty( $attributes['exclude'] ) ) {
 		$args['post__not_in'] = advgbGetPostIdsForTitles( $attributes['exclude'], $post_type );
 	}
@@ -523,6 +527,12 @@ function advgbRegisterBlockRecentPosts()
             ),
             'textBeforeReadmore' => array(
                 'type' => 'string',
+            ),
+            'include' => array(
+                'type' => 'array',
+                'items' => array(
+                    'type' => 'string'
+                )
             ),
             'exclude' => array(
                 'type' => 'array',

@@ -249,6 +249,9 @@ import AdvQueryControls from './query-controls.jsx';
                 this.setState( { postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function(){
                     // the saved attribute will be called 'include'/'exclude' and contain post titles
                     // we have to convert them into post Ids when the component is loaded the first time
+                    if (!attributes.includeIds && attributes.include) {
+                            this.selectPostByTitle(attributes.include, 'include');
+                    }
                     if(!attributes.excludeIds && attributes.exclude){
                         this.selectPostByTitle( attributes.exclude, 'exclude' );
                     }
@@ -295,11 +298,14 @@ import AdvQueryControls from './query-controls.jsx';
                 displayCommentCount,
                 textAfterTitle,
                 textBeforeReadmore,
+                include,
                 exclude,
                 author: selectedAuthorId,
             } = attributes;
 
             let recentPosts = this.props.recentPosts;
+            // for some reason, 'include' causes duplicate posts to be returned
+            recentPosts = recentPostsList ? uniqWith( recentPostsList, isEqual ) : null;
 
             const isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
 
@@ -529,6 +535,14 @@ import AdvQueryControls from './query-controls.jsx';
                             label={ __( 'Exclude these posts', 'advanced-gutenberg' ) }
                             placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
                             onChange={ ( value ) => this.selectPostByTitle( value, 'exclude') }
+                        />
+                        <FormTokenField
+                            multiple
+                            suggestions={ postSuggestions }
+                            value={ include }
+                            label={ __( 'Include these posts', 'advanced-gutenberg' ) }
+                            placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
+                            onChange={ ( value ) => this.selectPostByTitle( value, 'include') }
                         />
                     </PanelBody>
 
@@ -1040,7 +1054,7 @@ import AdvQueryControls from './query-controls.jsx';
         }
 
         updatePostType(type) {
-            this.props.setAttributes( { postType: type, exclude: [], excludeIds: [], updatePostSuggestions: true } );
+            this.props.setAttributes( { postType: type, include: [], exclude: [], includeIds: [], excludeIds: [], updatePostSuggestions: true } );
         }
 
         getDisplayImageStatus(attributes, index) {
@@ -1077,7 +1091,7 @@ import AdvQueryControls from './query-controls.jsx';
         },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, excludeIds, author } = props.attributes;
+            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, excludeIds, includeIds, author } = props.attributes;
 
             const catIds = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
 
@@ -1089,12 +1103,13 @@ import AdvQueryControls from './query-controls.jsx';
                 orderby: orderBy,
                 per_page: numberOfPosts,
                 token: myToken,
+                include: includeIds,
                 exclude: excludeCurrentPost ? (excludeIds ? union( excludeIds, [ postId ] ) : postId ) : excludeIds,
                 author: author,
             }, ( value ) => !isUndefined( value ) && !(isArray(value) && (isNull(value) || value.length === 0)) );
 
             // generate posts without filters for post suggestions
-            const postSuggestionsQuery = omit( recentPostsQuery, [ 'exclude', 'categories', 'tags', 'per_page' ] );
+            const postSuggestionsQuery = omit( recentPostsQuery, [ 'include', 'exclude', 'categories', 'tags', 'per_page' ] );
             let updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
 
             return {
