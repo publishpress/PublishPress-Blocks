@@ -755,6 +755,16 @@
           img {
             width: 100%;
           }
+
+          .advgb-post-caption {
+            margin: 0;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            padding: 10px;
+          }
         }
 
         .advgb-post-wrapper {
