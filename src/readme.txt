@@ -169,6 +169,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Masonry view with responsive support to Content Display block
   * Add: Filters panel to group category, tags, author and exclusion settings for Content Display block
   * Fix: Load dynamic block's CSS through wp_add_inline_style function
+  * Fix: Background for Frontapage view's Boxed style for Content Display block
   * Remove: "ADVGB" from Content Display and WooProducts blocks when loading in editor
 
 = 2.6.0 =
