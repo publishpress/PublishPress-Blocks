@@ -23415,15 +23415,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
     var advRecentPostsBlockIcon = React.createElement(
-        "svg",
-        { width: "20", height: "20", viewBox: "2 2 22 22" },
-        React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
-        React.createElement("rect", { x: "13", y: "7.5", width: "5", height: "2" }),
-        React.createElement("rect", { x: "13", y: "14.5", width: "5", height: "2" }),
-        React.createElement("path", { d: "M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,19H5V5h14V19z" }),
-        React.createElement("path", { d: "M11,6H6v5h5V6z M10,10H7V7h3V10z" }),
-        React.createElement("path", { d: "M11,13H6v5h5V13z M10,17H7v-3h3V17z" })
+        'svg',
+        { width: '20', height: '20', viewBox: '2 2 22 22' },
+        React.createElement('path', { fill: 'none', d: 'M0,0h24v24H0V0z' }),
+        React.createElement('rect', { x: '13', y: '7.5', width: '5', height: '2' }),
+        React.createElement('rect', { x: '13', y: '14.5', width: '5', height: '2' }),
+        React.createElement('path', { d: 'M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,19H5V5h14V19z' }),
+        React.createElement('path', { d: 'M11,6H6v5h5V6z M10,10H7V7h3V10z' }),
+        React.createElement('path', { d: 'M11,13H6v5h5V13z M10,17H7v-3h3V17z' })
     );
+
+    var MAX_CATEGORIES_SUGGESTIONS = 20;
 
     var previewImageData = 'data:image/png;base64,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';
 
@@ -23470,7 +23472,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(RecentPostsEdit, [{
-            key: "componentWillMount",
+            key: 'componentWillMount',
             value: function componentWillMount() {
                 var _this2 = this;
 
@@ -23487,7 +23489,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
-                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                    if ((typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
                         Object.keys(currentBlockConfig).map(function (attribute) {
                             if (typeof attributes[attribute] === 'boolean') {
                                 attributes[attribute] = !!currentBlockConfig[attribute];
@@ -23553,7 +23555,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
         }, {
-            key: "componentWillUpdate",
+            key: 'componentWillUpdate',
             value: function componentWillUpdate(nextProps) {
                 var nextPosts = nextProps.recentPosts;
                 var nextView = nextProps.attributes.postView;
@@ -23565,8 +23567,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var $ = jQuery;
 
                 if (nextView !== 'slider' || nextPosts && recentPosts && nextPosts.length !== recentPosts.length) {
-                    $("#block-" + clientId + " .advgb-recent-posts.slick-initialized").slick('unslick');
-                    $("#block-" + clientId + " .advgb-recent-post").removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
+                    $('#block-' + clientId + ' .advgb-recent-posts.slick-initialized').slick('unslick');
+                    $('#block-' + clientId + ' .advgb-recent-post').removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
 
                     if (nextView === 'slider' && nextPosts && recentPosts && nextPosts.length !== recentPosts.length) {
                         if (!this.state.updating) {
@@ -23580,7 +23582,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: "componentDidUpdate",
+            key: 'componentDidUpdate',
             value: function componentDidUpdate(prevProps) {
                 var that = this;
                 var _props3 = this.props,
@@ -23594,7 +23596,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 if (postView === 'slider') {
                     initSlider = setTimeout(function () {
-                        $("#block-" + clientId + " .advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)").slick({
+                        $('#block-' + clientId + ' .advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)').slick({
                             dots: true,
                             adaptiveHeight: true
                         });
@@ -23604,7 +23606,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         }
                     }, 100);
                 } else {
-                    $("#block-" + clientId + " .advgb-recent-posts.slick-initialized").slick('unslick');
+                    $('#block-' + clientId + ' .advgb-recent-posts.slick-initialized').slick('unslick');
                 }
 
                 // this.state.updatePostSuggestions: corresponds to componentDidMount
@@ -23626,7 +23628,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: "render",
+            key: 'render',
             value: function render() {
                 var _this3 = this;
 
@@ -23713,13 +23715,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         PanelBody,
                         { title: __('Frontpage View Settings', 'advanced-gutenberg') },
                         React.createElement(
-                            "div",
-                            { className: "advgb-recent-posts-responsive-items" },
+                            'div',
+                            { className: 'advgb-recent-posts-responsive-items' },
                             ['desktop', 'tablet', 'mobile'].map(function (device, index) {
                                 var itemClasses = ["advgb-recent-posts-responsive-item", tabSelected === device && 'is-selected'].filter(Boolean).join(' ');
 
                                 return React.createElement(
-                                    "div",
+                                    'div',
                                     { className: itemClasses,
                                         key: index,
                                         onClick: function onClick() {
@@ -23731,8 +23733,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             })
                         ),
                         React.createElement(
-                            "div",
-                            { className: "advgb-recent-posts-select-layout on-inspector" },
+                            'div',
+                            { className: 'advgb-recent-posts-select-layout on-inspector' },
                             tabSelected === 'desktop' && FRONTPAGE_LAYOUTS.map(function (layout, index) {
                                 var layoutClasses = ['advgb-recent-posts-layout', tabSelected === 'desktop' && layout.layout === frontpageLayout && 'is-selected'].filter(Boolean).join(' ');
 
@@ -23740,7 +23742,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     Tooltip,
                                     { text: layout.title, key: index },
                                     React.createElement(
-                                        "div",
+                                        'div',
                                         {
                                             className: layoutClasses,
                                             onClick: function onClick() {
@@ -23748,7 +23750,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 _this3.setState({ random: Math.random() });
                                             }
                                         },
-                                        React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
+                                        React.createElement('img', { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
                                             alt: layout.layout
                                         })
                                     )
@@ -23761,14 +23763,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     Tooltip,
                                     { text: layout.title, key: index },
                                     React.createElement(
-                                        "div",
+                                        'div',
                                         { className: layoutClasses,
                                             onClick: function onClick() {
                                                 setAttributes(_defineProperty({}, 'frontpageLayout' + deviceLetter, layout.layout));
                                                 _this3.setState({ random: Math.random() });
                                             }
                                         },
-                                        React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
+                                        React.createElement('img', { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
                                             alt: layout.layout
                                         })
                                     )
@@ -23781,14 +23783,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     Tooltip,
                                     { text: layout.title, key: index },
                                     React.createElement(
-                                        "div",
+                                        'div',
                                         { className: layoutClasses,
                                             onClick: function onClick() {
                                                 setAttributes(_defineProperty({}, 'frontpageLayout' + deviceLetter, layout.layout));
                                                 _this3.setState({ random: Math.random() });
                                             }
                                         },
-                                        React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
+                                        React.createElement('img', { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
                                             alt: layout.layout
                                         })
                                     )
@@ -23816,8 +23818,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         PanelBody,
                         { title: __('Newspaper View Settings', 'advanced-gutenberg') },
                         React.createElement(
-                            "div",
-                            { className: "advgb-recent-posts-select-layout on-inspector" },
+                            'div',
+                            { className: 'advgb-recent-posts-select-layout on-inspector' },
                             NEWSPAPER_LAYOUTS.map(function (layout, index) {
                                 var layoutClasses = ['advgb-recent-posts-layout', layout.layout === newspaperLayout && 'is-selected'].filter(Boolean).join(' ');
 
@@ -23825,7 +23827,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     Tooltip,
                                     { text: layout.title, key: index },
                                     React.createElement(
-                                        "div",
+                                        'div',
                                         {
                                             className: layoutClasses,
                                             onClick: function onClick() {
@@ -23835,7 +23837,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 _this3.setState({ random: Math.random() });
                                             }
                                         },
-                                        React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
+                                        React.createElement('img', { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
                                             alt: layout.layout
                                         })
                                     )
@@ -23866,21 +23868,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return _this3.updatePostType(value);
                             }
                         }),
-                        React.createElement(_queryControls2.default, _extends({ order: order, orderBy: orderBy, authorList: authorList, postType: postType, selectedAuthorId: selectedAuthorId }, {
-                            categorySuggestions: postType === 'post' ? categoriesList : null,
-                            selectedCategories: categories,
+                        React.createElement(_queryControls2.default, _extends({ order: order, orderBy: orderBy, postType: postType }, {
                             numberOfItems: numberOfPosts,
                             onOrderChange: function onOrderChange(value) {
                                 return setAttributes({ order: value });
                             },
                             onOrderByChange: function onOrderByChange(value) {
                                 return setAttributes({ orderBy: value });
-                            },
-                            onCategoryChange: function onCategoryChange(value) {
-                                _this3.selectCategories(value);
-                            },
-                            onAuthorChange: function onAuthorChange(value) {
-                                return setAttributes({ author: value });
                             },
                             onNumberOfItemsChange: function onNumberOfItemsChange(value) {
                                 return setAttributes({ numberOfPosts: value });
@@ -23891,6 +23885,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         PanelBody,
                         { title: __('Filters', 'advanced-gutenberg') },
                         postType === 'post' && React.createElement(FormTokenField, {
+                            key: 'query-controls-categories-select',
+                            label: __('Show content with these Categories', 'advanced-gutenberg'),
+                            value: categories && categories.map(function (item) {
+                                return {
+                                    id: item.id,
+                                    value: item.name || item.value
+                                };
+                            }),
+                            suggestions: Object.keys(categoriesList),
+                            onChange: function onChange(value) {
+                                _this3.selectCategories(value);
+                            },
+                            maxSuggestions: MAX_CATEGORIES_SUGGESTIONS
+                        }),
+                        postType === 'post' && React.createElement(FormTokenField, {
                             multiple: true,
                             suggestions: tagsList,
                             value: tags,
@@ -23898,6 +23907,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             placeholder: __('Type a tag', 'advanced-gutenberg'),
                             onChange: function onChange(value) {
                                 _this3.selectTags(value);
+                            }
+                        }),
+                        React.createElement(_queryControls.AuthorSelect, {
+                            key: 'query-controls-author-select',
+                            authorList: authorList,
+                            label: __('Author', 'advanced-gutenberg'),
+                            noOptionLabel: __('All', 'advanced-gutenberg'),
+                            selectedAuthorId: selectedAuthorId,
+                            onChange: function onChange(value) {
+                                return setAttributes({ author: value });
                             }
                         }),
                         isInPost && postType === 'post' && React.createElement(ToggleControl, {
@@ -23966,7 +23985,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onChange: function onChange(value) {
                                 setAttributes({ displayFeaturedImageFor: value });
                             },
-                            className: "advgb-child-select"
+                            className: 'advgb-child-select'
                         }),
                         displayFeaturedImage && React.createElement(ToggleControl, {
                             label: __('Display Caption', 'advanced-gutenberg'),
@@ -23974,7 +23993,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onChange: function onChange() {
                                 return setAttributes({ displayFeaturedImageCaption: !displayFeaturedImageCaption });
                             },
-                            className: "advgb-child-toggle"
+                            className: 'advgb-child-toggle'
                         }),
                         React.createElement(ToggleControl, {
                             label: __('Display Post Author', 'advanced-gutenberg'),
@@ -24098,7 +24117,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // If no posts found we show this notice
                 if (!hasPosts) {
-                    return isPreview ? React.createElement("img", { alt: __('Content Display', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
+                    return isPreview ? React.createElement('img', { alt: __('Content Display', 'advanced-gutenberg'), width: '100%', src: previewImageData }) : React.createElement(
                         Fragment,
                         null,
                         inspectorControls,
@@ -24162,7 +24181,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var formats = __experimentalGetSettings().formats;
                 var format = postDate !== 'hide' ? displayTime ? formats.datetime : formats.date : '';
 
-                return isPreview ? React.createElement("img", { alt: __('Content Display', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
+                return isPreview ? React.createElement('img', { alt: __('Content Display', 'advanced-gutenberg'), width: '100%', src: previewImageData }) : React.createElement(
                     Fragment,
                     null,
                     inspectorControls,
@@ -24174,7 +24193,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ToolbarGroup,
                             null,
                             React.createElement(ToolbarButton, {
-                                icon: "update",
+                                icon: 'update',
                                 label: __('Refresh', 'advanced-gutenberg'),
                                 onClick: function onClick() {
                                     return setAttributes({ myToken: Math.floor(Math.random() * Math.floor(999)) });
@@ -24183,111 +24202,111 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         )
                     ),
                     React.createElement(
-                        "div",
+                        'div',
                         { className: blockClassName },
-                        this.state.updating && React.createElement("div", { className: "advgb-recent-posts-loading" }),
+                        this.state.updating && React.createElement('div', { className: 'advgb-recent-posts-loading' }),
                         React.createElement(
-                            "div",
-                            { className: "advgb-recent-posts" },
+                            'div',
+                            { className: 'advgb-recent-posts' },
                             recentPosts.map(function (post, index) {
                                 return React.createElement(
-                                    "article",
+                                    'article',
                                     { key: index,
-                                        className: "advgb-recent-post " + (_this3.getDisplayImageStatus(attributes, index) ? "" : "advgb-recent-post--no-image")
+                                        className: 'advgb-recent-post ' + (_this3.getDisplayImageStatus(attributes, index) ? "" : "advgb-recent-post--no-image")
                                     },
                                     function () {
                                         if (_this3.getDisplayImageStatus(attributes, index)) {
                                             return React.createElement(
-                                                "div",
-                                                { className: "advgb-post-thumbnail" },
+                                                'div',
+                                                { className: 'advgb-post-thumbnail' },
                                                 React.createElement(
-                                                    "a",
-                                                    { href: post.link, target: "_blank" },
-                                                    React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') }),
+                                                    'a',
+                                                    { href: post.link, target: '_blank' },
+                                                    React.createElement('img', { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') }),
                                                     displayFeaturedImageCaption && post.featured_img_caption.length > 0 && React.createElement(
-                                                        "span",
-                                                        { "class": "advgb-post-caption" },
+                                                        'span',
+                                                        { 'class': 'advgb-post-caption' },
                                                         post.featured_img_caption
                                                     )
                                                 )
                                             );
                                         } else if (postView === 'frontpage' && frontpageStyle === 'headline' || postView === 'slider' && sliderStyle === 'headline') {
                                             return React.createElement(
-                                                "div",
-                                                { className: "advgb-post-thumbnail advgb-post-thumbnail-no-image" },
-                                                React.createElement("a", { href: post.link, target: "_blank" })
+                                                'div',
+                                                { className: 'advgb-post-thumbnail advgb-post-thumbnail-no-image' },
+                                                React.createElement('a', { href: post.link, target: '_blank' })
                                             );
                                         } else {
                                             {/* Nothing to do here */}
                                         }
                                     }(),
                                     React.createElement(
-                                        "div",
-                                        { className: "advgb-post-wrapper" },
+                                        'div',
+                                        { className: 'advgb-post-wrapper' },
                                         React.createElement(
-                                            "h2",
-                                            { className: "advgb-post-title" },
+                                            'h2',
+                                            { className: 'advgb-post-title' },
                                             React.createElement(
-                                                "a",
-                                                { href: post.link, target: "_blank" },
+                                                'a',
+                                                { href: post.link, target: '_blank' },
                                                 decodeEntities(post.title.rendered)
                                             )
                                         ),
                                         React.createElement(
                                             RawHTML,
-                                            { className: "advgb-text-after-title" },
+                                            { className: 'advgb-text-after-title' },
                                             textAfterTitle
                                         ),
                                         React.createElement(
-                                            "div",
-                                            { className: "advgb-post-info" },
+                                            'div',
+                                            { className: 'advgb-post-info' },
                                             displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map(function (coauthor, coauthor_indx) {
                                                 return React.createElement(
                                                     Fragment,
                                                     null,
                                                     React.createElement(
-                                                        "a",
+                                                        'a',
                                                         { href: coauthor.link,
-                                                            target: "_blank",
-                                                            className: "advgb-post-author"
+                                                            target: '_blank',
+                                                            className: 'advgb-post-author'
                                                         },
                                                         coauthor.display_name
                                                     ),
                                                     coauthor_indx < post.coauthors.length - 1 && React.createElement(
-                                                        "span",
+                                                        'span',
                                                         null,
-                                                        ", "
+                                                        ', '
                                                     )
                                                 );
                                             }),
                                             displayAuthor && (!post.coauthors || post.coauthors.length === 0) && React.createElement(
-                                                "a",
+                                                'a',
                                                 { href: post.author_meta.author_link,
-                                                    target: "_blank",
-                                                    className: "advgb-post-author"
+                                                    target: '_blank',
+                                                    className: 'advgb-post-author'
                                                 },
                                                 post.author_meta.display_name
                                             ),
                                             postDate !== 'hide' && React.createElement(
-                                                "span",
-                                                { className: "advgb-post-datetime" },
+                                                'span',
+                                                { className: 'advgb-post-datetime' },
                                                 postDateFormat === 'absolute' ? (postDate === 'created' ? __('Posted on', 'advanced-gutenberg') : __('Updated on', 'advanced-gutenberg')) + ' ' + dateI18n(format, postDate === 'created' ? post.date_gmt : post.modified_gmt) : postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified
                                             ),
                                             postType === 'post' && displayCommentCount && React.createElement(
-                                                "span",
-                                                { className: "advgb-post-comments" },
-                                                React.createElement("span", { "class": "dashicons dashicons-admin-comments" }),
-                                                "(",
+                                                'span',
+                                                { className: 'advgb-post-comments' },
+                                                React.createElement('span', { 'class': 'dashicons dashicons-admin-comments' }),
+                                                '(',
                                                 post.comment_count,
-                                                ")"
+                                                ')'
                                             )
                                         ),
                                         React.createElement(
-                                            "div",
-                                            { className: "advgb-post-tax-info" },
+                                            'div',
+                                            { className: 'advgb-post-tax-info' },
                                             showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories && React.createElement(
-                                                "div",
-                                                { className: "advgb-post-tax advgb-post-category" },
+                                                'div',
+                                                { className: 'advgb-post-tax advgb-post-category' },
                                                 showCategories === 'show' && post.tax_additional.categories.unlinked.map(function (cat, index) {
                                                     return React.createElement(
                                                         RawHTML,
@@ -24304,8 +24323,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 })
                                             ),
                                             showTags !== 'hide' && post.tax_additional && post.tax_additional.tags && React.createElement(
-                                                "div",
-                                                { className: "advgb-post-tax advgb-post-tag" },
+                                                'div',
+                                                { className: 'advgb-post-tax advgb-post-tag' },
                                                 showTags === 'show' && post.tax_additional.tags.unlinked.map(function (tag, index) {
                                                     return React.createElement(
                                                         RawHTML,
@@ -24323,15 +24342,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             )
                                         ),
                                         React.createElement(
-                                            "div",
-                                            { className: "advgb-post-content" },
-                                            displayExcerpt && React.createElement("div", { className: "advgb-post-excerpt",
+                                            'div',
+                                            { className: 'advgb-post-content' },
+                                            displayExcerpt && React.createElement('div', { className: 'advgb-post-excerpt',
                                                 dangerouslySetInnerHTML: {
                                                     __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.raw
                                                 } }),
                                             React.createElement(
-                                                "div",
-                                                { className: "advgb-text-before-readmore" },
+                                                'div',
+                                                { className: 'advgb-text-before-readmore' },
                                                 React.createElement(
                                                     RawHTML,
                                                     null,
@@ -24339,11 +24358,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 )
                                             ),
                                             displayReadMore && React.createElement(
-                                                "div",
-                                                { className: "advgb-post-readmore" },
+                                                'div',
+                                                { className: 'advgb-post-readmore' },
                                                 React.createElement(
-                                                    "a",
-                                                    { href: post.link, target: "_blank" },
+                                                    'a',
+                                                    { href: post.link, target: '_blank' },
                                                     readMoreLbl ? readMoreLbl : __('Read More', 'advanced-gutenberg')
                                                 )
                                             )
@@ -24356,7 +24375,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 );
             }
         }, {
-            key: "selectCategories",
+            key: 'selectCategories',
             value: function selectCategories(tokens) {
                 var categoriesList = this.state.categoriesList;
 
@@ -24378,7 +24397,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
         }, {
-            key: "selectTags",
+            key: 'selectTags',
             value: function selectTags(tokens) {
                 var _state2 = this.state,
                     tagsList = _state2.tagsList,
@@ -24407,7 +24426,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
         }, {
-            key: "getTagIdsForTags",
+            key: 'getTagIdsForTags',
             value: function getTagIdsForTags(tags) {
                 var tagNameVsId = this.state.tagNameVsId;
 
@@ -24416,7 +24435,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
         }, {
-            key: "getCategoryForBkwrdCompat",
+            key: 'getCategoryForBkwrdCompat',
             value: function getCategoryForBkwrdCompat(id) {
                 var catIdVsName = this.state.catIdVsName;
 
@@ -24426,7 +24445,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 };
             }
         }, {
-            key: "selectPostByTitle",
+            key: 'selectPostByTitle',
             value: function selectPostByTitle(tokens, type) {
                 var _props$setAttributes;
 
@@ -24449,17 +24468,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.props.setAttributes((_props$setAttributes = {}, _defineProperty(_props$setAttributes, type, tokens), _defineProperty(_props$setAttributes, typeForQuery, ids), _props$setAttributes));
             }
         }, {
-            key: "updatePostType",
+            key: 'updatePostType',
             value: function updatePostType(type) {
                 this.props.setAttributes({ postType: type, exclude: [], excludeIds: [], updatePostSuggestions: true });
             }
         }, {
-            key: "getDisplayImageStatus",
+            key: 'getDisplayImageStatus',
             value: function getDisplayImageStatus(attributes, index) {
                 return attributes.displayFeaturedImage && (attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor);
             }
         }], [{
-            key: "extractContent",
+            key: 'extractContent',
             value: function extractContent(html, length) {
                 var span = document.createElement('span');
                 span.innerHTML = html;
@@ -24666,15 +24685,10 @@ function CategorySelect(_ref2) {
 
 var DEFAULT_MIN_ITEMS = 1;
 var DEFAULT_MAX_ITEMS = 100;
-var MAX_CATEGORIES_SUGGESTIONS = 20;
 
 function AdvQueryControls(_ref3) {
-    var authorList = _ref3.authorList,
-        selectedAuthorId = _ref3.selectedAuthorId,
-        categoriesList = _ref3.categoriesList,
+    var categoriesList = _ref3.categoriesList,
         selectedCategoryId = _ref3.selectedCategoryId,
-        categorySuggestions = _ref3.categorySuggestions,
-        selectedCategories = _ref3.selectedCategories,
         numberOfItems = _ref3.numberOfItems,
         order = _ref3.order,
         orderBy = _ref3.orderBy,
@@ -24684,7 +24698,6 @@ function AdvQueryControls(_ref3) {
         _ref3$minItems = _ref3.minItems,
         minItems = _ref3$minItems === undefined ? DEFAULT_MIN_ITEMS : _ref3$minItems,
         onCategoryChange = _ref3.onCategoryChange,
-        onAuthorChange = _ref3.onAuthorChange,
         onNumberOfItemsChange = _ref3.onNumberOfItemsChange,
         onOrderChange = _ref3.onOrderChange,
         onOrderByChange = _ref3.onOrderByChange;
@@ -24762,13 +24775,6 @@ function AdvQueryControls(_ref3) {
         noOptionLabel: __('All', 'advanced-gutenberg'),
         selectedCategoryId: selectedCategoryId,
         onChange: onCategoryChange
-    }), onAuthorChange && React.createElement(AuthorSelect, {
-        key: 'query-controls-author-select',
-        authorList: authorList,
-        label: __('Author', 'advanced-gutenberg'),
-        noOptionLabel: __('All', 'advanced-gutenberg'),
-        selectedAuthorId: selectedAuthorId,
-        onChange: onAuthorChange
     }), onNumberOfItemsChange && React.createElement(RangeControl, {
         key: 'query-controls-range-control',
         label: __('Number of items', 'advanced-gutenberg'),
@@ -24777,22 +24783,11 @@ function AdvQueryControls(_ref3) {
         min: minItems,
         max: maxItems,
         required: true
-    }), categorySuggestions && onCategoryChange && React.createElement(FormTokenField, {
-        key: 'query-controls-categories-select',
-        label: __('Show content with these Categories', 'advanced-gutenberg'),
-        value: selectedCategories && selectedCategories.map(function (item) {
-            return {
-                id: item.id,
-                value: item.name || item.value
-            };
-        }),
-        suggestions: Object.keys(categorySuggestions),
-        onChange: onCategoryChange,
-        maxSuggestions: MAX_CATEGORIES_SUGGESTIONS
     })];
 }
 
 exports.default = AdvQueryControls;
+exports.AuthorSelect = AuthorSelect;
 
 /***/ }),
 

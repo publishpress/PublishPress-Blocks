@@ -82,15 +82,10 @@ function CategorySelect({
 
 const DEFAULT_MIN_ITEMS = 1;
 const DEFAULT_MAX_ITEMS = 100;
-const MAX_CATEGORIES_SUGGESTIONS = 20;
 
 function AdvQueryControls({
-                              authorList,
-                              selectedAuthorId,
                               categoriesList,
                               selectedCategoryId,
-                              categorySuggestions,
-                              selectedCategories,
                               numberOfItems,
                               order,
                               orderBy,
@@ -98,7 +93,6 @@ function AdvQueryControls({
                               maxItems = DEFAULT_MAX_ITEMS,
                               minItems = DEFAULT_MIN_ITEMS,
                               onCategoryChange,
-                              onAuthorChange,
                               onNumberOfItemsChange,
                               onOrderChange,
                               onOrderByChange,
@@ -194,16 +188,6 @@ function AdvQueryControls({
                 onChange={onCategoryChange}
             />
         ),
-        onAuthorChange && (
-            <AuthorSelect
-                key="query-controls-author-select"
-                authorList={authorList}
-                label={__('Author', 'advanced-gutenberg')}
-                noOptionLabel={__('All', 'advanced-gutenberg')}
-                selectedAuthorId={selectedAuthorId}
-                onChange={onAuthorChange}
-            />
-        ),
         onNumberOfItemsChange && (
             <RangeControl
                 key="query-controls-range-control"
@@ -215,23 +199,8 @@ function AdvQueryControls({
                 required
             />
         ),
-        categorySuggestions && onCategoryChange && (
-            <FormTokenField
-                key="query-controls-categories-select"
-                label={__('Show content with these Categories', 'advanced-gutenberg')}
-                value={
-                    selectedCategories &&
-                    selectedCategories.map((item) => ({
-                        id: item.id,
-                        value: item.name || item.value,
-                    }))
-                }
-                suggestions={Object.keys(categorySuggestions)}
-                onChange={onCategoryChange}
-                maxSuggestions={MAX_CATEGORIES_SUGGESTIONS}
-            />
-        ),
     ];
 }
 
 export default AdvQueryControls;
+export { AuthorSelect };
