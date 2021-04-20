@@ -240,6 +240,16 @@ import { AuthorSelect } from './query-controls.jsx';
                 $(`#block-${clientId} .advgb-recent-posts.slick-initialized`).slick('unslick');
             }
 
+            if (postView === 'masonry') {
+                (function($) {
+                    $('.masonry-view .advgb-recent-posts').isotope({
+                        itemSelector: '.advgb-recent-post',
+                        percentPosition: true
+                    });
+                    console.log('Isotope!');
+                })(jQuery);
+            }
+
             // this.state.updatePostSuggestions: corresponds to componentDidMount
             if(postList && (updatePostSuggestions || this.state.updatePostSuggestions)){
                 let postSuggestions = [];
