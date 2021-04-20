@@ -23610,12 +23610,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 if (postView === 'masonry') {
-                    (function ($) {
-                        $('.masonry-view .advgb-recent-posts').isotope({
-                            itemSelector: '.advgb-recent-post',
-                            percentPosition: true
-                        });
-                    })(jQuery);
+                    var $masonry = $('#block-' + clientId + ' .masonry-view .advgb-recent-posts');
+                    $masonry.isotope({
+                        itemSelector: '.advgb-recent-post',
+                        percentPosition: true
+                    });
+                    $(window).resize(function () {
+                        $masonry.isotope();
+                    });
+                } else {
+                    var $masonry = $('#block-' + clientId + ' .advgb-recent-posts');
+                    $masonry.isotope();
+                    $masonry.isotope('destroy');
                 }
 
                 // this.state.updatePostSuggestions: corresponds to componentDidMount
