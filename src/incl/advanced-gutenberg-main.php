@@ -4662,8 +4662,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             percentPosition: true
                         });
                         $(window).resize(function(){
-							$(\'.masonry-view .advgb-recent-posts\').isotope();
-						});
+                            $(\'.masonry-view .advgb-recent-posts\').isotope();
+                        });
                     })(jQuery);
                 });');
             }
