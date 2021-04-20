@@ -4656,13 +4656,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if (strpos($content, 'advgb-recent-posts-block masonry-view') !== false) {
                 wp_enqueue_script('advgb_masonry_js');
                 wp_add_inline_script('advgb_masonry_js', 'document.addEventListener("DOMContentLoaded", function(){
-        			(function($) {
+                    (function($) {
                         $(\'.masonry-view .advgb-recent-posts\').isotope({
                             itemSelector: \'.advgb-recent-post\',
                             percentPosition: true
                         });
-        			})(jQuery);
-        		});');
+                    })(jQuery);
+                });');
             }
 
             if (strpos($content, 'advgb-woo-products slider-view') !== false) {
