@@ -224,7 +224,7 @@
 /* Recent Posts - Newspaper view, layout 1 */
 @mixin recent-posts-np-1($device: desktop) {
 
-  $border-color: #ddd;
+  $border-color: rgba(0,0,0,0.1);
 
   @if $device == desktop {
 
@@ -458,7 +458,7 @@
 /* Recent Posts - Newspaper view, layout 2 */
 @mixin recent-posts-np-2($device: desktop) {
 
-  $border-color: #ddd;
+  $border-color: rgba(0,0,0,0.1);
 
   @if $device == desktop {
 
@@ -594,7 +594,7 @@
 /* Recent Posts - Newspaper view, layout 3 */
 @mixin recent-posts-np-3($device: desktop) {
 
-  $border-color: #ddd;
+  $border-color: rgba(0,0,0,0.1);
 
   @if $device == desktop {
 
