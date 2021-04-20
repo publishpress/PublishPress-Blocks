@@ -747,6 +747,7 @@
 
         .advgb-post-thumbnail {
           width: 100%;
+          background: #f2f2f2;
 
           a {
             display: block;
@@ -757,13 +758,10 @@
           }
 
           .advgb-post-caption {
+            display: block;
+            padding: 10px 20px;
             margin: 0;
-            position: absolute;
-            width: 100%;
-            top: 0;
-            background: rgba(0,0,0,0.5);
-            color: #fff;
-            padding: 10px;
+            background: rgba(0,0,0,0.05);
           }
         }
 
