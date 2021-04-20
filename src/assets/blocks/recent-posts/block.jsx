@@ -246,7 +246,6 @@ import { AuthorSelect } from './query-controls.jsx';
                         itemSelector: '.advgb-recent-post',
                         percentPosition: true
                     });
-                    console.log('Isotope!');
                 })(jQuery);
             }
 

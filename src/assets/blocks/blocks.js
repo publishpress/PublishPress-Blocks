@@ -23615,7 +23615,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             itemSelector: '.advgb-recent-post',
                             percentPosition: true
                         });
-                        console.log('Isotope!');
                     })(jQuery);
                 }
 
