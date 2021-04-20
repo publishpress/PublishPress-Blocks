@@ -365,6 +365,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_script('jquery-ui-tabs');
             wp_enqueue_script('jquery-ui-sortable');
             wp_enqueue_script('slick_js');
+            wp_enqueue_script('advgb_masonry_js');
 
             // Include needed CSS styles
             wp_enqueue_style('material_icon_font');
@@ -1449,6 +1450,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array('jquery'),
                     ADVANCED_GUTENBERG_VERSION
                 );
+                wp_register_script(
+                    'advgb_masonry_js',
+                    plugins_url('assets/js/isotope.pkgd.min.js', dirname(__FILE__)),
+                    array('jquery'),
+                    ADVANCED_GUTENBERG_VERSION
+                );
 
                 $saved_settings = get_option('advgb_settings');
                 if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
@@ -1533,6 +1540,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_register_script(
                 'slick_js',
                 plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
+                array('jquery'),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'advgb_masonry_js',
+                plugins_url('assets/js/isotope.pkgd.min.js', dirname(__FILE__)),
                 array('jquery'),
                 ADVANCED_GUTENBERG_VERSION
             );
@@ -4637,6 +4650,18 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         dots: true,
                         adaptiveHeight: true,
                     })
+                });');
+            }
+
+            if (strpos($content, 'advgb-recent-posts-block masonry-view') !== false) {
+                wp_enqueue_script('advgb_masonry_js');
+                wp_add_inline_script('advgb_masonry_js', 'document.addEventListener("DOMContentLoaded", function(){
+                    (function($) {
+                        $(\'.masonry-view .advgb-recent-posts\').isotope({
+                            itemSelector: \'.advgb-recent-post\',
+                            percentPosition: true
+                        });
+                    })(jQuery);
                 });');
             }
 

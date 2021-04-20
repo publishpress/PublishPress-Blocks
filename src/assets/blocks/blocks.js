@@ -23609,6 +23609,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     $('#block-' + clientId + ' .advgb-recent-posts.slick-initialized').slick('unslick');
                 }
 
+                if (postView === 'masonry') {
+                    (function ($) {
+                        $('.masonry-view .advgb-recent-posts').isotope({
+                            itemSelector: '.advgb-recent-post',
+                            percentPosition: true
+                        });
+                    })(jQuery);
+                }
+
                 // this.state.updatePostSuggestions: corresponds to componentDidMount
                 if (postList && (updatePostSuggestions || this.state.updatePostSuggestions)) {
                     var postSuggestions = [];

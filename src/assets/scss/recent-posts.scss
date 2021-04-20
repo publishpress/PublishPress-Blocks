@@ -733,19 +733,17 @@
     @include recent-posts-ms();
 
     .advgb-recent-posts {
-      column-gap: 0;
       width: 100%;
-      box-sizing: content-box;
+      display: flex;
+      flex-wrap: wrap;
 
       .advgb-recent-post {
-        box-shadow: 0px 5px 7px 1px rgba(0,10,20,0.15);
-        padding: 0;
+        padding-top: 0;
+        padding-bottom: 0;
         margin: 0;
         display: inline-block;
-        width: 100%;
-        transition: all 0.2s ease-in-out;
         box-sizing: border-box;
-        background: #fff;
+        width: 25%;
 
         .advgb-post-thumbnail {
           width: 100%;
@@ -774,6 +772,7 @@
           padding: 20px;
           margin: 0;
           word-break: break-word;
+          background: #f2f2f2;
 
           .advgb-post-info {
             font-size: 0.8em;
@@ -809,13 +808,14 @@
     $gap_options: 5, 10, 20, 30, 40, 50;
 
     @each $gap_option in $gap_options {
-      &.gap-#{$gap_option} .advgb-recent-posts {
-        column-gap: #{$gap_option}px;
-        margin-left: -#{$gap_option}px;
-        margin-right: #{$gap_option}px;
+      &.gap-#{$gap_option} {
+        margin-left: -#{$gap_option/2}px;
+        margin-right: -#{$gap_option/2}px;
 
-        .advgb-recent-post {
-          margin: 0 #{$gap_option}px #{$gap_option}px #{$gap_option}px;
+        .advgb-recent-posts .advgb-recent-post {
+          padding-right: #{$gap_option/2}px;
+          padding-left: #{$gap_option/2}px;
+          margin-bottom: #{$gap_option}px;
         }
       }
     }

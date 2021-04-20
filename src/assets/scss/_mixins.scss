@@ -810,8 +810,8 @@
   // Columns 1 to 4
   @for $i from 1 through 4 {
 
-    &.#{$prefix}columns-#{$i} .advgb-recent-posts {
-      columns: #{$i};
+    &.#{$prefix}columns-#{$i} .advgb-recent-posts .advgb-recent-post {
+      width: #{percentage(1/$i)};
     }
   }
 }
