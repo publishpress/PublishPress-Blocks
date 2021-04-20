@@ -917,7 +917,7 @@ function advgbGetAllAuthors( WP_REST_Request $request ) {
  * Wrapper method to fetch an author on the basis of it's ID.
  *
  * This ID can either be the WP_User ID (positive integer) or guest author ID (negative integer).
- * 
+ *
  * @return Author|false
  */
 function advgbGetAuthorByID( $id ) {
