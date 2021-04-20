@@ -809,13 +809,16 @@
 
     @each $gap_option in $gap_options {
       &.gap-#{$gap_option} {
-        margin-left: -#{$gap_option/2}px;
-        margin-right: -#{$gap_option/2}px;
 
-        .advgb-recent-posts .advgb-recent-post {
-          padding-right: #{$gap_option/2}px;
-          padding-left: #{$gap_option/2}px;
-          margin-bottom: #{$gap_option}px;
+        .advgb-recent-posts {
+          margin-left: -#{$gap_option/2}px;
+          margin-right: -#{$gap_option}px;
+
+          .advgb-recent-post {
+            padding-right: #{$gap_option/2}px;
+            padding-left: #{$gap_option/2}px;
+            margin-bottom: #{$gap_option}px;
+          }
         }
       }
     }
