@@ -4,7 +4,7 @@
  * Plugin URI: https://publishpress.com/blocks/
  * Description: Enhanced tools for Gutenberg editor
  * Version: 2.6.1
- * Tested up to: 5.7
+ * Tested up to: 5.7.1
  * Author: PublishPress
  * Author URI: https://publishpress.com/
  * License: GPL2
