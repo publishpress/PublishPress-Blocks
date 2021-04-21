@@ -196,7 +196,7 @@ import { AuthorSelect } from './query-controls.jsx';
         componentWillUpdate( nextProps ) {
             const { recentPosts: nextPosts } = nextProps;
             const { postView: nextView } = nextProps.attributes;
-            const { attributes, clientId, recentPosts} = this.props;
+            const { attributes, clientId, recentPosts } = this.props;
             const $ = jQuery;
 
             if (nextView !== 'slider' || (nextPosts && recentPosts && nextPosts.length !== recentPosts.length) ) {
