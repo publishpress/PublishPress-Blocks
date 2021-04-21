@@ -4450,6 +4450,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
 		 * Recursive loop to find nested blocks and load their blocks's CSS and media files
 		 *
+		 * @since   2.6.1
 		 * @param   object  $block      Nested block
 		 * @param   string  $style_html CSS Styles
 		 * @param   integer $level      Nested block level
@@ -4800,7 +4801,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 if($wp_version >= 5.5) {
 
                     // Check blocks in 2nd level and beyond
-                    $style_html .= $this->advgb_getNestedBlocksStyles($block); // This output is empty!
+                    $style_html .= $this->advgb_getNestedBlocksStyles($block);
                 }
             }
 
