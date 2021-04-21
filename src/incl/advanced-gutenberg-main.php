@@ -225,13 +225,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function addAdvBlocksCategory($categories)
         {
             return array_merge(
-                $categories,
                 array(
                     array(
                         'slug' => 'advgb-category',
                         'title' => __('PublishPress Blocks', 'advanced-gutenberg'),
                     ),
-                )
+                ),
+                $categories
             );
         }
 
@@ -365,6 +365,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_script('jquery-ui-tabs');
             wp_enqueue_script('jquery-ui-sortable');
             wp_enqueue_script('slick_js');
+            wp_enqueue_script('advgb_masonry_js');
 
             // Include needed CSS styles
             wp_enqueue_style('material_icon_font');
@@ -538,7 +539,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgbBlockLoader()
         {
-            // Block Recent Posts
+            // Block Content Display
             require_once(plugin_dir_path(dirname(__FILE__)) . 'assets/blocks/recent-posts/block.php');
         }
 
@@ -1446,8 +1447,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_register_script(
                     'slick_js',
                     plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
-                    array('jquery')
+                    array('jquery'),
+                    ADVANCED_GUTENBERG_VERSION
                 );
+                wp_register_script(
+                    'advgb_masonry_js',
+                    plugins_url('assets/js/isotope.pkgd.min.js', dirname(__FILE__)),
+                    array('jquery'),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+
                 $saved_settings = get_option('advgb_settings');
                 if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
                     wp_add_inline_style(
@@ -1531,7 +1540,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_register_script(
                 'slick_js',
                 plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
-                array('jquery')
+                array('jquery'),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'advgb_masonry_js',
+                plugins_url('assets/js/isotope.pkgd.min.js', dirname(__FILE__)),
+                array('jquery'),
+                ADVANCED_GUTENBERG_VERSION
             );
 
             $saved_settings = get_option('advgb_settings');
@@ -4432,6 +4448,42 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
+		 * Recursive loop to find nested blocks and load their blocks's CSS and media files
+		 *
+		 * @since   2.6.1
+		 * @param   object  $block      Nested block
+		 * @param   string  $style_html CSS Styles
+		 * @param   integer $level      Nested block level
+		 * @return  string              CSS Styles
+		 */
+		public function advgb_getNestedBlocksStyles($block, $level = 2, &$style_html = array()){
+
+			if(isset($block['innerBlocks'])){
+				foreach($block['innerBlocks'] as $key => $inner_block){
+
+					// Get styles
+					$new_style_html = $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
+
+					// Add the styles to the array
+					$style_html[] = $new_style_html;
+					//echo str_repeat("--", $level) . $inner_block['blockName'] . ' [ ' . $level . ' ]<br>';
+
+					self::advgb_getNestedBlocksStyles($inner_block, $level + 1, $style_html);
+				}
+			}
+
+			$final_styles = $style_html;
+			if( ! is_string( $final_styles ) ) {
+				// Convert array to string
+				$final_styles = implode( '', array_unique( $style_html ) );
+			}
+
+			//echo '<code>' . $final_styles . '</code>'; // This output is correct!
+
+			return $final_styles;
+		}
+
+        /**
          * Function to load assets for post/page on front-end after gutenberg rendering
          *
          * @param string $content Post content
@@ -4602,6 +4654,21 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 });');
             }
 
+            if (strpos($content, 'advgb-recent-posts-block masonry-view') !== false) {
+                wp_enqueue_script('advgb_masonry_js');
+                wp_add_inline_script('advgb_masonry_js', 'document.addEventListener("DOMContentLoaded", function(){
+                    (function($) {
+                        $(\'.masonry-view .advgb-recent-posts\').isotope({
+                            itemSelector: \'.advgb-recent-post\',
+                            percentPosition: true
+                        });
+                        $(window).resize(function(){
+                            $(\'.masonry-view .advgb-recent-posts\').isotope();
+                        });
+                    })(jQuery);
+                });');
+            }
+
             if (strpos($content, 'advgb-woo-products slider-view') !== false) {
                 wp_enqueue_style('slick_style');
                 wp_enqueue_style('slick_theme_style');
@@ -4732,87 +4799,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Parse styles for nested blocks in WP 5.5+
                 global $wp_version;
                 if($wp_version >= 5.5) {
-                    //echo $blockName .  '<br>';
 
-                    // Second level
-                    if(isset($block['innerBlocks'])){
-                        foreach ($block['innerBlocks'] as $j => $inner_block) {
-                            //echo '--' . $inner_block['blockName'] . '(2nd level)<br>';
-                            $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
-
-                            // Third level
-                            if(isset($inner_block['innerBlocks'])){
-                                foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                    //echo '----' . $inner_block['blockName'] . '(3rd level)<br>';
-                                    $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
-
-                                    // Fourth level
-                                    if(isset($inner_block['innerBlocks'])){
-                                        foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                            //echo '------' . $inner_block['blockName'] . '(4th level)<br>';
-                                            $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
-
-                                            // Fifth level
-                                            if(isset($inner_block['innerBlocks'])){
-                                                foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                                    //echo '--------' . $inner_block['blockName'] . '(5th level)<br>';
-                                                    $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
-
-                                                    // Sixth level
-                                                    if(isset($inner_block['innerBlocks'])){
-                                                        foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                                            //echo '--------' . $inner_block['blockName'] . '(6th level)<br>';
-                                                            $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
-
-                                                            // Seventh level
-                                                            if(isset($inner_block['innerBlocks'])){
-                                                                foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                                                    //echo '--------' . $inner_block['blockName'] . '(7th level)<br>';
-                                                                    $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
-
-                                                                    // Eighth level
-                                                                    if(isset($inner_block['innerBlocks'])){
-                                                                        foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                                                            //echo '--------' . $inner_block['blockName'] . '(8th level)<br>';
-                                                                            $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
-
-                                                                            // Nineth level
-                                                                            if(isset($inner_block['innerBlocks'])){
-                                                                                foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                                                                    //echo '--------' . $inner_block['blockName'] . '(9th level)<br>';
-                                                                                    $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
-
-                                                                                    // Tenth level
-                                                                                    if(isset($inner_block['innerBlocks'])){
-                                                                                        foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                                                                            //echo '--------' . $inner_block['blockName'] . '(10th level)<br>';
-                                                                                            $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
-
-                                                                                            // Eleventh level
-                                                                                            if(isset($inner_block['innerBlocks'])){
-                                                                                                foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                                                                                    //echo '--------' . $inner_block['blockName'] . '(11th level)<br>';
-                                                                                                    $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
-                                                                                                }
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    // Check blocks in 2nd level and beyond
+                    $style_html .= $this->advgb_getNestedBlocksStyles($block);
                 }
             }
 
@@ -4841,7 +4830,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             if ($styles_tag) {
-                $content .= '<style class="advgb-styles-renderer">'.$styles_tag.'</style>';
+                wp_add_inline_style(
+                    'advgb_blocks_styles',
+                    $styles_tag
+                );
             }
 
             return $content;

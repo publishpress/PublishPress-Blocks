@@ -334,7 +334,7 @@
                             : ( // When error
                                 <Placeholder
                                     icon={ advProductsBlockIcon }
-                                    label={ __( 'ADVGB Woo Products Block', 'advanced-gutenberg' ) }
+                                    label={ __( 'Woo Products Block', 'advanced-gutenberg' ) }
                                 >
                                     <div style={ { marginBottom: 10 } }>
                                         { __( 'WooCommerce has not been detected, make sure WooCommerce is installed and activated.', 'advanced-gutenberg' ) }

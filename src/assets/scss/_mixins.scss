@@ -64,7 +64,10 @@
     }
 }
 
-/* Columns Manager */
+/*
+ * Columns Manager
+ * $prefix: 'tbl-' for tablet, 'mbl-' for mobile
+ */
 @mixin colums-width-variants($prefix: '') {
 
     // 2 Columns layout variants
@@ -218,10 +221,10 @@
     }
 }
 
-/* Recent Posts - Newspaper view, layout 1 */
+/* Content Display - Newspaper view, layout 1 */
 @mixin recent-posts-np-1($device: desktop) {
 
-  $border-color: #ddd;
+  $border-color: rgba(0,0,0,0.1);
 
   @if $device == desktop {
 
@@ -452,10 +455,10 @@
   }
 }
 
-/* Recent Posts - Newspaper view, layout 2 */
+/* Content Display - Newspaper view, layout 2 */
 @mixin recent-posts-np-2($device: desktop) {
 
-  $border-color: #ddd;
+  $border-color: rgba(0,0,0,0.1);
 
   @if $device == desktop {
 
@@ -588,10 +591,10 @@
   }
 }
 
-/* Recent Posts - Newspaper view, layout 3 */
+/* Content Display - Newspaper view, layout 3 */
 @mixin recent-posts-np-3($device: desktop) {
 
-  $border-color: #ddd;
+  $border-color: rgba(0,0,0,0.1);
 
   @if $device == desktop {
 
@@ -795,5 +798,20 @@
 
   } else {
     // Nothing to do here
+  }
+}
+
+/*
+ * Content Display - Masonry view
+ * $prefix: 'tbl-' for tablet, 'mbl-' for mobile
+ */
+@mixin recent-posts-ms($prefix: '') {
+
+  // Columns 1 to 4
+  @for $i from 1 through 4 {
+
+    &.#{$prefix}columns-#{$i} .advgb-recent-posts .advgb-recent-post {
+      width: #{percentage(1/$i)};
+    }
   }
 }
