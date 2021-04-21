@@ -782,6 +782,10 @@
                 line-height: 1em;
               }
             }
+
+            span {
+              color: #666;
+            }
           }
 
           .advgb-post-content {
@@ -789,7 +793,6 @@
           }
 
           a {
-            font-weight: bold;
             text-decoration: none;
 
             &:hover,
