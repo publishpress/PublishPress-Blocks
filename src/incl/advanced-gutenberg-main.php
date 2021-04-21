@@ -539,7 +539,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgbBlockLoader()
         {
-            // Block Recent Posts
+            // Block Content Display
             require_once(plugin_dir_path(dirname(__FILE__)) . 'assets/blocks/recent-posts/block.php');
         }
 

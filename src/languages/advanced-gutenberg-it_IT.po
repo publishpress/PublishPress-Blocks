@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - PublishPress Blocks &#8211; Blocks, "
 "Permissions, Layouts, Forms and CSS Styles - Stable (latest release)\n"
-"POT-Creation-Date: 2021-04-21 10:15-0500\n"
-"PO-Revision-Date: 2021-04-21 10:16-0500\n"
+"POT-Creation-Date: 2021-04-21 11:33-0500\n"
+"PO-Revision-Date: 2021-04-21 11:34-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -4447,10 +4447,8 @@ msgstr ""
 "dell'amministratore"
 
 #: incl/view/advanced-gutenberg-settings.php:250
-msgid "Set the default post thumbnail to use in Recent Posts blocks."
+msgid "Set the default post thumbnail to use in Content Display blocks."
 msgstr ""
-"Imposta la miniatura predefinita dell'articolo da utilizzare nei blocchi "
-"degli articoli recenti."
 
 #: incl/view/advanced-gutenberg-settings.php:254
 msgid "Default thumbnail"
@@ -4615,6 +4613,11 @@ msgstr "PublishPress"
 #. Author URI of the plugin/theme
 msgid "https://publishpress.com/"
 msgstr "https://publishpress.com/"
+
+#~ msgid "Set the default post thumbnail to use in Recent Posts blocks."
+#~ msgstr ""
+#~ "Imposta la miniatura predefinita dell'articolo da utilizzare nei blocchi "
+#~ "degli articoli recenti."
 
 #~ msgid "Recent Posts"
 #~ msgstr "Articoli recenti"

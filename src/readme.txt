@@ -45,7 +45,7 @@ PublishPress Blocks has everything you need to build professional websites with 
 - **Login / Register Form block**: [demo](https://demo.publishpress.com/login-register-form/).
 - **Google Maps block**: [demo](https://demo.publishpress.com/map/).
 - **Newsletter block**: [demo](https://demo.publishpress.com/newsletter/).
-- **Recent Posts block**: [demo](https://demo.publishpress.com/recent-posts/).
+- **Content Display block**: [demo](https://demo.publishpress.com/recent-posts/).
 - **Search bar block**: [demo](https://demo.publishpress.com/search-bar/).
 - **Social Links block**: [demo](https://demo.publishpress.com/social-links/).
 - **Summary block**: [demo](https://demo.publishpress.com/summary).
@@ -152,7 +152,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 1. Columns Manager block with flexible column sizes for desktop, tablet and mobile
 1. Images Slider block with customizable text
 1. Customizable Login/Register Form block
-1. Recent Posts block with a lot of features, including views, support for multiple categories and tags
+1. Content Display block with a lot of features, including views, styles, filter by author, support for multiple categories and tags
 1. Search Bar block is a great alternative to default search form
 1. Social Links block
 1. Testimonial block support columns and slider views

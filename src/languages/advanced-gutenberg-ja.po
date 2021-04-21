@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-21 10:15-0500\n"
+"POT-Creation-Date: 2021-04-21 11:33-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -4377,7 +4377,7 @@ msgid "Define the admin Gutenberg editor width size"
 msgstr ""
 
 #: incl/view/advanced-gutenberg-settings.php:250
-msgid "Set the default post thumbnail to use in Recent Posts blocks."
+msgid "Set the default post thumbnail to use in Content Display blocks."
 msgstr ""
 
 #: incl/view/advanced-gutenberg-settings.php:254

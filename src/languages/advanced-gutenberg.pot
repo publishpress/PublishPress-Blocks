@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: PublishPress Blocks\n"
-"POT-Creation-Date: 2021-04-21 10:15-0500\n"
+"POT-Creation-Date: 2021-04-21 11:33-0500\n"
 "PO-Revision-Date: 2020-12-04 12:47-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -4384,7 +4384,7 @@ msgid "Define the admin Gutenberg editor width size"
 msgstr ""
 
 #: incl/view/advanced-gutenberg-settings.php:250
-msgid "Set the default post thumbnail to use in Recent Posts blocks."
+msgid "Set the default post thumbnail to use in Content Display blocks."
 msgstr ""
 
 #: incl/view/advanced-gutenberg-settings.php:254
