@@ -736,10 +736,11 @@
       width: 100%;
       display: flex;
       flex-wrap: wrap;
+      margin-left: 0;
+      margin-right: 0;
 
       .advgb-recent-post {
-        padding-top: 0;
-        padding-bottom: 0;
+        padding: 0;
         margin: 0;
         display: inline-block;
         box-sizing: border-box;
@@ -813,7 +814,7 @@
 
         .advgb-recent-posts {
           margin-left: -#{$gap_option/2}px;
-          margin-right: -#{$gap_option}px;
+          width: calc(100% + #{$gap_option}px);
 
           .advgb-recent-post {
             padding-right: #{$gap_option/2}px;
