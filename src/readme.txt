@@ -160,6 +160,10 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 == Changelog ==
 
+= 2.6.2 =
+  * Add: CSS properties to images for Content Display block to avoid inherit styles from themes
+  * Remove: Load block's CSS through wp_add_inline_style function
+
 = 2.6.1 =
   * Add: Load PublishPress Blocks category as first in Gutenberg editor
   * Add: "Content Display" as new name for Recent Posts block
