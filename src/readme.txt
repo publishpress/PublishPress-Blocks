@@ -172,6 +172,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Exclusion support to Content Display block
   * Add: Masonry view with responsive support to Content Display block
   * Add: Filters panel to group category, tags, author and exclusion settings for Content Display block
+  * Add: Recursive method to load CSS for blocks in frontend
   * Fix: Load dynamic block's CSS through wp_add_inline_style function
   * Fix: Background for Frontapage view's Boxed style for Content Display block
   * Fix: Use rgba border color in Newspaper view for Content Display block
