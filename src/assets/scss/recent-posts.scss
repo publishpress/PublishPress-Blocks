@@ -81,6 +81,9 @@
 
       img {
         vertical-align: middle;
+        border: none;
+        padding: 0;
+        margin: 0;
       }
 
       .advgb-post-caption {
@@ -772,6 +775,7 @@
           margin: 0;
           word-break: break-word;
           background: #f2f2f2;
+          box-sizing: border-box;
 
           .advgb-post-info {
             font-size: 0.8em;

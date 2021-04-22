@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.7.1
-Stable tag: 2.6.1
+Stable tag: 2.6.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -160,6 +160,10 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 == Changelog ==
 
+= 2.6.2 =
+  * Add: CSS properties to images for Content Display block to avoid inherit styles from themes
+  * Remove: Load block's CSS through wp_add_inline_style function
+
 = 2.6.1 =
   * Add: Load PublishPress Blocks category as first in Gutenberg editor
   * Add: "Content Display" as new name for Recent Posts block
@@ -168,6 +172,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Exclusion support to Content Display block
   * Add: Masonry view with responsive support to Content Display block
   * Add: Filters panel to group category, tags, author and exclusion settings for Content Display block
+  * Add: Recursive method to load CSS for blocks in frontend
   * Fix: Load dynamic block's CSS through wp_add_inline_style function
   * Fix: Background for Frontapage view's Boxed style for Content Display block
   * Fix: Use rgba border color in Newspaper view for Content Display block
