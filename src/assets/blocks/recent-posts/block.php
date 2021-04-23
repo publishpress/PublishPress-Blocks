@@ -73,7 +73,7 @@ function advgbRenderBlockRecentPosts($attributes)
 		$categories = $attributes['category'];
 	}
 
-	$tax_query = null;
+	$tax_query = [];
 	if ( !empty($attributes['tags'] ) ){
 		$tax_query = array(
 				array(
@@ -115,6 +115,19 @@ function advgbRenderBlockRecentPosts($attributes)
 
 	if( isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ) {
 		$args['post__not_in'] = isset( $args['post__not_in'] ) ? array_merge( $args['post__not_in'], array( $post->ID ) ) : array( $post->ID );
+	}
+
+	if( isset( $attributes['taxonomies'] ) && ! empty( $attributes['taxonomies'] ) ) {
+		foreach( $attributes['taxonomies'] as $slug => $terms ) {
+			if ( count( $terms ) > 0 ) {
+				$tax_query[] = array(
+						'taxonomy' => $slug,
+						'field' => 'name',
+						'terms' => $terms,
+						'operator' => 'IN',
+				);
+			}
+		}
 	}
 
 	// use tax for anything but pages...
@@ -533,6 +546,9 @@ function advgbRegisterBlockRecentPosts()
             'author' => array(
                 'type' => 'string',
             ),
+            'taxonomies' => array(
+                'type' => 'object',
+            ),
 			// deprecrated attributes...
             'displayDate' => array(
                 'type' => 'boolean',
@@ -637,6 +653,47 @@ function advgbRegisterCustomFields() {
         )
     );
 
+	// CPT fields
+	foreach ( advgbGetCPTs() as $cpt ) {
+		register_rest_field( $cpt, 'author' );
+
+		register_rest_field( $cpt,
+			'coauthors',
+			array(
+				'get_callback'  => 'advgbGetCoauthors',
+				'update_callback'   => null,
+				'schema'            => null,
+			)
+		);
+
+		register_rest_field( $cpt,
+			'author_meta',
+			array(
+				'get_callback'  => 'advgbGetAuthorMeta',
+				'update_callback'   => null,
+				'schema'            => null,
+			)
+		);
+
+		register_rest_field( $cpt,
+			'relative_dates',
+			array(
+				'get_callback'  => 'advgbGetRelativeDates',
+				'update_callback'   => null,
+				'schema'            => null,
+			)
+		);
+
+		register_rest_field( $cpt,
+			'featured_img_caption',
+			array(
+				'get_callback'  => 'advgbGetImageCaption',
+				'update_callback'   => null,
+				'schema'            => null,
+			)
+		);
+	}
+
 	// custom routes
 	register_rest_route( 'advgb/v1', '/authors/', array(
 		'methods' => 'GET',
@@ -648,6 +705,15 @@ function advgbRegisterCustomFields() {
 
 }
 add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
+
+/**
+ * Returns the custom post types.
+ *
+ * @return array
+ */
+function advgbGetCPTs() {
+	return get_post_types( array( '_builtin' => false, 'public' => true ) );
+}
 
 /**
  * Allow more orderBy values for posts.
@@ -672,6 +738,20 @@ function advgbAllowPageQueryVars( $query_params ) {
 	return $query_params;
 }
 add_filter( 'rest_page_collection_params', 'advgbAllowPageQueryVars' );
+
+/**
+ * Allow more orderBy values for custom post types.
+ *
+ * @return array
+ */
+function advgbAllowCPTQueryVars( $query_params ) {
+	$query_params['orderby']['enum'][] = 'author';
+	return $query_params;
+}
+
+foreach ( advgbGetCPTs() as $cpt ) {
+	add_filter( "rest_{$cpt}_collection_params", 'advgbAllowCPTQueryVars' );
+}
 
 /**
  * Returns the relative dates of the post.
@@ -754,7 +834,7 @@ function advgbGetCoauthors( $post ) {
 
 
 /**
- * Populate the author_meta for pages.
+ * Populate the author_meta for pages/custom post types.
  *
  * @return array
  */
@@ -835,6 +915,10 @@ function advgbGetAuthorFilterREST( $args, $request ) {
 add_filter( 'rest_post_query', 'advgbGetAuthorFilterREST', 10, 2 );
 add_filter( 'rest_page_query', 'advgbGetAuthorFilterREST', 10, 2 );
 
+foreach ( advgbGetCPTs() as $cpt ) {
+	add_filter( "rest_{$cpt}_query", 'advgbGetAuthorFilterREST', 10, 2 );
+}
+
 /**
  * Populate the correct arguments in REST for filtering by author.
  *
@@ -850,6 +934,10 @@ function advgbMultipleAuthorSortREST( $args, $request ) {
 	return $args;
 }
 add_filter( 'rest_post_query', 'advgbMultipleAuthorSortREST', 10, 2 );
+
+foreach ( advgbGetCPTs() as $cpt ) {
+	add_filter( "rest_{$cpt}_query", 'advgbMultipleAuthorSortREST', 10, 2 );
+}
 
 /**
  * Check if Featured image is enable for each post
