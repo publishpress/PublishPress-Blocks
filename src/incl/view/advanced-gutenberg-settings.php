@@ -247,7 +247,7 @@ if (!isset($saved_settings['enable_columns_visual_guide'])) {
                         <label for="editor_width"
                                class="ju-setting-label advgb_qtip"
                                data-qtip="<?php esc_attr_e(
-                                   'Set the default post thumbnail to use in Recent Posts blocks.',
+                                   'Set the default post thumbnail to use in Content Display blocks.',
                                    'advanced-gutenberg'
                                ) ?>"
                         >

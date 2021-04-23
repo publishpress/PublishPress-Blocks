@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.7.1
-Stable tag: 2.6.1b1
+Stable tag: 2.6.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -45,7 +45,7 @@ PublishPress Blocks has everything you need to build professional websites with 
 - **Login / Register Form block**: [demo](https://demo.publishpress.com/login-register-form/).
 - **Google Maps block**: [demo](https://demo.publishpress.com/map/).
 - **Newsletter block**: [demo](https://demo.publishpress.com/newsletter/).
-- **Recent Posts block**: [demo](https://demo.publishpress.com/recent-posts/).
+- **Content Display block**: [demo](https://demo.publishpress.com/recent-posts/).
 - **Search bar block**: [demo](https://demo.publishpress.com/search-bar/).
 - **Social Links block**: [demo](https://demo.publishpress.com/social-links/).
 - **Summary block**: [demo](https://demo.publishpress.com/summary).
@@ -152,13 +152,17 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 1. Columns Manager block with flexible column sizes for desktop, tablet and mobile
 1. Images Slider block with customizable text
 1. Customizable Login/Register Form block
-1. Recent Posts block with a lot of features, including views, support for multiple categories and tags
+1. Content Display block with a lot of features, including views, styles, filter by author, support for multiple categories and tags
 1. Search Bar block is a great alternative to default search form
 1. Social Links block
 1. Testimonial block support columns and slider views
 1. Advanced Buttons block
 
 == Changelog ==
+
+= 2.6.2 =
+  * Add: CSS properties to images for Content Display block to avoid inherit styles from themes
+  * Remove: Load block's CSS through wp_add_inline_style function
 
 = 2.6.1 =
   * Add: Load PublishPress Blocks category as first in Gutenberg editor
@@ -167,7 +171,11 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Caption support to Content Display block
   * Add: Exclusion support to Content Display block
   * Add: Masonry view with responsive support to Content Display block
+  * Add: Filters panel to group category, tags, author and exclusion settings for Content Display block
+  * Add: Recursive method to load CSS for blocks in frontend
   * Fix: Load dynamic block's CSS through wp_add_inline_style function
+  * Fix: Background for Frontapage view's Boxed style for Content Display block
+  * Fix: Use rgba border color in Newspaper view for Content Display block
   * Remove: "ADVGB" from Content Display and WooProducts blocks when loading in editor
 
 = 2.6.0 =
