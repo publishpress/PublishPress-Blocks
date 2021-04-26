@@ -23511,15 +23511,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 wp.apiFetch({
-                    path: wp.url.addQueryArgs('wp/v2/types', { context: 'edit' })
-                }).then(function (list) {
-                    var types = [];
-                    Object.keys(list).forEach(function (type) {
-                        if (list[type].viewable) {
-                            types.push({ label: list[type].name, value: list[type].slug });
-                        }
+                    path: wp.url.addQueryArgs('advgb/v1/exclude_post_types')
+                }).then(function (excludePostTypes) {
+                    wp.apiFetch({
+                        path: wp.url.addQueryArgs('wp/v2/types', { context: 'edit' })
+                    }).then(function (list) {
+                        var types = [];
+                        Object.keys(list).forEach(function (type) {
+                            if (list[type].viewable && !excludePostTypes.includes(type)) {
+                                types.push({ label: list[type].name, value: list[type].slug });
+                            }
+                        });
+                        _this2.setState({ postTypeList: types });
                     });
-                    _this2.setState({ postTypeList: types });
                 });
 
                 wp.apiFetch({
@@ -24525,9 +24529,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'updatePostType',
             value: function updatePostType(postType) {
-                if (INBUILT_POST_TYPES.includes(postType)) {
-                    this.setState({ taxonomyList: null });
-                } else {
+                this.setState({ taxonomyList: null });
+                if (!INBUILT_POST_TYPES.includes(postType)) {
                     this.generateTaxTerms(postType);
                 }
 
@@ -24542,6 +24545,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: 'generateTaxTerms',
             value: function generateTaxTerms(postType) {
                 var _this4 = this;
+
+                if (!postType) {
+                    return;
+                }
 
                 // fetch all taxonomies
                 wp.apiFetch({

@@ -658,6 +658,15 @@ function advgbRegisterCustomFields() {
 		register_rest_field( $cpt, 'author' );
 
 		register_rest_field( $cpt,
+			'featured_img',
+			array(
+				'get_callback'  => 'advgbGetFeaturedImage',
+				'update_callback'   => null,
+				'schema'            => null,
+			)
+		);
+
+		register_rest_field( $cpt,
 			'coauthors',
 			array(
 				'get_callback'  => 'advgbGetCoauthors',
@@ -701,7 +710,15 @@ function advgbRegisterCustomFields() {
 		'permission_callback' => function () {
 			return current_user_can( 'edit_others_posts' );
 		},
-  ) );
+	) );
+
+	register_rest_route( 'advgb/v1', '/exclude_post_types/', array(
+		'methods' => 'GET',
+		'callback' => 'advgbExcludePostTypes',
+		'permission_callback' => function () {
+			return current_user_can( 'edit_others_posts' );
+		},
+	) );
 
 }
 add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
@@ -1020,4 +1037,24 @@ function advgbGetAuthorByID( $id ) {
 		}
 	}
 	return $author;
+}
+
+/**
+ * Returns the featured image URL.
+ *
+ * @return string
+ */
+function advgbGetFeaturedImage( $post ) {
+	return get_the_post_thumbnail_url( $post[ 'id' ] );
+}
+
+
+/**
+ * Returns all the post types that need to be excluded.
+ *
+ * @return array
+ */
+function advgbExcludePostTypes( WP_REST_Request $request ) {
+	// allow users to add more
+	return apply_filters( 'advgb_exclude_post_types', array( 'attachment' ) );
 }

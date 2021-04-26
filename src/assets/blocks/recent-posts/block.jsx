@@ -142,15 +142,19 @@ import { AuthorSelect } from './query-controls.jsx';
             }
 
             wp.apiFetch( {
-                path: wp.url.addQueryArgs( 'wp/v2/types', { context: 'edit' } ),
-            } ).then( ( list ) => {
-                let types = [];
-                Object.keys(list).forEach(type => {
-                    if(list[ type ].viewable){
-                        types.push( {label: list[ type ].name, value: list[ type ].slug } );
-                    }
-                });
-                this.setState( { postTypeList: types } );
+                path: wp.url.addQueryArgs( 'advgb/v1/exclude_post_types' ),
+            } ).then( ( excludePostTypes ) => {
+                wp.apiFetch( {
+                    path: wp.url.addQueryArgs( 'wp/v2/types', { context: 'edit' } ),
+                } ).then( ( list ) => {
+                    let types = [];
+                    Object.keys(list).forEach(type => {
+                        if(list[ type ].viewable && ! excludePostTypes.includes( type ) ){
+                            types.push( {label: list[ type ].name, value: list[ type ].slug } );
+                        }
+                    });
+                    this.setState( { postTypeList: types } );
+                } );
             } );
 
             wp.apiFetch( {
@@ -1107,9 +1111,8 @@ import { AuthorSelect } from './query-controls.jsx';
         }
 
         updatePostType(postType) {
-            if(INBUILT_POST_TYPES.includes( postType )){
-                this.setState( { taxonomyList: null } );
-            }else{
+            this.setState( { taxonomyList: null } );
+            if(! INBUILT_POST_TYPES.includes( postType )){
                 this.generateTaxTerms( postType );
             }
 
@@ -1120,6 +1123,10 @@ import { AuthorSelect } from './query-controls.jsx';
          * Generates taxonomy list for a post type and sets it in the state as "taxonomyList".
          */
         generateTaxTerms( postType ) {
+            if(! postType){
+                return;
+            }
+
             // fetch all taxonomies
             wp.apiFetch( {
                 path: wp.url.addQueryArgs( `wp/v2/types/${postType}`, { context: 'edit' } ),
