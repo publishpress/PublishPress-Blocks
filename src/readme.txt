@@ -162,6 +162,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 = 2.6.3 =
   * Add: Custom Post Type support for Content Display block
+  * Add: Autoplay control to Slider view for Content Display block
 
 = 2.6.2 =
   * Add: CSS properties to images for Content Display block to avoid inherit styles from themes
