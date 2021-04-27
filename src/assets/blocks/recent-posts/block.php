@@ -339,6 +339,9 @@ function advgbRenderBlockRecentPosts($attributes)
     } elseif ($attributes['postView'] === 'slider') {
         $blockClass = 'slider-view';
         $blockClass .= ' style-' . $attributes['sliderStyle'];
+		if ( isset( $attributes['sliderAutoplay'] ) && $attributes['sliderAutoplay'] ) {
+	        $blockClass .= ' slider-autoplay';
+		}
     } elseif ($attributes['postView'] === 'frontpage') {
         $blockClass = 'frontpage-view';
         $blockClass .= ' layout-' . $attributes['frontpageLayout'];
@@ -490,6 +493,10 @@ function advgbRegisterBlockRecentPosts()
             'sliderStyle' => array(
                 'type' => 'string',
                 'default' => 'default',
+            ),
+            'sliderAutoplay' => array(
+                'type' => 'boolean',
+                'default' => false,
             ),
             'newspaperLayout' => array(
                 'type' => 'string',
