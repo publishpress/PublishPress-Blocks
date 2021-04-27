@@ -244,7 +244,7 @@ import { AuthorSelect } from './query-controls.jsx';
         componentDidUpdate( prevProps ) {
             const that = this;
             const { attributes, clientId, postList } = this.props;
-            const { postView, updatePostSuggestions } = attributes;
+            const { postView, updatePostSuggestions, sliderAutoplay } = attributes;
             const $ = jQuery;
 
             if (postView === 'slider') {
@@ -252,7 +252,10 @@ import { AuthorSelect } from './query-controls.jsx';
                     $(`#block-${clientId} .advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)`).slick( {
                         dots: true,
                         adaptiveHeight: true,
+                        autoplay: sliderAutoplay,
                     } );
+
+                    $(`#block-${clientId} .advgb-recent-posts-block.slider-view .advgb-recent-posts.slick-initialized`).slick('slickSetOption', 'autoplay', sliderAutoplay, true);
 
                     if (that.state.updating) {
                         that.setState( { updating: false } );
@@ -337,6 +340,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 textBeforeReadmore,
                 exclude,
                 author: selectedAuthorId,
+                sliderAutoplay,
             } = attributes;
 
             let recentPosts = this.props.recentPosts;
@@ -364,6 +368,11 @@ import { AuthorSelect } from './query-controls.jsx';
                                 { label: __( 'Headline', 'advanced-gutenberg' ), value: 'headline' },
                             ] }
                             onChange={ ( value ) => setAttributes( { sliderStyle: value } ) }
+                        />
+                        <ToggleControl
+                            label={ __( 'Autoplay', 'advanced-gutenberg' ) }
+                            checked={ sliderAutoplay }
+                            onChange={ () => setAttributes( { sliderAutoplay: !sliderAutoplay } ) }
                         />
                     </PanelBody>
                     }

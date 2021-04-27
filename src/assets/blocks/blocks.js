@@ -23617,7 +23617,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     clientId = _props3.clientId,
                     postList = _props3.postList;
                 var postView = attributes.postView,
-                    updatePostSuggestions = attributes.updatePostSuggestions;
+                    updatePostSuggestions = attributes.updatePostSuggestions,
+                    sliderAutoplay = attributes.sliderAutoplay;
 
                 var $ = jQuery;
 
@@ -23625,8 +23626,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     initSlider = setTimeout(function () {
                         $('#block-' + clientId + ' .advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)').slick({
                             dots: true,
-                            adaptiveHeight: true
+                            adaptiveHeight: true,
+                            autoplay: sliderAutoplay
                         });
+
+                        $('#block-' + clientId + ' .advgb-recent-posts-block.slider-view .advgb-recent-posts.slick-initialized').slick('slickSetOption', 'autoplay', sliderAutoplay, true);
 
                         if (that.state.updating) {
                             that.setState({ updating: false });
@@ -23723,7 +23727,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     textAfterTitle = attributes.textAfterTitle,
                     textBeforeReadmore = attributes.textBeforeReadmore,
                     exclude = attributes.exclude,
-                    selectedAuthorId = attributes.author;
+                    selectedAuthorId = attributes.author,
+                    sliderAutoplay = attributes.sliderAutoplay;
 
 
                 var recentPosts = this.props.recentPosts;
@@ -23751,6 +23756,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             options: [{ label: __('Default', 'advanced-gutenberg'), value: 'default' }, { label: __('Headline', 'advanced-gutenberg'), value: 'headline' }],
                             onChange: function onChange(value) {
                                 return setAttributes({ sliderStyle: value });
+                            }
+                        }),
+                        React.createElement(ToggleControl, {
+                            label: __('Autoplay', 'advanced-gutenberg'),
+                            checked: sliderAutoplay,
+                            onChange: function onChange() {
+                                return setAttributes({ sliderAutoplay: !sliderAutoplay });
                             }
                         })
                     ),
