@@ -140,13 +140,19 @@ function AdvQueryControls({
                         label: __('Post ID Ascending', 'advanced-gutenberg'),
                         value: 'id/asc',
                     },
+    ];
+
+    // post and page supports more orderBy parameters
+    if ( postType === 'post' || postType === 'page' ) {
+        orderParams = _.union(orderParams, [
                     {
                         label: __('Randomize', 'advanced-gutenberg'),
                         value: 'rand/asc',
                     },
-    ];
+        ]);
+    }
 
-    // post supports more orderBy parameters
+    // post support more orderBy parameters
     if ( postType === 'post' ) {
         orderParams = _.union(orderParams, [
                     {
