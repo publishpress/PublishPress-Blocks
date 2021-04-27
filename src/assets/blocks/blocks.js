@@ -23613,6 +23613,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     $('#block-' + clientId + ' .advgb-recent-posts.slick-initialized').slick('unslick');
                 }
 
+                if (postView === 'masonry') {
+                    var $masonry = $('#block-' + clientId + ' .masonry-view .advgb-recent-posts');
+                    $masonry.isotope({
+                        itemSelector: '.advgb-recent-post',
+                        percentPosition: true
+                    });
+                    $(window).resize(function () {
+                        $masonry.isotope();
+                    });
+                } else {
+                    var $masonry = $('#block-' + clientId + ' .advgb-recent-posts');
+                    $masonry.isotope();
+                    $masonry.isotope('destroy');
+                }
+
                 // this.state.updatePostSuggestions: corresponds to componentDidMount
                 if (postList && (updatePostSuggestions || this.state.updatePostSuggestions)) {
                     var postSuggestions = [];
@@ -24528,7 +24543,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/recent-posts', {
         title: __('Content Display', 'advanced-gutenberg'),
-        description: __('Displays your content in grid, list, slider, frontpage, and newspaper views with beautiful layouts and styles.', 'advanced-gutenberg'),
+        description: __('Displays your content in grid, list, slider, frontpage, newspaper, and masonry views with beautiful layouts and styles.', 'advanced-gutenberg'),
         icon: {
             src: advRecentPostsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined

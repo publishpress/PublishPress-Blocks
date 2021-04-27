@@ -3,8 +3,8 @@
  * Plugin Name: PublishPress Blocks
  * Plugin URI: https://publishpress.com/blocks/
  * Description: Enhanced tools for Gutenberg editor
- * Version: 2.6.1b2
- * Tested up to: 5.7
+ * Version: 2.6.2
+ * Tested up to: 5.7.1
  * Author: PublishPress
  * Author URI: https://publishpress.com/
  * License: GPL2
@@ -39,7 +39,7 @@
 defined('ABSPATH') || die;
 
 if (! defined('ADVANCED_GUTENBERG_VERSION')) {
-    define('ADVANCED_GUTENBERG_VERSION', '2.6.1b2');
+    define('ADVANCED_GUTENBERG_VERSION', '2.6.2');
 }
 
 // Code shared with Pro version

@@ -196,7 +196,7 @@ import { AuthorSelect } from './query-controls.jsx';
         componentWillUpdate( nextProps ) {
             const { recentPosts: nextPosts } = nextProps;
             const { postView: nextView } = nextProps.attributes;
-            const { attributes, clientId, recentPosts} = this.props;
+            const { attributes, clientId, recentPosts } = this.props;
             const $ = jQuery;
 
             if (nextView !== 'slider' || (nextPosts && recentPosts && nextPosts.length !== recentPosts.length) ) {
@@ -241,6 +241,21 @@ import { AuthorSelect } from './query-controls.jsx';
                 }, 100 );
             } else {
                 $(`#block-${clientId} .advgb-recent-posts.slick-initialized`).slick('unslick');
+            }
+
+            if (postView === 'masonry') {
+                var $masonry = $(`#block-${clientId} .masonry-view .advgb-recent-posts`);
+                $masonry.isotope({
+                    itemSelector: '.advgb-recent-post',
+                    percentPosition: true
+                });
+                $(window).resize(function(){
+                    $masonry.isotope();
+                });
+            } else {
+                var $masonry = $(`#block-${clientId} .advgb-recent-posts`);
+                $masonry.isotope();
+                $masonry.isotope('destroy');
             }
 
             // this.state.updatePostSuggestions: corresponds to componentDidMount
@@ -1082,7 +1097,7 @@ import { AuthorSelect } from './query-controls.jsx';
 
     registerBlockType( 'advgb/recent-posts', {
         title: __( 'Content Display', 'advanced-gutenberg' ),
-        description: __( 'Displays your content in grid, list, slider, frontpage, and newspaper views with beautiful layouts and styles.', 'advanced-gutenberg' ),
+        description: __( 'Displays your content in grid, list, slider, frontpage, newspaper, and masonry views with beautiful layouts and styles.', 'advanced-gutenberg' ),
         icon: {
             src: advRecentPostsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
