@@ -28933,7 +28933,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     React.createElement(
                                         "div",
                                         { className: "advgb-product-img" },
-                                        React.createElement("img", { src: product.images.length ? product.images[0].src : undefined, alt: product.name })
+                                        React.createElement("img", { src: product.images.length ? product.images[0].src : advgbBlocks.post_thumb, alt: product.name })
                                     ),
                                     React.createElement(
                                         "div",
