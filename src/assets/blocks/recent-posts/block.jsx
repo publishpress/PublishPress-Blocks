@@ -341,6 +341,8 @@ import { AuthorSelect } from './query-controls.jsx';
                 exclude,
                 author: selectedAuthorId,
                 sliderAutoplay,
+                linkCustomTax,
+                showCustomTaxList,
             } = attributes;
 
             let recentPosts = this.props.recentPosts;
@@ -734,6 +736,23 @@ import { AuthorSelect } from './query-controls.jsx';
                                 />
                             </Fragment>
                         }
+                        { ! INBUILT_POST_TYPES.includes(postType) &&
+                            <Fragment>
+                                <FormTokenField
+                                    multiple
+                                    suggestions={ taxonomyList && taxonomyList.length > 0 && taxonomyList.map( (tax) => tax.slug ) }
+                                    value={ showCustomTaxList }
+                                    label={ __( 'Display these taxonomies', 'advanced-gutenberg' ) }
+                                    onChange={ ( value ) => { this.selectTaxonomies(value); } }
+                                />
+                                <ToggleControl
+                                    label={ __( 'Link above taxonomies', 'advanced-gutenberg' ) }
+                                    checked={ linkCustomTax }
+                                    onChange={ () => setAttributes( { linkCustomTax: !linkCustomTax } ) }
+                                />
+                            </Fragment>
+
+                        }
                         <ToggleControl
                             label={ __( 'Display Read More Link', 'advanced-gutenberg' ) }
                             checked={ displayReadMore }
@@ -982,6 +1001,16 @@ import { AuthorSelect } from './query-controls.jsx';
                                                 ) )}
                                                 </div>
                                             ) }
+                                            {! INBUILT_POST_TYPES.includes( postType ) && showCustomTaxList.length > 0 && post.tax_additional && showCustomTaxList.map( (taxSlug) => ( 
+                                                <div className={"advgb-post-tax advgb-post-" + taxSlug}>
+                                                {!linkCustomTax && post.tax_additional[taxSlug].unlinked.map( ( tag, index ) => (
+                                                    <RawHTML>{ tag }</RawHTML>
+                                                ) )}
+                                                {linkCustomTax && post.tax_additional[taxSlug].linked.map( ( tag, index ) => (
+                                                    <RawHTML>{ tag }</RawHTML>
+                                                ) )}
+                                                </div>
+                                            ))}
                                         </div>
                                         <div className="advgb-post-content">
                                             {displayExcerpt && (
@@ -1224,6 +1253,35 @@ import { AuthorSelect } from './query-controls.jsx';
                 taxonomies: taxonomies, // to save in the attributes
                 [tax.slug]: suggestions, // to show in the select list
                 taxIds: taxIds, // to send in the query
+            });
+        }
+
+        /**
+         * Selects the correct taxonomy from the suggestions and updates the "showCustomTaxList" attribute.
+         */
+        selectTaxonomies(tokens) {
+            const { taxonomyList } = this.state;
+
+            if( ! taxonomyList ) {
+                return;
+            }
+
+            let taxList = taxonomyList && taxonomyList.length > 0 && taxonomyList.map( (tax) => tax.slug );
+
+            var hasNoSuggestion = tokens.some(function (token) {
+                return typeof token === 'string' && !taxList.includes(token);
+            });
+
+            if (hasNoSuggestion) {
+                return;
+            }
+
+            var taxes = tokens.map(function (token) {
+                return typeof token === 'string' && taxList[token] ? token : token;
+            })
+
+            this.props.setAttributes({
+                showCustomTaxList: taxes,
             });
         }
 

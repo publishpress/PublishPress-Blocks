@@ -23728,7 +23728,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     textBeforeReadmore = attributes.textBeforeReadmore,
                     exclude = attributes.exclude,
                     selectedAuthorId = attributes.author,
-                    sliderAutoplay = attributes.sliderAutoplay;
+                    sliderAutoplay = attributes.sliderAutoplay,
+                    linkCustomTax = attributes.linkCustomTax,
+                    showCustomTaxList = attributes.showCustomTaxList;
 
 
                 var recentPosts = this.props.recentPosts;
@@ -24127,6 +24129,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             })
                         ),
+                        !INBUILT_POST_TYPES.includes(postType) && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(FormTokenField, {
+                                multiple: true,
+                                suggestions: taxonomyList && taxonomyList.length > 0 && taxonomyList.map(function (tax) {
+                                    return tax.slug;
+                                }),
+                                value: showCustomTaxList,
+                                label: __('Display these taxonomies', 'advanced-gutenberg'),
+                                onChange: function onChange(value) {
+                                    _this3.selectTaxonomies(value);
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Link above taxonomies', 'advanced-gutenberg'),
+                                checked: linkCustomTax,
+                                onChange: function onChange() {
+                                    return setAttributes({ linkCustomTax: !linkCustomTax });
+                                }
+                            })
+                        ),
                         React.createElement(ToggleControl, {
                             label: __('Display Read More Link', 'advanced-gutenberg'),
                             checked: displayReadMore,
@@ -24410,7 +24434,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         tag
                                                     );
                                                 })
-                                            )
+                                            ),
+                                            !INBUILT_POST_TYPES.includes(postType) && showCustomTaxList.length > 0 && post.tax_additional && showCustomTaxList.map(function (taxSlug) {
+                                                return React.createElement(
+                                                    'div',
+                                                    { className: "advgb-post-tax advgb-post-" + taxSlug },
+                                                    !linkCustomTax && post.tax_additional[taxSlug].unlinked.map(function (tag, index) {
+                                                        return React.createElement(
+                                                            RawHTML,
+                                                            null,
+                                                            tag
+                                                        );
+                                                    }),
+                                                    linkCustomTax && post.tax_additional[taxSlug].linked.map(function (tag, index) {
+                                                        return React.createElement(
+                                                            RawHTML,
+                                                            null,
+                                                            tag
+                                                        );
+                                                    })
+                                                );
+                                            })
                                         ),
                                         React.createElement(
                                             'div',
@@ -24659,6 +24703,41 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 this.props.setAttributes((_props$setAttributes2 = {
                     taxonomies: taxonomies }, _defineProperty(_props$setAttributes2, tax.slug, suggestions), _defineProperty(_props$setAttributes2, 'taxIds', taxIds), _props$setAttributes2));
+            }
+
+            /**
+             * Selects the correct taxonomy from the suggestions and updates the "showCustomTaxList" attribute.
+             */
+
+        }, {
+            key: 'selectTaxonomies',
+            value: function selectTaxonomies(tokens) {
+                var taxonomyList = this.state.taxonomyList;
+
+
+                if (!taxonomyList) {
+                    return;
+                }
+
+                var taxList = taxonomyList && taxonomyList.length > 0 && taxonomyList.map(function (tax) {
+                    return tax.slug;
+                });
+
+                var hasNoSuggestion = tokens.some(function (token) {
+                    return typeof token === 'string' && !taxList.includes(token);
+                });
+
+                if (hasNoSuggestion) {
+                    return;
+                }
+
+                var taxes = tokens.map(function (token) {
+                    return typeof token === 'string' && taxList[token] ? token : token;
+                });
+
+                this.props.setAttributes({
+                    showCustomTaxList: taxes
+                });
             }
         }, {
             key: 'getDisplayImageStatus',
