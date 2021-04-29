@@ -4652,7 +4652,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         adaptiveHeight: true,
 
                     });
-					slick.slick("slickSetOption", "autoplay", slick.parent().hasClass("slider-autoplay"), true);				
+					slick.slick("slickSetOption", "autoplay", slick.parent().hasClass("slider-autoplay"), true);
                 });');
             }
 
@@ -5062,7 +5062,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if(defined('ADVANCED_GUTENBERG_PRO')) {
                 array_push(
                     $availableBlocks,
-                    'advgb/test'
+                    'advgb/test',
+                    'advgb/countdown'
                 );
             }
 
