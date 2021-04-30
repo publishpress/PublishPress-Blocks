@@ -359,6 +359,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION,
                     true
                 );
+                wp_enqueue_script(
+                    'advgb_countdown_scripts',
+                    plugins_url('assets/blocks/countdown/countdown.js', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
+                );
             }
 
             // Include needed JS libraries
@@ -1491,6 +1497,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_register_script(
                     'advgb_blocks_frontend_scripts_pro',
                     plugins_url('assets/blocks/frontend-pro.js', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+                wp_register_script(
+                    'advgb_countdown_scripts',
+                    plugins_url('assets/blocks/countdown/countdown.js', dirname(__FILE__)),
                     array(),
                     ADVANCED_GUTENBERG_VERSION
                 );
@@ -4774,6 +4786,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'login_failed_notice' => __('Username or password is incorrect!', 'advanced-gutenberg'),
                 ));
                 $this->loadRecaptchaApi();
+            }
+
+            // Pro
+            if(defined('ADVANCED_GUTENBERG_PRO')) {
+                if (strpos($content, 'advgb-countdown') !== false) {
+                    wp_enqueue_script('advgb_countdown_scripts');
+                }
             }
 
             $content = $this->groupStylesTag($content);
