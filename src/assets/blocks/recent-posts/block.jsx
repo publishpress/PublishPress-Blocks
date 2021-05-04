@@ -285,8 +285,8 @@ import { AuthorSelect } from './query-controls.jsx';
                 let postSuggestions = [];
                 let postTitleVsIdMap = [];
                 postList.forEach( post => {
-                    postSuggestions.push(post.title.rendered);
-                    postTitleVsIdMap[ post.title.rendered ] = post.id;
+                    postSuggestions.push(post.title.raw);
+                    postTitleVsIdMap[ post.title.raw ] = post.id;
                 });
                 this.props.setAttributes( { updatePostSuggestions: false } );
                 this.setState( { postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function(){

@@ -23660,8 +23660,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     var postSuggestions = [];
                     var postTitleVsIdMap = [];
                     postList.forEach(function (post) {
-                        postSuggestions.push(post.title.rendered);
-                        postTitleVsIdMap[post.title.rendered] = post.id;
+                        postSuggestions.push(post.title.raw);
+                        postTitleVsIdMap[post.title.raw] = post.id;
                     });
                     this.props.setAttributes({ updatePostSuggestions: false });
                     this.setState({ postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function () {
