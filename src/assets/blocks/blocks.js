@@ -24435,7 +24435,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     );
                                                 })
                                             ),
-                                            !INBUILT_POST_TYPES.includes(postType) && showCustomTaxList.length > 0 && post.tax_additional && showCustomTaxList.map(function (taxSlug) {
+                                            !INBUILT_POST_TYPES.includes(postType) && showCustomTaxList && showCustomTaxList.length > 0 && post.tax_additional && showCustomTaxList.map(function (taxSlug) {
                                                 return React.createElement(
                                                     'div',
                                                     { className: "advgb-post-tax advgb-post-" + taxSlug },

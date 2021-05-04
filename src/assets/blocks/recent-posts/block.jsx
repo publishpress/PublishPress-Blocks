@@ -1001,7 +1001,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                                 ) )}
                                                 </div>
                                             ) }
-                                            {! INBUILT_POST_TYPES.includes( postType ) && showCustomTaxList.length > 0 && post.tax_additional && showCustomTaxList.map( (taxSlug) => ( 
+                                            {! INBUILT_POST_TYPES.includes( postType ) && showCustomTaxList && showCustomTaxList.length > 0 && post.tax_additional && showCustomTaxList.map( (taxSlug) => ( 
                                                 <div className={"advgb-post-tax advgb-post-" + taxSlug}>
                                                 {!linkCustomTax && post.tax_additional[taxSlug].unlinked.map( ( tag, index ) => (
                                                     <RawHTML>{ tag }</RawHTML>
