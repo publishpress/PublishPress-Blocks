@@ -1183,8 +1183,8 @@ import { AuthorSelect } from './query-controls.jsx';
                             let suggestions = [];
                             let map = [];
                             terms.forEach(term => {
-                                suggestions.push(term.name);
-                                map[ term.name ] = term.id;
+                                suggestions.push(decodeEntities(term.name));
+                                map[ decodeEntities(term.name) ] = term.id;
                             });
 
                             const preselectedNames = this.props.attributes.taxonomies ? this.props.attributes.taxonomies[ tax ] : [];
