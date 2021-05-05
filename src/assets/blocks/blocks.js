@@ -24580,8 +24580,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 var suggestions = [];
                                 var map = [];
                                 terms.forEach(function (term) {
-                                    suggestions.push(term.name);
-                                    map[term.name] = term.id;
+                                    suggestions.push(decodeEntities(term.name));
+                                    map[decodeEntities(term.name)] = term.id;
                                 });
 
                                 var preselectedNames = _this4.props.attributes.taxonomies ? _this4.props.attributes.taxonomies[tax] : [];
