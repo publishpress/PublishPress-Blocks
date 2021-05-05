@@ -297,10 +297,15 @@ function advgbRenderBlockRecentPosts($attributes)
 			}
 
 			if ( ! in_array( $post_type, array( 'post', 'page' ), true ) && isset( $attributes['showCustomTaxList'] ) && ! empty( $attributes['showCustomTaxList'] ) ) {
-				$info = advgbGetTaxonomyTerms( $post_type, $post->ID, true );
+				$info = advgbGetTaxonomyTerms( $post_type, $post->ID, true, false );
 				if ( ! empty( $info ) ) {
-					foreach ( $attributes['showCustomTaxList'] as $slug ) {
-						$props = $info[ $slug ];
+					foreach ( $attributes['showCustomTaxList'] as $name ) {
+						if ( ! isset( $info[ $name ] ) ) {
+							// maybe the name changed?
+							continue;
+						}
+						$props = $info[ $name ];
+						$slug = $props['slug'];
 						$postHtml .= "<div class='advgb-post-tax advgb-post-${slug}'>";
 						if ( isset( $attributes['linkCustomTax'] ) && $attributes['linkCustomTax'] ) {
 							$postHtml .= implode( ' ', $props['linked'] );
@@ -883,7 +888,7 @@ function advgbGetAdditionalTaxInfo( $post ) {
  *
  * @return array
  */
-function advgbGetTaxonomyTerms( $post_type, $post_id, $front_end = false ) {
+function advgbGetTaxonomyTerms( $post_type, $post_id, $front_end = false, $use_tax_slug = true ) {
 	$info = array();
 	$taxonomies = get_object_taxonomies( $post_type, 'objects' );
 	foreach( $taxonomies as $slug => $tax ) {
@@ -898,7 +903,7 @@ function advgbGetTaxonomyTerms( $post_type, $post_id, $front_end = false ) {
 				$unlinked[] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $term->name ) );
 			}
 		}
-		$info[ $slug ] = array( 'linked' => $linked, 'unlinked' => $unlinked );
+		$info[ $use_tax_slug ? $slug : html_entity_decode( $tax->label, ENT_QUOTES ) ] = array( 'linked' => $linked, 'unlinked' => $unlinked, 'slug' => $slug, 'name' => esc_html( $tax->label ) );
 	}
 	return $info;
 }

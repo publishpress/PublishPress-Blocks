@@ -9,7 +9,7 @@ import { AuthorSelect } from './query-controls.jsx';
     const { InspectorControls, BlockControls } = wpBlockEditor;
     const { PanelBody, RangeControl, ToggleControl, TextControl, TextareaControl, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
     const { withSelect } = wpData;
-    const { pickBy, isUndefined, isArray, isNull, uniqWith, isEqual, omit, union, sortBy, unset, set } = lodash;
+    const { pickBy, isUndefined, isArray, isNull, uniqWith, isEqual, omit, union, sortBy, unset, set, find } = lodash;
     const { decodeEntities } = wpHtmlEntities;
     const { dateI18n, __experimentalGetSettings } = wpDate;
 
@@ -583,7 +583,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                         value={ this.populateTaxTerms( tax ) }
                                         onChange={ (value) => this.selectTaxTerms( tax, value ) }
                                         key="query-controls-`${tax.slug}`-select"
-                                        label={__('Show content with these ', 'advanced-gutenberg') + `${tax.name}`}
+                                        label={__('Show content with these ', 'advanced-gutenberg') + decodeEntities(`${tax.name}`)}
                                     />
                                 )
                             )
@@ -736,11 +736,11 @@ import { AuthorSelect } from './query-controls.jsx';
                                 />
                             </Fragment>
                         }
-                        { ! INBUILT_POST_TYPES.includes(postType) &&
+                        { ! INBUILT_POST_TYPES.includes(postType) && taxonomyList && taxonomyList.length > 0 && 
                             <Fragment>
                                 <FormTokenField
                                     multiple
-                                    suggestions={ taxonomyList && taxonomyList.length > 0 && taxonomyList.map( (tax) => tax.slug ) }
+                                    suggestions={ taxonomyList && taxonomyList.length > 0 && taxonomyList.map( (tax) => decodeEntities(tax.name) ) }
                                     value={ showCustomTaxList }
                                     label={ __( 'Display these taxonomies', 'advanced-gutenberg' ) }
                                     onChange={ ( value ) => { this.selectTaxonomies(value); } }
@@ -1001,12 +1001,12 @@ import { AuthorSelect } from './query-controls.jsx';
                                                 ) )}
                                                 </div>
                                             ) }
-                                            {! INBUILT_POST_TYPES.includes( postType ) && showCustomTaxList && showCustomTaxList.length > 0 && post.tax_additional && showCustomTaxList.map( (taxSlug) => ( 
+                                            {! INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.getTaxSlugs().map( (taxSlug) => ( 
                                                 <div className={"advgb-post-tax advgb-post-" + taxSlug}>
-                                                {!linkCustomTax && post.tax_additional[taxSlug].unlinked.map( ( tag, index ) => (
+                                                {!linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].unlinked.map( ( tag, index ) => (
                                                     <RawHTML>{ tag }</RawHTML>
                                                 ) )}
-                                                {linkCustomTax && post.tax_additional[taxSlug].linked.map( ( tag, index ) => (
+                                                {linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].linked.map( ( tag, index ) => (
                                                     <RawHTML>{ tag }</RawHTML>
                                                 ) )}
                                                 </div>
@@ -1194,7 +1194,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                 this.props.setAttributes( { taxIds: taxIds } );
                             }
 
-                            taxonomies.push({ slug: tax, name: taxAttributes.name, suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
+                            taxonomies.push({ slug: tax, name: decodeEntities(taxAttributes.name), suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
 
                             this.setState( { updating: true } );
                             if(typeAttributes.taxonomies.length === taxonomies.length){
@@ -1266,7 +1266,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 return;
             }
 
-            let taxList = taxonomyList && taxonomyList.length > 0 && taxonomyList.map( (tax) => tax.slug );
+            let taxList = taxonomyList && taxonomyList.length > 0 && taxonomyList.map( (tax) => decodeEntities(tax.name) );
 
             var hasNoSuggestion = tokens.some(function (token) {
                 return typeof token === 'string' && !taxList.includes(token);
@@ -1283,6 +1283,26 @@ import { AuthorSelect } from './query-controls.jsx';
             this.props.setAttributes({
                 showCustomTaxList: taxes,
             });
+        }
+
+        /**
+         * Returns the tax slugs corresponding to the tax names that appear in the suggestions.
+         */
+        getTaxSlugs() {
+            const { taxonomyList } = this.state;
+            const { showCustomTaxList } = this.props.attributes;
+            if( ! taxonomyList || ! showCustomTaxList || showCustomTaxList.length === 0 ) {
+                return [];
+            }
+            
+            var slugs = showCustomTaxList.map( (taxName) => {
+                var tax = find(taxonomyList, {name: decodeEntities(taxName)});
+                console.log(taxName,decodeEntities(taxName),taxonomyList,tax);
+                if(tax){
+                    return tax.slug;
+                }
+            });
+            return slugs;
         }
 
         getDisplayImageStatus(attributes, index) {

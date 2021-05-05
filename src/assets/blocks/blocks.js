@@ -23411,7 +23411,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         union = lodash.union,
         sortBy = lodash.sortBy,
         unset = lodash.unset,
-        set = lodash.set;
+        set = lodash.set,
+        find = lodash.find;
     var decodeEntities = wpHtmlEntities.decodeEntities;
     var dateI18n = wpDate.dateI18n,
         __experimentalGetSettings = wpDate.__experimentalGetSettings;
@@ -23979,7 +23980,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return _this3.selectTaxTerms(tax, value);
                                 },
                                 key: 'query-controls-`${tax.slug}`-select',
-                                label: __('Show content with these ', 'advanced-gutenberg') + ('' + tax.name)
+                                label: __('Show content with these ', 'advanced-gutenberg') + decodeEntities('' + tax.name)
                             });
                         }),
                         React.createElement(_queryControls.AuthorSelect, {
@@ -24129,13 +24130,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             })
                         ),
-                        !INBUILT_POST_TYPES.includes(postType) && React.createElement(
+                        !INBUILT_POST_TYPES.includes(postType) && taxonomyList && taxonomyList.length > 0 && React.createElement(
                             Fragment,
                             null,
                             React.createElement(FormTokenField, {
                                 multiple: true,
                                 suggestions: taxonomyList && taxonomyList.length > 0 && taxonomyList.map(function (tax) {
-                                    return tax.slug;
+                                    return decodeEntities(tax.name);
                                 }),
                                 value: showCustomTaxList,
                                 label: __('Display these taxonomies', 'advanced-gutenberg'),
@@ -24435,18 +24436,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     );
                                                 })
                                             ),
-                                            !INBUILT_POST_TYPES.includes(postType) && showCustomTaxList && showCustomTaxList.length > 0 && post.tax_additional && showCustomTaxList.map(function (taxSlug) {
+                                            !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.getTaxSlugs().map(function (taxSlug) {
                                                 return React.createElement(
                                                     'div',
                                                     { className: "advgb-post-tax advgb-post-" + taxSlug },
-                                                    !linkCustomTax && post.tax_additional[taxSlug].unlinked.map(function (tag, index) {
+                                                    !linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].unlinked.map(function (tag, index) {
                                                         return React.createElement(
                                                             RawHTML,
                                                             null,
                                                             tag
                                                         );
                                                     }),
-                                                    linkCustomTax && post.tax_additional[taxSlug].linked.map(function (tag, index) {
+                                                    linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].linked.map(function (tag, index) {
                                                         return React.createElement(
                                                             RawHTML,
                                                             null,
@@ -24637,7 +24638,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     _this4.props.setAttributes({ taxIds: taxIds });
                                 }
 
-                                taxonomies.push({ slug: tax, name: taxAttributes.name, suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
+                                taxonomies.push({ slug: tax, name: decodeEntities(taxAttributes.name), suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
 
                                 _this4.setState({ updating: true });
                                 if (typeAttributes.taxonomies.length === taxonomies.length) {
@@ -24720,7 +24721,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 var taxList = taxonomyList && taxonomyList.length > 0 && taxonomyList.map(function (tax) {
-                    return tax.slug;
+                    return decodeEntities(tax.name);
                 });
 
                 var hasNoSuggestion = tokens.some(function (token) {
@@ -24738,6 +24739,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.props.setAttributes({
                     showCustomTaxList: taxes
                 });
+            }
+
+            /**
+             * Returns the tax slugs corresponding to the tax names that appear in the suggestions.
+             */
+
+        }, {
+            key: 'getTaxSlugs',
+            value: function getTaxSlugs() {
+                var taxonomyList = this.state.taxonomyList;
+                var showCustomTaxList = this.props.attributes.showCustomTaxList;
+
+                if (!taxonomyList || !showCustomTaxList || showCustomTaxList.length === 0) {
+                    return [];
+                }
+
+                var slugs = showCustomTaxList.map(function (taxName) {
+                    var tax = find(taxonomyList, { name: decodeEntities(taxName) });
+                    console.log(taxName, decodeEntities(taxName), taxonomyList, tax);
+                    if (tax) {
+                        return tax.slug;
+                    }
+                });
+                return slugs;
             }
         }, {
             key: 'getDisplayImageStatus',
