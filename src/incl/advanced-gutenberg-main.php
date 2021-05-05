@@ -359,12 +359,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION,
                     true
                 );
-                wp_enqueue_script(
-                    'advgb_countdown_scripts',
-                    plugins_url('assets/blocks/countdown/countdown.js', dirname(__FILE__)),
-                    array(),
-                    ADVANCED_GUTENBERG_VERSION
-                );
             }
 
             // Include needed JS libraries
