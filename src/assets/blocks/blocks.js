@@ -23411,7 +23411,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         union = lodash.union,
         sortBy = lodash.sortBy,
         unset = lodash.unset,
-        set = lodash.set;
+        set = lodash.set,
+        find = lodash.find;
     var decodeEntities = wpHtmlEntities.decodeEntities;
     var dateI18n = wpDate.dateI18n,
         __experimentalGetSettings = wpDate.__experimentalGetSettings;
@@ -23728,7 +23729,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     textBeforeReadmore = attributes.textBeforeReadmore,
                     exclude = attributes.exclude,
                     selectedAuthorId = attributes.author,
-                    sliderAutoplay = attributes.sliderAutoplay;
+                    sliderAutoplay = attributes.sliderAutoplay,
+                    linkCustomTax = attributes.linkCustomTax,
+                    showCustomTaxList = attributes.showCustomTaxList;
 
 
                 var recentPosts = this.props.recentPosts;
@@ -23977,7 +23980,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return _this3.selectTaxTerms(tax, value);
                                 },
                                 key: 'query-controls-`${tax.slug}`-select',
-                                label: __('Show content with these ', 'advanced-gutenberg') + ('' + tax.name)
+                                label: __('Show content with these ', 'advanced-gutenberg') + decodeEntities('' + tax.name)
                             });
                         }),
                         React.createElement(_queryControls.AuthorSelect, {
@@ -24124,6 +24127,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 options: [{ label: __('Hide', 'advanced-gutenberg'), value: 'hide' }, { label: __('Show', 'advanced-gutenberg'), value: 'show' }, { label: __('Show & Link', 'advanced-gutenberg'), value: 'link' }],
                                 onChange: function onChange(value) {
                                     setAttributes({ showTags: value });
+                                }
+                            })
+                        ),
+                        !INBUILT_POST_TYPES.includes(postType) && taxonomyList && taxonomyList.length > 0 && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(FormTokenField, {
+                                multiple: true,
+                                suggestions: taxonomyList && taxonomyList.length > 0 && taxonomyList.map(function (tax) {
+                                    return decodeEntities(tax.name);
+                                }),
+                                value: showCustomTaxList,
+                                label: __('Display these taxonomies', 'advanced-gutenberg'),
+                                onChange: function onChange(value) {
+                                    _this3.selectTaxonomies(value);
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Link above taxonomies', 'advanced-gutenberg'),
+                                checked: linkCustomTax,
+                                onChange: function onChange() {
+                                    return setAttributes({ linkCustomTax: !linkCustomTax });
                                 }
                             })
                         ),
@@ -24410,7 +24435,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         tag
                                                     );
                                                 })
-                                            )
+                                            ),
+                                            !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.getTaxSlugs().map(function (taxSlug) {
+                                                return React.createElement(
+                                                    'div',
+                                                    { className: "advgb-post-tax advgb-post-" + taxSlug },
+                                                    !linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].unlinked.map(function (tag, index) {
+                                                        return React.createElement(
+                                                            RawHTML,
+                                                            null,
+                                                            tag
+                                                        );
+                                                    }),
+                                                    linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].linked.map(function (tag, index) {
+                                                        return React.createElement(
+                                                            RawHTML,
+                                                            null,
+                                                            tag
+                                                        );
+                                                    })
+                                                );
+                                            })
                                         ),
                                         React.createElement(
                                             'div',
@@ -24593,7 +24638,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     _this4.props.setAttributes({ taxIds: taxIds });
                                 }
 
-                                taxonomies.push({ slug: tax, name: taxAttributes.name, suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
+                                taxonomies.push({ slug: tax, name: decodeEntities(taxAttributes.name), suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
 
                                 _this4.setState({ updating: true });
                                 if (typeAttributes.taxonomies.length === taxonomies.length) {
@@ -24659,6 +24704,65 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 this.props.setAttributes((_props$setAttributes2 = {
                     taxonomies: taxonomies }, _defineProperty(_props$setAttributes2, tax.slug, suggestions), _defineProperty(_props$setAttributes2, 'taxIds', taxIds), _props$setAttributes2));
+            }
+
+            /**
+             * Selects the correct taxonomy from the suggestions and updates the "showCustomTaxList" attribute.
+             */
+
+        }, {
+            key: 'selectTaxonomies',
+            value: function selectTaxonomies(tokens) {
+                var taxonomyList = this.state.taxonomyList;
+
+
+                if (!taxonomyList) {
+                    return;
+                }
+
+                var taxList = taxonomyList && taxonomyList.length > 0 && taxonomyList.map(function (tax) {
+                    return decodeEntities(tax.name);
+                });
+
+                var hasNoSuggestion = tokens.some(function (token) {
+                    return typeof token === 'string' && !taxList.includes(token);
+                });
+
+                if (hasNoSuggestion) {
+                    return;
+                }
+
+                var taxes = tokens.map(function (token) {
+                    return typeof token === 'string' && taxList[token] ? token : token;
+                });
+
+                this.props.setAttributes({
+                    showCustomTaxList: taxes
+                });
+            }
+
+            /**
+             * Returns the tax slugs corresponding to the tax names that appear in the suggestions.
+             */
+
+        }, {
+            key: 'getTaxSlugs',
+            value: function getTaxSlugs() {
+                var taxonomyList = this.state.taxonomyList;
+                var showCustomTaxList = this.props.attributes.showCustomTaxList;
+
+                if (!taxonomyList || !showCustomTaxList || showCustomTaxList.length === 0) {
+                    return [];
+                }
+
+                var slugs = showCustomTaxList.map(function (taxName) {
+                    var tax = find(taxonomyList, { name: decodeEntities(taxName) });
+                    console.log(taxName, decodeEntities(taxName), taxonomyList, tax);
+                    if (tax) {
+                        return tax.slug;
+                    }
+                });
+                return slugs;
             }
         }, {
             key: 'getDisplayImageStatus',
