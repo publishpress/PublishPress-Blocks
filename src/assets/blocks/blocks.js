@@ -24757,7 +24757,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var slugs = showCustomTaxList.map(function (taxName) {
                     var tax = find(taxonomyList, { name: decodeEntities(taxName) });
-                    console.log(taxName, decodeEntities(taxName), taxonomyList, tax);
                     if (tax) {
                         return tax.slug;
                     }

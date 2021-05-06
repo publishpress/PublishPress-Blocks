@@ -574,8 +574,8 @@ import { AuthorSelect } from './query-controls.jsx';
                                 />
                             </Fragment>
                         }
-                        { taxonomyList && taxonomyList.length > 0 && 
-                            taxonomyList.map( (tax) => 
+                        { taxonomyList && taxonomyList.length > 0 &&
+                            taxonomyList.map( (tax) =>
                                 (
                                     <FormTokenField
                                         multiple
@@ -736,7 +736,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                 />
                             </Fragment>
                         }
-                        { ! INBUILT_POST_TYPES.includes(postType) && taxonomyList && taxonomyList.length > 0 && 
+                        { ! INBUILT_POST_TYPES.includes(postType) && taxonomyList && taxonomyList.length > 0 &&
                             <Fragment>
                                 <FormTokenField
                                     multiple
@@ -1001,7 +1001,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                                 ) )}
                                                 </div>
                                             ) }
-                                            {! INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.getTaxSlugs().map( (taxSlug) => ( 
+                                            {! INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.getTaxSlugs().map( (taxSlug) => (
                                                 <div className={"advgb-post-tax advgb-post-" + taxSlug}>
                                                 {!linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].unlinked.map( ( tag, index ) => (
                                                     <RawHTML>{ tag }</RawHTML>
@@ -1294,10 +1294,9 @@ import { AuthorSelect } from './query-controls.jsx';
             if( ! taxonomyList || ! showCustomTaxList || showCustomTaxList.length === 0 ) {
                 return [];
             }
-            
+
             var slugs = showCustomTaxList.map( (taxName) => {
                 var tax = find(taxonomyList, {name: decodeEntities(taxName)});
-                console.log(taxName,decodeEntities(taxName),taxonomyList,tax);
                 if(tax){
                     return tax.slug;
                 }
