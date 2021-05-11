@@ -296,6 +296,27 @@ function advgbRenderBlockRecentPosts($attributes)
 				}
 			}
 
+			if ( ! in_array( $post_type, array( 'post', 'page' ), true ) && isset( $attributes['showCustomTaxList'] ) && ! empty( $attributes['showCustomTaxList'] ) ) {
+				$info = advgbGetTaxonomyTerms( $post_type, $post->ID, true, false );
+				if ( ! empty( $info ) ) {
+					foreach ( $attributes['showCustomTaxList'] as $name ) {
+						if ( ! isset( $info[ $name ] ) ) {
+							// maybe the name changed?
+							continue;
+						}
+						$props = $info[ $name ];
+						$slug = $props['slug'];
+						$postHtml .= "<div class='advgb-post-tax advgb-post-${slug}'>";
+						if ( isset( $attributes['linkCustomTax'] ) && $attributes['linkCustomTax'] ) {
+							$postHtml .= implode( ' ', $props['linked'] );
+						} else {
+							$postHtml .= implode( ' ', $props['unlinked'] );
+						}
+						$postHtml .= '</div>';
+					}
+				}
+			}
+
             $postHtml .= '</div>'; // end advgb-post-tax-info
 
             $postHtml .= '<div class="advgb-post-content">';
@@ -556,6 +577,16 @@ function advgbRegisterBlockRecentPosts()
             'taxonomies' => array(
                 'type' => 'object',
             ),
+			'showCustomTaxList' => array(
+                'type' => 'array',
+                'items' => array(
+                    'type' => 'string'
+                )
+            ),
+            'linkCustomTax' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
 			// deprecrated attributes...
             'displayDate' => array(
                 'type' => 'boolean',
@@ -708,6 +739,15 @@ function advgbRegisterCustomFields() {
 				'schema'            => null,
 			)
 		);
+
+		register_rest_field( $cpt,
+			'tax_additional',
+			array(
+				'get_callback'  => 'advgbGetAdditionalTaxInfo',
+				'update_callback'   => null,
+				'schema'            => null,
+			)
+		);
 	}
 
 	// custom routes
@@ -815,24 +855,55 @@ function advgbGetComments( $post ) {
 function advgbGetAdditionalTaxInfo( $post ) {
 	$info = array();
 
-	$categories = get_the_category( $post['id'] );
-	if ( ! empty( $categories ) ) {
-		$cats = array( 'linked' => array(), 'unlinked' => array() );
-		foreach ( $categories as $category ) {
-			$cats['linked'][] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_category_link( $category ) ), esc_html( $category->name ) );
-			$cats['unlinked'][] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $category->name ) );
+	$post_type = get_post_type( $post['id'] );
+	if ( 'post' ===  $post_type ) {
+		$categories = get_the_category( $post['id'] );
+		if ( ! empty( $categories ) ) {
+			$cats = array( 'linked' => array(), 'unlinked' => array() );
+			foreach ( $categories as $category ) {
+				$cats['linked'][] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_category_link( $category ) ), esc_html( $category->name ) );
+				$cats['unlinked'][] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $category->name ) );
+			}
+			$info['categories'] = $cats;
 		}
-		$info['categories'] = $cats;
+
+		$tags = get_the_tags( $post['id'] );
+		if ( ! empty( $tags ) ) {
+			$cats = array( 'linked' => array(), 'unlinked' => array() );
+			foreach ( $tags as $tag ) {
+				$cats['linked'][] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_tag_link( $category ) ), esc_html( $tag->name ) );
+				$cats['unlinked'][] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $tag->name ) );
+			}
+			$info['tags'] = $cats;
+		}
+	} else {
+		$info = advgbGetTaxonomyTerms( $post_type, $post['id'], false );
 	}
 
-	$tags = get_the_tags( $post['id'] );
-	if ( ! empty( $tags ) ) {
-		$cats = array( 'linked' => array(), 'unlinked' => array() );
-		foreach ( $tags as $tag ) {
-			$cats['linked'][] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_tag_link( $category ) ), esc_html( $tag->name ) );
-			$cats['unlinked'][] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $tag->name ) );
+	return $info;
+}
+
+/**
+ * Gets the taxonomy terms for a specific custom post.
+ *
+ * @return array
+ */
+function advgbGetTaxonomyTerms( $post_type, $post_id, $front_end = false, $use_tax_slug = true ) {
+	$info = array();
+	$taxonomies = get_object_taxonomies( $post_type, 'objects' );
+	foreach( $taxonomies as $slug => $tax ) {
+		$terms = get_the_terms( $post_id, $slug );
+		$linked = $unlinked = array();
+		foreach( $terms as $term ) {
+			if ( $front_end ) {
+				$linked[] = sprintf( '<div><a href="%s" class="advgb-post-tax-term">%s</a></div>', esc_url( get_term_link( $term->slug, $slug ) ), esc_html( $term->name ) );
+				$unlinked[] = sprintf( '<div><span class="advgb-post-tax-term">%s</span></div>', esc_html( $term->name ) );
+			} else {
+				$linked[] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_term_link( $term->slug, $slug ) ), esc_html( $term->name ) );
+				$unlinked[] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $term->name ) );
+			}
 		}
-		$info['tags'] = $cats;
+		$info[ $use_tax_slug ? $slug : html_entity_decode( $tax->label, ENT_QUOTES ) ] = array( 'linked' => $linked, 'unlinked' => $unlinked, 'slug' => $slug, 'name' => esc_html( $tax->label ) );
 	}
 	return $info;
 }

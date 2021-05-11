@@ -9,7 +9,7 @@ import { AuthorSelect } from './query-controls.jsx';
     const { InspectorControls, BlockControls } = wpBlockEditor;
     const { PanelBody, RangeControl, ToggleControl, TextControl, TextareaControl, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
     const { withSelect } = wpData;
-    const { pickBy, isUndefined, isArray, isNull, uniqWith, isEqual, omit, union, sortBy, unset, set } = lodash;
+    const { pickBy, isUndefined, isArray, isNull, uniqWith, isEqual, omit, union, sortBy, unset, set, find } = lodash;
     const { decodeEntities } = wpHtmlEntities;
     const { dateI18n, __experimentalGetSettings } = wpDate;
 
@@ -285,8 +285,8 @@ import { AuthorSelect } from './query-controls.jsx';
                 let postSuggestions = [];
                 let postTitleVsIdMap = [];
                 postList.forEach( post => {
-                    postSuggestions.push(post.title.rendered);
-                    postTitleVsIdMap[ post.title.rendered ] = post.id;
+                    postSuggestions.push(post.title.raw);
+                    postTitleVsIdMap[ post.title.raw ] = post.id;
                 });
                 this.props.setAttributes( { updatePostSuggestions: false } );
                 this.setState( { postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function(){
@@ -341,6 +341,8 @@ import { AuthorSelect } from './query-controls.jsx';
                 exclude,
                 author: selectedAuthorId,
                 sliderAutoplay,
+                linkCustomTax,
+                showCustomTaxList,
             } = attributes;
 
             let recentPosts = this.props.recentPosts;
@@ -572,8 +574,8 @@ import { AuthorSelect } from './query-controls.jsx';
                                 />
                             </Fragment>
                         }
-                        { taxonomyList && taxonomyList.length > 0 && 
-                            taxonomyList.map( (tax) => 
+                        { taxonomyList && taxonomyList.length > 0 &&
+                            taxonomyList.map( (tax) =>
                                 (
                                     <FormTokenField
                                         multiple
@@ -581,7 +583,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                         value={ this.populateTaxTerms( tax ) }
                                         onChange={ (value) => this.selectTaxTerms( tax, value ) }
                                         key="query-controls-`${tax.slug}`-select"
-                                        label={__('Show content with these ', 'advanced-gutenberg') + `${tax.name}`}
+                                        label={__('Show content with these ', 'advanced-gutenberg') + decodeEntities(`${tax.name}`)}
                                     />
                                 )
                             )
@@ -733,6 +735,23 @@ import { AuthorSelect } from './query-controls.jsx';
                                     onChange={ ( value ) => { setAttributes( { showTags: value } ) } }
                                 />
                             </Fragment>
+                        }
+                        { ! INBUILT_POST_TYPES.includes(postType) && taxonomyList && taxonomyList.length > 0 &&
+                            <Fragment>
+                                <FormTokenField
+                                    multiple
+                                    suggestions={ taxonomyList && taxonomyList.length > 0 && taxonomyList.map( (tax) => decodeEntities(tax.name) ) }
+                                    value={ showCustomTaxList }
+                                    label={ __( 'Display these taxonomies', 'advanced-gutenberg' ) }
+                                    onChange={ ( value ) => { this.selectTaxonomies(value); } }
+                                />
+                                <ToggleControl
+                                    label={ __( 'Link above taxonomies', 'advanced-gutenberg' ) }
+                                    checked={ linkCustomTax }
+                                    onChange={ () => setAttributes( { linkCustomTax: !linkCustomTax } ) }
+                                />
+                            </Fragment>
+
                         }
                         <ToggleControl
                             label={ __( 'Display Read More Link', 'advanced-gutenberg' ) }
@@ -982,6 +1001,16 @@ import { AuthorSelect } from './query-controls.jsx';
                                                 ) )}
                                                 </div>
                                             ) }
+                                            {! INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.getTaxSlugs().map( (taxSlug) => (
+                                                <div className={"advgb-post-tax advgb-post-" + taxSlug}>
+                                                {!linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].unlinked.map( ( tag, index ) => (
+                                                    <RawHTML>{ tag }</RawHTML>
+                                                ) )}
+                                                {linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].linked.map( ( tag, index ) => (
+                                                    <RawHTML>{ tag }</RawHTML>
+                                                ) )}
+                                                </div>
+                                            ))}
                                         </div>
                                         <div className="advgb-post-content">
                                             {displayExcerpt && (
@@ -1154,8 +1183,8 @@ import { AuthorSelect } from './query-controls.jsx';
                             let suggestions = [];
                             let map = [];
                             terms.forEach(term => {
-                                suggestions.push(term.name);
-                                map[ term.name ] = term.id;
+                                suggestions.push(decodeEntities(term.name));
+                                map[ decodeEntities(term.name) ] = term.id;
                             });
 
                             const preselectedNames = this.props.attributes.taxonomies ? this.props.attributes.taxonomies[ tax ] : [];
@@ -1165,7 +1194,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                 this.props.setAttributes( { taxIds: taxIds } );
                             }
 
-                            taxonomies.push({ slug: tax, name: taxAttributes.name, suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
+                            taxonomies.push({ slug: tax, name: decodeEntities(taxAttributes.name), suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
 
                             this.setState( { updating: true } );
                             if(typeAttributes.taxonomies.length === taxonomies.length){
@@ -1225,6 +1254,54 @@ import { AuthorSelect } from './query-controls.jsx';
                 [tax.slug]: suggestions, // to show in the select list
                 taxIds: taxIds, // to send in the query
             });
+        }
+
+        /**
+         * Selects the correct taxonomy from the suggestions and updates the "showCustomTaxList" attribute.
+         */
+        selectTaxonomies(tokens) {
+            const { taxonomyList } = this.state;
+
+            if( ! taxonomyList ) {
+                return;
+            }
+
+            let taxList = taxonomyList && taxonomyList.length > 0 && taxonomyList.map( (tax) => decodeEntities(tax.name) );
+
+            var hasNoSuggestion = tokens.some(function (token) {
+                return typeof token === 'string' && !taxList.includes(token);
+            });
+
+            if (hasNoSuggestion) {
+                return;
+            }
+
+            var taxes = tokens.map(function (token) {
+                return typeof token === 'string' && taxList[token] ? token : token;
+            })
+
+            this.props.setAttributes({
+                showCustomTaxList: taxes,
+            });
+        }
+
+        /**
+         * Returns the tax slugs corresponding to the tax names that appear in the suggestions.
+         */
+        getTaxSlugs() {
+            const { taxonomyList } = this.state;
+            const { showCustomTaxList } = this.props.attributes;
+            if( ! taxonomyList || ! showCustomTaxList || showCustomTaxList.length === 0 ) {
+                return [];
+            }
+
+            var slugs = showCustomTaxList.map( (taxName) => {
+                var tax = find(taxonomyList, {name: decodeEntities(taxName)});
+                if(tax){
+                    return tax.slug;
+                }
+            });
+            return slugs;
         }
 
         getDisplayImageStatus(attributes, index) {

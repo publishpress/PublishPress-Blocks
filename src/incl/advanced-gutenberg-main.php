@@ -1365,6 +1365,22 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     plugins_url('assets/css/slick-theme.css', dirname(__FILE__))
                 );
 
+                // Free
+                if(!defined('ADVANCED_GUTENBERG_PRO')) {
+                  wp_enqueue_style(
+                      'advgb_top_notice',
+                      plugins_url('assets/css/top-notice.css', dirname(__FILE__)),
+                      array(),
+                      ADVANCED_GUTENBERG_VERSION
+                  );
+                  wp_enqueue_script(
+                      'advgb_top_notice_js',
+                      plugins_url('assets/js/top-notice.js', dirname(__FILE__)),
+                      array(),
+                      ADVANCED_GUTENBERG_VERSION
+                  );
+                }
+
                 // Register JS
                 wp_register_script(
                     'advgb_main_js',
