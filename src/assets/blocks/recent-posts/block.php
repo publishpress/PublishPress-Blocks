@@ -306,11 +306,11 @@ function advgbRenderBlockRecentPosts($attributes)
 						}
 						$props = $info[ $name ];
 						$slug = $props['slug'];
-						$postHtml .= "<div class='advgb-post-tax advgb-post-${slug}'>";
+						$postHtml .= "<div class='advgb-post-tax advgb-post-cpt advgb-post-${slug}'>";
 						if ( isset( $attributes['linkCustomTax'] ) && $attributes['linkCustomTax'] ) {
-							$postHtml .= implode( ' ', $props['linked'] );
+							$postHtml .= implode( '', $props['linked'] );
 						} else {
-							$postHtml .= implode( ' ', $props['unlinked'] );
+							$postHtml .= implode( '', $props['unlinked'] );
 						}
 						$postHtml .= '</div>';
 					}
