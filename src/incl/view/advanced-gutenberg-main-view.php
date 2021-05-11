@@ -34,7 +34,21 @@ $tabs_data = array(
         'icon' => 'code',
     ),
 );
+
+// Pro
+if(!defined('ADVANCED_GUTENBERG_PRO')) {
 ?>
+    <div class="pp-version-notice-bold-purple">
+        <div class="pp-version-notice-bold-purple-message">
+            <?php _e('You\'re using PublishPress Blocks Free. The Pro version has more features and support.', 'advanced-gutenberg') ?>
+        </div>
+        <div class="pp-version-notice-bold-purple-button">
+            <a href="https://publishpress.com/links/blocks" target="_blank">
+                <?php _e('Upgrade to Pro', 'advanced-gutenberg') ?>
+            </a>
+        </div>
+    </div>
+<?php } ?>
 
 <div class="ju-main-wrapper" style="display: none">
     <div class="ju-left-panel-toggle">
