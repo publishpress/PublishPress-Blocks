@@ -24456,7 +24456,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.getTaxSlugs().map(function (taxSlug) {
                                                 return React.createElement(
                                                     'div',
-                                                    { className: "advgb-post-tax advgb-post-" + taxSlug },
+                                                    { className: "advgb-post-tax advgb-post-cpt advgb-post-" + taxSlug },
                                                     !linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].unlinked.map(function (tag, index) {
                                                         return React.createElement(
                                                             RawHTML,
