@@ -1,10 +1,11 @@
-(function ( wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents ) {
+(function ( wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { addFilter } = wpHooks;
     const { __ } = wpI18n;
     const { hasBlockSupport } = wpBlocks;
     const { InspectorControls } = wpBlockEditor;
     const { SelectControl } = wpComponents;
+    const { createHigherOrderComponent } = wpCompose;
 
     // Register custom styles to blocks attributes
     addFilter( 'blocks.registerBlockType', 'advgb/registerCustomStyleClass', function ( settings ) {
@@ -55,7 +56,7 @@
                                       marginLeft: '10px',
                                   } } />
                         ] }
-                        help={__( 'This option let you add custom style for current paragraph. (Front-end only!)', 'advanced-gutenberg' )}
+                        help={__( 'This option let you add custom style for current paragraph', 'advanced-gutenberg' )}
                         value={props.attributes.customStyle}
                         options={advgbBlocks.customStyles.map( ( cstyle, index ) => {
                             if (cstyle.title) advgbBlocks.customStyles[ index ].label = cstyle.title;
@@ -92,4 +93,23 @@
 
         return extraProps;
     } );
-})( wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components );
+
+
+    const withStyleClasses = createHigherOrderComponent( ( BlockListBlock ) => {
+        return ( props ) => {
+            if ( props.name !== 'core/paragraph' || !hasBlockSupport( props.name, 'customStyle', true ) ) {
+                return <BlockListBlock { ...props } />
+            }
+
+            const {
+                customStyle,
+            } = props.attributes;
+
+            return <BlockListBlock { ...props } className={ `${ customStyle }` } />;
+        };
+    }, 'withStyleClasses' );
+
+    // Apply custom styles on back-end
+    wp.hooks.addFilter( 'editor.BlockListBlock', 'advgb/loadBackendCustomStyles', withStyleClasses );
+
+})( wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components, wp.compose );

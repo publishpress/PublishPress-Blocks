@@ -16997,7 +16997,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-(function (wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents) {
+(function (wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var addFilter = wpHooks.addFilter;
     var __ = wpI18n.__;
@@ -17005,6 +17005,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls;
     var SelectControl = wpComponents.SelectControl;
+    var createHigherOrderComponent = wpCompose.createHigherOrderComponent;
 
     // Register custom styles to blocks attributes
 
@@ -17052,7 +17053,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                             display: 'inline-block',
                             marginLeft: '10px'
                         } })],
-                    help: __('This option let you add custom style for current paragraph. (Front-end only!)', 'advanced-gutenberg'),
+                    help: __('This option let you add custom style for current paragraph', 'advanced-gutenberg'),
                     value: props.attributes.customStyle,
                     options: advgbBlocks.customStyles.map(function (cstyle, index) {
                         if (cstyle.title) advgbBlocks.customStyles[index].label = cstyle.title;
@@ -17091,7 +17092,23 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
         return extraProps;
     });
-})(wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components);
+
+    var withStyleClasses = createHigherOrderComponent(function (BlockListBlock) {
+        return function (props) {
+            if (props.name !== 'core/paragraph' || !hasBlockSupport(props.name, 'customStyle', true)) {
+                return React.createElement(BlockListBlock, props);
+            }
+
+            var customStyle = props.attributes.customStyle;
+
+
+            return React.createElement(BlockListBlock, _extends({}, props, { className: '' + customStyle }));
+        };
+    }, 'withStyleClasses');
+
+    // Apply custom styles on back-end
+    wp.hooks.addFilter('editor.BlockListBlock', 'advgb/loadBackendCustomStyles', withStyleClasses);
+})(wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components, wp.compose);
 
 /***/ }),
 
