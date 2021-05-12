@@ -1002,7 +1002,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                                 </div>
                                             ) }
                                             {! INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.getTaxSlugs().map( (taxSlug) => (
-                                                <div className={"advgb-post-tax advgb-post-" + taxSlug}>
+                                                <div className={"advgb-post-tax advgb-post-cpt advgb-post-" + taxSlug}>
                                                 {!linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].unlinked.map( ( tag, index ) => (
                                                     <RawHTML>{ tag }</RawHTML>
                                                 ) )}
