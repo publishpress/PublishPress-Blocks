@@ -433,7 +433,7 @@ input.ju-radiobox:focus {
     width: 300px;
     height: 100%;
     padding: 20px 0;
-    background-image: linear-gradient(to bottom, $purple, $purple-hover);
+    background-image: linear-gradient(to bottom, darken($purple, 10%), darken($purple-hover, 10%));
     position: fixed;
     overflow: auto;
     z-index: 15;
