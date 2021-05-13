@@ -36,6 +36,16 @@ $tabs_data = array(
 );
 
 // Pro
+if(defined('ADVANCED_GUTENBERG_PRO')) {
+    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_license_page' ) ) {
+        array_push(
+            $tabs_data,
+            PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_license_page('tabs_data')
+        );
+    }
+}
+
+// Pro
 if(!defined('ADVANCED_GUTENBERG_PRO')) {
 ?>
     <div class="pp-version-notice-bold-purple">
