@@ -5074,10 +5074,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
             // Pro
             if(defined('ADVANCED_GUTENBERG_PRO')) {
                 if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_get_blocks' ) ) {
-                    array_push(
-                        $availableBlocks,
-                        PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_get_blocks()
-                    );
+                    $availableProBlocks = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_get_blocks();
+                    foreach ($availableProBlocks as $availableProBlock) {
+                        array_push(
+                            $availableBlocks,
+                            $availableProBlock
+                        );
+                    }
             	}
             }
 
