@@ -165,6 +165,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Autoplay control to Slider view for Content Display block
   * Add: Top notice in admin with link to Pro version
   * Add: Darken left menu in admin
+  * Add: New sidebar menu background color
   * Fix: Default image load in editor for WooProducts block
   * Fix: Web Stories block by Google not available in editor
   * Fix: Multiple email addresses in Email settings
