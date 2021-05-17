@@ -42,7 +42,7 @@
 
     ul#adminmenu a.wp-has-current-submenu:after,
     ul#adminmenu > li.current > a.current:after {
-        border-right-color: $sidebar-color-active;
+        border-right-color: $sidebar-color;
     }
 
     #adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head,
