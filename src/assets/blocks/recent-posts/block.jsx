@@ -9,7 +9,7 @@ import { AuthorSelect } from './query-controls.jsx';
     const { InspectorControls, BlockControls } = wpBlockEditor;
     const { PanelBody, RangeControl, ToggleControl, TextControl, TextareaControl, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
     const { withSelect } = wpData;
-    const { pickBy, isUndefined, isArray, isNull, uniqWith, isEqual, omit, union } = lodash;
+    const { pickBy, isUndefined, isArray, isNull, uniqWith, isEqual, omit, union, sortBy, unset, set, find } = lodash;
     const { decodeEntities } = wpHtmlEntities;
     const { dateI18n, __experimentalGetSettings } = wpDate;
 
@@ -23,6 +23,8 @@ import { AuthorSelect } from './query-controls.jsx';
             <path d="M11,13H6v5h5V13z M10,17H7v-3h3V17z"/>
         </svg>
     );
+
+    const INBUILT_POST_TYPES = [ 'page', 'post' ];
 
     const MAX_CATEGORIES_SUGGESTIONS = 20;
 
@@ -86,6 +88,8 @@ import { AuthorSelect } from './query-controls.jsx';
         { layout: 'np-3-3', icon: 'np-3-3', title: __( 'The leading post on top, below 2 columns with 1 post in the left and 3 posts in the right', 'advanced-gutenberg' ) },
     ];
 
+    const CUSTOM_TAX_PREFIX = 'custom-tax-';
+
     let initSlider = null;
 
     class RecentPostsEdit extends Component {
@@ -97,10 +101,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 tagsList: [],
                 catIdVsName: [],
                 tagNameVsId: [],
-                postTypeList: [
-                { label: __( 'Post' ), value: 'post' },
-                { label: __( 'Page' ), value: 'page' },
-                ],
+                postTypeList: [],
                 updating: false,
                 tabSelected: 'desktop',
                 updatePostSuggestions: true,
@@ -139,6 +140,22 @@ import { AuthorSelect } from './query-controls.jsx';
                 // Finally set changed attribute to true, so we don't modify anything again
                 setAttributes( { changed: true } );
             }
+
+            wp.apiFetch( {
+                path: wp.url.addQueryArgs( 'advgb/v1/exclude_post_types' ),
+            } ).then( ( excludePostTypes ) => {
+                wp.apiFetch( {
+                    path: wp.url.addQueryArgs( 'wp/v2/types', { context: 'edit' } ),
+                } ).then( ( list ) => {
+                    let types = [];
+                    Object.keys(list).forEach(type => {
+                        if(list[ type ].viewable && ! excludePostTypes.includes( type ) ){
+                            types.push( {label: list[ type ].name, value: list[ type ].slug } );
+                        }
+                    });
+                    this.setState( { postTypeList: types } );
+                } );
+            } );
 
             wp.apiFetch( {
                 path: wp.url.addQueryArgs( 'wp/v2/categories', tagsAndcategoriesListQuery ),
@@ -191,6 +208,11 @@ import { AuthorSelect } from './query-controls.jsx';
                   postDate: postDateDisplay,
                   displayDate: false,
             });
+
+            if( ! INBUILT_POST_TYPES.includes( attributes.postType ) ){
+                this.generateTaxTerms( attributes.postType );
+            }
+
         }
 
         componentWillUpdate( nextProps ) {
@@ -222,7 +244,7 @@ import { AuthorSelect } from './query-controls.jsx';
         componentDidUpdate( prevProps ) {
             const that = this;
             const { attributes, clientId, postList } = this.props;
-            const { postView, updatePostSuggestions } = attributes;
+            const { postView, updatePostSuggestions, sliderAutoplay } = attributes;
             const $ = jQuery;
 
             if (postView === 'slider') {
@@ -230,7 +252,10 @@ import { AuthorSelect } from './query-controls.jsx';
                     $(`#block-${clientId} .advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)`).slick( {
                         dots: true,
                         adaptiveHeight: true,
+                        autoplay: sliderAutoplay,
                     } );
+
+                    $(`#block-${clientId} .advgb-recent-posts-block.slider-view .advgb-recent-posts.slick-initialized`).slick('slickSetOption', 'autoplay', sliderAutoplay, true);
 
                     if (that.state.updating) {
                         that.setState( { updating: false } );
@@ -260,8 +285,8 @@ import { AuthorSelect } from './query-controls.jsx';
                 let postSuggestions = [];
                 let postTitleVsIdMap = [];
                 postList.forEach( post => {
-                    postSuggestions.push(post.title.rendered);
-                    postTitleVsIdMap[ post.title.rendered ] = post.id;
+                    postSuggestions.push(post.title.raw);
+                    postTitleVsIdMap[ post.title.raw ] = post.id;
                 });
                 this.props.setAttributes( { updatePostSuggestions: false } );
                 this.setState( { postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function(){
@@ -276,7 +301,7 @@ import { AuthorSelect } from './query-controls.jsx';
         }
 
         render() {
-            const { categoriesList, tagsList, postTypeList, tabSelected, authorList, postSuggestions } = this.state;
+            const { categoriesList, tagsList, postTypeList, tabSelected, authorList, postSuggestions, taxonomyList } = this.state;
             const { attributes, setAttributes, recentPosts: recentPostsList } = this.props;
             const {
                 postView,
@@ -315,6 +340,9 @@ import { AuthorSelect } from './query-controls.jsx';
                 textBeforeReadmore,
                 exclude,
                 author: selectedAuthorId,
+                sliderAutoplay,
+                linkCustomTax,
+                showCustomTaxList,
             } = attributes;
 
             let recentPosts = this.props.recentPosts;
@@ -342,6 +370,11 @@ import { AuthorSelect } from './query-controls.jsx';
                                 { label: __( 'Headline', 'advanced-gutenberg' ), value: 'headline' },
                             ] }
                             onChange={ ( value ) => setAttributes( { sliderStyle: value } ) }
+                        />
+                        <ToggleControl
+                            label={ __( 'Autoplay', 'advanced-gutenberg' ) }
+                            checked={ sliderAutoplay }
+                            onChange={ () => setAttributes( { sliderAutoplay: !sliderAutoplay } ) }
                         />
                     </PanelBody>
                     }
@@ -513,33 +546,47 @@ import { AuthorSelect } from './query-controls.jsx';
                     </PanelBody>
                     <PanelBody title={ __( 'Filters', 'advanced-gutenberg' ) }>
                         { postType === 'post' &&
-                            <FormTokenField
-                                key="query-controls-categories-select"
-                                label={__('Show content with these Categories', 'advanced-gutenberg')}
-                                value={
-                                    categories &&
-                                    categories.map((item) => ({
-                                        id: item.id,
-                                        value: item.name || item.value,
-                                    }))
-                                }
-                                suggestions={Object.keys(categoriesList)}
-                                onChange={ ( value ) => { this.selectCategories(value); } }
-                                maxSuggestions={ MAX_CATEGORIES_SUGGESTIONS }
-                            />
+                            <Fragment>
+                                <FormTokenField
+                                    key="query-controls-categories-select"
+                                    label={__('Show content with these Categories', 'advanced-gutenberg')}
+                                    value={
+                                        categories &&
+                                        categories.map((item) => ({
+                                            id: item.id,
+                                            value: item.name || item.value,
+                                        }))
+                                    }
+                                    suggestions={Object.keys(categoriesList)}
+                                    onChange={ ( value ) => { this.selectCategories(value); } }
+                                    maxSuggestions={ MAX_CATEGORIES_SUGGESTIONS }
+                                />
+                                <FormTokenField
+                                    multiple
+                                    suggestions={ tagsList }
+                                    value={ tags }
+                                    label={ __( 'Show content with these Tags', 'advanced-gutenberg' ) }
+                                    placeholder={ __( 'Type a tag', 'advanced-gutenberg' ) }
+                                    onChange={ ( value ) => {
+                                                        this.selectTags(value);
+                                                    }
+                                    }
+                                />
+                            </Fragment>
                         }
-                        { postType === 'post' &&
-                            <FormTokenField
-                                multiple
-                                suggestions={ tagsList }
-                                value={ tags }
-                                label={ __( 'Show content with these Tags', 'advanced-gutenberg' ) }
-                                placeholder={ __( 'Type a tag', 'advanced-gutenberg' ) }
-                                onChange={ ( value ) => {
-                                                    this.selectTags(value);
-                                                }
-                                }
-                            />
+                        { taxonomyList && taxonomyList.length > 0 &&
+                            taxonomyList.map( (tax) =>
+                                (
+                                    <FormTokenField
+                                        multiple
+                                        suggestions={ tax.suggestions }
+                                        value={ this.populateTaxTerms( tax ) }
+                                        onChange={ (value) => this.selectTaxTerms( tax, value ) }
+                                        key="query-controls-`${tax.slug}`-select"
+                                        label={__('Show content with these ', 'advanced-gutenberg') + decodeEntities(`${tax.name}`)}
+                                    />
+                                )
+                            )
                         }
                         <AuthorSelect
                             key="query-controls-author-select"
@@ -688,6 +735,23 @@ import { AuthorSelect } from './query-controls.jsx';
                                     onChange={ ( value ) => { setAttributes( { showTags: value } ) } }
                                 />
                             </Fragment>
+                        }
+                        { ! INBUILT_POST_TYPES.includes(postType) && taxonomyList && taxonomyList.length > 0 &&
+                            <Fragment>
+                                <FormTokenField
+                                    multiple
+                                    suggestions={ taxonomyList && taxonomyList.length > 0 && taxonomyList.map( (tax) => decodeEntities(tax.name) ) }
+                                    value={ showCustomTaxList }
+                                    label={ __( 'Display these taxonomies', 'advanced-gutenberg' ) }
+                                    onChange={ ( value ) => { this.selectTaxonomies(value); } }
+                                />
+                                <ToggleControl
+                                    label={ __( 'Link above taxonomies', 'advanced-gutenberg' ) }
+                                    checked={ linkCustomTax }
+                                    onChange={ () => setAttributes( { linkCustomTax: !linkCustomTax } ) }
+                                />
+                            </Fragment>
+
                         }
                         <ToggleControl
                             label={ __( 'Display Read More Link', 'advanced-gutenberg' ) }
@@ -937,12 +1001,22 @@ import { AuthorSelect } from './query-controls.jsx';
                                                 ) )}
                                                 </div>
                                             ) }
+                                            {! INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.getTaxSlugs().map( (taxSlug) => (
+                                                <div className={"advgb-post-tax advgb-post-cpt advgb-post-" + taxSlug}>
+                                                {!linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].unlinked.map( ( tag, index ) => (
+                                                    <RawHTML>{ tag }</RawHTML>
+                                                ) )}
+                                                {linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].linked.map( ( tag, index ) => (
+                                                    <RawHTML>{ tag }</RawHTML>
+                                                ) )}
+                                                </div>
+                                            ))}
                                         </div>
                                         <div className="advgb-post-content">
                                             {displayExcerpt && (
                                                 <div className="advgb-post-excerpt"
                                                      dangerouslySetInnerHTML={ {
-                                                         __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.raw
+                                                         __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : (post.excerpt ? post.excerpt.raw : '')
                                                      } } />
                                             ) }
                                             <div className="advgb-text-before-readmore"><RawHTML>{ textBeforeReadmore }</RawHTML></div>
@@ -1074,8 +1148,160 @@ import { AuthorSelect } from './query-controls.jsx';
             this.props.setAttributes({ [type]: tokens, [typeForQuery]: ids });
         }
 
-        updatePostType(type) {
-            this.props.setAttributes( { postType: type, exclude: [], excludeIds: [], updatePostSuggestions: true } );
+        updatePostType(postType) {
+            this.setState( { taxonomyList: null } );
+            if(! INBUILT_POST_TYPES.includes( postType )){
+                this.generateTaxTerms( postType );
+            }
+
+            this.props.setAttributes( { postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true } );
+        }
+
+        /**
+         * Generates taxonomy list for a post type and sets it in the state as "taxonomyList".
+         */
+        generateTaxTerms( postType ) {
+            if(! postType){
+                return;
+            }
+
+            // fetch all taxonomies
+            wp.apiFetch( {
+                path: wp.url.addQueryArgs( `wp/v2/types/${postType}`, { context: 'edit' } ),
+            } ).then( ( typeAttributes ) => {
+                let taxonomies = [];
+                let taxIds = {};
+                typeAttributes.taxonomies.forEach(tax => {
+                    // fetch taxonomy attributes
+                    wp.apiFetch( {
+                        path: wp.url.addQueryArgs( `wp/v2/taxonomies/${tax}`, { context: 'edit' } ),
+                    } ).then( ( taxAttributes ) => {
+                        // fetch all terms
+                        wp.apiFetch( {
+                            path: wp.url.addQueryArgs( `wp/v2/${taxAttributes.rest_base}`, { context: 'edit' } ),
+                        } ).then( ( terms ) => {
+                            let suggestions = [];
+                            let map = [];
+                            terms.forEach(term => {
+                                suggestions.push(decodeEntities(term.name));
+                                map[ decodeEntities(term.name) ] = term.id;
+                            });
+
+                            const preselectedNames = this.props.attributes.taxonomies ? this.props.attributes.taxonomies[ tax ] : [];
+                            if(preselectedNames){
+                                let preselectedIds = preselectedNames.map(name => map[ name ] );
+                                set( taxIds, tax, preselectedIds );
+                                this.props.setAttributes( { taxIds: taxIds } );
+                            }
+
+                            taxonomies.push({ slug: tax, name: decodeEntities(taxAttributes.name), suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
+
+                            this.setState( { updating: true } );
+                            if(typeAttributes.taxonomies.length === taxonomies.length){
+                                // set state only when all taxonomies have been fetched
+                                // otherwise the taxonomy boxes will appear one at a time making the page jittery
+                                // we will sort the taxonomies so that the boxes are always in a predictable, consistent order
+                                this.setState( { taxonomyList: sortBy(taxonomies, ['slug']), updating: false } );
+                            }
+                        } );
+                    } );
+                } );
+            } );
+        }
+
+        /**
+         * Populates the taxonomy terms in the suggestions box.
+         */
+        populateTaxTerms( tax ) {
+            const { taxonomies } = this.props.attributes;
+            return taxonomies && taxonomies[tax.slug];
+        }
+
+        /**
+         * Selects the correct the taxonomy term from the suggestions and updates the "taxonomies" attribute.
+         */
+        selectTaxTerms( tax, tokens ) {
+            var hasNoSuggestion = tokens.some(function (token) {
+                return typeof token === 'string' && !tax.map[token];
+            });
+
+            if (hasNoSuggestion) {
+                return;
+            }
+
+            var suggestions = tokens.map(function (token) {
+                return typeof token === 'string' && tax.map[token] ? token : token;
+            })
+
+            var ids = tokens.map(function (token) {
+                return typeof token === 'string' ? tax.map[token] : token.id;
+            })
+
+            let taxonomies = this.props.attributes.taxonomies || {};
+            unset( taxonomies, tax.slug );
+            if(suggestions){
+                set( taxonomies, tax.slug, suggestions );
+            }
+
+            let taxIds = this.props.attributes.taxIds || {};
+            unset( taxIds, tax.slug );
+            if(ids){
+                set( taxIds, tax.slug, ids );
+            }
+
+            this.props.setAttributes({
+                taxonomies: taxonomies, // to save in the attributes
+                [tax.slug]: suggestions, // to show in the select list
+                taxIds: taxIds, // to send in the query
+            });
+        }
+
+        /**
+         * Selects the correct taxonomy from the suggestions and updates the "showCustomTaxList" attribute.
+         */
+        selectTaxonomies(tokens) {
+            const { taxonomyList } = this.state;
+
+            if( ! taxonomyList ) {
+                return;
+            }
+
+            let taxList = taxonomyList && taxonomyList.length > 0 && taxonomyList.map( (tax) => decodeEntities(tax.name) );
+
+            var hasNoSuggestion = tokens.some(function (token) {
+                return typeof token === 'string' && !taxList.includes(token);
+            });
+
+            if (hasNoSuggestion) {
+                return;
+            }
+
+            var taxes = tokens.map(function (token) {
+                return typeof token === 'string' && taxList[token] ? token : token;
+            })
+
+            this.props.setAttributes({
+                showCustomTaxList: taxes,
+            });
+        }
+
+        /**
+         * Returns the tax slugs corresponding to the tax names that appear in the suggestions.
+         */
+        getTaxSlugs() {
+            const { taxonomyList } = this.state;
+            const { showCustomTaxList } = this.props.attributes;
+            if( ! taxonomyList || ! showCustomTaxList || showCustomTaxList.length === 0 ) {
+                return [];
+            }
+
+            var slugs = showCustomTaxList.map( (taxName) => {
+                var tax = find(taxonomyList, {name: decodeEntities(taxName)});
+                if(tax){
+                    return tax.slug;
+                }
+            });
+            return slugs;
         }
 
         getDisplayImageStatus(attributes, index) {
@@ -1112,7 +1338,7 @@ import { AuthorSelect } from './query-controls.jsx';
         },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, excludeIds, author } = props.attributes;
+            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, excludeIds, author, taxonomies, taxIds } = props.attributes;
 
             const catIds = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
 
@@ -1128,8 +1354,16 @@ import { AuthorSelect } from './query-controls.jsx';
                 author: author,
             }, ( value ) => !isUndefined( value ) && !(isArray(value) && (isNull(value) || value.length === 0)) );
 
+            let filterTaxNames = [];
+            if(taxIds){
+                Object.keys(taxIds).map(taxSlug => {
+                    filterTaxNames.push(taxSlug);
+                    recentPostsQuery[ taxSlug ] = taxIds[ taxSlug ];
+                });
+            }
+
             // generate posts without filters for post suggestions
-            const postSuggestionsQuery = omit( recentPostsQuery, [ 'exclude', 'categories', 'tags', 'per_page' ] );
+            const postSuggestionsQuery = omit( recentPostsQuery, union( [ 'exclude', 'categories', 'tags', 'per_page' ], filterTaxNames ) );
             let updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
 
             return {

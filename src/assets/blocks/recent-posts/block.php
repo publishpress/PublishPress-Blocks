@@ -73,7 +73,7 @@ function advgbRenderBlockRecentPosts($attributes)
 		$categories = $attributes['category'];
 	}
 
-	$tax_query = null;
+	$tax_query = [];
 	if ( !empty($attributes['tags'] ) ){
 		$tax_query = array(
 				array(
@@ -116,6 +116,19 @@ function advgbRenderBlockRecentPosts($attributes)
     if( isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ) {
         $args['post__not_in'] = isset( $args['post__not_in'] ) ? array_merge( $args['post__not_in'], array( $post->ID ) ) : array( $post->ID );
     }
+
+	if( isset( $attributes['taxonomies'] ) && ! empty( $attributes['taxonomies'] ) ) {
+		foreach( $attributes['taxonomies'] as $slug => $terms ) {
+			if ( count( $terms ) > 0 ) {
+				$tax_query[] = array(
+						'taxonomy' => $slug,
+						'field' => 'name',
+						'terms' => $terms,
+						'operator' => 'IN',
+				);
+			}
+		}
+	}
 
 	// use tax for anything but pages...
 	if ( ! in_array( $post_type, array( 'page' ), true ) ) {
@@ -283,6 +296,27 @@ function advgbRenderBlockRecentPosts($attributes)
 				}
 			}
 
+			if ( ! in_array( $post_type, array( 'post', 'page' ), true ) && isset( $attributes['showCustomTaxList'] ) && ! empty( $attributes['showCustomTaxList'] ) ) {
+				$info = advgbGetTaxonomyTerms( $post_type, $post->ID, true, false );
+				if ( ! empty( $info ) ) {
+					foreach ( $attributes['showCustomTaxList'] as $name ) {
+						if ( ! isset( $info[ $name ] ) ) {
+							// maybe the name changed?
+							continue;
+						}
+						$props = $info[ $name ];
+						$slug = $props['slug'];
+						$postHtml .= "<div class='advgb-post-tax advgb-post-cpt advgb-post-${slug}'>";
+						if ( isset( $attributes['linkCustomTax'] ) && $attributes['linkCustomTax'] ) {
+							$postHtml .= implode( '', $props['linked'] );
+						} else {
+							$postHtml .= implode( '', $props['unlinked'] );
+						}
+						$postHtml .= '</div>';
+					}
+				}
+			}
+
             $postHtml .= '</div>'; // end advgb-post-tax-info
 
             $postHtml .= '<div class="advgb-post-content">';
@@ -339,6 +373,9 @@ function advgbRenderBlockRecentPosts($attributes)
     } elseif ($attributes['postView'] === 'slider') {
         $blockClass = 'slider-view';
         $blockClass .= ' style-' . $attributes['sliderStyle'];
+		if ( isset( $attributes['sliderAutoplay'] ) && $attributes['sliderAutoplay'] ) {
+	        $blockClass .= ' slider-autoplay';
+		}
     } elseif ($attributes['postView'] === 'frontpage') {
         $blockClass = 'frontpage-view';
         $blockClass .= ' layout-' . $attributes['frontpageLayout'];
@@ -491,6 +528,10 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'string',
                 'default' => 'default',
             ),
+            'sliderAutoplay' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
             'newspaperLayout' => array(
                 'type' => 'string',
                 'default' => 'np-1-3',
@@ -532,6 +573,19 @@ function advgbRegisterBlockRecentPosts()
             ),
             'author' => array(
                 'type' => 'string',
+            ),
+            'taxonomies' => array(
+                'type' => 'object',
+            ),
+			'showCustomTaxList' => array(
+                'type' => 'array',
+                'items' => array(
+                    'type' => 'string'
+                )
+            ),
+            'linkCustomTax' => array(
+                'type' => 'boolean',
+                'default' => false,
             ),
 			// deprecrated attributes...
             'displayDate' => array(
@@ -637,6 +691,65 @@ function advgbRegisterCustomFields() {
         )
     );
 
+	// CPT fields
+	foreach ( advgbGetCPTs() as $cpt ) {
+		register_rest_field( $cpt, 'author' );
+
+		register_rest_field( $cpt,
+			'featured_img',
+			array(
+				'get_callback'  => 'advgbGetFeaturedImage',
+				'update_callback'   => null,
+				'schema'            => null,
+			)
+		);
+
+		register_rest_field( $cpt,
+			'coauthors',
+			array(
+				'get_callback'  => 'advgbGetCoauthors',
+				'update_callback'   => null,
+				'schema'            => null,
+			)
+		);
+
+		register_rest_field( $cpt,
+			'author_meta',
+			array(
+				'get_callback'  => 'advgbGetAuthorMeta',
+				'update_callback'   => null,
+				'schema'            => null,
+			)
+		);
+
+		register_rest_field( $cpt,
+			'relative_dates',
+			array(
+				'get_callback'  => 'advgbGetRelativeDates',
+				'update_callback'   => null,
+				'schema'            => null,
+			)
+		);
+
+		register_rest_field( $cpt,
+			'featured_img_caption',
+			array(
+				'get_callback'  => 'advgbGetImageCaption',
+				'update_callback'   => null,
+				'schema'            => null,
+			)
+		);
+
+		register_rest_field( $cpt,
+			'tax_additional',
+			array(
+				'get_callback'  => 'advgbGetAdditionalTaxInfo',
+				'update_callback'   => null,
+				'schema'            => null,
+			)
+		);
+	}
+
 	// custom routes
 	register_rest_route( 'advgb/v1', '/authors/', array(
 		'methods' => 'GET',
@@ -644,10 +757,27 @@ function advgbRegisterCustomFields() {
 		'permission_callback' => function () {
 			return current_user_can( 'edit_others_posts' );
 		},
-  ) );
+	) );
+
+	register_rest_route( 'advgb/v1', '/exclude_post_types/', array(
+		'methods' => 'GET',
+		'callback' => 'advgbExcludePostTypes',
+		'permission_callback' => function () {
+			return current_user_can( 'edit_others_posts' );
+		},
+	) );
 
 }
 add_action( 'rest_api_init', 'advgbRegisterCustomFields' );
+
+/**
+ * Returns the custom post types.
+ *
+ * @return array
+ */
+function advgbGetCPTs() {
+	return get_post_types( array( '_builtin' => false, 'public' => true ) );
+}
 
 /**
  * Allow more orderBy values for posts.
@@ -672,6 +802,20 @@ function advgbAllowPageQueryVars( $query_params ) {
 	return $query_params;
 }
 add_filter( 'rest_page_collection_params', 'advgbAllowPageQueryVars' );
+
+/**
+ * Allow more orderBy values for custom post types.
+ *
+ * @return array
+ */
+function advgbAllowCPTQueryVars( $query_params ) {
+	$query_params['orderby']['enum'][] = 'author';
+	return $query_params;
+}
+
+foreach ( advgbGetCPTs() as $cpt ) {
+	add_filter( "rest_{$cpt}_collection_params", 'advgbAllowCPTQueryVars' );
+}
 
 /**
  * Returns the relative dates of the post.
@@ -711,24 +855,55 @@ function advgbGetComments( $post ) {
 function advgbGetAdditionalTaxInfo( $post ) {
 	$info = array();
 
-	$categories = get_the_category( $post['id'] );
-	if ( ! empty( $categories ) ) {
-		$cats = array( 'linked' => array(), 'unlinked' => array() );
-		foreach ( $categories as $category ) {
-			$cats['linked'][] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_category_link( $category ) ), esc_html( $category->name ) );
-			$cats['unlinked'][] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $category->name ) );
+	$post_type = get_post_type( $post['id'] );
+	if ( 'post' ===  $post_type ) {
+		$categories = get_the_category( $post['id'] );
+		if ( ! empty( $categories ) ) {
+			$cats = array( 'linked' => array(), 'unlinked' => array() );
+			foreach ( $categories as $category ) {
+				$cats['linked'][] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_category_link( $category ) ), esc_html( $category->name ) );
+				$cats['unlinked'][] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $category->name ) );
+			}
+			$info['categories'] = $cats;
 		}
-		$info['categories'] = $cats;
+
+		$tags = get_the_tags( $post['id'] );
+		if ( ! empty( $tags ) ) {
+			$cats = array( 'linked' => array(), 'unlinked' => array() );
+			foreach ( $tags as $tag ) {
+				$cats['linked'][] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_tag_link( $category ) ), esc_html( $tag->name ) );
+				$cats['unlinked'][] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $tag->name ) );
+			}
+			$info['tags'] = $cats;
+		}
+	} else {
+		$info = advgbGetTaxonomyTerms( $post_type, $post['id'], false );
 	}
 
-	$tags = get_the_tags( $post['id'] );
-	if ( ! empty( $tags ) ) {
-		$cats = array( 'linked' => array(), 'unlinked' => array() );
-		foreach ( $tags as $tag ) {
-			$cats['linked'][] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_tag_link( $category ) ), esc_html( $tag->name ) );
-			$cats['unlinked'][] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $tag->name ) );
+	return $info;
+}
+
+/**
+ * Gets the taxonomy terms for a specific custom post.
+ *
+ * @return array
+ */
+function advgbGetTaxonomyTerms( $post_type, $post_id, $front_end = false, $use_tax_slug = true ) {
+	$info = array();
+	$taxonomies = get_object_taxonomies( $post_type, 'objects' );
+	foreach( $taxonomies as $slug => $tax ) {
+		$terms = get_the_terms( $post_id, $slug );
+		$linked = $unlinked = array();
+		foreach( $terms as $term ) {
+			if ( $front_end ) {
+				$linked[] = sprintf( '<div><a href="%s" class="advgb-post-tax-term">%s</a></div>', esc_url( get_term_link( $term->slug, $slug ) ), esc_html( $term->name ) );
+				$unlinked[] = sprintf( '<div><span class="advgb-post-tax-term">%s</span></div>', esc_html( $term->name ) );
+			} else {
+				$linked[] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_term_link( $term->slug, $slug ) ), esc_html( $term->name ) );
+				$unlinked[] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $term->name ) );
+			}
 		}
-		$info['tags'] = $cats;
+		$info[ $use_tax_slug ? $slug : html_entity_decode( $tax->label, ENT_QUOTES ) ] = array( 'linked' => $linked, 'unlinked' => $unlinked, 'slug' => $slug, 'name' => esc_html( $tax->label ) );
 	}
 	return $info;
 }
@@ -754,7 +929,7 @@ function advgbGetCoauthors( $post ) {
 
 
 /**
- * Populate the author_meta for pages.
+ * Populate the author_meta for pages/custom post types.
  *
  * @return array
  */
@@ -835,6 +1010,10 @@ function advgbGetAuthorFilterREST( $args, $request ) {
 add_filter( 'rest_post_query', 'advgbGetAuthorFilterREST', 10, 2 );
 add_filter( 'rest_page_query', 'advgbGetAuthorFilterREST', 10, 2 );
 
+foreach ( advgbGetCPTs() as $cpt ) {
+	add_filter( "rest_{$cpt}_query", 'advgbGetAuthorFilterREST', 10, 2 );
+}
+
 /**
  * Populate the correct arguments in REST for filtering by author.
  *
@@ -850,6 +1029,10 @@ function advgbMultipleAuthorSortREST( $args, $request ) {
 	return $args;
 }
 add_filter( 'rest_post_query', 'advgbMultipleAuthorSortREST', 10, 2 );
+
+foreach ( advgbGetCPTs() as $cpt ) {
+	add_filter( "rest_{$cpt}_query", 'advgbMultipleAuthorSortREST', 10, 2 );
+}
 
 /**
  * Check if Featured image is enable for each post
@@ -932,4 +1115,24 @@ function advgbGetAuthorByID( $id ) {
 		}
 	}
 	return $author;
+}
+
+/**
+ * Returns the featured image URL.
+ *
+ * @return string
+ */
+function advgbGetFeaturedImage( $post ) {
+	return get_the_post_thumbnail_url( $post[ 'id' ] );
+}
+
+
+/**
+ * Returns all the post types that need to be excluded.
+ *
+ * @return array
+ */
+function advgbExcludePostTypes( WP_REST_Request $request ) {
+	// allow users to add more
+	return apply_filters( 'advgb_exclude_post_types', array( 'attachment' ) );
 }
