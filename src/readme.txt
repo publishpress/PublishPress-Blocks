@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.7.2
-Stable tag: 2.7.0b3
+Stable tag: 2.7.0b4
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -164,7 +164,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Custom Post Type support for Content Display block
   * Add: Autoplay control to Slider view for Content Display block
   * Add: Top notice in admin with link to Pro version
-  * Add: Dark color for sidebar menu in admin
+  * Add: Lighter color scheme for sidebar menu in admin
   * Fix: Default image load in editor for WooProducts block
   * Fix: Web Stories block by Google not available in editor
   * Fix: Multiple email addresses in Email settings
