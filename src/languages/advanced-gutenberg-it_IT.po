@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - PublishPress Blocks &#8211; Blocks, "
 "Permissions, Layouts, Forms and CSS Styles - Stable (latest release)\n"
-"POT-Creation-Date: 2021-05-17 13:20-0500\n"
-"PO-Revision-Date: 2021-05-17 13:21-0500\n"
+"POT-Creation-Date: 2021-05-18 11:18-0500\n"
+"PO-Revision-Date: 2021-05-18 11:21-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -4043,8 +4043,8 @@ msgstr "Salva"
 
 #: incl/view/advanced-gutenberg-block-settings.php:63
 #: incl/view/advanced-gutenberg-main-view.php:23
-msgid "Default Block Settings"
-msgstr ""
+msgid "Block Settings"
+msgstr "Impostazioni blocco"
 
 #: incl/view/advanced-gutenberg-block-settings.php:69
 #: incl/view/advanced-gutenberg-profile.php:123
@@ -4060,8 +4060,7 @@ msgstr "Modifica"
 #: incl/view/advanced-gutenberg-block-settings.php:97
 msgid ""
 "No blocks available. Please edit a Profile (e.g. save changes without "
-"modifying anything). Then come back to Default Block Settings to see the "
-"blocks list."
+"modifying anything). Then come back to Block Settings to see the blocks list."
 msgstr ""
 
 #: incl/view/advanced-gutenberg-custom-styles.php:8
@@ -4620,8 +4619,10 @@ msgid "https://publishpress.com/blocks/"
 msgstr "https://publishpress.com/blocks/"
 
 #. Description of the plugin/theme
-msgid "Enhanced tools for Gutenberg editor"
-msgstr "Strumenti avanzati per l'editor di Gutenberg"
+msgid ""
+"PublishPress Blocks has everything you need to build professional websites "
+"with the Gutenberg editor."
+msgstr ""
 
 #. Author of the plugin/theme
 msgid "PublishPress"
@@ -4629,7 +4630,10 @@ msgstr "PublishPress"
 
 #. Author URI of the plugin/theme
 msgid "https://publishpress.com/"
-msgstr "https://publishpress.com/"
+msgstr ""
+
+#~ msgid "Enhanced tools for Gutenberg editor"
+#~ msgstr "Strumenti avanzati per l'editor di Gutenberg"
 
 #~ msgid "We are updating blocks list..."
 #~ msgstr "Stiamo aggiornando l'elenco dei blocchi…"
@@ -4665,9 +4669,6 @@ msgstr "https://publishpress.com/"
 #~ msgstr ""
 #~ "Se le tue colonne sono in eccedenza, verranno inserite in una nuova riga "
 #~ "(ad esempio: usa questo con Spaziatura colonne)."
-
-#~ msgid "Block Settings"
-#~ msgstr "Impostazioni blocco"
 
 #~ msgid ""
 #~ "Config for this block is currently unsupported. It will coming in the "

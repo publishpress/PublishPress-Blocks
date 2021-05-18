@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-05-17 13:20-0500\n"
+"POT-Creation-Date: 2021-05-18 11:18-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -3991,8 +3991,8 @@ msgstr ""
 
 #: incl/view/advanced-gutenberg-block-settings.php:63
 #: incl/view/advanced-gutenberg-main-view.php:23
-msgid "Default Block Settings"
-msgstr ""
+msgid "Block Settings"
+msgstr "Opciones del bloque"
 
 #: incl/view/advanced-gutenberg-block-settings.php:69
 #: incl/view/advanced-gutenberg-profile.php:123
@@ -4008,8 +4008,7 @@ msgstr "Editar"
 #: incl/view/advanced-gutenberg-block-settings.php:97
 msgid ""
 "No blocks available. Please edit a Profile (e.g. save changes without "
-"modifying anything). Then come back to Default Block Settings to see the "
-"blocks list."
+"modifying anything). Then come back to Block Settings to see the blocks list."
 msgstr ""
 
 #: incl/view/advanced-gutenberg-custom-styles.php:8
@@ -4540,7 +4539,9 @@ msgid "https://publishpress.com/blocks/"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Enhanced tools for Gutenberg editor"
+msgid ""
+"PublishPress Blocks has everything you need to build professional websites "
+"with the Gutenberg editor."
 msgstr ""
 
 #. Author of the plugin/theme
@@ -4550,9 +4551,6 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "https://publishpress.com/"
 msgstr ""
-
-#~ msgid "Block Settings"
-#~ msgstr "Opciones del bloque"
 
 #~ msgid "Example of text"
 #~ msgstr "Texto de Ejemplo"
