@@ -8,51 +8,57 @@ Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Gutenberg is good, and with PublishPress Blocks, it’s great! The blocks include accordions, galleries, sliders, tabs, maps and more.
+PublishPress Blocks include accordions, galleries, sliders, tabs, maps and more. Plus it has the best content display block in WordPress.
 
 == Description ==
 
-Gutenberg is good, and with [PublishPress Blocks](https://publishpress.com/blocks/), it’s great! PublishPress Blocks has everything you need to build professional websites with WordPress. The blocks include layout options, sliders, buttons, icons, image galleries, maps, tabs, testimonials, accordions, and much more.
+[PublishPress Blocks](https://publishpress.com/blocks/) has everything you need to build professional websites with WordPress. The blocks include layout options, sliders, buttons, icons, image galleries, maps, tabs, testimonials, accordions, and much more.
 
-- [See the block demos](https://demo.publishpress.com/).
-- [Browse the documentation and videos](https://publishpress.com/knowledge-base/installation/).
+PublishPress Blocks features **the best content block in WordPress**. You can use the "Content Display" block to create blog layouts, lists of posts by a specific author, or even complete newspaper frontpages. This block allows you to show posts, pages and other content types in many beautiful layouts. These layout options are *Grid*, *Frontpage*, *List*, *Newspaper*, *Masonry*, and *Slider*. You also have dozens of different ways to customize your content. You can filter your content by author, category or tag. You can add many types of data to your layouts including posted date, updated date, images, authors, excerpts, intro text, comments and more.
 
-## 4 Powerful features in PublishPress Blocks
+## 5 Powerful features in PublishPress Blocks
 
-1. **Over 20 extra blocks**: The new blocks include accordions, galleries, sliders, tabs, maps, tables, recent posts, and more.
-2. **Permissions for blocks**: You can control who can use each block, including default WordPress blocks.
-3. **Custom CSS for blocks**: You can add your own custom, reusable CSS styles for your blocks.
-4. **Block layout options**: Choose from dozens of layouts. Each one is customizable for desktop, tablet and mobile devices.
+1. **The best content block in WordPress**: The Content Display block allows you to show posts, pages and other content types in many beautiful layouts.
+2. **Over 20 extra blocks**: The blocks include accordions, galleries, sliders, tabs, maps, tables, recent posts, and more.
+3. **Permissions for blocks**: You can control who can use each block, including default WordPress blocks.
+4. **Custom CSS for blocks**: You can add your own custom, reusable CSS styles for your blocks.
+5. **Block layout options**: Choose from dozens of layouts. Each one is customizable for desktop, tablet and mobile devices.
 
-## Feature #1. Extra Blocks
+## Feature #1. The best News block in WordPress
+
+We've already mentioned many features of the Content Display block. So what are you waiting for? **Install PublishPress Blocks and check out the Content Display block**.
+
+This block really is the best way to showcase your posts in the Gutenberg editor.
+
+## Feature #2. Extra Blocks
 
 PublishPress Blocks has everything you need to build professional websites with WordPress. Here's an introduction to the blocks available with the PublishPress Blocks plugin:
 
 - **Accordion block**: [demo](https://demo.publishpress.com/advanced-accordion/).
 - **Button block**: [demo](https://demo.publishpress.com/advanced-button/).
-- **Icon block**: [demo](https://demo.publishpress.com/advanced-icon/).
-- **Image block**: [demo](https://demo.publishpress.com/advanced-image/).
-- **List block**: [demo](https://demo.publishpress.com/advanced-list/).
-- **Table block**: [demo](https://demo.publishpress.com/advanced-table/).
-- **Tabs block**: [demo](https://demo.publishpress.com/advanced-tabs/).
-- **Video block**: [demo](https://demo.publishpress.com/advanced-video/).
 - **Columns Manager block**: [demo](https://demo.publishpress.com/columns-manager/).
 - **Contact Form block**: [demo](https://demo.publishpress.com/contact-form/).
+- **Content Display block**: [demo](https://demo.publishpress.com/content-display/).
 - **Count Up block**: [demo](https://demo.publishpress.com/count-up/).
 - **Gallery block**: [demo](https://demo.publishpress.com/gallery/).
+- **Google Maps block**: [demo](https://demo.publishpress.com/map/).
+- **Icon block**: [demo](https://demo.publishpress.com/advanced-icon/).
+- **Image block**: [demo](https://demo.publishpress.com/advanced-image/).
 - **Images Slider block**: [demo](https://demo.publishpress.com/images-slider/).
 - **Info Box block**: [demo](https://demo.publishpress.com/info-box/).
+- **List block**: [demo](https://demo.publishpress.com/advanced-list/).
 - **Login / Register Form block**: [demo](https://demo.publishpress.com/login-register-form/).
-- **Google Maps block**: [demo](https://demo.publishpress.com/map/).
 - **Newsletter block**: [demo](https://demo.publishpress.com/newsletter/).
-- **Content Display block**: [demo](https://demo.publishpress.com/recent-posts/).
 - **Search bar block**: [demo](https://demo.publishpress.com/search-bar/).
 - **Social Links block**: [demo](https://demo.publishpress.com/social-links/).
 - **Summary block**: [demo](https://demo.publishpress.com/summary).
+- **Table block**: [demo](https://demo.publishpress.com/advanced-table/).
+- **Tabs block**: [demo](https://demo.publishpress.com/advanced-tabs/).
 - **Testimonial block**: [demo](https://demo.publishpress.com/testimonial/).
+- **Video block**: [demo](https://demo.publishpress.com/advanced-video/).
 - **WooCommerce block**: [demo](https://demo.publishpress.com/woo-products/).
 
-## Feature #2. Permissions for Blocks
+## Feature #3. Permissions for Blocks
 
 PublishPress Blocks allows you to enable or disable blocks for some users. For example, you can disable the “Classic” block if you don’t want users to rely on the old WordPress editor.
 
@@ -60,13 +66,13 @@ Using the PublishPress Blocks plugin, you can create editor profiles for differe
 
 [Click here to see how to control permissions for blocks](https://publishpress.com/knowledge-base/editor-profiles/)
 
-## Feature #3. Custom CSS Styles for Blocks
+## Feature #4. Custom CSS Styles for Blocks
 
 You create custom, reusable CSS styles and making them available to end users. Name the style, and let the content editors use it when they need it. This is a very useful feature that empowers your users to add pre-defined CSS styles to any block.
 
 [Click here to see how to create custom styles for blocks](https://publishpress.com/knowledge-base/custom-css/).
 
-## Feature #4. Block Layout Options
+## Feature #5. Block Layout Options
 
 PublishPress Blocks allows you to create flexible and beautiful layouts. You get 24 layout options with different options for desktop, tablet and mobile devices. You can create these layouts with Columns Manager block. This Columns Manager block is based on the default Columns block in Gutenberg. This new version of the block has many extra features including extra layout options, padding, margins and much more.
 
