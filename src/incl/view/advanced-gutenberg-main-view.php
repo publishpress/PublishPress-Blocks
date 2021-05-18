@@ -20,7 +20,7 @@ $tabs_data = array(
     ),
     array(
         'id' => 'block-settings',
-        'title' => __('Default Block Settings', 'advanced-gutenberg'),
+        'title' => __('Block Settings', 'advanced-gutenberg'),
         'icon' => 'settings',
     ),
     array(

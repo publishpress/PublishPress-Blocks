@@ -60,7 +60,7 @@ if(defined('ADVANCED_GUTENBERG_PRO')) {
 
 <div id="advgb-block-settings-container">
     <div class="advgb-header" style="padding-top: 40px">
-        <h1 class="header-title"><?php esc_html_e('Default Block Settings', 'advanced-gutenberg') ?></h1>
+        <h1 class="header-title"><?php esc_html_e('Block Settings', 'advanced-gutenberg') ?></h1>
     </div>
     <div class="clearfix">
         <div class="advgb-search-wrapper">
@@ -94,7 +94,7 @@ if(defined('ADVANCED_GUTENBERG_PRO')) {
 
         <?php if (count($advgb_blocks) === 0) : ?>
             <div class="blocks-not-loaded" style="text-align: center">
-                <p><?php esc_html_e('No blocks available. Please edit a Profile (e.g. save changes without modifying anything). Then come back to Default Block Settings to see the blocks list.', 'advanced-gutenberg'); ?></p>
+                <p><?php esc_html_e('No blocks available. Please edit a Profile (e.g. save changes without modifying anything). Then come back to Block Settings to see the blocks list.', 'advanced-gutenberg'); ?></p>
             </div>
         <?php endif; ?>
     </div>
