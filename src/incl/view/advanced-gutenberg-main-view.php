@@ -20,7 +20,7 @@ $tabs_data = array(
     ),
     array(
         'id' => 'block-settings',
-        'title' => __('Default Block Settings', 'advanced-gutenberg'),
+        'title' => __('Block Settings', 'advanced-gutenberg'),
         'icon' => 'settings',
     ),
     array(
@@ -34,6 +34,16 @@ $tabs_data = array(
         'icon' => 'code',
     ),
 );
+
+// Pro
+if(defined('ADVANCED_GUTENBERG_PRO')) {
+    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_license_page' ) ) {
+        array_push(
+            $tabs_data,
+            PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_license_page('tabs_data')
+        );
+    }
+}
 
 // Pro
 if(!defined('ADVANCED_GUTENBERG_PRO')) {

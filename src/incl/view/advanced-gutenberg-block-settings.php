@@ -39,12 +39,28 @@ $excluded_blocks_config = array(
     'advgb/accordion',
     'advgb/tabs',
     'advgb/tab',
+    'advgb/recent-posts',
+    'advgb/login-form',
+    'advgb/search-bar',
 );
+
+// Pro
+if(defined('ADVANCED_GUTENBERG_PRO')) {
+    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_default_block_settings' ) ) {
+        $excludedProBlocks = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_default_block_settings('excluded_blocks');
+        foreach ($excludedProBlocks as $excludedProBlock) {
+            array_push(
+                $excluded_blocks_config,
+                $excludedProBlock
+            );
+        }
+    }
+}
 ?>
 
 <div id="advgb-block-settings-container">
     <div class="advgb-header" style="padding-top: 40px">
-        <h1 class="header-title"><?php esc_html_e('Default Block Settings', 'advanced-gutenberg') ?></h1>
+        <h1 class="header-title"><?php esc_html_e('Block Settings', 'advanced-gutenberg') ?></h1>
     </div>
     <div class="clearfix">
         <div class="advgb-search-wrapper">
@@ -78,7 +94,7 @@ $excluded_blocks_config = array(
 
         <?php if (count($advgb_blocks) === 0) : ?>
             <div class="blocks-not-loaded" style="text-align: center">
-                <p><?php esc_html_e('We are updating blocks list...', 'advanced-gutenberg'); ?></p>
+                <p><?php esc_html_e('No blocks available. Please edit a Profile (e.g. save changes without modifying anything). Then come back to Block Settings to see the blocks list.', 'advanced-gutenberg'); ?></p>
             </div>
         <?php endif; ?>
     </div>

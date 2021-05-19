@@ -9,7 +9,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #fff;
+    background-color: $dark;
     opacity: 0.12;
     pointer-events: none;
 }
@@ -42,7 +42,7 @@
 
     ul#adminmenu a.wp-has-current-submenu:after,
     ul#adminmenu > li.current > a.current:after {
-        border-right-color: $purple-hover;
+        border-right-color: $sidebar-background;
     }
 
     #adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head,
@@ -83,7 +83,7 @@
 
 .tabs .tab a {
     text-decoration: none;
-    color: #fff;
+    color: $sidebar-color;
     background-color: #2196f3;
     display: block;
     width: 100%;
@@ -433,31 +433,31 @@ input.ju-radiobox:focus {
     width: 300px;
     height: 100%;
     padding: 20px 0;
-    background-image: linear-gradient(to bottom, $purple, $purple-hover);
+    background: $sidebar-background;
     position: fixed;
     overflow: auto;
     z-index: 15;
-    -webkit-box-shadow: 10px 20px 20px 0 rgba(186, 192, 213, 0.1);
-    -moz-box-shadow: 10px 20px 20px 0 rgba(186, 192, 213, 0.1);
-    box-shadow: 10px 20px 20px 0 rgba(186, 192, 213, 0.1);
+    -webkit-box-shadow: 10px 20px 20px 0 rgba(186, 192, 213, 0.5);
+    -moz-box-shadow: 10px 20px 20px 0 rgba(186, 192, 213, 0.5);
+    box-shadow: 10px 20px 20px 0 rgba(186, 192, 213, 0.5);
 }
 
 .ju-main-wrapper .ju-left-panel .ju-menu-search {
     margin: 0 10px 20px;
     padding: 0 5px 10px;
     border: none;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
 }
 
 .ju-main-wrapper .ju-left-panel .ju-menu-search .ju-menu-search-icon {
     font-size: 20px;
-    color: #fff;
+    color: $sidebar-color;
     vertical-align: text-bottom;
 }
 
 .ju-main-wrapper .ju-left-panel .ju-menu-search .ju-menu-search-input {
     background: transparent;
-    color: #fff;
+    color: $sidebar-color;
     border: none;
     outline: none;
     padding: 5px;
@@ -468,7 +468,7 @@ input.ju-radiobox:focus {
 }
 
 .ju-main-wrapper .ju-left-panel .ju-menu-search .ju-menu-search-input::placeholder {
-    color: #fff;
+    color: $sidebar-color;
     opacity: 0.5;
 }
 
@@ -491,7 +491,6 @@ input.ju-radiobox:focus {
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab {
     padding: 20px;
-    opacity: 0.7;
     background-color: transparent;
 }
 
@@ -516,7 +515,7 @@ input.ju-radiobox:focus {
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active {
     opacity: 1;
-    background-color: $purple-hover;
+    background-color: $sidebar-background-active;
 }
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active.with-submenus.expanded:after {
@@ -527,14 +526,18 @@ input.ju-radiobox:focus {
     max-height: 500px;
 }
 
+.ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab:hover:not(.expanded) {
+    background-color: lighten($sidebar-background-active, 5%);
+}
+
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active:not(.expanded) {
-    background-color: transparent;
+    background-color: $sidebar-background-active;
 }
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab .ju-submenu-tabs {
     display: block;
     max-height: 0;
-    background-color: $purple-hover;
+    background-color: $sidebar-background-active;
     -webkit-transition: max-height cubic-bezier(0.3, 1.1, 0.3, 1.1) 1s;
     -moz-transition: max-height cubic-bezier(0.3, 1.1, 0.3, 1.1) 1s;
     -ms-transition: max-height cubic-bezier(0.3, 1.1, 0.3, 1.1) 1s;
@@ -545,14 +548,13 @@ input.ju-radiobox:focus {
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab .ju-submenu-tabs div.link-tab {
     padding: 20px;
     cursor: pointer;
-    color: #fff;
+    color: $sidebar-color;
     margin-left: 32px;
     font-size: 16px;
-    opacity: 0.7;
 }
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab .ju-submenu-tabs div.link-tab.active {
-    opacity: 1;
+    //opacity: 0.7;
 }
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab .menu-tab-icon {

@@ -352,13 +352,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             // Pro
             if(defined('ADVANCED_GUTENBERG_PRO')) {
-                wp_enqueue_script(
-                    'advgb_blocks_pro',
-                    plugins_url('assets/blocks/blocks-pro.js', dirname(__FILE__)),
-                    array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor', 'wp-plugins', 'wp-compose' ),
-                    ADVANCED_GUTENBERG_VERSION,
-                    true
-                );
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_scripts_editor' ) ) {
+                    PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_scripts_editor();
+                }
             }
 
             // Include needed JS libraries
@@ -455,12 +451,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 // Pro
                 if(defined('ADVANCED_GUTENBERG_PRO')) {
-                    wp_enqueue_style(
-                        'advgb_blocks_styles_pro',
-                        plugins_url('assets/css/blocks-pro.css', dirname(__FILE__)),
-                        array(),
-                        ADVANCED_GUTENBERG_VERSION
-                    );
+                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_main_styles' ) ) {
+                        PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_main_styles();
+                    }
                 }
             }
 
@@ -1504,12 +1497,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             // Pro
             if(defined('ADVANCED_GUTENBERG_PRO')) {
-                wp_register_script(
-                    'advgb_blocks_frontend_scripts_pro',
-                    plugins_url('assets/blocks/frontend-pro.js', dirname(__FILE__)),
-                    array(),
-                    ADVANCED_GUTENBERG_VERSION
-                );
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_register_scripts_frontend' ) ) {
+                    PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_register_scripts_frontend();
+                }
             }
 
             wp_register_style(
@@ -4792,6 +4782,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $this->loadRecaptchaApi();
             }
 
+            // Pro
+            if(defined('ADVANCED_GUTENBERG_PRO')) {
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_scripts_frontend' ) ) {
+                    PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_scripts_frontend($content);
+                }
+            }
+
             $content = $this->groupStylesTag($content);
 
             return $content;
@@ -5076,10 +5073,15 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             // Pro
             if(defined('ADVANCED_GUTENBERG_PRO')) {
-                array_push(
-                    $availableBlocks,
-                    'advgb/test'
-                );
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_get_blocks' ) ) {
+                    $availableProBlocks = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_get_blocks();
+                    foreach ($availableProBlocks as $availableProBlock) {
+                        array_push(
+                            $availableBlocks,
+                            $availableProBlock
+                        );
+                    }
+            	}
             }
 
             // Load common CSS
@@ -5093,12 +5095,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 // Pro
                 if(defined('ADVANCED_GUTENBERG_PRO')) {
-                    wp_enqueue_style(
-                        'advgb_blocks_styles_pro',
-                        plugins_url('assets/css/blocks-pro.css', dirname(__FILE__)),
-                        array(),
-                        ADVANCED_GUTENBERG_VERSION
-                    );
+                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_main_styles' ) ) {
+                        PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_main_styles();
+                    }
                 }
             }
 
@@ -5713,11 +5712,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function advgb_AdvancedCountUpStyles()
         {
             wp_enqueue_script('advgb_blocks_frontend_scripts');
-
-            // Pro
-            if(defined('ADVANCED_GUTENBERG_PRO')) {
-                wp_enqueue_script('advgb_blocks_frontend_scripts_pro');
-            }
 
             $style_html = '';
 
