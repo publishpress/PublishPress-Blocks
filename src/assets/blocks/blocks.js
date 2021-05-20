@@ -17010,16 +17010,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     // Register custom styles to blocks attributes
 
     addFilter('blocks.registerBlockType', 'advgb/registerCustomStyleClass', function (settings) {
-        if (settings.name === 'core/paragraph') {
-            settings.attributes = _extends(settings.attributes, {
-                customStyle: {
-                    type: 'string'
-                },
-                identifyColor: {
-                    type: 'string'
-                }
-            });
-        }
+        settings.attributes = _extends(settings.attributes, {
+            customStyle: {
+                type: 'string'
+            },
+            identifyColor: {
+                type: 'string'
+            }
+        });
 
         return settings;
     });
@@ -17037,7 +17035,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     // Add option to select custom styles for paragraph blocks
     addFilter('editor.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
         return function (props) {
-            return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-class-name' }, props)), props.isSelected && props.name === "core/paragraph" && React.createElement(
+            return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-class-name' }, props)), props.isSelected && React.createElement(
                 InspectorControls,
                 { key: 'advgb-custom-controls' },
                 React.createElement(SelectControl, {
@@ -17095,7 +17093,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     var withStyleClasses = createHigherOrderComponent(function (BlockListBlock) {
         return function (props) {
-            if (props.name !== 'core/paragraph' || !hasBlockSupport(props.name, 'customStyle', true)) {
+            if (!hasBlockSupport(props.name, 'customStyle', true)) {
                 return React.createElement(BlockListBlock, props);
             }
 

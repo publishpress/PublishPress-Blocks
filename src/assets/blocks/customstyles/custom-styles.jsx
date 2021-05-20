@@ -9,7 +9,6 @@
 
     // Register custom styles to blocks attributes
     addFilter( 'blocks.registerBlockType', 'advgb/registerCustomStyleClass', function ( settings ) {
-        if (settings.name === 'core/paragraph') {
             settings.attributes = Object.assign( settings.attributes, {
                 customStyle: {
                     type: 'string'
@@ -18,7 +17,6 @@
                     type: 'string'
                 }
             } );
-        }
 
         return settings;
     } );
@@ -38,7 +36,7 @@
         return ( props ) => {
             return ( [
                 <BlockEdit key="block-edit-custom-class-name" {...props} />,
-                props.isSelected && props.name === "core/paragraph" &&
+                props.isSelected &&
                 <InspectorControls key="advgb-custom-controls">
                     <SelectControl
                         label={ [
@@ -97,7 +95,7 @@
 
     const withStyleClasses = createHigherOrderComponent( ( BlockListBlock ) => {
         return ( props ) => {
-            if ( props.name !== 'core/paragraph' || !hasBlockSupport( props.name, 'customStyle', true ) ) {
+            if ( !hasBlockSupport( props.name, 'customStyle', true ) ) {
                 return <BlockListBlock { ...props } />
             }
 
