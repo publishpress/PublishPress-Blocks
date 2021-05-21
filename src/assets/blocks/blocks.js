@@ -29172,7 +29172,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
             var listCats = categories.join(',');
-            var shortCode = ['[products', "limit=\"" + numberOfProducts + "\"", "columns=\"" + columns + "\"", "orderby=\"" + orderBy + "\"", "order=\"" + order + "\"", category === 'selected' && "category=\"" + listCats + "\"", status === 'featured' && 'featured="1"', status === 'on_sale' && 'on_sale="1"', ']'].filter(Boolean).join(' ');
+            var shortCode = ['[products', "limit=\"" + numberOfProducts + "\"", "columns=\"" + columns + "\"", "orderby=\"" + orderBy + "\"", "order=\"" + order + "\"", category === 'selected' && "category=\"" + listCats + "\"", status === 'featured' && 'visibility="featured"', status === 'on_sale' && 'on_sale="1"', ']'].filter(Boolean).join(' ');
 
             var blockClassName = ['advgb-woo-products', viewType === 'slider' && 'slider-view'].filter(Boolean).join(' ');
 

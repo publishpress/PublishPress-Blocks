@@ -432,7 +432,7 @@
                 `orderby="${orderBy}"`,
                 `order="${order}"`,
                 category === 'selected' && `category="${listCats}"`,
-                status === 'featured' && 'featured="1"',
+                status === 'featured' && 'visibility="featured"',
                 status === 'on_sale' && 'on_sale="1"',
                 ']',
             ].filter( Boolean ).join( ' ' );
