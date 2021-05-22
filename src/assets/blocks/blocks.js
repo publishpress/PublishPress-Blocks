@@ -17007,10 +17007,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     var SelectControl = wpComponents.SelectControl;
     var createHigherOrderComponent = wpCompose.createHigherOrderComponent;
 
-    // Register custom styles to blocks attributes
 
+    var SUPPORTED_BLOCKS = ['core/paragraph', 'core/heading', 'core/list', 'core/code', 'core/freeform', 'core/preformatted', 'core/table', 'core/columns', 'core/column', 'core/group'];
+
+    // Register custom styles to blocks attributes
     addFilter('blocks.registerBlockType', 'advgb/registerCustomStyleClass', function (settings) {
-        if (settings.name === 'core/paragraph') {
+        if (SUPPORTED_BLOCKS.includes(settings.name)) {
             settings.attributes = _extends(settings.attributes, {
                 customStyle: {
                     type: 'string'
@@ -17034,10 +17036,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         });
     }
 
-    // Add option to select custom styles for paragraph blocks
+    // Add option to select custom styles for supported blocks
     addFilter('editor.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
         return function (props) {
-            return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-class-name' }, props)), props.isSelected && props.name === "core/paragraph" && React.createElement(
+            return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-class-name' }, props)), props.isSelected && SUPPORTED_BLOCKS.includes(props.name) && React.createElement(
                 InspectorControls,
                 { key: 'advgb-custom-controls' },
                 React.createElement(SelectControl, {
@@ -17053,7 +17055,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                             display: 'inline-block',
                             marginLeft: '10px'
                         } })],
-                    help: __('This option let you add custom style for current paragraph', 'advanced-gutenberg'),
+                    help: __('This option let you add custom style for the current block', 'advanced-gutenberg'),
                     value: props.attributes.customStyle,
                     options: advgbBlocks.customStyles.map(function (cstyle, index) {
                         if (cstyle.title) advgbBlocks.customStyles[index].label = cstyle.title;
@@ -17095,7 +17097,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     var withStyleClasses = createHigherOrderComponent(function (BlockListBlock) {
         return function (props) {
-            if (props.name !== 'core/paragraph' || !hasBlockSupport(props.name, 'customStyle', true)) {
+            if (!SUPPORTED_BLOCKS.includes(props.name) || !hasBlockSupport(props.name, 'customStyle', true)) {
                 return React.createElement(BlockListBlock, props);
             }
 

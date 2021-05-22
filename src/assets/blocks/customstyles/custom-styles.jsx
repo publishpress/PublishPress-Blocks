@@ -7,9 +7,22 @@
     const { SelectControl } = wpComponents;
     const { createHigherOrderComponent } = wpCompose;
 
+    const SUPPORTED_BLOCKS = [
+        'core/paragraph',
+        'core/heading',
+        'core/list',
+        'core/code',
+        'core/freeform',
+        'core/preformatted',
+        'core/table',
+        'core/columns',
+        'core/column',
+        'core/group',
+    ];
+
     // Register custom styles to blocks attributes
     addFilter( 'blocks.registerBlockType', 'advgb/registerCustomStyleClass', function ( settings ) {
-        if (settings.name === 'core/paragraph') {
+        if (SUPPORTED_BLOCKS.includes( settings.name )) {
             settings.attributes = Object.assign( settings.attributes, {
                 customStyle: {
                     type: 'string'
@@ -33,12 +46,12 @@
         } );
     }
 
-    // Add option to select custom styles for paragraph blocks
+    // Add option to select custom styles for supported blocks
     addFilter( 'editor.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
         return ( props ) => {
             return ( [
                 <BlockEdit key="block-edit-custom-class-name" {...props} />,
-                props.isSelected && props.name === "core/paragraph" &&
+                props.isSelected && SUPPORTED_BLOCKS.includes( props.name ) &&
                 <InspectorControls key="advgb-custom-controls">
                     <SelectControl
                         label={ [
@@ -56,7 +69,7 @@
                                       marginLeft: '10px',
                                   } } />
                         ] }
-                        help={__( 'This option let you add custom style for current paragraph', 'advanced-gutenberg' )}
+                        help={__( 'This option let you add custom style for the current block', 'advanced-gutenberg' )}
                         value={props.attributes.customStyle}
                         options={advgbBlocks.customStyles.map( ( cstyle, index ) => {
                             if (cstyle.title) advgbBlocks.customStyles[ index ].label = cstyle.title;
@@ -97,7 +110,7 @@
 
     const withStyleClasses = createHigherOrderComponent( ( BlockListBlock ) => {
         return ( props ) => {
-            if ( props.name !== 'core/paragraph' || !hasBlockSupport( props.name, 'customStyle', true ) ) {
+            if ( ! SUPPORTED_BLOCKS.includes( props.name ) || !hasBlockSupport( props.name, 'customStyle', true ) ) {
                 return <BlockListBlock { ...props } />
             }
 
