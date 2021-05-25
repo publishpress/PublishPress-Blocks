@@ -17008,7 +17008,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     var createHigherOrderComponent = wpCompose.createHigherOrderComponent;
 
 
-    var SUPPORTED_BLOCKS = ['core/paragraph', 'core/heading', 'core/list', 'core/code', 'core/freeform', 'core/preformatted', 'core/table', 'core/columns', 'core/column', 'core/group'];
+    var SUPPORTED_BLOCKS = ['core/paragraph', 'core/heading', 'core/list', 'core/code', 'core/preformatted', 'core/table', 'core/columns', 'core/column', 'core/group'];
 
     // Register custom styles to blocks attributes
     addFilter('blocks.registerBlockType', 'advgb/registerCustomStyleClass', function (settings) {

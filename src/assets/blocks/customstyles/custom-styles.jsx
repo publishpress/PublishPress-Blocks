@@ -12,7 +12,6 @@
         'core/heading',
         'core/list',
         'core/code',
-        'core/freeform',
         'core/preformatted',
         'core/table',
         'core/columns',
