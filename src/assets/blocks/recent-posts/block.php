@@ -1134,5 +1134,5 @@ function advgbGetFeaturedImage( $post ) {
  */
 function advgbExcludePostTypes( WP_REST_Request $request ) {
 	// allow users to add more
-	return apply_filters( 'advgb_exclude_post_types', array( 'attachment' ) );
+	return apply_filters( 'advgb_exclude_post_types', array( 'attachment', 'web-story' ) );
 }
