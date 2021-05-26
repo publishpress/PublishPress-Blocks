@@ -29120,6 +29120,47 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return AdvProductsEdit;
     }(Component);
 
+    var attributes = {
+        viewType: {
+            type: 'string',
+            default: 'normal'
+        },
+        category: {
+            type: 'string'
+        },
+        categories: {
+            type: 'array',
+            default: []
+        },
+        status: {
+            type: 'string'
+        },
+        order: {
+            type: 'string',
+            default: 'desc'
+        },
+        orderBy: {
+            type: 'string',
+            default: 'date'
+        },
+        numberOfProducts: {
+            type: 'number',
+            default: 6
+        },
+        columns: {
+            type: 'number',
+            default: 3
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        },
+        isPreview: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
     registerBlockType('advgb/woo-products', {
         title: __('Woo Products', 'advanced-gutenberg'),
         description: __('Listing your products in a easy way.', 'advanced-gutenberg'),
@@ -29129,46 +29170,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'advgb-category',
         keywords: [__('woo commerce', 'advanced-gutenberg'), __('products list', 'advanced-gutenberg'), __('price list', 'advanced-gutenberg')],
-        attributes: {
-            viewType: {
-                type: 'string',
-                default: 'normal'
-            },
-            category: {
-                type: 'string'
-            },
-            categories: {
-                type: 'array',
-                default: []
-            },
-            status: {
-                type: 'string'
-            },
-            order: {
-                type: 'string',
-                default: 'desc'
-            },
-            orderBy: {
-                type: 'string',
-                default: 'date'
-            },
-            numberOfProducts: {
-                type: 'number',
-                default: 6
-            },
-            columns: {
-                type: 'number',
-                default: 3
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            },
-            isPreview: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: attributes,
         example: {
             attributes: {
                 isPreview: true
@@ -29191,7 +29193,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
             var listCats = categories.join(',');
-            var shortCode = ['[products', "limit=\"" + numberOfProducts + "\"", "columns=\"" + columns + "\"", "orderby=\"" + orderBy + "\"", "order=\"" + order + "\"", category === 'selected' && "category=\"" + listCats + "\"", status === 'featured' && 'featured="1"', status === 'on_sale' && 'on_sale="1"', ']'].filter(Boolean).join(' ');
+            var shortCode = ['[products', "limit=\"" + numberOfProducts + "\"", "columns=\"" + columns + "\"", "orderby=\"" + orderBy + "\"", "order=\"" + order + "\"", category === 'selected' && "category=\"" + listCats + "\"", status === 'featured' && 'visibility="featured"', status === 'on_sale' && 'on_sale="1"', ']'].filter(Boolean).join(' ');
 
             var blockClassName = ['advgb-woo-products', viewType === 'slider' && 'slider-view'].filter(Boolean).join(' ');
 
@@ -29200,7 +29202,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 { className: blockClassName },
                 shortCode
             );
-        }
+        },
+        deprecated: [{
+            attributes: attributes,
+            save: function save(_ref2) {
+                var attributes = _ref2.attributes;
+                var viewType = attributes.viewType,
+                    category = attributes.category,
+                    categories = attributes.categories,
+                    status = attributes.status,
+                    order = attributes.order,
+                    orderBy = attributes.orderBy,
+                    numberOfProducts = attributes.numberOfProducts,
+                    columns = attributes.columns;
+
+
+                var listCats = categories.join(',');
+                var shortCode = ['[products', "limit=\"" + numberOfProducts + "\"", "columns=\"" + columns + "\"", "orderby=\"" + orderBy + "\"", "order=\"" + order + "\"", category === 'selected' && "category=\"" + listCats + "\"", status === 'featured' && 'featured="1"', status === 'on_sale' && 'on_sale="1"', ']'].filter(Boolean).join(' ');
+
+                var blockClassName = ['advgb-woo-products', viewType === 'slider' && 'slider-view'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: blockClassName },
+                    shortCode
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
