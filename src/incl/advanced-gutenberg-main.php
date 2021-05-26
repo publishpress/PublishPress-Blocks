@@ -1277,10 +1277,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function handleLoginFailed()
         {
-            $referrer = $_SERVER['HTTP_REFERER'];
             $from_advgb = isset($_POST['advgb_login_form']); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- redirect
-            if (!empty($referrer) && $from_advgb) {
-                $redirect = add_query_arg('login', 'failed', $referrer);
+            if (!empty($_SERVER['HTTP_REFERER']) && $from_advgb) {
+                $redirect = add_query_arg('login', 'failed', $_SERVER['HTTP_REFERER']);
                 wp_safe_redirect($redirect);
                 exit;
             }
