@@ -1470,12 +1470,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
                     wp_add_inline_style(
                         'dashicons',
-                        '#editor div.block-editor-writing-flow {max-width: ' . $saved_settings['editor_width'] . '%;margin: 0 auto} #editor .wp-block:not([data-type="advgb/images-slider"]):not([data-type="advgb/testimonial"]) {max-width: inherit}'
-                    );
-                } else {
-                    wp_add_inline_style(
-                        'dashicons',
-                        '#editor div.block-editor-writing-flow {margin: 0 auto} #editor .wp-block:not([data-type="advgb/images-slider"]):not([data-type="advgb/testimonial"]) {max-width: inherit}'
+                        'body:not(.advgb-editor-width-default) #editor .wp-block{max-width:' . $saved_settings['editor_width'] . '%;width:' . $saved_settings['editor_width'] . '%;margin:0 auto}'
                     );
                 }
             }
