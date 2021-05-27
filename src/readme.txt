@@ -172,6 +172,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Original editor width inherit theme's editor width
   * Fix: Filter product status as Featured for Woo Products block
   * Fix: Undefined HTTP_REFERER for Login / Register Form block
+  * Fix: Duplicated ID when duplicating Advanced List block
 
 = 2.7.0 =
   * Add: Custom Post Type support for Content Display block
