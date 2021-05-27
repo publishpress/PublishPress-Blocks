@@ -46,7 +46,7 @@
                     })
                 }
             }
-            
+
             setAttributes({
                 id: 'advgblist-' + clientId
             });
@@ -229,7 +229,7 @@
                         />
                         <div>
                             <style>
-                                {`.${id} li { font-size: ${fontSize}px; margin-left: ${size + padd}px }`}
+                                {`.${id} li { font-size: ${fontSize}px; padding-left: ${size + padd}px; margin-left: 0; }`}
                             </style>
                             {icon &&
                             <style>

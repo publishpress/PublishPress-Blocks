@@ -9777,7 +9777,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             'style',
                             null,
-                            '.' + id + ' li { font-size: ' + fontSize + 'px; margin-left: ' + (size + padd) + 'px }'
+                            '.' + id + ' li { font-size: ' + fontSize + 'px; padding-left: ' + (size + padd) + 'px; margin-left: 0; }'
                         ),
                         icon && React.createElement(
                             'style',
