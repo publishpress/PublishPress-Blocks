@@ -46,11 +46,10 @@
                     })
                 }
             }
-            if (!attributes.id) {
-                setAttributes({
-                    id: 'advgblist-' + clientId
-                })
-            }
+            
+            setAttributes({
+                id: 'advgblist-' + clientId
+            });
         }
 
         render() {
