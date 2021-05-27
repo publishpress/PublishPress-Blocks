@@ -9777,12 +9777,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             'style',
                             null,
-                            '.' + id + ' li { font-size: ' + fontSize + 'px; padding-left: ' + (size + padd) + 'px; margin-left: 0; }'
+                            '.' + id + ' li { font-size: ' + fontSize + 'px; }'
                         ),
                         icon && React.createElement(
                             'style',
                             null,
-                            '.' + id + ' li:before {\n                                font-size: ' + iconSize + 'px;\n                                color: ' + iconColor + ';\n                                line-height: ' + lineHeight + 'px;\n                                margin: ' + margin + 'px;\n                                padding: ' + padding + 'px;\n                                margin-left: -' + (size + padd + marg) + 'px\n                            }'
+                            '.' + id + ' li {\n                                    padding-left: ' + (size + padd) + 'px;\n                                    margin-left: 0;\n                                }\n                                .' + id + ' li:before {\n                                    font-size: ' + iconSize + 'px;\n                                    color: ' + iconColor + ';\n                                    line-height: ' + lineHeight + 'px;\n                                    margin: ' + margin + 'px;\n                                    padding: ' + padding + 'px;\n                                    margin-left: -' + (size + padd + marg) + 'px\n                                }'
                         )
                     )
                 );

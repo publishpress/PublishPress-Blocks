@@ -229,18 +229,22 @@
                         />
                         <div>
                             <style>
-                                {`.${id} li { font-size: ${fontSize}px; padding-left: ${size + padd}px; margin-left: 0; }`}
+                                {`.${id} li { font-size: ${fontSize}px; }`}
                             </style>
                             {icon &&
                             <style>
-                                {`.${id} li:before {
-                                font-size: ${iconSize}px;
-                                color: ${iconColor};
-                                line-height: ${lineHeight}px;
-                                margin: ${margin}px;
-                                padding: ${padding}px;
-                                margin-left: -${size + padd + marg}px
-                            }`}
+                                {`.${id} li {
+                                    padding-left: ${size + padd}px;
+                                    margin-left: 0;
+                                }
+                                .${id} li:before {
+                                    font-size: ${iconSize}px;
+                                    color: ${iconColor};
+                                    line-height: ${lineHeight}px;
+                                    margin: ${margin}px;
+                                    padding: ${padding}px;
+                                    margin-left: -${size + padd + marg}px
+                                }`}
                             </style>
                             }
                         </div>
