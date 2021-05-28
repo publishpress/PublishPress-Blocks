@@ -175,7 +175,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Filter product status as Featured for Woo Products block
   * Fix: Undefined HTTP_REFERER for Login / Register Form block
   * Fix: Duplicated ID when duplicating Advanced List block
-  * Fix: Warning in frontend whenin editor switching to a post type with taxonomies to one without
+  * Fix: Warning in frontend when switching to a different post type but keeping previous post type taxonomies
 
 = 2.7.0 =
   * Add: Custom Post Type support for Content Display block
