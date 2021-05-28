@@ -404,17 +404,32 @@ div.advgb-image-block .advgb-browse-image-btn {
 .advgb-list-yes li:before {
     content: "\f147";
 }
+.advgb-list-yes-alt li:before {
+    content: "\f12a";
+}
+.advgb-list-saved li:before {
+    content: "\f15e";
+}
 .advgb-list-minus li:before {
     content: "\f460";
 }
+.advgb-list-remove li:before {
+    content: "\f14f";
+}
 .advgb-list-plus li:before {
     content: "\f132";
+}
+.advgb-list-insert li:before {
+    content: "\f10f";
 }
 .advgb-list-controls-play li:before {
     content: "\f522";
 }
 .advgb-list-arrow-right-alt li:before {
     content: "\f344";
+}
+.advgb-list-arrow-right-alt2 li:before {
+    content: "\f345";
 }
 .advgb-list-dismiss li:before {
     content: "\f153";
@@ -427,6 +442,9 @@ div.advgb-image-block .advgb-browse-image-btn {
 }
 .advgb-list-info li:before {
     content: "\f348";
+}
+.advgb-list-info-outline li:before {
+    content: "\f14c";
 }
 .advgb-list-marker li:before {
     content: "\f159";
