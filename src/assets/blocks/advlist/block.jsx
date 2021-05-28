@@ -69,6 +69,7 @@
                 {label: __('Play', 'advanced-gutenberg'), value: 'controls-play'},
                 {label: __('Arrow right', 'advanced-gutenberg'), value: 'arrow-right-alt'},
                 {label: __('Arrow right 2', 'advanced-gutenberg'), value: 'arrow-right-alt2'},
+                {label: __('X Cross 2', 'advanced-gutenberg'), value: 'no'},
                 {label: __('X Cross', 'advanced-gutenberg'), value: 'dismiss'},
                 {label: __('Warning', 'advanced-gutenberg'), value: 'warning'},
                 {label: __('Help', 'advanced-gutenberg'), value: 'editor-help'},
