@@ -124,6 +124,7 @@ function advgbRenderBlockRecentPosts($attributes)
 						'taxonomy' => $slug,
 						'field' => 'name',
 						'terms' => $terms,
+						'include_children' => false,
 						'operator' => 'IN',
 				);
 			}
