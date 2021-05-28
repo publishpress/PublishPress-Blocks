@@ -5179,8 +5179,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $style_html  = '.wp-block-advgb-list ul.' . $block_class . ' > li{';
             $style_html .= 'font-size:'.$font_size.'px;';
             $style_html .= '}';
-            if (!isset($blockAttrs['icon']) || (isset($blockAttrs['icon']) && !!$blockAttrs['icon'])) {
-                $style_html  = '.wp-block-advgb-list ul.' . $block_class . ' > li{';
+            if (isset($blockAttrs['icon']) && !empty($blockAttrs['icon'])) {
+                $style_html .= '.wp-block-advgb-list ul.' . $block_class . ' > li{';
                 $style_html .= 'padding-left:'.($icon_size + $padding).'px;margin-left:0;';
                 $style_html .= '}';
                 $style_html .= '.wp-block-advgb-list ul.' . $block_class . ' > li:before{';
