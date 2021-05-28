@@ -69,7 +69,8 @@ body:not(.advgb-editor-width-default) {
 
 body.advgb-editor-width-large:not(.advgb-editor-width-default) #editor {
 
-  .wp-block {
+  .edit-post-visual-editor__post-title-wrapper > .wp-block,
+  .block-editor-writing-flow > .block-editor-block-list__layout > .wp-block {
       max-width: 75%;
       width: 75%;
       margin: 0 auto;
@@ -78,7 +79,8 @@ body.advgb-editor-width-large:not(.advgb-editor-width-default) #editor {
 
 body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
 
-  .wp-block {
+  .edit-post-visual-editor__post-title-wrapper > .wp-block,
+  .block-editor-writing-flow > .block-editor-block-list__layout > .wp-block {
       max-width: 95%;
       width: 95%;
       margin: 0 auto;
@@ -2375,8 +2377,8 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     right: 0;
 }
 .editor-styles-wrapper [data-block] {
-    margin-top: 12px;
-    margin-bottom: 12px;
+    margin-top: 12px !important;
+    margin-bottom: 12px !important;
 }
 #editor .advgb-columns .block-editor-block-list__block .block-list-appender {
     margin: 0;
