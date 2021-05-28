@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.7.2
-Stable tag: 2.7.1b1
+Stable tag: 2.7.1b2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -174,6 +174,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Filter product status as Featured for Woo Products block
   * Fix: Undefined HTTP_REFERER for Login / Register Form block
   * Fix: Duplicated ID when duplicating Advanced List block
+  * Fix: Warning in frontend whenin editor switching to a post type with taxonomies to one without
 
 = 2.7.0 =
   * Add: Custom Post Type support for Content Display block
