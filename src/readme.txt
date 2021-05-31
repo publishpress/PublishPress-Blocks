@@ -169,7 +169,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 = 2.7.1 =
   * Add: Preview for custom styles in editor
   * Add: Support for custom styles to heading, list, code, preformatted, table, columns and group blocks
-  * Add: Optimization for Advanced List block to integrate with Pricing Table block
+  * Add: Spacing optimization for Advanced List block
   * Add: More icons to Advanced List block
   * Fix: Original editor width inherit theme's editor width
   * Fix: Filter product status as Featured for Woo Products block
