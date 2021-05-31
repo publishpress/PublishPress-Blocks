@@ -5149,13 +5149,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     break;
             }
 
-            // Pro
-            if(defined('ADVANCED_GUTENBERG_PRO')) {
-                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_set_styles_for_blocks' ) ) {
-                    $html_style .= PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_set_styles_for_blocks($blockAttrs, $blockName);
-                }
-            }
-
             return $html_style;
         }
 
