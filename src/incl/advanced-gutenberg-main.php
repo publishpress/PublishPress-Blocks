@@ -1569,8 +1569,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function registerMainMenu()
         {
             add_menu_page(
-                __('PublishPress Blocks', 'advanced-gutenberg'),
-                __('PublishPress Blocks', 'advanced-gutenberg'),
+                __('Blocks', 'advanced-gutenberg'),
+                __('Blocks', 'advanced-gutenberg'),
                 'manage_options',
                 'advgb_main',
                 array($this, 'advgbMainView'),
