@@ -124,6 +124,7 @@ function advgbRenderBlockRecentPosts($attributes)
 						'taxonomy' => $slug,
 						'field' => 'name',
 						'terms' => $terms,
+						'include_children' => false,
 						'operator' => 'IN',
 				);
 			}
@@ -894,13 +895,15 @@ function advgbGetTaxonomyTerms( $post_type, $post_id, $front_end = false, $use_t
 	foreach( $taxonomies as $slug => $tax ) {
 		$terms = get_the_terms( $post_id, $slug );
 		$linked = $unlinked = array();
-		foreach( $terms as $term ) {
-			if ( $front_end ) {
-				$linked[] = sprintf( '<div><a href="%s" class="advgb-post-tax-term">%s</a></div>', esc_url( get_term_link( $term->slug, $slug ) ), esc_html( $term->name ) );
-				$unlinked[] = sprintf( '<div><span class="advgb-post-tax-term">%s</span></div>', esc_html( $term->name ) );
-			} else {
-				$linked[] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_term_link( $term->slug, $slug ) ), esc_html( $term->name ) );
-				$unlinked[] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $term->name ) );
+		if ( $terms ) {
+			foreach( $terms as $term ) {
+				if ( $front_end ) {
+					$linked[] = sprintf( '<div><a href="%s" class="advgb-post-tax-term">%s</a></div>', esc_url( get_term_link( $term->slug, $slug ) ), esc_html( $term->name ) );
+					$unlinked[] = sprintf( '<div><span class="advgb-post-tax-term">%s</span></div>', esc_html( $term->name ) );
+				} else {
+					$linked[] = sprintf( '<a href="%s" class="advgb-post-tax-term">%s</a>', esc_url( get_term_link( $term->slug, $slug ) ), esc_html( $term->name ) );
+					$unlinked[] = sprintf( '<span class="advgb-post-tax-term">%s</span>', esc_html( $term->name ) );
+				}
 			}
 		}
 		$info[ $use_tax_slug ? $slug : html_entity_decode( $tax->label, ENT_QUOTES ) ] = array( 'linked' => $linked, 'unlinked' => $unlinked, 'slug' => $slug, 'name' => esc_html( $tax->label ) );
@@ -1134,5 +1137,5 @@ function advgbGetFeaturedImage( $post ) {
  */
 function advgbExcludePostTypes( WP_REST_Request $request ) {
 	// allow users to add more
-	return apply_filters( 'advgb_exclude_post_types', array( 'attachment' ) );
+	return apply_filters( 'advgb_exclude_post_types', array( 'attachment', 'web-story' ) );
 }

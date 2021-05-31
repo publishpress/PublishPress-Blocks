@@ -1277,10 +1277,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function handleLoginFailed()
         {
-            $referrer = $_SERVER['HTTP_REFERER'];
             $from_advgb = isset($_POST['advgb_login_form']); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- redirect
-            if (!empty($referrer) && $from_advgb) {
-                $redirect = add_query_arg('login', 'failed', $referrer);
+            if (!empty($_SERVER['HTTP_REFERER']) && $from_advgb) {
+                $redirect = add_query_arg('login', 'failed', $_SERVER['HTTP_REFERER']);
                 wp_safe_redirect($redirect);
                 exit;
             }
@@ -1470,12 +1469,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
                     wp_add_inline_style(
                         'dashicons',
-                        '#editor div.block-editor-writing-flow {max-width: ' . $saved_settings['editor_width'] . '%;margin: 0 auto} #editor .wp-block:not([data-type="advgb/images-slider"]):not([data-type="advgb/testimonial"]) {max-width: inherit}'
-                    );
-                } else {
-                    wp_add_inline_style(
-                        'dashicons',
-                        '#editor div.block-editor-writing-flow {margin: 0 auto} #editor .wp-block:not([data-type="advgb/images-slider"]):not([data-type="advgb/testimonial"]) {max-width: inherit}'
+                        'body:not(.advgb-editor-width-default) #editor .edit-post-visual-editor__post-title-wrapper > .wp-block,body:not(.advgb-editor-width-default) #editor .block-editor-writing-flow > .block-editor-block-list__layout > .wp-block{max-width:' . $saved_settings['editor_width'] . '%;width:' . $saved_settings['editor_width'] . '%;margin:0 auto}'
                     );
                 }
             }
@@ -5176,9 +5170,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $line_height    = isset($blockAttrs['lineHeight']) ? intval($blockAttrs['lineHeight']) : 18;
 
             $style_html  = '.wp-block-advgb-list ul.' . $block_class . ' > li{';
-            $style_html .= 'font-size:'.$font_size.'px;margin-left:'.($icon_size + $padding).'px';
+            $style_html .= 'font-size:'.$font_size.'px;';
             $style_html .= '}';
-            if (!isset($blockAttrs['icon']) || (isset($blockAttrs['icon']) && !!$blockAttrs['icon'])) {
+            if (isset($blockAttrs['icon']) && !empty($blockAttrs['icon'])) {
+                $style_html .= '.wp-block-advgb-list ul.' . $block_class . ' > li{';
+                $style_html .= 'padding-left:'.($icon_size + $padding).'px;margin-left:0;';
+                $style_html .= '}';
                 $style_html .= '.wp-block-advgb-list ul.' . $block_class . ' > li:before{';
                 $style_html .= 'font-size:'.$icon_size.'px;';
                 $style_html .= 'color:'.$icon_color.';';

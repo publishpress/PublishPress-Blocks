@@ -354,6 +354,47 @@
         }
     }
 
+    const attributes = {
+        viewType: {
+            type: 'string',
+            default: 'normal',
+        },
+        category: {
+            type: 'string',
+        },
+        categories: {
+            type: 'array',
+            default: [],
+        },
+        status: {
+            type: 'string',
+        },
+        order: {
+            type: 'string',
+            default: 'desc',
+        },
+        orderBy: {
+            type: 'string',
+            default: 'date',
+        },
+        numberOfProducts: {
+            type: 'number',
+            default: 6,
+        },
+        columns: {
+            type: 'number',
+            default: 3,
+        },
+        changed: {
+            type: 'boolean',
+            default: false,
+        },
+        isPreview: {
+            type: 'boolean',
+            default: false,
+        },
+    };
+
     registerBlockType( 'advgb/woo-products', {
         title: __( 'Woo Products', 'advanced-gutenberg' ),
         description: __( 'Listing your products in a easy way.', 'advanced-gutenberg' ),
@@ -363,46 +404,7 @@
         },
         category: 'advgb-category',
         keywords: [ __( 'woo commerce', 'advanced-gutenberg' ), __( 'products list', 'advanced-gutenberg' ), __( 'price list', 'advanced-gutenberg' ) ],
-        attributes: {
-            viewType: {
-                type: 'string',
-                default: 'normal',
-            },
-            category: {
-                type: 'string',
-            },
-            categories: {
-                type: 'array',
-                default: [],
-            },
-            status: {
-                type: 'string',
-            },
-            order: {
-                type: 'string',
-                default: 'desc',
-            },
-            orderBy: {
-                type: 'string',
-                default: 'date',
-            },
-            numberOfProducts: {
-                type: 'number',
-                default: 6,
-            },
-            columns: {
-                type: 'number',
-                default: 3,
-            },
-            changed: {
-                type: 'boolean',
-                default: false,
-            },
-            isPreview: {
-                type: 'boolean',
-                default: false,
-            },
-        },
+        attributes,
         example: {
             attributes: {
                 isPreview: true
@@ -432,7 +434,7 @@
                 `orderby="${orderBy}"`,
                 `order="${order}"`,
                 category === 'selected' && `category="${listCats}"`,
-                status === 'featured' && 'featured="1"',
+                status === 'featured' && 'visibility="featured"',
                 status === 'on_sale' && 'on_sale="1"',
                 ']',
             ].filter( Boolean ).join( ' ' );
@@ -447,6 +449,47 @@
                     {shortCode}
                 </div>
             );
-        }
+        },
+        deprecated: [
+            {
+                attributes,
+                save: function ( { attributes } ) {
+                    const {
+                        viewType,
+                        category,
+                        categories,
+                        status,
+                        order,
+                        orderBy,
+                        numberOfProducts,
+                        columns,
+                    } = attributes;
+
+                    const listCats = categories.join(',');
+                    const shortCode = [
+                        '[products',
+                        `limit="${numberOfProducts}"`,
+                        `columns="${columns}"`,
+                        `orderby="${orderBy}"`,
+                        `order="${order}"`,
+                        category === 'selected' && `category="${listCats}"`,
+                        status === 'featured' && 'featured="1"',
+                        status === 'on_sale' && 'on_sale="1"',
+                        ']',
+                    ].filter( Boolean ).join( ' ' );
+
+                    const blockClassName = [
+                        'advgb-woo-products',
+                        viewType === 'slider' && 'slider-view',
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <div className={ blockClassName }>
+                            {shortCode}
+                        </div>
+                    );
+                },
+            },
+        ],
     } )
 } )( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

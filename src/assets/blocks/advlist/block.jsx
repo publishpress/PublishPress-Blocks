@@ -46,11 +46,10 @@
                     })
                 }
             }
-            if (!attributes.id) {
-                setAttributes({
-                    id: 'advgblist-' + clientId
-                })
-            }
+
+            setAttributes({
+                id: 'advgblist-' + clientId
+            });
         }
 
         render() {
@@ -61,14 +60,21 @@
                 {label: __('Flag', 'advanced-gutenberg'), value: 'flag'},
                 {label: __('Star', 'advanced-gutenberg'), value: 'star-filled'},
                 {label: __('Checkmark', 'advanced-gutenberg'), value: 'yes'},
+                {label: __('Checkmark 2', 'advanced-gutenberg'), value: 'yes-alt'},
+                {label: __('Checkmark 3', 'advanced-gutenberg'), value: 'saved'},
                 {label: __('Minus', 'advanced-gutenberg'), value: 'minus'},
+                {label: __('Minus 2', 'advanced-gutenberg'), value: 'remove'},
                 {label: __('Plus', 'advanced-gutenberg'), value: 'plus'},
+                {label: __('Plus 2', 'advanced-gutenberg'), value: 'insert'},
                 {label: __('Play', 'advanced-gutenberg'), value: 'controls-play'},
                 {label: __('Arrow right', 'advanced-gutenberg'), value: 'arrow-right-alt'},
+                {label: __('Arrow right 2', 'advanced-gutenberg'), value: 'arrow-right-alt2'},
+                {label: __('X Cross 2', 'advanced-gutenberg'), value: 'no'},
                 {label: __('X Cross', 'advanced-gutenberg'), value: 'dismiss'},
                 {label: __('Warning', 'advanced-gutenberg'), value: 'warning'},
                 {label: __('Help', 'advanced-gutenberg'), value: 'editor-help'},
                 {label: __('Info', 'advanced-gutenberg'), value: 'info'},
+                {label: __('Info 2', 'advanced-gutenberg'), value: 'info-outline'},
                 {label: __('Circle', 'advanced-gutenberg'), value: 'marker'},
             ];
             const {
@@ -230,18 +236,22 @@
                         />
                         <div>
                             <style>
-                                {`.${id} li { font-size: ${fontSize}px; margin-left: ${size + padd}px }`}
+                                {`.${id} li { font-size: ${fontSize}px; }`}
                             </style>
                             {icon &&
                             <style>
-                                {`.${id} li:before {
-                                font-size: ${iconSize}px;
-                                color: ${iconColor};
-                                line-height: ${lineHeight}px;
-                                margin: ${margin}px;
-                                padding: ${padding}px;
-                                margin-left: -${size + padd + marg}px
-                            }`}
+                                {`.${id} li {
+                                    padding-left: ${size + padd}px;
+                                    margin-left: 0;
+                                }
+                                .${id} li:before {
+                                    font-size: ${iconSize}px;
+                                    color: ${iconColor};
+                                    line-height: ${lineHeight}px;
+                                    margin: ${margin}px;
+                                    padding: ${padding}px;
+                                    margin-left: -${size + padd + marg}px
+                                }`}
                             </style>
                             }
                         </div>

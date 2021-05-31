@@ -9581,16 +9581,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         });
                     }
                 }
-                if (!attributes.id) {
-                    setAttributes({
-                        id: 'advgblist-' + clientId
-                    });
-                }
+
+                setAttributes({
+                    id: 'advgblist-' + clientId
+                });
             }
         }, {
             key: 'render',
             value: function render() {
-                var listIcons = [{ label: __('None', 'advanced-gutenberg'), value: '' }, { label: __('Pushpin', 'advanced-gutenberg'), value: 'admin-post' }, { label: __('Configuration', 'advanced-gutenberg'), value: 'admin-generic' }, { label: __('Flag', 'advanced-gutenberg'), value: 'flag' }, { label: __('Star', 'advanced-gutenberg'), value: 'star-filled' }, { label: __('Checkmark', 'advanced-gutenberg'), value: 'yes' }, { label: __('Minus', 'advanced-gutenberg'), value: 'minus' }, { label: __('Plus', 'advanced-gutenberg'), value: 'plus' }, { label: __('Play', 'advanced-gutenberg'), value: 'controls-play' }, { label: __('Arrow right', 'advanced-gutenberg'), value: 'arrow-right-alt' }, { label: __('X Cross', 'advanced-gutenberg'), value: 'dismiss' }, { label: __('Warning', 'advanced-gutenberg'), value: 'warning' }, { label: __('Help', 'advanced-gutenberg'), value: 'editor-help' }, { label: __('Info', 'advanced-gutenberg'), value: 'info' }, { label: __('Circle', 'advanced-gutenberg'), value: 'marker' }];
+                var listIcons = [{ label: __('None', 'advanced-gutenberg'), value: '' }, { label: __('Pushpin', 'advanced-gutenberg'), value: 'admin-post' }, { label: __('Configuration', 'advanced-gutenberg'), value: 'admin-generic' }, { label: __('Flag', 'advanced-gutenberg'), value: 'flag' }, { label: __('Star', 'advanced-gutenberg'), value: 'star-filled' }, { label: __('Checkmark', 'advanced-gutenberg'), value: 'yes' }, { label: __('Checkmark 2', 'advanced-gutenberg'), value: 'yes-alt' }, { label: __('Checkmark 3', 'advanced-gutenberg'), value: 'saved' }, { label: __('Minus', 'advanced-gutenberg'), value: 'minus' }, { label: __('Minus 2', 'advanced-gutenberg'), value: 'remove' }, { label: __('Plus', 'advanced-gutenberg'), value: 'plus' }, { label: __('Plus 2', 'advanced-gutenberg'), value: 'insert' }, { label: __('Play', 'advanced-gutenberg'), value: 'controls-play' }, { label: __('Arrow right', 'advanced-gutenberg'), value: 'arrow-right-alt' }, { label: __('Arrow right 2', 'advanced-gutenberg'), value: 'arrow-right-alt2' }, { label: __('X Cross 2', 'advanced-gutenberg'), value: 'no' }, { label: __('X Cross', 'advanced-gutenberg'), value: 'dismiss' }, { label: __('Warning', 'advanced-gutenberg'), value: 'warning' }, { label: __('Help', 'advanced-gutenberg'), value: 'editor-help' }, { label: __('Info', 'advanced-gutenberg'), value: 'info' }, { label: __('Info 2', 'advanced-gutenberg'), value: 'info-outline' }, { label: __('Circle', 'advanced-gutenberg'), value: 'marker' }];
                 var _props3 = this.props,
                     attributes = _props3.attributes,
                     isSelected = _props3.isSelected,
@@ -9778,12 +9777,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             'style',
                             null,
-                            '.' + id + ' li { font-size: ' + fontSize + 'px; margin-left: ' + (size + padd) + 'px }'
+                            '.' + id + ' li { font-size: ' + fontSize + 'px; }'
                         ),
                         icon && React.createElement(
                             'style',
                             null,
-                            '.' + id + ' li:before {\n                                font-size: ' + iconSize + 'px;\n                                color: ' + iconColor + ';\n                                line-height: ' + lineHeight + 'px;\n                                margin: ' + margin + 'px;\n                                padding: ' + padding + 'px;\n                                margin-left: -' + (size + padd + marg) + 'px\n                            }'
+                            '.' + id + ' li {\n                                    padding-left: ' + (size + padd) + 'px;\n                                    margin-left: 0;\n                                }\n                                .' + id + ' li:before {\n                                    font-size: ' + iconSize + 'px;\n                                    color: ' + iconColor + ';\n                                    line-height: ' + lineHeight + 'px;\n                                    margin: ' + margin + 'px;\n                                    padding: ' + padding + 'px;\n                                    margin-left: -' + (size + padd + marg) + 'px\n                                }'
                         )
                     )
                 );
@@ -16997,7 +16996,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-(function (wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents) {
+(function (wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var addFilter = wpHooks.addFilter;
     var __ = wpI18n.__;
@@ -17005,11 +17004,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls;
     var SelectControl = wpComponents.SelectControl;
+    var createHigherOrderComponent = wpCompose.createHigherOrderComponent;
+
+
+    var SUPPORTED_BLOCKS = ['core/paragraph', 'core/heading', 'core/list', 'core/code', 'core/preformatted', 'core/table', 'core/columns', 'core/column', 'core/group'];
 
     // Register custom styles to blocks attributes
-
     addFilter('blocks.registerBlockType', 'advgb/registerCustomStyleClass', function (settings) {
-        if (settings.name === 'core/paragraph') {
+        if (SUPPORTED_BLOCKS.includes(settings.name)) {
             settings.attributes = _extends(settings.attributes, {
                 customStyle: {
                     type: 'string'
@@ -17033,10 +17035,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         });
     }
 
-    // Add option to select custom styles for paragraph blocks
+    // Add option to select custom styles for supported blocks
     addFilter('editor.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
         return function (props) {
-            return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-class-name' }, props)), props.isSelected && props.name === "core/paragraph" && React.createElement(
+            return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-class-name' }, props)), props.isSelected && SUPPORTED_BLOCKS.includes(props.name) && React.createElement(
                 InspectorControls,
                 { key: 'advgb-custom-controls' },
                 React.createElement(SelectControl, {
@@ -17052,7 +17054,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                             display: 'inline-block',
                             marginLeft: '10px'
                         } })],
-                    help: __('This option let you add custom style for current paragraph. (Front-end only!)', 'advanced-gutenberg'),
+                    help: __('This option let you add custom style for the current block', 'advanced-gutenberg'),
                     value: props.attributes.customStyle,
                     options: advgbBlocks.customStyles.map(function (cstyle, index) {
                         if (cstyle.title) advgbBlocks.customStyles[index].label = cstyle.title;
@@ -17091,7 +17093,23 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
         return extraProps;
     });
-})(wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components);
+
+    var withStyleClasses = createHigherOrderComponent(function (BlockListBlock) {
+        return function (props) {
+            if (!SUPPORTED_BLOCKS.includes(props.name) || !hasBlockSupport(props.name, 'customStyle', true)) {
+                return React.createElement(BlockListBlock, props);
+            }
+
+            var customStyle = props.attributes.customStyle;
+
+
+            return React.createElement(BlockListBlock, _extends({}, props, { className: '' + customStyle }));
+        };
+    }, 'withStyleClasses');
+
+    // Apply custom styles on back-end
+    wp.hooks.addFilter('editor.BlockListBlock', 'advgb/loadBackendCustomStyles', withStyleClasses);
+})(wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components, wp.compose);
 
 /***/ }),
 
@@ -24591,7 +24609,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     this.generateTaxTerms(postType);
                 }
 
-                this.props.setAttributes({ postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true });
+                this.props.setAttributes({ postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {} });
             }
 
             /**
@@ -29101,6 +29119,47 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return AdvProductsEdit;
     }(Component);
 
+    var attributes = {
+        viewType: {
+            type: 'string',
+            default: 'normal'
+        },
+        category: {
+            type: 'string'
+        },
+        categories: {
+            type: 'array',
+            default: []
+        },
+        status: {
+            type: 'string'
+        },
+        order: {
+            type: 'string',
+            default: 'desc'
+        },
+        orderBy: {
+            type: 'string',
+            default: 'date'
+        },
+        numberOfProducts: {
+            type: 'number',
+            default: 6
+        },
+        columns: {
+            type: 'number',
+            default: 3
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        },
+        isPreview: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
     registerBlockType('advgb/woo-products', {
         title: __('Woo Products', 'advanced-gutenberg'),
         description: __('Listing your products in a easy way.', 'advanced-gutenberg'),
@@ -29110,46 +29169,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'advgb-category',
         keywords: [__('woo commerce', 'advanced-gutenberg'), __('products list', 'advanced-gutenberg'), __('price list', 'advanced-gutenberg')],
-        attributes: {
-            viewType: {
-                type: 'string',
-                default: 'normal'
-            },
-            category: {
-                type: 'string'
-            },
-            categories: {
-                type: 'array',
-                default: []
-            },
-            status: {
-                type: 'string'
-            },
-            order: {
-                type: 'string',
-                default: 'desc'
-            },
-            orderBy: {
-                type: 'string',
-                default: 'date'
-            },
-            numberOfProducts: {
-                type: 'number',
-                default: 6
-            },
-            columns: {
-                type: 'number',
-                default: 3
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            },
-            isPreview: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: attributes,
         example: {
             attributes: {
                 isPreview: true
@@ -29172,7 +29192,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
             var listCats = categories.join(',');
-            var shortCode = ['[products', "limit=\"" + numberOfProducts + "\"", "columns=\"" + columns + "\"", "orderby=\"" + orderBy + "\"", "order=\"" + order + "\"", category === 'selected' && "category=\"" + listCats + "\"", status === 'featured' && 'featured="1"', status === 'on_sale' && 'on_sale="1"', ']'].filter(Boolean).join(' ');
+            var shortCode = ['[products', "limit=\"" + numberOfProducts + "\"", "columns=\"" + columns + "\"", "orderby=\"" + orderBy + "\"", "order=\"" + order + "\"", category === 'selected' && "category=\"" + listCats + "\"", status === 'featured' && 'visibility="featured"', status === 'on_sale' && 'on_sale="1"', ']'].filter(Boolean).join(' ');
 
             var blockClassName = ['advgb-woo-products', viewType === 'slider' && 'slider-view'].filter(Boolean).join(' ');
 
@@ -29181,7 +29201,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 { className: blockClassName },
                 shortCode
             );
-        }
+        },
+        deprecated: [{
+            attributes: attributes,
+            save: function save(_ref2) {
+                var attributes = _ref2.attributes;
+                var viewType = attributes.viewType,
+                    category = attributes.category,
+                    categories = attributes.categories,
+                    status = attributes.status,
+                    order = attributes.order,
+                    orderBy = attributes.orderBy,
+                    numberOfProducts = attributes.numberOfProducts,
+                    columns = attributes.columns;
+
+
+                var listCats = categories.join(',');
+                var shortCode = ['[products', "limit=\"" + numberOfProducts + "\"", "columns=\"" + columns + "\"", "orderby=\"" + orderBy + "\"", "order=\"" + order + "\"", category === 'selected' && "category=\"" + listCats + "\"", status === 'featured' && 'featured="1"', status === 'on_sale' && 'on_sale="1"', ']'].filter(Boolean).join(' ');
+
+                var blockClassName = ['advgb-woo-products', viewType === 'slider' && 'slider-view'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: blockClassName },
+                    shortCode
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
