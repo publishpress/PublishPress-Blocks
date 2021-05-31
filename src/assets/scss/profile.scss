@@ -218,11 +218,9 @@ ul.blocks-list li.block-item .ju-switch-button input:checked + .slider:before {
 
 #users-tab .advgb-users-search-box input, #users-tab .advgb-users-search-box select {
     vertical-align: middle;
-    padding: 10px 25px;
 }
 
 #users-tab .advgb-users-search-box select {
-    height: 39px;
     box-shadow: none;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -238,7 +236,6 @@ ul.blocks-list li.block-item .ju-switch-button input:checked + .slider:before {
 
 #users-tab .users-block-title #user-search-input {
     border: none;
-    padding: 10px;
     margin: 0;
     display: none;
     width: 200px;
@@ -250,8 +247,8 @@ ul.blocks-list li.block-item .ju-switch-button input:checked + .slider:before {
 }
 
 .users-block-title .users-search-toggle {
-    font-size: 23px;
-    padding: 7px 10px;
+    font-size: 22px;
+    padding: 4px 8px;
     vertical-align: middle;
     cursor: pointer;
 }

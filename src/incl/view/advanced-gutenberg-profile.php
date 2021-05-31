@@ -138,7 +138,7 @@ wp_add_inline_script(
                     <input type="button"
                            name="advgb-clear-btn"
                            id="advgb-clear-btn"
-                           class="ju-rect-button"
+                           class="button pp-default-button"
                            value="<?php esc_attr_e('Clear', 'advanced-gutenberg') ?>"/>
                     <select name="advgb-roles-filter" id="advgb-roles-filter">
                         <option value=""><?php esc_html_e('Use role filter', 'advanced-gutenberg') ?></option>

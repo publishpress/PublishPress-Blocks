@@ -44,7 +44,7 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
     // Add default profiles if no profiles exist
     if (!$profiles->have_posts()) {
         $post_data = array(
-            'post_title'  => 'Default',
+            'post_title'  => 'All Users',
             'post_type'   => 'advgb_profiles',
             'post_status' => 'publish',
             'meta_input'  => array(

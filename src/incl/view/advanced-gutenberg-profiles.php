@@ -31,22 +31,19 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
 
 <div class="advgb-header" style="padding-top: 40px">
     <h1 class="header-title"><?php esc_html_e('PublishPress Blocks Profiles', 'advanced-gutenberg') ?></h1>
-    <div class="inline-button-wrapper">
-        <a class="button pp-default-button"
+</div>
+<div class="profiles-list-wrapper">
+    <div class="profiles-action-btn" style="float: left; margin: 25px auto">
+        <a class="button pp-primary-button" id="new-profile"
            href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) ?>"
         >
             <i class="dashicons dashicons-plus"></i>
             <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
-        </a>
-    </div>
-</div>
-<div class="profiles-list-wrapper">
-    <div class="profiles-action-btn" style="float: left; margin: 25px auto">
-        <button type="button" id="delete-selected-profiles" class="ju-rect-button">
-            <?php esc_html_e('Delete selected', 'advanced-gutenberg') ?>
+        </a> <button type="button" id="delete-selected-profiles" class="button pp-default-button">
+            <?php esc_html_e('Delete', 'advanced-gutenberg') ?>
         </button>
     </div>
-    <div class="advgb-search-wrapper" style="float: right; width: 350px">
+    <div class="advgb-search-wrapper" style="float: right; width: 300px">
         <input type="text" class="profiles-search-input advgb-search-input"
                placeholder="<?php esc_html_e('Search profiles by title or author', 'advanced-gutenberg') ?>"
         >
@@ -105,8 +102,14 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
             <?php endforeach; ?>
         <?php else : ?>
             <tr>
-                <td colspan="3" class="advgb-no-profiles">
-                    <?php esc_html_e('No profiles found.', 'advanced-gutenberg') ?>
+                <td colspan="4" class="advgb-no-profiles">
+                    <?php
+                    echo sprintf(
+                        __('No profiles found. %sCreate a new profile%s', 'advanced-gutenberg'),
+                        '<a href="' . esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) . '">',
+                        '</a>'
+                    );
+                    ?>
                 </td>
             </tr>
         <?php endif; ?>

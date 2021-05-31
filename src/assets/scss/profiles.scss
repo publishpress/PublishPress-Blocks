@@ -7,10 +7,6 @@
     border: none;
 }
 
-#delete-selected-profiles {
-    padding: 14px 15px;
-}
-
 #profiles-list th {
     text-align: inherit;
     padding: 10px;
@@ -78,4 +74,9 @@
     color: #000;
     font-weight: bold;
     vertical-align: middle;
+}
+
+.advgb-no-profiles {
+  background: #fff;
+  text-align: center;
 }
