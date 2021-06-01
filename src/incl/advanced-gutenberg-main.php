@@ -429,7 +429,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function addEditorAndFrontendStyles()
         {
-            // Load custom styles in the <head>. Replaces custom_styles.css load
+            // Load custom styles in the <head>
             add_action('wp_head', array($this, 'loadCustomStylesFrontend'));
             add_action('admin_head', array($this, 'loadCustomStylesAdmin'));
 
@@ -1861,17 +1861,24 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function loadCustomStylesFrontend() {
 
             $custom_styles = get_option('advgb_custom_styles');
+            $post_content = get_the_content();
 
             if(is_array($custom_styles)) {
 
                 $content = '';
+
                 foreach ($custom_styles as $styles) {
-                    $content .= '.' . $styles['name'] . " {\n";
-                    $content .= $styles['css'] . "\n} \n";
+
+                    // Check if the class is in use in the post
+                    if (strpos($post_content, $styles['name']) !== false) {
+                        $content .= '.' . $styles['name'] . " {\n";
+                        $content .= $styles['css'] . "\n} \n";
+                    }
                 }
 
-                echo '<style type="text/css">' . $content . '</style>';
-
+                if( !empty($content) ) {
+                    echo '<style type="text/css">' . $content . '</style>';
+                }
             }
         }
 

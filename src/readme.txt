@@ -169,6 +169,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 = 2.8.0 =
   * Add: Rename menu to "Blocks"
   * Add: Ask for review popup after 1 week
+  * Add: Load only custom styles in use in frontend
   * Fix: Fix long broken taxonomy display for Content Display block
 
 = 2.7.1 =
