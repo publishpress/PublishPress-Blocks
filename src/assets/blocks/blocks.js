@@ -23953,7 +23953,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ orderBy: value });
                             },
                             onNumberOfItemsChange: function onNumberOfItemsChange(value) {
-                                return setAttributes({ numberOfPosts: value });
+                                return _this3.refreshOnChangeItems(value);
                             }
                         }))
                     ),
@@ -24786,6 +24786,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function getDisplayImageStatus(attributes, index) {
                 return attributes.displayFeaturedImage && (attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor);
             }
+        }, {
+            key: 'refreshOnChangeItems',
+            value: function refreshOnChangeItems(numberOfPosts) {
+                var _props$attributes = this.props.attributes,
+                    postView = _props$attributes.postView,
+                    myToken = _props$attributes.myToken;
+
+                this.props.setAttributes({ numberOfPosts: numberOfPosts });
+
+                if (postView === 'masonry') {
+                    this.props.setAttributes({ myToken: Math.floor(Math.random() * Math.floor(999)) });
+                }
+            }
         }], [{
             key: 'extractContent',
             value: function extractContent(html, length) {
@@ -24844,21 +24857,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _select = select('core'),
                 getEntityRecords = _select.getEntityRecords;
 
-            var _props$attributes = props.attributes,
-                categories = _props$attributes.categories,
-                tagIds = _props$attributes.tagIds,
-                tags = _props$attributes.tags,
-                category = _props$attributes.category,
-                order = _props$attributes.order,
-                orderBy = _props$attributes.orderBy,
-                numberOfPosts = _props$attributes.numberOfPosts,
-                myToken = _props$attributes.myToken,
-                postType = _props$attributes.postType,
-                excludeCurrentPost = _props$attributes.excludeCurrentPost,
-                excludeIds = _props$attributes.excludeIds,
-                author = _props$attributes.author,
-                taxonomies = _props$attributes.taxonomies,
-                taxIds = _props$attributes.taxIds;
+            var _props$attributes2 = props.attributes,
+                categories = _props$attributes2.categories,
+                tagIds = _props$attributes2.tagIds,
+                tags = _props$attributes2.tags,
+                category = _props$attributes2.category,
+                order = _props$attributes2.order,
+                orderBy = _props$attributes2.orderBy,
+                numberOfPosts = _props$attributes2.numberOfPosts,
+                myToken = _props$attributes2.myToken,
+                postType = _props$attributes2.postType,
+                excludeCurrentPost = _props$attributes2.excludeCurrentPost,
+                excludeIds = _props$attributes2.excludeIds,
+                author = _props$attributes2.author,
+                taxonomies = _props$attributes2.taxonomies,
+                taxIds = _props$attributes2.taxIds;
 
 
             var catIds = categories && categories.length > 0 ? categories.map(function (cat) {
