@@ -30,7 +30,7 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
 ?>
 
 <div class="advgb-header" style="padding-top: 40px">
-    <h1 class="header-title"><?php esc_html_e('PublishPress Blocks Profiles', 'advanced-gutenberg') ?></h1>
+    <h1 class="header-title"><?php esc_html_e('Block Access Profiles', 'advanced-gutenberg') ?></h1>
 </div>
 <div class="profiles-list-wrapper">
     <div class="profiles-action-btn" style="float: left; margin: 25px auto">

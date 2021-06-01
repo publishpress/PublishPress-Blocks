@@ -10,7 +10,7 @@ $phpver = phpversion();
 $tabs_data = array(
     array(
         'id' => 'profiles',
-        'title' => __('Profiles', 'advanced-gutenberg'),
+        'title' => __('Block Access', 'advanced-gutenberg'),
         'icon' => 'account-circle',
     ),
     array(
