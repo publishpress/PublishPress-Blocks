@@ -42,6 +42,10 @@ if (! defined('ADVANCED_GUTENBERG_VERSION')) {
     define('ADVANCED_GUTENBERG_VERSION', '2.8.0b1');
 }
 
+if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
+    define('ADVANCED_GUTENBERG_PLUGIN', __FILE__);
+}
+
 // Code shared with Pro version
 require_once __DIR__ . '/init.php';
 
