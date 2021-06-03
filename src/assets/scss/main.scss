@@ -16,7 +16,6 @@
 
 .advgb-header .header-title {
     margin: 0;
-    margin-left: 10px;
     display: inline-block;
     padding: 10px 0;
     text-transform: capitalize;
@@ -120,5 +119,5 @@ button:disabled {
 
 /*Support RTL*/
 .rtl .advgb-header .header-title {
-    margin-right: 10px;
+    //margin-right: 10px;
 }

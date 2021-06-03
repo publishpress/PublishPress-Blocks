@@ -170,6 +170,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Rename menu to "Blocks"
   * Add: Ask for review popup after 1 week
   * Add: Load only custom styles in use in frontend
+  * Add: Block Access layout improvements
   * Fix: Fix long broken taxonomy display for Content Display block
   * Fix: Editor preview when changing number of items in Masonry view for Content Display block
   * Fix: Hook when plugin is activated
