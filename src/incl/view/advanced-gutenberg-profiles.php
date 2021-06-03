@@ -61,15 +61,15 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
                         <i class="dashicons"></i>
                     </span>
                 </th>
-                <th class="profile-header-author sorting-header" data-sort="author">
+                <th class="profile-header-roles sorting-header desc" data-sort="roles">
                     <span>
-                        <span><?php esc_html_e('Author', 'advanced-gutenberg') ?></span>
+                        <span><?php esc_html_e('Roles', 'advanced-gutenberg') ?></span>
                         <i class="dashicons"></i>
                     </span>
                 </th>
-                <th class="profile-header-date sorting-header desc" data-sort="date">
+                <th class="profile-header-users sorting-header" data-sort="users">
                     <span>
-                        <span><?php esc_html_e('Date', 'advanced-gutenberg') ?></span>
+                        <span><?php esc_html_e('Users', 'advanced-gutenberg') ?></span>
                         <i class="dashicons"></i>
                     </span>
                 </th>
@@ -78,17 +78,12 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
         <tbody>
         <?php if (count($profiles) > 0) : ?>
             <?php foreach ($profiles as $profile) : ?>
-                <?php $profileRolesAccess = get_post_meta($profile->ID, 'roles_access', true); ?>
-                <?php $profileRolesAccess = implode(', ', $profileRolesAccess) ?>
                 <tr class="advgb-profile" data-profile-id="<?php echo esc_html($profile->ID) ?>">
                     <td class="profile-checkbox select-box">
                         <input type="checkbox" class="ju-checkbox" name="advgb_profile[]" value="<?php echo esc_html($profile->ID) ?>">
                     </td>
                     <td class="profile-title">
-                        <a href="<?php echo esc_html(admin_url('admin.php?page=advgb_main&view=profile&id='.$profile->ID)) ?>"
-                           class="advgb_qtip"
-                           data-qtip="<?php echo esc_html($profileRolesAccess); ?>"
-                        >
+                        <a href="<?php echo esc_html(admin_url('admin.php?page=advgb_main&view=profile&id='.$profile->ID)) ?>">
                             <?php echo esc_html($profile->post_title ? $profile->post_title : __('(untitled)', 'advanced-gutenberg')) ?>
                         </a>
                         <i class="mi mi-delete-forever profile-delete"
@@ -96,8 +91,31 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
                            data-profile-id="<?php echo esc_html($profile->ID) ?>">
                         </i>
                     </td>
-                    <td class="profile-author"><?php the_author_meta('display_name', $profile->post_author) ?></td>
-                    <td class="profile-date"><?php echo get_the_date('Y/m/d - H:i', $profile->ID) ?></td>
+                    <td class="profile-roles">
+                        <?php
+                        global $wp_roles;
+                        $roles_access   = get_post_meta($profile->ID, 'roles_access', true);
+                        $roles_realname = [];
+                        if( !empty($roles_access) ) {
+                            foreach($roles_access as $role_access) {
+                                $roles_realname[] = translate_user_role( $wp_roles->roles[$role_access]['name'] );
+                            }
+                            echo implode( ', ', $roles_realname);
+                        }
+                        ?>
+                    </td>
+                    <td class="profile-users">
+                        <?php
+                        $users_access   = get_post_meta( $profile->ID, 'users_access', true );
+                        $users_realname = [];
+                        if( !empty($users_access) ) {
+                            foreach($users_access as $user_id) {
+                                $users_realname[] = get_userdata($user_id)->display_name;
+                            }
+                            echo implode( ', ', $users_realname);
+                        }
+                        ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         <?php else : ?>
@@ -125,15 +143,15 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
                         <i class="dashicons"></i>
                     </span>
                 </th>
-                <th class="profile-header-author sorting-header" data-sort="author">
+                <th class="profile-header-roles sorting-header desc" data-sort="roles">
                     <span>
-                        <span><?php esc_html_e('Author', 'advanced-gutenberg') ?></span>
+                        <span><?php esc_html_e('Roles', 'advanced-gutenberg') ?></span>
                         <i class="dashicons"></i>
                     </span>
                 </th>
-                <th class="profile-header-date sorting-header desc" data-sort="date">
+                <th class="profile-header-users sorting-header" data-sort="users">
                     <span>
-                        <span><?php esc_html_e('Date', 'advanced-gutenberg') ?></span>
+                        <span><?php esc_html_e('Users', 'advanced-gutenberg') ?></span>
                         <i class="dashicons"></i>
                     </span>
                 </th>
