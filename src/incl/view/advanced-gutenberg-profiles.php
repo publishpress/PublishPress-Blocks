@@ -45,7 +45,7 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
     </div>
     <div class="advgb-search-wrapper" style="float: right; width: 300px">
         <input type="text" class="profiles-search-input advgb-search-input"
-               placeholder="<?php esc_html_e('Search profiles by title or author', 'advanced-gutenberg') ?>"
+               placeholder="<?php esc_html_e('Search profiles by title', 'advanced-gutenberg') ?>"
         >
         <i class="mi mi-search"></i>
     </div>
