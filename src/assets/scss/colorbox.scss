@@ -134,18 +134,9 @@
 }
 
 #colorbox.advgb_lightbox #cboxTitle {
-    position: absolute;
-    bottom: -42px;
-    top: auto;
-    left: auto;
-    border: none;
     font-size: 18px;
     color: #cdcdcd;
     text-align: left;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     width: 90%;
 }
 
