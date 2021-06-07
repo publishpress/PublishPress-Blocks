@@ -96,7 +96,17 @@
                 borderRadius,
                 marginBottom,
                 collapsedAll,
+                headerTag,
             } = attributes;
+
+            const htmlTags = [
+                { label: 'h1', value: 'h1' },
+                { label: 'h2', value: 'h2' },
+                { label: 'h3', value: 'h3' },
+                { label: 'h4', value: 'h4' },
+                { label: 'h5', value: 'h5' },
+                { label: 'h6', value: 'h6' },
+            ];
 
             return (
                 <Fragment>
@@ -115,6 +125,12 @@
                                 help={ __( 'Make all accordions collapsed by default.', 'advanced-gutenberg' ) }
                                 checked={ collapsedAll }
                                 onChange={ () => this.props.updateRootBlockAttrs({ collapsedAll: !collapsedAll })}
+                            />
+                            <SelectControl
+                                label={ __( 'Heading Tag', 'advanced-gutenberg' ) }
+                                value={ headerTag }
+                                options={ htmlTags }
+                                onChange={ ( value ) => setAttributes( { headerTag: value } ) }
                             />
                         </PanelBody>
                         <PanelBody title={ __( 'Header Settings', 'advanced-gutenberg' ) }>
@@ -225,7 +241,7 @@
                             </svg>
                         </span>
                             <RichText
-                                tagName="h4"
+                                tagName={ headerTag }
                                 value={ header }
                                 onChange={ ( value ) => setAttributes( { header: value } ) }
                                 unstableOnSplit={ () => null }
@@ -322,6 +338,10 @@
                 type: 'boolean',
                 default: false,
             },
+            headerTag: {
+                type: 'string',
+                default: 'h4',
+            },
             changed: {
                 type: 'boolean',
                 default: false,
@@ -371,6 +391,7 @@
                 borderColor,
                 borderRadius,
                 marginBottom,
+                headerTag,
             } = attributes;
 
             return (
@@ -390,7 +411,12 @@
                                 { HEADER_ICONS[headerIcon] }
                             </svg>
                         </span>
-                        <h4 className="advgb-accordion-header-title" style={ { color: 'inherit' } }>{ header }</h4>
+                        <RichText.Content
+                            tagName={ headerTag }
+                            className="advgb-accordion-header-title"
+                            style={ { color: 'inherit' } }
+                            value={ header }
+                        />
                     </div>
                     <div className="advgb-accordion-body"
                          style={ {

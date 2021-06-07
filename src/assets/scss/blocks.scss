@@ -164,14 +164,28 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
     vertical-align: sub;
 }
 
-.advgb-accordion-header h4.advgb-accordion-header-title, .advgb-accordion-header h4 {
-    padding: 0;
-    margin: 0;
-    clear: none;
-    color: inherit;
-    line-height: 1.8;
-    font-size: 1.2em;
-    cursor: pointer;
+.advgb-accordion-header {
+
+  h1.advgb-accordion-header-title,
+  h1,
+  h2.advgb-accordion-header-title,
+  h2,
+  h3.advgb-accordion-header-title,
+  h3,
+  h4.advgb-accordion-header-title,
+  h4,
+  h5.advgb-accordion-header-title,
+  h5,
+  h6.advgb-accordion-header-title,
+  h6 {
+      padding: 0;
+      margin: 0;
+      clear: none;
+      color: inherit;
+      line-height: 1.8;
+      font-size: 1.2em;
+      cursor: pointer;
+  }
 }
 
 .advgb-accordion-header[aria-expanded="true"] .advgb-accordion-header-icon {
