@@ -6045,8 +6045,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     borderColor = attributes.borderColor,
                     borderRadius = attributes.borderRadius,
                     marginBottom = attributes.marginBottom,
-                    collapsedAll = attributes.collapsedAll;
+                    collapsedAll = attributes.collapsedAll,
+                    headerTag = attributes.headerTag;
 
+
+                var htmlTags = [{ label: 'h1', value: 'h1' }, { label: 'h2', value: 'h2' }, { label: 'h3', value: 'h3' }, { label: 'h4', value: 'h4' }, { label: 'h5', value: 'h5' }, { label: 'h6', value: 'h6' }];
 
                 return React.createElement(
                     Fragment,
@@ -6073,6 +6076,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 checked: collapsedAll,
                                 onChange: function onChange() {
                                     return _this2.props.updateRootBlockAttrs({ collapsedAll: !collapsedAll });
+                                }
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Header Tag', 'advanced-gutenberg'),
+                                value: headerTag,
+                                options: htmlTags,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ headerTag: value });
                                 }
                             })
                         ),
@@ -6213,7 +6224,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 )
                             ),
                             React.createElement(RichText, {
-                                tagName: "h4",
+                                tagName: headerTag,
                                 value: header,
                                 onChange: function onChange(value) {
                                     return setAttributes({ header: value });
@@ -6318,6 +6329,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'boolean',
                 default: false
             },
+            headerTag: {
+                type: 'string',
+                default: 'h4'
+            },
             changed: {
                 type: 'boolean',
                 default: false
@@ -6365,7 +6380,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderWidth = attributes.borderWidth,
                 borderColor = attributes.borderColor,
                 borderRadius = attributes.borderRadius,
-                marginBottom = attributes.marginBottom;
+                marginBottom = attributes.marginBottom,
+                headerTag = attributes.headerTag;
 
 
             return React.createElement(
@@ -6392,11 +6408,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             HEADER_ICONS[headerIcon]
                         )
                     ),
-                    React.createElement(
-                        "h4",
-                        { className: "advgb-accordion-header-title", style: { color: 'inherit' } },
-                        header
-                    )
+                    React.createElement(RichText.Content, {
+                        tagName: headerTag,
+                        className: "advgb-accordion-header-title",
+                        style: { color: 'inherit' },
+                        value: header
+                    })
                 ),
                 React.createElement(
                     "div",
