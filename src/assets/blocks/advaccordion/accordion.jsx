@@ -127,7 +127,7 @@
                                 onChange={ () => this.props.updateRootBlockAttrs({ collapsedAll: !collapsedAll })}
                             />
                             <SelectControl
-                                label={ __( 'Heading Tag', 'advanced-gutenberg' ) }
+                                label={ __( 'Header Tag', 'advanced-gutenberg' ) }
                                 value={ headerTag }
                                 options={ htmlTags }
                                 onChange={ ( value ) => setAttributes( { headerTag: value } ) }

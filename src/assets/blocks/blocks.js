@@ -6079,7 +6079,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(SelectControl, {
-                                label: __('Heading Tag', 'advanced-gutenberg'),
+                                label: __('Header Tag', 'advanced-gutenberg'),
                                 value: headerTag,
                                 options: htmlTags,
                                 onChange: function onChange(value) {
