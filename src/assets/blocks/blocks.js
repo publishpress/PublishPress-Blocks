@@ -9886,7 +9886,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     var values = _ref.values;
 
                     return createBlock('advgb/list', {
-                        values: parse(values),
+                        values: values,
                         icon: 'controls-play',
                         iconColor: '#ff0000'
                     });

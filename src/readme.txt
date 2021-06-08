@@ -172,10 +172,11 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Load only custom styles in use in frontend
   * Add: Block Access layout improvements
   * Add: Roles and Users to Block Access profiles list
-  * Add: HTML tag options for the Header in Advanced Accordion Block 
+  * Add: HTML tag options for the Header in Advanced Accordion Block
   * Fix: Fix long broken taxonomy display for Content Display block
   * Fix: Editor preview when changing number of items in Masonry view for Content Display block
   * Fix: Hook when plugin is activated
+  * Fix: Advanced List transform can break the editor page after is converted into List block
   * Remove: Author and Date from Block Access profiles list
 
 = 2.7.1 =
