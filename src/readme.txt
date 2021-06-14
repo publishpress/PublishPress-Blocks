@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.7.2
-Stable tag: 2.8.0b1
+Stable tag: 2.8.0b2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -172,6 +172,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Load only custom styles in use in frontend
   * Add: Block Access layout improvements
   * Add: Roles and Users to Block Access profiles list
+  * Add: Overlay image caption option for Gallery blocks
   * Add: HTML tag options for the Header in Advanced Accordion Block
   * Fix: Fix long broken taxonomy display for Content Display block
   * Fix: Editor preview when changing number of items in Masonry view for Content Display block

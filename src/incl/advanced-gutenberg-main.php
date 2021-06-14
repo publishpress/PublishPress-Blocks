@@ -1798,12 +1798,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['gallery_lightbox'] = 0;
                 }
 
-                if (isset($_POST['gallery_lightbox_caption'])) {
-                    $save_config['gallery_lightbox_caption'] = 1;
-                } else {
-                    $save_config['gallery_lightbox_caption'] = 0;
-                }
-
                 if (isset($_POST['enable_blocks_spacing'])) {
                     $save_config['enable_blocks_spacing'] = 1;
                 } else {
@@ -1822,6 +1816,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['enable_columns_visual_guide'] = 0;
                 }
 
+                $save_config['gallery_lightbox_caption'] = $_POST['gallery_lightbox_caption'];
                 $save_config['google_api_key'] = $_POST['google_api_key'];
                 $save_config['blocks_spacing'] = $_POST['blocks_spacing'];
                 $save_config['blocks_icon_color'] = $_POST['blocks_icon_color'];
