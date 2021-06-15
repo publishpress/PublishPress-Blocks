@@ -336,7 +336,7 @@
                     blocks: ['core/list'],
                     transform: ({values}) => {
                         return createBlock('advgb/list', {
-                            values: parse(values),
+                            values: values,
                             icon: 'controls-play',
                             iconColor: '#ff0000',
                         })

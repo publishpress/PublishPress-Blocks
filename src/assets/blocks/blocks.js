@@ -6045,8 +6045,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     borderColor = attributes.borderColor,
                     borderRadius = attributes.borderRadius,
                     marginBottom = attributes.marginBottom,
-                    collapsedAll = attributes.collapsedAll;
+                    collapsedAll = attributes.collapsedAll,
+                    headerTag = attributes.headerTag;
 
+
+                var htmlTags = [{ label: 'h1', value: 'h1' }, { label: 'h2', value: 'h2' }, { label: 'h3', value: 'h3' }, { label: 'h4', value: 'h4' }, { label: 'h5', value: 'h5' }, { label: 'h6', value: 'h6' }];
 
                 return React.createElement(
                     Fragment,
@@ -6073,6 +6076,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 checked: collapsedAll,
                                 onChange: function onChange() {
                                     return _this2.props.updateRootBlockAttrs({ collapsedAll: !collapsedAll });
+                                }
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Header Tag', 'advanced-gutenberg'),
+                                value: headerTag,
+                                options: htmlTags,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ headerTag: value });
                                 }
                             })
                         ),
@@ -6213,7 +6224,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 )
                             ),
                             React.createElement(RichText, {
-                                tagName: "h4",
+                                tagName: headerTag,
                                 value: header,
                                 onChange: function onChange(value) {
                                     return setAttributes({ header: value });
@@ -6318,6 +6329,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'boolean',
                 default: false
             },
+            headerTag: {
+                type: 'string',
+                default: 'h4'
+            },
             changed: {
                 type: 'boolean',
                 default: false
@@ -6365,7 +6380,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderWidth = attributes.borderWidth,
                 borderColor = attributes.borderColor,
                 borderRadius = attributes.borderRadius,
-                marginBottom = attributes.marginBottom;
+                marginBottom = attributes.marginBottom,
+                headerTag = attributes.headerTag;
 
 
             return React.createElement(
@@ -6392,11 +6408,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             HEADER_ICONS[headerIcon]
                         )
                     ),
-                    React.createElement(
-                        "h4",
-                        { className: "advgb-accordion-header-title", style: { color: 'inherit' } },
-                        header
-                    )
+                    React.createElement(RichText.Content, {
+                        tagName: headerTag,
+                        className: "advgb-accordion-header-title",
+                        style: { color: 'inherit' },
+                        value: header
+                    })
                 ),
                 React.createElement(
                     "div",
@@ -9869,7 +9886,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     var values = _ref.values;
 
                     return createBlock('advgb/list', {
-                        values: parse(values),
+                        values: values,
                         icon: 'controls-play',
                         iconColor: '#ff0000'
                     });
@@ -23953,7 +23970,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ orderBy: value });
                             },
                             onNumberOfItemsChange: function onNumberOfItemsChange(value) {
-                                return setAttributes({ numberOfPosts: value });
+                                return _this3.refreshOnChangeItems(value);
                             }
                         }))
                     ),
@@ -24786,6 +24803,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function getDisplayImageStatus(attributes, index) {
                 return attributes.displayFeaturedImage && (attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor);
             }
+        }, {
+            key: 'refreshOnChangeItems',
+            value: function refreshOnChangeItems(numberOfPosts) {
+                var _props$attributes = this.props.attributes,
+                    postView = _props$attributes.postView,
+                    myToken = _props$attributes.myToken;
+
+                this.props.setAttributes({ numberOfPosts: numberOfPosts });
+
+                if (postView === 'masonry') {
+                    this.props.setAttributes({ myToken: Math.floor(Math.random() * Math.floor(999)) });
+                }
+            }
         }], [{
             key: 'extractContent',
             value: function extractContent(html, length) {
@@ -24844,21 +24874,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _select = select('core'),
                 getEntityRecords = _select.getEntityRecords;
 
-            var _props$attributes = props.attributes,
-                categories = _props$attributes.categories,
-                tagIds = _props$attributes.tagIds,
-                tags = _props$attributes.tags,
-                category = _props$attributes.category,
-                order = _props$attributes.order,
-                orderBy = _props$attributes.orderBy,
-                numberOfPosts = _props$attributes.numberOfPosts,
-                myToken = _props$attributes.myToken,
-                postType = _props$attributes.postType,
-                excludeCurrentPost = _props$attributes.excludeCurrentPost,
-                excludeIds = _props$attributes.excludeIds,
-                author = _props$attributes.author,
-                taxonomies = _props$attributes.taxonomies,
-                taxIds = _props$attributes.taxIds;
+            var _props$attributes2 = props.attributes,
+                categories = _props$attributes2.categories,
+                tagIds = _props$attributes2.tagIds,
+                tags = _props$attributes2.tags,
+                category = _props$attributes2.category,
+                order = _props$attributes2.order,
+                orderBy = _props$attributes2.orderBy,
+                numberOfPosts = _props$attributes2.numberOfPosts,
+                myToken = _props$attributes2.myToken,
+                postType = _props$attributes2.postType,
+                excludeCurrentPost = _props$attributes2.excludeCurrentPost,
+                excludeIds = _props$attributes2.excludeIds,
+                author = _props$attributes2.author,
+                taxonomies = _props$attributes2.taxonomies,
+                taxIds = _props$attributes2.taxIds;
 
 
             var catIds = categories && categories.length > 0 ? categories.map(function (cat) {

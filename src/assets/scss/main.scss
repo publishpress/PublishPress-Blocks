@@ -16,7 +16,6 @@
 
 .advgb-header .header-title {
     margin: 0;
-    margin-left: 10px;
     display: inline-block;
     padding: 10px 0;
     text-transform: capitalize;
@@ -49,8 +48,7 @@
 
 /*Search input styles*/
 .advgb-search-wrapper {
-    margin: 25px auto;
-    padding: 10px;
+    margin: 23px auto;
     border: 2px solid #e1e1e1;
     border-radius: 4px;
     background-color: transparent;
@@ -69,12 +67,12 @@
 }
 
 .advgb-search-wrapper .advgb-search-input:focus {
-    border: none;
-    box-shadow: none;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .advgb-search-wrapper > i {
-    font-size: 22px;
+    font-size: 20px;
     vertical-align: text-bottom;
 }
 
@@ -121,5 +119,5 @@ button:disabled {
 
 /*Support RTL*/
 .rtl .advgb-header .header-title {
-    margin-right: 10px;
+    //margin-right: 10px;
 }

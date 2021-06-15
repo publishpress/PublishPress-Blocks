@@ -429,7 +429,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function addEditorAndFrontendStyles()
         {
-            // Load custom styles in the <head>. Replaces custom_styles.css load
+            // Load custom styles in the <head>
             add_action('wp_head', array($this, 'loadCustomStylesFrontend'));
             add_action('admin_head', array($this, 'loadCustomStylesAdmin'));
 
@@ -1569,8 +1569,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function registerMainMenu()
         {
             add_menu_page(
-                __('PublishPress Blocks', 'advanced-gutenberg'),
-                __('PublishPress Blocks', 'advanced-gutenberg'),
+                __('Blocks', 'advanced-gutenberg'),
+                __('Blocks', 'advanced-gutenberg'),
                 'manage_options',
                 'advgb_main',
                 array($this, 'advgbMainView'),
@@ -1798,12 +1798,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['gallery_lightbox'] = 0;
                 }
 
-                if (isset($_POST['gallery_lightbox_caption'])) {
-                    $save_config['gallery_lightbox_caption'] = 1;
-                } else {
-                    $save_config['gallery_lightbox_caption'] = 0;
-                }
-
                 if (isset($_POST['enable_blocks_spacing'])) {
                     $save_config['enable_blocks_spacing'] = 1;
                 } else {
@@ -1822,6 +1816,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['enable_columns_visual_guide'] = 0;
                 }
 
+                $save_config['gallery_lightbox_caption'] = $_POST['gallery_lightbox_caption'];
                 $save_config['google_api_key'] = $_POST['google_api_key'];
                 $save_config['blocks_spacing'] = $_POST['blocks_spacing'];
                 $save_config['blocks_icon_color'] = $_POST['blocks_icon_color'];
@@ -1861,17 +1856,24 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function loadCustomStylesFrontend() {
 
             $custom_styles = get_option('advgb_custom_styles');
+            $post_content = get_the_content();
 
             if(is_array($custom_styles)) {
 
                 $content = '';
+
                 foreach ($custom_styles as $styles) {
-                    $content .= '.' . $styles['name'] . " {\n";
-                    $content .= $styles['css'] . "\n} \n";
+
+                    // Check if the class is in use in the post
+                    if (strpos($post_content, $styles['name']) !== false) {
+                        $content .= '.' . $styles['name'] . " {\n";
+                        $content .= $styles['css'] . "\n} \n";
+                    }
                 }
 
-                echo '<style type="text/css">' . $content . '</style>';
-
+                if( !empty($content) ) {
+                    echo '<style type="text/css">' . $content . '</style>';
+                }
             }
         }
 
@@ -5147,6 +5149,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 default:
                     // Nothing to do here
                     break;
+            }
+
+            // Pro
+            if(defined('ADVANCED_GUTENBERG_PRO')) {
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_set_styles_for_blocks' ) ) {
+                    $html_style .= PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_set_styles_for_blocks($blockAttrs, $blockName);
+                }
             }
 
             return $html_style;

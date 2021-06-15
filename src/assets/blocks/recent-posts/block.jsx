@@ -541,7 +541,7 @@ import { AuthorSelect } from './query-controls.jsx';
                             numberOfItems={ numberOfPosts }
                             onOrderChange={ ( value ) => setAttributes( { order: value } ) }
                             onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
-                            onNumberOfItemsChange={ (value) => setAttributes( { numberOfPosts: value } ) }
+                            onNumberOfItemsChange={ (value) => this.refreshOnChangeItems(value) }
                         />
                     </PanelBody>
                     <PanelBody title={ __( 'Filters', 'advanced-gutenberg' ) }>
@@ -1308,6 +1308,15 @@ import { AuthorSelect } from './query-controls.jsx';
             return(
                 attributes.displayFeaturedImage && ( attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor)
             )
+        }
+
+        refreshOnChangeItems(numberOfPosts) {
+            const { postView, myToken } = this.props.attributes;
+            this.props.setAttributes( { numberOfPosts: numberOfPosts } );
+
+            if( postView === 'masonry' ){
+                this.props.setAttributes( { myToken: Math.floor(Math.random() * Math.floor(999)) } );
+            }
         }
 
     }

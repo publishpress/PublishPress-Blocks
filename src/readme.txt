@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.7.2
-Stable tag: 2.7.1
+Stable tag: 2.8.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -165,6 +165,20 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 1. Advanced Buttons block
 
 == Changelog ==
+
+= 2.8.0 =
+  * Add: Rename menu to "Blocks"
+  * Add: Ask for review popup after 1 week
+  * Add: Load only custom styles in use in frontend
+  * Add: Block Access layout improvements
+  * Add: Roles and Users to Block Access profiles list
+  * Add: Overlay image caption option for Gallery blocks
+  * Add: HTML tag options for the Header in Advanced Accordion Block
+  * Fix: Fix long broken taxonomy display for Content Display block
+  * Fix: Editor preview when changing number of items in Masonry view for Content Display block
+  * Fix: Hook when plugin is activated
+  * Fix: Advanced List transform can break the editor page after is converted into List block
+  * Remove: Author and Date from Block Access profiles list
 
 = 2.7.1 =
   * Add: Preview for custom styles in editor

@@ -38,10 +38,6 @@ if (version_compare(PHP_VERSION, '5.6.20', '<')) {
     return;
 }
 
-if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
-    define('ADVANCED_GUTENBERG_PLUGIN', __FILE__);
-}
-
 if (!defined('GUTENBERG_VERSION_REQUIRED')) {
     define('GUTENBERG_VERSION_REQUIRED', '5.7.0');
 }

@@ -3,7 +3,7 @@
 }
 
 #profiles-container .tab-content {
-    padding: 10px;
+    padding: 20px 0 10px;
 }
 
 #update-list-btn i.rotating {
@@ -34,7 +34,7 @@ button[disabled] {
 }
 
 .profile-title {
-    padding: 10px;
+    padding: 0 0 10px;
 }
 
 .profile-title .advgb-search-wrapper {
@@ -42,6 +42,10 @@ button[disabled] {
     margin-bottom: 0;
     box-shadow: 0 20px 20px 0 rgba(186, 192, 213, 0.08);
     background-color: #fff;
+
+    > .profile-title-input {
+      font-size: 22px;
+    }
 }
 
 .profile-title .advgb-search-wrapper:not(.focused) {
@@ -60,8 +64,7 @@ ul.blocks-list {
 }
 
 ul.blocks-list li.block-item {
-    margin: 10px 15px;
-    margin-left: 0;
+    margin: 5px 10px 5px 0;
     padding: 10px;
     background-color: #fff;
     flex-basis: 300px;
@@ -218,11 +221,9 @@ ul.blocks-list li.block-item .ju-switch-button input:checked + .slider:before {
 
 #users-tab .advgb-users-search-box input, #users-tab .advgb-users-search-box select {
     vertical-align: middle;
-    padding: 10px 25px;
 }
 
 #users-tab .advgb-users-search-box select {
-    height: 39px;
     box-shadow: none;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -238,7 +239,6 @@ ul.blocks-list li.block-item .ju-switch-button input:checked + .slider:before {
 
 #users-tab .users-block-title #user-search-input {
     border: none;
-    padding: 10px;
     margin: 0;
     display: none;
     width: 200px;
@@ -250,8 +250,8 @@ ul.blocks-list li.block-item .ju-switch-button input:checked + .slider:before {
 }
 
 .users-block-title .users-search-toggle {
-    font-size: 23px;
-    padding: 7px 10px;
+    font-size: 22px;
+    padding: 4px 8px;
     vertical-align: middle;
     cursor: pointer;
 }
@@ -281,17 +281,16 @@ ul.blocks-list li.block-item .ju-switch-button input:checked + .slider:before {
 }
 
 .advgb-groups-list {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
 }
 
 .advgb-groups-list li {
-    margin: 5px;
-    margin-right: 15px;
-    padding: 10px;
-    background-color: #fff;
-    flex-basis: 30%;
+  padding: 10px;
+  background-color: #fff;
+  width: unset;
+  margin: 0;
 }
 
 .advgb-groups-list li .ju-switch-button {
