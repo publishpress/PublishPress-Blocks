@@ -51,6 +51,16 @@
     .advgb-child-select {
       max-width: 200px;
     }
+
+    .advgb-custom-styles-wrapper {
+      padding-top: 16px;
+      border-top: 1px solid #e0e0e0;
+
+      .components-flex,
+      .components-base-control__help  {
+        padding: 0 16px;
+      }
+    }
 }
 
 body:not(.advgb-editor-width-default) {

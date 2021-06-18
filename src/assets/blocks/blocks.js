@@ -17058,41 +17058,45 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-class-name' }, props)), props.isSelected && SUPPORTED_BLOCKS.includes(props.name) && React.createElement(
                 InspectorControls,
                 { key: 'advgb-custom-controls' },
-                React.createElement(SelectControl, {
-                    label: [__('Custom styles', 'advanced-gutenberg'), React.createElement('span', { className: 'components-panel__color-area',
-                        key: 'customstyle-identify',
-                        style: {
-                            background: props.attributes.identifyColor,
-                            verticalAlign: 'text-bottom',
-                            borderRadius: '50%',
-                            border: 'none',
-                            width: '16px',
-                            height: '16px',
-                            display: 'inline-block',
-                            marginLeft: '10px'
-                        } })],
-                    help: __('This option let you add custom style for the current block', 'advanced-gutenberg'),
-                    value: props.attributes.customStyle,
-                    options: advgbBlocks.customStyles.map(function (cstyle, index) {
-                        if (cstyle.title) advgbBlocks.customStyles[index].label = cstyle.title;
-                        if (cstyle.name) advgbBlocks.customStyles[index].value = cstyle.name;
+                React.createElement(
+                    'div',
+                    { className: 'advgb-custom-styles-wrapper' },
+                    React.createElement(SelectControl, {
+                        label: [__('Custom styles', 'advanced-gutenberg'), React.createElement('span', { className: 'components-panel__color-area',
+                            key: 'customstyle-identify',
+                            style: {
+                                background: props.attributes.identifyColor,
+                                verticalAlign: 'text-bottom',
+                                borderRadius: '50%',
+                                border: 'none',
+                                width: '16px',
+                                height: '16px',
+                                display: 'inline-block',
+                                marginLeft: '10px'
+                            } })],
+                        help: __('This option let you add custom style for the current block', 'advanced-gutenberg'),
+                        value: props.attributes.customStyle,
+                        options: advgbBlocks.customStyles.map(function (cstyle, index) {
+                            if (cstyle.title) advgbBlocks.customStyles[index].label = cstyle.title;
+                            if (cstyle.name) advgbBlocks.customStyles[index].value = cstyle.name;
 
-                        return cstyle;
-                    }),
-                    onChange: function onChange(cstyle) {
-                        var identifyColor = advgbBlocks.customStyles.filter(function (style) {
-                            return style.value === cstyle;
-                        })[0].identifyColor;
+                            return cstyle;
+                        }),
+                        onChange: function onChange(cstyle) {
+                            var identifyColor = advgbBlocks.customStyles.filter(function (style) {
+                                return style.value === cstyle;
+                            })[0].identifyColor;
 
-                        props.setAttributes({
-                            customStyle: cstyle,
-                            identifyColor: identifyColor,
-                            backgroundColor: undefined,
-                            textColor: undefined,
-                            fontSize: undefined
-                        });
-                    }
-                })
+                            props.setAttributes({
+                                customStyle: cstyle,
+                                identifyColor: identifyColor,
+                                backgroundColor: undefined,
+                                textColor: undefined,
+                                fontSize: undefined
+                            });
+                        }
+                    })
+                )
             )];
         };
     });
