@@ -17046,7 +17046,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     if (typeof advgbBlocks.customStyles !== 'undefined' && advgbBlocks.customStyles) {
         advgbBlocks.customStyles.unshift({
             id: 0,
-            label: __('Paragraph', 'advanced-gutenberg'),
+            label: __('Select a custom style', 'advanced-gutenberg'),
             value: '',
             identifyColor: ''
         });

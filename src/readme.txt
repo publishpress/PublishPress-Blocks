@@ -168,6 +168,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 = 2.8.1 =
   * Fix: Default color and background values when are empty in frontend for Advanced Button blocks
+  * Fix: Default label for custom styles dropdown in editor
 
 = 2.8.0 =
   * Add: Rename menu to "Blocks"
