@@ -5209,8 +5209,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             $block_class    = $blockAttrs['id'];
             $font_size      = isset($blockAttrs['textSize']) ? intval($blockAttrs['textSize']) : 18;
-            $color          = isset($blockAttrs['textColor']) ? $blockAttrs['textColor'] : '';
-            $bg_color       = isset($blockAttrs['bgColor']) ? $blockAttrs['bgColor'] : '';
+            $color          = isset($blockAttrs['textColor']) ? $blockAttrs['textColor'] : '#fff';
+            $bg_color       = isset($blockAttrs['bgColor']) ? $blockAttrs['bgColor'] : '#2196f3';
             $mg_top         = isset($blockAttrs['marginTop']) ? intval($blockAttrs['marginTop']) : 0;
             $mg_right       = isset($blockAttrs['marginRight']) ? intval($blockAttrs['marginRight']) : 0;
             $mg_bottom      = isset($blockAttrs['marginBottom']) ? intval($blockAttrs['marginBottom']) : 0;
