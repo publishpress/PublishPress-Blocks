@@ -169,10 +169,12 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 = 2.8.1 =
   * Add: Increase max padding and margin for Columns manager and Column blocks
   * Add: Rename "Summary" block to "Table of Contents"
+  * Add: Translation support to javascript for block Settings popup
   * Fix: Default color and background values when are empty in frontend for Advanced Button blocks
   * Fix: Default label for custom styles dropdown in editor
   * Fix: Spacing for Custom styles dropdown in editor
   * Fix: Enable Contributor and Subscriber in "All User Roles" profile
+  * Fix: Block Settings popup spacing
 
 = 2.8.0 =
   * Add: Rename menu to "Blocks"
