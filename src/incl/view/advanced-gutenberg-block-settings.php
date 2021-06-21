@@ -79,11 +79,11 @@ if(defined('ADVANCED_GUTENBERG_PRO')) {
                 if (isset($block['iconColor'])) :
                     $iconColor = 'style=color:' . $block['iconColor'];
                 endif; ?>
-            <li class="block-config-item ju-settings-option" title="<?php echo esc_attr($block['title']); ?>">
+            <li class="block-config-item ju-settings-option" title="<?php echo esc_attr( __($block['title'], 'advanced-gutenberg') ); ?>">
                 <span class="block-icon" <?php echo esc_attr($iconColor) ?>>
                     <?php echo html_entity_decode(html_entity_decode(stripslashes($block['icon']))); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
                 </span>
-                <span class="block-title"><?php echo esc_html($block['title']); ?></span>
+                <span class="block-title"><?php echo esc_html( __($block['title'], 'advanced-gutenberg') ); ?></span>
                 <i class="mi mi-settings block-config-button"
                    title="<?php esc_html_e('Edit', 'advanced-gutenberg') ?>"
                    data-block="<?php echo esc_attr($block['name']); ?>"
