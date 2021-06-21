@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: PublishPress Blocks\n"
-"POT-Creation-Date: 2021-06-21 15:06-0500\n"
+"POT-Creation-Date: 2021-06-21 15:29-0500\n"
 "PO-Revision-Date: 2020-12-04 12:47-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -3332,6 +3332,14 @@ msgstr ""
 #: assets/blocks/recent-posts/block.php:246
 #: assets/blocks/recent-posts/block.php:829
 msgid "Updated"
+msgstr ""
+
+#: assets/js/settings.js:526
+msgid "Edit block"
+msgstr ""
+
+#: assets/js/settings.js:526
+msgid "default config"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
