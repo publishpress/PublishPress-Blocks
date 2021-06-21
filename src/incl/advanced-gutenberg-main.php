@@ -3203,7 +3203,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                 'name'  => 'loadMinimized',
                             ),
                             array(
-                                'title' => __('Summary header title', 'advanced-gutenberg'),
+                                'title' => __('Table of Contents header title', 'advanced-gutenberg'),
                                 'type'  => 'text',
                                 'name'  => 'headerTitle',
                             ),
@@ -3213,7 +3213,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                 'name'  => 'anchorColor',
                             ),
                             array(
-                                'title' => __('Summary Alignment', 'advanced-gutenberg'),
+                                'title' => __('Table of Contents Alignment', 'advanced-gutenberg'),
                                 'type'  => 'select',
                                 'name'  => 'align',
                                 'options' => array(
