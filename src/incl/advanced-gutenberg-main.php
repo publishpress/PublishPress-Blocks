@@ -1389,7 +1389,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_register_script(
                     'advgb_settings_js',
                     plugins_url('assets/js/settings.js', dirname(__FILE__)),
-                    array(),
+                    array('wp-i18n'),
                     ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_script(
