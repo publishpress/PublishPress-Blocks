@@ -13,7 +13,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          *
          * @var array   Array of default role access
          */
-        public static $default_roles_access = array('administrator', 'editor', 'author');
+        public static $default_roles_access = array('administrator', 'editor', 'author', 'contributor', 'subscriber');
 
         /**
          * Default active all blocks for new profile
