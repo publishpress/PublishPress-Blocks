@@ -371,6 +371,9 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass = 'grid-view columns-' . $attributes['columns'];
     } elseif ($attributes['postView'] === 'list') {
         $blockClass = 'list-view';
+        if($attributes['imagePosition'] !== 'left'){
+            $blockClass .= ' image-' . $attributes['imagePosition'];
+        }
     } elseif ($attributes['postView'] === 'slider') {
         $blockClass = 'slider-view';
         $blockClass .= ' style-' . $attributes['sliderStyle'];
@@ -587,6 +590,10 @@ function advgbRegisterBlockRecentPosts()
             'linkCustomTax' => array(
                 'type' => 'boolean',
                 'default' => false,
+            ),
+            'imagePosition' => array(
+                'type' => 'string',
+                'default' => 'left',
             ),
 			// deprecrated attributes...
             'displayDate' => array(

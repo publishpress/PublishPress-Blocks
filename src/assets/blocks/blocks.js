@@ -23770,7 +23770,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     selectedAuthorId = attributes.author,
                     sliderAutoplay = attributes.sliderAutoplay,
                     linkCustomTax = attributes.linkCustomTax,
-                    showCustomTaxList = attributes.showCustomTaxList;
+                    showCustomTaxList = attributes.showCustomTaxList,
+                    imagePosition = attributes.imagePosition;
 
 
                 var recentPosts = this.props.recentPosts;
@@ -24100,6 +24101,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             },
                             className: 'advgb-child-select'
                         }),
+                        displayFeaturedImage && postView === 'list' && React.createElement(SelectControl, {
+                            label: __('Position', 'advanced-gutenberg'),
+                            value: imagePosition,
+                            options: [{ label: __('Left', 'advanced-gutenberg'), value: 'left' }, { label: __('Right', 'advanced-gutenberg'), value: 'right' }],
+                            onChange: function onChange(value) {
+                                return setAttributes({ imagePosition: value });
+                            },
+                            className: 'advgb-child-select'
+                        }),
                         displayFeaturedImage && React.createElement(ToggleControl, {
                             label: __('Display Caption', 'advanced-gutenberg'),
                             checked: displayFeaturedImageCaption,
@@ -24311,7 +24321,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'masonry'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView && postView + '-view', (postView === 'grid' || postView === 'masonry') && 'columns-' + columns, postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM, postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, (postView === 'frontpage' || postView === 'masonry') && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView && postView + '-view', postView === 'list' && imagePosition !== 'left' && 'image-' + imagePosition, (postView === 'grid' || postView === 'masonry') && 'columns-' + columns, postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM, postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, (postView === 'frontpage' || postView === 'masonry') && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout].filter(Boolean).join(' ');
 
                 var formats = __experimentalGetSettings().formats;
                 var format = postDate !== 'hide' ? displayTime ? formats.datetime : formats.date : '';

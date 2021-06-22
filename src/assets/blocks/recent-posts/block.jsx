@@ -343,6 +343,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 sliderAutoplay,
                 linkCustomTax,
                 showCustomTaxList,
+                imagePosition,
             } = attributes;
 
             let recentPosts = this.props.recentPosts;
@@ -662,6 +663,18 @@ import { AuthorSelect } from './query-controls.jsx';
                             className="advgb-child-select"
                         />
                         }
+                        {displayFeaturedImage && postView === 'list' &&
+                        <SelectControl
+                            label={ __( 'Position', 'advanced-gutenberg' ) }
+                            value={ imagePosition }
+                            options={ [
+                                { label: __( 'Left', 'advanced-gutenberg' ), value: 'left' },
+                                { label: __( 'Right', 'advanced-gutenberg' ), value: 'right' },
+                            ] }
+                            onChange={ ( value ) => setAttributes( { imagePosition: value } ) }
+                            className="advgb-child-select"
+                        />
+                        }
                         {displayFeaturedImage &&
                         <ToggleControl
                             label={ __( 'Display Caption', 'advanced-gutenberg' ) }
@@ -869,6 +882,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 'advgb-recent-posts-block',
                 this.state.updating && 'loading',
                 postView && postView + '-view',
+                postView === 'list' && imagePosition !== 'left' && 'image-' + imagePosition,
                 ( ( postView === 'grid' ) || ( postView === 'masonry' ) ) && 'columns-' + columns,
                 postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM,
                 postView === 'slider' && sliderStyle && 'style-' + sliderStyle,
