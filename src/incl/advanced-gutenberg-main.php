@@ -4649,12 +4649,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_enqueue_style('slick_theme_style');
                 wp_enqueue_script('slick_js');
                 wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
-                    var slick = $(".advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)").slick({
-                        dots: true,
-                        adaptiveHeight: true,
-
+                    $(".advgb-recent-posts-block.slider-view").find(".advgb-recent-posts:not(.slick-initialized)").each(function() {
+                        $(this).slick({
+                            dots: true,
+                            adaptiveHeight: true,
+                        });
+                        $(this).slick("slickSetOption", "autoplay", $(this).parent().hasClass("slider-autoplay"), true);
                     });
-					slick.slick("slickSetOption", "autoplay", slick.parent().hasClass("slider-autoplay"), true);
                 });');
             }
 
