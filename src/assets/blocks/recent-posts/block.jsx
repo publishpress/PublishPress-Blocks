@@ -926,7 +926,7 @@ import { AuthorSelect } from './query-controls.jsx';
                         <div className="advgb-recent-posts">
                             {recentPosts.map( ( post, index ) => (
                                 <article key={ index }
-                                className={`advgb-recent-post ${ this.getDisplayImageStatus( attributes, index ) ? "" : "advgb-recent-post--no-image"}` }
+                                className={`advgb-recent-post ${ this.getDisplayImageStatus( attributes, index ) && ( post.featured_img || enablePlaceholderImage ) ? "" : "advgb-recent-post--no-image"}` }
                                 >
 
                                     {(() => {

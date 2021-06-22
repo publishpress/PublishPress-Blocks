@@ -150,10 +150,11 @@ function advgbRenderBlockRecentPosts($attributes)
     if (!empty($recent_posts)) {
         foreach ($recent_posts as $key=>$post) {
             $postThumbID = get_post_thumbnail_id($post->ID);
+            $outputImage = advgbCheckImageStatus( $attributes, $key ) && ( $postThumbID || $attributes['enablePlaceholderImage'] );
 
-            $postHtml .= '<article class="advgb-recent-post' . ( advgbCheckImageStatus( $attributes, $key ) ? '' : ' advgb-recent-post--no-image' ) . '">';
+            $postHtml .= '<article class="advgb-recent-post' . ( $outputImage ? '' : ' advgb-recent-post--no-image' ) . '">';
 
-            if ( advgbCheckImageStatus( $attributes, $key ) && ( $postThumbID || $attributes['enablePlaceholderImage'] ) ) {
+            if ( $outputImage ) {
                 $postThumb = '<img src="' . $rp_default_thumb['url'] . '" />';
                 $postThumbCaption = '';
                 if ($postThumbID) {

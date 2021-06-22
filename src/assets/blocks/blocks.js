@@ -24371,7 +24371,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     'article',
                                     { key: index,
-                                        className: 'advgb-recent-post ' + (_this3.getDisplayImageStatus(attributes, index) ? "" : "advgb-recent-post--no-image")
+                                        className: 'advgb-recent-post ' + (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage) ? "" : "advgb-recent-post--no-image")
                                     },
                                     function () {
                                         if (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage)) {
