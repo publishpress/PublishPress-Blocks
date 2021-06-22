@@ -153,7 +153,7 @@ function advgbRenderBlockRecentPosts($attributes)
 
             $postHtml .= '<article class="advgb-recent-post' . ( advgbCheckImageStatus( $attributes, $key ) ? '' : ' advgb-recent-post--no-image' ) . '">';
 
-            if ( advgbCheckImageStatus( $attributes, $key ) ) {
+            if ( advgbCheckImageStatus( $attributes, $key ) && ( $postThumbID || $attributes['enablePlaceholderImage'] ) ) {
                 $postThumb = '<img src="' . $rp_default_thumb['url'] . '" />';
                 $postThumbCaption = '';
                 if ($postThumbID) {
@@ -471,6 +471,10 @@ function advgbRegisterBlockRecentPosts()
             'displayFeaturedImageCaption' => array(
                 'type' => 'boolean',
                 'default' => false,
+            ),
+            'enablePlaceholderImage' => array(
+                'type' => 'boolean',
+                'default' => true,
             ),
             'displayAuthor' => array(
                 'type' => 'boolean',

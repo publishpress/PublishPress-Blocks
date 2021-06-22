@@ -23740,6 +23740,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayFeaturedImage = attributes.displayFeaturedImage,
                     displayFeaturedImageFor = attributes.displayFeaturedImageFor,
                     displayFeaturedImageCaption = attributes.displayFeaturedImageCaption,
+                    enablePlaceholderImage = attributes.enablePlaceholderImage,
                     displayAuthor = attributes.displayAuthor,
                     displayDate = attributes.displayDate,
                     postDate = attributes.postDate,
@@ -24104,6 +24105,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 },
                                 className: 'advgb-child-select'
                             }),
+                            React.createElement(ToggleControl, {
+                                label: __('Enable Placeholder Image', 'advanced-gutenberg'),
+                                checked: enablePlaceholderImage,
+                                onChange: function onChange() {
+                                    return setAttributes({ enablePlaceholderImage: !enablePlaceholderImage });
+                                },
+                                className: 'advgb-child-toggle',
+                                help: __('If a post doesn\'t have a featured image, the placeholder image will be displayed instead', 'advanced-gutenberg')
+                            }),
                             postView === 'list' && React.createElement(SelectControl, {
                                 label: __('Position', 'advanced-gutenberg'),
                                 value: imagePosition,
@@ -24364,7 +24374,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         className: 'advgb-recent-post ' + (_this3.getDisplayImageStatus(attributes, index) ? "" : "advgb-recent-post--no-image")
                                     },
                                     function () {
-                                        if (_this3.getDisplayImageStatus(attributes, index)) {
+                                        if (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage)) {
                                             return React.createElement(
                                                 'div',
                                                 { className: 'advgb-post-thumbnail' },
