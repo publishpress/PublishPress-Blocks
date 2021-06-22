@@ -649,39 +649,39 @@ import { AuthorSelect } from './query-controls.jsx';
                             onChange={ () => setAttributes( { displayFeaturedImage: !displayFeaturedImage } ) }
                         />
                         {displayFeaturedImage &&
-                        <SelectControl
-                            value={ displayFeaturedImageFor }
-                            options={ [
-                                { label: __( 'For all posts', 'advanced-gutenberg' ), value: 'all' },
-                                { label: __( 'For the first post', 'advanced-gutenberg' ), value: 1 },
-                                { label: __( 'For the first 2 posts', 'advanced-gutenberg' ), value: 2 },
-                                { label: __( 'For the first 3 posts', 'advanced-gutenberg' ), value: 3 },
-                                { label: __( 'For the first 4 posts', 'advanced-gutenberg' ), value: 4 },
-                                { label: __( 'For the first 5 posts', 'advanced-gutenberg' ), value: 5 },
-                            ] }
-                            onChange={ ( value ) => { setAttributes( { displayFeaturedImageFor: value } ) } }
-                            className="advgb-child-select"
-                        />
-                        }
-                        {displayFeaturedImage && postView === 'list' &&
-                        <SelectControl
-                            label={ __( 'Position', 'advanced-gutenberg' ) }
-                            value={ imagePosition }
-                            options={ [
-                                { label: __( 'Left', 'advanced-gutenberg' ), value: 'left' },
-                                { label: __( 'Right', 'advanced-gutenberg' ), value: 'right' },
-                            ] }
-                            onChange={ ( value ) => setAttributes( { imagePosition: value } ) }
-                            className="advgb-child-select"
-                        />
-                        }
-                        {displayFeaturedImage &&
-                        <ToggleControl
-                            label={ __( 'Display Caption', 'advanced-gutenberg' ) }
-                            checked={ displayFeaturedImageCaption }
-                            onChange={ () => setAttributes( { displayFeaturedImageCaption: !displayFeaturedImageCaption } ) }
-                            className="advgb-child-toggle"
-                        />
+                        <Fragment>
+                            <SelectControl
+                                value={ displayFeaturedImageFor }
+                                options={ [
+                                    { label: __( 'For all posts', 'advanced-gutenberg' ), value: 'all' },
+                                    { label: __( 'For the first post', 'advanced-gutenberg' ), value: 1 },
+                                    { label: __( 'For the first 2 posts', 'advanced-gutenberg' ), value: 2 },
+                                    { label: __( 'For the first 3 posts', 'advanced-gutenberg' ), value: 3 },
+                                    { label: __( 'For the first 4 posts', 'advanced-gutenberg' ), value: 4 },
+                                    { label: __( 'For the first 5 posts', 'advanced-gutenberg' ), value: 5 },
+                                ] }
+                                onChange={ ( value ) => { setAttributes( { displayFeaturedImageFor: value } ) } }
+                                className="advgb-child-select"
+                            />
+                            {postView === 'list' &&
+                            <SelectControl
+                                label={ __( 'Position', 'advanced-gutenberg' ) }
+                                value={ imagePosition }
+                                options={ [
+                                    { label: __( 'Left', 'advanced-gutenberg' ), value: 'left' },
+                                    { label: __( 'Right', 'advanced-gutenberg' ), value: 'right' },
+                                ] }
+                                onChange={ ( value ) => setAttributes( { imagePosition: value } ) }
+                                className="advgb-child-select"
+                            />
+                            }
+                            <ToggleControl
+                                label={ __( 'Display Caption', 'advanced-gutenberg' ) }
+                                checked={ displayFeaturedImageCaption }
+                                onChange={ () => setAttributes( { displayFeaturedImageCaption: !displayFeaturedImageCaption } ) }
+                                className="advgb-child-toggle"
+                            />
+                        </Fragment>
                         }
                         <ToggleControl
                             label={ __( 'Display Post Author', 'advanced-gutenberg' ) }

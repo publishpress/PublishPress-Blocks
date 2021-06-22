@@ -24093,31 +24093,35 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayFeaturedImage: !displayFeaturedImage });
                             }
                         }),
-                        displayFeaturedImage && React.createElement(SelectControl, {
-                            value: displayFeaturedImageFor,
-                            options: [{ label: __('For all posts', 'advanced-gutenberg'), value: 'all' }, { label: __('For the first post', 'advanced-gutenberg'), value: 1 }, { label: __('For the first 2 posts', 'advanced-gutenberg'), value: 2 }, { label: __('For the first 3 posts', 'advanced-gutenberg'), value: 3 }, { label: __('For the first 4 posts', 'advanced-gutenberg'), value: 4 }, { label: __('For the first 5 posts', 'advanced-gutenberg'), value: 5 }],
-                            onChange: function onChange(value) {
-                                setAttributes({ displayFeaturedImageFor: value });
-                            },
-                            className: 'advgb-child-select'
-                        }),
-                        displayFeaturedImage && postView === 'list' && React.createElement(SelectControl, {
-                            label: __('Position', 'advanced-gutenberg'),
-                            value: imagePosition,
-                            options: [{ label: __('Left', 'advanced-gutenberg'), value: 'left' }, { label: __('Right', 'advanced-gutenberg'), value: 'right' }],
-                            onChange: function onChange(value) {
-                                return setAttributes({ imagePosition: value });
-                            },
-                            className: 'advgb-child-select'
-                        }),
-                        displayFeaturedImage && React.createElement(ToggleControl, {
-                            label: __('Display Caption', 'advanced-gutenberg'),
-                            checked: displayFeaturedImageCaption,
-                            onChange: function onChange() {
-                                return setAttributes({ displayFeaturedImageCaption: !displayFeaturedImageCaption });
-                            },
-                            className: 'advgb-child-toggle'
-                        }),
+                        displayFeaturedImage && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(SelectControl, {
+                                value: displayFeaturedImageFor,
+                                options: [{ label: __('For all posts', 'advanced-gutenberg'), value: 'all' }, { label: __('For the first post', 'advanced-gutenberg'), value: 1 }, { label: __('For the first 2 posts', 'advanced-gutenberg'), value: 2 }, { label: __('For the first 3 posts', 'advanced-gutenberg'), value: 3 }, { label: __('For the first 4 posts', 'advanced-gutenberg'), value: 4 }, { label: __('For the first 5 posts', 'advanced-gutenberg'), value: 5 }],
+                                onChange: function onChange(value) {
+                                    setAttributes({ displayFeaturedImageFor: value });
+                                },
+                                className: 'advgb-child-select'
+                            }),
+                            postView === 'list' && React.createElement(SelectControl, {
+                                label: __('Position', 'advanced-gutenberg'),
+                                value: imagePosition,
+                                options: [{ label: __('Left', 'advanced-gutenberg'), value: 'left' }, { label: __('Right', 'advanced-gutenberg'), value: 'right' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ imagePosition: value });
+                                },
+                                className: 'advgb-child-select'
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Display Caption', 'advanced-gutenberg'),
+                                checked: displayFeaturedImageCaption,
+                                onChange: function onChange() {
+                                    return setAttributes({ displayFeaturedImageCaption: !displayFeaturedImageCaption });
+                                },
+                                className: 'advgb-child-toggle'
+                            })
+                        ),
                         React.createElement(ToggleControl, {
                             label: __('Display Post Author', 'advanced-gutenberg'),
                             checked: displayAuthor,
