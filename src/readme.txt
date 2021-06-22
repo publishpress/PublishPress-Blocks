@@ -171,6 +171,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Rename "Summary" block to "Table of Contents"
   * Add: Translation support to javascript for block Settings popup
   * Add: Setting to display images on the right for Content Display's block List view
+  * Add: Setting to not display placeholder featured image for Content Display block
   * Fix: Default color and background values when are empty in frontend for Advanced Button blocks
   * Fix: Default label for custom styles dropdown in editor
   * Fix: Spacing for Custom styles dropdown in editor

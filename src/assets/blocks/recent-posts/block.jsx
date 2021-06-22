@@ -314,6 +314,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 displayFeaturedImage,
                 displayFeaturedImageFor,
                 displayFeaturedImageCaption,
+                enablePlaceholderImage,
                 displayAuthor,
                 displayDate,
                 postDate,
@@ -663,6 +664,13 @@ import { AuthorSelect } from './query-controls.jsx';
                                 onChange={ ( value ) => { setAttributes( { displayFeaturedImageFor: value } ) } }
                                 className="advgb-child-select"
                             />
+                            <ToggleControl
+                                label={ __( 'Enable Placeholder Image', 'advanced-gutenberg' ) }
+                                checked={ enablePlaceholderImage }
+                                onChange={ () => setAttributes( { enablePlaceholderImage: !enablePlaceholderImage } ) }
+                                className="advgb-child-toggle"
+                                help={ __( 'If a post doesn\'t have a featured image, the placeholder image will be displayed instead', 'advanced-gutenberg' ) }
+                            />
                             {postView === 'list' &&
                             <SelectControl
                                 label={ __( 'Position', 'advanced-gutenberg' ) }
@@ -918,11 +926,11 @@ import { AuthorSelect } from './query-controls.jsx';
                         <div className="advgb-recent-posts">
                             {recentPosts.map( ( post, index ) => (
                                 <article key={ index }
-                                className={`advgb-recent-post ${ this.getDisplayImageStatus( attributes, index ) ? "" : "advgb-recent-post--no-image"}` }
+                                className={`advgb-recent-post ${ this.getDisplayImageStatus( attributes, index ) && ( post.featured_img || enablePlaceholderImage ) ? "" : "advgb-recent-post--no-image"}` }
                                 >
 
                                     {(() => {
-                                        if( this.getDisplayImageStatus( attributes, index ) ) {
+                                        if( this.getDisplayImageStatus( attributes, index ) && ( post.featured_img || enablePlaceholderImage ) ) {
                                             return(
                                                 <div className="advgb-post-thumbnail">
                                                     <a href={ post.link } target="_blank">
