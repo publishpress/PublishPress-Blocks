@@ -23453,8 +23453,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         set = lodash.set,
         find = lodash.find;
     var decodeEntities = wpHtmlEntities.decodeEntities;
-    var dateI18n = wpDate.dateI18n,
-        __experimentalGetSettings = wpDate.__experimentalGetSettings;
+    var dateI18n = wpDate.dateI18n;
 
 
     var advRecentPostsBlockIcon = React.createElement(
@@ -24338,9 +24337,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView && postView + '-view', postView === 'list' && imagePosition !== 'left' && 'image-' + imagePosition, (postView === 'grid' || postView === 'masonry') && 'columns-' + columns, postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM, postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, (postView === 'frontpage' || postView === 'masonry') && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout].filter(Boolean).join(' ');
 
-                var formats = __experimentalGetSettings().formats;
-                var format = postDate !== 'hide' ? displayTime ? formats.datetime : formats.date : '';
-
                 return isPreview ? React.createElement('img', { alt: __('Content Display', 'advanced-gutenberg'), width: '100%', src: previewImageData }) : React.createElement(
                     Fragment,
                     null,
@@ -24450,7 +24446,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             postDate !== 'hide' && React.createElement(
                                                 'span',
                                                 { className: 'advgb-post-datetime' },
-                                                postDateFormat === 'absolute' ? (postDate === 'created' ? __('Posted on', 'advanced-gutenberg') : __('Updated on', 'advanced-gutenberg')) + ' ' + dateI18n(format, postDate === 'created' ? post.date_gmt : post.modified_gmt) : postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified
+                                                _this3.getDateTime(post)
                                             ),
                                             postType === 'post' && displayCommentCount && React.createElement(
                                                 'span',
@@ -24845,6 +24841,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     this.props.setAttributes({ myToken: Math.floor(Math.random() * Math.floor(999)) });
                 }
             }
+        }, {
+            key: 'getDateTime',
+            value: function getDateTime(post) {
+                var _props$attributes2 = this.props.attributes,
+                    postDate = _props$attributes2.postDate,
+                    postDateFormat = _props$attributes2.postDateFormat,
+                    displayTime = _props$attributes2.displayTime;
+
+
+                if (postDateFormat === 'absolute') {
+                    if (postDate === 'created') {
+                        return displayTime ? post.absolute_dates_time.created : post.absolute_dates.created;
+                    } else {
+                        return displayTime ? post.absolute_dates_time.modified : post.absolute_dates.modified;
+                    }
+                } else {
+                    return postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified;
+                }
+            }
         }], [{
             key: 'extractContent',
             value: function extractContent(html, length) {
@@ -24903,21 +24918,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _select = select('core'),
                 getEntityRecords = _select.getEntityRecords;
 
-            var _props$attributes2 = props.attributes,
-                categories = _props$attributes2.categories,
-                tagIds = _props$attributes2.tagIds,
-                tags = _props$attributes2.tags,
-                category = _props$attributes2.category,
-                order = _props$attributes2.order,
-                orderBy = _props$attributes2.orderBy,
-                numberOfPosts = _props$attributes2.numberOfPosts,
-                myToken = _props$attributes2.myToken,
-                postType = _props$attributes2.postType,
-                excludeCurrentPost = _props$attributes2.excludeCurrentPost,
-                excludeIds = _props$attributes2.excludeIds,
-                author = _props$attributes2.author,
-                taxonomies = _props$attributes2.taxonomies,
-                taxIds = _props$attributes2.taxIds;
+            var _props$attributes3 = props.attributes,
+                categories = _props$attributes3.categories,
+                tagIds = _props$attributes3.tagIds,
+                tags = _props$attributes3.tags,
+                category = _props$attributes3.category,
+                order = _props$attributes3.order,
+                orderBy = _props$attributes3.orderBy,
+                numberOfPosts = _props$attributes3.numberOfPosts,
+                myToken = _props$attributes3.myToken,
+                postType = _props$attributes3.postType,
+                excludeCurrentPost = _props$attributes3.excludeCurrentPost,
+                excludeIds = _props$attributes3.excludeIds,
+                author = _props$attributes3.author,
+                taxonomies = _props$attributes3.taxonomies,
+                taxIds = _props$attributes3.taxIds;
 
 
             var catIds = categories && categories.length > 0 ? categories.map(function (cat) {

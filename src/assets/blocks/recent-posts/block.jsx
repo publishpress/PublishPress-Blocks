@@ -11,7 +11,7 @@ import { AuthorSelect } from './query-controls.jsx';
     const { withSelect } = wpData;
     const { pickBy, isUndefined, isArray, isNull, uniqWith, isEqual, omit, union, sortBy, unset, set, find } = lodash;
     const { decodeEntities } = wpHtmlEntities;
-    const { dateI18n, __experimentalGetSettings } = wpDate;
+    const { dateI18n } = wpDate;
 
     const advRecentPostsBlockIcon = (
         <svg width="20" height="20" viewBox="2 2 22 22">
@@ -903,9 +903,6 @@ import { AuthorSelect } from './query-controls.jsx';
                 postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout,
             ].filter( Boolean ).join( ' ' );
 
-            const formats = __experimentalGetSettings().formats;
-            let format = postDate !== 'hide' ? (displayTime ? formats.datetime : formats.date) : '';
-
             return (
                 isPreview ?
                     <img alt={__('Content Display', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
@@ -986,14 +983,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                             }
                                             {postDate !== 'hide' && (
                                                 <span className="advgb-post-datetime" >
-                                                { postDateFormat === 'absolute'
-                                                    ? (
-                                                        (
-                                                            postDate === 'created' ? __( 'Posted on', 'advanced-gutenberg' ) : __( 'Updated on', 'advanced-gutenberg' )
-                                                        ) + ' ' + dateI18n( format, postDate === 'created' ? post.date_gmt : post.modified_gmt )
-                                                    )
-                                                    : ( postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified )
-                                                }
+                                                { this.getDateTime(post) }
                                                 </span>
                                             ) }
                                             {postType === 'post' && displayCommentCount && (
@@ -1339,6 +1329,20 @@ import { AuthorSelect } from './query-controls.jsx';
 
             if( postView === 'masonry' ){
                 this.props.setAttributes( { myToken: Math.floor(Math.random() * Math.floor(999)) } );
+            }
+        }
+
+        getDateTime(post) {
+            const { postDate, postDateFormat, displayTime } = this.props.attributes;
+
+            if( postDateFormat === 'absolute' ) {
+                if( postDate === 'created' ) {
+                    return ( displayTime ? post.absolute_dates_time.created : post.absolute_dates.created );
+                } else {
+                    return ( displayTime ? post.absolute_dates_time.modified : post.absolute_dates.modified );
+                }
+            } else {
+                return ( postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified );
             }
         }
 

@@ -659,6 +659,24 @@ function advgbRegisterCustomFields() {
     );
 
     register_rest_field( 'post',
+        'absolute_dates',
+        array(
+            'get_callback'  => 'advgbGetAbsoluteDates',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'absolute_dates_time',
+        array(
+            'get_callback'  => 'advgbGetAbsoluteDatesTime',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
+    register_rest_field( 'post',
         'featured_img_caption',
         array(
             'get_callback'  => 'advgbGetImageCaption',
@@ -690,6 +708,23 @@ function advgbRegisterCustomFields() {
         'relative_dates',
         array(
             'get_callback'  => 'advgbGetRelativeDates',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+    register_rest_field( 'page',
+        'absolute_dates',
+        array(
+            'get_callback'  => 'advgbGetAbsoluteDates',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
+    register_rest_field( 'page',
+        'absolute_dates_time',
+        array(
+            'get_callback'  => 'advgbGetAbsoluteDatesTime',
             'update_callback'   => null,
             'schema'            => null,
         )
@@ -743,6 +778,24 @@ function advgbRegisterCustomFields() {
 				'schema'            => null,
 			)
 		);
+
+        register_rest_field( $cpt,
+            'absolute_dates',
+            array(
+                'get_callback'  => 'advgbGetAbsoluteDates',
+                'update_callback'   => null,
+                'schema'            => null,
+            )
+        );
+
+        register_rest_field( $cpt,
+            'absolute_dates_time',
+            array(
+                'get_callback'  => 'advgbGetAbsoluteDatesTime',
+                'update_callback'   => null,
+                'schema'            => null,
+            )
+        );
 
 		register_rest_field( $cpt,
 			'featured_img_caption',
@@ -840,6 +893,32 @@ function advgbGetRelativeDates( $post ) {
 		'created' => __( 'Posted', 'advanced-gutenberg') . ' ' . human_time_diff( get_the_date( 'U', $post['id'] ) ) . ' ' . __( 'ago', 'advanced-gutenberg'),
 		'modified' => __( 'Updated', 'advanced-gutenberg') . ' ' . human_time_diff( get_the_modified_date( 'U', $post['id'] ) ) . ' ' . __( 'ago', 'advanced-gutenberg')
 	);
+}
+
+/**
+ * Returns the absolute dates of the post.
+ *
+ * @return array
+ */
+function advgbGetAbsoluteDates( $post ) {
+    $format = get_option( 'date_format' );
+    return array(
+        'created' => __( 'Posted on', 'advanced-gutenberg') . ' ' . get_the_date( $format, $post['id']),
+        'modified' => __( 'Updated on', 'advanced-gutenberg') . ' ' . get_the_modified_date( $format, $post['id'])
+    );
+}
+
+/**
+ * Returns the absolute dates with time of the post.
+ *
+ * @return array
+ */
+function advgbGetAbsoluteDatesTime( $post ) {
+    $format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
+    return array(
+        'created' => __( 'Posted on', 'advanced-gutenberg') . ' ' . get_the_date( $format, $post['id']),
+        'modified' => __( 'Updated on', 'advanced-gutenberg') . ' ' . get_the_modified_date( $format, $post['id'])
+    );
 }
 
 /**
