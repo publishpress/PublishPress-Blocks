@@ -224,14 +224,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function addAdvBlocksCategory($categories)
         {
-            return array_merge(
-                array(
+            return in_array(
+                    'advgb-category', wp_list_pluck( $categories, 'slug' ), true
+                ) ? $categories : array_merge(
                     array(
-                        'slug' => 'advgb-category',
-                        'title' => __('PublishPress Blocks', 'advanced-gutenberg'),
+                        array(
+                            'slug' => 'advgb-category',
+                            'title' => __('PublishPress Blocks', 'advanced-gutenberg'),
+                        ),
                     ),
-                ),
-                $categories
+                    $categories
             );
         }
 
