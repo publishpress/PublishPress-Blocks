@@ -182,6 +182,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Autoplay in frontend when loading more than once instance of Content Display's block with Slider view
   * Fix: Adjust Number of items when selecting a Newspaper layout for Content Display block
   * Fix: Timezone for date time in Content Display block
+  * Fix: Advanced Accordion content overlay
 
 = 2.8.0 =
   * Add: Rename menu to "Blocks"

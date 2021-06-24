@@ -213,6 +213,10 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
     box-sizing: border-box;
 }
 
+.advgb-accordion-body {
+  overflow: hidden;
+}
+
 .advgb-accordion-controls {
     margin-top: 10px;
     text-align: center;
