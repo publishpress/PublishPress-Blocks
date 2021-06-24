@@ -1568,14 +1568,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function registerMainMenu()
         {
-            add_menu_page(
-                __('Blocks', 'advanced-gutenberg'),
-                __('Blocks', 'advanced-gutenberg'),
-                'manage_options',
-                'advgb_main',
-                array($this, 'advgbMainView'),
-                'dashicons-layout'
-            );
+            if (empty($GLOBALS['admin_page_hooks']['advgb_main'])) {
+                add_menu_page(
+                    __('Blocks', 'advanced-gutenberg'),
+                    __('Blocks', 'advanced-gutenberg'),
+                    'manage_options',
+                    'advgb_main',
+                    array($this, 'advgbMainView'),
+                    'dashicons-layout'
+                );
+            }
         }
 
         /**
