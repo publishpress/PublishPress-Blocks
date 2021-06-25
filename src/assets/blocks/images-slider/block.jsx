@@ -303,7 +303,7 @@
                             </PanelBody>
                         </InspectorControls>
                         <div className={blockClass}>
-                            <div className="advgb-images-slider">
+                            <div className="advgb-images-slider" dir={ rtl ? 'rtl' : 'ltr' }>
                                 {images.map((image, index) => (
                                     <div className="advgb-image-slider-item" key={index}>
                                         <img src={image.url}

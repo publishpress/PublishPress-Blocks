@@ -17741,7 +17741,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: blockClass },
                         React.createElement(
                             "div",
-                            { className: "advgb-images-slider" },
+                            { className: "advgb-images-slider", dir: rtl ? 'rtl' : 'ltr' },
                             images.map(function (image, index) {
                                 return React.createElement(
                                     "div",
