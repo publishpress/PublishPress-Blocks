@@ -508,7 +508,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                                     newspaperLayout: layout.layout
                                                 } );
                                                 this.setState( { random: Math.random() } );
-                                                this.refreshOnChangeItems(layout.items);
+                                                this.newspaperOnChangeLayout(layout.layout);
                                             } }
                                         >
                                             <img src={advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png'}
@@ -876,7 +876,10 @@ import { AuthorSelect } from './query-controls.jsx';
                 {
                     icon: 'admin-site-alt3',
                     title: __( 'Newspaper View', 'advanced-gutenberg' ),
-                    onClick: () => setAttributes( { postView: 'newspaper' } ),
+                    onClick: () => {
+                        setAttributes( { postView: 'newspaper' } );
+                        this.newspaperOnChangeLayout(newspaperLayout);
+                    },
                     isActive: postView === 'newspaper',
                 },
                 {
@@ -1330,6 +1333,12 @@ import { AuthorSelect } from './query-controls.jsx';
             if( postView === 'masonry' ){
                 this.props.setAttributes( { myToken: Math.floor(Math.random() * Math.floor(999)) } );
             }
+        }
+
+        newspaperOnChangeLayout(newspaperLayout) {
+            const { numberOfPosts } = this.props.attributes;
+            const currentLayout = NEWSPAPER_LAYOUTS.find( layout => layout.layout === newspaperLayout );
+            this.props.setAttributes( { numberOfPosts: currentLayout.items } );
         }
 
         getDateTime(post) {

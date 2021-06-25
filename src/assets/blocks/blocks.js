@@ -24011,7 +24011,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     newspaperLayout: layout.layout
                                                 });
                                                 _this3.setState({ random: Math.random() });
-                                                _this3.refreshOnChangeItems(layout.items);
+                                                _this3.newspaperOnChangeLayout(layout.layout);
                                             }
                                         },
                                         React.createElement('img', { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
@@ -24401,7 +24401,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     icon: 'admin-site-alt3',
                     title: __('Newspaper View', 'advanced-gutenberg'),
                     onClick: function onClick() {
-                        return setAttributes({ postView: 'newspaper' });
+                        setAttributes({ postView: 'newspaper' });
+                        _this3.newspaperOnChangeLayout(newspaperLayout);
                     },
                     isActive: postView === 'newspaper'
                 }, {
@@ -24918,6 +24919,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (postView === 'masonry') {
                     this.props.setAttributes({ myToken: Math.floor(Math.random() * Math.floor(999)) });
                 }
+            }
+        }, {
+            key: 'newspaperOnChangeLayout',
+            value: function newspaperOnChangeLayout(newspaperLayout) {
+                var numberOfPosts = this.props.attributes.numberOfPosts;
+
+                var currentLayout = NEWSPAPER_LAYOUTS.find(function (layout) {
+                    return layout.layout === newspaperLayout;
+                });
+                this.props.setAttributes({ numberOfPosts: currentLayout.items });
             }
         }, {
             key: 'getDateTime',
