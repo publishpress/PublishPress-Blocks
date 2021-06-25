@@ -17741,7 +17741,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: blockClass },
                         React.createElement(
                             "div",
-                            { className: "advgb-images-slider" },
+                            { className: "advgb-images-slider", dir: rtl ? 'rtl' : 'ltr' },
                             images.map(function (image, index) {
                                 return React.createElement(
                                     "div",
@@ -18043,7 +18043,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 { className: blockClassName },
                 React.createElement(
                     "div",
-                    { className: "advgb-images-slider", "data-slick": "{\"rtl\": " + rtl + "}" },
+                    { className: "advgb-images-slider", dir: rtl ? 'rtl' : 'ltr' },
                     images.map(function (image, index) {
                         return React.createElement(
                             "div",
@@ -18095,8 +18095,86 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         deprecated: [{
             attributes: blockAttrs,
+            supports: {
+                anchor: true
+            },
             save: function save(_ref4) {
                 var attributes = _ref4.attributes;
+                var images = attributes.images,
+                    actionOnClick = attributes.actionOnClick,
+                    fullWidth = attributes.fullWidth,
+                    autoHeight = attributes.autoHeight,
+                    width = attributes.width,
+                    height = attributes.height,
+                    alwaysShowOverlay = attributes.alwaysShowOverlay,
+                    rtl = attributes.rtl,
+                    hoverColor = attributes.hoverColor,
+                    titleColor = attributes.titleColor,
+                    textColor = attributes.textColor,
+                    hAlign = attributes.hAlign,
+                    vAlign = attributes.vAlign;
+
+                var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: blockClassName },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-images-slider", "data-slick": "{\"rtl\": " + rtl + "}" },
+                        images.map(function (image, index) {
+                            return React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-item", key: index },
+                                React.createElement("img", { src: image.url,
+                                    className: "advgb-image-slider-img",
+                                    alt: image.title,
+                                    style: {
+                                        width: fullWidth ? '100%' : width,
+                                        height: autoHeight ? 'auto' : height
+                                    }
+                                }),
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-image-slider-item-info",
+                                        style: {
+                                            justifyContent: vAlign,
+                                            alignItems: hAlign
+                                        }
+                                    },
+                                    (actionOnClick !== '' || alwaysShowOverlay) && React.createElement("a", { className: "advgb-image-slider-overlay",
+                                        target: actionOnClick !== '' ? '_blank' : false,
+                                        rel: "noopener noreferrer",
+                                        href: actionOnClick === 'link' && !!image.link ? image.link : '#',
+                                        style: {
+                                            backgroundColor: hoverColor,
+                                            opacity: alwaysShowOverlay ? 0.5 : undefined
+                                        }
+                                    }),
+                                    image.title && React.createElement(
+                                        "h4",
+                                        { className: "advgb-image-slider-title",
+                                            style: { color: titleColor }
+                                        },
+                                        image.title
+                                    ),
+                                    image.text && React.createElement(
+                                        "p",
+                                        { className: "advgb-image-slider-text",
+                                            style: { color: textColor }
+                                        },
+                                        image.text
+                                    )
+                                )
+                            );
+                        })
+                    )
+                );
+            }
+        }, {
+            attributes: blockAttrs,
+            save: function save(_ref5) {
+                var attributes = _ref5.attributes;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
                     fullWidth = attributes.fullWidth,
@@ -18170,8 +18248,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             attributes: blockAttrs,
-            save: function save(_ref5) {
-                var attributes = _ref5.attributes;
+            save: function save(_ref6) {
+                var attributes = _ref6.attributes;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
                     fullWidth = attributes.fullWidth,
@@ -18244,8 +18322,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             attributes: blockAttrs,
-            save: function save(_ref6) {
-                var attributes = _ref6.attributes;
+            save: function save(_ref7) {
+                var attributes = _ref7.attributes;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
                     fullWidth = attributes.fullWidth,
