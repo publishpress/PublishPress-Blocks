@@ -185,6 +185,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Advanced Accordion content overlay
   * Fix: Duplicated Blocks links in admin when having Free and Pro plugins activated
   * Fix: PublishPress Blocks category is listed twice in editor when having Free and Pro plugins activated
+  * Fix: RTL support for Images Slider block
 
 = 2.8.0 =
   * Add: Rename menu to "Blocks"
