@@ -176,7 +176,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
                 add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
                 add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
-                add_filter('block_categories', array($this, 'addAdvBlocksCategory'));
+                add_filter('block_categories_all', array($this, 'addAdvBlocksCategory'));
                 add_filter('admin_body_class', array($this, 'setAdvgEditorBodyClassses'));
 
                 // Ajax
