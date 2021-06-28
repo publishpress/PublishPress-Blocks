@@ -177,6 +177,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Spacing for Custom styles dropdown in editor
   * Fix: Enable Contributor and Subscriber in "All User Roles" profile
   * Fix: Block Settings popup spacing
+  * Fix: Language support in Block Settings
   * Fix: Spacing for Content Display block in Grid and List views
   * Fix: Navigation dots margin for Slider view in Content Display block
   * Fix: Autoplay in frontend when loading more than once instance of Content Display's block with Slider view
