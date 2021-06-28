@@ -13,7 +13,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          *
          * @var array   Array of default role access
          */
-        public static $default_roles_access = array('administrator', 'editor', 'author');
+        public static $default_roles_access = array('administrator', 'editor', 'author', 'contributor', 'subscriber');
 
         /**
          * Default active all blocks for new profile
@@ -224,14 +224,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function addAdvBlocksCategory($categories)
         {
-            return array_merge(
-                array(
+            return in_array(
+                    'advgb-category', wp_list_pluck( $categories, 'slug' ), true
+                ) ? $categories : array_merge(
                     array(
-                        'slug' => 'advgb-category',
-                        'title' => __('PublishPress Blocks', 'advanced-gutenberg'),
+                        array(
+                            'slug' => 'advgb-category',
+                            'title' => __('PublishPress Blocks', 'advanced-gutenberg'),
+                        ),
                     ),
-                ),
-                $categories
+                    $categories
             );
         }
 
@@ -1389,7 +1391,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_register_script(
                     'advgb_settings_js',
                     plugins_url('assets/js/settings.js', dirname(__FILE__)),
-                    array(),
+                    array('wp-i18n'),
                     ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_script(
@@ -1568,14 +1570,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function registerMainMenu()
         {
-            add_menu_page(
-                __('Blocks', 'advanced-gutenberg'),
-                __('Blocks', 'advanced-gutenberg'),
-                'manage_options',
-                'advgb_main',
-                array($this, 'advgbMainView'),
-                'dashicons-layout'
-            );
+            if (empty($GLOBALS['admin_page_hooks']['advgb_main'])) {
+                add_menu_page(
+                    __('Blocks', 'advanced-gutenberg'),
+                    __('Blocks', 'advanced-gutenberg'),
+                    'manage_options',
+                    'advgb_main',
+                    array($this, 'advgbMainView'),
+                    'dashicons-layout'
+                );
+            }
         }
 
         /**
@@ -3203,7 +3207,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                 'name'  => 'loadMinimized',
                             ),
                             array(
-                                'title' => __('Summary header title', 'advanced-gutenberg'),
+                                'title' => __('Table of Contents header title', 'advanced-gutenberg'),
                                 'type'  => 'text',
                                 'name'  => 'headerTitle',
                             ),
@@ -3213,7 +3217,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                 'name'  => 'anchorColor',
                             ),
                             array(
-                                'title' => __('Summary Alignment', 'advanced-gutenberg'),
+                                'title' => __('Table of Contents Alignment', 'advanced-gutenberg'),
                                 'type'  => 'select',
                                 'name'  => 'align',
                                 'options' => array(
@@ -4649,12 +4653,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_enqueue_style('slick_theme_style');
                 wp_enqueue_script('slick_js');
                 wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
-                    var slick = $(".advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)").slick({
-                        dots: true,
-                        adaptiveHeight: true,
-
+                    $(".advgb-recent-posts-block.slider-view").find(".advgb-recent-posts:not(.slick-initialized)").each(function() {
+                        $(this).slick({
+                            dots: true,
+                            adaptiveHeight: true,
+                        });
+                        $(this).slick("slickSetOption", "autoplay", $(this).parent().hasClass("slider-autoplay"), true);
                     });
-					slick.slick("slickSetOption", "autoplay", slick.parent().hasClass("slider-autoplay"), true);
                 });');
             }
 
@@ -5209,8 +5214,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             $block_class    = $blockAttrs['id'];
             $font_size      = isset($blockAttrs['textSize']) ? intval($blockAttrs['textSize']) : 18;
-            $color          = isset($blockAttrs['textColor']) ? $blockAttrs['textColor'] : '';
-            $bg_color       = isset($blockAttrs['bgColor']) ? $blockAttrs['bgColor'] : '';
+            $color          = isset($blockAttrs['textColor']) ? $blockAttrs['textColor'] : '#fff';
+            $bg_color       = isset($blockAttrs['bgColor']) ? $blockAttrs['bgColor'] : '#2196f3';
             $mg_top         = isset($blockAttrs['marginTop']) ? intval($blockAttrs['marginTop']) : 0;
             $mg_right       = isset($blockAttrs['marginRight']) ? intval($blockAttrs['marginRight']) : 0;
             $mg_bottom      = isset($blockAttrs['marginBottom']) ? intval($blockAttrs['marginBottom']) : 0;

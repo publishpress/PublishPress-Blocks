@@ -11,7 +11,7 @@ import { AuthorSelect } from './query-controls.jsx';
     const { withSelect } = wpData;
     const { pickBy, isUndefined, isArray, isNull, uniqWith, isEqual, omit, union, sortBy, unset, set, find } = lodash;
     const { decodeEntities } = wpHtmlEntities;
-    const { dateI18n, __experimentalGetSettings } = wpDate;
+    const { dateI18n } = wpDate;
 
     const advRecentPostsBlockIcon = (
         <svg width="20" height="20" viewBox="2 2 22 22">
@@ -72,20 +72,20 @@ import { AuthorSelect } from './query-controls.jsx';
     ];
 
     const NEWSPAPER_LAYOUTS = [
-        { layout: 'np-1-1', icon: 'np-1-1', title: __( 'The leading post in the left, 1 post in the right', 'advanced-gutenberg' ) },
-        { layout: 'np-1-2', icon: 'np-1-2', title: __( 'The leading post in the left, 2 posts in the right', 'advanced-gutenberg' ) },
-        { layout: 'np-1-3', icon: 'np-1-3', title: __( 'The leading post in the left, 3 posts in the right', 'advanced-gutenberg' ) },
-        { layout: 'np-1-4', icon: 'np-1-4', title: __( 'The leading post in the left, 4 posts in the right', 'advanced-gutenberg' ) },
-        { layout: 'np-1-5', icon: 'np-1-5', title: __( 'The leading post in the left, 5 posts in the right', 'advanced-gutenberg' ) },
-        { layout: 'np-1-1-r', icon: 'np-1-1-r', title: __( 'The leading post in the right, 1 post in the left', 'advanced-gutenberg' ) },
-        { layout: 'np-1-2-r', icon: 'np-1-2-r', title: __( 'The leading post in the right, 2 posts in the left', 'advanced-gutenberg' ) },
-        { layout: 'np-1-3-r', icon: 'np-1-3-r', title: __( 'The leading post in the right, 3 posts in the left', 'advanced-gutenberg' ) },
-        { layout: 'np-1-4-r', icon: 'np-1-4-r', title: __( 'The leading post in the right, 4 posts in the left', 'advanced-gutenberg' ) },
-        { layout: 'np-1-5-r', icon: 'np-1-5-r', title: __( 'The leading post in the right, 5 posts in the left', 'advanced-gutenberg' ) },
-        { layout: 'np-2', icon: 'np-2', title: __( 'The leading post on top, the rest of posts below', 'advanced-gutenberg' ) },
-        { layout: 'np-3-1', icon: 'np-3-1', title: __( 'The leading post on top, below 2 columns with 1 post in the left and 1 post in the right', 'advanced-gutenberg' ) },
-        { layout: 'np-3-2', icon: 'np-3-2', title: __( 'The leading post on top, below 2 columns with 1 post in the left and 2 posts in the right', 'advanced-gutenberg' ) },
-        { layout: 'np-3-3', icon: 'np-3-3', title: __( 'The leading post on top, below 2 columns with 1 post in the left and 3 posts in the right', 'advanced-gutenberg' ) },
+        { layout: 'np-1-1', icon: 'np-1-1', items: 2, title: __( 'The leading post in the left, 1 post in the right', 'advanced-gutenberg' ) },
+        { layout: 'np-1-2', icon: 'np-1-2', items: 3, title: __( 'The leading post in the left, 2 posts in the right', 'advanced-gutenberg' ) },
+        { layout: 'np-1-3', icon: 'np-1-3', items: 4, title: __( 'The leading post in the left, 3 posts in the right', 'advanced-gutenberg' ) },
+        { layout: 'np-1-4', icon: 'np-1-4', items: 5, title: __( 'The leading post in the left, 4 posts in the right', 'advanced-gutenberg' ) },
+        { layout: 'np-1-5', icon: 'np-1-5', items: 6, title: __( 'The leading post in the left, 5 posts in the right', 'advanced-gutenberg' ) },
+        { layout: 'np-1-1-r', icon: 'np-1-1-r', items: 2, title: __( 'The leading post in the right, 1 post in the left', 'advanced-gutenberg' ) },
+        { layout: 'np-1-2-r', icon: 'np-1-2-r', items: 3, title: __( 'The leading post in the right, 2 posts in the left', 'advanced-gutenberg' ) },
+        { layout: 'np-1-3-r', icon: 'np-1-3-r', items: 4, title: __( 'The leading post in the right, 3 posts in the left', 'advanced-gutenberg' ) },
+        { layout: 'np-1-4-r', icon: 'np-1-4-r', items: 5, title: __( 'The leading post in the right, 4 posts in the left', 'advanced-gutenberg' ) },
+        { layout: 'np-1-5-r', icon: 'np-1-5-r', items: 6, title: __( 'The leading post in the right, 5 posts in the left', 'advanced-gutenberg' ) },
+        { layout: 'np-2', icon: 'np-2', items: 3, title: __( 'The leading post on top, the rest of posts below', 'advanced-gutenberg' ) },
+        { layout: 'np-3-1', icon: 'np-3-1', items: 3, title: __( 'The leading post on top, below 2 columns with 1 post in the left and 1 post in the right', 'advanced-gutenberg' ) },
+        { layout: 'np-3-2', icon: 'np-3-2', items: 4, title: __( 'The leading post on top, below 2 columns with 1 post in the left and 2 posts in the right', 'advanced-gutenberg' ) },
+        { layout: 'np-3-3', icon: 'np-3-3', items: 5, title: __( 'The leading post on top, below 2 columns with 1 post in the left and 3 posts in the right', 'advanced-gutenberg' ) },
     ];
 
     const CUSTOM_TAX_PREFIX = 'custom-tax-';
@@ -314,6 +314,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 displayFeaturedImage,
                 displayFeaturedImageFor,
                 displayFeaturedImageCaption,
+                enablePlaceholderImage,
                 displayAuthor,
                 displayDate,
                 postDate,
@@ -343,6 +344,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 sliderAutoplay,
                 linkCustomTax,
                 showCustomTaxList,
+                imagePosition,
             } = attributes;
 
             let recentPosts = this.props.recentPosts;
@@ -506,6 +508,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                                     newspaperLayout: layout.layout
                                                 } );
                                                 this.setState( { random: Math.random() } );
+                                                this.newspaperOnChangeLayout(layout.layout);
                                             } }
                                         >
                                             <img src={advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png'}
@@ -648,27 +651,46 @@ import { AuthorSelect } from './query-controls.jsx';
                             onChange={ () => setAttributes( { displayFeaturedImage: !displayFeaturedImage } ) }
                         />
                         {displayFeaturedImage &&
-                        <SelectControl
-                            value={ displayFeaturedImageFor }
-                            options={ [
-                                { label: __( 'For all posts', 'advanced-gutenberg' ), value: 'all' },
-                                { label: __( 'For the first post', 'advanced-gutenberg' ), value: 1 },
-                                { label: __( 'For the first 2 posts', 'advanced-gutenberg' ), value: 2 },
-                                { label: __( 'For the first 3 posts', 'advanced-gutenberg' ), value: 3 },
-                                { label: __( 'For the first 4 posts', 'advanced-gutenberg' ), value: 4 },
-                                { label: __( 'For the first 5 posts', 'advanced-gutenberg' ), value: 5 },
-                            ] }
-                            onChange={ ( value ) => { setAttributes( { displayFeaturedImageFor: value } ) } }
-                            className="advgb-child-select"
-                        />
-                        }
-                        {displayFeaturedImage &&
-                        <ToggleControl
-                            label={ __( 'Display Caption', 'advanced-gutenberg' ) }
-                            checked={ displayFeaturedImageCaption }
-                            onChange={ () => setAttributes( { displayFeaturedImageCaption: !displayFeaturedImageCaption } ) }
-                            className="advgb-child-toggle"
-                        />
+                        <Fragment>
+                            <SelectControl
+                                value={ displayFeaturedImageFor }
+                                options={ [
+                                    { label: __( 'For all posts', 'advanced-gutenberg' ), value: 'all' },
+                                    { label: __( 'For the first post', 'advanced-gutenberg' ), value: 1 },
+                                    { label: __( 'For the first 2 posts', 'advanced-gutenberg' ), value: 2 },
+                                    { label: __( 'For the first 3 posts', 'advanced-gutenberg' ), value: 3 },
+                                    { label: __( 'For the first 4 posts', 'advanced-gutenberg' ), value: 4 },
+                                    { label: __( 'For the first 5 posts', 'advanced-gutenberg' ), value: 5 },
+                                ] }
+                                onChange={ ( value ) => { setAttributes( { displayFeaturedImageFor: value } ) } }
+                                className="advgb-child-select"
+                            />
+                            <ToggleControl
+                                label={ __( 'Enable Placeholder Image', 'advanced-gutenberg' ) }
+                                checked={ enablePlaceholderImage }
+                                onChange={ () => setAttributes( { enablePlaceholderImage: !enablePlaceholderImage } ) }
+                                className="advgb-child-toggle"
+                                help={ __( 'If a post doesn\'t have a featured image, the placeholder image will be displayed instead', 'advanced-gutenberg' ) }
+                            />
+                            {postView === 'list' &&
+                            <SelectControl
+                                label={ __( 'Position', 'advanced-gutenberg' ) }
+                                value={ imagePosition }
+                                options={ [
+                                    { label: __( 'Left', 'advanced-gutenberg' ), value: 'left' },
+                                    { label: __( 'Right', 'advanced-gutenberg' ), value: 'right' },
+                                ] }
+                                onChange={ ( value ) => setAttributes( { imagePosition: value } ) }
+                                className="advgb-child-select"
+                            />
+                            }
+                            <ToggleControl
+                                label={ __( 'Display Caption', 'advanced-gutenberg' ) }
+                                checked={ displayFeaturedImageCaption }
+                                onChange={ () => setAttributes( { displayFeaturedImageCaption: !displayFeaturedImageCaption } ) }
+                                className="advgb-child-toggle"
+                            />
+                        </Fragment>
                         }
                         <ToggleControl
                             label={ __( 'Display Post Author', 'advanced-gutenberg' ) }
@@ -854,7 +876,10 @@ import { AuthorSelect } from './query-controls.jsx';
                 {
                     icon: 'admin-site-alt3',
                     title: __( 'Newspaper View', 'advanced-gutenberg' ),
-                    onClick: () => setAttributes( { postView: 'newspaper' } ),
+                    onClick: () => {
+                        setAttributes( { postView: 'newspaper' } );
+                        this.newspaperOnChangeLayout(newspaperLayout);
+                    },
                     isActive: postView === 'newspaper',
                 },
                 {
@@ -869,6 +894,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 'advgb-recent-posts-block',
                 this.state.updating && 'loading',
                 postView && postView + '-view',
+                postView === 'list' && imagePosition !== 'left' && 'image-' + imagePosition,
                 ( ( postView === 'grid' ) || ( postView === 'masonry' ) ) && 'columns-' + columns,
                 postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM,
                 postView === 'slider' && sliderStyle && 'style-' + sliderStyle,
@@ -879,9 +905,6 @@ import { AuthorSelect } from './query-controls.jsx';
                 postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle,
                 postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout,
             ].filter( Boolean ).join( ' ' );
-
-            const formats = __experimentalGetSettings().formats;
-            let format = postDate !== 'hide' ? (displayTime ? formats.datetime : formats.date) : '';
 
             return (
                 isPreview ?
@@ -904,11 +927,11 @@ import { AuthorSelect } from './query-controls.jsx';
                         <div className="advgb-recent-posts">
                             {recentPosts.map( ( post, index ) => (
                                 <article key={ index }
-                                className={`advgb-recent-post ${ this.getDisplayImageStatus( attributes, index ) ? "" : "advgb-recent-post--no-image"}` }
+                                className={`advgb-recent-post ${ this.getDisplayImageStatus( attributes, index ) && ( post.featured_img || enablePlaceholderImage ) ? "" : "advgb-recent-post--no-image"}` }
                                 >
 
                                     {(() => {
-                                        if( this.getDisplayImageStatus( attributes, index ) ) {
+                                        if( this.getDisplayImageStatus( attributes, index ) && ( post.featured_img || enablePlaceholderImage ) ) {
                                             return(
                                                 <div className="advgb-post-thumbnail">
                                                     <a href={ post.link } target="_blank">
@@ -963,14 +986,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                             }
                                             {postDate !== 'hide' && (
                                                 <span className="advgb-post-datetime" >
-                                                { postDateFormat === 'absolute'
-                                                    ? (
-                                                        (
-                                                            postDate === 'created' ? __( 'Posted on', 'advanced-gutenberg' ) : __( 'Updated on', 'advanced-gutenberg' )
-                                                        ) + ' ' + dateI18n( format, postDate === 'created' ? post.date_gmt : post.modified_gmt )
-                                                    )
-                                                    : ( postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified )
-                                                }
+                                                { this.getDateTime(post) }
                                                 </span>
                                             ) }
                                             {postType === 'post' && displayCommentCount && (
@@ -1316,6 +1332,26 @@ import { AuthorSelect } from './query-controls.jsx';
 
             if( postView === 'masonry' ){
                 this.props.setAttributes( { myToken: Math.floor(Math.random() * Math.floor(999)) } );
+            }
+        }
+
+        newspaperOnChangeLayout(newspaperLayout) {
+            const { numberOfPosts } = this.props.attributes;
+            const currentLayout = NEWSPAPER_LAYOUTS.find( layout => layout.layout === newspaperLayout );
+            this.props.setAttributes( { numberOfPosts: currentLayout.items } );
+        }
+
+        getDateTime(post) {
+            const { postDate, postDateFormat, displayTime } = this.props.attributes;
+
+            if( postDateFormat === 'absolute' ) {
+                if( postDate === 'created' ) {
+                    return ( displayTime ? post.absolute_dates_time.created : post.absolute_dates.created );
+                } else {
+                    return ( displayTime ? post.absolute_dates_time.modified : post.absolute_dates.modified );
+                }
+            } else {
+                return ( postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified );
             }
         }
 

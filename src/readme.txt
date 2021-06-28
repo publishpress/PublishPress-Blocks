@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.7.2
-Stable tag: 2.8.0
+Stable tag: 2.8.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -165,6 +165,28 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 1. Advanced Buttons block
 
 == Changelog ==
+
+= 2.8.1 =
+  * Add: Increase max padding and margin for Columns manager and Column blocks
+  * Add: Rename "Summary" block to "Table of Contents"
+  * Add: Translation support to javascript for block Settings popup
+  * Add: Setting to display images on the right for Content Display's block List view
+  * Add: Setting to not display placeholder featured image for Content Display block
+  * Fix: Default color and background values when are empty in frontend for Advanced Button blocks
+  * Fix: Default label for custom styles dropdown in editor
+  * Fix: Spacing for Custom styles dropdown in editor
+  * Fix: Enable Contributor and Subscriber in "All User Roles" profile
+  * Fix: Block Settings popup spacing
+  * Fix: Language support in Block Settings
+  * Fix: Spacing for Content Display block in Grid and List views
+  * Fix: Navigation dots margin for Slider view in Content Display block
+  * Fix: Autoplay in frontend when loading more than once instance of Content Display's block with Slider view
+  * Fix: Adjust Number of items when selecting a Newspaper layout for Content Display block
+  * Fix: Timezone for date time in Content Display block
+  * Fix: Advanced Accordion content overlay
+  * Fix: Duplicated Blocks links in admin when having Free and Pro plugins activated
+  * Fix: PublishPress Blocks category is listed twice in editor when having Free and Pro plugins activated
+  * Fix: RTL support for Images Slider block
 
 = 2.8.0 =
   * Add: Rename menu to "Blocks"

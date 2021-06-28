@@ -39,7 +39,7 @@
     if (typeof advgbBlocks.customStyles !== 'undefined' && advgbBlocks.customStyles) {
         advgbBlocks.customStyles.unshift( {
             id: 0,
-            label: __( 'Paragraph', 'advanced-gutenberg' ),
+            label: __( 'Select a custom style', 'advanced-gutenberg' ),
             value: '',
             identifyColor: ''
         } );
@@ -52,41 +52,43 @@
                 <BlockEdit key="block-edit-custom-class-name" {...props} />,
                 props.isSelected && SUPPORTED_BLOCKS.includes( props.name ) &&
                 <InspectorControls key="advgb-custom-controls">
-                    <SelectControl
-                        label={ [
-                            __( 'Custom styles', 'advanced-gutenberg' ),
-                            <span className={'components-panel__color-area'}
-                                  key="customstyle-identify"
-                                  style={ {
-                                      background: props.attributes.identifyColor,
-                                      verticalAlign: 'text-bottom',
-                                      borderRadius: '50%',
-                                      border: 'none',
-                                      width: '16px',
-                                      height: '16px',
-                                      display: 'inline-block',
-                                      marginLeft: '10px',
-                                  } } />
-                        ] }
-                        help={__( 'This option let you add custom style for the current block', 'advanced-gutenberg' )}
-                        value={props.attributes.customStyle}
-                        options={advgbBlocks.customStyles.map( ( cstyle, index ) => {
-                            if (cstyle.title) advgbBlocks.customStyles[ index ].label = cstyle.title;
-                            if (cstyle.name) advgbBlocks.customStyles[ index ].value = cstyle.name;
+                    <div className="advgb-custom-styles-wrapper">
+                        <SelectControl
+                            label={ [
+                                __( 'Custom styles', 'advanced-gutenberg' ),
+                                <span className={'components-panel__color-area'}
+                                      key="customstyle-identify"
+                                      style={ {
+                                          background: props.attributes.identifyColor,
+                                          verticalAlign: 'text-bottom',
+                                          borderRadius: '50%',
+                                          border: 'none',
+                                          width: '16px',
+                                          height: '16px',
+                                          display: 'inline-block',
+                                          marginLeft: '10px',
+                                      } } />
+                            ] }
+                            help={__( 'This option let you add custom style for the current block', 'advanced-gutenberg' )}
+                            value={props.attributes.customStyle}
+                            options={advgbBlocks.customStyles.map( ( cstyle, index ) => {
+                                if (cstyle.title) advgbBlocks.customStyles[ index ].label = cstyle.title;
+                                if (cstyle.name) advgbBlocks.customStyles[ index ].value = cstyle.name;
 
-                            return cstyle;
-                        } )}
-                        onChange={( cstyle ) => {
-                            const { identifyColor } = advgbBlocks.customStyles.filter( ( style ) => style.value === cstyle )[0];
-                            props.setAttributes( {
-                                customStyle: cstyle,
-                                identifyColor: identifyColor,
-                                backgroundColor: undefined,
-                                textColor: undefined,
-                                fontSize: undefined,
-                            } );
-                        }}
-                    />
+                                return cstyle;
+                            } )}
+                            onChange={( cstyle ) => {
+                                const { identifyColor } = advgbBlocks.customStyles.filter( ( style ) => style.value === cstyle )[0];
+                                props.setAttributes( {
+                                    customStyle: cstyle,
+                                    identifyColor: identifyColor,
+                                    backgroundColor: undefined,
+                                    textColor: undefined,
+                                    fontSize: undefined,
+                                } );
+                            }}
+                        />
+                    </div>
                 </InspectorControls>
             ] )
         }

@@ -14497,7 +14497,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             beforeIcon: pos.icon,
                                             value: attributes['padding' + pos.label + deviceLetter] || 0,
                                             min: 0,
-                                            max: 50,
+                                            max: 200,
                                             onChange: function onChange(value) {
                                                 return setAttributes(_defineProperty({}, 'padding' + pos.label + deviceLetter, value));
                                             }
@@ -14539,7 +14539,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             beforeIcon: pos.icon,
                                             value: attributes['margin' + pos.label + deviceLetter] || 0,
                                             min: 0,
-                                            max: 50,
+                                            max: 200,
                                             onChange: function onChange(value) {
                                                 return setAttributes(_defineProperty({}, 'margin' + pos.label + deviceLetter, value));
                                             }
@@ -15406,7 +15406,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         beforeIcon: pos.icon,
                                         value: attributes['padding' + pos.label + deviceLetter] || '',
                                         min: 0,
-                                        max: 50,
+                                        max: 200,
                                         onChange: function onChange(value) {
                                             return setAttributes(_defineProperty({}, 'padding' + pos.label + deviceLetter, value));
                                         }
@@ -15429,7 +15429,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         beforeIcon: pos.icon,
                                         value: attributes['margin' + pos.label + deviceLetter] || '',
                                         min: 0,
-                                        max: 50,
+                                        max: 200,
                                         onChange: function onChange(value) {
                                             return setAttributes(_defineProperty({}, 'margin' + pos.label + deviceLetter, value));
                                         }
@@ -17046,7 +17046,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     if (typeof advgbBlocks.customStyles !== 'undefined' && advgbBlocks.customStyles) {
         advgbBlocks.customStyles.unshift({
             id: 0,
-            label: __('Paragraph', 'advanced-gutenberg'),
+            label: __('Select a custom style', 'advanced-gutenberg'),
             value: '',
             identifyColor: ''
         });
@@ -17058,41 +17058,45 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-class-name' }, props)), props.isSelected && SUPPORTED_BLOCKS.includes(props.name) && React.createElement(
                 InspectorControls,
                 { key: 'advgb-custom-controls' },
-                React.createElement(SelectControl, {
-                    label: [__('Custom styles', 'advanced-gutenberg'), React.createElement('span', { className: 'components-panel__color-area',
-                        key: 'customstyle-identify',
-                        style: {
-                            background: props.attributes.identifyColor,
-                            verticalAlign: 'text-bottom',
-                            borderRadius: '50%',
-                            border: 'none',
-                            width: '16px',
-                            height: '16px',
-                            display: 'inline-block',
-                            marginLeft: '10px'
-                        } })],
-                    help: __('This option let you add custom style for the current block', 'advanced-gutenberg'),
-                    value: props.attributes.customStyle,
-                    options: advgbBlocks.customStyles.map(function (cstyle, index) {
-                        if (cstyle.title) advgbBlocks.customStyles[index].label = cstyle.title;
-                        if (cstyle.name) advgbBlocks.customStyles[index].value = cstyle.name;
+                React.createElement(
+                    'div',
+                    { className: 'advgb-custom-styles-wrapper' },
+                    React.createElement(SelectControl, {
+                        label: [__('Custom styles', 'advanced-gutenberg'), React.createElement('span', { className: 'components-panel__color-area',
+                            key: 'customstyle-identify',
+                            style: {
+                                background: props.attributes.identifyColor,
+                                verticalAlign: 'text-bottom',
+                                borderRadius: '50%',
+                                border: 'none',
+                                width: '16px',
+                                height: '16px',
+                                display: 'inline-block',
+                                marginLeft: '10px'
+                            } })],
+                        help: __('This option let you add custom style for the current block', 'advanced-gutenberg'),
+                        value: props.attributes.customStyle,
+                        options: advgbBlocks.customStyles.map(function (cstyle, index) {
+                            if (cstyle.title) advgbBlocks.customStyles[index].label = cstyle.title;
+                            if (cstyle.name) advgbBlocks.customStyles[index].value = cstyle.name;
 
-                        return cstyle;
-                    }),
-                    onChange: function onChange(cstyle) {
-                        var identifyColor = advgbBlocks.customStyles.filter(function (style) {
-                            return style.value === cstyle;
-                        })[0].identifyColor;
+                            return cstyle;
+                        }),
+                        onChange: function onChange(cstyle) {
+                            var identifyColor = advgbBlocks.customStyles.filter(function (style) {
+                                return style.value === cstyle;
+                            })[0].identifyColor;
 
-                        props.setAttributes({
-                            customStyle: cstyle,
-                            identifyColor: identifyColor,
-                            backgroundColor: undefined,
-                            textColor: undefined,
-                            fontSize: undefined
-                        });
-                    }
-                })
+                            props.setAttributes({
+                                customStyle: cstyle,
+                                identifyColor: identifyColor,
+                                backgroundColor: undefined,
+                                textColor: undefined,
+                                fontSize: undefined
+                            });
+                        }
+                    })
+                )
             )];
         };
     });
@@ -17737,7 +17741,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: blockClass },
                         React.createElement(
                             "div",
-                            { className: "advgb-images-slider" },
+                            { className: "advgb-images-slider", dir: rtl ? 'rtl' : 'ltr' },
                             images.map(function (image, index) {
                                 return React.createElement(
                                     "div",
@@ -18039,7 +18043,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 { className: blockClassName },
                 React.createElement(
                     "div",
-                    { className: "advgb-images-slider", "data-slick": "{\"rtl\": " + rtl + "}" },
+                    { className: "advgb-images-slider", dir: rtl ? 'rtl' : 'ltr' },
                     images.map(function (image, index) {
                         return React.createElement(
                             "div",
@@ -18091,8 +18095,86 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         deprecated: [{
             attributes: blockAttrs,
+            supports: {
+                anchor: true
+            },
             save: function save(_ref4) {
                 var attributes = _ref4.attributes;
+                var images = attributes.images,
+                    actionOnClick = attributes.actionOnClick,
+                    fullWidth = attributes.fullWidth,
+                    autoHeight = attributes.autoHeight,
+                    width = attributes.width,
+                    height = attributes.height,
+                    alwaysShowOverlay = attributes.alwaysShowOverlay,
+                    rtl = attributes.rtl,
+                    hoverColor = attributes.hoverColor,
+                    titleColor = attributes.titleColor,
+                    textColor = attributes.textColor,
+                    hAlign = attributes.hAlign,
+                    vAlign = attributes.vAlign;
+
+                var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: blockClassName },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-images-slider", "data-slick": "{\"rtl\": " + rtl + "}" },
+                        images.map(function (image, index) {
+                            return React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-item", key: index },
+                                React.createElement("img", { src: image.url,
+                                    className: "advgb-image-slider-img",
+                                    alt: image.title,
+                                    style: {
+                                        width: fullWidth ? '100%' : width,
+                                        height: autoHeight ? 'auto' : height
+                                    }
+                                }),
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-image-slider-item-info",
+                                        style: {
+                                            justifyContent: vAlign,
+                                            alignItems: hAlign
+                                        }
+                                    },
+                                    (actionOnClick !== '' || alwaysShowOverlay) && React.createElement("a", { className: "advgb-image-slider-overlay",
+                                        target: actionOnClick !== '' ? '_blank' : false,
+                                        rel: "noopener noreferrer",
+                                        href: actionOnClick === 'link' && !!image.link ? image.link : '#',
+                                        style: {
+                                            backgroundColor: hoverColor,
+                                            opacity: alwaysShowOverlay ? 0.5 : undefined
+                                        }
+                                    }),
+                                    image.title && React.createElement(
+                                        "h4",
+                                        { className: "advgb-image-slider-title",
+                                            style: { color: titleColor }
+                                        },
+                                        image.title
+                                    ),
+                                    image.text && React.createElement(
+                                        "p",
+                                        { className: "advgb-image-slider-text",
+                                            style: { color: textColor }
+                                        },
+                                        image.text
+                                    )
+                                )
+                            );
+                        })
+                    )
+                );
+            }
+        }, {
+            attributes: blockAttrs,
+            save: function save(_ref5) {
+                var attributes = _ref5.attributes;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
                     fullWidth = attributes.fullWidth,
@@ -18166,8 +18248,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             attributes: blockAttrs,
-            save: function save(_ref5) {
-                var attributes = _ref5.attributes;
+            save: function save(_ref6) {
+                var attributes = _ref6.attributes;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
                     fullWidth = attributes.fullWidth,
@@ -18240,8 +18322,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             attributes: blockAttrs,
-            save: function save(_ref6) {
-                var attributes = _ref6.attributes;
+            save: function save(_ref7) {
+                var attributes = _ref7.attributes;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
                     fullWidth = attributes.fullWidth,
@@ -23449,8 +23531,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         set = lodash.set,
         find = lodash.find;
     var decodeEntities = wpHtmlEntities.decodeEntities;
-    var dateI18n = wpDate.dateI18n,
-        __experimentalGetSettings = wpDate.__experimentalGetSettings;
+    var dateI18n = wpDate.dateI18n;
 
 
     var advRecentPostsBlockIcon = React.createElement(
@@ -23479,7 +23560,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var GAP_OPTIONS = [{ label: __('None', 'advanced-gutenberg'), value: 0 }, { label: '5px', value: 5 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }];
 
-    var NEWSPAPER_LAYOUTS = [{ layout: 'np-1-1', icon: 'np-1-1', title: __('The leading post in the left, 1 post in the right', 'advanced-gutenberg') }, { layout: 'np-1-2', icon: 'np-1-2', title: __('The leading post in the left, 2 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-3', icon: 'np-1-3', title: __('The leading post in the left, 3 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-4', icon: 'np-1-4', title: __('The leading post in the left, 4 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-5', icon: 'np-1-5', title: __('The leading post in the left, 5 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-1-r', icon: 'np-1-1-r', title: __('The leading post in the right, 1 post in the left', 'advanced-gutenberg') }, { layout: 'np-1-2-r', icon: 'np-1-2-r', title: __('The leading post in the right, 2 posts in the left', 'advanced-gutenberg') }, { layout: 'np-1-3-r', icon: 'np-1-3-r', title: __('The leading post in the right, 3 posts in the left', 'advanced-gutenberg') }, { layout: 'np-1-4-r', icon: 'np-1-4-r', title: __('The leading post in the right, 4 posts in the left', 'advanced-gutenberg') }, { layout: 'np-1-5-r', icon: 'np-1-5-r', title: __('The leading post in the right, 5 posts in the left', 'advanced-gutenberg') }, { layout: 'np-2', icon: 'np-2', title: __('The leading post on top, the rest of posts below', 'advanced-gutenberg') }, { layout: 'np-3-1', icon: 'np-3-1', title: __('The leading post on top, below 2 columns with 1 post in the left and 1 post in the right', 'advanced-gutenberg') }, { layout: 'np-3-2', icon: 'np-3-2', title: __('The leading post on top, below 2 columns with 1 post in the left and 2 posts in the right', 'advanced-gutenberg') }, { layout: 'np-3-3', icon: 'np-3-3', title: __('The leading post on top, below 2 columns with 1 post in the left and 3 posts in the right', 'advanced-gutenberg') }];
+    var NEWSPAPER_LAYOUTS = [{ layout: 'np-1-1', icon: 'np-1-1', items: 2, title: __('The leading post in the left, 1 post in the right', 'advanced-gutenberg') }, { layout: 'np-1-2', icon: 'np-1-2', items: 3, title: __('The leading post in the left, 2 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-3', icon: 'np-1-3', items: 4, title: __('The leading post in the left, 3 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-4', icon: 'np-1-4', items: 5, title: __('The leading post in the left, 4 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-5', icon: 'np-1-5', items: 6, title: __('The leading post in the left, 5 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-1-r', icon: 'np-1-1-r', items: 2, title: __('The leading post in the right, 1 post in the left', 'advanced-gutenberg') }, { layout: 'np-1-2-r', icon: 'np-1-2-r', items: 3, title: __('The leading post in the right, 2 posts in the left', 'advanced-gutenberg') }, { layout: 'np-1-3-r', icon: 'np-1-3-r', items: 4, title: __('The leading post in the right, 3 posts in the left', 'advanced-gutenberg') }, { layout: 'np-1-4-r', icon: 'np-1-4-r', items: 5, title: __('The leading post in the right, 4 posts in the left', 'advanced-gutenberg') }, { layout: 'np-1-5-r', icon: 'np-1-5-r', items: 6, title: __('The leading post in the right, 5 posts in the left', 'advanced-gutenberg') }, { layout: 'np-2', icon: 'np-2', items: 3, title: __('The leading post on top, the rest of posts below', 'advanced-gutenberg') }, { layout: 'np-3-1', icon: 'np-3-1', items: 3, title: __('The leading post on top, below 2 columns with 1 post in the left and 1 post in the right', 'advanced-gutenberg') }, { layout: 'np-3-2', icon: 'np-3-2', items: 4, title: __('The leading post on top, below 2 columns with 1 post in the left and 2 posts in the right', 'advanced-gutenberg') }, { layout: 'np-3-3', icon: 'np-3-3', items: 5, title: __('The leading post on top, below 2 columns with 1 post in the left and 3 posts in the right', 'advanced-gutenberg') }];
 
     var CUSTOM_TAX_PREFIX = 'custom-tax-';
 
@@ -23736,6 +23817,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayFeaturedImage = attributes.displayFeaturedImage,
                     displayFeaturedImageFor = attributes.displayFeaturedImageFor,
                     displayFeaturedImageCaption = attributes.displayFeaturedImageCaption,
+                    enablePlaceholderImage = attributes.enablePlaceholderImage,
                     displayAuthor = attributes.displayAuthor,
                     displayDate = attributes.displayDate,
                     postDate = attributes.postDate,
@@ -23766,7 +23848,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     selectedAuthorId = attributes.author,
                     sliderAutoplay = attributes.sliderAutoplay,
                     linkCustomTax = attributes.linkCustomTax,
-                    showCustomTaxList = attributes.showCustomTaxList;
+                    showCustomTaxList = attributes.showCustomTaxList,
+                    imagePosition = attributes.imagePosition;
 
 
                 var recentPosts = this.props.recentPosts;
@@ -23928,6 +24011,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     newspaperLayout: layout.layout
                                                 });
                                                 _this3.setState({ random: Math.random() });
+                                                _this3.newspaperOnChangeLayout(layout.layout);
                                             }
                                         },
                                         React.createElement('img', { src: advgbBlocks.pluginUrl + '/assets/blocks/recent-posts/icons/' + layout.icon + '.png',
@@ -24088,22 +24172,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayFeaturedImage: !displayFeaturedImage });
                             }
                         }),
-                        displayFeaturedImage && React.createElement(SelectControl, {
-                            value: displayFeaturedImageFor,
-                            options: [{ label: __('For all posts', 'advanced-gutenberg'), value: 'all' }, { label: __('For the first post', 'advanced-gutenberg'), value: 1 }, { label: __('For the first 2 posts', 'advanced-gutenberg'), value: 2 }, { label: __('For the first 3 posts', 'advanced-gutenberg'), value: 3 }, { label: __('For the first 4 posts', 'advanced-gutenberg'), value: 4 }, { label: __('For the first 5 posts', 'advanced-gutenberg'), value: 5 }],
-                            onChange: function onChange(value) {
-                                setAttributes({ displayFeaturedImageFor: value });
-                            },
-                            className: 'advgb-child-select'
-                        }),
-                        displayFeaturedImage && React.createElement(ToggleControl, {
-                            label: __('Display Caption', 'advanced-gutenberg'),
-                            checked: displayFeaturedImageCaption,
-                            onChange: function onChange() {
-                                return setAttributes({ displayFeaturedImageCaption: !displayFeaturedImageCaption });
-                            },
-                            className: 'advgb-child-toggle'
-                        }),
+                        displayFeaturedImage && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(SelectControl, {
+                                value: displayFeaturedImageFor,
+                                options: [{ label: __('For all posts', 'advanced-gutenberg'), value: 'all' }, { label: __('For the first post', 'advanced-gutenberg'), value: 1 }, { label: __('For the first 2 posts', 'advanced-gutenberg'), value: 2 }, { label: __('For the first 3 posts', 'advanced-gutenberg'), value: 3 }, { label: __('For the first 4 posts', 'advanced-gutenberg'), value: 4 }, { label: __('For the first 5 posts', 'advanced-gutenberg'), value: 5 }],
+                                onChange: function onChange(value) {
+                                    setAttributes({ displayFeaturedImageFor: value });
+                                },
+                                className: 'advgb-child-select'
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Enable Placeholder Image', 'advanced-gutenberg'),
+                                checked: enablePlaceholderImage,
+                                onChange: function onChange() {
+                                    return setAttributes({ enablePlaceholderImage: !enablePlaceholderImage });
+                                },
+                                className: 'advgb-child-toggle',
+                                help: __('If a post doesn\'t have a featured image, the placeholder image will be displayed instead', 'advanced-gutenberg')
+                            }),
+                            postView === 'list' && React.createElement(SelectControl, {
+                                label: __('Position', 'advanced-gutenberg'),
+                                value: imagePosition,
+                                options: [{ label: __('Left', 'advanced-gutenberg'), value: 'left' }, { label: __('Right', 'advanced-gutenberg'), value: 'right' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ imagePosition: value });
+                                },
+                                className: 'advgb-child-select'
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Display Caption', 'advanced-gutenberg'),
+                                checked: displayFeaturedImageCaption,
+                                onChange: function onChange() {
+                                    return setAttributes({ displayFeaturedImageCaption: !displayFeaturedImageCaption });
+                                },
+                                className: 'advgb-child-toggle'
+                            })
+                        ),
                         React.createElement(ToggleControl, {
                             label: __('Display Post Author', 'advanced-gutenberg'),
                             checked: displayAuthor,
@@ -24295,7 +24401,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     icon: 'admin-site-alt3',
                     title: __('Newspaper View', 'advanced-gutenberg'),
                     onClick: function onClick() {
-                        return setAttributes({ postView: 'newspaper' });
+                        setAttributes({ postView: 'newspaper' });
+                        _this3.newspaperOnChangeLayout(newspaperLayout);
                     },
                     isActive: postView === 'newspaper'
                 }, {
@@ -24307,10 +24414,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'masonry'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView && postView + '-view', (postView === 'grid' || postView === 'masonry') && 'columns-' + columns, postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM, postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, (postView === 'frontpage' || postView === 'masonry') && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout].filter(Boolean).join(' ');
-
-                var formats = __experimentalGetSettings().formats;
-                var format = postDate !== 'hide' ? displayTime ? formats.datetime : formats.date : '';
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView && postView + '-view', postView === 'list' && imagePosition !== 'left' && 'image-' + imagePosition, (postView === 'grid' || postView === 'masonry') && 'columns-' + columns, postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM, postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, (postView === 'frontpage' || postView === 'masonry') && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout].filter(Boolean).join(' ');
 
                 return isPreview ? React.createElement('img', { alt: __('Content Display', 'advanced-gutenberg'), width: '100%', src: previewImageData }) : React.createElement(
                     Fragment,
@@ -24343,10 +24447,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     'article',
                                     { key: index,
-                                        className: 'advgb-recent-post ' + (_this3.getDisplayImageStatus(attributes, index) ? "" : "advgb-recent-post--no-image")
+                                        className: 'advgb-recent-post ' + (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage) ? "" : "advgb-recent-post--no-image")
                                     },
                                     function () {
-                                        if (_this3.getDisplayImageStatus(attributes, index)) {
+                                        if (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage)) {
                                             return React.createElement(
                                                 'div',
                                                 { className: 'advgb-post-thumbnail' },
@@ -24421,7 +24525,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             postDate !== 'hide' && React.createElement(
                                                 'span',
                                                 { className: 'advgb-post-datetime' },
-                                                postDateFormat === 'absolute' ? (postDate === 'created' ? __('Posted on', 'advanced-gutenberg') : __('Updated on', 'advanced-gutenberg')) + ' ' + dateI18n(format, postDate === 'created' ? post.date_gmt : post.modified_gmt) : postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified
+                                                _this3.getDateTime(post)
                                             ),
                                             postType === 'post' && displayCommentCount && React.createElement(
                                                 'span',
@@ -24816,6 +24920,35 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     this.props.setAttributes({ myToken: Math.floor(Math.random() * Math.floor(999)) });
                 }
             }
+        }, {
+            key: 'newspaperOnChangeLayout',
+            value: function newspaperOnChangeLayout(newspaperLayout) {
+                var numberOfPosts = this.props.attributes.numberOfPosts;
+
+                var currentLayout = NEWSPAPER_LAYOUTS.find(function (layout) {
+                    return layout.layout === newspaperLayout;
+                });
+                this.props.setAttributes({ numberOfPosts: currentLayout.items });
+            }
+        }, {
+            key: 'getDateTime',
+            value: function getDateTime(post) {
+                var _props$attributes2 = this.props.attributes,
+                    postDate = _props$attributes2.postDate,
+                    postDateFormat = _props$attributes2.postDateFormat,
+                    displayTime = _props$attributes2.displayTime;
+
+
+                if (postDateFormat === 'absolute') {
+                    if (postDate === 'created') {
+                        return displayTime ? post.absolute_dates_time.created : post.absolute_dates.created;
+                    } else {
+                        return displayTime ? post.absolute_dates_time.modified : post.absolute_dates.modified;
+                    }
+                } else {
+                    return postDate === 'created' ? post.relative_dates.created : post.relative_dates.modified;
+                }
+            }
         }], [{
             key: 'extractContent',
             value: function extractContent(html, length) {
@@ -24874,21 +25007,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _select = select('core'),
                 getEntityRecords = _select.getEntityRecords;
 
-            var _props$attributes2 = props.attributes,
-                categories = _props$attributes2.categories,
-                tagIds = _props$attributes2.tagIds,
-                tags = _props$attributes2.tags,
-                category = _props$attributes2.category,
-                order = _props$attributes2.order,
-                orderBy = _props$attributes2.orderBy,
-                numberOfPosts = _props$attributes2.numberOfPosts,
-                myToken = _props$attributes2.myToken,
-                postType = _props$attributes2.postType,
-                excludeCurrentPost = _props$attributes2.excludeCurrentPost,
-                excludeIds = _props$attributes2.excludeIds,
-                author = _props$attributes2.author,
-                taxonomies = _props$attributes2.taxonomies,
-                taxIds = _props$attributes2.taxIds;
+            var _props$attributes3 = props.attributes,
+                categories = _props$attributes3.categories,
+                tagIds = _props$attributes3.tagIds,
+                tags = _props$attributes3.tags,
+                category = _props$attributes3.category,
+                order = _props$attributes3.order,
+                orderBy = _props$attributes3.orderBy,
+                numberOfPosts = _props$attributes3.numberOfPosts,
+                myToken = _props$attributes3.myToken,
+                postType = _props$attributes3.postType,
+                excludeCurrentPost = _props$attributes3.excludeCurrentPost,
+                excludeIds = _props$attributes3.excludeIds,
+                author = _props$attributes3.author,
+                taxonomies = _props$attributes3.taxonomies,
+                taxIds = _props$attributes3.taxIds;
 
 
             var catIds = categories && categories.length > 0 ? categories.map(function (cat) {
@@ -26511,7 +26644,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var previewImageData = 'data:image/png;base64,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';
 
-    var summaryBlockTitle = __('Summary', 'advanced-gutenberg');
+    var summaryBlockTitle = __('Table of Contents', 'advanced-gutenberg');
 
     // Add button to insert summary inside table of contents component
     (function () {
@@ -26533,7 +26666,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return block.name === 'advgb/summary';
                 }).length;
                 setTimeout(function () {
-                    var summaryButton = $('<button class="button" style="position: absolute; bottom: 10px; right: 15px">' + __('Insert Summary', 'advanced-gutenberg') + '</button>');
+                    var summaryButton = $('<button class="button" style="position: absolute; bottom: 10px; right: 15px">' + __('Insert Table of Contents', 'advanced-gutenberg') + '</button>');
 
                     $('#editor').find('.table-of-contents__popover').find('.document-outline').append(summaryButton);
                     summaryButton.unbind('click').click(function () {
@@ -26694,7 +26827,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No heading blocks
 
-                var summaryContent = isPreview ? React.createElement("img", { alt: __('Summary', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
+                var summaryContent = isPreview ? React.createElement("img", { alt: __('Table of Contents', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
                     Placeholder,
                     {
                         icon: summaryBlockIcon,
@@ -26754,7 +26887,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             null,
                             React.createElement(ToolbarButton, { className: 'components-icon-button components-toolbar__control',
                                 icon: 'update',
-                                label: __('Update Summary', 'advanced-gutenberg'),
+                                label: __('Update Table of Contents', 'advanced-gutenberg'),
                                 onClick: this.updateSummary
                             })
                         )
@@ -26764,7 +26897,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Summary settings', 'advanced-gutenberg') },
+                            { title: __('Table of Contents settings', 'advanced-gutenberg') },
                             React.createElement(ToggleControl, {
                                 label: __('Load minimized', 'advanced-gutenberg'),
                                 checked: !!loadMinimized,
@@ -26773,7 +26906,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             loadMinimized && React.createElement(TextControl, {
-                                label: __('Summary header title', 'advanced-gutenberg'),
+                                label: __('Table of Contents header title', 'advanced-gutenberg'),
                                 value: headerTitle || '',
                                 placeholder: __('Enter header…', 'advanced-gutenberg'),
                                 onChange: function onChange(value) {
@@ -26859,13 +26992,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/summary', {
         title: summaryBlockTitle,
-        description: __('Show the table of content of current post/page.', 'advanced-gutenberg'),
+        description: __('Show the table of contents of current post/page.', 'advanced-gutenberg'),
         icon: {
             src: summaryBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('summary', 'advanced-gutenberg'), __('table of content', 'advanced-gutenberg'), __('list', 'advanced-gutenberg')],
+        keywords: [__('summary', 'advanced-gutenberg'), __('table of content', 'advanced-gutenberg'), __('table of contents', 'advanced-gutenberg'), __('list', 'advanced-gutenberg')],
         attributes: blockAttrs,
         example: {
             attributes: {

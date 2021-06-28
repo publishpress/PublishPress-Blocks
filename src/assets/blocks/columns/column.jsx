@@ -193,7 +193,7 @@
                                         beforeIcon={ pos.icon }
                                         value={ attributes['padding' + pos.label + deviceLetter] || '' }
                                         min={ 0 }
-                                        max={ 50 }
+                                        max={ 200 }
                                         onChange={ (value) => setAttributes( { ['padding' + pos.label + deviceLetter]: value } ) }
                                     />
                                 ) ) }
@@ -208,7 +208,7 @@
                                         beforeIcon={ pos.icon }
                                         value={ attributes['margin' + pos.label + deviceLetter] || '' }
                                         min={ 0 }
-                                        max={ 50 }
+                                        max={ 200 }
                                         onChange={ (value) => setAttributes( { ['margin' + pos.label + deviceLetter]: value } ) }
                                     />
                                 ) ) }
