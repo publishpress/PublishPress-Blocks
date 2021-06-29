@@ -172,7 +172,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_action('admin_menu', array($this, 'registerMainMenu'));
                 add_action('admin_menu', array($this, 'registerBlockConfigPage'));
                 add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
-                add_filter('block_editor_settings', array($this, 'replaceEditorSettings'), 9999);
+                add_filter('block_editor_settings_all', array($this, 'replaceEditorSettings'), 9999);
                 add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
                 add_action('admin_enqueue_scripts', array($this, 'addEditorAssetsWidgets'), 9999);
                 add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
