@@ -174,6 +174,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
                 add_filter('block_editor_settings', array($this, 'replaceEditorSettings'), 9999);
                 add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
+                add_action('admin_enqueue_scripts', array($this, 'addEditorAssetsWidgets'), 9999);
                 add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
                 add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
                 add_filter('block_categories_all', array($this, 'addAdvBlocksCategory'));
@@ -344,6 +345,34 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return;
             }
 
+            $this->enqueueEditorAssets();
+            $this->advgbBlocksVariables();
+        }
+
+        /**
+         * Enqueue styles and scripts for gutenberg in widgets.php
+         *
+         * @param int $hook Hook suffix for the current admin page
+         *
+         * @return void
+         */
+        public function addEditorAssetsWidgets($hook)
+        {
+            if ( 'widgets.php' != $hook ) {
+                return;
+            }
+
+            $this->enqueueEditorAssets();
+            $this->advgbBlocksVariables(false);
+        }
+
+        /**
+         * Enqueue styles and scripts for gutenberg
+         *
+         * @return void
+         */
+        public function enqueueEditorAssets()
+        {
             wp_enqueue_script(
                 'advgb_blocks',
                 plugins_url('assets/blocks/blocks.js', dirname(__FILE__)),
@@ -370,7 +399,17 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_style('material_icon_font_custom');
             wp_enqueue_style('slick_style');
             wp_enqueue_style('slick_theme_style');
+        }
 
+        /**
+         * Output blocks data and settings as javascript objects (advgb_blocks_var, advgbBlocks and advgbDefaultConfig)
+         *
+         * @param boolean $post When the blocks load in post edit screen
+         *
+         * @return void
+         */
+        public function advgbBlocksVariables($post = true)
+        {
             $advgb_blocks_vars = array();
             $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
 
