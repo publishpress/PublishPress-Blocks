@@ -4558,7 +4558,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js');
 
-            $content = $this->setFrontendAssets($content);
+            $this->setFrontendAssets($content);
             $content = $this->groupStylesTag($content);
 
             return $content;
