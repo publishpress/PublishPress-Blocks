@@ -186,7 +186,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     add_filter('block_editor_settings', array($this, 'replaceEditorSettings'), 9999);
                     add_filter('block_categories', array($this, 'addAdvBlocksCategory'));
                 }
-                
+
                 // Ajax
                 add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
                 add_action('wp_ajax_advgb_get_users', array($this, 'getUsers'));
@@ -4557,6 +4557,22 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js');
+
+            $content = $this->setFrontendAssets($content);
+            $content = $this->groupStylesTag($content);
+
+            return $content;
+        }
+
+        /**
+         * Set frontend assets and styles
+         *
+         * @param string $content Post content
+         *
+         * @return string
+         */
+        public function setFrontendAssets($content)
+        {
             if (strpos($content, 'wp-block-gallery') !== false) {
                 if (!$saved_settings) {
                     $saved_settings = get_option('advgb_settings');
@@ -4586,6 +4602,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array('jquery')
                 );
             }
+
             if (strpos($content, 'wp-block-advgb-count-up') !== false) {
                 $content = preg_replace_callback(
                     '@<div[^>]*?advgb\-count\-up\-columns.*?(</p></div>)@s',
@@ -4835,8 +4852,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_scripts_frontend($content);
                 }
             }
-
-            $content = $this->groupStylesTag($content);
 
             return $content;
         }
