@@ -4543,12 +4543,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Check to disable autop used to prevent unwanted paragraphs to blocks
          *
-         * @param string $content post or widget content
          * @param string $filter_name filter name; 'the_content' or 'widget_block_content'
          *
          * @return void
          */
-        public function checkToDisableWpautop($content, $filter_name)
+        public function checkToDisableWpautop($filter_name)
         {
             $saved_settings = false;
             if (has_filter($filter_name, 'wpautop')) {
@@ -4571,7 +4570,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function addFrontendContentAssets($content)
         {
-            $this->checkToDisableWpautop($content, 'the_content');
+            $this->checkToDisableWpautop('the_content');
             $this->setFrontendAssets($content);
             $content = $this->groupStylesTag($content);
 
@@ -4587,7 +4586,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function addFrontendWidgetAssets($text)
         {
-            $this->checkToDisableWpautop($content, 'widget_block_content');
+            $this->checkToDisableWpautop('widget_block_content');
             $this->setFrontendAssets($text);
             $text = $this->groupStylesTag($text);
 
