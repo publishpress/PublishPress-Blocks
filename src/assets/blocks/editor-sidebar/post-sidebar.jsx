@@ -35,7 +35,7 @@
             'advgb-editor-col-guide-enable',
             'advgb-editor-col-guide-disable',
         );
-        
+
         // Editor width
         if (!!advgb_blocks_editor_width) {
             bodyClass.add( 'advgb-editor-width-' + advgb_blocks_editor_width );
@@ -43,7 +43,7 @@
             // Global
             bodyClass.add( 'advgb-editor-width-' + advg_settings.editor_width_global );
         }
-        
+
         // Columns visual guide
         if (!!advgb_blocks_columns_visual_guide) {
             bodyClass.add( 'advgb-editor-col-guide-' + advgb_blocks_columns_visual_guide );

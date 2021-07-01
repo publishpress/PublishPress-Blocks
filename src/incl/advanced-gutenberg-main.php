@@ -393,6 +393,17 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 true
             );
 
+            $currentScreen = get_current_screen();
+            if( $currentScreen->id !== 'widgets' ) {
+                wp_enqueue_script(
+                    'advgb_post_sidebar',
+                    plugins_url('assets/blocks/post-sidebar.js', dirname(__FILE__)),
+                    array( 'advgb_blocks' ),
+                    ADVANCED_GUTENBERG_VERSION,
+                    true
+                );
+            }
+
             // Pro
             if(defined('ADVANCED_GUTENBERG_PRO')) {
                 if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_scripts_editor' ) ) {

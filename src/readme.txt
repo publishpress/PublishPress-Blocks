@@ -171,6 +171,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Add: Support for Block Access to Widget areas
  * Add: Assets loading in Widget areas in frontend
  * Remove: Deprecated filter `block_categories`. Replaced with `block_categories_all`
+ * Remove: Sidebar settings on widgets page
 
 = 2.8.1 =
   * Add: Increase max padding and margin for Columns manager and Column blocks
