@@ -393,8 +393,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 true
             );
 
+            // Don't load post-sidebar.js in widgets.php and Theme Customizer > Widgets
             $currentScreen = get_current_screen();
-            if( $currentScreen->id !== 'widgets' ) {
+            if( $currentScreen->id !== 'widgets' && is_customize_preview() === false ) {
                 wp_enqueue_script(
                     'advgb_post_sidebar',
                     plugins_url('assets/blocks/post-sidebar.js', dirname(__FILE__)),
