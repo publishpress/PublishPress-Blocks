@@ -23849,7 +23849,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     sliderAutoplay = attributes.sliderAutoplay,
                     linkCustomTax = attributes.linkCustomTax,
                     showCustomTaxList = attributes.showCustomTaxList,
-                    imagePosition = attributes.imagePosition;
+                    imagePosition = attributes.imagePosition,
+                    onlyFromCurrentUser = attributes.onlyFromCurrentUser;
 
 
                 var recentPosts = this.props.recentPosts;
@@ -24102,7 +24103,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 label: __('Show content with these ', 'advanced-gutenberg') + decodeEntities('' + tax.name)
                             });
                         }),
-                        React.createElement(_queryControls.AuthorSelect, {
+                        !onlyFromCurrentUser && React.createElement(_queryControls.AuthorSelect, {
                             key: 'query-controls-author-select',
                             authorList: authorList,
                             label: __('Author', 'advanced-gutenberg'),
@@ -24110,6 +24111,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             selectedAuthorId: selectedAuthorId,
                             onChange: function onChange(value) {
                                 return setAttributes({ author: value });
+                            }
+                        }),
+                        React.createElement(ToggleControl, {
+                            label: __('Show only posts from current user', 'advanced-gutenberg'),
+                            help: __('When an user is logged in, his posts will be shown only.', 'advanced-gutenberg'),
+                            checked: onlyFromCurrentUser,
+                            onChange: function onChange() {
+                                return setAttributes({ onlyFromCurrentUser: !onlyFromCurrentUser });
                             }
                         }),
                         isInPost && postType === 'post' && React.createElement(ToggleControl, {
@@ -25021,7 +25030,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 excludeIds = _props$attributes3.excludeIds,
                 author = _props$attributes3.author,
                 taxonomies = _props$attributes3.taxonomies,
-                taxIds = _props$attributes3.taxIds;
+                taxIds = _props$attributes3.taxIds,
+                onlyFromCurrentUser = _props$attributes3.onlyFromCurrentUser;
 
 
             var catIds = categories && categories.length > 0 ? categories.map(function (cat) {
@@ -25037,7 +25047,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 per_page: numberOfPosts,
                 token: myToken,
                 exclude: excludeCurrentPost ? excludeIds ? union(excludeIds, [postId]) : postId : excludeIds,
-                author: author
+                author: onlyFromCurrentUser ? wp.data.select('core').getCurrentUser().id : author
             }, function (value) {
                 return !isUndefined(value) && !(isArray(value) && (isNull(value) || value.length === 0));
             });
