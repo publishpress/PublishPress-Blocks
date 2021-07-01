@@ -600,6 +600,10 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'string',
                 'default' => 'left',
             ),
+            'onlyFromCurrentUser' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
 			// deprecrated attributes...
             'displayDate' => array(
                 'type' => 'boolean',

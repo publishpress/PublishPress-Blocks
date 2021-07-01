@@ -345,6 +345,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 linkCustomTax,
                 showCustomTaxList,
                 imagePosition,
+                onlyFromCurrentUser,
             } = attributes;
 
             let recentPosts = this.props.recentPosts;
@@ -591,6 +592,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                 )
                             )
                         }
+                        { !onlyFromCurrentUser &&
                         <AuthorSelect
                             key="query-controls-author-select"
                             authorList={authorList}
@@ -598,6 +600,13 @@ import { AuthorSelect } from './query-controls.jsx';
                             noOptionLabel={__('All', 'advanced-gutenberg')}
                             selectedAuthorId={selectedAuthorId}
                             onChange={ ( value ) => setAttributes( { author: value } ) }
+                        />
+                        }
+                        <ToggleControl
+                            label={ __( 'Show only posts from current user', 'advanced-gutenberg' ) }
+                            help={ __( 'When an author is logged in, he will see his posts only.', 'advanced-gutenberg' ) }
+                            checked={ onlyFromCurrentUser }
+                            onChange={ () => setAttributes( { onlyFromCurrentUser: !onlyFromCurrentUser } ) }
                         />
                         {isInPost && postType === 'post' &&
                         <ToggleControl
@@ -1383,7 +1392,7 @@ import { AuthorSelect } from './query-controls.jsx';
         },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, excludeIds, author, taxonomies, taxIds } = props.attributes;
+            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, excludeIds, author, taxonomies, taxIds, onlyFromCurrentUser } = props.attributes;
 
             const catIds = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
 
@@ -1396,7 +1405,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 per_page: numberOfPosts,
                 token: myToken,
                 exclude: excludeCurrentPost ? (excludeIds ? union( excludeIds, [ postId ] ) : postId ) : excludeIds,
-                author: author,
+                author: onlyFromCurrentUser ? wp.data.select('core').getCurrentUser().id : author,
             }, ( value ) => !isUndefined( value ) && !(isArray(value) && (isNull(value) || value.length === 0)) );
 
             let filterTaxNames = [];
