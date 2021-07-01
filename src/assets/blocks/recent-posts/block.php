@@ -1045,7 +1045,19 @@ function advgbGetAuthorMeta( $page ) {
 function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
     // Get current logged in user
     if ( isset( $attributes['onlyFromCurrentUser'] ) && $attributes['onlyFromCurrentUser'] ) {
-        $args['author'] = is_user_logged_in() ? get_current_user_id() : 99999; // 99999 means user is a guest :)
+        if ( ! function_exists('get_multiple_authors') ){
+            $args['author'] = advgbGetCurrentUserId();
+        } else {
+            $user_id = advgbGetCurrentUserId();
+            $author = advgbGetAuthorByID( $user_id );
+            if ( $author ) {
+                $args['meta_query'][] = array(
+                    'key' => 'ppma_authors_name',
+                    'value' => $author->__get( 'display_name' ),
+                    'compare' => 'LIKE',
+                );
+            }
+        }
     } else {
         // Get author attribute
         if ( isset( $attributes['author'] ) && ! empty( $attributes['author'] ) ) {
@@ -1153,6 +1165,15 @@ function advgbCheckImageStatus( $attributes, $key )  {
     } else {
         return false;
     }
+}
+
+/**
+ * Get id of current user
+ *
+ * @return integer
+ */
+function advgbGetCurrentUserId()  {
+    return is_user_logged_in() ? get_current_user_id() : 99999; // 99999 means user is a guest :)
 }
 
 /**
