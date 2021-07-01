@@ -147,6 +147,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function __construct()
         {
+            global $wp_version;
+
             add_action('init', array($this, 'registerPostMeta'));
             add_action('admin_init', array($this, 'registerStylesScripts'));
             add_action('wp_enqueue_scripts', array($this, 'registerStylesScriptsFrontend'));
@@ -178,7 +180,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
                 add_filter('admin_body_class', array($this, 'setAdvgEditorBodyClassses'));
 
-                global $wp_version;
                 if($wp_version >= 5.8) {
                     add_filter('block_editor_settings_all', array($this, 'replaceEditorSettings'), 9999);
                     add_filter('block_categories_all', array($this, 'addAdvBlocksCategory'));
@@ -186,7 +187,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     add_filter('block_editor_settings', array($this, 'replaceEditorSettings'), 9999);
                     add_filter('block_categories', array($this, 'addAdvBlocksCategory'));
                 }
-                
+
                 // Ajax
                 add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
                 add_action('wp_ajax_advgb_get_users', array($this, 'getUsers'));
@@ -197,6 +198,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Front-end
                 add_filter('render_block_data', array($this, 'contentPreRender'));
                 add_filter('the_content', array($this, 'addFrontendContentAssets'), 9);
+
+                if($wp_version >= 5.8) {
+                    add_filter('widget_block_content', array($this, 'addFrontendWidgetAssets'), 9);
+                }
             }
         }
 
@@ -4536,7 +4541,28 @@ if(!class_exists('AdvancedGutenbergMain')) {
 		}
 
         /**
-         * Function to load assets for post/page on front-end after gutenberg rendering
+         * Check to disable autop used to prevent unwanted paragraphs to blocks
+         *
+         * @param string $filter_name filter name; 'the_content' or 'widget_block_content'
+         *
+         * @return void
+         */
+        public function checkToDisableWpautop($filter_name)
+        {
+            $saved_settings = false;
+            if (has_filter($filter_name, 'wpautop')) {
+                if (!$saved_settings) {
+                    $saved_settings = get_option('advgb_settings');
+                }
+
+                if (!empty($saved_settings['disable_wpautop'])) {
+                    remove_filter($filter_name, 'wpautop');
+                }
+            }
+        }
+
+        /**
+         * Load assets for post/page on front-end after gutenberg rendering
          *
          * @param string $content Post content
          *
@@ -4544,19 +4570,40 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function addFrontendContentAssets($content)
         {
-            // Check to disable autop
-            $saved_settings = false;
-            if (has_filter('the_content', 'wpautop')) {
-                if (!$saved_settings) {
-                    $saved_settings = get_option('advgb_settings');
-                }
+            $this->checkToDisableWpautop('the_content');
+            $this->setFrontendAssets($content);
+            $content = $this->groupStylesTag($content);
 
-                if (!empty($saved_settings['disable_wpautop'])) {
-                    remove_filter('the_content', 'wpautop');
-                }
-            }
+            return $content;
+        }
 
+        /**
+         * Load assets for widgets on front-end after gutenberg rendering
+         *
+         * @param string $text Widget content
+         *
+         * @return string
+         */
+        public function addFrontendWidgetAssets($text)
+        {
+            $this->checkToDisableWpautop('widget_block_content');
+            $this->setFrontendAssets($text);
+            $text = $this->groupStylesTag($text);
+
+            return $text;
+        }
+
+        /**
+         * Set frontend assets and styles for posts
+         *
+         * @param string $content Post content
+         *
+         * @return string
+         */
+        public function setFrontendAssets($content)
+        {
             wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js');
+
             if (strpos($content, 'wp-block-gallery') !== false) {
                 if (!$saved_settings) {
                     $saved_settings = get_option('advgb_settings');
@@ -4586,6 +4633,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array('jquery')
                 );
             }
+
             if (strpos($content, 'wp-block-advgb-count-up') !== false) {
                 $content = preg_replace_callback(
                     '@<div[^>]*?advgb\-count\-up\-columns.*?(</p></div>)@s',
@@ -4835,8 +4883,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_scripts_frontend($content);
                 }
             }
-
-            $content = $this->groupStylesTag($content);
 
             return $content;
         }
