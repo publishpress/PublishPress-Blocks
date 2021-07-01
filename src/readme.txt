@@ -166,6 +166,9 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 == Changelog ==
 
+= 2.8.2 =
+ * Add: Show only posts from current user setting for Content Display block
+
 = 2.8.1 =
   * Add: Increase max padding and margin for Columns manager and Column blocks
   * Add: Rename "Summary" block to "Table of Contents"
