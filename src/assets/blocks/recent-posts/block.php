@@ -1047,6 +1047,8 @@ function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
     if ( isset( $attributes['onlyFromCurrentUser'] ) && $attributes['onlyFromCurrentUser'] ) {
         if ( ! function_exists('get_multiple_authors') ){
             $args['author'] = advgbGetCurrentUserId();
+        } elseif( advgbGetCurrentUserId() === 999999 ) {
+            $args['author'] = advgbGetCurrentUserId();
         } else {
             $user_id = advgbGetCurrentUserId();
             $author = advgbGetAuthorByID( $user_id );
@@ -1173,7 +1175,7 @@ function advgbCheckImageStatus( $attributes, $key )  {
  * @return integer
  */
 function advgbGetCurrentUserId()  {
-    return is_user_logged_in() ? get_current_user_id() : 99999; // 99999 means user is a guest :)
+    return is_user_logged_in() ? get_current_user_id() : 999999; // 999999 means user is a guest :)
 }
 
 /**
