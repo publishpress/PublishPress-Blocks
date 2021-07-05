@@ -2745,8 +2745,29 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
         padding-left: 43px;
         padding-right: 43px;
     }
-    .advgb-columns>.block-editor-inner-blocks>.block-editor-block-list__layout>[data-type="advgb/column"]:nth-child(2n) {
-        margin-left: 32px;
+    .advgb-columns {
+      
+      &.gutter-10 > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="advgb/column"]:not(:first-child) {
+          margin-left: 10px;
+      }
+      &.gutter-20 > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="advgb/column"]:not(:first-child) {
+          margin-left: 20px;
+      }
+      &.gutter-30 > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="advgb/column"]:not(:first-child) {
+          margin-left: 30px;
+      }
+      &.gutter-40 > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="advgb/column"]:not(:first-child) {
+          margin-left: 40px;
+      }
+      &.gutter-50 > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="advgb/column"]:not(:first-child) {
+          margin-left: 50px;
+      }
+      &.gutter-70 > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="advgb/column"]:not(:first-child) {
+          margin-left: 70px;
+      }
+      &.gutter-90 > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="advgb/column"]:not(:first-child) {
+          margin-left: 90px;
+      }
     }
     #editor .edit-post-visual-editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"] {
         margin-left: 14px !important;
@@ -2782,9 +2803,6 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 @media screen and (min-width: 782px) {
     .advgb-columns>.block-editor-inner-blocks>.block-editor-block-list__layout {
         flex-wrap: nowrap;
-    }
-    .advgb-columns>.block-editor-inner-blocks>.block-editor-block-list__layout>[data-type="advgb/column"]:not(:first-child) {
-        margin-left: 32px;
     }
 }
 
