@@ -2103,7 +2103,7 @@ form .advgb-grecaptcha > div {
   .advgb-recent-posts-layout,
   .advgb-columns-layout {
     margin: 5px;
-    flex-basis: 100px;
+    flex-basis: 105px;
     text-align: center;
     cursor: pointer;
     line-height: 1;
@@ -2112,6 +2112,12 @@ form .advgb-grecaptcha > div {
     &:hover,
     &.is-selected {
         opacity: 1;
+    }
+
+    .advgb-columns-layout-description {
+      margin-bottom: 10px;
+      margin-top: 10px;
+      font-size: 13px;
     }
   }
 
@@ -2746,7 +2752,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
         padding-right: 43px;
     }
     .advgb-columns {
-      
+
       &.gutter-10 > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="advgb/column"]:not(:first-child) {
           margin-left: 10px;
       }
