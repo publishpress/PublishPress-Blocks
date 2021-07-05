@@ -168,6 +168,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 = 2.8.2 =
  * Add: Show only posts from current user setting for Content Display block
+ * Add: Custom styles support to Image block
  * Fix: Spacing between columns preview in editor for Columns Manager block
 
 = 2.8.1 =

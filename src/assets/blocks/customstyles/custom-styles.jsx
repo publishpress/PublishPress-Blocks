@@ -17,6 +17,7 @@
         'core/columns',
         'core/column',
         'core/group',
+        'core/image',
     ];
 
     // Register custom styles to blocks attributes
