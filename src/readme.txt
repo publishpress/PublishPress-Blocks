@@ -173,6 +173,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Spacing between columns preview in editor for Columns Manager block
  * Fix: Load and resize triggers for Masonry view for Content Display block
  * Fix: Blocks spacing in editor
+ * Fix: Focus for tabs in Advanced Tabs block in Twenty Twenty-One theme in frontend
  * Remove: !important property for margin-bottom and margin-top for each block in editor
 
 = 2.8.1 =

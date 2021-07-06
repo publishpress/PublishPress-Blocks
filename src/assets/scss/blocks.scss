@@ -1001,6 +1001,15 @@ ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active a {
     color: inherit !important;
 }
 
+ul.advgb-tabs-panel li.advgb-tab a {
+
+  &:hover,
+  &:focus {
+      background: none !important;
+      text-decoration: none !important;
+  }
+}
+
 ul.advgb-tabs-panel li.advgb-add-tab {
     text-align: center;
 }
