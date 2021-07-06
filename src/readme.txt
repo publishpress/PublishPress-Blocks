@@ -171,6 +171,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Add: Custom styles support to Image block
  * Add: Description to choose columns layout for Columns Manager block
  * Fix: Spacing between columns preview in editor for Columns Manager block
+ * Fix: Load and resize triggers for Masonry view for Content Display block
 
 = 2.8.1 =
   * Add: Increase max padding and margin for Columns manager and Column blocks

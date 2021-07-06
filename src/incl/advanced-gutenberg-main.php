@@ -4671,7 +4671,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             itemSelector: \'.advgb-recent-post\',
                             percentPosition: true
                         });
-                        $(window).resize(function(){
+                        $(window).on(\'load resize\', function(){
                             $(\'.masonry-view .advgb-recent-posts\').isotope();
                         });
                     })(jQuery);
