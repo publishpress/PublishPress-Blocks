@@ -434,6 +434,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             // Load custom styles in the <head>
             add_action('wp_head', array($this, 'loadCustomStylesFrontend'));
             add_action('admin_head', array($this, 'loadCustomStylesAdmin'));
+            add_action('admin_head', array($this, 'setBlocksSpacingAdmin'));
 
             wp_enqueue_style('dashicons');
 
@@ -1900,6 +1901,20 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 echo '<style type="text/css">' . $content . '</style>';
 
+            }
+        }
+
+        /**
+         * Set blocks spacing in editor
+         *
+         * @return void
+         */
+        public function setBlocksSpacingAdmin() {
+            $saved_settings = get_option('advgb_settings');
+
+            if (isset($saved_settings['enable_blocks_spacing']) && $saved_settings['enable_blocks_spacing']) {
+                $blocks_spacing = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
+                echo '<style type="text/css">.editor-styles-wrapper [data-block] { margin-bottom: ' . $blocks_spacing . 'px; }</style>';
             }
         }
 
