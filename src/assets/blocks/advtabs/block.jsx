@@ -99,11 +99,9 @@
             } else {
                 advgbTabsUniqueIDs.push( this.props.attributes.uniqueID );
             }
-            if (!this.props.attributes.pid) {
-                this.props.setAttributes( {
-                    pid: `advgb-tabs-${this.props.clientId}`,
-                } );
-            }
+            this.props.setAttributes( {
+                pid: `advgb-tabs-${this.props.clientId}`,
+            } );
             this.updateTabHeaders();
             this.props.resetOrder();
         }
