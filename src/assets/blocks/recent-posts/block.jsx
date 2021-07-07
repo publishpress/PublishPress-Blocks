@@ -604,7 +604,7 @@ import { AuthorSelect } from './query-controls.jsx';
                         }
                         <ToggleControl
                             label={ __( 'Show only posts from current user', 'advanced-gutenberg' ) }
-                            help={ __( 'When an user is logged in, his posts will be shown only.', 'advanced-gutenberg' ) }
+                            help={ __( 'When a user is logged in, his posts will be shown only.', 'advanced-gutenberg' ) }
                             checked={ onlyFromCurrentUser }
                             onChange={ () => setAttributes( { onlyFromCurrentUser: !onlyFromCurrentUser } ) }
                         />
