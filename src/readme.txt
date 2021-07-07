@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.7.2
-Stable tag: 2.8.1
+Stable tag: 2.8.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -165,6 +165,17 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 1. Advanced Buttons block
 
 == Changelog ==
+
+= 2.8.2 =
+ * Add: Show only posts from current user setting for Content Display block
+ * Add: Custom styles support to Image block
+ * Add: Description to choose columns layout for Columns Manager block
+ * Fix: Spacing between columns preview in editor for Columns Manager block
+ * Fix: Load and resize triggers for Masonry view for Content Display block
+ * Fix: Blocks spacing in editor
+ * Fix: Focus for tabs in Advanced Tabs block in Twenty Twenty-One theme in frontend
+ * Fix: Duplicated id for Advanced Tabs block
+ * Remove: !important property for margin-bottom and margin-top for each block in editor
 
 = 2.8.1 =
   * Add: Increase max padding and margin for Columns manager and Column blocks

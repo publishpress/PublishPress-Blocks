@@ -2,6 +2,5 @@
 bundled/
 vendor/
 node_modules/
-src/assets/blocks/blocks.js.map
-src/assets/blocks/frontend.js.map
+src/assets/blocks/*.js.map
 .DS_Store*

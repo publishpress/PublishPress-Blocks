@@ -600,6 +600,10 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'string',
                 'default' => 'left',
             ),
+            'onlyFromCurrentUser' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
 			// deprecrated attributes...
             'displayDate' => array(
                 'type' => 'boolean',
@@ -1039,21 +1043,41 @@ function advgbGetAuthorMeta( $page ) {
  * @return array
  */
 function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
-	if ( isset( $attributes['author'] ) && ! empty( $attributes['author'] ) ) {
-		if ( ! function_exists('get_multiple_authors') ){
-			$args['author'] = $attributes['author'];
-		} else {
-			$user_id = $attributes['author'];
-			$author = advgbGetAuthorByID( $user_id );
-			if ( $author ) {
-				$args['meta_query'][] = array(
-					'key' => 'ppma_authors_name',
-					'value' => $author->__get( 'display_name' ),
-					'compare' => 'LIKE',
-				);
-			}
-		}
-	}
+    // Get current logged in user
+    if ( isset( $attributes['onlyFromCurrentUser'] ) && $attributes['onlyFromCurrentUser'] ) {
+        if ( ! function_exists('get_multiple_authors') ){
+            $args['author'] = advgbGetCurrentUserId();
+        } elseif( advgbGetCurrentUserId() === 999999 ) {
+            $args['author'] = advgbGetCurrentUserId();
+        } else {
+            $user_id = advgbGetCurrentUserId();
+            $author = advgbGetAuthorByID( $user_id );
+            if ( $author ) {
+                $args['meta_query'][] = array(
+                    'key' => 'ppma_authors_name',
+                    'value' => $author->__get( 'display_name' ),
+                    'compare' => 'LIKE',
+                );
+            }
+        }
+    } else {
+        // Get author attribute
+        if ( isset( $attributes['author'] ) && ! empty( $attributes['author'] ) ) {
+    		if ( ! function_exists('get_multiple_authors') ){
+    			$args['author'] = $attributes['author'];
+    		} else {
+    			$user_id = $attributes['author'];
+    			$author = advgbGetAuthorByID( $user_id );
+    			if ( $author ) {
+    				$args['meta_query'][] = array(
+    					'key' => 'ppma_authors_name',
+    					'value' => $author->__get( 'display_name' ),
+    					'compare' => 'LIKE',
+    				);
+    			}
+    		}
+    	}
+    }
 	return $args;
 }
 add_filter( 'advgb_get_recent_posts_args', 'advgbGetAuthorFilter', 10, 3 );
@@ -1143,6 +1167,15 @@ function advgbCheckImageStatus( $attributes, $key )  {
     } else {
         return false;
     }
+}
+
+/**
+ * Get id of current user
+ *
+ * @return integer
+ */
+function advgbGetCurrentUserId()  {
+    return is_user_logged_in() ? get_current_user_id() : 999999; // 999999 means user is a guest :)
 }
 
 /**
