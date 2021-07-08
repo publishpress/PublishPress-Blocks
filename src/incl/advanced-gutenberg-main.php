@@ -1922,25 +1922,36 @@ if(!class_exists('AdvancedGutenbergMain')) {
          * @return void
          */
         public function loadCustomStylesFrontend() {
+            $post_content = get_the_content();
+            $this->getCustomStylesContent($post_content);
+
+            // @TODO Check for Custom styles in use in Widgets
+        }
+
+        /**
+         * Get Custom Styles in use in Contennt
+         *
+         * @return string
+         */
+        public function getCustomStylesContent($content) {
 
             $custom_styles = get_option('advgb_custom_styles');
-            $post_content = get_the_content();
 
             if(is_array($custom_styles)) {
 
-                $content = '';
+                $css = '';
 
                 foreach ($custom_styles as $styles) {
 
-                    // Check if the class is in use in the post
-                    if (strpos($post_content, $styles['name']) !== false) {
-                        $content .= '.' . $styles['name'] . " {\n";
-                        $content .= $styles['css'] . "\n} \n";
-                    }
+                    // @TODO Check if the class is in use in the post and widgets
+                    //if (strpos($content, $styles['name']) !== false) {
+                        $css .= '.' . $styles['name'] . " {\n";
+                        $css .= $styles['css'] . "\n} \n";
+                    //}
                 }
 
-                if( !empty($content) ) {
-                    echo '<style type="text/css">' . $content . '</style>';
+                if( !empty($css) ) {
+                    echo '<style type="text/css">' . $css . '</style>';
                 }
             }
         }
@@ -1958,7 +1969,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 $content = '';
                 foreach ($custom_styles as $styles) {
-                    $content .= '#editor .' .$styles['name'] . " {\n";
+                    $content .= '.block-editor-writing-flow .' .$styles['name'] . " {\n";
                     $content .= $styles['css'] . "\n} \n";
                 }
 
