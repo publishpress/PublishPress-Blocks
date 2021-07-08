@@ -175,7 +175,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Remove: Deprecated filter `block_categories`. Replaced with `block_categories_all`
  * Remove: Sidebar settings on widgets page and theme customizer
 
-= 2.8.2 =
+= 2.8.2 - 2021-07-07 =
  * Add: Show only posts from current user setting for Content Display block
  * Add: Custom styles support to Image block
  * Add: Description to choose columns layout for Columns Manager block
@@ -186,7 +186,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Duplicated id for Advanced Tabs block
  * Remove: !important property for margin-bottom and margin-top for each block in editor
 
-= 2.8.1 =
+= 2.8.1 - 2021-06-28 =
   * Add: Increase max padding and margin for Columns manager and Column blocks
   * Add: Rename "Summary" block to "Table of Contents"
   * Add: Translation support to javascript for block Settings popup
@@ -208,7 +208,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: PublishPress Blocks category is listed twice in editor when having Free and Pro plugins activated
   * Fix: RTL support for Images Slider block
 
-= 2.8.0 =
+= 2.8.0 - 2021-06-15 =
   * Add: Rename menu to "Blocks"
   * Add: Ask for review popup after 1 week
   * Add: Load only custom styles in use in frontend
@@ -222,7 +222,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Advanced List transform can break the editor page after is converted into List block
   * Remove: Author and Date from Block Access profiles list
 
-= 2.7.1 =
+= 2.7.1 - 2021-05-31 =
   * Add: Preview for custom styles in editor
   * Add: Support for custom styles to heading, list, code, preformatted, table, columns and group blocks
   * Add: Spacing optimization for Advanced List block
@@ -234,7 +234,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Warning in frontend when switching to a different post type but keeping previous post type taxonomies
   * Fix: Warning for taxonomy loop
 
-= 2.7.0 =
+= 2.7.0 - 2021-05-18 =
   * Add: Custom Post Type support for Content Display block
   * Add: Autoplay control to Slider view for Content Display block
   * Add: Top notice in admin with link to Pro version
@@ -243,11 +243,11 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Web Stories block by Google not available in editor
   * Fix: Multiple email addresses in Email settings
 
-= 2.6.2 =
+= 2.6.2 - 2021-04-22 =
   * Add: CSS properties to images for Content Display block to avoid inherit styles from themes
   * Remove: Load block's CSS through wp_add_inline_style function
 
-= 2.6.1 =
+= 2.6.1 - 2021-04-21 =
   * Add: Load PublishPress Blocks category as first in Gutenberg editor
   * Add: "Content Display" as new name for Recent Posts block
   * Add: "Posted on" and "Updated on" labels before modified date
@@ -261,7 +261,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Fix: Use rgba border color in Newspaper view for Content Display block
   * Remove: "ADVGB" from Content Display and WooProducts blocks when loading in editor
 
-= 2.6.0 =
+= 2.6.0 - 2021-04-12 =
   * Add: Compressed CSS files only
   * Add: Tags support to Recent Posts block
   * Add: PublishPress Authors support to Recent Posts block
@@ -297,7 +297,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Remove: Not required formatting for editable elements for Login/Register block
   * Remove: Static font-size for post titles for Recent Posts block
 
-= 2.5.7 =
+= 2.5.7 - 2021-03-08 =
  * Add: Separate pages for Settings and Default block settings
  * Add: Multiple category support to Recent Posts block
  * Fix: Alt attribute for img tag in Images Slider block
@@ -314,11 +314,11 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Remove: Wide width alignment option for Advanced Button block
  * Remove: Refresh option for Advanced Button block
 
-= 2.5.6 =
+= 2.5.6 - 2021-02-23 =
  * Fix: Bug in deprecation for Advanced Accordion block from v2.5.5
  * Remove: Full path in compiled JavaScript
 
-= 2.5.5 =
+= 2.5.5 - 2021-02-17 =
  * Add: Bigger font-size for custom styles in new plugin installations
  * Add: Newest version of Material Icons
  * Fix: Center alignment for Advanced Table block
@@ -335,7 +335,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Remove: Unnecessary allowed formats for Advanced Accordion header
  * Remove: Format options for Advanced Image block
 
-= 2.5.4 =
+= 2.5.4 - 2021-02-04 =
  * Fix: Deprecated code for Advanced Button block
  * Fix: Deprecated code for Advanced Accordion block
  * Fix: Deprecated code for Advanced Image block
@@ -350,20 +350,20 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Deprecated code for Summary block
  * Fix: Deprecated code for Woo Products block
 
-= 2.5.3 =
+= 2.5.3 - 2021-01-21 =
  * Fix: Advanced Button and Advanced Icon duplication id
  * Fix: Deprecated prop for Advanced Button block
  * Fix: Editor width and Columns visual guide settings in WordPress 5.6
  * Add: Darker border color for Columns visual guide
 
-= 2.5.2 =
+= 2.5.2 - 2021-01-14 =
  * Fix: Summary block style and better CSS handling for margin-left
  * Fix: Ajax call to update the block list in db
  * Fix: Deprecated core/editor to core/block-editor Namespace
  * Fix: Introduced bug in 2.5.1 for gallery lightbox target
  * Add: Better gallery lightbox target support
 
-= 2.5.1 =
+= 2.5.1 - 2021-01-11 =
  * Add: Anchor support for all the blocks, except: Adv. Icons, Columns Manager, Info Box, Recent Posts and Testimonial
  * Fix: Fix gallery lightbox target to open a bigger version of the image (hughworm)
  * Add: Better CSS selector for Advanced List block
@@ -371,7 +371,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Remove: Old CSS approach for Columns Manager columns and layouts
  * Fix: Advanced Button center alignment in editor
 
-= 2.5.0 =
+= 2.5.0 - 2020-12-09 =
  * Add: "PublishPress Blocks" as new plugin's name
  * Add: New admin design
  * Add: Support for javascript translations
@@ -379,35 +379,35 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Add: More translation strings for Spanish (Spain)
  * Fix: Strings that are saved as static content
 
-= 2.4.7 =
+= 2.4.7 - 2020-10-19 =
  * Fix: Global columns visual guide
  * Fix: Deprecated isDefault replaced with isSecondary
  * Fix: Hidden text in selected button groups on content Gutenberg sidebar
  * Fix: Custom class support for Advanced Icon and Info Box blocks
  * Fix: Tooltips in configuration pages
 
-= 2.4.6 =
+= 2.4.6 - 2020-09-16 =
  * Fix: Support for nested blocks in 5th level
 
-= 2.4.5 =
+= 2.4.5 - 2020-09-03 =
  * Fix: Load Custom Styles in multisites
  * Add: Optimize blocks style loading
 
-= 2.4.4 =
+= 2.4.4 - 2020-08-24 =
  * Fix: Recent Posts block, broken Category setting
  * Add: AdvQueryControls component
 
-= 2.4.3 =
+= 2.4.3 - 2020-08-17 =
  * Fix: Load common CSS for nested blocks
 
-= 2.4.2 =
+= 2.4.2 - 2020-08-14 =
  * Fix: Styles not loading in frontend for nested blocks in WordPress 5.5
 
-= 2.4.1 =
+= 2.4.1 - 2020-08-11 =
  * Fix: Border width for Advanced Button Block
  * Fix: Missing Thickbox CSS loading
 
-= 2.4.0 =
+= 2.4.0 - 2020-08-05 =
  * Remove: JU Translation system
  * Add: Native language files support
  * Add: Support for language overrides created with version 2.3.11 and older
@@ -418,10 +418,10 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Load reCaptcha in Login/register, Contact form and Newsletter blocks only when required in frontend
  * Fix: Load Google Maps API in Map block only when required in frontend
 
-= 2.3.11 =
+= 2.3.11 - 2020-06-22 =
  * Fix: Improve default background position for new Advanced image block
 
-= 2.3.10 =
+= 2.3.10 - 2020-06-08 =
  * Fix: Blocks spacing
  * Fix: Default background position for new Advanced image block
 
