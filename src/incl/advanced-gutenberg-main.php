@@ -4626,7 +4626,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             $this->checkToDisableWpautop('widget_block_content');
             $this->setFrontendAssets($text);
-            $text = $this->groupStylesTag($text);
+            $text = $this->groupStylesTag($text, false);
 
             return $text;
         }
@@ -4960,10 +4960,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
          * Find all style tag and append them in the end of content
          *
          * @param string $content Content to be prettify
+         * @param boolean $is_post if the content is false, is a widget
          *
          * @return string          New prettified string
          */
-        public function groupStylesTag($content)
+        public function groupStylesTag($content, $is_post = true)
         {
             // Group styles tag in the end of the content
             preg_match_all('/(<style.*?>)(.*?)(<\/style>)/mis', $content, $styles_html);
@@ -4976,7 +4977,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             if ($styles_tag) {
-                $content .= '<style class="advgb-styles-renderer">'.$styles_tag.'</style>';
+                $content .= '<style class="advgb-styles-renderer' . ( $is_post === false ? '-widget' : '' ) . '">'.$styles_tag.'</style>';
             }
 
             return $content;
