@@ -172,6 +172,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Add: Assets loading in Widget areas in frontend
  * Add: Custom styles support for widgets
  * Fix: Adjust blocks preview CSS for Widgets area
+ * Fix: Woo Products slideshow in frontend
  * Remove: Deprecated filter `block_categories`. Replaced with `block_categories_all`
  * Remove: Sidebar settings on widgets page and theme customizer
 
