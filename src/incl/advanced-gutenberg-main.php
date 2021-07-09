@@ -4815,6 +4815,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_enqueue_style('slick_theme_style');
                 wp_enqueue_script('slick_js');
                 wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
+                    $(".advgb-woo-products.slider-view").on("init", function(event){
+                      $(this).find("div.woocommerce, ul.products").removeClass("columns-1 columns-2 columns-3 columns-4");
+                    });
                     $(".advgb-woo-products.slider-view .products:not(.slick-initialized)").slick({
                         dots: true,
                         adaptiveHeight: true,
