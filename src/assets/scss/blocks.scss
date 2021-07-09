@@ -1343,25 +1343,34 @@ hr.wp-block-separator {
     margin: auto;
 }
 
-.advgb-woo-products.slider-view .woocommerce ul.products li.first,
-.advgb-woo-products.slider-view .woocommerce-page ul.products li.first {
-    clear: none !important;
-}
+.advgb-woo-products.slider-view {
 
-.advgb-woo-products.slider-view .woocommerce ul.products li.product,
-.advgb-woo-products.slider-view .woocommerce-page ul.products li.product {
-    margin: 10px;
-    text-align: center;
-}
+  .woocommerce,
+  .woocommerce-page {
 
-.advgb-woo-products.slider-view .woocommerce ul.products li.product a {
-  margin: 0 auto;
+    ul.products li.first {
+        clear: none !important;
+    }
+  }
 
-  img {
-      height: 400px;
-      width: auto;
-      display: block;
-      margin: 0 auto 1.5em;
+  .woocommerce,
+  .woocommerce-page {
+
+    ul.products li.product {
+        margin: 10px;
+        text-align: center;
+
+        a {
+          margin: 0 auto;
+
+          img {
+              height: 400px;
+              width: auto;
+              display: block;
+              margin: 0 auto 1.5em;
+          }
+        }
+    }
   }
 }
 
