@@ -1354,11 +1354,15 @@ hr.wp-block-separator {
     text-align: center;
 }
 
-.advgb-woo-products.slider-view .woocommerce ul.products li.product a img {
-    height: 400px;
-    width: auto;
-    display: block;
-    margin: 0 auto 1.5em;
+.advgb-woo-products.slider-view .woocommerce ul.products li.product a {
+  margin: 0 auto;
+
+  img {
+      height: 400px;
+      width: auto;
+      display: block;
+      margin: 0 auto 1.5em;
+  }
 }
 
 /*Image slider block*/
