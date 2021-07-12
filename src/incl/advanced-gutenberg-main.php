@@ -4793,6 +4793,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         $(this).slick("slickSetOption", "autoplay", $(this).parent().hasClass("slider-autoplay"), true);
                     });
                 });');
+
+                // Patch for Twenty Twenty-One
+                $this->fixCssGridFooterWidgets();
             }
 
             if (strpos($content, 'advgb-recent-posts-block masonry-view') !== false) {
@@ -4823,6 +4826,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         adaptiveHeight: true,
                     })
                 });');
+
+                // Patch for Twenty Twenty-One
+                $this->fixCssGridFooterWidgets();
             }
 
             if (strpos($content, 'advgb-images-slider-block') !== false) {
@@ -4847,6 +4853,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         ADVANCED_GUTENBERG_VERSION
                     );
                 }
+
+                // Patch for Twenty Twenty-One
+                $this->fixCssGridFooterWidgets();
             }
 
             if (strpos($content, 'advgb-contact-form') !== false) {
@@ -4881,6 +4890,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array(),
                     ADVANCED_GUTENBERG_VERSION
                 );
+
+                // Patch for Twenty Twenty-One
+                $this->fixCssGridFooterWidgets();
             }
 
             if (strpos($content, 'advgb-testimonial') !== false) {
@@ -5142,6 +5154,33 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_enqueue_script(
                     'advgb_map_api',
                     'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
+                );
+            }
+        }
+
+        /**
+         * Add CSS patch when using Twenty Twenty-One in footer with Slick slideshow
+         * https://core.trac.wordpress.org/ticket/53649
+         * https://github.com/kenwheeler/slick/issues/3415
+         *
+         * @return void
+         */
+        public function fixCssGridFooterWidgets() {
+            $ctheme = wp_get_theme();
+            if ( 'Twenty Twenty-One' == $ctheme->name || 'Twenty Twenty-One' == $ctheme->parent_theme ) {
+                wp_add_inline_style(
+                    'advgb_blocks_styles',
+                    '@media only screen and (min-width: 652px) {
+                        .widget-area {
+                          grid-template-columns: repeat(2, minmax( 0, 1fr ));
+                        }
+                      }
+                      @media only screen and (min-width: 1024px) {
+                        .widget-area {
+                          grid-template-columns: repeat(3, minmax( 0, 1fr ));
+                        }
+                      }
+                  }'
                 );
             }
         }
