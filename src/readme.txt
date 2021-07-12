@@ -174,6 +174,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Add: Patch for Twenty Twenty-One theme, footer widgets columns in frontend for Slick
  * Fix: Adjust blocks preview CSS for Widgets area
  * Fix: Woo Products slideshow in frontend
+ * Fix: Warning for profiles without assigned users in Block access list
  * Remove: Deprecated filter `block_categories`. Replaced with `block_categories_all`
  * Remove: Sidebar settings on widgets page and theme customizer
 
