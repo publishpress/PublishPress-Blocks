@@ -175,12 +175,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_action('admin_menu', array($this, 'registerBlockConfigPage'));
                 add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
                 add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
-                add_action('admin_enqueue_scripts', array($this, 'addEditorAssetsWidgets'), 9999);
                 add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
                 add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
                 add_filter('admin_body_class', array($this, 'setAdvgEditorBodyClassses'));
 
                 if($wp_version >= 5.8) {
+                    add_action('admin_enqueue_scripts', array($this, 'addEditorAssetsWidgets'), 9999);
                     add_filter('block_editor_settings_all', array($this, 'replaceEditorSettings'), 9999);
                     add_filter('block_categories_all', array($this, 'addAdvBlocksCategory'));
                 } else {
