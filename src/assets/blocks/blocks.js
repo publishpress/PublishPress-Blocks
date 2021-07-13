@@ -6235,7 +6235,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 className: "advgb-accordion-header-title",
                                 placeholder: __('Enter header…', 'advanced-gutenberg'),
                                 style: { color: 'inherit' },
-                                allowedFormats: ['core/bold', 'core/italic', 'core/image', 'core/strikethrough']
+                                allowedFormats: ['core/bold', 'core/italic', 'core/image', 'core/strikethrough', 'core/text-color']
                             })
                         ),
                         React.createElement(

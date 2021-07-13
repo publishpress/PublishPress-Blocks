@@ -172,6 +172,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Add: Assets loading in Widget areas in frontend
  * Add: Custom styles support for widgets
  * Add: Patch for Twenty Twenty-One theme, footer widgets columns in frontend for Slick
+ * Add: Back color format option to Advanced Accordion block
  * Fix: Adjust blocks preview CSS for Widgets area
  * Fix: Woo Products slideshow in frontend
  * Fix: Warning for profiles without assigned users in Block access list
