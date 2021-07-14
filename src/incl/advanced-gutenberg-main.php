@@ -4814,8 +4814,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                     // Masonry view
                     wp_enqueue_script('advgb_masonry_js');
-                    wp_add_inline_script('advgb_masonry_js', 'document.addEventListener("DOMSubtreeModified", function(){
-                        (function($) {
+                    wp_add_inline_script('advgb_masonry_js', 'jQuery(document).ready(function ($) {
+                        document.addEventListener("DOMSubtreeModified", function(){
                             try {
                                 $(\'.masonry-view .advgb-recent-posts\').isotope({
                                     itemSelector: \'.advgb-recent-post\',
@@ -4860,15 +4860,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Don't load when previewed through Customizer; Masonry is already executed
                 if( !isset($_GET['customize_theme']) ) {
                     wp_enqueue_script('advgb_masonry_js');
-                    wp_add_inline_script('advgb_masonry_js', 'document.addEventListener("DOMContentLoaded", function(){
-                        (function($) {
-                            $(\'.masonry-view .advgb-recent-posts\').isotope({
-                                itemSelector: \'.advgb-recent-post\',
-                                percentPosition: true
-                            });
-                            $(window).on(\'load resize\', function(){
-                                $(\'.masonry-view .advgb-recent-posts\').isotope();
-                            });
+                    wp_add_inline_script('advgb_masonry_js', 'jQuery(document).ready(function($){
+                        $(\'.masonry-view .advgb-recent-posts\').isotope({
+                            itemSelector: \'.advgb-recent-post\',
+                            percentPosition: true
+                        });
+                        $(window).on(\'load resize\', function(){
+                            $(\'.masonry-view .advgb-recent-posts\').isotope();
                         });
                     });');
                 }
