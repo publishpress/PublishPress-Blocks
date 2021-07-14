@@ -4681,16 +4681,30 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             if (strpos($content, 'advgb-image-block') !== false) {
-                if (strpos($content, 'advgb-lightbox') !== false) {
+                // Preview in Customizer
+                if( isset($_GET['customize_theme']) ) {
                     wp_enqueue_style('colorbox_style');
                     wp_enqueue_script('colorbox_js');
 
                     wp_enqueue_script(
-                        'advgbImageLightbox_js',
-                        plugins_url('assets/blocks/advimage/lightbox.js', dirname(__FILE__)),
+                        'advgbImageLightboxCustomizer_js',
+                        plugins_url('assets/blocks/advimage/lightbox-customizer.js', dirname(__FILE__)),
                         array(),
                         ADVANCED_GUTENBERG_VERSION
                     );
+                } else {
+                    // Frontend (no customizer)
+                    if (strpos($content, 'advgb-lightbox') !== false) {
+                        wp_enqueue_style('colorbox_style');
+                        wp_enqueue_script('colorbox_js');
+
+                        wp_enqueue_script(
+                            'advgbImageLightbox_js',
+                            plugins_url('assets/blocks/advimage/lightbox.js', dirname(__FILE__)),
+                            array(),
+                            ADVANCED_GUTENBERG_VERSION
+                        );
+                    }
                 }
             }
 
@@ -4778,80 +4792,177 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             if (strpos($content, 'advgb-recent-posts-block') !== false) {
                 wp_enqueue_style('advgb_recent_posts_styles');
+
+                // Preview in Customizer
+                if( isset($_GET['customize_theme']) ) {
+
+                    // Slider view
+                    wp_enqueue_style('slick_style');
+                    wp_enqueue_style('slick_theme_style');
+                    wp_enqueue_script('slick_js');
+                    wp_add_inline_script('slick_js', 'jQuery(document).ready(function ($) {
+                        document.addEventListener("DOMSubtreeModified", function(){
+                            $(".advgb-recent-posts-block.slider-view").find(".advgb-recent-posts:not(.slick-initialized)").each(function() {
+                                $(this).slick({
+                                    dots: true,
+                                    adaptiveHeight: true,
+                                });
+                                $(this).slick("slickSetOption", "autoplay", $(this).parent().hasClass("slider-autoplay"), true);
+                            });
+                        });
+                    });');
+
+                    // Masonry view
+                    wp_enqueue_script('advgb_masonry_js');
+                    wp_add_inline_script('advgb_masonry_js', 'document.addEventListener("DOMSubtreeModified", function(){
+                        (function($) {
+                            try {
+                                $(\'.masonry-view .advgb-recent-posts\').isotope({
+                                    itemSelector: \'.advgb-recent-post\',
+                                    percentPosition: true
+                                });
+                                $(window).on(\'load resize\', function(){
+                                    $(\'.masonry-view .advgb-recent-posts\').isotope();
+                                });
+                            } catch(e) {
+                                console.log(e);
+                            }
+                        });
+                    });');
+                }
+
+                // Patch for Twenty Twenty-One
+                $this->fixCssGridFooterWidgets();
             }
 
             if (strpos($content, 'advgb-recent-posts-block slider-view') !== false) {
-                wp_enqueue_style('slick_style');
-                wp_enqueue_style('slick_theme_style');
-                wp_enqueue_script('slick_js');
-                wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
-                    $(".advgb-recent-posts-block.slider-view").find(".advgb-recent-posts:not(.slick-initialized)").each(function() {
-                        $(this).slick({
-                            dots: true,
-                            adaptiveHeight: true,
+                // Don't load when previewed through Customizer; Slick is already executed
+                if( !isset($_GET['customize_theme']) ) {
+                    wp_enqueue_style('slick_style');
+                    wp_enqueue_style('slick_theme_style');
+                    wp_enqueue_script('slick_js');
+                    wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
+                        $(".advgb-recent-posts-block.slider-view").find(".advgb-recent-posts:not(.slick-initialized)").each(function() {
+                            $(this).slick({
+                                dots: true,
+                                adaptiveHeight: true,
+                            });
+                            $(this).slick("slickSetOption", "autoplay", $(this).parent().hasClass("slider-autoplay"), true);
                         });
-                        $(this).slick("slickSetOption", "autoplay", $(this).parent().hasClass("slider-autoplay"), true);
-                    });
-                });');
+                    });');
 
-                // Patch for Twenty Twenty-One
-                $this->fixCssGridFooterWidgets();
+                    // Patch for Twenty Twenty-One
+                    $this->fixCssGridFooterWidgets();
+                }
             }
 
             if (strpos($content, 'advgb-recent-posts-block masonry-view') !== false) {
-                wp_enqueue_script('advgb_masonry_js');
-                wp_add_inline_script('advgb_masonry_js', 'document.addEventListener("DOMContentLoaded", function(){
-                    (function($) {
-                        $(\'.masonry-view .advgb-recent-posts\').isotope({
-                            itemSelector: \'.advgb-recent-post\',
-                            percentPosition: true
+                // Don't load when previewed through Customizer; Masonry is already executed
+                if( !isset($_GET['customize_theme']) ) {
+                    wp_enqueue_script('advgb_masonry_js');
+                    wp_add_inline_script('advgb_masonry_js', 'document.addEventListener("DOMContentLoaded", function(){
+                        (function($) {
+                            $(\'.masonry-view .advgb-recent-posts\').isotope({
+                                itemSelector: \'.advgb-recent-post\',
+                                percentPosition: true
+                            });
+                            $(window).on(\'load resize\', function(){
+                                $(\'.masonry-view .advgb-recent-posts\').isotope();
+                            });
                         });
-                        $(window).on(\'load resize\', function(){
-                            $(\'.masonry-view .advgb-recent-posts\').isotope();
+                    });');
+                }
+            }
+
+            if (strpos($content, 'advgb-woo-products') !== false) {
+                // Preview in Customizer
+                if( isset($_GET['customize_theme']) ) {
+                    wp_enqueue_style('slick_style');
+                    wp_enqueue_style('slick_theme_style');
+                    wp_enqueue_script('slick_js');
+                    wp_add_inline_script('slick_js', 'jQuery(document).ready(function ($) {
+                        document.addEventListener("DOMSubtreeModified", function(){
+                            $(".advgb-woo-products.slider-view").on("init", function(event){
+                              $(this).find("div.woocommerce, ul.products").removeClass("columns-1 columns-2 columns-3 columns-4");
+                            });
+                            $(".advgb-woo-products.slider-view .products:not(.slick-initialized)").slick({
+                                dots: true,
+                                adaptiveHeight: true,
+                            });
                         });
-                    })(jQuery);
-                });');
+                    });');
+
+                    // Patch for Twenty Twenty-One
+                    $this->fixCssGridFooterWidgets();
+                }
             }
 
             if (strpos($content, 'advgb-woo-products slider-view') !== false) {
-                wp_enqueue_style('slick_style');
-                wp_enqueue_style('slick_theme_style');
-                wp_enqueue_script('slick_js');
-                wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
-                    $(".advgb-woo-products.slider-view").on("init", function(event){
-                      $(this).find("div.woocommerce, ul.products").removeClass("columns-1 columns-2 columns-3 columns-4");
-                    });
-                    $(".advgb-woo-products.slider-view .products:not(.slick-initialized)").slick({
-                        dots: true,
-                        adaptiveHeight: true,
-                    })
-                });');
+                // Don't load when previewed through Customizer; Slick is already executed
+                if( !isset($_GET['customize_theme']) ) {
+                    wp_enqueue_style('slick_style');
+                    wp_enqueue_style('slick_theme_style');
+                    wp_enqueue_script('slick_js');
+                    wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
+                        $(".advgb-woo-products.slider-view").on("init", function(event){
+                          $(this).find("div.woocommerce, ul.products").removeClass("columns-1 columns-2 columns-3 columns-4");
+                        });
+                        $(".advgb-woo-products.slider-view .products:not(.slick-initialized)").slick({
+                            dots: true,
+                            adaptiveHeight: true,
+                        })
+                    });');
 
-                // Patch for Twenty Twenty-One
-                $this->fixCssGridFooterWidgets();
+                    // Patch for Twenty Twenty-One
+                    $this->fixCssGridFooterWidgets();
+                }
             }
 
             if (strpos($content, 'advgb-images-slider-block') !== false) {
                 wp_enqueue_style('slick_style');
                 wp_enqueue_style('slick_theme_style');
                 wp_enqueue_script('slick_js');
-                wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
-                    $(".advgb-images-slider-block .advgb-images-slider:not(.slick-initialized)").slick({
-                        dots: true,
-                        adaptiveHeight: true,
-                    })
-                });');
 
-                if (strpos($content, 'advgb-images-slider-lightbox') !== false) {
+                // Preview in Customizer
+                if( isset($_GET['customize_theme']) ) {
+                    wp_add_inline_script('slick_js', 'jQuery(document).ready(function ($) {
+                        document.addEventListener("DOMSubtreeModified", function(){
+                            $(".advgb-images-slider-block .advgb-images-slider:not(.slick-initialized)").slick({
+                                dots: true,
+                                adaptiveHeight: true,
+                            });
+                        });
+                    });');
+
                     wp_enqueue_style('colorbox_style');
                     wp_enqueue_script('colorbox_js');
 
                     wp_enqueue_script(
-                        'advgbImageSliderLightbox_js',
-                        plugins_url('assets/blocks/images-slider/lightbox.js', dirname(__FILE__)),
+                        'advgbImageSliderLightboxCustomizer_js',
+                        plugins_url('assets/blocks/images-slider/lightbox-customizer.js', dirname(__FILE__)),
                         array(),
                         ADVANCED_GUTENBERG_VERSION
                     );
+                } else {
+                    // Frontend (no customizer)
+                    wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
+                        $(".advgb-images-slider-block .advgb-images-slider:not(.slick-initialized)").slick({
+                            dots: true,
+                            adaptiveHeight: true,
+                        })
+                    });');
+
+                    if (strpos($content, 'advgb-images-slider-lightbox') !== false) {
+                        wp_enqueue_style('colorbox_style');
+                        wp_enqueue_script('colorbox_js');
+
+                        wp_enqueue_script(
+                            'advgbImageSliderLightbox_js',
+                            plugins_url('assets/blocks/images-slider/lightbox.js', dirname(__FILE__)),
+                            array(),
+                            ADVANCED_GUTENBERG_VERSION
+                        );
+                    }
                 }
 
                 // Patch for Twenty Twenty-One
@@ -4881,18 +4992,21 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             if (strpos($content, 'advgb-testimonial slider-view') !== false) {
-                wp_enqueue_style('slick_style');
-                wp_enqueue_style('slick_theme_style');
-                wp_enqueue_script('slick_js');
-                wp_enqueue_script(
-                    'advgb_testimonial_frontend',
-                    plugins_url('assets/blocks/testimonial/frontend.js', dirname(__FILE__)),
-                    array(),
-                    ADVANCED_GUTENBERG_VERSION
-                );
+                // Don't load when previewed through Customizer; Slick is already executed
+                if( !isset($_GET['customize_theme']) ) {
+                    wp_enqueue_style('slick_style');
+                    wp_enqueue_style('slick_theme_style');
+                    wp_enqueue_script('slick_js');
+                    wp_enqueue_script(
+                        'advgb_testimonial_frontend',
+                        plugins_url('assets/blocks/testimonial/frontend.js', dirname(__FILE__)),
+                        array(),
+                        ADVANCED_GUTENBERG_VERSION
+                    );
 
-                // Patch for Twenty Twenty-One
-                $this->fixCssGridFooterWidgets();
+                    // Patch for Twenty Twenty-One
+                    $this->fixCssGridFooterWidgets();
+                }
             }
 
             if (strpos($content, 'advgb-testimonial') !== false) {
@@ -4901,6 +5015,22 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array($this, 'decodeHtmlEntity'),
                     $content
                 );
+
+                // Preview in Customizer
+                if( isset($_GET['customize_theme']) ) {
+                    wp_enqueue_style('slick_style');
+                    wp_enqueue_style('slick_theme_style');
+                    wp_enqueue_script('slick_js');
+                    wp_enqueue_script(
+                        'advgb_testimonial_customizer_frontend',
+                        plugins_url('assets/blocks/testimonial/frontend-customizer.js', dirname(__FILE__)),
+                        array(),
+                        ADVANCED_GUTENBERG_VERSION
+                    );
+
+                    // Patch for Twenty Twenty-One
+                    $this->fixCssGridFooterWidgets();
+                }
             }
 
             if (strpos($content, 'advgb-columns') !== false) {
