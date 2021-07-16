@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.9.0b3
+Stable tag: 2.9.0b5
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -166,7 +166,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 == Changelog ==
 
-= 2.9.0 - 13 Jul 2021 =
+= 2.9.0 - 14 Jul 2021 =
  * Add: Support for PublishPress Blocks in widgets.php page
  * Add: Support for Block Access to Widget areas
  * Add: Assets loading in Widget areas in frontend
@@ -177,6 +177,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Woo Products slideshow in frontend
  * Fix: Warning for profiles without assigned users in Block access list
  * Fix: Label to show posts from current user for Content Display block
+ * Fix: Customizer preview for Content Display, Woo Products, Testimonial, Images Slider and Advanced Image blocks
  * Remove: Deprecated filter `block_categories`. Replaced with `block_categories_all`
  * Remove: Sidebar settings on widgets page and theme customizer
 
