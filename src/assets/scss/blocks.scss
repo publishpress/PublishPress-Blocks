@@ -128,6 +128,15 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
   }
 }
 
+/* Widgets Customizer */
+.customize-control-sidebar_block_editor .block-editor-writing-flow {
+
+  .advgb-lores-form-wrapper,
+  .advgb-search-bar-inner {
+    width: 100% !important;
+  }
+}
+
 /*Accordion block styles*/
 #editor {
 

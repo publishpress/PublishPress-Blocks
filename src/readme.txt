@@ -178,6 +178,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Warning for profiles without assigned users in Block access list
  * Fix: Label to show posts from current user for Content Display block
  * Fix: Customizer preview for Content Display, Woo Products, Testimonial, Images Slider and Advanced Image blocks
+ * Fix: Cropped blocks display in widgets customizer for Login/Register and Search Bar
  * Remove: Deprecated filter `block_categories`. Replaced with `block_categories_all`
  * Remove: Sidebar settings on widgets page and theme customizer
 
