@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.9.0b5
+Stable tag: 2.9.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -166,7 +166,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 == Changelog ==
 
-= 2.9.0 - 14 Jul 2021 =
+= 2.9.0 - 19 Jul 2021 =
  * Add: Support for PublishPress Blocks in widgets.php page
  * Add: Support for Block Access to Widget areas
  * Add: Assets loading in Widget areas in frontend
