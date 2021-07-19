@@ -10,6 +10,25 @@ window.onload = function () {
         var listBlocks = [];
         var nonce = '';
 
+        // Add Widgets Legacy and Area blocks manually
+        allBlocks.push({
+          "name": "core/legacy-widget",
+          "icon": {
+            "src": "block-default",
+          },
+          "title": "Legacy Widget",
+          "category": "widgets",
+        },
+        {
+          "name": "core/widget-area",
+          "icon": {
+            "src": "block-default",
+          },
+          "category": "widgets",
+          "title": "Widget Area",
+        });
+        //console.log(allBlocks);
+
         allBlocks.forEach(function (block) {
             var blockItemIcon = '';
             var blockItem = {
