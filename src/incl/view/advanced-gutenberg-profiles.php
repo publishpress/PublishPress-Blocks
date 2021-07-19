@@ -108,7 +108,8 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
                         <?php
                         $users_access   = get_post_meta( $profile->ID, 'users_access', true );
                         $users_realname = [];
-                        if( !empty($users_access) ) {
+                        // When creating/editing a profile, an array is created but its first value is empty
+                        if( !empty($users_access) && count($users_access) && !empty($users_access[0]) ) {
                             foreach($users_access as $user_id) {
                                 $users_realname[] = get_userdata($user_id)->display_name;
                             }
