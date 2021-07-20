@@ -464,6 +464,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $icons['material']  = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
             $icons['material']  = json_decode($icons['material'], true);
 
+            global $wp_version;
+            $blocks_widget_support = ( $wp_version >= 5.8 ) ? true : false;
+
             wp_localize_script('wp-blocks', 'advgbBlocks', array(
                 'color' => $blocks_icon_color,
                 'post_thumb' => $rp_default_thumb['url'],
@@ -479,6 +482,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'pluginUrl' => plugins_url('', ADVANCED_GUTENBERG_PLUGIN),
                 'iconList' => $icons,
                 'registerEnabled' => get_option('users_can_register'),
+                'blocks_widget_support' => $blocks_widget_support,
             ));
 
             // Setup default config data for blocks
