@@ -12741,11 +12741,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { href: "#advgb-tabs-tab" + index,
                                     style: { color: headerTextColor }
                                 },
-                                React.createElement(
-                                    "span",
-                                    null,
-                                    header
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "span",
+                                    value: header
+                                })
                             )
                         );
                     })

@@ -617,7 +617,10 @@
                                 <a href={`#advgb-tabs-tab${index}`}
                                    style={ { color: headerTextColor } }
                                 >
-                                    <span>{header}</span>
+                                    <RichText.Content
+                                        tagName="span"
+                                        value={ header }
+                                    />
                                 </a>
                             </li>
                         ) ) }
