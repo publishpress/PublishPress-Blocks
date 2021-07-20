@@ -27811,6 +27811,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 setAttributes({ items: newItems });
+                console.log('test...');
             }
         }, {
             key: "render",
@@ -27825,6 +27826,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var pid = attributes.pid,
                     items = attributes.items,
                     sliderView = attributes.sliderView,
+                    enableAvatar = attributes.enableAvatar,
                     avatarColor = attributes.avatarColor,
                     avatarBorderRadius = attributes.avatarBorderRadius,
                     avatarBorderWidth = attributes.avatarBorderWidth,
@@ -28045,58 +28047,69 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 PanelBody,
                                 { title: __('Avatar', 'advanced-gutenberg'), initialOpen: false },
-                                React.createElement(PanelColorSettings, {
-                                    title: __('Avatar Colors', 'advanced-gutenberg'),
-                                    initialOpen: false,
-                                    colorSettings: [{
-                                        label: __('Background Color', 'advanced-gutenberg'),
-                                        value: avatarColor,
+                                React.createElement(ToggleControl, {
+                                    label: __('Enable Avatar', 'advanced-gutenberg'),
+                                    checked: enableAvatar,
+                                    onChange: function onChange() {
+                                        return setAttributes({ enableAvatar: !enableAvatar });
+                                    }
+                                }),
+                                enableAvatar && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(PanelColorSettings, {
+                                        title: __('Avatar Colors', 'advanced-gutenberg'),
+                                        initialOpen: false,
+                                        colorSettings: [{
+                                            label: __('Background Color', 'advanced-gutenberg'),
+                                            value: avatarColor,
+                                            onChange: function onChange(value) {
+                                                return setAttributes({ avatarColor: value });
+                                            }
+                                        }, {
+                                            label: __('Border Color', 'advanced-gutenberg'),
+                                            value: avatarBorderColor,
+                                            onChange: function onChange(value) {
+                                                return setAttributes({ avatarBorderColor: value });
+                                            }
+                                        }]
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Border Radius (%)', 'advanced-gutenberg'),
+                                        min: 0,
+                                        max: 50,
+                                        value: avatarBorderRadius,
                                         onChange: function onChange(value) {
-                                            return setAttributes({ avatarColor: value });
+                                            return setAttributes({ avatarBorderRadius: value });
                                         }
-                                    }, {
-                                        label: __('Border Color', 'advanced-gutenberg'),
-                                        value: avatarBorderColor,
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Border Width', 'advanced-gutenberg'),
+                                        min: 0,
+                                        max: 5,
+                                        value: avatarBorderWidth,
                                         onChange: function onChange(value) {
-                                            return setAttributes({ avatarBorderColor: value });
+                                            return setAttributes({ avatarBorderWidth: value });
                                         }
-                                    }]
-                                }),
-                                React.createElement(RangeControl, {
-                                    label: __('Border Radius (%)', 'advanced-gutenberg'),
-                                    min: 0,
-                                    max: 50,
-                                    value: avatarBorderRadius,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ avatarBorderRadius: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    label: __('Border Width', 'advanced-gutenberg'),
-                                    min: 0,
-                                    max: 5,
-                                    value: avatarBorderWidth,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ avatarBorderWidth: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    label: __('Avatar Size', 'advanced-gutenberg'),
-                                    min: 50,
-                                    max: 130,
-                                    value: avatarSize,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ avatarSize: value });
-                                    }
-                                }),
-                                React.createElement(SelectControl, {
-                                    label: __('Avatar Position', 'advanced-gutenberg'),
-                                    value: avatarPosition,
-                                    options: [{ label: __('Top', 'advanced-gutenberg'), value: 'top' }, { label: __('Bottom', 'advanced-gutenberg'), value: 'bottom' }, { label: __('Left', 'advanced-gutenberg'), value: 'left' }, { label: __('right', 'advanced-gutenberg'), value: 'right' }],
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ avatarPosition: value });
-                                    }
-                                })
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Avatar Size', 'advanced-gutenberg'),
+                                        min: 50,
+                                        max: 130,
+                                        value: avatarSize,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ avatarSize: value });
+                                        }
+                                    }),
+                                    React.createElement(SelectControl, {
+                                        label: __('Avatar Position', 'advanced-gutenberg'),
+                                        value: avatarPosition,
+                                        options: [{ label: __('Top', 'advanced-gutenberg'), value: 'top' }, { label: __('Bottom', 'advanced-gutenberg'), value: 'bottom' }, { label: __('Left', 'advanced-gutenberg'), value: 'left' }, { label: __('right', 'advanced-gutenberg'), value: 'right' }],
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ avatarPosition: value });
+                                        }
+                                    })
+                                )
                             ),
                             React.createElement(PanelColorSettings, {
                                 title: __('Text Colors', 'advanced-gutenberg'),
@@ -28135,7 +28148,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     "div",
                                     { className: "advgb-testimonial-item", key: idx },
-                                    React.createElement(MediaUpload, {
+                                    enableAvatar && React.createElement(MediaUpload, {
                                         allowedTypes: ["image"],
                                         onSelect: function onSelect(media) {
                                             return _this2.updateItems(idx, {
@@ -28167,8 +28180,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 ),
                                                 React.createElement(
                                                     Tooltip,
-                                                    { text: __('Remove avatar', 'advanced-gutenberg') },
-                                                    React.createElement("span", { className: "dashicons dashicons-no advgb-testimonial-avatar-clear",
+                                                    { text: __('Show default avatar', 'advanced-gutenberg') },
+                                                    React.createElement("span", { className: "dashicons dashicons-update-alt advgb-testimonial-avatar-clear",
                                                         onClick: function onClick() {
                                                             return _this2.updateItems(idx, { avatarUrl: undefined, avatarID: undefined });
                                                         }
@@ -28291,6 +28304,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'boolean',
             default: false
         },
+        enableAvatar: {
+            type: 'boolean',
+            default: true
+        },
         avatarColor: {
             type: 'string'
         },
@@ -28412,6 +28429,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var pid = attributes.pid,
                 items = attributes.items,
                 sliderView = attributes.sliderView,
+                enableAvatar = attributes.enableAvatar,
                 avatarColor = attributes.avatarColor,
                 avatarBorderRadius = attributes.avatarBorderRadius,
                 avatarBorderWidth = attributes.avatarBorderWidth,
@@ -28483,7 +28501,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         return React.createElement(
                             "div",
                             { className: "advgb-testimonial-item", key: idx },
-                            React.createElement(
+                            enableAvatar && React.createElement(
                                 "div",
                                 { className: "advgb-testimonial-avatar-group" },
                                 React.createElement("div", { className: "advgb-testimonial-avatar",
