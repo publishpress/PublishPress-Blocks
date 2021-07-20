@@ -28048,7 +28048,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 PanelBody,
                                 { title: __('Avatar', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(ToggleControl, {
-                                    label: __('Enable Avatar', 'advanced-gutenberg'),
+                                    label: __('Display Avatar', 'advanced-gutenberg'),
                                     checked: enableAvatar,
                                     onChange: function onChange() {
                                         return setAttributes({ enableAvatar: !enableAvatar });

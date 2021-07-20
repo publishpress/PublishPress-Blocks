@@ -353,7 +353,7 @@
                             )}
                             <PanelBody title={ __( 'Avatar', 'advanced-gutenberg' ) } initialOpen={ false }>
                                 <ToggleControl
-                                    label={ __( 'Enable Avatar', 'advanced-gutenberg' ) }
+                                    label={ __( 'Display Avatar', 'advanced-gutenberg' ) }
                                     checked={ enableAvatar }
                                     onChange={ () => setAttributes( { enableAvatar: !enableAvatar } ) }
                                 />
