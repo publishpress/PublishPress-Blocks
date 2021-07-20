@@ -1,3419 +1,922 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-07-06 16:05-0500\n"
-"PO-Revision-Date: \n"
+"Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-07-20 12:00-0500\n"
+"PO-Revision-Date: \n"
+"Language: es_ES\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: assets/blocks/blocks.js:5169
-msgid "Icon List"
-msgstr "Lista de Íconos"
-
-#: assets/blocks/blocks.js:5217
-msgid "Search icons"
-msgstr ""
-
-#: assets/blocks/blocks.js:5224 assets/blocks/blocks.js:23879
-#: assets/blocks/blocks.js:23981
-msgid "Style"
-msgstr ""
-
-#: assets/blocks/blocks.js:5227
-msgid "Filled"
-msgstr "Relleno"
-
-#: assets/blocks/blocks.js:5227 assets/blocks/blocks.js:7870
-msgid "Outlined"
-msgstr ""
-
-#: assets/blocks/blocks.js:5227
-msgid "Rounded"
-msgstr ""
-
-#: assets/blocks/blocks.js:5227
-msgid "Two-Tone"
-msgstr ""
-
-#: assets/blocks/blocks.js:5227
-msgid "Sharp"
-msgstr ""
-
-#: assets/blocks/blocks.js:5280
-msgid "Apply"
-msgstr ""
-
-#: assets/blocks/blocks.js:5467 assets/blocks/blocks.js:15795
-#: assets/blocks/blocks.js:20812 assets/blocks/blocks.js:22978
-msgid "Notice"
-msgstr ""
-
-#: assets/blocks/blocks.js:5471
-msgid ""
-"This accordion block has been replaced by a new and better one.\n"
-"                                 This block will be removed in a future "
-"version.\n"
-"                                 Please transform this to an Accordion Item "
-"block\n"
-"                                 and drag them into new Adv. Accordion block "
-"as soon as possible."
-msgstr ""
-
-#: assets/blocks/blocks.js:5476 assets/blocks/blocks.js:6062
-#: assets/blocks/blocks.js:6938 incl/advanced-gutenberg-main.php:2298
+#: assets/blocks/blocks.js:5476
+#: assets/blocks/blocks.js:6062
+#: assets/blocks/blocks.js:6938
+#: incl/advanced-gutenberg-main.php:2376
 msgid "Accordion Settings"
 msgstr "Configuración del Acordeón"
 
-#: assets/blocks/blocks.js:5478 assets/blocks/blocks.js:6064
-#: assets/blocks/blocks.js:6940 incl/advanced-gutenberg-main.php:2301
+#: assets/blocks/blocks.js:5478
+#: assets/blocks/blocks.js:6064
+#: assets/blocks/blocks.js:6940
+#: incl/advanced-gutenberg-main.php:2379
 msgid "Bottom spacing"
 msgstr "Espaciado inferior"
 
-#: assets/blocks/blocks.js:5480
-msgid ""
-"Define space to next block. This will override Block spacing option "
-"(Frontend view only)"
-msgstr ""
-
-#: assets/blocks/blocks.js:5490 assets/blocks/blocks.js:6092
-#: assets/blocks/blocks.js:6961 incl/advanced-gutenberg-main.php:2315
+#: assets/blocks/blocks.js:5490
+#: assets/blocks/blocks.js:6092
+#: assets/blocks/blocks.js:6961
+#: incl/advanced-gutenberg-main.php:2393
 msgid "Header Settings"
 msgstr "Ajustes de Cabecera"
 
-#: assets/blocks/blocks.js:5493 assets/blocks/blocks.js:6095
-#: assets/blocks/blocks.js:6964
-msgid "Header Icon Style"
-msgstr "Estilo de Icono de Cabecera"
-
-#: assets/blocks/blocks.js:5518 assets/blocks/blocks.js:5570
-#: assets/blocks/blocks.js:6120 assets/blocks/blocks.js:6172
-#: assets/blocks/blocks.js:6989 assets/blocks/blocks.js:7041
-#: assets/blocks/blocks.js:7634 assets/blocks/blocks.js:9093
-#: assets/blocks/blocks.js:11362 assets/blocks/blocks.js:13566
-#: assets/blocks/blocks.js:15923 assets/blocks/blocks.js:16444
-#: assets/blocks/blocks.js:17700 assets/blocks/blocks.js:23115
-#: incl/advanced-gutenberg-main.php:2965 incl/advanced-gutenberg-main.php:3751
+#: assets/blocks/blocks.js:5518
+#: assets/blocks/blocks.js:5570
+#: assets/blocks/blocks.js:6120
+#: assets/blocks/blocks.js:6172
+#: assets/blocks/blocks.js:6989
+#: assets/blocks/blocks.js:7041
+#: assets/blocks/blocks.js:7634
+#: assets/blocks/blocks.js:9093
+#: assets/blocks/blocks.js:11362
+#: assets/blocks/blocks.js:13566
+#: assets/blocks/blocks.js:15923
+#: assets/blocks/blocks.js:16444
+#: assets/blocks/blocks.js:17479
+#: assets/blocks/blocks.js:22894
+#: incl/advanced-gutenberg-main.php:3043
+#: incl/advanced-gutenberg-main.php:3829
 msgid "Color Settings"
 msgstr "Configuración del Color"
 
-#: assets/blocks/blocks.js:5521 assets/blocks/blocks.js:5545
-#: assets/blocks/blocks.js:6123 assets/blocks/blocks.js:6147
-#: assets/blocks/blocks.js:6992 assets/blocks/blocks.js:7016
-#: assets/blocks/blocks.js:7386 assets/blocks/blocks.js:7491
-#: assets/blocks/blocks.js:11364 assets/blocks/blocks.js:12373
-#: assets/blocks/blocks.js:12402 assets/blocks/blocks.js:27359
-#: assets/blocks/blocks.js:27388 assets/blocks/blocks.js:28274
-#: incl/advanced-gutenberg-main.php:2318 incl/advanced-gutenberg-main.php:2373
-#: incl/advanced-gutenberg-main.php:2445 incl/advanced-gutenberg-main.php:2569
-#: incl/advanced-gutenberg-main.php:3267 incl/advanced-gutenberg-main.php:3282
-#: incl/advanced-gutenberg-main.php:3297 incl/advanced-gutenberg-main.php:3360
-#: incl/advanced-gutenberg-main.php:3474 incl/advanced-gutenberg-main.php:3530
-#: incl/advanced-gutenberg-main.php:3630 incl/advanced-gutenberg-main.php:3686
-#: incl/advanced-gutenberg-main.php:4079 incl/advanced-gutenberg-main.php:4148
+#: assets/blocks/blocks.js:5521
+#: assets/blocks/blocks.js:5545
+#: assets/blocks/blocks.js:6123
+#: assets/blocks/blocks.js:6147
+#: assets/blocks/blocks.js:6992
+#: assets/blocks/blocks.js:7016
+#: assets/blocks/blocks.js:7386
+#: assets/blocks/blocks.js:7491
+#: assets/blocks/blocks.js:11364
+#: assets/blocks/blocks.js:12373
+#: assets/blocks/blocks.js:12402
+#: assets/blocks/blocks.js:27137
+#: assets/blocks/blocks.js:27166
+#: assets/blocks/blocks.js:28052
+#: incl/advanced-gutenberg-main.php:2396
+#: incl/advanced-gutenberg-main.php:2451
+#: incl/advanced-gutenberg-main.php:2523
+#: incl/advanced-gutenberg-main.php:2647
+#: incl/advanced-gutenberg-main.php:3345
+#: incl/advanced-gutenberg-main.php:3360
+#: incl/advanced-gutenberg-main.php:3375
+#: incl/advanced-gutenberg-main.php:3438
+#: incl/advanced-gutenberg-main.php:3552
+#: incl/advanced-gutenberg-main.php:3608
+#: incl/advanced-gutenberg-main.php:3708
+#: incl/advanced-gutenberg-main.php:3764
+#: incl/advanced-gutenberg-main.php:4157
+#: incl/advanced-gutenberg-main.php:4226
 msgid "Background Color"
 msgstr "Color de Fondo"
 
-#: assets/blocks/blocks.js:5527 assets/blocks/blocks.js:5551
-#: assets/blocks/blocks.js:6129 assets/blocks/blocks.js:6153
-#: assets/blocks/blocks.js:6998 assets/blocks/blocks.js:7022
-#: assets/blocks/blocks.js:7392 assets/blocks/blocks.js:7498
-#: assets/blocks/blocks.js:11370 assets/blocks/blocks.js:12379
-#: assets/blocks/blocks.js:12408 assets/blocks/blocks.js:17714
-#: assets/blocks/blocks.js:27365 assets/blocks/blocks.js:27394
-#: incl/advanced-gutenberg-main.php:2323 incl/advanced-gutenberg-main.php:2378
-#: incl/advanced-gutenberg-main.php:2440 incl/advanced-gutenberg-main.php:2564
-#: incl/advanced-gutenberg-main.php:3272 incl/advanced-gutenberg-main.php:3287
-#: incl/advanced-gutenberg-main.php:3302 incl/advanced-gutenberg-main.php:3479
-#: incl/advanced-gutenberg-main.php:3635 incl/advanced-gutenberg-main.php:3764
+#: assets/blocks/blocks.js:5527
+#: assets/blocks/blocks.js:5551
+#: assets/blocks/blocks.js:6129
+#: assets/blocks/blocks.js:6153
+#: assets/blocks/blocks.js:6998
+#: assets/blocks/blocks.js:7022
+#: assets/blocks/blocks.js:7392
+#: assets/blocks/blocks.js:7498
+#: assets/blocks/blocks.js:11370
+#: assets/blocks/blocks.js:12379
+#: assets/blocks/blocks.js:12408
+#: assets/blocks/blocks.js:17493
+#: assets/blocks/blocks.js:27143
+#: assets/blocks/blocks.js:27172
+#: incl/advanced-gutenberg-main.php:2401
+#: incl/advanced-gutenberg-main.php:2456
+#: incl/advanced-gutenberg-main.php:2518
+#: incl/advanced-gutenberg-main.php:2642
+#: incl/advanced-gutenberg-main.php:3350
+#: incl/advanced-gutenberg-main.php:3365
+#: incl/advanced-gutenberg-main.php:3380
+#: incl/advanced-gutenberg-main.php:3557
+#: incl/advanced-gutenberg-main.php:3713
+#: incl/advanced-gutenberg-main.php:3842
 msgid "Text Color"
 msgstr "Color del texto"
 
-#: assets/blocks/blocks.js:5533 assets/blocks/blocks.js:6135
-#: assets/blocks/blocks.js:7004 assets/blocks/blocks.js:8301
-#: assets/blocks/blocks.js:18829 incl/advanced-gutenberg-main.php:3098
-#: incl/advanced-gutenberg-main.php:3136 incl/advanced-gutenberg-main.php:3174
-#: incl/advanced-gutenberg-main.php:4136
+#: assets/blocks/blocks.js:5533
+#: assets/blocks/blocks.js:6135
+#: assets/blocks/blocks.js:7004
+#: assets/blocks/blocks.js:8301
+#: assets/blocks/blocks.js:18608
+#: incl/advanced-gutenberg-main.php:3176
+#: incl/advanced-gutenberg-main.php:3214
+#: incl/advanced-gutenberg-main.php:3252
+#: incl/advanced-gutenberg-main.php:4214
 msgid "Icon Color"
 msgstr "Color del icono"
 
-#: assets/blocks/blocks.js:5542 assets/blocks/blocks.js:6144
-#: assets/blocks/blocks.js:7013
-msgid "Body Color Settings"
-msgstr "Ajustes del color del cuerpo"
-
-#: assets/blocks/blocks.js:5560 assets/blocks/blocks.js:6162
-#: assets/blocks/blocks.js:7031 assets/blocks/blocks.js:12417
-#: assets/blocks/blocks.js:15320 assets/blocks/blocks.js:15889
-#: assets/blocks/blocks.js:20660 assets/blocks/blocks.js:23081
-#: assets/blocks/blocks.js:27403 incl/advanced-gutenberg-main.php:2385
-#: incl/advanced-gutenberg-main.php:2452 incl/advanced-gutenberg-main.php:3309
-#: incl/advanced-gutenberg-main.php:3486 incl/advanced-gutenberg-main.php:3642
-#: incl/advanced-gutenberg-main.php:3988
+#: assets/blocks/blocks.js:5560
+#: assets/blocks/blocks.js:6162
+#: assets/blocks/blocks.js:7031
+#: assets/blocks/blocks.js:12417
+#: assets/blocks/blocks.js:15320
+#: assets/blocks/blocks.js:15889
+#: assets/blocks/blocks.js:20439
+#: assets/blocks/blocks.js:22860
+#: assets/blocks/blocks.js:27181
+#: incl/advanced-gutenberg-main.php:2463
+#: incl/advanced-gutenberg-main.php:2530
+#: incl/advanced-gutenberg-main.php:3387
+#: incl/advanced-gutenberg-main.php:3564
+#: incl/advanced-gutenberg-main.php:3720
+#: incl/advanced-gutenberg-main.php:4066
 msgid "Border Settings"
 msgstr "Configuración del Borde"
 
-#: assets/blocks/blocks.js:5562 assets/blocks/blocks.js:6164
-#: assets/blocks/blocks.js:7033 assets/blocks/blocks.js:11400
-#: assets/blocks/blocks.js:12419 assets/blocks/blocks.js:15902
-#: assets/blocks/blocks.js:20673 assets/blocks/blocks.js:23094
-#: assets/blocks/blocks.js:27405 incl/advanced-gutenberg-main.php:2388
-#: incl/advanced-gutenberg-main.php:2455 incl/advanced-gutenberg-main.php:3312
-#: incl/advanced-gutenberg-main.php:3494 incl/advanced-gutenberg-main.php:3650
+#: assets/blocks/blocks.js:5562
+#: assets/blocks/blocks.js:6164
+#: assets/blocks/blocks.js:7033
+#: assets/blocks/blocks.js:11400
+#: assets/blocks/blocks.js:12419
+#: assets/blocks/blocks.js:15902
+#: assets/blocks/blocks.js:20452
+#: assets/blocks/blocks.js:22873
+#: assets/blocks/blocks.js:27183
+#: incl/advanced-gutenberg-main.php:2466
+#: incl/advanced-gutenberg-main.php:2533
+#: incl/advanced-gutenberg-main.php:3390
+#: incl/advanced-gutenberg-main.php:3572
+#: incl/advanced-gutenberg-main.php:3728
 msgid "Border Style"
 msgstr "Estilo del Borde"
 
-#: assets/blocks/blocks.js:5564 assets/blocks/blocks.js:6166
-#: assets/blocks/blocks.js:7035 assets/blocks/blocks.js:7342
-#: assets/blocks/blocks.js:11402 assets/blocks/blocks.js:12421
-#: assets/blocks/blocks.js:15184 assets/blocks/blocks.js:15904
-#: assets/blocks/blocks.js:20675 assets/blocks/blocks.js:23096
-#: assets/blocks/blocks.js:27407 incl/advanced-gutenberg-main.php:2393
-#: incl/advanced-gutenberg-main.php:2460 incl/advanced-gutenberg-main.php:3316
-#: incl/advanced-gutenberg-main.php:3499 incl/advanced-gutenberg-main.php:3655
-#: incl/advanced-gutenberg-main.php:4000
+#: assets/blocks/blocks.js:5564
+#: assets/blocks/blocks.js:6166
+#: assets/blocks/blocks.js:7035
+#: assets/blocks/blocks.js:7342
+#: assets/blocks/blocks.js:11402
+#: assets/blocks/blocks.js:12421
+#: assets/blocks/blocks.js:15184
+#: assets/blocks/blocks.js:15904
+#: assets/blocks/blocks.js:20454
+#: assets/blocks/blocks.js:22875
+#: assets/blocks/blocks.js:27185
+#: incl/advanced-gutenberg-main.php:2471
+#: incl/advanced-gutenberg-main.php:2538
+#: incl/advanced-gutenberg-main.php:3394
+#: incl/advanced-gutenberg-main.php:3577
+#: incl/advanced-gutenberg-main.php:3733
+#: incl/advanced-gutenberg-main.php:4078
 msgid "Solid"
 msgstr ""
 
-#: assets/blocks/blocks.js:5564 assets/blocks/blocks.js:6166
-#: assets/blocks/blocks.js:7035 assets/blocks/blocks.js:7342
-#: assets/blocks/blocks.js:11402 assets/blocks/blocks.js:12421
-#: assets/blocks/blocks.js:15184 assets/blocks/blocks.js:15904
-#: assets/blocks/blocks.js:20675 assets/blocks/blocks.js:23096
-#: assets/blocks/blocks.js:27407 incl/advanced-gutenberg-main.php:2397
-#: incl/advanced-gutenberg-main.php:2464 incl/advanced-gutenberg-main.php:3317
-#: incl/advanced-gutenberg-main.php:3503 incl/advanced-gutenberg-main.php:3659
-#: incl/advanced-gutenberg-main.php:4008
+#: assets/blocks/blocks.js:5564
+#: assets/blocks/blocks.js:6166
+#: assets/blocks/blocks.js:7035
+#: assets/blocks/blocks.js:7342
+#: assets/blocks/blocks.js:11402
+#: assets/blocks/blocks.js:12421
+#: assets/blocks/blocks.js:15184
+#: assets/blocks/blocks.js:15904
+#: assets/blocks/blocks.js:20454
+#: assets/blocks/blocks.js:22875
+#: assets/blocks/blocks.js:27185
+#: incl/advanced-gutenberg-main.php:2475
+#: incl/advanced-gutenberg-main.php:2542
+#: incl/advanced-gutenberg-main.php:3395
+#: incl/advanced-gutenberg-main.php:3581
+#: incl/advanced-gutenberg-main.php:3737
+#: incl/advanced-gutenberg-main.php:4086
 msgid "Dashed"
 msgstr "Rayado"
 
-#: assets/blocks/blocks.js:5564 assets/blocks/blocks.js:6166
-#: assets/blocks/blocks.js:7035 assets/blocks/blocks.js:7342
-#: assets/blocks/blocks.js:11402 assets/blocks/blocks.js:12421
-#: assets/blocks/blocks.js:15184 assets/blocks/blocks.js:15904
-#: assets/blocks/blocks.js:20675 assets/blocks/blocks.js:23096
-#: assets/blocks/blocks.js:27407 incl/advanced-gutenberg-main.php:2401
-#: incl/advanced-gutenberg-main.php:2468 incl/advanced-gutenberg-main.php:3318
-#: incl/advanced-gutenberg-main.php:3507 incl/advanced-gutenberg-main.php:3663
-#: incl/advanced-gutenberg-main.php:4004
+#: assets/blocks/blocks.js:5564
+#: assets/blocks/blocks.js:6166
+#: assets/blocks/blocks.js:7035
+#: assets/blocks/blocks.js:7342
+#: assets/blocks/blocks.js:11402
+#: assets/blocks/blocks.js:12421
+#: assets/blocks/blocks.js:15184
+#: assets/blocks/blocks.js:15904
+#: assets/blocks/blocks.js:20454
+#: assets/blocks/blocks.js:22875
+#: assets/blocks/blocks.js:27185
+#: incl/advanced-gutenberg-main.php:2479
+#: incl/advanced-gutenberg-main.php:2546
+#: incl/advanced-gutenberg-main.php:3396
+#: incl/advanced-gutenberg-main.php:3585
+#: incl/advanced-gutenberg-main.php:3741
+#: incl/advanced-gutenberg-main.php:4082
 msgid "Dotted"
 msgstr "Punteado"
 
-#: assets/blocks/blocks.js:5573 assets/blocks/blocks.js:6175
-#: assets/blocks/blocks.js:7044 assets/blocks/blocks.js:7529
-#: assets/blocks/blocks.js:7532 assets/blocks/blocks.js:8322
-#: assets/blocks/blocks.js:11417 assets/blocks/blocks.js:11419
-#: assets/blocks/blocks.js:12427 assets/blocks/blocks.js:12430
-#: assets/blocks/blocks.js:15333 assets/blocks/blocks.js:15336
-#: assets/blocks/blocks.js:15891 assets/blocks/blocks.js:18735
-#: assets/blocks/blocks.js:18852 assets/blocks/blocks.js:20662
-#: assets/blocks/blocks.js:23083 assets/blocks/blocks.js:27413
-#: assets/blocks/blocks.js:27416 assets/blocks/blocks.js:28280
-#: incl/advanced-gutenberg-main.php:2407 incl/advanced-gutenberg-main.php:2474
-#: incl/advanced-gutenberg-main.php:3322 incl/advanced-gutenberg-main.php:3365
-#: incl/advanced-gutenberg-main.php:3489 incl/advanced-gutenberg-main.php:3645
-#: incl/advanced-gutenberg-main.php:4014 incl/advanced-gutenberg-main.php:4084
-#: incl/advanced-gutenberg-main.php:4153
+#: assets/blocks/blocks.js:5573
+#: assets/blocks/blocks.js:6175
+#: assets/blocks/blocks.js:7044
+#: assets/blocks/blocks.js:7529
+#: assets/blocks/blocks.js:7532
+#: assets/blocks/blocks.js:8322
+#: assets/blocks/blocks.js:11417
+#: assets/blocks/blocks.js:11419
+#: assets/blocks/blocks.js:12427
+#: assets/blocks/blocks.js:12430
+#: assets/blocks/blocks.js:15333
+#: assets/blocks/blocks.js:15336
+#: assets/blocks/blocks.js:15891
+#: assets/blocks/blocks.js:18514
+#: assets/blocks/blocks.js:18631
+#: assets/blocks/blocks.js:20441
+#: assets/blocks/blocks.js:22862
+#: assets/blocks/blocks.js:27191
+#: assets/blocks/blocks.js:27194
+#: assets/blocks/blocks.js:28058
+#: incl/advanced-gutenberg-main.php:2485
+#: incl/advanced-gutenberg-main.php:2552
+#: incl/advanced-gutenberg-main.php:3400
+#: incl/advanced-gutenberg-main.php:3443
+#: incl/advanced-gutenberg-main.php:3567
+#: incl/advanced-gutenberg-main.php:3723
+#: incl/advanced-gutenberg-main.php:4092
+#: incl/advanced-gutenberg-main.php:4162
+#: incl/advanced-gutenberg-main.php:4231
 msgid "Border Color"
 msgstr "Color del Borde"
 
-#: assets/blocks/blocks.js:5581 assets/blocks/blocks.js:6183
-#: assets/blocks/blocks.js:7052 assets/blocks/blocks.js:7540
-#: assets/blocks/blocks.js:11408 assets/blocks/blocks.js:12438
-#: assets/blocks/blocks.js:15344 assets/blocks/blocks.js:20681
-#: assets/blocks/blocks.js:27424
-msgid "Border width"
-msgstr "Ancho del borde"
-
-#: assets/blocks/blocks.js:5590 assets/blocks/blocks.js:6192
-#: assets/blocks/blocks.js:7061 assets/blocks/blocks.js:7509
-#: assets/blocks/blocks.js:12447 assets/blocks/blocks.js:27433
-msgid "Border radius"
-msgstr "Radio de las esquinas"
-
-#: assets/blocks/blocks.js:5601
-msgid "Accordions State"
-msgstr ""
-
-#: assets/blocks/blocks.js:5603 assets/blocks/blocks.js:6074
-#: assets/blocks/blocks.js:6950 incl/advanced-gutenberg-main.php:2308
+#: assets/blocks/blocks.js:5603
+#: assets/blocks/blocks.js:6074
+#: assets/blocks/blocks.js:6950
+#: incl/advanced-gutenberg-main.php:2386
 msgid "Initial Collapsed"
 msgstr ""
 
-#: assets/blocks/blocks.js:5604
-msgid ""
-"Make all accordions collapsed by default, enable this setting to apply to "
-"all accordions."
-msgstr ""
-
-#: assets/blocks/blocks.js:5646 assets/blocks/blocks.js:6236
-#: assets/blocks/blocks.js:26924
-msgid "Enter header…"
-msgstr ""
-
-#: assets/blocks/blocks.js:5737
-msgid "Accordion"
-msgstr ""
-
-#: assets/blocks/blocks.js:5738 assets/blocks/blocks.js:6274
-#: assets/blocks/blocks.js:7160
-msgid "Easy to create an accordion for your post/page."
-msgstr ""
-
-#: assets/blocks/blocks.js:5744 assets/blocks/blocks.js:6281
-#: assets/blocks/blocks.js:7166 assets/blocks/blocks.js:21054
-#: assets/blocks/blocks.js:25851
-msgid "accordion"
-msgstr ""
-
-#: assets/blocks/blocks.js:5744 assets/blocks/blocks.js:6281
-#: assets/blocks/blocks.js:7166 assets/blocks/blocks.js:9874
-#: assets/blocks/blocks.js:21054 assets/blocks/blocks.js:25851
-#: assets/blocks/blocks.js:27014
-msgid "list"
-msgstr ""
-
-#: assets/blocks/blocks.js:5744 assets/blocks/blocks.js:6281
-#: assets/blocks/blocks.js:7166 assets/blocks/blocks.js:21054
-#: assets/blocks/blocks.js:25851
-msgid "faq"
-msgstr ""
-
-#: assets/blocks/blocks.js:6066 assets/blocks/blocks.js:6942
-msgid "Define space between each accordion (Frontend view only)"
-msgstr ""
-
-#: assets/blocks/blocks.js:6075 assets/blocks/blocks.js:6951
-msgid "Make all accordions collapsed by default."
-msgstr ""
-
-#: assets/blocks/blocks.js:6082
-msgid "Header Tag"
-msgstr ""
-
-#: assets/blocks/blocks.js:6273
-msgid "Accordion Item"
-msgstr ""
-
-#: assets/blocks/blocks.js:6915 assets/blocks/blocks.js:7159
-msgid "Advanced Accordion"
-msgstr ""
-
-#: assets/blocks/blocks.js:6929 assets/blocks/blocks.js:24444
-msgid "Refresh"
-msgstr ""
-
-#: assets/blocks/blocks.js:7342 assets/blocks/blocks.js:9009
-#: assets/blocks/blocks.js:9609 assets/blocks/blocks.js:11402
-#: assets/blocks/blocks.js:12421 assets/blocks/blocks.js:13531
-#: assets/blocks/blocks.js:14106 assets/blocks/blocks.js:15184
-#: assets/blocks/blocks.js:17647 assets/blocks/blocks.js:23564
-#: incl/advanced-gutenberg-main.php:2626 incl/advanced-gutenberg-main.php:2756
-#: incl/advanced-gutenberg-main.php:3824 incl/advanced-gutenberg-main.php:3863
-#: incl/advanced-gutenberg-main.php:3996
+#: assets/blocks/blocks.js:7342
+#: assets/blocks/blocks.js:9009
+#: assets/blocks/blocks.js:9609
+#: assets/blocks/blocks.js:11402
+#: assets/blocks/blocks.js:12421
+#: assets/blocks/blocks.js:13531
+#: assets/blocks/blocks.js:14106
+#: assets/blocks/blocks.js:15184
+#: assets/blocks/blocks.js:17426
+#: assets/blocks/blocks.js:23343
+#: incl/advanced-gutenberg-main.php:2704
+#: incl/advanced-gutenberg-main.php:2834
+#: incl/advanced-gutenberg-main.php:3902
+#: incl/advanced-gutenberg-main.php:3941
+#: incl/advanced-gutenberg-main.php:4074
 msgid "None"
 msgstr ""
 
-#: assets/blocks/blocks.js:7342 assets/blocks/blocks.js:15184
-msgid "Double"
-msgstr ""
-
-#: assets/blocks/blocks.js:7342 assets/blocks/blocks.js:15184
-msgid "Groove"
-msgstr ""
-
-#: assets/blocks/blocks.js:7342 assets/blocks/blocks.js:15184
-msgid "Ridge"
-msgstr ""
-
-#: assets/blocks/blocks.js:7342 assets/blocks/blocks.js:15184
-msgid "Inset"
-msgstr ""
-
-#: assets/blocks/blocks.js:7342 assets/blocks/blocks.js:15184
-msgid "Outset"
-msgstr ""
-
-#: assets/blocks/blocks.js:7398 incl/advanced-gutenberg-main.php:2574
+#: assets/blocks/blocks.js:7398
+#: incl/advanced-gutenberg-main.php:2652
 msgid "Shadow Color"
 msgstr ""
 
-#: assets/blocks/blocks.js:7417 assets/blocks/blocks.js:7836
-msgid "Advanced Button"
-msgstr "Botón Avanzado"
-
-#: assets/blocks/blocks.js:7427
-msgid "Add text…"
-msgstr ""
-
-#: assets/blocks/blocks.js:7448
-msgid "Button link"
-msgstr "Enlace del botón"
-
-#: assets/blocks/blocks.js:7452 assets/blocks/blocks.js:9018
-msgid "Link URL"
-msgstr ""
-
-#: assets/blocks/blocks.js:7455 assets/blocks/blocks.js:9021
+#: assets/blocks/blocks.js:7455
+#: assets/blocks/blocks.js:9021
 #: incl/view/advanced-gutenberg-custom-styles.php:97
 msgid "Preview"
 msgstr ""
 
-#: assets/blocks/blocks.js:7469
-msgid "Open in new tab"
-msgstr ""
-
-#: assets/blocks/blocks.js:7478
-msgid "Text/Color"
-msgstr "Texto/Color"
-
-#: assets/blocks/blocks.js:7480 assets/blocks/blocks.js:9659
-msgid "Text size"
-msgstr ""
-
-#: assets/blocks/blocks.js:7507 assets/blocks/blocks.js:8318
-#: assets/blocks/blocks.js:11379
-msgid "Border"
-msgstr "Borde"
-
-#: assets/blocks/blocks.js:7518 assets/blocks/blocks.js:15322
-#: incl/advanced-gutenberg-main.php:3991
+#: assets/blocks/blocks.js:7518
+#: assets/blocks/blocks.js:15322
+#: incl/advanced-gutenberg-main.php:4069
 msgid "Border style"
 msgstr "Estilo del borde"
 
-#: assets/blocks/blocks.js:7552 assets/blocks/blocks.js:8430
-#: assets/blocks/blocks.js:9735 assets/blocks/blocks.js:14512
-#: assets/blocks/blocks.js:15421 assets/blocks/blocks.js:18921
-#: assets/blocks/blocks.js:19093 assets/blocks/blocks.js:19257
-#: incl/advanced-gutenberg-main.php:2837
+#: assets/blocks/blocks.js:7552
+#: assets/blocks/blocks.js:8430
+#: assets/blocks/blocks.js:9735
+#: assets/blocks/blocks.js:14512
+#: assets/blocks/blocks.js:15421
+#: assets/blocks/blocks.js:18700
+#: assets/blocks/blocks.js:18872
+#: assets/blocks/blocks.js:19036
+#: incl/advanced-gutenberg-main.php:2915
 msgid "Margin"
 msgstr ""
 
-#: assets/blocks/blocks.js:7554
-msgid "Margin top"
-msgstr ""
-
-#: assets/blocks/blocks.js:7563
-msgid "Margin right"
-msgstr ""
-
-#: assets/blocks/blocks.js:7572
-msgid "Margin bottom"
-msgstr ""
-
-#: assets/blocks/blocks.js:7581
-msgid "Margin left"
-msgstr ""
-
-#: assets/blocks/blocks.js:7592 assets/blocks/blocks.js:8385
-#: assets/blocks/blocks.js:9745 assets/blocks/blocks.js:11429
-#: assets/blocks/blocks.js:14470 assets/blocks/blocks.js:15398
-#: assets/blocks/blocks.js:18760 assets/blocks/blocks.js:18877
-#: assets/blocks/blocks.js:19049 assets/blocks/blocks.js:19213
-#: incl/advanced-gutenberg-main.php:2844
+#: assets/blocks/blocks.js:7592
+#: assets/blocks/blocks.js:8385
+#: assets/blocks/blocks.js:9745
+#: assets/blocks/blocks.js:11429
+#: assets/blocks/blocks.js:14470
+#: assets/blocks/blocks.js:15398
+#: assets/blocks/blocks.js:18539
+#: assets/blocks/blocks.js:18656
+#: assets/blocks/blocks.js:18828
+#: assets/blocks/blocks.js:18992
+#: incl/advanced-gutenberg-main.php:2922
 msgid "Padding"
 msgstr ""
 
-#: assets/blocks/blocks.js:7594
-msgid "Padding top"
-msgstr ""
-
-#: assets/blocks/blocks.js:7603
-msgid "Padding right"
-msgstr ""
-
-#: assets/blocks/blocks.js:7612
-msgid "Padding bottom"
-msgstr ""
-
-#: assets/blocks/blocks.js:7621
-msgid "Padding left"
-msgstr ""
-
-#: assets/blocks/blocks.js:7632
-msgid "Hover"
-msgstr ""
-
-#: assets/blocks/blocks.js:7640 assets/blocks/blocks.js:20753
-msgid "Shadow"
-msgstr ""
-
-#: assets/blocks/blocks.js:7642 assets/blocks/blocks.js:20755
-#: assets/blocks/blocks.js:25655
-msgid "Opacity (%)"
-msgstr ""
-
-#: assets/blocks/blocks.js:7651 assets/blocks/blocks.js:20764
-#: assets/blocks/blocks.js:25664 assets/blocks/blocks.js:28195
-msgid "Transition speed (ms)"
-msgstr ""
-
-#: assets/blocks/blocks.js:7660 assets/blocks/blocks.js:20773
-#: assets/blocks/blocks.js:25673
-msgid "Shadow H offset"
-msgstr ""
-
-#: assets/blocks/blocks.js:7669 assets/blocks/blocks.js:20782
-#: assets/blocks/blocks.js:25682
-msgid "Shadow V offset"
-msgstr ""
-
-#: assets/blocks/blocks.js:7678 assets/blocks/blocks.js:20791
-#: assets/blocks/blocks.js:25691
-msgid "Shadow blur"
-msgstr ""
-
-#: assets/blocks/blocks.js:7687 assets/blocks/blocks.js:20800
-#: assets/blocks/blocks.js:25700
-msgid "Shadow spread"
-msgstr ""
-
-#: assets/blocks/blocks.js:7837
-msgid "New button with more styles."
-msgstr ""
-
-#: assets/blocks/blocks.js:7843
-msgid "button"
-msgstr ""
-
-#: assets/blocks/blocks.js:7843
-msgid "link"
-msgstr ""
-
-#: assets/blocks/blocks.js:7870 assets/blocks/blocks.js:8286
-#: assets/blocks/blocks.js:11701 assets/blocks/blocks.js:22998
-#: assets/blocks/blocks.js:23881 assets/blocks/blocks.js:23983
-#: assets/blocks/blocks.js:25862 incl/advanced-gutenberg-main.php:4952
+#: assets/blocks/blocks.js:7870
+#: assets/blocks/blocks.js:8286
+#: assets/blocks/blocks.js:11701
+#: assets/blocks/blocks.js:22777
+#: assets/blocks/blocks.js:23660
+#: assets/blocks/blocks.js:23762
+#: assets/blocks/blocks.js:25640
+#: incl/advanced-gutenberg-main.php:5121
 msgid "Default"
 msgstr "Defecto"
 
-#: assets/blocks/blocks.js:7870
-msgid "Squared"
-msgstr "Cuadrado"
-
-#: assets/blocks/blocks.js:7870
-msgid "Squared Outline"
-msgstr ""
-
-#: assets/blocks/blocks.js:8222 assets/blocks/blocks.js:8607
-msgid "Advanced Icon"
-msgstr "Icono avanzado"
-
-#: assets/blocks/blocks.js:8240
-msgid "Icon Count"
-msgstr ""
-
-#: assets/blocks/blocks.js:8242
-msgid "Number of Icons"
-msgstr ""
-
-#: assets/blocks/blocks.js:8260
-msgid "Icon "
-msgstr ""
-
-#: assets/blocks/blocks.js:8266 assets/blocks/blocks.js:18813
-msgid "Icon Library (Material Icon)"
-msgstr ""
-
-#: assets/blocks/blocks.js:8280 assets/blocks/blocks.js:18825
-msgid "Icon Selection"
-msgstr ""
-
-#: assets/blocks/blocks.js:8284 assets/blocks/blocks.js:13587
-msgid "Icon Style"
-msgstr "Estilo de icono"
-
-#: assets/blocks/blocks.js:8286 assets/blocks/blocks.js:12335
-#: assets/blocks/blocks.js:14104 assets/blocks/blocks.js:23557
-#: assets/blocks/blocks.js:23560 assets/blocks/blocks.js:23562
-msgid "Stacked"
-msgstr ""
-
-#: assets/blocks/blocks.js:8292 incl/advanced-gutenberg-main.php:2823
-#: incl/advanced-gutenberg-main.php:3199 incl/advanced-gutenberg-main.php:4141
+#: assets/blocks/blocks.js:8292
+#: incl/advanced-gutenberg-main.php:2901
+#: incl/advanced-gutenberg-main.php:3277
+#: incl/advanced-gutenberg-main.php:4219
 msgid "Icon Size"
 msgstr "Tamaño del Icono"
 
-#: assets/blocks/blocks.js:8308
-msgid "Icon Background"
-msgstr "Fondo del icono"
-
-#: assets/blocks/blocks.js:8329
-msgid "Border Size(px)"
-msgstr "Tamaño del borde (px)"
-
-#: assets/blocks/blocks.js:8338
-msgid "Border Radius(%)"
-msgstr "Radio del borde (%)"
-
-#: assets/blocks/blocks.js:8348 assets/blocks/blocks.js:8354
-#: assets/blocks/blocks.js:17835
-msgid "Link"
-msgstr ""
-
-#: assets/blocks/blocks.js:8367
-msgid "Link Target"
-msgstr ""
-
-#: assets/blocks/blocks.js:8369
-msgid "Same Window"
-msgstr ""
-
-#: assets/blocks/blocks.js:8369
-msgid "New Window"
-msgstr ""
-
-#: assets/blocks/blocks.js:8375
-msgid "Title for Accessibility"
-msgstr ""
-
-#: assets/blocks/blocks.js:8394 assets/blocks/blocks.js:8439
-#: assets/blocks/blocks.js:14479 assets/blocks/blocks.js:14521
-#: assets/blocks/blocks.js:18769 assets/blocks/blocks.js:18886
-#: assets/blocks/blocks.js:18930 assets/blocks/blocks.js:19058
-#: assets/blocks/blocks.js:19102 assets/blocks/blocks.js:19222
-#: assets/blocks/blocks.js:19266
-msgid "Unit"
-msgstr ""
-
-#: assets/blocks/blocks.js:8608 assets/blocks/blocks.js:19651
-msgid "Advanced icon block with more options and styles."
-msgstr ""
-
-#: assets/blocks/blocks.js:8614 assets/blocks/blocks.js:9874
-#: assets/blocks/blocks.js:19657
-msgid "icon"
-msgstr ""
-
-#: assets/blocks/blocks.js:8967 assets/blocks/blocks.js:9005
-#: assets/blocks/blocks.js:9309
-msgid "Advanced Image"
-msgstr "Imagen avanzada"
-
-#: assets/blocks/blocks.js:8985
-msgid "Change image"
-msgstr ""
-
-#: assets/blocks/blocks.js:8992 assets/blocks/blocks.js:17899
-msgid "Remove image"
-msgstr ""
-
-#: assets/blocks/blocks.js:9007 assets/blocks/blocks.js:17645
-#: incl/advanced-gutenberg-main.php:2621 incl/advanced-gutenberg-main.php:3705
+#: assets/blocks/blocks.js:9007
+#: assets/blocks/blocks.js:17424
+#: incl/advanced-gutenberg-main.php:2699
+#: incl/advanced-gutenberg-main.php:3783
 msgid "Action on click"
 msgstr "Acción al hacer clic"
 
-#: assets/blocks/blocks.js:9009 assets/blocks/blocks.js:17647
-#: incl/advanced-gutenberg-main.php:3710
+#: assets/blocks/blocks.js:9009
+#: assets/blocks/blocks.js:17426
+#: incl/advanced-gutenberg-main.php:3788
 msgid "Open image in lightbox"
 msgstr ""
 
-#: assets/blocks/blocks.js:9009 incl/advanced-gutenberg-main.php:2634
+#: assets/blocks/blocks.js:9009
+#: incl/advanced-gutenberg-main.php:2712
 msgid "Open custom URL"
 msgstr ""
 
-#: assets/blocks/blocks.js:9024
-msgid "Enter URL…"
-msgstr ""
-
-#: assets/blocks/blocks.js:9030
-msgid "Open link in new tab"
-msgstr ""
-
-#: assets/blocks/blocks.js:9039 incl/advanced-gutenberg-main.php:2647
+#: assets/blocks/blocks.js:9039
+#: incl/advanced-gutenberg-main.php:2725
 msgid "Image Size"
 msgstr ""
 
-#: assets/blocks/blocks.js:9041 assets/blocks/blocks.js:13538
-#: assets/blocks/blocks.js:17180 assets/blocks/blocks.js:17653
-#: assets/blocks/blocks.js:25501 incl/advanced-gutenberg-main.php:2650
-#: incl/advanced-gutenberg-main.php:2877 incl/advanced-gutenberg-main.php:3720
+#: assets/blocks/blocks.js:9041
+#: assets/blocks/blocks.js:13538
+#: assets/blocks/blocks.js:17432
+#: assets/blocks/blocks.js:25279
+#: assets/blocks/post-sidebar.js:129
+#: incl/advanced-gutenberg-main.php:2728
+#: incl/advanced-gutenberg-main.php:2955
+#: incl/advanced-gutenberg-main.php:3798
 msgid "Full width"
 msgstr "Ancho completo"
 
-#: assets/blocks/blocks.js:9048 assets/blocks/blocks.js:17676
-#: assets/blocks/blocks.js:22533 incl/advanced-gutenberg-main.php:2655
-#: incl/advanced-gutenberg-main.php:3033 incl/advanced-gutenberg-main.php:3737
+#: assets/blocks/blocks.js:9048
+#: assets/blocks/blocks.js:17455
+#: assets/blocks/blocks.js:22312
+#: incl/advanced-gutenberg-main.php:2733
+#: incl/advanced-gutenberg-main.php:3111
+#: incl/advanced-gutenberg-main.php:3815
 msgid "Height"
 msgstr ""
 
-#: assets/blocks/blocks.js:9057 assets/blocks/blocks.js:17667
-#: assets/blocks/blocks.js:25508 incl/advanced-gutenberg-main.php:2662
-#: incl/advanced-gutenberg-main.php:3730
+#: assets/blocks/blocks.js:9057
+#: assets/blocks/blocks.js:17446
+#: assets/blocks/blocks.js:25286
+#: incl/advanced-gutenberg-main.php:2740
+#: incl/advanced-gutenberg-main.php:3808
 msgid "Width"
 msgstr ""
 
-#: assets/blocks/blocks.js:9066
-msgid "Focal Point Picker"
-msgstr ""
-
-#: assets/blocks/blocks.js:9074
-msgid "Overlay opacity default"
-msgstr ""
-
-#: assets/blocks/blocks.js:9083
-msgid "Overlay opacity hover"
-msgstr ""
-
-#: assets/blocks/blocks.js:9096 assets/blocks/blocks.js:17708
-#: incl/advanced-gutenberg-main.php:2674 incl/advanced-gutenberg-main.php:3759
-#: incl/advanced-gutenberg-main.php:4233
+#: assets/blocks/blocks.js:9096
+#: assets/blocks/blocks.js:17487
+#: incl/advanced-gutenberg-main.php:2752
+#: incl/advanced-gutenberg-main.php:3837
+#: incl/advanced-gutenberg-main.php:4311
 msgid "Title Color"
 msgstr "Color del título"
 
-#: assets/blocks/blocks.js:9102 incl/advanced-gutenberg-main.php:2679
+#: assets/blocks/blocks.js:9102
+#: incl/advanced-gutenberg-main.php:2757
 msgid "Subtitle Color"
 msgstr "Color del subtítulo"
 
-#: assets/blocks/blocks.js:9108 assets/blocks/blocks.js:13569
-#: incl/advanced-gutenberg-main.php:2684
+#: assets/blocks/blocks.js:9108
+#: assets/blocks/blocks.js:13569
+#: incl/advanced-gutenberg-main.php:2762
 msgid "Overlay Color"
 msgstr "Color de superposición"
 
-#: assets/blocks/blocks.js:9117 assets/blocks/blocks.js:11469
-#: assets/blocks/blocks.js:17723 incl/advanced-gutenberg-main.php:2691
-#: incl/advanced-gutenberg-main.php:3771
+#: assets/blocks/blocks.js:9117
+#: assets/blocks/blocks.js:11469
+#: assets/blocks/blocks.js:17502
+#: incl/advanced-gutenberg-main.php:2769
+#: incl/advanced-gutenberg-main.php:3849
 msgid "Text Alignment"
 msgstr ""
 
-#: assets/blocks/blocks.js:9119 assets/blocks/blocks.js:17725
-#: incl/advanced-gutenberg-main.php:2694 incl/advanced-gutenberg-main.php:3774
+#: assets/blocks/blocks.js:9119
+#: assets/blocks/blocks.js:17504
+#: incl/advanced-gutenberg-main.php:2772
+#: incl/advanced-gutenberg-main.php:3852
 msgid "Vertical Alignment"
 msgstr ""
 
-#: assets/blocks/blocks.js:9121 assets/blocks/blocks.js:17727
-#: assets/blocks/blocks.js:28317 incl/advanced-gutenberg-main.php:2699
-#: incl/advanced-gutenberg-main.php:3779 incl/advanced-gutenberg-main.php:3912
+#: assets/blocks/blocks.js:9121
+#: assets/blocks/blocks.js:17506
+#: assets/blocks/blocks.js:28095
+#: incl/advanced-gutenberg-main.php:2777
+#: incl/advanced-gutenberg-main.php:3857
+#: incl/advanced-gutenberg-main.php:3990
 msgid "Top"
 msgstr ""
 
-#: assets/blocks/blocks.js:9121 assets/blocks/blocks.js:9129
-#: assets/blocks/blocks.js:15951 assets/blocks/blocks.js:17727
-#: assets/blocks/blocks.js:17735 assets/blocks/blocks.js:20719
-#: incl/advanced-gutenberg-main.php:2703 incl/advanced-gutenberg-main.php:2722
-#: incl/advanced-gutenberg-main.php:3194 incl/advanced-gutenberg-main.php:3240
-#: incl/advanced-gutenberg-main.php:3547 incl/advanced-gutenberg-main.php:3783
-#: incl/advanced-gutenberg-main.php:3802 incl/advanced-gutenberg-main.php:4047
+#: assets/blocks/blocks.js:9121
+#: assets/blocks/blocks.js:9129
+#: assets/blocks/blocks.js:15951
+#: assets/blocks/blocks.js:17506
+#: assets/blocks/blocks.js:17514
+#: assets/blocks/blocks.js:20498
+#: incl/advanced-gutenberg-main.php:2781
+#: incl/advanced-gutenberg-main.php:2800
+#: incl/advanced-gutenberg-main.php:3272
+#: incl/advanced-gutenberg-main.php:3318
+#: incl/advanced-gutenberg-main.php:3625
+#: incl/advanced-gutenberg-main.php:3861
+#: incl/advanced-gutenberg-main.php:3880
+#: incl/advanced-gutenberg-main.php:4125
 msgid "Center"
 msgstr "Centro"
 
-#: assets/blocks/blocks.js:9121 assets/blocks/blocks.js:17727
-#: assets/blocks/blocks.js:28317 incl/advanced-gutenberg-main.php:2707
-#: incl/advanced-gutenberg-main.php:3787 incl/advanced-gutenberg-main.php:3920
+#: assets/blocks/blocks.js:9121
+#: assets/blocks/blocks.js:17506
+#: assets/blocks/blocks.js:28095
+#: incl/advanced-gutenberg-main.php:2785
+#: incl/advanced-gutenberg-main.php:3865
+#: incl/advanced-gutenberg-main.php:3998
 #: incl/view/advanced-gutenberg-settings.php:93
 msgid "Bottom"
 msgstr "Final"
 
-#: assets/blocks/blocks.js:9127 assets/blocks/blocks.js:17733
-#: incl/advanced-gutenberg-main.php:2713 incl/advanced-gutenberg-main.php:3793
+#: assets/blocks/blocks.js:9127
+#: assets/blocks/blocks.js:17512
+#: incl/advanced-gutenberg-main.php:2791
+#: incl/advanced-gutenberg-main.php:3871
 msgid "Horizontal Alignment"
 msgstr ""
 
-#: assets/blocks/blocks.js:9129 assets/blocks/blocks.js:15951
-#: assets/blocks/blocks.js:17735 assets/blocks/blocks.js:20719
-#: assets/blocks/blocks.js:24210 assets/blocks/blocks.js:28317
-#: incl/advanced-gutenberg-main.php:2718 incl/advanced-gutenberg-main.php:3193
-#: incl/advanced-gutenberg-main.php:3239 incl/advanced-gutenberg-main.php:3551
-#: incl/advanced-gutenberg-main.php:3798 incl/advanced-gutenberg-main.php:4043
+#: assets/blocks/blocks.js:9129
+#: assets/blocks/blocks.js:15951
+#: assets/blocks/blocks.js:17514
+#: assets/blocks/blocks.js:20498
+#: assets/blocks/blocks.js:23988
+#: assets/blocks/blocks.js:28095
+#: incl/advanced-gutenberg-main.php:2796
+#: incl/advanced-gutenberg-main.php:3271
+#: incl/advanced-gutenberg-main.php:3317
+#: incl/advanced-gutenberg-main.php:3629
+#: incl/advanced-gutenberg-main.php:3876
+#: incl/advanced-gutenberg-main.php:4121
 msgid "Left"
 msgstr ""
 
-#: assets/blocks/blocks.js:9129 assets/blocks/blocks.js:15951
-#: assets/blocks/blocks.js:17735 assets/blocks/blocks.js:20719
-#: assets/blocks/blocks.js:24210 incl/advanced-gutenberg-main.php:2726
-#: incl/advanced-gutenberg-main.php:3195 incl/advanced-gutenberg-main.php:3241
-#: incl/advanced-gutenberg-main.php:3555 incl/advanced-gutenberg-main.php:3806
-#: incl/advanced-gutenberg-main.php:4051
+#: assets/blocks/blocks.js:9129
+#: assets/blocks/blocks.js:15951
+#: assets/blocks/blocks.js:17514
+#: assets/blocks/blocks.js:20498
+#: assets/blocks/blocks.js:23988
+#: incl/advanced-gutenberg-main.php:2804
+#: incl/advanced-gutenberg-main.php:3273
+#: incl/advanced-gutenberg-main.php:3319
+#: incl/advanced-gutenberg-main.php:3633
+#: incl/advanced-gutenberg-main.php:3884
+#: incl/advanced-gutenberg-main.php:4129
 msgid "Right"
 msgstr "Derecha"
 
-#: assets/blocks/blocks.js:9166
-msgid "Open media library"
-msgstr ""
-
-#: assets/blocks/blocks.js:9185
-msgid "Enter title…"
-msgstr "Introduzca el título…"
-
-#: assets/blocks/blocks.js:9203
-msgid "Enter subtitle…"
-msgstr "Introduzca el subtítulo…"
-
-#: assets/blocks/blocks.js:9310
-msgid "Advanced image/photo block with more options and styles."
-msgstr ""
-
-#: assets/blocks/blocks.js:9316
-msgid "image"
-msgstr ""
-
-#: assets/blocks/blocks.js:9316
-msgid "photo"
-msgstr ""
-
-#: assets/blocks/blocks.js:9316 assets/blocks/blocks.js:16250
-#: assets/blocks/blocks.js:19657
-msgid "box"
-msgstr ""
-
-#: assets/blocks/blocks.js:9609 incl/advanced-gutenberg-main.php:2760
+#: assets/blocks/blocks.js:9609
+#: incl/advanced-gutenberg-main.php:2838
 msgid "Pushpin"
 msgstr ""
 
-#: assets/blocks/blocks.js:9609 incl/advanced-gutenberg-main.php:2764
+#: assets/blocks/blocks.js:9609
+#: incl/advanced-gutenberg-main.php:2842
 msgid "Configuration"
 msgstr "Configuración"
 
-#: assets/blocks/blocks.js:9609 incl/advanced-gutenberg-main.php:2768
+#: assets/blocks/blocks.js:9609
+#: incl/advanced-gutenberg-main.php:2846
 msgid "Flag"
 msgstr "Bandera"
 
-#: assets/blocks/blocks.js:9609 incl/advanced-gutenberg-main.php:2772
+#: assets/blocks/blocks.js:9609
+#: incl/advanced-gutenberg-main.php:2850
 msgid "Star"
 msgstr ""
 
-#: assets/blocks/blocks.js:9609 incl/advanced-gutenberg-main.php:2776
+#: assets/blocks/blocks.js:9609
+#: incl/advanced-gutenberg-main.php:2854
 msgid "Checkmark"
 msgstr "Marca de Visto"
 
 #: assets/blocks/blocks.js:9609
-msgid "Checkmark 2"
-msgstr ""
-
-#: assets/blocks/blocks.js:9609
-msgid "Checkmark 3"
-msgstr ""
-
-#: assets/blocks/blocks.js:9609 incl/advanced-gutenberg-main.php:2780
+#: incl/advanced-gutenberg-main.php:2858
 msgid "Minus"
 msgstr ""
 
 #: assets/blocks/blocks.js:9609
-msgid "Minus 2"
-msgstr ""
-
-#: assets/blocks/blocks.js:9609 incl/advanced-gutenberg-main.php:2333
-#: incl/advanced-gutenberg-main.php:2784
+#: incl/advanced-gutenberg-main.php:2411
+#: incl/advanced-gutenberg-main.php:2862
 msgid "Plus"
 msgstr ""
 
 #: assets/blocks/blocks.js:9609
-msgid "Plus 2"
-msgstr ""
-
-#: assets/blocks/blocks.js:9609 incl/advanced-gutenberg-main.php:2788
+#: incl/advanced-gutenberg-main.php:2866
 msgid "Play"
 msgstr ""
 
 #: assets/blocks/blocks.js:9609
-msgid "Arrow right"
-msgstr "Flecha derecha"
-
-#: assets/blocks/blocks.js:9609
-msgid "Arrow right 2"
-msgstr ""
-
-#: assets/blocks/blocks.js:9609
-msgid "X Cross 2"
-msgstr ""
-
-#: assets/blocks/blocks.js:9609 incl/advanced-gutenberg-main.php:2796
+#: incl/advanced-gutenberg-main.php:2874
 msgid "X Cross"
 msgstr ""
 
-#: assets/blocks/blocks.js:9609 incl/advanced-gutenberg-main.php:2800
+#: assets/blocks/blocks.js:9609
+#: incl/advanced-gutenberg-main.php:2878
 msgid "Warning"
 msgstr ""
 
-#: assets/blocks/blocks.js:9609 incl/advanced-gutenberg-main.php:2804
+#: assets/blocks/blocks.js:9609
+#: incl/advanced-gutenberg-main.php:2882
 msgid "Help"
 msgstr ""
 
-#: assets/blocks/blocks.js:9609 incl/advanced-gutenberg-main.php:2808
+#: assets/blocks/blocks.js:9609
+#: incl/advanced-gutenberg-main.php:2886
 msgid "Info"
 msgstr ""
 
 #: assets/blocks/blocks.js:9609
-msgid "Info 2"
-msgstr ""
-
-#: assets/blocks/blocks.js:9609 incl/advanced-gutenberg-main.php:2812
+#: incl/advanced-gutenberg-main.php:2890
 msgid "Circle"
 msgstr "Círculo"
 
-#: assets/blocks/blocks.js:9634 assets/blocks/blocks.js:9867
-msgid "Advanced List"
-msgstr "Advanced List"
-
-#: assets/blocks/blocks.js:9644
-msgid "Refresh this list when it conflict with other lists styles"
-msgstr ""
-
-#: assets/blocks/blocks.js:9657 assets/blocks/blocks.js:19140
-#: incl/advanced-gutenberg-main.php:2736 incl/advanced-gutenberg-main.php:3393
-#: incl/advanced-gutenberg-main.php:4341
+#: assets/blocks/blocks.js:9657
+#: assets/blocks/blocks.js:18919
+#: incl/advanced-gutenberg-main.php:2814
+#: incl/advanced-gutenberg-main.php:3471
+#: incl/advanced-gutenberg-main.php:4419
 msgid "Text Settings"
 msgstr "Ajustes de texto"
 
-#: assets/blocks/blocks.js:9672 assets/blocks/blocks.js:18807
-#: incl/advanced-gutenberg-main.php:2748 incl/advanced-gutenberg-main.php:4133
+#: assets/blocks/blocks.js:9672
+#: assets/blocks/blocks.js:18586
+#: incl/advanced-gutenberg-main.php:2826
+#: incl/advanced-gutenberg-main.php:4211
 msgid "Icon Settings"
 msgstr "Ajustes de ícono"
 
-#: assets/blocks/blocks.js:9675
-msgid "List icon"
-msgstr ""
-
-#: assets/blocks/blocks.js:9702 incl/advanced-gutenberg-main.php:2818
+#: assets/blocks/blocks.js:9702
+#: incl/advanced-gutenberg-main.php:2896
 msgid "Icon color"
 msgstr "Color del icono"
 
-#: assets/blocks/blocks.js:9715 assets/blocks/blocks.js:26366
-msgid "Icon size"
-msgstr ""
-
-#: assets/blocks/blocks.js:9725
-msgid "Line height"
-msgstr ""
-
-#: assets/blocks/blocks.js:9765
-msgid "Write advanced list…"
-msgstr ""
-
-#: assets/blocks/blocks.js:9868
-msgid "List block with custom icons and styles."
-msgstr ""
-
-#: assets/blocks/blocks.js:10277
-msgid "At least 1 row of current section must present."
-msgstr ""
-
-#: assets/blocks/blocks.js:10894 assets/blocks/blocks.js:10915
-msgid "Cannot select multi cells from difference section!"
-msgstr ""
-
-#: assets/blocks/blocks.js:10999 assets/blocks/blocks.js:11289
-#: assets/blocks/blocks.js:11555
-msgid "Advanced Table"
-msgstr "Tabla avanzada"
-
-#: assets/blocks/blocks.js:11007
-msgid "Column Count"
-msgstr "Número de columnas"
-
-#: assets/blocks/blocks.js:11016
-msgid "Row Count"
-msgstr ""
-
-#: assets/blocks/blocks.js:11029
-msgid "Create"
-msgstr ""
-
-#: assets/blocks/blocks.js:11037
-msgid ""
-"Hint: Hold CTRL key for multi cells selection. Hold SHIFT key for range "
-"cells selection."
-msgstr ""
-
-#: assets/blocks/blocks.js:11046
-msgid "Add Row Before"
-msgstr ""
-
-#: assets/blocks/blocks.js:11053
-msgid "Add Row After"
-msgstr ""
-
-#: assets/blocks/blocks.js:11060
-msgid "Delete Row"
-msgstr "Eliminar Fila"
-
-#: assets/blocks/blocks.js:11067
-msgid "Add Column Before"
-msgstr ""
-
-#: assets/blocks/blocks.js:11074
-msgid "Add Column After"
-msgstr ""
-
-#: assets/blocks/blocks.js:11081
-msgid "Delete Column"
-msgstr "Borrar Columna"
-
-#: assets/blocks/blocks.js:11093
-msgid "Split Merged Cells"
-msgstr ""
-
-#: assets/blocks/blocks.js:11108
-msgid "Merge Cells"
-msgstr ""
-
-#: assets/blocks/blocks.js:11116
-msgid "Border Top"
-msgstr "Borde superior"
-
-#: assets/blocks/blocks.js:11128
-msgid "Border Right"
-msgstr "Borde derecho"
-
-#: assets/blocks/blocks.js:11140
-msgid "Border Bottom"
-msgstr "Borde Inferior"
-
-#: assets/blocks/blocks.js:11152
-msgid "Border Left"
-msgstr "Borde Izquierdo"
-
-#: assets/blocks/blocks.js:11164
-msgid "Border All"
-msgstr "Bordear todo"
-
-#: assets/blocks/blocks.js:11175
-msgid "Border None"
-msgstr "Ningún borde"
-
-#: assets/blocks/blocks.js:11190
-msgid "Border Vertical"
-msgstr "Borde Vertical"
-
-#: assets/blocks/blocks.js:11202
-msgid "Border Horizontal"
-msgstr "Borde horizontal"
-
-#: assets/blocks/blocks.js:11214
-msgid "Border Inner"
-msgstr "Borde Interior"
-
-#: assets/blocks/blocks.js:11226
-msgid "Border Outer"
-msgstr "Borde exterior"
-
-#: assets/blocks/blocks.js:11244
-msgid "Align left"
-msgstr ""
-
-#: assets/blocks/blocks.js:11248
-msgid "Align center"
-msgstr ""
-
-#: assets/blocks/blocks.js:11252
-msgid "Align right"
-msgstr ""
-
-#: assets/blocks/blocks.js:11256
-msgid "Align justify"
-msgstr ""
-
-#: assets/blocks/blocks.js:11267
-msgid "Align top"
-msgstr ""
-
-#: assets/blocks/blocks.js:11276
-msgid "Align middle"
-msgstr ""
-
-#: assets/blocks/blocks.js:11285
-msgid "Align bottom"
-msgstr ""
-
-#: assets/blocks/blocks.js:11301
-msgid "Edit Table"
-msgstr "Editar Tabla"
-
-#: assets/blocks/blocks.js:11306
-msgid "Refresh table (Use this after using undo or redo)"
-msgstr ""
-
-#: assets/blocks/blocks.js:11318 incl/advanced-gutenberg-main.php:2855
+#: assets/blocks/blocks.js:11318
+#: incl/advanced-gutenberg-main.php:2933
 msgid "Table Settings"
 msgstr "Configuración de tabla"
 
-#: assets/blocks/blocks.js:11320
-msgid "Max width (px)"
-msgstr ""
-
-#: assets/blocks/blocks.js:11321
-msgid "Set this to 0 to make max-width is 100%"
-msgstr ""
-
-#: assets/blocks/blocks.js:11330
-msgid "Fixed width table cells"
-msgstr ""
-
-#: assets/blocks/blocks.js:11337
-msgid "Table header"
-msgstr ""
-
-#: assets/blocks/blocks.js:11344
-msgid "Table footer"
-msgstr ""
-
-#: assets/blocks/blocks.js:11351
-msgid "Border collapsed"
-msgstr "Borde colapsado"
-
-#: assets/blocks/blocks.js:11360
-msgid "Cell Settings"
-msgstr "Ajustes de la celda"
-
-#: assets/blocks/blocks.js:11431 incl/advanced-gutenberg-main.php:2531
-#: incl/advanced-gutenberg-main.php:4103 incl/advanced-gutenberg-main.php:4172
-#: incl/advanced-gutenberg-main.php:4283 incl/advanced-gutenberg-main.php:4363
+#: assets/blocks/blocks.js:11431
+#: incl/advanced-gutenberg-main.php:2609
+#: incl/advanced-gutenberg-main.php:4181
+#: incl/advanced-gutenberg-main.php:4250
+#: incl/advanced-gutenberg-main.php:4361
+#: incl/advanced-gutenberg-main.php:4441
 msgid "Padding Top"
 msgstr ""
 
-#: assets/blocks/blocks.js:11440 incl/advanced-gutenberg-main.php:2538
-#: incl/advanced-gutenberg-main.php:4124 incl/advanced-gutenberg-main.php:4193
-#: incl/advanced-gutenberg-main.php:4304 incl/advanced-gutenberg-main.php:4384
+#: assets/blocks/blocks.js:11440
+#: incl/advanced-gutenberg-main.php:2616
+#: incl/advanced-gutenberg-main.php:4202
+#: incl/advanced-gutenberg-main.php:4271
+#: incl/advanced-gutenberg-main.php:4382
+#: incl/advanced-gutenberg-main.php:4462
 msgid "Padding Right"
 msgstr ""
 
-#: assets/blocks/blocks.js:11449 incl/advanced-gutenberg-main.php:2545
-#: incl/advanced-gutenberg-main.php:4110 incl/advanced-gutenberg-main.php:4179
-#: incl/advanced-gutenberg-main.php:4290 incl/advanced-gutenberg-main.php:4370
+#: assets/blocks/blocks.js:11449
+#: incl/advanced-gutenberg-main.php:2623
+#: incl/advanced-gutenberg-main.php:4188
+#: incl/advanced-gutenberg-main.php:4257
+#: incl/advanced-gutenberg-main.php:4368
+#: incl/advanced-gutenberg-main.php:4448
 msgid "Padding Bottom"
 msgstr "Espacio Inferior"
 
-#: assets/blocks/blocks.js:11458 incl/advanced-gutenberg-main.php:2552
-#: incl/advanced-gutenberg-main.php:4117 incl/advanced-gutenberg-main.php:4186
-#: incl/advanced-gutenberg-main.php:4297 incl/advanced-gutenberg-main.php:4377
+#: assets/blocks/blocks.js:11458
+#: incl/advanced-gutenberg-main.php:2630
+#: incl/advanced-gutenberg-main.php:4195
+#: incl/advanced-gutenberg-main.php:4264
+#: incl/advanced-gutenberg-main.php:4375
+#: incl/advanced-gutenberg-main.php:4455
 msgid "Padding Left"
 msgstr ""
 
-#: assets/blocks/blocks.js:11472
-msgid "Horizontal Align"
-msgstr ""
-
-#: assets/blocks/blocks.js:11488 incl/advanced-gutenberg-main.php:3907
+#: assets/blocks/blocks.js:11488
+#: incl/advanced-gutenberg-main.php:3985
 msgid "Vertical Align"
 msgstr ""
 
-#: assets/blocks/blocks.js:11556
-msgid "Advanced table block with more styles and functions."
-msgstr ""
-
-#: assets/blocks/blocks.js:11562
-msgid "table"
-msgstr ""
-
-#: assets/blocks/blocks.js:11562
-msgid "cell"
-msgstr ""
-
-#: assets/blocks/blocks.js:11562
-msgid "data"
-msgstr ""
-
-#: assets/blocks/blocks.js:11701
-msgid "Stripes"
-msgstr ""
-
-#: assets/blocks/blocks.js:12054 incl/advanced-gutenberg-main.php:3257
+#: assets/blocks/blocks.js:12054
+#: incl/advanced-gutenberg-main.php:3335
 msgid "Horizontal"
 msgstr ""
 
-#: assets/blocks/blocks.js:12054 incl/advanced-gutenberg-main.php:3261
+#: assets/blocks/blocks.js:12054
+#: incl/advanced-gutenberg-main.php:3339
 msgid "Vertical"
 msgstr ""
 
-#: assets/blocks/blocks.js:12287 assets/blocks/blocks.js:12653
-msgid "Advanced Tabs"
-msgstr "Pestañas avanzadas"
-
-#: assets/blocks/blocks.js:12295 incl/advanced-gutenberg-main.php:3252
+#: assets/blocks/blocks.js:12295
+#: incl/advanced-gutenberg-main.php:3330
 msgid "Tabs Style"
 msgstr "Estilos de pestañas"
 
-#: assets/blocks/blocks.js:12357
-msgid "Tabs Settings"
-msgstr "Configuración de las pestañas"
-
-#: assets/blocks/blocks.js:12359
-msgid "Initial Open Tab"
-msgstr ""
-
-#: assets/blocks/blocks.js:12370 assets/blocks/blocks.js:27356
-msgid "Tab Colors"
-msgstr "Colores de las pestañas"
-
-#: assets/blocks/blocks.js:12385 assets/blocks/blocks.js:27371
-msgid "Active Tab Background Color"
-msgstr "Color de Fondo de la Pestaña Activa"
-
-#: assets/blocks/blocks.js:12391 assets/blocks/blocks.js:27377
-msgid "Active Tab Text Color"
-msgstr "Color de texto de Pestaña Activa"
-
-#: assets/blocks/blocks.js:12399 assets/blocks/blocks.js:27385
-msgid "Body Colors"
-msgstr "Colores del cuerpo"
-
-#: assets/blocks/blocks.js:12492 assets/blocks/blocks.js:27477
-msgid "Title…"
-msgstr ""
-
-#: assets/blocks/blocks.js:12497 assets/blocks/blocks.js:27482
-msgid "Remove tab"
-msgstr ""
-
-#: assets/blocks/blocks.js:12520 assets/blocks/blocks.js:27510
-msgid "Add tab"
-msgstr ""
-
-#: assets/blocks/blocks.js:12574 assets/blocks/blocks.js:13090
-#: assets/blocks/blocks.js:13144 assets/blocks/blocks.js:27574
-msgid "Tab 1"
-msgstr ""
-
-#: assets/blocks/blocks.js:12574 assets/blocks/blocks.js:13090
-#: assets/blocks/blocks.js:13144 assets/blocks/blocks.js:27577
-msgid "Tab 2"
-msgstr ""
-
-#: assets/blocks/blocks.js:12574 assets/blocks/blocks.js:13090
-#: assets/blocks/blocks.js:13144 assets/blocks/blocks.js:27580
-msgid "Tab 3"
-msgstr ""
-
-#: assets/blocks/blocks.js:12654 assets/blocks/blocks.js:27630
-msgid "Create your own tabs never easy like this."
-msgstr ""
-
-#: assets/blocks/blocks.js:12660 assets/blocks/blocks.js:27636
-msgid "tabs"
-msgstr ""
-
-#: assets/blocks/blocks.js:12660 assets/blocks/blocks.js:27636
-msgid "cards"
-msgstr ""
-
-#: assets/blocks/blocks.js:13062
-msgid "Tab Item"
-msgstr ""
-
-#: assets/blocks/blocks.js:13100
-msgid "tab"
-msgstr ""
-
-#: assets/blocks/blocks.js:13441 assets/blocks/blocks.js:13869
-msgid "Advanced Video"
-msgstr "Video avanzado"
-
-#: assets/blocks/blocks.js:13460
-msgid "Change image preview"
-msgstr ""
-
-#: assets/blocks/blocks.js:13468
-msgid "Remove image preview"
-msgstr ""
-
-#: assets/blocks/blocks.js:13481
-msgid "Advanced Video Settings"
-msgstr "Ajustes de video avanzados"
-
-#: assets/blocks/blocks.js:13483
-msgid "Open video in light box"
-msgstr ""
-
-#: assets/blocks/blocks.js:13484
-msgid "Lightbox offers additional display options."
-msgstr ""
-
-#: assets/blocks/blocks.js:13494 assets/blocks/blocks.js:23887
-msgid "Autoplay"
-msgstr ""
-
-#: assets/blocks/blocks.js:13501
-msgid "Loop"
-msgstr ""
-
-#: assets/blocks/blocks.js:13508
-msgid "Muted"
-msgstr ""
-
-#: assets/blocks/blocks.js:13515
-msgid "Playback Controls"
-msgstr ""
-
-#: assets/blocks/blocks.js:13522
-msgid "Play inline"
-msgstr ""
-
-#: assets/blocks/blocks.js:13529
-msgid "Video preloading"
-msgstr ""
-
-#: assets/blocks/blocks.js:13531
-msgid "Auto"
-msgstr ""
-
-#: assets/blocks/blocks.js:13531
-msgid "Metadata"
-msgstr ""
-
-#: assets/blocks/blocks.js:13545
-msgid "Video width"
-msgstr "Ancho del video"
-
-#: assets/blocks/blocks.js:13554
-msgid "Video height"
-msgstr ""
-
-#: assets/blocks/blocks.js:13575
-msgid "Play Button Color"
-msgstr "Color del botón de reproducción"
-
-#: assets/blocks/blocks.js:13584
-msgid "Play Button"
-msgstr ""
-
-#: assets/blocks/blocks.js:13612
-msgid "Play Button Size"
-msgstr "Tamaño del botón"
-
-#: assets/blocks/blocks.js:13648
-msgid "Select image preview"
-msgstr ""
-
-#: assets/blocks/blocks.js:13698
-msgid "Youtube/Vimeo video URL/ID…"
-msgstr ""
-
-#: assets/blocks/blocks.js:13712
-msgid "Fetch video content"
-msgstr ""
-
-#: assets/blocks/blocks.js:13729
-msgid "Load local video"
-msgstr ""
-
-#: assets/blocks/blocks.js:13742
-msgid "Current Video"
-msgstr ""
-
-#: assets/blocks/blocks.js:13765
-msgid "Wrong video URL/ID. Please try another."
-msgstr ""
-
-#: assets/blocks/blocks.js:13766
-msgid "Not selected yet."
-msgstr "Aún no está seleccionado."
-
-#: assets/blocks/blocks.js:13870
-msgid "Powerful block for insert and embed video."
-msgstr ""
-
-#: assets/blocks/blocks.js:13876
-msgid "video"
-msgstr ""
-
-#: assets/blocks/blocks.js:13876
-msgid "embed"
-msgstr ""
-
-#: assets/blocks/blocks.js:13876
-msgid "media"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "One column"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "100"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Two columns; equal split"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "50 / 50"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Two columns; two-thirds, one-third split"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "66 / 33"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Two columns; one-third, two-thirds split"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "33 / 66"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Two columns; one-quarter, three-quarters split"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "25 / 75"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Two columns; three-quarters, one-quarter split"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "75 / 25"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Two columns; one-fifth, four-fifths split"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "20 / 80"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Two columns; four-fifths, one-fifth split"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "80 / 20"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Three columns; equal split"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "33 / 33 / 33"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Three columns; wider one-half left column"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "50 / 25 / 25"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Three columns; wider one-half right column"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "25 / 25 / 50"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Three columns; wider one-half center column"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "25 / 50 / 25"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Three columns; wider three-fifths center column"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "20 / 60 / 20"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Three columns; wider three-fifths left column"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "60 / 20 / 20"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Three columns; wider three-fifths right column"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "20 / 20 / 60"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Three columns; wider four-sixths center column"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "16.6 / 66.6 / 16.6"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Four columns; equal split"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "25 / 25 / 25 / 25"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Four columns; wider one-half left column"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "50 / 16.6 / 16.6 / 16.6"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Four columns; wider one-half right column"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "16.6 / 16.6 / 16.6 / 50"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Four columns; wider two-fifths right column"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "20 / 20 / 20 / 40"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Four columns; wider two-fifths left column"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "40 / 20 / 20 / 20"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Five columns; equal split"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "20 / 20 / 20 / 20 / 20"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "Six columns; equal split"
-msgstr ""
-
-#: assets/blocks/blocks.js:14101
-msgid "16.6 / 16.6 / 16.6 / 16.6 / 16.6 / 16.6"
-msgstr ""
-
-#: assets/blocks/blocks.js:14102
-msgid "Three: 100 - 1/2 - 1/2"
-msgstr ""
-
-#: assets/blocks/blocks.js:14102
-msgid "Three: 1/2 - 1/2 - 100"
-msgstr ""
-
-#: assets/blocks/blocks.js:14102
-msgid "Four: Two Columns"
-msgstr ""
-
-#: assets/blocks/blocks.js:14102
-msgid "Six: Two Columns"
-msgstr "Seis: Dos columnas"
-
-#: assets/blocks/blocks.js:14102
-msgid "Six: Three Columns"
-msgstr ""
-
-#: assets/blocks/blocks.js:14260 assets/blocks/blocks.js:14988
-msgid "Columns Manager"
-msgstr "Administrador de Columnas"
-
-#: assets/blocks/blocks.js:14266
-msgid "Choose a columns layout"
-msgstr ""
-
-#: assets/blocks/blocks.js:14314
-msgid "Vertical Align Top"
-msgstr ""
-
-#: assets/blocks/blocks.js:14326
-msgid "Vertical Align Middle"
-msgstr ""
-
-#: assets/blocks/blocks.js:14338
-msgid "Vertical Align Bottom"
-msgstr ""
-
-#: assets/blocks/blocks.js:14350
-msgid "Inner Columns Full Height"
-msgstr ""
-
-#: assets/blocks/blocks.js:14362
-msgid "Columns Manager "
-msgstr "Administrador de Columnas"
-
-#: assets/blocks/blocks.js:14375 incl/advanced-gutenberg-main.php:3816
+#: assets/blocks/blocks.js:14375
+#: incl/advanced-gutenberg-main.php:3894
 msgid "Columns Settings"
 msgstr "Configuración de columnas"
 
-#: assets/blocks/blocks.js:14378
-msgid "Responsive Settings"
-msgstr "Ajustes del modo responsivo"
-
-#: assets/blocks/blocks.js:14442
-msgid "Space between columns"
-msgstr ""
-
-#: assets/blocks/blocks.js:14453 incl/advanced-gutenberg-main.php:3858
+#: assets/blocks/blocks.js:14453
+#: incl/advanced-gutenberg-main.php:3936
 msgid "Vertical space when collapsed"
 msgstr ""
 
-#: assets/blocks/blocks.js:14461
-msgid "Collapsed Order RTL"
-msgstr ""
-
-#: assets/blocks/blocks.js:14470 assets/blocks/blocks.js:15398
-msgid " Padding"
-msgstr ""
-
-#: assets/blocks/blocks.js:14512 assets/blocks/blocks.js:15421
-msgid " Margin"
-msgstr ""
-
-#: assets/blocks/blocks.js:14555 incl/advanced-gutenberg-main.php:3904
+#: assets/blocks/blocks.js:14555
+#: incl/advanced-gutenberg-main.php:3982
 msgid "Row Settings"
 msgstr "Configuración de filas"
 
-#: assets/blocks/blocks.js:14557 incl/advanced-gutenberg-main.php:3930
+#: assets/blocks/blocks.js:14557
+#: incl/advanced-gutenberg-main.php:4008
 msgid "Columns Wrapped"
 msgstr "Columnas envueltas"
 
-#: assets/blocks/blocks.js:14558
-msgid ""
-"If your columns overflow they available space, they will be placed on a new "
-"line."
-msgstr ""
-
-#: assets/blocks/blocks.js:14565 assets/blocks/blocks.js:16292
-#: incl/advanced-gutenberg-main.php:3935
+#: assets/blocks/blocks.js:14565
+#: assets/blocks/blocks.js:16292
+#: incl/advanced-gutenberg-main.php:4013
 msgid "Wrapper Tag"
 msgstr ""
 
-#: assets/blocks/blocks.js:14573 incl/advanced-gutenberg-main.php:3970
+#: assets/blocks/blocks.js:14573
+#: incl/advanced-gutenberg-main.php:4048
 msgid "Content Max Width"
 msgstr ""
 
-#: assets/blocks/blocks.js:14596 incl/advanced-gutenberg-main.php:3977
+#: assets/blocks/blocks.js:14596
+#: incl/advanced-gutenberg-main.php:4055
 msgid "Content Min Height"
 msgstr ""
 
-#: assets/blocks/blocks.js:14619
-msgid "Content Max Height"
-msgstr ""
-
-#: assets/blocks/blocks.js:14989
-msgid "Row layout with columns you decided."
-msgstr ""
-
-#: assets/blocks/blocks.js:14995 assets/blocks/blocks.js:15572
-msgid "columns"
-msgstr "columnas"
-
-#: assets/blocks/blocks.js:14995 assets/blocks/blocks.js:15572
-#: assets/blocks/blocks.js:16250
-msgid "row"
-msgstr ""
-
-#: assets/blocks/blocks.js:14995 assets/blocks/blocks.js:15572
-msgid "layout"
-msgstr ""
-
-#: assets/blocks/blocks.js:15303 incl/advanced-gutenberg-main.php:4035
+#: assets/blocks/blocks.js:15303
+#: incl/advanced-gutenberg-main.php:4113
 msgid "Column Settings"
 msgstr "Ajustes de columna"
 
-#: assets/blocks/blocks.js:15305
-msgid "Width (%)"
-msgstr ""
-
-#: assets/blocks/blocks.js:15308
-msgid "Available: "
-msgstr ""
-
-#: assets/blocks/blocks.js:15310
-msgid ""
-"Set to 0 = auto. This will override predefine layout styles. Recommend for "
-"experience users!"
-msgstr ""
-
-#: assets/blocks/blocks.js:15353 assets/blocks/blocks.js:15910
-#: assets/blocks/blocks.js:23102 assets/blocks/blocks.js:25619
-msgid "Border radius (px)"
-msgstr "Radio del borde (px)"
-
-#: assets/blocks/blocks.js:15386
-msgid " text alignment"
-msgstr ""
-
-#: assets/blocks/blocks.js:15404 assets/blocks/blocks.js:15427
-msgid "Unit (px)"
-msgstr ""
-
-#: assets/blocks/blocks.js:15564
-msgid "Adv. Column"
-msgstr "Columna Avanzada"
-
-#: assets/blocks/blocks.js:15566
-msgid "Column in row."
-msgstr ""
-
-#: assets/blocks/blocks.js:15784 assets/blocks/blocks.js:16091
-msgid "Contact Form"
-msgstr ""
-
-#: assets/blocks/blocks.js:15792 assets/blocks/blocks.js:22994
-#: incl/advanced-gutenberg-main.php:3565
+#: assets/blocks/blocks.js:15792
+#: assets/blocks/blocks.js:22773
+#: incl/advanced-gutenberg-main.php:3643
 msgid "Form Settings"
 msgstr "Configuración del formulario"
 
-#: assets/blocks/blocks.js:15799 assets/blocks/blocks.js:20816
-#: assets/blocks/blocks.js:22982
-msgid ""
-"We strongly recommend to enable Google reCaptcha to avoid spam bot. You can "
-"enable it in Form Recaptcha in"
-msgstr ""
-
-#: assets/blocks/blocks.js:15804 assets/blocks/blocks.js:15820
-#: assets/blocks/blocks.js:20821 assets/blocks/blocks.js:22987
-msgid "settings"
-msgstr "configuración del Email"
-
-#: assets/blocks/blocks.js:15811
-msgid "Email sender"
-msgstr "Remitente de correo electrónico"
-
-#: assets/blocks/blocks.js:15815
-msgid ""
-"An email will be sent to the admin email (by default) whenever a contact "
-"form is submitted. You can change it in "
-msgstr ""
-
-#: assets/blocks/blocks.js:15827 assets/blocks/blocks.js:23015
-#: incl/advanced-gutenberg-main.php:3436 incl/advanced-gutenberg-main.php:3592
+#: assets/blocks/blocks.js:15827
+#: assets/blocks/blocks.js:22794
+#: incl/advanced-gutenberg-main.php:3514
+#: incl/advanced-gutenberg-main.php:3670
 msgid "Text Label"
 msgstr ""
 
-#: assets/blocks/blocks.js:15829
-msgid "Name input placeholder"
-msgstr ""
-
-#: assets/blocks/blocks.js:15836 assets/blocks/blocks.js:20627
-#: assets/blocks/blocks.js:23035
-msgid "Email input placeholder"
-msgstr ""
-
-#: assets/blocks/blocks.js:15843
-msgid "Message input placeholder"
-msgstr ""
-
-#: assets/blocks/blocks.js:15850 assets/blocks/blocks.js:23042
-msgid "Submit text"
-msgstr ""
-
-#: assets/blocks/blocks.js:15857 assets/blocks/blocks.js:23049
-msgid "Empty field warning text"
-msgstr ""
-
-#: assets/blocks/blocks.js:15864 assets/blocks/blocks.js:23056
-msgid "Submit success text"
-msgstr ""
-
-#: assets/blocks/blocks.js:15872 assets/blocks/blocks.js:23064
-#: assets/blocks/blocks.js:25567 incl/advanced-gutenberg-main.php:3471
-#: incl/advanced-gutenberg-main.php:3627
+#: assets/blocks/blocks.js:15872
+#: assets/blocks/blocks.js:22843
+#: assets/blocks/blocks.js:25345
+#: incl/advanced-gutenberg-main.php:3549
+#: incl/advanced-gutenberg-main.php:3705
 msgid "Input Color"
 msgstr "Color del campo"
 
-#: assets/blocks/blocks.js:15874 assets/blocks/blocks.js:20732
-#: assets/blocks/blocks.js:23066 assets/blocks/blocks.js:25570
-#: assets/blocks/blocks.js:25605 assets/blocks/blocks.js:25632
-msgid "Background color"
-msgstr "Color de fondo"
-
-#: assets/blocks/blocks.js:15880 assets/blocks/blocks.js:20651
-#: assets/blocks/blocks.js:20738 assets/blocks/blocks.js:23072
-#: assets/blocks/blocks.js:25576 assets/blocks/blocks.js:25612
-#: assets/blocks/blocks.js:25638
-msgid "Text color"
-msgstr ""
-
-#: assets/blocks/blocks.js:15894 assets/blocks/blocks.js:20665
-#: assets/blocks/blocks.js:23086
-msgid "Border color"
-msgstr "Color del borde"
-
-#: assets/blocks/blocks.js:15921 assets/blocks/blocks.js:20692
-#: assets/blocks/blocks.js:23113 incl/advanced-gutenberg-main.php:3522
-#: incl/advanced-gutenberg-main.php:3678
+#: assets/blocks/blocks.js:15921
+#: assets/blocks/blocks.js:20471
+#: assets/blocks/blocks.js:22892
+#: incl/advanced-gutenberg-main.php:3600
+#: incl/advanced-gutenberg-main.php:3756
 msgid "Submit Button Settings"
 msgstr "Enviar configuración de botones"
 
-#: assets/blocks/blocks.js:15926 assets/blocks/blocks.js:20694
-#: assets/blocks/blocks.js:23118
-msgid "Border and Text"
-msgstr "Borde y Texto"
-
-#: assets/blocks/blocks.js:15932 assets/blocks/blocks.js:18728
-#: assets/blocks/blocks.js:18845 assets/blocks/blocks.js:20701
-#: assets/blocks/blocks.js:23124
-msgid "Background"
-msgstr "Fondo"
-
-#: assets/blocks/blocks.js:15940 assets/blocks/blocks.js:20708
-#: assets/blocks/blocks.js:23132
-msgid "Button border radius"
-msgstr "Radio del borde del botón"
-
-#: assets/blocks/blocks.js:15949 assets/blocks/blocks.js:20717
-msgid "Button position"
-msgstr "Posición del botón"
-
-#: assets/blocks/blocks.js:16092
-msgid "Fastest way to create a contact form for your page."
-msgstr ""
-
-#: assets/blocks/blocks.js:16098
-msgid "contact"
-msgstr ""
-
-#: assets/blocks/blocks.js:16098 assets/blocks/blocks.js:23264
-msgid "form"
-msgstr ""
-
-#: assets/blocks/blocks.js:16243
-msgid "Container"
-msgstr ""
-
-#: assets/blocks/blocks.js:16244
-msgid "Block for containing other blocks."
-msgstr ""
-
-#: assets/blocks/blocks.js:16250
-msgid "container"
-msgstr ""
-
-#: assets/blocks/blocks.js:16290 assets/blocks/blocks.js:18725
-#: incl/advanced-gutenberg-main.php:4076
+#: assets/blocks/blocks.js:16290
+#: assets/blocks/blocks.js:18504
+#: incl/advanced-gutenberg-main.php:4154
 msgid "Container Settings"
 msgstr "Ajustes del contenedor"
 
-#: assets/blocks/blocks.js:16434 assets/blocks/blocks.js:16900
-msgid "Count Up"
-msgstr ""
-
-#: assets/blocks/blocks.js:16442 incl/advanced-gutenberg-main.php:2985
+#: assets/blocks/blocks.js:16442
+#: incl/advanced-gutenberg-main.php:3063
 msgid "Count Up Settings"
 msgstr "Configuración del recuento"
 
-#: assets/blocks/blocks.js:16447 assets/blocks/blocks.js:20590
-#: incl/advanced-gutenberg-main.php:2968
+#: assets/blocks/blocks.js:16447
+#: assets/blocks/blocks.js:20369
+#: incl/advanced-gutenberg-main.php:3046
 msgid "Header Color"
 msgstr "Color de Cabecera"
 
-#: assets/blocks/blocks.js:16453 incl/advanced-gutenberg-main.php:2973
+#: assets/blocks/blocks.js:16453
+#: incl/advanced-gutenberg-main.php:3051
 msgid "Count Up Color"
 msgstr "Color del recuento"
 
-#: assets/blocks/blocks.js:16459 assets/blocks/blocks.js:28339
-#: incl/advanced-gutenberg-main.php:2978 incl/advanced-gutenberg-main.php:3406
+#: assets/blocks/blocks.js:16459
+#: assets/blocks/blocks.js:28117
+#: incl/advanced-gutenberg-main.php:3056
+#: incl/advanced-gutenberg-main.php:3484
 msgid "Description Color"
 msgstr "Descripción del Color"
 
-#: assets/blocks/blocks.js:16467 assets/blocks/blocks.js:24150
-#: assets/blocks/blocks.js:28124 assets/blocks/blocks.js:29189
-#: incl/advanced-gutenberg-main.php:3348 incl/advanced-gutenberg-main.php:3418
+#: assets/blocks/blocks.js:16467
+#: assets/blocks/blocks.js:23928
+#: assets/blocks/blocks.js:27902
+#: assets/blocks/blocks.js:28967
+#: incl/advanced-gutenberg-main.php:3426
+#: incl/advanced-gutenberg-main.php:3496
 msgid "Columns"
 msgstr "Columnas"
-
-#: assets/blocks/blocks.js:16476
-msgid "Counter Number Size"
-msgstr ""
-
-#: assets/blocks/blocks.js:16487
-msgid "Counter Up Symbol"
-msgstr ""
-
-#: assets/blocks/blocks.js:16503 assets/blocks/blocks.js:16520
-#: assets/blocks/blocks.js:16537
-msgid "After"
-msgstr ""
-
-#: assets/blocks/blocks.js:16503 assets/blocks/blocks.js:16520
-#: assets/blocks/blocks.js:16537
-msgid "Before"
-msgstr ""
-
-#: assets/blocks/blocks.js:16543
-msgid ""
-"Use toggle buttons above to define symbol placement before/after the number "
-"(toggle on is after)."
-msgstr ""
-
-#: assets/blocks/blocks.js:16564 assets/blocks/blocks.js:16615
-#: assets/blocks/blocks.js:16633 assets/blocks/blocks.js:16684
-#: assets/blocks/blocks.js:16702 assets/blocks/blocks.js:16753
-#: assets/blocks/blocks.js:27544
-msgid "Enter text…"
-msgstr ""
-
-#: assets/blocks/blocks.js:16901
-msgid "Make a block with animate counting numbers."
-msgstr ""
-
-#: assets/blocks/blocks.js:16907
-msgid "numbers"
-msgstr ""
-
-#: assets/blocks/blocks.js:16907
-msgid "count"
-msgstr ""
-
-#: assets/blocks/blocks.js:16907
-msgid "increase"
-msgstr ""
-
-#: assets/blocks/blocks.js:17052
-msgid "Select a custom style"
-msgstr ""
 
 #: assets/blocks/blocks.js:17068
 #: incl/view/advanced-gutenberg-custom-styles.php:14
 msgid "Custom styles"
 msgstr "Estilos Personalizados"
 
-#: assets/blocks/blocks.js:17080
-msgid "This option let you add custom style for the current block"
-msgstr ""
-
-#: assets/blocks/blocks.js:17177
-msgid "PublishPress Blocks Settings"
-msgstr "Ajustes de PublishPress Blocks"
-
-#: assets/blocks/blocks.js:17179 assets/blocks/blocks.js:17180
-msgid "Inherit from global settings"
-msgstr ""
-
-#: assets/blocks/blocks.js:17179
-msgid "Enable"
-msgstr ""
-
-#: assets/blocks/blocks.js:17179
-msgid "Disable"
-msgstr ""
-
-#: assets/blocks/blocks.js:17180
-msgid "Original"
-msgstr ""
-
-#: assets/blocks/blocks.js:17180
-msgid "Large"
-msgstr ""
-
-#: assets/blocks/blocks.js:17249
-msgid "These settings will override the PublishPress Blocks global settings."
-msgstr ""
-
-#: assets/blocks/blocks.js:17253 incl/view/advanced-gutenberg-settings.php:235
-msgid "Editor width"
-msgstr "Ancho del Editor"
-
-#: assets/blocks/blocks.js:17257
-msgid "Change your editor width"
-msgstr "Cambie el ancho de su editor"
-
-#: assets/blocks/blocks.js:17280
-msgid "Columns Visual Guide"
-msgstr ""
-
-#: assets/blocks/blocks.js:17284
-msgid "Border to materialize PublishPress Blocks Column block"
-msgstr ""
-
-#: assets/blocks/blocks.js:17598 assets/blocks/blocks.js:17635
-#: assets/blocks/blocks.js:18008
-msgid "Images Slider"
-msgstr ""
-
-#: assets/blocks/blocks.js:17602
-msgid "Image Slider Block"
-msgstr ""
-
-#: assets/blocks/blocks.js:17603
-msgid "No images selected. Adding images to start using this block."
-msgstr ""
-
-#: assets/blocks/blocks.js:17626
-msgid "Add images"
-msgstr ""
-
-#: assets/blocks/blocks.js:17643
-msgid "Image Settings"
-msgstr "Ajustes de imagen"
-
-#: assets/blocks/blocks.js:17647 incl/advanced-gutenberg-main.php:3714
+#: assets/blocks/blocks.js:17426
+#: incl/advanced-gutenberg-main.php:3792
 msgid "Open custom link"
 msgstr ""
 
-#: assets/blocks/blocks.js:17660
-msgid "Auto height"
-msgstr "Altura automática"
-
-#: assets/blocks/blocks.js:17685 incl/advanced-gutenberg-main.php:3744
+#: assets/blocks/blocks.js:17464
+#: incl/advanced-gutenberg-main.php:3822
 msgid "Always show overlay"
 msgstr ""
 
-#: assets/blocks/blocks.js:17692
-msgid "Enable RTL"
-msgstr "Activar RTL"
-
-#: assets/blocks/blocks.js:17702 incl/advanced-gutenberg-main.php:3754
+#: assets/blocks/blocks.js:17481
+#: incl/advanced-gutenberg-main.php:3832
 msgid "Hover Color"
 msgstr "Color al pasar por encima"
 
-#: assets/blocks/blocks.js:17813 incl/view/advanced-gutenberg-profiles.php:60
-#: incl/view/advanced-gutenberg-profiles.php:142
+#: assets/blocks/blocks.js:17592
+#: incl/view/advanced-gutenberg-profiles.php:60
+#: incl/view/advanced-gutenberg-profiles.php:143
 msgid "Title"
 msgstr ""
 
-#: assets/blocks/blocks.js:17824
-msgid "Text"
-msgstr ""
-
-#: assets/blocks/blocks.js:17851
-msgid "Move Left"
-msgstr ""
-
-#: assets/blocks/blocks.js:17871
-msgid "Image"
-msgstr ""
-
-#: assets/blocks/blocks.js:17879
-msgid "Move Right"
-msgstr "Mover a la derecha"
-
-#: assets/blocks/blocks.js:17930
-msgid "Add image"
-msgstr ""
-
-#: assets/blocks/blocks.js:18009
-msgid "Display your images in a slider."
-msgstr ""
-
-#: assets/blocks/blocks.js:18015
-msgid "slide"
-msgstr ""
-
-#: assets/blocks/blocks.js:18015
-msgid "gallery"
-msgstr ""
-
-#: assets/blocks/blocks.js:18015
-msgid "photos"
-msgstr ""
-
-#: assets/blocks/blocks.js:18706 assets/blocks/blocks.js:19650
-msgid "Info Box"
-msgstr ""
-
-#: assets/blocks/blocks.js:18742 assets/blocks/blocks.js:18859
-msgid "Border Width (px)"
-msgstr "Ancho del borde (px)"
-
-#: assets/blocks/blocks.js:18751 assets/blocks/blocks.js:18868
-msgid "Border Radius (px)"
-msgstr "Radio del Borde (px)"
-
-#: assets/blocks/blocks.js:18836
-msgid "Icon Size (px)"
-msgstr ""
-
-#: assets/blocks/blocks.js:18968 incl/advanced-gutenberg-main.php:4230
+#: assets/blocks/blocks.js:18747
+#: incl/advanced-gutenberg-main.php:4308
 msgid "Title Settings"
 msgstr "Configuración de Títulos"
 
-#: assets/blocks/blocks.js:18972 assets/blocks/blocks.js:19144
-#: incl/advanced-gutenberg-main.php:2671 incl/advanced-gutenberg-main.php:4344
+#: assets/blocks/blocks.js:18751
+#: assets/blocks/blocks.js:18923
+#: incl/advanced-gutenberg-main.php:2749
+#: incl/advanced-gutenberg-main.php:4422
 msgid "Color"
 msgstr "Color"
 
-#: assets/blocks/blocks.js:19000 assets/blocks/blocks.js:19172
-msgid "Font Size"
-msgstr "Tamaño de fuente"
-
-#: assets/blocks/blocks.js:19031 assets/blocks/blocks.js:19203
-#: incl/advanced-gutenberg-main.php:2830
+#: assets/blocks/blocks.js:18810
+#: assets/blocks/blocks.js:18982
+#: incl/advanced-gutenberg-main.php:2908
 msgid "Line Height"
 msgstr ""
 
-#: assets/blocks/blocks.js:19041 incl/advanced-gutenberg-main.php:4252
+#: assets/blocks/blocks.js:18820
+#: incl/advanced-gutenberg-main.php:4330
 msgid "HTML Tag"
 msgstr ""
 
-#: assets/blocks/blocks.js:19043 incl/advanced-gutenberg-main.php:4257
+#: assets/blocks/blocks.js:18822
+#: incl/advanced-gutenberg-main.php:4335
 msgid "H1"
 msgstr ""
 
-#: assets/blocks/blocks.js:19043 incl/advanced-gutenberg-main.php:4261
+#: assets/blocks/blocks.js:18822
+#: incl/advanced-gutenberg-main.php:4339
 msgid "H2"
 msgstr ""
 
-#: assets/blocks/blocks.js:19043 incl/advanced-gutenberg-main.php:4265
+#: assets/blocks/blocks.js:18822
+#: incl/advanced-gutenberg-main.php:4343
 msgid "H3"
 msgstr ""
 
-#: assets/blocks/blocks.js:19043 incl/advanced-gutenberg-main.php:4269
+#: assets/blocks/blocks.js:18822
+#: incl/advanced-gutenberg-main.php:4347
 msgid "H4"
 msgstr ""
 
-#: assets/blocks/blocks.js:19043 incl/advanced-gutenberg-main.php:4273
+#: assets/blocks/blocks.js:18822
+#: incl/advanced-gutenberg-main.php:4351
 msgid "H5"
 msgstr ""
 
-#: assets/blocks/blocks.js:19043 incl/advanced-gutenberg-main.php:4277
+#: assets/blocks/blocks.js:18822
+#: incl/advanced-gutenberg-main.php:4355
 msgid "H6"
 msgstr ""
 
-#: assets/blocks/blocks.js:19657
-msgid "info"
-msgstr ""
-
-#: assets/blocks/blocks.js:19993 assets/blocks/blocks.js:20030
-msgid "Click to change logo"
-msgstr ""
-
-#: assets/blocks/blocks.js:20073 assets/blocks/blocks.js:28417
-#: assets/blocks/blocks.js:28432 assets/blocks/blocks.js:28447
-msgid "Text…"
-msgstr ""
-
-#: assets/blocks/blocks.js:20091 assets/blocks/blocks.js:20360
-#: assets/blocks/blocks.js:20491
-msgid "Register…"
-msgstr ""
-
-#: assets/blocks/blocks.js:20111
-msgid "Welcome text…"
-msgstr ""
-
-#: assets/blocks/blocks.js:20135 assets/blocks/blocks.js:20384
-msgid "Username label…"
-msgstr ""
-
-#: assets/blocks/blocks.js:20184
-msgid "Password label…"
-msgstr ""
-
-#: assets/blocks/blocks.js:20244
-msgid "Remember me…"
-msgstr ""
-
-#: assets/blocks/blocks.js:20276
-msgid "Login…"
-msgstr ""
-
-#: assets/blocks/blocks.js:20303
-msgid "Lost password…"
-msgstr ""
-
-#: assets/blocks/blocks.js:20339
-msgid "Back…"
-msgstr ""
-
-#: assets/blocks/blocks.js:20433
-msgid "Email label…"
-msgstr "Etiqueta de correo electrónico.."
-
-#: assets/blocks/blocks.js:20501 assets/blocks/blocks.js:21047
-msgid "Login/Register Form"
-msgstr ""
-
-#: assets/blocks/blocks.js:20509
-msgid "Options"
-msgstr ""
-
-#: assets/blocks/blocks.js:20512
-msgid "Switch View"
-msgstr ""
-
-#: assets/blocks/blocks.js:20524
-msgid "Form State"
-msgstr "Estado del formulario"
-
-#: assets/blocks/blocks.js:20526
-msgid "Initial Form"
-msgstr ""
-
-#: assets/blocks/blocks.js:20527
-msgid "Form that show on load."
-msgstr ""
-
-#: assets/blocks/blocks.js:20529
-msgid "Login"
-msgstr ""
-
-#: assets/blocks/blocks.js:20529
-msgid "Register"
-msgstr ""
-
-#: assets/blocks/blocks.js:20536
-msgid "Redirect After Login"
-msgstr ""
-
-#: assets/blocks/blocks.js:20538
-msgid "Home"
-msgstr ""
-
-#: assets/blocks/blocks.js:20538
-msgid "Dashboard"
-msgstr "Escritorio"
-
-#: assets/blocks/blocks.js:20538 assets/blocks/blocks.js:22612
-#: incl/advanced-gutenberg-main.php:3049
+#: assets/blocks/blocks.js:20317
+#: assets/blocks/blocks.js:22391
+#: incl/advanced-gutenberg-main.php:3127
 msgid "Custom"
 msgstr "Personalizado"
 
-#: assets/blocks/blocks.js:20544
-msgid "Custom redirect link"
-msgstr ""
-
-#: assets/blocks/blocks.js:20551
-msgid "Form Width (px)"
-msgstr ""
-
-#: assets/blocks/blocks.js:20560
-msgid "Show Logo"
-msgstr ""
-
-#: assets/blocks/blocks.js:20567
-msgid "Logo Width (px)"
-msgstr ""
-
-#: assets/blocks/blocks.js:20576
-msgid "Show input field icon"
-msgstr ""
-
-#: assets/blocks/blocks.js:20583
-msgid "Show register/header link"
-msgstr ""
-
-#: assets/blocks/blocks.js:20593
-msgid "Header color"
-msgstr "Color del encabezado"
-
-#: assets/blocks/blocks.js:20601
-msgid "Show lost password link"
-msgstr ""
-
-#: assets/blocks/blocks.js:20610
-msgid "Input placeholder"
-msgstr ""
-
-#: assets/blocks/blocks.js:20612
-msgid "Login input placeholder"
-msgstr ""
-
-#: assets/blocks/blocks.js:20619
-msgid "Username input placeholder"
-msgstr ""
-
-#: assets/blocks/blocks.js:20620 assets/blocks/blocks.js:20628
-msgid "Use in register form"
-msgstr ""
-
-#: assets/blocks/blocks.js:20636
-msgid "Text/Input Color"
-msgstr ""
-
-#: assets/blocks/blocks.js:20639
-msgid "Input background color"
-msgstr "Color de fondo del campo"
-
-#: assets/blocks/blocks.js:20645
-msgid "Input color"
-msgstr "Color de entrada"
-
-#: assets/blocks/blocks.js:20727
-msgid "Submit Button Hover"
-msgstr ""
-
-#: assets/blocks/blocks.js:20729 assets/blocks/blocks.js:25629
-msgid "Hover Colors"
-msgstr "Colores al pasar por encima"
-
-#: assets/blocks/blocks.js:20744 assets/blocks/blocks.js:25644
-msgid "Shadow color"
-msgstr "Color de la sombra"
-
-#: assets/blocks/blocks.js:20832
-msgid "Registration Form"
-msgstr ""
-
-#: assets/blocks/blocks.js:20833
-msgid ""
-"Registration for your website is currently disabled, enable it in WordPress "
-"General settings to use registration form"
-msgstr ""
-
-#: assets/blocks/blocks.js:21048
-msgid "Create a login form for your post/page."
-msgstr ""
-
-#: assets/blocks/blocks.js:22398
-msgid "No matching address found!"
-msgstr ""
-
-#: assets/blocks/blocks.js:22438 assets/blocks/blocks.js:22722
-msgid "Map"
-msgstr ""
-
-#: assets/blocks/blocks.js:22446
-msgid "Map settings"
-msgstr "Configuración del Mapa"
-
-#: assets/blocks/blocks.js:22451
-msgid "Address"
-msgstr ""
-
-#: assets/blocks/blocks.js:22459
-msgid "Use Lat/Lng"
-msgstr ""
-
-#: assets/blocks/blocks.js:22462
-msgid "Enter address…"
-msgstr ""
-
-#: assets/blocks/blocks.js:22473
-msgid "Fetch Location"
-msgstr ""
-
-#: assets/blocks/blocks.js:22482
-msgid "Current"
-msgstr ""
-
-#: assets/blocks/blocks.js:22497
-msgid "Location"
-msgstr "Ubicación"
-
-#: assets/blocks/blocks.js:22505
-msgid "Use Address"
-msgstr ""
-
-#: assets/blocks/blocks.js:22508
-msgid "Enter latitude…"
-msgstr "Introduzca la latitud.."
-
-#: assets/blocks/blocks.js:22509 incl/advanced-gutenberg-main.php:3007
+#: assets/blocks/blocks.js:22288
+#: incl/advanced-gutenberg-main.php:3085
 msgid "Latitude"
 msgstr ""
 
-#: assets/blocks/blocks.js:22516
-msgid "Enter longitude…"
-msgstr ""
-
-#: assets/blocks/blocks.js:22517 incl/advanced-gutenberg-main.php:3014
+#: assets/blocks/blocks.js:22296
+#: incl/advanced-gutenberg-main.php:3092
 msgid "Longitude"
 msgstr ""
 
-#: assets/blocks/blocks.js:22524
-msgid "Zoom level"
-msgstr ""
-
-#: assets/blocks/blocks.js:22555
-msgid "Marker Icon (27x43 px)"
-msgstr ""
-
-#: assets/blocks/blocks.js:22566
-msgid "Remove"
-msgstr ""
-
-#: assets/blocks/blocks.js:22574
-msgid "Choose icon"
-msgstr ""
-
-#: assets/blocks/blocks.js:22578
-msgid "Marker icon"
-msgstr ""
-
-#: assets/blocks/blocks.js:22583 incl/advanced-gutenberg-main.php:3058
+#: assets/blocks/blocks.js:22362
+#: incl/advanced-gutenberg-main.php:3136
 msgid "Marker Title"
 msgstr ""
 
-#: assets/blocks/blocks.js:22585
-msgid "Enter custom title…"
-msgstr ""
-
-#: assets/blocks/blocks.js:22591
-msgid "Marker description"
-msgstr ""
-
-#: assets/blocks/blocks.js:22593
-msgid "Enter custom description…"
-msgstr ""
-
-#: assets/blocks/blocks.js:22599
-msgid "Open marker tooltip"
-msgstr ""
-
-#: assets/blocks/blocks.js:22606
-msgid "Map styles"
-msgstr "Estilos del mapa"
-
-#: assets/blocks/blocks.js:22607
-msgid "Custom map style is recommended for experienced users only."
-msgstr ""
-
-#: assets/blocks/blocks.js:22612
-msgid "Standard"
-msgstr ""
-
-#: assets/blocks/blocks.js:22615
-msgid "Custom code"
-msgstr "Código Personalizado"
-
-#: assets/blocks/blocks.js:22620
-msgid "Invalid JSON"
-msgstr ""
-
-#: assets/blocks/blocks.js:22622
-msgid ""
-"Paste your custom map styles in json format into the text field. You can "
-"create your own map styles by follow one of these links: "
-msgstr ""
-
-#: assets/blocks/blocks.js:22632
-msgid "Enter your json code here…"
-msgstr ""
-
-#: assets/blocks/blocks.js:22647
-msgid "No API Key Provided!"
-msgstr ""
-
-#: assets/blocks/blocks.js:22648
-msgid ""
-"Opps! Look like you have not configured your Google API Key yet. Add an API "
-"Key and refresh the page to start using Map Block. This is a requirement "
-"enforced by Google."
-msgstr ""
-
-#: assets/blocks/blocks.js:22656
-msgid "Add Google API Key"
-msgstr ""
-
-#: assets/blocks/blocks.js:22723
-msgid "Block for inserting location map."
-msgstr ""
-
-#: assets/blocks/blocks.js:22729
-msgid "google map"
-msgstr ""
-
-#: assets/blocks/blocks.js:22729
-msgid "location"
-msgstr "ubicación"
-
-#: assets/blocks/blocks.js:22729
-msgid "address"
-msgstr ""
-
-#: assets/blocks/blocks.js:22967 assets/blocks/blocks.js:23257
-msgid "Newsletter"
-msgstr ""
-
-#: assets/blocks/blocks.js:22975
-msgid "Newsletter Settings"
-msgstr "Ajustes del Boletín"
-
-#: assets/blocks/blocks.js:22996 incl/advanced-gutenberg-main.php:3568
+#: assets/blocks/blocks.js:22775
+#: incl/advanced-gutenberg-main.php:3646
 msgid "Form style"
 msgstr "Estilo del formulario"
 
-#: assets/blocks/blocks.js:22998 incl/advanced-gutenberg-main.php:3577
+#: assets/blocks/blocks.js:22777
+#: incl/advanced-gutenberg-main.php:3655
 msgid "Alternative"
 msgstr ""
 
-#: assets/blocks/blocks.js:23004
-msgid "Form width (px)"
-msgstr ""
-
-#: assets/blocks/blocks.js:23020
-msgid "First Name input placeholder"
-msgstr ""
-
-#: assets/blocks/blocks.js:23027
-msgid "Last Name input placeholder"
-msgstr ""
-
-#: assets/blocks/blocks.js:23189 assets/blocks/blocks.js:23402
-msgid "First Name"
-msgstr "Nombre"
-
-#: assets/blocks/blocks.js:23204 assets/blocks/blocks.js:23417
-msgid "Last Name"
-msgstr ""
-
-#: assets/blocks/blocks.js:23258
-msgid "Fastest way to create a newsletter form for your page."
-msgstr ""
-
-#: assets/blocks/blocks.js:23264
-msgid "newsletter"
-msgstr ""
-
-#: assets/blocks/blocks.js:23264
-msgid "email"
-msgstr "email"
-
-#: assets/blocks/blocks.js:23557 assets/blocks/blocks.js:23560
-#: assets/blocks/blocks.js:23562
-msgid "The leading post on top, the rest in 2 columns below"
-msgstr ""
-
-#: assets/blocks/blocks.js:23557 assets/blocks/blocks.js:23560
-msgid "The leading post on top, the rest in 3 columns below"
-msgstr ""
-
-#: assets/blocks/blocks.js:23557 assets/blocks/blocks.js:23560
-msgid "The leading post on top, the rest in 4 columns below"
-msgstr ""
-
-#: assets/blocks/blocks.js:23557 assets/blocks/blocks.js:23560
-msgid "The leading post on top, the rest in 5 columns below"
-msgstr ""
-
-#: assets/blocks/blocks.js:23557 assets/blocks/blocks.js:23560
-#: assets/blocks/blocks.js:23562
-msgid "All posts in 2 columns grid"
-msgstr ""
-
-#: assets/blocks/blocks.js:23557 assets/blocks/blocks.js:23560
-msgid "All posts in 3 columns grid"
-msgstr ""
-
-#: assets/blocks/blocks.js:23557 assets/blocks/blocks.js:23560
-msgid "All posts in 4 columns grid"
-msgstr ""
-
-#: assets/blocks/blocks.js:23557 assets/blocks/blocks.js:23560
-msgid "All posts in 5 columns grid"
-msgstr ""
-
-#: assets/blocks/blocks.js:23566
-msgid "The leading post in the left, 1 post in the right"
-msgstr ""
-
-#: assets/blocks/blocks.js:23566
-msgid "The leading post in the left, 2 posts in the right"
-msgstr ""
-
-#: assets/blocks/blocks.js:23566
-msgid "The leading post in the left, 3 posts in the right"
-msgstr ""
-
-#: assets/blocks/blocks.js:23566
-msgid "The leading post in the left, 4 posts in the right"
-msgstr ""
-
-#: assets/blocks/blocks.js:23566
-msgid "The leading post in the left, 5 posts in the right"
-msgstr ""
-
-#: assets/blocks/blocks.js:23566
-msgid "The leading post in the right, 1 post in the left"
-msgstr ""
-
-#: assets/blocks/blocks.js:23566
-msgid "The leading post in the right, 2 posts in the left"
-msgstr ""
-
-#: assets/blocks/blocks.js:23566
-msgid "The leading post in the right, 3 posts in the left"
-msgstr ""
-
-#: assets/blocks/blocks.js:23566
-msgid "The leading post in the right, 4 posts in the left"
-msgstr ""
-
-#: assets/blocks/blocks.js:23566
-msgid "The leading post in the right, 5 posts in the left"
-msgstr ""
-
-#: assets/blocks/blocks.js:23566
-msgid "The leading post on top, the rest of posts below"
-msgstr ""
-
-#: assets/blocks/blocks.js:23566
-msgid ""
-"The leading post on top, below 2 columns with 1 post in the left and 1 post "
-"in the right"
-msgstr ""
-
-#: assets/blocks/blocks.js:23566
-msgid ""
-"The leading post on top, below 2 columns with 1 post in the left and 2 posts "
-"in the right"
-msgstr ""
-
-#: assets/blocks/blocks.js:23566
-msgid ""
-"The leading post on top, below 2 columns with 1 post in the left and 3 posts "
-"in the right"
-msgstr ""
-
-#: assets/blocks/blocks.js:23877
-msgid "Slider View Settings"
-msgstr ""
-
-#: assets/blocks/blocks.js:23881 assets/blocks/blocks.js:23983
-msgid "Headline"
-msgstr ""
-
-#: assets/blocks/blocks.js:23896
-msgid "Frontpage View Settings"
-msgstr ""
-
-#: assets/blocks/blocks.js:23983
-msgid "Boxed"
-msgstr ""
-
-#: assets/blocks/blocks.js:23989 assets/blocks/blocks.js:24033
-msgid "Space between columns and rows"
-msgstr ""
-
-#: assets/blocks/blocks.js:23999
-msgid "Newspaper View Settings"
-msgstr ""
-
-#: assets/blocks/blocks.js:24031
-msgid "Masonry View Settings"
-msgstr ""
-
-#: assets/blocks/blocks.js:24043
-msgid "Post Settings"
-msgstr ""
-
-#: assets/blocks/blocks.js:24045
-msgid "Post Type"
-msgstr ""
-
-#: assets/blocks/blocks.js:24067
-msgid "Filters"
-msgstr ""
-
-#: assets/blocks/blocks.js:24073
-msgid "Show content with these Categories"
-msgstr ""
-
-#: assets/blocks/blocks.js:24090
-msgid "Show content with these Tags"
-msgstr ""
-
-#: assets/blocks/blocks.js:24091
-msgid "Type a tag"
-msgstr ""
-
-#: assets/blocks/blocks.js:24106
-msgid "Show content with these "
-msgstr ""
-
-#: assets/blocks/blocks.js:24112 assets/blocks/blocks.js:25215
-#: assets/blocks/blocks.js:25218
-msgid "Author"
-msgstr "Autor"
-
-#: assets/blocks/blocks.js:24113 assets/blocks/blocks.js:25275
-#: assets/blocks/blocks.js:29151 assets/blocks/blocks.js:29159
-msgid "All"
-msgstr ""
-
-#: assets/blocks/blocks.js:24120
-msgid "Show only posts from current user"
-msgstr ""
-
-#: assets/blocks/blocks.js:24121
-msgid "When an user is logged in, his posts will be shown only."
-msgstr ""
-
-#: assets/blocks/blocks.js:24128
-msgid "Exclude current post"
-msgstr ""
-
-#: assets/blocks/blocks.js:24129
-msgid "If this post is listed in the block, you can exclude it."
-msgstr ""
-
-#: assets/blocks/blocks.js:24139
-msgid "Exclude these posts"
-msgstr ""
-
-#: assets/blocks/blocks.js:24140
-msgid "Search by title"
-msgstr ""
-
-#: assets/blocks/blocks.js:24148
-msgid "Display Settings"
-msgstr ""
-
-#: assets/blocks/blocks.js:24162
-msgid "Columns (Tablet)"
-msgstr ""
-
-#: assets/blocks/blocks.js:24171
-msgid "Columns (Mobile)"
-msgstr ""
-
-#: assets/blocks/blocks.js:24181
-msgid "Display Featured Image"
-msgstr ""
-
-#: assets/blocks/blocks.js:24192
-msgid "For all posts"
-msgstr ""
-
-#: assets/blocks/blocks.js:24192
-msgid "For the first post"
-msgstr ""
-
-#: assets/blocks/blocks.js:24192
-msgid "For the first 2 posts"
-msgstr ""
-
-#: assets/blocks/blocks.js:24192
-msgid "For the first 3 posts"
-msgstr ""
-
-#: assets/blocks/blocks.js:24192
-msgid "For the first 4 posts"
-msgstr ""
-
-#: assets/blocks/blocks.js:24192
-msgid "For the first 5 posts"
-msgstr ""
-
-#: assets/blocks/blocks.js:24199
-msgid "Enable Placeholder Image"
-msgstr ""
-
-#: assets/blocks/blocks.js:24205
-msgid ""
-"If a post doesn't have a featured image, the placeholder image will be "
-"displayed instead"
-msgstr ""
-
-#: assets/blocks/blocks.js:24208
-msgid "Position"
-msgstr ""
-
-#: assets/blocks/blocks.js:24217
-msgid "Display Caption"
-msgstr ""
-
-#: assets/blocks/blocks.js:24226
-msgid "Display Post Author"
-msgstr ""
-
-#: assets/blocks/blocks.js:24233
-msgid "Display Post Date"
-msgstr ""
-
-#: assets/blocks/blocks.js:24235 assets/blocks/blocks.js:24272
-#: assets/blocks/blocks.js:24280
-msgid "Hide"
-msgstr ""
-
-#: assets/blocks/blocks.js:24235
-msgid "Created Date"
-msgstr ""
-
-#: assets/blocks/blocks.js:24235
-msgid "Updated Date"
-msgstr ""
-
-#: assets/blocks/blocks.js:24244
-msgid "Post Date Format"
-msgstr ""
-
-#: assets/blocks/blocks.js:24246
-msgid "Absolute"
-msgstr ""
-
-#: assets/blocks/blocks.js:24246
-msgid "Relative"
-msgstr ""
-
-#: assets/blocks/blocks.js:24252
-msgid "Display Post Time"
-msgstr ""
-
-#: assets/blocks/blocks.js:24260
-msgid "Display Comment Counts"
-msgstr ""
-
-#: assets/blocks/blocks.js:24270
-msgid "Display Category"
-msgstr ""
-
-#: assets/blocks/blocks.js:24272 assets/blocks/blocks.js:24280
-msgid "Show"
-msgstr ""
-
-#: assets/blocks/blocks.js:24272 assets/blocks/blocks.js:24280
-msgid "Show & Link"
-msgstr ""
-
-#: assets/blocks/blocks.js:24278
-msgid "Display Tags"
-msgstr ""
-
-#: assets/blocks/blocks.js:24295
-msgid "Display these taxonomies"
-msgstr ""
-
-#: assets/blocks/blocks.js:24301
-msgid "Link above taxonomies"
-msgstr ""
-
-#: assets/blocks/blocks.js:24309
-msgid "Display Read More Link"
-msgstr ""
-
-#: assets/blocks/blocks.js:24316
-msgid "Read more text"
-msgstr ""
-
-#: assets/blocks/blocks.js:24323
-msgid "Display Post Excerpt"
-msgstr ""
-
-#: assets/blocks/blocks.js:24330
-msgid "First Post text as Excerpt"
-msgstr ""
-
-#: assets/blocks/blocks.js:24331
-msgid "Display some part of first text found in post as excerpt."
-msgstr ""
-
-#: assets/blocks/blocks.js:24338
-msgid "Post Text Excerpt length"
-msgstr ""
-
-#: assets/blocks/blocks.js:24347
-msgid "Text after title"
-msgstr ""
-
-#: assets/blocks/blocks.js:24348
-msgid "Include text/HTML after title"
-msgstr ""
-
-#: assets/blocks/blocks.js:24355
-msgid "Text before read more"
-msgstr ""
-
-#: assets/blocks/blocks.js:24356
-msgid "Include text/HTML before read more"
-msgstr ""
-
-#: assets/blocks/blocks.js:24369 assets/blocks/blocks.js:24431
-#: assets/blocks/blocks.js:25002
-msgid "Content Display"
-msgstr ""
-
-#: assets/blocks/blocks.js:24377
-msgid "Content Display Block"
-msgstr ""
-
-#: assets/blocks/blocks.js:24379
-msgid "No posts found! Try to change filters or publish posts."
-msgstr ""
-
-#: assets/blocks/blocks.js:24386
-msgid "Grid View"
-msgstr ""
-
-#: assets/blocks/blocks.js:24393
-msgid "List View"
-msgstr ""
-
-#: assets/blocks/blocks.js:24400 assets/blocks/blocks.js:29123
-msgid "Slider View"
-msgstr ""
-
-#: assets/blocks/blocks.js:24407
-msgid "Frontpage View"
-msgstr ""
-
-#: assets/blocks/blocks.js:24414
-msgid "Newspaper View"
-msgstr ""
-
-#: assets/blocks/blocks.js:24422
-msgid "Masonry View"
-msgstr ""
-
-#: assets/blocks/blocks.js:24472
-msgid "Post Image"
-msgstr ""
-
-#: assets/blocks/blocks.js:24633 assets/blocks/recent-posts/block.php:349
+#: assets/blocks/blocks.js:24411
+#: assets/blocks/recent-posts/block.php:349
 msgid "Read More"
 msgstr ""
 
-#: assets/blocks/blocks.js:25003
-msgid ""
-"Displays your content in grid, list, slider, frontpage, newspaper, and "
-"masonry views with beautiful layouts and styles."
-msgstr ""
-
-#: assets/blocks/blocks.js:25009
-msgid "recent posts"
-msgstr ""
-
-#: assets/blocks/blocks.js:25009
-msgid "latest posts"
-msgstr ""
-
-#: assets/blocks/blocks.js:25009
-msgid "posts slide"
-msgstr ""
-
-#: assets/blocks/blocks.js:25009
-msgid "posts grid"
-msgstr ""
-
-#: assets/blocks/blocks.js:25009
-msgid "posts"
-msgstr ""
-
-#: assets/blocks/blocks.js:25009
-msgid "pages"
-msgstr ""
-
-#: assets/blocks/blocks.js:25201
-msgid "Created: Newest to oldest"
-msgstr ""
-
-#: assets/blocks/blocks.js:25204
-msgid "Created: Oldest to newest"
-msgstr ""
-
-#. translators: label for ordering posts by title in ascending order
-#: assets/blocks/blocks.js:25208 assets/blocks/blocks.js:25215
-msgid "A → Z"
-msgstr ""
-
-#. translators: label for ordering posts by title in descending order
-#: assets/blocks/blocks.js:25212 assets/blocks/blocks.js:25218
-msgid "Z → A"
-msgstr ""
-
-#: assets/blocks/blocks.js:25221
-msgid "Modified: Newest to oldest"
-msgstr ""
-
-#: assets/blocks/blocks.js:25224
-msgid "Modified: Oldest to newest"
-msgstr ""
-
-#: assets/blocks/blocks.js:25227
-msgid "Post ID Descending"
-msgstr ""
-
-#: assets/blocks/blocks.js:25230
-msgid "Post ID Ascending"
-msgstr ""
-
-#: assets/blocks/blocks.js:25237
-msgid "Randomize"
-msgstr ""
-
-#: assets/blocks/blocks.js:25245
-msgid "Comments, decreasing order"
-msgstr ""
-
-#: assets/blocks/blocks.js:25248
-msgid "Comments, increasing order"
-msgstr ""
-
-#: assets/blocks/blocks.js:25255
-msgid "Order by"
-msgstr "Ordenar por"
-
-#: assets/blocks/blocks.js:25274 assets/blocks/blocks.js:29157
-msgid "Category"
-msgstr ""
-
-#: assets/blocks/blocks.js:25280 assets/blocks/blocks.js:28124
-msgid "Number of items"
-msgstr ""
-
-#: assets/blocks/blocks.js:25491 assets/blocks/blocks.js:25844
-msgid "Search Bar"
-msgstr ""
-
-#: assets/blocks/blocks.js:25499
-msgid "Search Bar State"
-msgstr ""
-
-#: assets/blocks/blocks.js:25519
-msgid "Search Icon Settings"
-msgstr "Configuración del icono de búsqueda"
-
-#: assets/blocks/blocks.js:25521
-msgid "Search icon on the right"
-msgstr ""
-
-#: assets/blocks/blocks.js:25533
-msgid "Search icon"
-msgstr ""
-
-#: assets/blocks/blocks.js:25558
-msgid "Search Input Settings"
-msgstr ""
-
-#: assets/blocks/blocks.js:25560
-msgid "Search placeholder"
-msgstr ""
-
-#: assets/blocks/blocks.js:25586
-msgid "Search Button Settings"
-msgstr ""
-
-#: assets/blocks/blocks.js:25588
-msgid "Show submit button"
-msgstr ""
-
-#: assets/blocks/blocks.js:25595
-msgid "Search button on the left"
-msgstr ""
-
-#: assets/blocks/blocks.js:25620
-msgid "Affect both input and button."
-msgstr ""
-
-#: assets/blocks/blocks.js:25653
-msgid "Hover Shadow"
-msgstr ""
-
-#: assets/blocks/blocks.js:25845
-msgid "Easy to create a search bar for your site."
-msgstr ""
-
-#: assets/blocks/blocks.js:25862
-msgid "Classic"
-msgstr ""
-
-#: assets/blocks/blocks.js:26219 assets/blocks/blocks.js:26478
-msgid "Social Links"
-msgstr ""
-
-#: assets/blocks/blocks.js:26231
-msgid "Add item"
-msgstr ""
-
-#: assets/blocks/blocks.js:26239
-msgid "Remove selected item"
-msgstr "Eliminar el elemento seleccionado"
-
-#: assets/blocks/blocks.js:26265
-msgid "Preset Icons"
-msgstr ""
-
-#: assets/blocks/blocks.js:26267
-msgid "Type here to search…"
-msgstr ""
-
-#: assets/blocks/blocks.js:26311
-msgid "Custom icon"
-msgstr "Icono personalizado"
-
-#: assets/blocks/blocks.js:26336
-msgid "Upload/Choose"
-msgstr ""
-
-#: assets/blocks/blocks.js:26342 assets/blocks/blocks.js:26345
-msgid "Preset Icon Color"
-msgstr "Color de icono preestablecido"
-
-#: assets/blocks/blocks.js:26364
-msgid "Icons settings"
-msgstr "Configuración de los iconos"
-
-#: assets/blocks/blocks.js:26375
-msgid "Icon space"
-msgstr ""
-
-#: assets/blocks/blocks.js:26411 assets/blocks/blocks.js:26530
-#: assets/blocks/blocks.js:26581
-msgid "Social link icon"
-msgstr ""
-
-#: assets/blocks/blocks.js:26428
-msgid "Social link:"
-msgstr ""
-
-#: assets/blocks/blocks.js:26431
-msgid "Enter social link…"
-msgstr ""
-
-#: assets/blocks/blocks.js:26479
-msgid "Insert your social link with icon."
-msgstr ""
-
-#: assets/blocks/blocks.js:26485
-msgid "social icons"
-msgstr ""
-
-#: assets/blocks/blocks.js:26485
-msgid "shares"
-msgstr ""
-
-#: assets/blocks/blocks.js:26485
-msgid "icon link"
-msgstr ""
-
-#: assets/blocks/blocks.js:26660 assets/blocks/blocks.js:26843
-msgid "Table of Contents"
-msgstr ""
-
-#: assets/blocks/blocks.js:26682
-msgid "Insert Table of Contents"
-msgstr ""
-
-#: assets/blocks/blocks.js:26712
-msgid ""
-"After manually changing the anchor, remember to refresh summary block to "
-"make the links work!"
-msgstr ""
-
-#: assets/blocks/blocks.js:26848
-msgid ""
-"Your current post/page has no headings. Try add some headings and update "
-"this block later"
-msgstr ""
-
-#: assets/blocks/blocks.js:26855
-msgid "Update"
-msgstr ""
-
-#: assets/blocks/blocks.js:26903
-msgid "Update Table of Contents"
-msgstr ""
-
-#: assets/blocks/blocks.js:26913
-msgid "Table of Contents settings"
-msgstr ""
-
-#: assets/blocks/blocks.js:26915 incl/advanced-gutenberg-main.php:3220
+#: assets/blocks/blocks.js:26693
+#: incl/advanced-gutenberg-main.php:3298
 msgid "Load minimized"
 msgstr ""
 
-#: assets/blocks/blocks.js:26922 incl/advanced-gutenberg-main.php:3225
+#: assets/blocks/blocks.js:26700
+#: incl/advanced-gutenberg-main.php:3303
 msgid "Table of Contents header title"
 msgstr ""
 
-#: assets/blocks/blocks.js:26930 assets/blocks/blocks.js:26933
-#, fuzzy
-msgid "Anchor Color"
-msgstr "Color de anclaje"
-
-#: assets/blocks/blocks.js:27008
-msgid "Show the table of contents of current post/page."
-msgstr ""
-
-#: assets/blocks/blocks.js:27014
-msgid "summary"
-msgstr ""
-
-#: assets/blocks/blocks.js:27014
-msgid "table of content"
-msgstr "tabla de contenido"
-
-#: assets/blocks/blocks.js:27014
-msgid "table of contents"
-msgstr ""
-
-#: assets/blocks/blocks.js:27515
-msgid "New Tab"
-msgstr ""
-
-#: assets/blocks/blocks.js:27515
-msgid "Enter your content."
-msgstr ""
-
-#: assets/blocks/blocks.js:27575 assets/blocks/blocks.js:27578
-#: assets/blocks/blocks.js:27581
-msgid ""
-"Filler text (also placeholder text or dummy text) is text that shares some "
-"characteristics of a real written text, but is random or otherwise generated."
-msgstr ""
-
-#: assets/blocks/blocks.js:27629
-msgid "Tabs"
-msgstr ""
-
-#: assets/blocks/blocks.js:28107 assets/blocks/blocks.js:28617
-msgid "Testimonial"
-msgstr ""
-
-#: assets/blocks/blocks.js:28115
-msgid "Testimonial Settings"
-msgstr "Ajustes de los testimonios"
-
-#: assets/blocks/blocks.js:28117
-msgid "Slider view"
-msgstr ""
-
-#: assets/blocks/blocks.js:28125
-msgid "Range in Normal view is 1-3, and in Slider view is 4-10."
-msgstr ""
-
-#: assets/blocks/blocks.js:28137
-msgid "Items to show"
-msgstr ""
-
-#: assets/blocks/blocks.js:28146
-msgid "Items to scroll"
-msgstr ""
-
-#: assets/blocks/blocks.js:28156
-msgid "Slider Settings"
-msgstr "Configuración del Slider"
-
-#: assets/blocks/blocks.js:28158
-msgid "Center mode"
-msgstr "Modo centrado"
-
-#: assets/blocks/blocks.js:28165
-msgid "Pause on hover"
-msgstr ""
-
-#: assets/blocks/blocks.js:28172
-msgid "Auto play"
-msgstr ""
-
-#: assets/blocks/blocks.js:28179
-msgid "Autoplay speed (ms)"
-msgstr ""
-
-#: assets/blocks/blocks.js:28188
-msgid "Infinite Loop"
-msgstr ""
-
-#: assets/blocks/blocks.js:28204
-msgid "Show dots"
-msgstr ""
-
-#: assets/blocks/blocks.js:28211
-msgid "Show arrows"
-msgstr ""
-
-#: assets/blocks/blocks.js:28221
-msgid "Arrow size"
-msgstr "Tamaño de flecha"
-
-#: assets/blocks/blocks.js:28230
-msgid "Arrow border size"
-msgstr ""
-
-#: assets/blocks/blocks.js:28239
-msgid "Arrow border radius (%)"
-msgstr "Radio del borde de la flecha (%)"
-
-#: assets/blocks/blocks.js:28250
-msgid "Slider Colors"
-msgstr "Colores del Slider"
-
-#: assets/blocks/blocks.js:28253
-msgid "Arrow and Border Color"
-msgstr "Color de la flecha y del borde"
-
-#: assets/blocks/blocks.js:28259
-msgid "Dots Color"
-msgstr "Color de los puntos"
-
-#: assets/blocks/blocks.js:28269
-msgid "Avatar"
-msgstr "Avatar"
-
-#: assets/blocks/blocks.js:28271
-msgid "Avatar Colors"
-msgstr ""
-
-#: assets/blocks/blocks.js:28288 incl/advanced-gutenberg-main.php:3370
+#: assets/blocks/blocks.js:28066
+#: incl/advanced-gutenberg-main.php:3448
 msgid "Border Radius (%)"
 msgstr "Radio del Borde (%)"
 
-#: assets/blocks/blocks.js:28297 incl/advanced-gutenberg-main.php:2412
-#: incl/advanced-gutenberg-main.php:2479 incl/advanced-gutenberg-main.php:3327
-#: incl/advanced-gutenberg-main.php:3377 incl/advanced-gutenberg-main.php:4019
-#: incl/advanced-gutenberg-main.php:4089 incl/advanced-gutenberg-main.php:4158
+#: assets/blocks/blocks.js:28075
+#: incl/advanced-gutenberg-main.php:2490
+#: incl/advanced-gutenberg-main.php:2557
+#: incl/advanced-gutenberg-main.php:3405
+#: incl/advanced-gutenberg-main.php:3455
+#: incl/advanced-gutenberg-main.php:4097
+#: incl/advanced-gutenberg-main.php:4167
+#: incl/advanced-gutenberg-main.php:4236
 msgid "Border Width"
 msgstr "Ancho del Borde"
 
-#: assets/blocks/blocks.js:28306 incl/advanced-gutenberg-main.php:3384
+#: assets/blocks/blocks.js:28084
+#: incl/advanced-gutenberg-main.php:3462
 msgid "Avatar Size"
 msgstr "Tamaño del Avatar"
 
-#: assets/blocks/blocks.js:28315
-msgid "Avatar Position"
-msgstr "Posición del avatar"
-
-#: assets/blocks/blocks.js:28317
-msgid "right"
-msgstr "derecha"
-
-#: assets/blocks/blocks.js:28324
-msgid "Text Colors"
-msgstr "Colores de Texto"
-
-#: assets/blocks/blocks.js:28327 incl/advanced-gutenberg-main.php:3396
+#: assets/blocks/blocks.js:28105
+#: incl/advanced-gutenberg-main.php:3474
 msgid "Name Color"
 msgstr "Nombre del color"
 
-#: assets/blocks/blocks.js:28333 incl/advanced-gutenberg-main.php:3401
+#: assets/blocks/blocks.js:28111
+#: incl/advanced-gutenberg-main.php:3479
 msgid "Position Color"
 msgstr "Posición del Color"
 
-#: assets/blocks/blocks.js:28376
-msgid "Click to change avatar"
-msgstr ""
-
-#: assets/blocks/blocks.js:28392
-msgid "Remove avatar"
-msgstr ""
-
-#: assets/blocks/blocks.js:28618
-msgid "Block for creating personal or team/group information."
-msgstr ""
-
-#: assets/blocks/blocks.js:28624
-msgid "testimonial"
-msgstr ""
-
-#: assets/blocks/blocks.js:28624
-msgid "personal"
-msgstr ""
-
-#: assets/blocks/blocks.js:28624
-msgid "about"
-msgstr ""
-
-#: assets/blocks/blocks.js:29116
-msgid "Normal View"
-msgstr ""
-
-#: assets/blocks/blocks.js:29134 assets/blocks/blocks.js:29340
-msgid "Woo Products"
-msgstr ""
-
-#: assets/blocks/blocks.js:29147
-msgid "Products Settings"
-msgstr "Configuración de productos"
-
-#: assets/blocks/blocks.js:29149
-msgid "Product Status"
-msgstr ""
-
-#: assets/blocks/blocks.js:29151
-msgid "Featured"
-msgstr ""
-
-#: assets/blocks/blocks.js:29151
-msgid "On Sale"
-msgstr ""
-
-#: assets/blocks/blocks.js:29159
-msgid "Selected"
-msgstr "Seleccionado"
-
-#: assets/blocks/blocks.js:29187 incl/advanced-gutenberg-main.php:3415
+#: assets/blocks/blocks.js:28965
+#: incl/advanced-gutenberg-main.php:3493
 msgid "Layout Settings"
 msgstr "Opciones de diseño"
 
-#: assets/blocks/blocks.js:29198 incl/advanced-gutenberg-main.php:3425
+#: assets/blocks/blocks.js:28976
+#: incl/advanced-gutenberg-main.php:3503
 msgid "Number of Products"
 msgstr ""
 
-#: assets/blocks/blocks.js:29207
-msgid "Order"
-msgstr ""
-
-#: assets/blocks/blocks.js:29209
-msgid "Newest to oldest"
-msgstr ""
-
-#: assets/blocks/blocks.js:29209
-msgid "Price: high to low"
-msgstr ""
-
-#: assets/blocks/blocks.js:29209
-msgid "Price: low to high"
-msgstr ""
-
-#: assets/blocks/blocks.js:29209
-msgid "Highest Rating first"
-msgstr ""
-
-#: assets/blocks/blocks.js:29209
-msgid "Most sale first"
-msgstr ""
-
-#: assets/blocks/blocks.js:29209
-msgid "Title: Alphabetical"
-msgstr ""
-
-#: assets/blocks/blocks.js:29209
-msgid "Title: Alphabetical reversed"
-msgstr ""
-
-#: assets/blocks/blocks.js:29247
-msgid "Add to cart"
-msgstr ""
-
-#: assets/blocks/blocks.js:29256
-msgid "No products found."
-msgstr ""
-
-#: assets/blocks/blocks.js:29264
-msgid "Loading"
-msgstr ""
-
-#: assets/blocks/blocks.js:29272
-msgid "Woo Products Block"
-msgstr ""
-
-#: assets/blocks/blocks.js:29277
-msgid ""
-"WooCommerce has not been detected, make sure WooCommerce is installed and "
-"activated."
-msgstr ""
-
-#: assets/blocks/blocks.js:29287
-msgid "Try again"
-msgstr ""
-
-#: assets/blocks/blocks.js:29341
-msgid "Listing your products in a easy way."
-msgstr ""
-
-#: assets/blocks/blocks.js:29347
-msgid "woo commerce"
-msgstr ""
-
-#: assets/blocks/blocks.js:29347
-msgid "products list"
-msgstr ""
-
-#: assets/blocks/blocks.js:29347
-msgid "price list"
-msgstr ""
+#: assets/blocks/post-sidebar.js:202
+#: incl/view/advanced-gutenberg-settings.php:235
+msgid "Editor width"
+msgstr "Ancho del Editor"
 
 #: assets/blocks/recent-posts/block.php:238
 #: assets/blocks/recent-posts/block.php:910
@@ -3444,695 +947,749 @@ msgstr ""
 msgid "Updated"
 msgstr ""
 
-#: assets/js/settings.js:526
-msgid "Edit block"
-msgstr ""
-
-#: assets/js/settings.js:526
-msgid "default config"
-msgstr ""
-
 #. Plugin Name of the plugin/theme
-#: incl/advanced-gutenberg-main.php:233
+#: incl/advanced-gutenberg-main.php:246
 msgid "PublishPress Blocks"
 msgstr "PublishPress Blocks"
 
-#: incl/advanced-gutenberg-main.php:725 incl/advanced-gutenberg-main.php:892
-#: incl/advanced-gutenberg-main.php:1030 incl/advanced-gutenberg-main.php:1061
+#: incl/advanced-gutenberg-main.php:792
+#: incl/advanced-gutenberg-main.php:959
+#: incl/advanced-gutenberg-main.php:1097
+#: incl/advanced-gutenberg-main.php:1128
 msgid "No permission!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:816
+#: incl/advanced-gutenberg-main.php:883
 #: incl/view/advanced-gutenberg-profile.php:252
 msgctxt "no user roles"
 msgid "None"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:825
+#: incl/advanced-gutenberg-main.php:892
 #: incl/view/advanced-gutenberg-profile.php:261
 msgid "No users found."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:848
+#: incl/advanced-gutenberg-main.php:915
 msgid "First page"
 msgstr "Primera página"
 
-#: incl/advanced-gutenberg-main.php:874
+#: incl/advanced-gutenberg-main.php:941
 #: incl/view/advanced-gutenberg-profile.php:317
 msgid "Last page"
 msgstr "Última página"
 
-#: incl/advanced-gutenberg-main.php:899 incl/advanced-gutenberg-main.php:1066
+#: incl/advanced-gutenberg-main.php:966
+#: incl/advanced-gutenberg-main.php:1133
 msgid "Invalid nonce token!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:916
+#: incl/advanced-gutenberg-main.php:983
 msgid "New class"
 msgstr "Nueva clase"
 
-#: incl/advanced-gutenberg-main.php:917
+#: incl/advanced-gutenberg-main.php:984
 msgid "new-class"
 msgstr "Añadir nueva clase"
 
-#: incl/advanced-gutenberg-main.php:1035
+#: incl/advanced-gutenberg-main.php:1102
 msgid "Fail to verify nonce!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1122 incl/advanced-gutenberg-main.php:1196
-#: incl/advanced-gutenberg-main.php:1246
+#: incl/advanced-gutenberg-main.php:1189
+#: incl/advanced-gutenberg-main.php:1263
+#: incl/advanced-gutenberg-main.php:1313
 msgid "Bad Request!"
 msgstr "Solicitud incorrecta"
 
-#: incl/advanced-gutenberg-main.php:1129 incl/advanced-gutenberg-main.php:1203
-#: incl/advanced-gutenberg-main.php:1253
+#: incl/advanced-gutenberg-main.php:1196
+#: incl/advanced-gutenberg-main.php:1270
+#: incl/advanced-gutenberg-main.php:1320
 msgid "Server error. Try again later!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1137 incl/advanced-gutenberg-main.php:1211
-#: incl/advanced-gutenberg-main.php:1261
+#: incl/advanced-gutenberg-main.php:1204
+#: incl/advanced-gutenberg-main.php:1278
+#: incl/advanced-gutenberg-main.php:1328
 msgid "Cannot validate captcha"
 msgstr "No se puede validar el captcha"
 
-#: incl/advanced-gutenberg-main.php:1142 incl/advanced-gutenberg-main.php:1216
-#: incl/advanced-gutenberg-main.php:1266
+#: incl/advanced-gutenberg-main.php:1209
+#: incl/advanced-gutenberg-main.php:1283
+#: incl/advanced-gutenberg-main.php:1333
 msgid "Captcha validation error"
 msgstr "Error de validación del captcha"
 
-#: incl/advanced-gutenberg-main.php:1165
+#: incl/advanced-gutenberg-main.php:1232
 #: incl/view/advanced-gutenberg-email-form.php:15
 msgid "Website Contact"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1170
+#: incl/advanced-gutenberg-main.php:1237
 msgid "You have received a contact from your website."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1172
+#: incl/advanced-gutenberg-main.php:1239
 #: incl/view/advanced-gutenberg-profile.php:198
 msgid "Name"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1173 incl/advanced-gutenberg-main.php:3085
-#: incl/advanced-gutenberg-main.php:3123 incl/advanced-gutenberg-main.php:3161
+#: incl/advanced-gutenberg-main.php:1240
+#: incl/advanced-gutenberg-main.php:3163
+#: incl/advanced-gutenberg-main.php:3201
+#: incl/advanced-gutenberg-main.php:3239
 #: incl/view/advanced-gutenberg-profile.php:204
 msgid "Email"
 msgstr "Email"
 
-#: incl/advanced-gutenberg-main.php:1174
+#: incl/advanced-gutenberg-main.php:1241
 msgid "Date"
 msgstr "Fecha"
 
-#: incl/advanced-gutenberg-main.php:1175
+#: incl/advanced-gutenberg-main.php:1242
 msgid "Message"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1182
+#: incl/advanced-gutenberg-main.php:1249
 msgid "Error while sending form. Try again!"
 msgstr "Hubo un error mientras se enviaba el formulario."
 
-#: incl/advanced-gutenberg-main.php:1269
+#: incl/advanced-gutenberg-main.php:1336
 msgid "Captcha validated"
 msgstr "Captcha validado"
 
-#: incl/advanced-gutenberg-main.php:1272
+#: incl/advanced-gutenberg-main.php:1339
 msgid "Captcha is empty"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1576 incl/advanced-gutenberg-main.php:1577
+#: incl/advanced-gutenberg-main.php:1643
+#: incl/advanced-gutenberg-main.php:1644
 msgid "Blocks"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1729 incl/advanced-gutenberg-main.php:1730
+#: incl/advanced-gutenberg-main.php:1796
+#: incl/advanced-gutenberg-main.php:1797
 msgid "PublishPress Blocks Profiles"
 msgstr "Perfiles de PublishPress Blocks"
 
-#: incl/advanced-gutenberg-main.php:1731
+#: incl/advanced-gutenberg-main.php:1798
 #: incl/view/advanced-gutenberg-profile.php:96
 #: incl/view/advanced-gutenberg-profiles.php:41
 msgid "New Profile"
 msgstr "Nuevo Perfil"
 
-#: incl/advanced-gutenberg-main.php:1732
+#: incl/advanced-gutenberg-main.php:1799
 msgid "Add New Profile"
 msgstr "Añadir nuevo perfil"
 
-#: incl/advanced-gutenberg-main.php:1733
+#: incl/advanced-gutenberg-main.php:1800
 #: incl/view/advanced-gutenberg-profile.php:86
 msgid "Edit Profile"
 msgstr "Editar Perfil"
 
-#: incl/advanced-gutenberg-main.php:1734 incl/advanced-gutenberg-main.php:1740
+#: incl/advanced-gutenberg-main.php:1801
+#: incl/advanced-gutenberg-main.php:1807
 msgid "Profiles"
 msgstr "Perfiles"
 
-#: incl/advanced-gutenberg-main.php:1735
+#: incl/advanced-gutenberg-main.php:1802
 msgid "View Profile"
 msgstr "Ver Perfil"
 
-#: incl/advanced-gutenberg-main.php:1736
+#: incl/advanced-gutenberg-main.php:1803
 msgid "Search Profiles"
 msgstr "Buscar Perfiles"
 
-#: incl/advanced-gutenberg-main.php:1737
+#: incl/advanced-gutenberg-main.php:1804
 msgid "No profiles found"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1738
+#: incl/advanced-gutenberg-main.php:1805
 msgid "No profiles found in trash"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2244 incl/advanced-gutenberg-main.php:2245
+#: incl/advanced-gutenberg-main.php:2322
+#: incl/advanced-gutenberg-main.php:2323
 msgid "Block Config"
 msgstr "Configuración de Bloque"
 
-#: incl/advanced-gutenberg-main.php:2328
+#: incl/advanced-gutenberg-main.php:2406
 msgid "Header Icon"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2337
+#: incl/advanced-gutenberg-main.php:2415
 msgid "Plus Circle"
 msgstr "Más Círculo"
 
-#: incl/advanced-gutenberg-main.php:2341
+#: incl/advanced-gutenberg-main.php:2419
 msgid "Plus Circle Outline"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2345
+#: incl/advanced-gutenberg-main.php:2423
 msgid "Plus Square Outline"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2349
+#: incl/advanced-gutenberg-main.php:2427
 msgid "Unfold Arrow"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2353
+#: incl/advanced-gutenberg-main.php:2431
 msgid "Horizontal Dots"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2357
+#: incl/advanced-gutenberg-main.php:2435
 msgid "Arrow Down"
 msgstr "Flecha abajo"
 
-#: incl/advanced-gutenberg-main.php:2363
+#: incl/advanced-gutenberg-main.php:2441
 msgid "Header Icon Color"
 msgstr "Color del icono de la cabecera"
 
-#: incl/advanced-gutenberg-main.php:2370 incl/advanced-gutenberg-main.php:3294
+#: incl/advanced-gutenberg-main.php:2448
+#: incl/advanced-gutenberg-main.php:3372
 msgid "Body Settings"
 msgstr "Configuración del Cuerpo"
 
-#: incl/advanced-gutenberg-main.php:2419 incl/advanced-gutenberg-main.php:2486
-#: incl/advanced-gutenberg-main.php:3334 incl/advanced-gutenberg-main.php:3513
-#: incl/advanced-gutenberg-main.php:3535 incl/advanced-gutenberg-main.php:3669
-#: incl/advanced-gutenberg-main.php:3691 incl/advanced-gutenberg-main.php:4026
-#: incl/advanced-gutenberg-main.php:4096 incl/advanced-gutenberg-main.php:4165
+#: incl/advanced-gutenberg-main.php:2497
+#: incl/advanced-gutenberg-main.php:2564
+#: incl/advanced-gutenberg-main.php:3412
+#: incl/advanced-gutenberg-main.php:3591
+#: incl/advanced-gutenberg-main.php:3613
+#: incl/advanced-gutenberg-main.php:3747
+#: incl/advanced-gutenberg-main.php:3769
+#: incl/advanced-gutenberg-main.php:4104
+#: incl/advanced-gutenberg-main.php:4174
+#: incl/advanced-gutenberg-main.php:4243
 msgid "Border Radius"
 msgstr "Radio del Borde"
 
-#: incl/advanced-gutenberg-main.php:2430
+#: incl/advanced-gutenberg-main.php:2508
 msgid "Text and Color"
 msgstr "Texto y color"
 
-#: incl/advanced-gutenberg-main.php:2433 incl/advanced-gutenberg-main.php:2739
+#: incl/advanced-gutenberg-main.php:2511
+#: incl/advanced-gutenberg-main.php:2817
 msgid "Text Size"
 msgstr "Tamaño de texto"
 
-#: incl/advanced-gutenberg-main.php:2495
+#: incl/advanced-gutenberg-main.php:2573
 msgid "Margin Settings"
 msgstr "Ajustes de Margen"
 
-#: incl/advanced-gutenberg-main.php:2498 incl/advanced-gutenberg-main.php:4200
-#: incl/advanced-gutenberg-main.php:4311 incl/advanced-gutenberg-main.php:4391
+#: incl/advanced-gutenberg-main.php:2576
+#: incl/advanced-gutenberg-main.php:4278
+#: incl/advanced-gutenberg-main.php:4389
+#: incl/advanced-gutenberg-main.php:4469
 msgid "Margin Top"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2505 incl/advanced-gutenberg-main.php:4221
-#: incl/advanced-gutenberg-main.php:4332 incl/advanced-gutenberg-main.php:4412
+#: incl/advanced-gutenberg-main.php:2583
+#: incl/advanced-gutenberg-main.php:4299
+#: incl/advanced-gutenberg-main.php:4410
+#: incl/advanced-gutenberg-main.php:4490
 msgid "Margin Right"
 msgstr "Margen Derecho"
 
-#: incl/advanced-gutenberg-main.php:2512 incl/advanced-gutenberg-main.php:4207
-#: incl/advanced-gutenberg-main.php:4318 incl/advanced-gutenberg-main.php:4398
+#: incl/advanced-gutenberg-main.php:2590
+#: incl/advanced-gutenberg-main.php:4285
+#: incl/advanced-gutenberg-main.php:4396
+#: incl/advanced-gutenberg-main.php:4476
 msgid "Margin Bottom"
 msgstr "Margen inferior"
 
-#: incl/advanced-gutenberg-main.php:2519 incl/advanced-gutenberg-main.php:4214
-#: incl/advanced-gutenberg-main.php:4325 incl/advanced-gutenberg-main.php:4405
+#: incl/advanced-gutenberg-main.php:2597
+#: incl/advanced-gutenberg-main.php:4292
+#: incl/advanced-gutenberg-main.php:4403
+#: incl/advanced-gutenberg-main.php:4483
 msgid "Margin Left"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2528
+#: incl/advanced-gutenberg-main.php:2606
 msgid "Padding Settings"
 msgstr "Ajustes de Espacio"
 
-#: incl/advanced-gutenberg-main.php:2561
+#: incl/advanced-gutenberg-main.php:2639
 msgid "Hover Settings"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2579
+#: incl/advanced-gutenberg-main.php:2657
 msgid "Shadow H Offset"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2586
+#: incl/advanced-gutenberg-main.php:2664
 msgid "Shadow V Offset"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2593
+#: incl/advanced-gutenberg-main.php:2671
 msgid "Shadow Blur"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2600
+#: incl/advanced-gutenberg-main.php:2678
 msgid "Shadow Spread"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2607
+#: incl/advanced-gutenberg-main.php:2685
 msgid "Transition Speed"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2618
+#: incl/advanced-gutenberg-main.php:2696
 msgid "Click action"
 msgstr "Pulsar acción"
 
-#: incl/advanced-gutenberg-main.php:2630
+#: incl/advanced-gutenberg-main.php:2708
 msgid "Open image in a lightbox"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2640
+#: incl/advanced-gutenberg-main.php:2718
 msgid "Open link in a new tab"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2751
+#: incl/advanced-gutenberg-main.php:2829
 msgid "Icon style"
 msgstr "Estilo del icono"
 
-#: incl/advanced-gutenberg-main.php:2792
+#: incl/advanced-gutenberg-main.php:2870
 msgid "Arrow Right"
 msgstr "Flecha derecha"
 
-#: incl/advanced-gutenberg-main.php:2858
+#: incl/advanced-gutenberg-main.php:2936
 msgid "Max width"
 msgstr "Anchura máxima"
 
-#: incl/advanced-gutenberg-main.php:2869
+#: incl/advanced-gutenberg-main.php:2947
 msgid "Video Settings"
 msgstr "Ajustes de Video"
 
-#: incl/advanced-gutenberg-main.php:2872
+#: incl/advanced-gutenberg-main.php:2950
 msgid "Open video in lightbox"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2882
+#: incl/advanced-gutenberg-main.php:2960
 msgid "Video Width"
 msgstr "Ancho de video"
 
-#: incl/advanced-gutenberg-main.php:2889
+#: incl/advanced-gutenberg-main.php:2967
 msgid "Video Height"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2896
+#: incl/advanced-gutenberg-main.php:2974
 msgid "Overlay color"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2903
+#: incl/advanced-gutenberg-main.php:2981
 msgid "Play Button Settings"
 msgstr "Configuración del botón de reproducción"
 
-#: incl/advanced-gutenberg-main.php:2906
+#: incl/advanced-gutenberg-main.php:2984
 msgid "Button Icon"
 msgstr "Icono del Botón"
 
-#: incl/advanced-gutenberg-main.php:2911 incl/advanced-gutenberg-main.php:3573
+#: incl/advanced-gutenberg-main.php:2989
+#: incl/advanced-gutenberg-main.php:3651
 msgid "Normal"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2915
+#: incl/advanced-gutenberg-main.php:2993
 msgid "Filled Circle"
 msgstr "Círculo relleno"
 
-#: incl/advanced-gutenberg-main.php:2919
+#: incl/advanced-gutenberg-main.php:2997
 msgid "Outline Circle"
 msgstr "Contorno circular"
 
-#: incl/advanced-gutenberg-main.php:2923
+#: incl/advanced-gutenberg-main.php:3001
 msgid "Video Camera"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2927
+#: incl/advanced-gutenberg-main.php:3005
 msgid "Filled Square"
 msgstr "Cuadrado relleno"
 
-#: incl/advanced-gutenberg-main.php:2931
+#: incl/advanced-gutenberg-main.php:3009
 msgid "Star Sticker"
 msgstr "Pegatina de estrella"
 
-#: incl/advanced-gutenberg-main.php:2937
+#: incl/advanced-gutenberg-main.php:3015
 msgid "Button Size"
 msgstr "Tamaño del Botón"
 
-#: incl/advanced-gutenberg-main.php:2944
+#: incl/advanced-gutenberg-main.php:3022
 msgid "Button Color"
 msgstr "Color del Botón"
 
-#: incl/advanced-gutenberg-main.php:2953 incl/advanced-gutenberg-main.php:3186
-#: incl/advanced-gutenberg-main.php:3217 incl/advanced-gutenberg-main.php:3345
-#: incl/advanced-gutenberg-main.php:4061
+#: incl/advanced-gutenberg-main.php:3031
+#: incl/advanced-gutenberg-main.php:3264
+#: incl/advanced-gutenberg-main.php:3295
+#: incl/advanced-gutenberg-main.php:3423
+#: incl/advanced-gutenberg-main.php:4139
 msgid "General Settings"
 msgstr "Configuración General"
 
-#: incl/advanced-gutenberg-main.php:2956
+#: incl/advanced-gutenberg-main.php:3034
 msgid "Number of columns"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2988
+#: incl/advanced-gutenberg-main.php:3066
 msgid "Count Up Number Size"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2999
+#: incl/advanced-gutenberg-main.php:3077
 msgid "Location Settings"
 msgstr "Configuraciones de Lugar"
 
-#: incl/advanced-gutenberg-main.php:3023
+#: incl/advanced-gutenberg-main.php:3101
 msgid "Map Settings"
 msgstr "Configuración de Mapas"
 
-#: incl/advanced-gutenberg-main.php:3026
+#: incl/advanced-gutenberg-main.php:3104
 msgid "Zoom Level"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3040
+#: incl/advanced-gutenberg-main.php:3118
 msgid "Map style"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3044
+#: incl/advanced-gutenberg-main.php:3122
 msgid "Silver"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3045
+#: incl/advanced-gutenberg-main.php:3123
 msgid "Retro"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3046
+#: incl/advanced-gutenberg-main.php:3124
 msgid "Dark"
 msgstr "Oscuro"
 
-#: incl/advanced-gutenberg-main.php:3047
+#: incl/advanced-gutenberg-main.php:3125
 msgid "Night"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3048
+#: incl/advanced-gutenberg-main.php:3126
 msgid "Aubergine"
 msgstr "Berenjena"
 
-#: incl/advanced-gutenberg-main.php:3055
+#: incl/advanced-gutenberg-main.php:3133
 msgid "Marker Settings"
 msgstr "Configuración del marcado"
 
-#: incl/advanced-gutenberg-main.php:3063
+#: incl/advanced-gutenberg-main.php:3141
 msgid "Marker Description"
 msgstr "Descripción de marcador"
 
-#: incl/advanced-gutenberg-main.php:3072
+#: incl/advanced-gutenberg-main.php:3150
 msgid "Icon 1 Settings"
 msgstr "Icono 1 Ajustes"
 
-#: incl/advanced-gutenberg-main.php:3075 incl/advanced-gutenberg-main.php:3113
-#: incl/advanced-gutenberg-main.php:3151
+#: incl/advanced-gutenberg-main.php:3153
+#: incl/advanced-gutenberg-main.php:3191
+#: incl/advanced-gutenberg-main.php:3229
 msgid "Icon"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3079 incl/advanced-gutenberg-main.php:3117
-#: incl/advanced-gutenberg-main.php:3155
+#: incl/advanced-gutenberg-main.php:3157
+#: incl/advanced-gutenberg-main.php:3195
+#: incl/advanced-gutenberg-main.php:3233
 msgid "Blogger"
 msgstr "Blogger"
 
-#: incl/advanced-gutenberg-main.php:3080 incl/advanced-gutenberg-main.php:3118
-#: incl/advanced-gutenberg-main.php:3156
+#: incl/advanced-gutenberg-main.php:3158
+#: incl/advanced-gutenberg-main.php:3196
+#: incl/advanced-gutenberg-main.php:3234
 msgid "Facebook"
 msgstr "Facebook"
 
-#: incl/advanced-gutenberg-main.php:3081 incl/advanced-gutenberg-main.php:3119
-#: incl/advanced-gutenberg-main.php:3157
+#: incl/advanced-gutenberg-main.php:3159
+#: incl/advanced-gutenberg-main.php:3197
+#: incl/advanced-gutenberg-main.php:3235
 msgid "Flickr"
 msgstr "Flickr"
 
-#: incl/advanced-gutenberg-main.php:3082 incl/advanced-gutenberg-main.php:3120
-#: incl/advanced-gutenberg-main.php:3158
+#: incl/advanced-gutenberg-main.php:3160
+#: incl/advanced-gutenberg-main.php:3198
+#: incl/advanced-gutenberg-main.php:3236
 msgid "Google Plus"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3083 incl/advanced-gutenberg-main.php:3121
-#: incl/advanced-gutenberg-main.php:3159
+#: incl/advanced-gutenberg-main.php:3161
+#: incl/advanced-gutenberg-main.php:3199
+#: incl/advanced-gutenberg-main.php:3237
 msgid "Instagram"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3084 incl/advanced-gutenberg-main.php:3122
-#: incl/advanced-gutenberg-main.php:3160
+#: incl/advanced-gutenberg-main.php:3162
+#: incl/advanced-gutenberg-main.php:3200
+#: incl/advanced-gutenberg-main.php:3238
 msgid "LinkedIn"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3086 incl/advanced-gutenberg-main.php:3124
-#: incl/advanced-gutenberg-main.php:3162
+#: incl/advanced-gutenberg-main.php:3164
+#: incl/advanced-gutenberg-main.php:3202
+#: incl/advanced-gutenberg-main.php:3240
 msgid "Picasa"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3087 incl/advanced-gutenberg-main.php:3125
-#: incl/advanced-gutenberg-main.php:3163
+#: incl/advanced-gutenberg-main.php:3165
+#: incl/advanced-gutenberg-main.php:3203
+#: incl/advanced-gutenberg-main.php:3241
 msgid "Pinterest"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3088 incl/advanced-gutenberg-main.php:3126
-#: incl/advanced-gutenberg-main.php:3164
+#: incl/advanced-gutenberg-main.php:3166
+#: incl/advanced-gutenberg-main.php:3204
+#: incl/advanced-gutenberg-main.php:3242
 msgid "Reddit"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3089 incl/advanced-gutenberg-main.php:3127
-#: incl/advanced-gutenberg-main.php:3165
+#: incl/advanced-gutenberg-main.php:3167
+#: incl/advanced-gutenberg-main.php:3205
+#: incl/advanced-gutenberg-main.php:3243
 msgid "Skype"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3090 incl/advanced-gutenberg-main.php:3128
-#: incl/advanced-gutenberg-main.php:3166
+#: incl/advanced-gutenberg-main.php:3168
+#: incl/advanced-gutenberg-main.php:3206
+#: incl/advanced-gutenberg-main.php:3244
 msgid "Sound Cloud"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3091 incl/advanced-gutenberg-main.php:3129
-#: incl/advanced-gutenberg-main.php:3167
+#: incl/advanced-gutenberg-main.php:3169
+#: incl/advanced-gutenberg-main.php:3207
+#: incl/advanced-gutenberg-main.php:3245
 msgid "Tumblr"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3092 incl/advanced-gutenberg-main.php:3130
-#: incl/advanced-gutenberg-main.php:3168
+#: incl/advanced-gutenberg-main.php:3170
+#: incl/advanced-gutenberg-main.php:3208
+#: incl/advanced-gutenberg-main.php:3246
 msgid "Twitter"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3093 incl/advanced-gutenberg-main.php:3131
-#: incl/advanced-gutenberg-main.php:3169
+#: incl/advanced-gutenberg-main.php:3171
+#: incl/advanced-gutenberg-main.php:3209
+#: incl/advanced-gutenberg-main.php:3247
 msgid "Vimeo"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3094 incl/advanced-gutenberg-main.php:3132
-#: incl/advanced-gutenberg-main.php:3170
+#: incl/advanced-gutenberg-main.php:3172
+#: incl/advanced-gutenberg-main.php:3210
+#: incl/advanced-gutenberg-main.php:3248
 msgid "Youtube"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3103 incl/advanced-gutenberg-main.php:3141
-#: incl/advanced-gutenberg-main.php:3179
+#: incl/advanced-gutenberg-main.php:3181
+#: incl/advanced-gutenberg-main.php:3219
+#: incl/advanced-gutenberg-main.php:3257
 msgid "Icon Link"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3110
+#: incl/advanced-gutenberg-main.php:3188
 msgid "Icon 2 Settings"
 msgstr "Icono 2 Ajustes"
 
-#: incl/advanced-gutenberg-main.php:3148
+#: incl/advanced-gutenberg-main.php:3226
 msgid "Icon 3 Settings"
 msgstr "Icono 3 Ajustes"
 
-#: incl/advanced-gutenberg-main.php:3189
+#: incl/advanced-gutenberg-main.php:3267
 msgid "Icon Alignment"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3206
+#: incl/advanced-gutenberg-main.php:3284
 msgid "Icon Space"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3230
+#: incl/advanced-gutenberg-main.php:3308
 msgid "Anchor color"
 msgstr "Color de anclaje"
 
-#: incl/advanced-gutenberg-main.php:3235
+#: incl/advanced-gutenberg-main.php:3313
 msgid "Table of Contents Alignment"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3249
+#: incl/advanced-gutenberg-main.php:3327
 msgid "Tab Settings"
 msgstr "Ajustes de Pestaña"
 
-#: incl/advanced-gutenberg-main.php:3279
+#: incl/advanced-gutenberg-main.php:3357
 msgid "Active Tab Settings"
 msgstr "Configuración de la pestaña activa"
 
-#: incl/advanced-gutenberg-main.php:3357
+#: incl/advanced-gutenberg-main.php:3435
 msgid "Avatar Settings"
 msgstr "Configuración del Avatar"
 
-#: incl/advanced-gutenberg-main.php:3439
+#: incl/advanced-gutenberg-main.php:3517
 msgid "Name placeholder"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3444 incl/advanced-gutenberg-main.php:3605
+#: incl/advanced-gutenberg-main.php:3522
+#: incl/advanced-gutenberg-main.php:3683
 msgid "Email placeholder"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3449
+#: incl/advanced-gutenberg-main.php:3527
 msgid "Message placeholder"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3454 incl/advanced-gutenberg-main.php:3610
+#: incl/advanced-gutenberg-main.php:3532
+#: incl/advanced-gutenberg-main.php:3688
 msgid "Submit label"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3459 incl/advanced-gutenberg-main.php:3615
+#: incl/advanced-gutenberg-main.php:3537
+#: incl/advanced-gutenberg-main.php:3693
 msgid "Success text"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3464 incl/advanced-gutenberg-main.php:3620
+#: incl/advanced-gutenberg-main.php:3542
+#: incl/advanced-gutenberg-main.php:3698
 msgid "Error text"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3525 incl/advanced-gutenberg-main.php:3681
+#: incl/advanced-gutenberg-main.php:3603
+#: incl/advanced-gutenberg-main.php:3759
 msgid "Border and Text Color"
 msgstr "Color del borde y del texto"
 
-#: incl/advanced-gutenberg-main.php:3542
+#: incl/advanced-gutenberg-main.php:3620
 msgid "Button Position"
 msgstr "Posición del botón"
 
-#: incl/advanced-gutenberg-main.php:3583
+#: incl/advanced-gutenberg-main.php:3661
 msgid "Form width"
 msgstr "Ancho del formulario"
 
-#: incl/advanced-gutenberg-main.php:3595
+#: incl/advanced-gutenberg-main.php:3673
 msgid "First Name placeholder"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3600
+#: incl/advanced-gutenberg-main.php:3678
 msgid "Last Name placeholder"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3702
+#: incl/advanced-gutenberg-main.php:3780
 msgid "Images Settings"
 msgstr "Ajustes de las imágenes"
 
-#: incl/advanced-gutenberg-main.php:3725
+#: incl/advanced-gutenberg-main.php:3803
 msgid "Auto Height"
 msgstr "Altura Automatica"
 
-#: incl/advanced-gutenberg-main.php:3819
+#: incl/advanced-gutenberg-main.php:3897
 msgid "Space between column"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3828 incl/advanced-gutenberg-main.php:3867
+#: incl/advanced-gutenberg-main.php:3906
+#: incl/advanced-gutenberg-main.php:3945
 msgid "10px"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3832 incl/advanced-gutenberg-main.php:3871
+#: incl/advanced-gutenberg-main.php:3910
+#: incl/advanced-gutenberg-main.php:3949
 msgid "20px"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3836 incl/advanced-gutenberg-main.php:3875
+#: incl/advanced-gutenberg-main.php:3914
+#: incl/advanced-gutenberg-main.php:3953
 msgid "30px"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3840 incl/advanced-gutenberg-main.php:3879
+#: incl/advanced-gutenberg-main.php:3918
+#: incl/advanced-gutenberg-main.php:3957
 msgid "40px"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3844 incl/advanced-gutenberg-main.php:3883
+#: incl/advanced-gutenberg-main.php:3922
+#: incl/advanced-gutenberg-main.php:3961
 msgid "50px"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3848 incl/advanced-gutenberg-main.php:3887
+#: incl/advanced-gutenberg-main.php:3926
+#: incl/advanced-gutenberg-main.php:3965
 msgid "70px"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3852 incl/advanced-gutenberg-main.php:3891
+#: incl/advanced-gutenberg-main.php:3930
+#: incl/advanced-gutenberg-main.php:3969
 msgid "90px"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3897
+#: incl/advanced-gutenberg-main.php:3975
 msgid "Collapsed order RTL"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3916
+#: incl/advanced-gutenberg-main.php:3994
 msgid "Middle"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3924
+#: incl/advanced-gutenberg-main.php:4002
 msgid "Full Height"
 msgstr "Altura completa"
 
-#: incl/advanced-gutenberg-main.php:3940
+#: incl/advanced-gutenberg-main.php:4018
 msgid "Div"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3944
+#: incl/advanced-gutenberg-main.php:4022
 msgid "Header"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3948
+#: incl/advanced-gutenberg-main.php:4026
 msgid "Section"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3952
+#: incl/advanced-gutenberg-main.php:4030
 msgid "Main"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3956
+#: incl/advanced-gutenberg-main.php:4034
 msgid "Article"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3960
+#: incl/advanced-gutenberg-main.php:4038
 msgid "Aside"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3964
+#: incl/advanced-gutenberg-main.php:4042
 msgid "Footer"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4038
+#: incl/advanced-gutenberg-main.php:4116
 msgid "Text alignment"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4064
+#: incl/advanced-gutenberg-main.php:4142
 msgid "Number of icons"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4238 incl/advanced-gutenberg-main.php:4349
+#: incl/advanced-gutenberg-main.php:4316
+#: incl/advanced-gutenberg-main.php:4427
 msgid "Font Size (px)"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4245 incl/advanced-gutenberg-main.php:4356
+#: incl/advanced-gutenberg-main.php:4323
+#: incl/advanced-gutenberg-main.php:4434
 msgid "Line Height (px)"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4427
+#: incl/advanced-gutenberg-main.php:4505
 msgid "Default configuration for this block is not available."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4794
+#: incl/advanced-gutenberg-main.php:4964
 msgid "User registration is currently not allowed."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4795
+#: incl/advanced-gutenberg-main.php:4965
 msgid "Captcha must be checked!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4796
+#: incl/advanced-gutenberg-main.php:4966
 msgid "Username or password is incorrect!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4971
+#: incl/advanced-gutenberg-main.php:5140
 msgid "Type field not defined"
 msgstr ""
 
@@ -4167,9 +1724,7 @@ msgid "Edit"
 msgstr "Editar"
 
 #: incl/view/advanced-gutenberg-block-settings.php:97
-msgid ""
-"No blocks available. Please edit a Profile (e.g. save changes without "
-"modifying anything). Then come back to Block Settings to see the blocks list."
+msgid "No blocks available. Please edit a Profile (e.g. save changes without modifying anything). Then come back to Block Settings to see the blocks list."
 msgstr ""
 
 #: incl/view/advanced-gutenberg-custom-styles.php:8
@@ -4201,8 +1756,7 @@ msgstr ""
 #: incl/view/advanced-gutenberg-custom-styles.php:56
 msgid ""
 "This option help you identify specific custom styles in the list\n"
-"                                (usually set this same as the custom style's "
-"background color)"
+"                                (usually set this same as the custom style's background color)"
 msgstr ""
 
 #: incl/view/advanced-gutenberg-custom-styles.php:61
@@ -4287,9 +1841,7 @@ msgid "Enable reCAPTCHA"
 msgstr "Activar reCAPTCHA"
 
 #: incl/view/advanced-gutenberg-email-form.php:177
-msgid ""
-"Use the Google reCaptcha to avoid spam in PublishPress Blocks forms. Get "
-"credentials for your domain by registering"
+msgid "Use the Google reCaptcha to avoid spam in PublishPress Blocks forms. Get credentials for your domain by registering"
 msgstr ""
 
 #: incl/view/advanced-gutenberg-email-form.php:179
@@ -4322,9 +1874,7 @@ msgid "Auto detect"
 msgstr "detección automática"
 
 #: incl/view/advanced-gutenberg-email-form.php:240
-msgid ""
-"We strongly recommend not using Invisible reCAPTCHA if you have more than 1 "
-"Newsletter or Contact forms block in a page."
+msgid "We strongly recommend not using Invisible reCAPTCHA if you have more than 1 Newsletter or Contact forms block in a page."
 msgstr ""
 
 #: incl/view/advanced-gutenberg-email-form.php:244
@@ -4371,9 +1921,7 @@ msgid "Custom Styles"
 msgstr "Estilos Personalizados"
 
 #: incl/view/advanced-gutenberg-main-view.php:53
-msgid ""
-"You're using PublishPress Blocks Free. The Pro version has more features and "
-"support."
+msgid "You're using PublishPress Blocks Free. The Pro version has more features and support."
 msgstr ""
 
 #: incl/view/advanced-gutenberg-main-view.php:57
@@ -4473,12 +2021,12 @@ msgid "Search profiles by title"
 msgstr ""
 
 #: incl/view/advanced-gutenberg-profiles.php:66
-#: incl/view/advanced-gutenberg-profiles.php:148
+#: incl/view/advanced-gutenberg-profiles.php:149
 msgid "Roles"
 msgstr ""
 
 #: incl/view/advanced-gutenberg-profiles.php:72
-#: incl/view/advanced-gutenberg-profiles.php:154
+#: incl/view/advanced-gutenberg-profiles.php:155
 msgid "Users"
 msgstr ""
 
@@ -4486,7 +2034,7 @@ msgstr ""
 msgid "(untitled)"
 msgstr "(sin título)"
 
-#: incl/view/advanced-gutenberg-profiles.php:126
+#: incl/view/advanced-gutenberg-profiles.php:127
 #, php-format
 msgid "No profiles found. %sCreate a new profile%s"
 msgstr ""
@@ -4516,9 +2064,7 @@ msgid "Overlay"
 msgstr ""
 
 #: incl/view/advanced-gutenberg-settings.php:106
-msgid ""
-"Remove the WordPress function autop, used to prevent unwanted paragraph to "
-"be added in some blocks"
+msgid "Remove the WordPress function autop, used to prevent unwanted paragraph to be added in some blocks"
 msgstr ""
 
 #: incl/view/advanced-gutenberg-settings.php:110
@@ -4527,9 +2073,7 @@ msgstr ""
 
 #: incl/view/advanced-gutenberg-settings.php:130
 msgid "A Google API key is required to use the Map block without any warning."
-msgstr ""
-"Se requiere una clave de API de Google para usar el bloque de mapas sin "
-"ninguna advertencia."
+msgstr "Se requiere una clave de API de Google para usar el bloque de mapas sin ninguna advertencia."
 
 #: incl/view/advanced-gutenberg-settings.php:134
 msgid "Google API Key"
@@ -4552,12 +2096,8 @@ msgid "Enable blocks spacing"
 msgstr "Activar espacio de bloques"
 
 #: incl/view/advanced-gutenberg-settings.php:187
-msgid ""
-"Apply a minimal vertical block spacing automatically. Default is None. "
-"Values in pixels"
-msgstr ""
-"Aplica un espacio mínimo de bloque vertical de forma automática. El valor "
-"predeterminado es Ninguno. Valores en píxeles"
+msgid "Apply a minimal vertical block spacing automatically. Default is None. Values in pixels"
+msgstr "Aplica un espacio mínimo de bloque vertical de forma automática. El valor predeterminado es Ninguno. Valores en píxeles"
 
 #: incl/view/advanced-gutenberg-settings.php:191
 msgid "Blocks spacing"
@@ -4656,9 +2196,7 @@ msgid "Very quick feedback"
 msgstr ""
 
 #: jufeedback/jufeedback.php:242
-msgid ""
-"Before leaving, would you have 30 seconds to give your anonymous opinion "
-"about why you're disabling the plugin?"
+msgid "Before leaving, would you have 30 seconds to give your anonymous opinion about why you're disabling the plugin?"
 msgstr ""
 
 #: jufeedback/jufeedback.php:264
@@ -4666,10 +2204,7 @@ msgid "Share anonymous technical informations"
 msgstr ""
 
 #: jufeedback/jufeedback.php:266
-msgid ""
-"We get 100% anonymously info for debug and statistics purpose only (theme "
-"name, server informations...), click the drop down icon to see what "
-"information is sent"
+msgid "We get 100% anonymously info for debug and statistics purpose only (theme name, server informations...), click the drop down icon to see what information is sent"
 msgstr ""
 
 #: jufeedback/jufeedback.php:274
@@ -4681,14 +2216,11 @@ msgid "SEND & DISABLE, THANKS!"
 msgstr ""
 
 #: jufeedback/jufeedback.php:349
-msgid ""
-"Thanks for your feedback! We will acknowledge and make it better in the "
-"future."
+msgid "Thanks for your feedback! We will acknowledge and make it better in the future."
 msgstr ""
 
 #: jufeedback/jufeedback.php:353
-msgid ""
-"Oops! It seems there was a problem sending the e-mail. Please try again!"
+msgid "Oops! It seems there was a problem sending the e-mail. Please try again!"
 msgstr ""
 
 #: jufeedback/jufeedback.php:486
@@ -4701,10 +2233,7 @@ msgstr ""
 
 #: jufeedback/jufeedback.php:614
 #, php-format
-msgid ""
-"Thanks for using %s, it’s been more than a week now! Would you consider "
-"leaving a review on the plugin directory? It helps us make the plugin & "
-"support better :)"
+msgid "Thanks for using %s, it’s been more than a week now! Would you consider leaving a review on the plugin directory? It helps us make the plugin & support better :)"
 msgstr ""
 
 #: jufeedback/jufeedback.php:618
@@ -4720,9 +2249,7 @@ msgid "https://publishpress.com/blocks/"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid ""
-"PublishPress Blocks has everything you need to build professional websites "
-"with the Gutenberg editor."
+msgid "PublishPress Blocks has everything you need to build professional websites with the Gutenberg editor."
 msgstr ""
 
 #. Author of the plugin/theme
@@ -4752,9 +2279,10 @@ msgstr ""
 #~ msgstr "Texto de Ejemplo"
 
 #~ msgid ""
-#~ "Following Paragraph Following Paragraph  Following Paragraph Following "
-#~ "Paragraph Following Paragraph Following Paragraph Following Paragraph "
-#~ "Following Paragraph"
+"\n"
+"Paragraph Following Paragraph  Following Paragraph Following \"\n"
+"Following Paragraph Following Paragraph Following Paragraph \"\n"
+"Paragraph\""
 #~ msgstr "Continuar párrafo"
 
 #~ msgid "Default blocks config"
