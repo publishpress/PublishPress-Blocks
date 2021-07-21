@@ -883,10 +883,6 @@ function advgbAllowCPTQueryVars( $query_params ) {
 	return $query_params;
 }
 
-foreach ( advgbGetCPTs() as $cpt ) {
-	add_filter( "rest_{$cpt}_collection_params", 'advgbAllowCPTQueryVars' );
-}
-
 /**
  * Returns the relative dates of the post.
  *
@@ -1032,7 +1028,10 @@ function advgbGetCoauthors( $post ) {
  * @return array
  */
 function advgbGetAuthorMeta( $page ) {
-	return array( 'author_link' => get_author_posts_url( $page['author'] ), 'display_name' => get_the_author_meta( 'display_name', $page['author'] ) );
+	if ( isset( $page['author'] ) ) {
+		return array( 'author_link' => get_author_posts_url( $page['author'] ), 'display_name' => get_the_author_meta( 'display_name', $page['author'] ) );
+	}
+	return array( 'author_link' => '', 'display_name' => '' );
 }
 
 /**
@@ -1104,14 +1103,15 @@ function advgbMultipleAuthorSort() {
 }
 
 /**
- * Populate the correct arguments in REST for sorting by author.
+ * Populate the correct arguments in REST for filtering by author.
  *
  * The results depends on whether PublishPress Authors plugin is activated.
  *
  * @return array
  */
 function advgbGetAuthorFilterREST( $args, $request ) {
-	if ( isset( $request['author'] ) && ! empty( $request['author'] ) && function_exists('get_multiple_authors') ) {
+	if ( isset( $request['author'] ) && ! empty( $request['author'] ) ) {
+		if ( function_exists('get_multiple_authors') ) {
 			$author = $request['author'];
 			$user_id = reset( $author );
 			$author = advgbGetAuthorByID( $user_id );
@@ -1122,18 +1122,18 @@ function advgbGetAuthorFilterREST( $args, $request ) {
 				unset( $args['author'] );
 				unset( $args['author__in'] );
 			}
+		} else {
+			unset( $args['author'] );
+			$args['author__in'] = $request['author'];
+		}
 	}
 	return $args;
 }
 add_filter( 'rest_post_query', 'advgbGetAuthorFilterREST', 10, 2 );
 add_filter( 'rest_page_query', 'advgbGetAuthorFilterREST', 10, 2 );
 
-foreach ( advgbGetCPTs() as $cpt ) {
-	add_filter( "rest_{$cpt}_query", 'advgbGetAuthorFilterREST', 10, 2 );
-}
-
 /**
- * Populate the correct arguments in REST for filtering by author.
+ * Populate the correct arguments in REST for sorting by author.
  *
  * The results depends on whether PublishPress Authors plugin is activated.
  *
@@ -1147,10 +1147,6 @@ function advgbMultipleAuthorSortREST( $args, $request ) {
 	return $args;
 }
 add_filter( 'rest_post_query', 'advgbMultipleAuthorSortREST', 10, 2 );
-
-foreach ( advgbGetCPTs() as $cpt ) {
-	add_filter( "rest_{$cpt}_query", 'advgbMultipleAuthorSortREST', 10, 2 );
-}
 
 /**
  * Check if Featured image is enable for each post
@@ -1263,3 +1259,15 @@ function advgbExcludePostTypes( WP_REST_Request $request ) {
 	// allow users to add more
 	return apply_filters( 'advgb_exclude_post_types', array( 'attachment', 'web-story' ) );
 }
+
+/**
+ * Fires all the relevant hooks for CPTs.
+ */
+function advgbInitializeHooksForCPTs() {
+	foreach ( advgbGetCPTs() as $cpt ) {
+		add_filter( "rest_{$cpt}_query", 'advgbGetAuthorFilterREST', 10, 2 );
+		add_filter( "rest_{$cpt}_query", 'advgbMultipleAuthorSortREST', 10, 2 );
+		add_filter( "rest_{$cpt}_collection_params", 'advgbAllowCPTQueryVars' );
+	}
+}
+add_action( 'init', 'advgbInitializeHooksForCPTs' );
