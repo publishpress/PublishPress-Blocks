@@ -145,6 +145,8 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
             this.setState( {
                 showPopup: !showPopup
             } );
+
+            console.log(showPopup);
         }
 
         render() {

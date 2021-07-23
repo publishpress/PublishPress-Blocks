@@ -8193,6 +8193,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({
                     showPopup: !showPopup
                 });
+
+                console.log(showPopup);
             }
         }, {
             key: "render",
