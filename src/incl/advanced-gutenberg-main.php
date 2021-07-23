@@ -1728,7 +1728,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Get Global Columns Viosual Guide state
+         * Get Global Columns Visual Guide
          *
          * @param int $value Columns Visual Guide check
          *
@@ -1790,7 +1790,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 return $classes;
             } elseif ( 'widgets' === get_current_screen()->id ) {
-                // Use global Columns Visual Guide in Appearance > Widgets 
+                // Use global Columns Visual Guide in Appearance > Widgets
                 $editorColsVGGlobal = $this->getAdvgbColsVisualGuideGlobal( $saved_settings['enable_columns_visual_guide'] );
                 $classes .= ' advgb-editor-col-guide-' . $editorColsVGGlobal;
             }
