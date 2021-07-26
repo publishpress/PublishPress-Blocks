@@ -28518,27 +28518,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-testimonial-info" },
-                                React.createElement(
-                                    "h4",
-                                    { className: "advgb-testimonial-name",
-                                        style: { color: nameColor }
-                                    },
-                                    item.name
-                                ),
-                                React.createElement(
-                                    "p",
-                                    { className: "advgb-testimonial-position",
-                                        style: { color: positionColor }
-                                    },
-                                    item.position
-                                ),
-                                React.createElement(
-                                    "p",
-                                    { className: "advgb-testimonial-desc",
-                                        style: { color: descColor }
-                                    },
-                                    item.desc
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "h4",
+                                    className: "advgb-testimonial-name",
+                                    style: { color: nameColor },
+                                    value: item.name
+                                }),
+                                React.createElement(RichText.Content, {
+                                    tagName: "p",
+                                    className: "advgb-testimonial-position",
+                                    style: { color: positionColor },
+                                    value: item.position
+                                }),
+                                React.createElement(RichText.Content, {
+                                    tagName: "p",
+                                    className: "advgb-testimonial-desc",
+                                    style: { color: descColor },
+                                    value: item.desc
+                                })
                             )
                         );
                     })
