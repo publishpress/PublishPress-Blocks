@@ -1429,6 +1429,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                       array(),
                       ADVANCED_GUTENBERG_VERSION
                   );
+                  wp_enqueue_style(
+                      'advgb_pro_admin_popup',
+                      plugins_url('assets/css/pro-popup.css', dirname(__FILE__)),
+                      array(),
+                      ADVANCED_GUTENBERG_VERSION
+                  );
                   wp_enqueue_script(
                       'advgb_top_notice_js',
                       plugins_url('assets/js/top-notice.js', dirname(__FILE__)),

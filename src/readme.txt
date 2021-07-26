@@ -168,6 +168,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 = 2.9.2 =
  * Add: Toggle to disable all the avatars for Testimonial block
+ * Add: Upgrade to Pro admin page
  * Fix: Label to reset avatar for Testimonial block
  * Fix: Text format displayed as raw HTML in frontend for Advanced Tabs block
  * Fix: Images Slider exponential width inside Columns Manager block
