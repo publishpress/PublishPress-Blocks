@@ -77,12 +77,16 @@ ul.blocks-list li.block-item .ju-setting-label {
     width: 150px;
 }
 
-ul.blocks-list li.block-item .ju-setting-label svg,
-ul.blocks-list li.block-item .ju-setting-label i,
-ul.blocks-list li.block-item .ju-setting-label span.dashicons {
-    vertical-align: middle;
-    height: 25px;
-    width: auto;
+ul.blocks-list li.block-item .ju-setting-label {
+
+  img,
+  svg,
+  i,
+  span.dashicons {
+      vertical-align: middle;
+      height: 25px;
+      width: auto;
+  }
 }
 
 ul.blocks-list li.block-item .ju-setting-label span.dashicons {

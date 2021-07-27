@@ -174,6 +174,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Images Slider exponential width inside Columns Manager block
  * Fix: Use Global Columns Visual Guide class in Widgets
  * Fix: Text format displayed as raw HTML in frontend for Testimonial block
+ * Fix: CSS conflicts in admin with third party plugins
 
 = 2.9.1 - 20 Jul 2021 =
  * Fix: Legacy Widgets and Widget Area blocks support for profiles
