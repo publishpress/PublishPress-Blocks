@@ -26486,7 +26486,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 React.createElement(
                     "p",
                     { style: { color: 'red', fontStyle: 'italic' } },
-                    __('After manually changing the anchor, remember to refresh summary block to make the links work!', 'advanced-gutenberg')
+                    __('After manually changing the anchor, remember to refresh Table of Contents block to make the links work!', 'advanced-gutenberg')
                 )
             )];
         };
