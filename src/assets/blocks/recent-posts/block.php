@@ -1111,9 +1111,10 @@ function advgbMultipleAuthorSort() {
  */
 function advgbGetAuthorFilterREST( $args, $request ) {
 	if ( isset( $request['author'] ) && ! empty( $request['author'] ) ) {
-		if ( function_exists('get_multiple_authors') ) {
+		// WooCommerce Products don't support multiple authors...
+		if ( $args['post_type'] !== 'product' && function_exists('get_multiple_authors') ) {
 			$author = $request['author'];
-			$user_id = reset( $author );
+			$user_id = is_array( $author ) ? reset( $author ) : $author;
 			$author = advgbGetAuthorByID( $user_id );
 			if ( $author ) {
 				$args['meta_key'] = 'ppma_authors_name';
