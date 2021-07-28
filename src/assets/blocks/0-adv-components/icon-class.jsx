@@ -35,7 +35,8 @@ class IconListPopup extends Component {
     }
 
     handleClick(e) {
-        if (this.node.contains(e.target)) {
+        // ignore clicks inside the popup and the click that launched the popup
+        if (this.node.contains(e.target) || e.target.className.includes('advgb-browse-image-btn') || e.target.className.includes('advgb-browse-icon-btn')) {
             return;
         }
         this.props.closePopup();

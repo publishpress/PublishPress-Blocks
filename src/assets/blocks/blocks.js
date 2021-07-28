@@ -5151,7 +5151,8 @@ var IconListPopup = function (_Component) {
     }, {
         key: 'handleClick',
         value: function handleClick(e) {
-            if (this.node.contains(e.target)) {
+            // ignore clicks inside the popup and the click that launched the popup
+            if (this.node.contains(e.target) || e.target.className.includes('advgb-browse-image-btn') || e.target.className.includes('advgb-browse-icon-btn')) {
                 return;
             }
             this.props.closePopup();
@@ -26486,7 +26487,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 React.createElement(
                     "p",
                     { style: { color: 'red', fontStyle: 'italic' } },
-                    __('After manually changing the anchor, remember to refresh summary block to make the links work!', 'advanced-gutenberg')
+                    __('After manually changing the anchor, remember to refresh Table of Contents block to make the links work!', 'advanced-gutenberg')
                 )
             )];
         };
@@ -28518,27 +28519,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-testimonial-info" },
-                                React.createElement(
-                                    "h4",
-                                    { className: "advgb-testimonial-name",
-                                        style: { color: nameColor }
-                                    },
-                                    item.name
-                                ),
-                                React.createElement(
-                                    "p",
-                                    { className: "advgb-testimonial-position",
-                                        style: { color: positionColor }
-                                    },
-                                    item.position
-                                ),
-                                React.createElement(
-                                    "p",
-                                    { className: "advgb-testimonial-desc",
-                                        style: { color: descColor }
-                                    },
-                                    item.desc
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "h4",
+                                    className: "advgb-testimonial-name",
+                                    style: { color: nameColor },
+                                    value: item.name
+                                }),
+                                React.createElement(RichText.Content, {
+                                    tagName: "p",
+                                    className: "advgb-testimonial-position",
+                                    style: { color: positionColor },
+                                    value: item.position
+                                }),
+                                React.createElement(RichText.Content, {
+                                    tagName: "p",
+                                    className: "advgb-testimonial-desc",
+                                    style: { color: descColor },
+                                    value: item.desc
+                                })
                             )
                         );
                     })

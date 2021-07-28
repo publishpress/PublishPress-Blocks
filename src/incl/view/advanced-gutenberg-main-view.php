@@ -35,6 +35,18 @@ $tabs_data = array(
     ),
 );
 
+// Upgrade to Pro page
+if(!defined('ADVANCED_GUTENBERG_PRO')) {
+    array_push(
+        $tabs_data,
+        array(
+            'id' => 'pro',
+            'title' => __('Blocks Pro', 'advanced-gutenberg'),
+            'icon' => 'star',
+        )
+    );
+}
+
 // Pro
 if(defined('ADVANCED_GUTENBERG_PRO')) {
     if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_license_page' ) ) {

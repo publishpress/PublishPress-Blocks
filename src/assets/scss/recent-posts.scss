@@ -159,6 +159,11 @@
       grid-gap: 20px;
       display: -ms-flexbox;
       -ms-flex-wrap: wrap;
+
+      .advgb-recent-post .advgb-post-thumbnail img {
+        max-width: 100%;
+        height: auto;
+      }
     }
 
     &.columns-1 .advgb-recent-posts {
@@ -213,6 +218,11 @@
 
       .advgb-post-thumbnail {
         flex-basis: 30%;
+
+        img {
+          max-width: 100%;
+          height: auto;
+        }
       }
 
       .advgb-post-wrapper {
