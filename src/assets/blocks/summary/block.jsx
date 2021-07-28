@@ -67,7 +67,7 @@ import latinize from "latinize";
                 isSelected && blockType === 'core/heading' && attributes.nodeName !== 'H1' &&
                 <InspectorAdvancedControls key="advgb-summary-controls-hint">
                     <p style={{ color: 'red', fontStyle: 'italic' }}>
-                        {__( 'After manually changing the anchor, remember to refresh summary block to make the links work!', 'advanced-gutenberg' )}
+                        {__( 'After manually changing the anchor, remember to refresh Table of Contents block to make the links work!', 'advanced-gutenberg' )}
                     </p>
                 </InspectorAdvancedControls>,
             ] )

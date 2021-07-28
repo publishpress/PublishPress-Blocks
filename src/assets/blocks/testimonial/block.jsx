@@ -752,21 +752,24 @@
                                         </div>
                                     }
                                     <div className="advgb-testimonial-info">
-                                        <h4 className="advgb-testimonial-name"
+                                        <RichText.Content
+                                            tagName="h4"
+                                            className="advgb-testimonial-name"
                                             style={ { color: nameColor } }
-                                        >
-                                            { item.name }
-                                        </h4>
-                                        <p className="advgb-testimonial-position"
-                                           style={ { color: positionColor } }
-                                        >
-                                            { item.position }
-                                        </p>
-                                        <p className="advgb-testimonial-desc"
-                                           style={ { color: descColor } }
-                                        >
-                                            { item.desc }
-                                        </p>
+                                            value={ item.name }
+                                        />
+                                        <RichText.Content
+                                            tagName="p"
+                                            className="advgb-testimonial-position"
+                                            style={ { color: positionColor } }
+                                            value={ item.position }
+                                        />
+                                        <RichText.Content
+                                            tagName="p"
+                                            className="advgb-testimonial-desc"
+                                            style={ { color: descColor } }
+                                            value={ item.desc }
+                                        />
                                     </div>
                                 </div>
                             ) } ) }
