@@ -5152,7 +5152,7 @@ var IconListPopup = function (_Component) {
         key: 'handleClick',
         value: function handleClick(e) {
             // ignore clicks inside the popup and the click that launched the popup
-            if (this.node.contains(e.target) || e.target.className.includes('advgb-browse-image-btn')) {
+            if (this.node.contains(e.target) || e.target.className.includes('advgb-browse-image-btn') || e.target.className.includes('advgb-browse-icon-btn')) {
                 return;
             }
             this.props.closePopup();
