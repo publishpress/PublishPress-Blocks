@@ -176,6 +176,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Text format displayed as raw HTML in frontend for Testimonial block
  * Fix: CSS conflicts in admin with third party plugins
  * Fix: Icon Selection button compatibility with Gutenberg 11 for Advanced Icon and Info Box blocks
+ * Fix: Content Display block image width when inserting through Widgets area 
 
 = 2.9.1 - 20 Jul 2021 =
  * Fix: Legacy Widgets and Widget Area blocks support for profiles
