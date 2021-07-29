@@ -30,7 +30,9 @@ import latinize from "latinize";
 
             const $ = jQuery;
             const { insertBlock } = dispatch( 'core/editor' );
-            const summaryBlock = createBlock( 'advgb/summary' );
+            if ( select( 'core/blocks' ).getBlockType( 'advgb/summary' ) ) {
+                const summaryBlock = createBlock( 'advgb/summary' );
+            }
 
             $( '#editor' ).find( '.table-of-contents' ).click( function () {
                 const allBlocks = select( 'core/block-editor' ).getBlocks();

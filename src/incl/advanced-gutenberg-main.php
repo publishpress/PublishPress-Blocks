@@ -376,6 +376,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             $this->enqueueEditorAssets();
             $this->advgbBlocksVariables(false);
+            $this->advgbDisableBlocksWidgetAreas();
         }
 
         /**
@@ -593,6 +594,23 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 wp_localize_script('advgb_update_list', 'updateListNonce', array('nonce' => $advgb_nonce));
             }
+        }
+
+        /**
+         * Unregister Table of Contents block in Widgets page
+         *
+         * @return void
+         */
+        public function advgbDisableBlocksWidgetAreas()
+        {
+            wp_add_inline_script(
+                'advgb_blocks',
+                'wp.domReady( function () {
+                    if ( wp.data.select("core/blocks").getBlockType( "advgb/summary" ) ) {
+                        wp.blocks.unregisterBlockType( "advgb/summary" );
+                    }
+                } );'
+            );
         }
 
         /**
