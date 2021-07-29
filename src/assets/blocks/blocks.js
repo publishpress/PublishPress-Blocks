@@ -26449,7 +26449,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _dispatch = dispatch('core/editor'),
                 insertBlock = _dispatch.insertBlock;
 
-            var summaryBlock = createBlock('advgb/summary');
+            if (select('core/blocks').getBlockType('advgb/summary')) {
+                var _summaryBlock = createBlock('advgb/summary');
+            }
 
             $('#editor').find('.table-of-contents').click(function () {
                 var allBlocks = select('core/block-editor').getBlocks();

@@ -606,7 +606,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_add_inline_script(
                 'advgb_blocks',
                 'wp.domReady( function () {
-                    wp.blocks.unregisterBlockType( "advgb/summary" );
+                    if ( wp.data.select("core/blocks").getBlockType( "advgb/summary" ) ) {
+                        wp.blocks.unregisterBlockType( "advgb/summary" );
+                    }
                 } );'
             );
         }
@@ -2315,9 +2317,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                 return array('active_blocks'=>array(), 'inactive_blocks'=>array());
                             }
 
-                            // Remove Table of Contents block on Widgets editor
-                            //$blocks_saved = $this->advgbDisableBlocksWidgetsPage($blocks_saved);
-
                             // Return allowed blocks
                             return $blocks_saved;
                         }
@@ -2335,39 +2334,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
             }
             return array('active_blocks'=>$all_blocks, 'inactive_blocks'=>array());
-        }
-
-        /**
-         * Remove Table of Contents block on Widgets editor
-         *
-         * @return array
-         */
-        public function advgbDisableBlocksWidgetsPage($blocks)
-        {
-            $disable_these_blocks = array(
-                'advgb/summary'
-            );
-
-            foreach( $disable_these_blocks as $disable_this_block ) {
-
-                // Remove from active_blocks array
-                if( in_array( $disable_this_block, $blocks['active_blocks']) ) {
-                    //echo 'yes! ';
-                    $advgb_position_ = array_search( $disable_this_block, $blocks['active_blocks'] );
-                    unset( $blocks['active_blocks'][$advgb_position_] );
-                }
-
-                // Add to inactive_blocks array
-                if( !in_array( $disable_this_block, $blocks['inactive_blocks']) ) {
-                    //echo 'yes! ';
-                    array_push( $blocks['inactive_blocks'], $disable_this_block );
-                }
-            }
-
-            //echo '<pre>' . print_r($blocks, 1) . '</pre>';
-            // exit;
-
-            return $blocks;
         }
 
         /**
