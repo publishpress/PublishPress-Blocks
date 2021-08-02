@@ -1481,6 +1481,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_script(
+                    'advgb_block_access_js',
+                    plugins_url('assets/js/block-access.js', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+                wp_register_script(
                     'advgb_settings_js',
                     plugins_url('assets/js/settings.js', dirname(__FILE__)),
                     array('wp-i18n'),
@@ -1872,7 +1878,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_safe_redirect(admin_url('admin.php?page=advgb_main&view=profiles'));
             }
 
-            if (isset($_POST['advgb_profile_save'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            if( isset($_POST['advgb_block_access_save']) ) {
+                $this->saveAdvgbBlockAccess();
+            } elseif (isset($_POST['advgb_profile_save'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 $this->saveAdvgbProfile();
             } elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 $this->saveSettings();
@@ -2105,6 +2113,41 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             return $postID;
+        }
+
+        /**
+         * Save block access by user role
+         *
+         * @return void
+         */
+        public function saveAdvgbBlockAccess() {
+
+            // Check nonce field exist
+            if ( !isset( $_POST['advgb_nonce_field'] ) ) {
+                return false;
+            }
+            // Verify nonce
+            if ( !wp_verify_nonce( $_POST['advgb_nonce_field'], 'advgb_nonce' ) ) {
+                return false;
+            }
+
+            $block_access   = array();
+            $user_role      = $_POST['user_role'];
+            $blocks         = $_POST['blocks'];
+
+            if( $blocks ) {
+                foreach( $blocks as $block ) {
+                    $block_access[] = $block;
+                }
+            }
+
+            $block_access_by_role                           = get_option( 'advgb_blocks_user_roles');
+            $block_access_by_role[$user_role]['approach']   = 'enable';
+            $block_access_by_role[$user_role]['blocks']     = isset($blocks) ? $blocks : '';
+
+            update_option( 'advgb_blocks_user_roles', $block_access_by_role, false );
+
+            wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_profile=success' ) );
         }
 
         /**

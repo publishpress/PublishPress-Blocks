@@ -14,6 +14,11 @@ $tabs_data = array(
         'icon' => 'account-circle',
     ),
     array(
+        'id' => 'block-access',
+        'title' => __('Block Access [By User Roles]', 'advanced-gutenberg'),
+        'icon' => 'account-circle',
+    ),
+    array(
         'id' => 'settings',
         'title' => __('Settings', 'advanced-gutenberg'),
         'icon' => 'build',
