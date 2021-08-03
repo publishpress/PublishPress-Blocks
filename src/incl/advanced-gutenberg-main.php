@@ -427,7 +427,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Output blocks data and settings as javascript objects (advgb_blocks_var, advgbBlocks and advgbDefaultConfig)
+         * Output blocks data and settings as javascript objects (advgb_blocks_var, advgbBlocks, advgbDefaultConfig and advgb_blocks_user_roles)
          *
          * @param boolean $post When the blocks load in post edit screen
          *
@@ -490,6 +490,19 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $blocks_config_saved = get_option('advgb_blocks_default_config');
             $blocks_config_saved = $blocks_config_saved !== false ? $blocks_config_saved : array();
             wp_localize_script('wp-blocks', 'advgbDefaultConfig', $blocks_config_saved);
+
+            // Block Access
+            $current_user       = wp_get_current_user();
+            $current_user_role  = $current_user->roles[0];
+
+            // Setup default config data for Block Access
+            $advgb_blocks_user_roles = get_option( 'advgb_blocks_user_roles' );
+            $advgb_blocks_user_roles = $advgb_blocks_user_roles !== false ? $advgb_blocks_user_roles : array();
+            $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
+            wp_localize_script('wp-blocks', 'advgb_block_access', array(
+                'block_access' => $advgb_blocks_user_roles,
+                'user_role' => $current_user_role,
+            ));
         }
 
         /**
