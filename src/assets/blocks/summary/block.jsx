@@ -30,7 +30,9 @@ import latinize from "latinize";
 
             const $ = jQuery;
             const { insertBlock } = dispatch( 'core/editor' );
-            const summaryBlock = createBlock( 'advgb/summary' );
+            if ( select( 'core/blocks' ).getBlockType( 'advgb/summary' ) ) {
+                const summaryBlock = createBlock( 'advgb/summary' );
+            }
 
             $( '#editor' ).find( '.table-of-contents' ).click( function () {
                 const allBlocks = select( 'core/block-editor' ).getBlocks();
@@ -67,7 +69,7 @@ import latinize from "latinize";
                 isSelected && blockType === 'core/heading' && attributes.nodeName !== 'H1' &&
                 <InspectorAdvancedControls key="advgb-summary-controls-hint">
                     <p style={{ color: 'red', fontStyle: 'italic' }}>
-                        {__( 'After manually changing the anchor, remember to refresh summary block to make the links work!', 'advanced-gutenberg' )}
+                        {__( 'After manually changing the anchor, remember to refresh Table of Contents block to make the links work!', 'advanced-gutenberg' )}
                     </p>
                 </InspectorAdvancedControls>,
             ] )
