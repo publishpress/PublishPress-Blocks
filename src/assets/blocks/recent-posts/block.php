@@ -1062,7 +1062,8 @@ function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
     } else {
         // Get author attribute
         if ( isset( $attributes['author'] ) && ! empty( $attributes['author'] ) ) {
-    		if ( ! function_exists('get_multiple_authors') ){
+			// WooCommerce Products don't support multiple authors...
+    		if (  $post_type === 'product' || ! function_exists('get_multiple_authors') ){
     			$args['author'] = $attributes['author'];
     		} else {
     			$user_id = $attributes['author'];
@@ -1074,7 +1075,7 @@ function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
     					'compare' => 'LIKE',
     				);
     			}
-    		}
+			}
     	}
     }
 	return $args;
