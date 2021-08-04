@@ -777,7 +777,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 update_option('advgb_blocks_list', $blocksList);
             }
 
-            // Check that profile blocks are up to date
+            /*/ Check that profile blocks are up to date
             $args     = array(
                 'fields'    => 'ids',
                 'post_type' => 'advgb_profiles',
@@ -799,7 +799,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         update_post_meta($postID, 'blocks', $allBlocksMeta);
                     }
                 }
-            }
+            }*/
 
             if ((defined('GUTENBERG_VERSION')
                 && version_compare(get_option('advgb_gutenberg_version'), GUTENBERG_VERSION, '<'))
@@ -2154,7 +2154,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if ( isset( $blocks ) ) {
                 $blocks_list        = $_POST['blocks_list'];
                 $active_blocks     = $blocks;
-                $inactive_blocks   = array_values( array_diff( $blocks_list, $active_blocks ) );
+                $inactive_blocks   = array_unique( array_values( array_diff( $blocks_list, $active_blocks ) ) );
             }
 
             $block_access_by_role                                   = get_option( 'advgb_blocks_user_roles');
