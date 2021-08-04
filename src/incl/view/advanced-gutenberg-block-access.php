@@ -35,11 +35,6 @@ if( isset( $_REQUEST['user_role'] ) ) {
     $current_user_role = 'administrator';
 }
 
-/*/ No user roles detected since 3.0.0. Let's create the option
-if( !get_option( 'advgb_blocks_user_roles' ) ) {
-    add_option( 'advgb_blocks_user_roles' );
-}*/
-
 // Get disabled blocks by user roles option
 $advgb_blocks_user_roles = !empty( get_option('advgb_blocks_user_roles') ) ? get_option( 'advgb_blocks_user_roles' ) : [];
 $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
@@ -118,11 +113,7 @@ if ( !current_user_can('administrator') ) {
             </div>
 
             <div>
-                <!--div id="advgb-blocks-list"></div>
-                <div class="blocks-section"></div-->
                 <?php
-                $savedBlocksListName = array();
-
                 foreach( $blockCategories as $blockCategory ) {
                     ?>
                     <div class="category-block clearfix">
@@ -137,7 +128,6 @@ if ( !current_user_can('administrator') ) {
                                 if( $blockCategory['slug'] === $block['category'] ) {
                                     // Convert object to array
                                     $block = (array)$block;
-                                    //$savedBlocksListName[] = $block['name'];
                                     ?>
                                     <li class="block-item ju-settings-option">
                                         <label class="ju-setting-label">
@@ -150,13 +140,20 @@ if ( !current_user_can('administrator') ) {
                                         </label>
                                         <div class="ju-switch-button">
                                             <label class="switch">
-                                                <input type="checkbox" name="blocks[]" value="<?php echo esc_attr( $block['name'] ); ?>"<?php echo ( empty($advgb_blocks_user_roles['blocks']) || in_array($block['name'], $advgb_blocks_user_roles['blocks']) ) ? ' checked="checked"' : '' ?>>
+                                                <input type="checkbox" name="blocks[]" value="<?php echo esc_attr( $block['name'] ); ?>"<?php echo ( empty($advgb_blocks_user_roles['active_blocks']) || ( in_array($block['name'], $advgb_blocks_user_roles['active_blocks']) || !in_array($block['name'], $advgb_blocks_user_roles['inactive_blocks']) ) ) ? ' checked="checked"' : '' ?>>
                                                 <span class="slider"></span>
                                             </label>
                                         </div>
                                     </li>
                                 <?php
                                 }
+                            }
+
+                            // Generate hidden fields with all the saved blocks (even the ones not listed here)
+                            foreach ($advgb_blocks_list as $block) {
+                            ?>
+                                <input type="hidden" name="blocks_list[]" value="<?php echo esc_attr( $block['name'] ); ?>">
+                            <?php
                             }
                         ?>
                     </div>
