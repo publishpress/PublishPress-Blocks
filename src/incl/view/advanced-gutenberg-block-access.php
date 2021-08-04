@@ -2,6 +2,7 @@
 defined('ABSPATH') || die;
 
 wp_enqueue_style('advgb_profile_style');
+wp_enqueue_script('advgb_update_list');
 wp_enqueue_script('advgb_block_access_js');
 wp_enqueue_script('wp-blocks');
 wp_enqueue_script('wp-element');
@@ -20,7 +21,6 @@ if (function_exists('get_block_categories')) {
 } elseif (function_exists('gutenberg_get_block_categories')) {
     $blockCategories = gutenberg_get_block_categories(get_post());
 }
-//var_dump($blockCategories);
 
 wp_add_inline_script(
     'wp-blocks',
@@ -38,7 +38,8 @@ if( isset( $_REQUEST['user_role'] ) ) {
 // Get disabled blocks by user roles option
 $advgb_blocks_user_roles = !empty( get_option('advgb_blocks_user_roles') ) ? get_option( 'advgb_blocks_user_roles' ) : [];
 $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
-var_dump( $advgb_blocks_user_roles );
+//var_dump( $advgb_blocks_user_roles );
+//var_dump($blockCategories);
 
 // Saved blocks (the ones detected by PP Blocks)
 $advgb_blocks_list = get_option( 'advgb_blocks_list' );
@@ -62,18 +63,6 @@ if ( !current_user_can('administrator') ) {
 
         <div class="advgb-header profile-header">
             <h1 class="header-title"><?php esc_html_e('Block Access', 'advanced-gutenberg') ?></h1>
-            <div class="inline-button-wrapper">
-                <span id="block-update-notice">
-                    <?php esc_html_e('Blocks list updated.', 'advanced-gutenberg') ?>
-                </span>
-
-                <button class="button button-primary pp-primary-button save-profile-button"
-                        type="submit"
-                        name="advgb_block_access_save"
-                >
-                    <span><?php esc_html_e('Save', 'advanced-gutenberg') ?></span>
-                </button>
-            </div>
         </div>
 
         <div class="profile-title">
@@ -92,14 +81,18 @@ if ( !current_user_can('administrator') ) {
                     endforeach;
                     ?>
                 </select>
-                <?php
-                if( $_REQUEST['user_role'] ) {
-                    echo $_REQUEST['user_role'];
-                }
-                ?>
-                <span id="advgb-loading" style="display:none;">
-                    <?php _e('Loading...', 'advanced-gutenberg') ?>
-                </span>
+                <div class="inline-button-wrapper">
+                    <span id="block-update-notice">
+                        <?php esc_html_e('Blocks list updated.', 'advanced-gutenberg') ?>
+                    </span>
+
+                    <button class="button button-primary pp-primary-button save-profile-button"
+                            type="submit"
+                            name="advgb_block_access_save"
+                    >
+                        <span><?php esc_html_e('Save', 'advanced-gutenberg') ?></span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -148,13 +141,17 @@ if ( !current_user_can('administrator') ) {
                                 <?php
                                 }
                             }
-
-                            // Generate hidden fields with all the saved blocks (even the ones not listed here)
-                            foreach ($advgb_blocks_list as $block) {
+                            ?>
+                        </ul>
+                        <?php
+                        // Generate hidden fields with all the saved blocks (even the ones not listed here)
+                        foreach ($advgb_blocks_list as $block) {
+                            if( $block['name'] ) {
                             ?>
                                 <input type="hidden" name="blocks_list[]" value="<?php echo esc_attr( $block['name'] ); ?>">
                             <?php
                             }
+                        }
                         ?>
                     </div>
                     <?php
