@@ -177,13 +177,14 @@
             } );
 
             setAttributes( { items: newItems } );
+            console.log('test...');
         }
 
         render() {
             const { currentEdit } = this.state;
             const { attributes, setAttributes, isSelected } = this.props;
             const {
-                pid, items, sliderView, avatarColor, avatarBorderRadius, avatarBorderWidth, avatarBorderColor, avatarSize,
+                pid, items, sliderView, enableAvatar, avatarColor, avatarBorderRadius, avatarBorderWidth, avatarBorderColor, avatarSize,
                 nameColor, positionColor, descColor, columns, sliderColumn, sliderItemsToScroll, sliderCenterMode, sliderPauseOnHover,
                 sliderAutoPlay, sliderInfiniteLoop, sliderDotsShown, sliderDotsColor, sliderSpeed, sliderAutoPlaySpeed,
                 sliderArrowShown, sliderArrowSize, sliderArrowBorderSize, sliderArrowBorderRadius, sliderArrowColor, avatarPosition,
@@ -351,54 +352,63 @@
                             </Fragment>
                             )}
                             <PanelBody title={ __( 'Avatar', 'advanced-gutenberg' ) } initialOpen={ false }>
-                                <PanelColorSettings
-                                    title={ __( 'Avatar Colors', 'advanced-gutenberg' ) }
-                                    initialOpen={ false }
-                                    colorSettings={ [
-                                        {
-                                            label: __( 'Background Color', 'advanced-gutenberg' ),
-                                            value: avatarColor,
-                                            onChange: ( value ) => setAttributes( { avatarColor: value } ),
-                                        },
-                                        {
-                                            label: __( 'Border Color', 'advanced-gutenberg' ),
-                                            value: avatarBorderColor,
-                                            onChange: ( value ) => setAttributes( { avatarBorderColor: value } ),
-                                        },
-                                    ] }
+                                <ToggleControl
+                                    label={ __( 'Display Avatar', 'advanced-gutenberg' ) }
+                                    checked={ enableAvatar }
+                                    onChange={ () => setAttributes( { enableAvatar: !enableAvatar } ) }
                                 />
-                                <RangeControl
-                                    label={ __( 'Border Radius (%)', 'advanced-gutenberg' ) }
-                                    min={ 0 }
-                                    max={ 50 }
-                                    value={ avatarBorderRadius }
-                                    onChange={ (value) => setAttributes( { avatarBorderRadius: value } ) }
-                                />
-                                <RangeControl
-                                    label={ __( 'Border Width', 'advanced-gutenberg' ) }
-                                    min={ 0 }
-                                    max={ 5 }
-                                    value={ avatarBorderWidth }
-                                    onChange={ (value) => setAttributes( { avatarBorderWidth: value } ) }
-                                />
-                                <RangeControl
-                                    label={ __( 'Avatar Size', 'advanced-gutenberg' ) }
-                                    min={ 50 }
-                                    max={ 130 }
-                                    value={ avatarSize }
-                                    onChange={ (value) => setAttributes( { avatarSize: value } ) }
-                                />
-                                <SelectControl
-                                    label={ __( 'Avatar Position', 'advanced-gutenberg' ) }
-                                    value={ avatarPosition }
-                                    options={ [
-                                        {label: __( 'Top', 'advanced-gutenberg' ), value: 'top'},
-                                        {label: __( 'Bottom', 'advanced-gutenberg' ), value: 'bottom'},
-                                        {label: __( 'Left', 'advanced-gutenberg' ), value: 'left'},
-                                        {label: __( 'right', 'advanced-gutenberg' ), value: 'right'},
-                                    ] }
-                                    onChange={ (value) => setAttributes( { avatarPosition: value } ) }
-                                />
+                                { enableAvatar &&
+                                    <Fragment>
+                                        <PanelColorSettings
+                                            title={ __( 'Avatar Colors', 'advanced-gutenberg' ) }
+                                            initialOpen={ false }
+                                            colorSettings={ [
+                                                {
+                                                    label: __( 'Background Color', 'advanced-gutenberg' ),
+                                                    value: avatarColor,
+                                                    onChange: ( value ) => setAttributes( { avatarColor: value } ),
+                                                },
+                                                {
+                                                    label: __( 'Border Color', 'advanced-gutenberg' ),
+                                                    value: avatarBorderColor,
+                                                    onChange: ( value ) => setAttributes( { avatarBorderColor: value } ),
+                                                },
+                                            ] }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Border Radius (%)', 'advanced-gutenberg' ) }
+                                            min={ 0 }
+                                            max={ 50 }
+                                            value={ avatarBorderRadius }
+                                            onChange={ (value) => setAttributes( { avatarBorderRadius: value } ) }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Border Width', 'advanced-gutenberg' ) }
+                                            min={ 0 }
+                                            max={ 5 }
+                                            value={ avatarBorderWidth }
+                                            onChange={ (value) => setAttributes( { avatarBorderWidth: value } ) }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Avatar Size', 'advanced-gutenberg' ) }
+                                            min={ 50 }
+                                            max={ 130 }
+                                            value={ avatarSize }
+                                            onChange={ (value) => setAttributes( { avatarSize: value } ) }
+                                        />
+                                        <SelectControl
+                                            label={ __( 'Avatar Position', 'advanced-gutenberg' ) }
+                                            value={ avatarPosition }
+                                            options={ [
+                                                {label: __( 'Top', 'advanced-gutenberg' ), value: 'top'},
+                                                {label: __( 'Bottom', 'advanced-gutenberg' ), value: 'bottom'},
+                                                {label: __( 'Left', 'advanced-gutenberg' ), value: 'left'},
+                                                {label: __( 'right', 'advanced-gutenberg' ), value: 'right'},
+                                            ] }
+                                            onChange={ (value) => setAttributes( { avatarPosition: value } ) }
+                                        />
+                                    </Fragment>
+                                }
                             </PanelBody>
                             <PanelColorSettings
                                 title={ __( 'Text Colors', 'advanced-gutenberg' ) }
@@ -430,37 +440,39 @@
                                 if (i > validCols) return false;
                                 return (
                                     <div className="advgb-testimonial-item" key={idx}>
-                                        <MediaUpload
-                                            allowedTypes={ ["image"] }
-                                            onSelect={ (media) => this.updateItems(idx, {
-                                                avatarUrl: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
-                                                avatarID: media.id
-                                            } ) }
-                                            value={ item.avatarID }
-                                            render={ ( { open } ) => (
-                                                <div className="advgb-testimonial-avatar-group">
-                                                    <Tooltip text={ __( 'Click to change avatar', 'advanced-gutenberg' ) }>
-                                                        <div className="advgb-testimonial-avatar"
-                                                             onClick={ open }
-                                                             style={ {
-                                                                 backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbBlocks.avatarHolder})`,
-                                                                 backgroundColor: avatarColor,
-                                                                 borderRadius: avatarBorderRadius + '%',
-                                                                 borderWidth: avatarBorderWidth + 'px',
-                                                                 borderColor: avatarBorderColor,
-                                                                 width: avatarSize + 'px',
-                                                                 height: avatarSize + 'px',
-                                                             } }
-                                                        />
-                                                    </Tooltip>
-                                                    <Tooltip text={ __( 'Remove avatar', 'advanced-gutenberg' ) }>
-                                                        <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
-                                                              onClick={ () => this.updateItems(idx, { avatarUrl: undefined, avatarID: undefined } ) }
-                                                        />
-                                                    </Tooltip>
-                                                </div>
-                                            ) }
-                                        />
+                                        { enableAvatar &&
+                                            <MediaUpload
+                                                allowedTypes={ ["image"] }
+                                                onSelect={ (media) => this.updateItems(idx, {
+                                                    avatarUrl: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
+                                                    avatarID: media.id
+                                                } ) }
+                                                value={ item.avatarID }
+                                                render={ ( { open } ) => (
+                                                    <div className="advgb-testimonial-avatar-group">
+                                                        <Tooltip text={ __( 'Click to change avatar', 'advanced-gutenberg' ) }>
+                                                            <div className="advgb-testimonial-avatar"
+                                                                 onClick={ open }
+                                                                 style={ {
+                                                                     backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbBlocks.avatarHolder})`,
+                                                                     backgroundColor: avatarColor,
+                                                                     borderRadius: avatarBorderRadius + '%',
+                                                                     borderWidth: avatarBorderWidth + 'px',
+                                                                     borderColor: avatarBorderColor,
+                                                                     width: avatarSize + 'px',
+                                                                     height: avatarSize + 'px',
+                                                                 } }
+                                                            />
+                                                        </Tooltip>
+                                                        <Tooltip text={ __( 'Show default avatar', 'advanced-gutenberg' ) }>
+                                                            <span className="dashicons dashicons-update-alt advgb-testimonial-avatar-clear"
+                                                                  onClick={ () => this.updateItems(idx, { avatarUrl: undefined, avatarID: undefined } ) }
+                                                            />
+                                                        </Tooltip>
+                                                    </div>
+                                                ) }
+                                            />
+                                        }
                                         <div className="advgb-testimonial-info">
                                             <RichText
                                                 tagName="h4"
@@ -550,6 +562,10 @@
         sliderView: {
             type: 'boolean',
             default: false,
+        },
+        enableAvatar: {
+            type: 'boolean',
+            default: true,
         },
         avatarColor: {
             type: 'string',
@@ -669,7 +685,7 @@
         edit: AdvTestimonial,
         save: function ( { attributes } ) {
             const {
-                pid, items, sliderView, avatarColor, avatarBorderRadius, avatarBorderWidth, avatarBorderColor, avatarSize,
+                pid, items, sliderView, enableAvatar, avatarColor, avatarBorderRadius, avatarBorderWidth, avatarBorderColor, avatarSize,
                 nameColor, positionColor, descColor, columns, sliderColumn, sliderItemsToScroll, sliderCenterMode, sliderPauseOnHover,
                 sliderAutoPlay, sliderInfiniteLoop, sliderDotsShown, avatarPosition, sliderSpeed, sliderAutoPlaySpeed,
                 sliderArrowShown, sliderArrowSize, sliderArrowBorderSize, sliderArrowBorderRadius, sliderArrowColor,
@@ -720,35 +736,40 @@
                             if (i > validCols) return false;
                             return (
                                 <div className="advgb-testimonial-item" key={idx}>
-                                    <div className="advgb-testimonial-avatar-group">
-                                        <div className="advgb-testimonial-avatar"
-                                             style={ {
-                                                 backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbBlocks.avatarHolder})`,
-                                                 backgroundColor: avatarColor,
-                                                 borderRadius: avatarBorderRadius + '%',
-                                                 borderWidth: avatarBorderWidth + 'px',
-                                                 borderColor: avatarBorderColor,
-                                                 width: avatarSize + 'px',
-                                                 height: avatarSize + 'px',
-                                             } }
-                                        />
-                                    </div>
+                                    { enableAvatar &&
+                                        <div className="advgb-testimonial-avatar-group">
+                                            <div className="advgb-testimonial-avatar"
+                                                 style={ {
+                                                     backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbBlocks.avatarHolder})`,
+                                                     backgroundColor: avatarColor,
+                                                     borderRadius: avatarBorderRadius + '%',
+                                                     borderWidth: avatarBorderWidth + 'px',
+                                                     borderColor: avatarBorderColor,
+                                                     width: avatarSize + 'px',
+                                                     height: avatarSize + 'px',
+                                                 } }
+                                            />
+                                        </div>
+                                    }
                                     <div className="advgb-testimonial-info">
-                                        <h4 className="advgb-testimonial-name"
+                                        <RichText.Content
+                                            tagName="h4"
+                                            className="advgb-testimonial-name"
                                             style={ { color: nameColor } }
-                                        >
-                                            { item.name }
-                                        </h4>
-                                        <p className="advgb-testimonial-position"
-                                           style={ { color: positionColor } }
-                                        >
-                                            { item.position }
-                                        </p>
-                                        <p className="advgb-testimonial-desc"
-                                           style={ { color: descColor } }
-                                        >
-                                            { item.desc }
-                                        </p>
+                                            value={ item.name }
+                                        />
+                                        <RichText.Content
+                                            tagName="p"
+                                            className="advgb-testimonial-position"
+                                            style={ { color: positionColor } }
+                                            value={ item.position }
+                                        />
+                                        <RichText.Content
+                                            tagName="p"
+                                            className="advgb-testimonial-desc"
+                                            style={ { color: descColor } }
+                                            value={ item.desc }
+                                        />
                                     </div>
                                 </div>
                             ) } ) }

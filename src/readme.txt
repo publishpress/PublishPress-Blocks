@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.9.1
+Stable tag: 2.9.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -165,6 +165,19 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 1. Advanced Buttons block
 
 == Changelog ==
+
+= 2.9.2 - 4 Aug 2021 =
+ * Add: Toggle to disable all the avatars for Testimonial block
+ * Add: Upgrade to Pro admin page
+ * Fix: Label to reset avatar for Testimonial block
+ * Fix: Text format displayed as raw HTML in frontend for Advanced Tabs block
+ * Fix: Images Slider exponential width inside Columns Manager block
+ * Fix: Use Global Columns Visual Guide class in Widgets
+ * Fix: Text format displayed as raw HTML in frontend for Testimonial block
+ * Fix: CSS conflicts in admin with third party plugins
+ * Fix: Icon Selection button compatibility with Gutenberg 11 for Advanced Icon and Info Box blocks
+ * Fix: Content Display block image width when inserting through Widgets area
+ * Remove: Table of Contents block in Widgets area
 
 = 2.9.1 - 20 Jul 2021 =
  * Fix: Legacy Widgets and Widget Area blocks support for profiles
