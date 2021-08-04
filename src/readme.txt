@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.9.2b3
+Stable tag: 2.9.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -166,7 +166,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 == Changelog ==
 
-= 2.9.2 =
+= 2.9.2 - 4 Aug 2021 =
  * Add: Toggle to disable all the avatars for Testimonial block
  * Add: Upgrade to Pro admin page
  * Fix: Label to reset avatar for Testimonial block
