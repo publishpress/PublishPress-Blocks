@@ -1049,15 +1049,7 @@ function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
         } elseif( advgbGetCurrentUserId() === 999999 ) {
             $args['author'] = advgbGetCurrentUserId();
         } else {
-            $user_id = advgbGetCurrentUserId();
-            $author = advgbGetAuthorByID( $user_id );
-            if ( $author ) {
-                $args['meta_query'][] = array(
-                    'key' => 'ppma_authors_name',
-                    'value' => $author->__get( 'display_name' ),
-                    'compare' => 'LIKE',
-                );
-            }
+			advgbSetPPAuthorArgs( advgbGetCurrentUserId(), $args );
         }
     } else {
         // Get author attribute
@@ -1066,21 +1058,69 @@ function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
     		if (  $post_type === 'product' || ! function_exists('get_multiple_authors') ){
     			$args['author'] = $attributes['author'];
     		} else {
-    			$user_id = $attributes['author'];
-    			$author = advgbGetAuthorByID( $user_id );
-    			if ( $author ) {
-    				$args['meta_query'][] = array(
-    					'key' => 'ppma_authors_name',
-    					'value' => $author->__get( 'display_name' ),
-    					'compare' => 'LIKE',
-    				);
-    			}
+				advgbSetPPAuthorArgs( $attributes['author'], $args );
 			}
     	}
     }
 	return $args;
 }
 add_filter( 'advgb_get_recent_posts_args', 'advgbGetAuthorFilter', 10, 3 );
+
+/**
+ * Populate the correct arguments in REST for filtering by author.
+ *
+ * The results depends on whether PublishPress Authors plugin is activated.
+ *
+ * @return array
+ */
+function advgbGetAuthorFilterREST( $args, $request ) {
+	if ( isset( $request['author'] ) && ! empty( $request['author'] ) ) {
+		// WooCommerce Products don't support multiple authors...
+		if ( $args['post_type'] !== 'product' && function_exists('get_multiple_authors') ) {
+			$author = $request['author'];
+			$user_id = is_array( $author ) ? reset( $author ) : $author;
+			advgbSetPPAuthorArgs( $user_id, $args );
+		} else {
+			unset( $args['author'] );
+			$args['author__in'] = $request['author'];
+		}
+	}
+	return $args;
+}
+add_filter( 'rest_post_query', 'advgbGetAuthorFilterREST', 10, 2 );
+add_filter( 'rest_page_query', 'advgbGetAuthorFilterREST', 10, 2 );
+
+/**
+ * Sets the author args for the meta_query.
+ */
+function advgbSetPPAuthorArgs( $user_id, &$args ) {
+	$author = advgbGetAuthorByID( $user_id );
+	if ( $author ) {
+		$args['meta_query'][] = array(
+			'key' => 'ppma_authors_name',
+			'value' => $author->__get( 'display_name' ),
+			'compare' => 'LIKE',
+		);
+		unset( $args['author'] );
+		unset( $args['author__in'] );
+	}
+}
+
+/**
+ * Populate the correct arguments in REST for sorting by author.
+ *
+ * The results depends on whether PublishPress Authors plugin is activated.
+ *
+ * @return array
+ */
+function advgbMultipleAuthorSortREST( $args, $request ) {
+	if ( isset( $request['orderby'] ) && 'author' === $request['orderby'] && function_exists('get_multiple_authors') ) {
+		$args['meta_key'] = 'ppma_authors_name';
+		$args['orderby'] = 'meta_value';
+	}
+	return $args;
+}
+add_filter( 'rest_post_query', 'advgbMultipleAuthorSortREST', 10, 2 );
 
 /**
  * Populate the correct arguments for filtering by author.
@@ -1102,53 +1142,6 @@ function advgbMultipleAuthorSort() {
 		} );
 	}
 }
-
-/**
- * Populate the correct arguments in REST for filtering by author.
- *
- * The results depends on whether PublishPress Authors plugin is activated.
- *
- * @return array
- */
-function advgbGetAuthorFilterREST( $args, $request ) {
-	if ( isset( $request['author'] ) && ! empty( $request['author'] ) ) {
-		// WooCommerce Products don't support multiple authors...
-		if ( $args['post_type'] !== 'product' && function_exists('get_multiple_authors') ) {
-			$author = $request['author'];
-			$user_id = is_array( $author ) ? reset( $author ) : $author;
-			$author = advgbGetAuthorByID( $user_id );
-			if ( $author ) {
-				$args['meta_key'] = 'ppma_authors_name';
-				$args['meta_value'] = $author->__get( 'display_name' );
-				$args['meta_compare'] = 'LIKE';
-				unset( $args['author'] );
-				unset( $args['author__in'] );
-			}
-		} else {
-			unset( $args['author'] );
-			$args['author__in'] = $request['author'];
-		}
-	}
-	return $args;
-}
-add_filter( 'rest_post_query', 'advgbGetAuthorFilterREST', 10, 2 );
-add_filter( 'rest_page_query', 'advgbGetAuthorFilterREST', 10, 2 );
-
-/**
- * Populate the correct arguments in REST for sorting by author.
- *
- * The results depends on whether PublishPress Authors plugin is activated.
- *
- * @return array
- */
-function advgbMultipleAuthorSortREST( $args, $request ) {
-	if ( isset( $request['orderby'] ) && 'author' === $request['orderby'] && function_exists('get_multiple_authors') ) {
-		$args['meta_key'] = 'ppma_authors_name';
-		$args['orderby'] = 'meta_value';
-	}
-	return $args;
-}
-add_filter( 'rest_post_query', 'advgbMultipleAuthorSortREST', 10, 2 );
 
 /**
  * Check if Featured image is enable for each post
