@@ -168,7 +168,34 @@ if( version_compare($advgb_current_version, '2.10.0', 'lt') && !get_option( 'adv
 
         // Don't delete post type advgb_profile to keep a backup!
     }
+}
 
+// Deactivate Container block
+$advgb_blocks_user_roles = get_option( 'advgb_blocks_user_roles');
+
+if( is_array( $advgb_blocks_user_roles ) ) {
+    //var_dump( $advgb_blocks_user_roles );
+    //exit;
+
+    foreach( $advgb_blocks_user_roles as $role ) {
+        //var_dump( $role );
+
+        /*var_dump( $role['active_blocks'] );
+        var_dump( $role['inactive_blocks'] );
+
+        $key = array_search( 'advgb/container', $role['active_blocks'] );
+        if ($key !== false) {
+            unset( $role['active_blocks'][$key] );
+        }
+
+        $keyIA = array_search( 'advgb/container', $role['inactive_blocks'] );
+        if ( $keyIA === false ) {
+            array_push( $role['inactive_blocks'], 'advgb/container' );
+        }
+
+        update_option( 'advgb_blocks_user_roles', $role, false );*/
+    }
+    //exit;
 }
 
 // Set version if needed
