@@ -9,13 +9,8 @@ $phpver = phpversion();
 
 $tabs_data = array(
     array(
-        'id' => 'profiles',
-        'title' => __('Block Access', 'advanced-gutenberg'),
-        'icon' => 'account-circle',
-    ),
-    array(
         'id' => 'block-access',
-        'title' => __('Block Access [By User Roles]', 'advanced-gutenberg'),
+        'title' => __('Block Access', 'advanced-gutenberg'),
         'icon' => 'account-circle',
     ),
     array(
