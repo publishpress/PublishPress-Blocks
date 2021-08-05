@@ -105,7 +105,7 @@ if (version_compare($advgb_current_version, '2.0.6', 'lt')) {
 }
 
 // v2.10.0 - Migrate Block Access Profiles to Block Access by Roles
-if( !get_option( 'advgb_blocks_user_roles') ) {
+if( version_compare($advgb_current_version, '2.10.0', 'lt') && !get_option( 'advgb_blocks_user_roles') ) {
 
     global $wpdb;
     $profiles = $wpdb->get_results(
