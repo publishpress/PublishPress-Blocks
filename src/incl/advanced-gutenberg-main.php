@@ -1784,6 +1784,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     : 'default';
                 $editorColsVGGlobal = $this->getAdvgbColsVisualGuideGlobal( $saved_settings['enable_columns_visual_guide'] );
 
+                $editorBlockVisibility = (
+                        isset($saved_settings['block_visibility'])
+                        && ($saved_settings['block_visibility'] == 0)
+                    )
+                    ? 'disable'
+                    : 'enable';
+
                 // Editor width
                 if(isset($editorWidth) && !empty($editorWidth)) {
                     // Editor width - Post meta
@@ -1809,6 +1816,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     [
                         'editor_width_global'                   => $editorWidthGlobal,
                         'enable_columns_visual_guide_global'    => $editorColsVGGlobal,
+                        'block_visibility'						=> $editorBlockVisibility,
                     ]
                 );
 
@@ -1922,6 +1930,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['enable_columns_visual_guide'] = 1;
                 } else {
                     $save_config['enable_columns_visual_guide'] = 0;
+                }
+
+                if (isset($_POST['block_visibility'])) {
+                    $save_config['block_visibility'] = 1;
+                } else {
+                    $save_config['block_visibility'] = 0;
                 }
 
                 $save_config['gallery_lightbox_caption'] = $_POST['gallery_lightbox_caption'];
@@ -4575,6 +4589,22 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function contentPreRender($block)
         {
+			$saved_settings     = get_option('advgb_settings');
+			$blockVisibility = (
+					isset($saved_settings['block_visibility'])
+					&& ($saved_settings['block_visibility'] == 0)
+				)
+				? 'disable'
+				: 'enable';
+			if ( $blockVisibility === 'enable' && isset($block['attrs']['bvEnabled']) && intval($block['attrs']['bvEnabled']) === 1 ) {
+				$dateFrom	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bvDateFrom'] );
+				$dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bvDateTo'] );
+				$now = new DateTime();
+				if ( ! ( $dateFrom->getTimestamp() < $now->getTimestamp() && $now->getTimestamp() < $dateTo->getTimestamp() ) ) {
+					return null;
+				}
+			}
+
             // Search for needed blocks then add styles to it
             $style = $this->addBlocksStyles($block);
             array_push($block['innerContent'], $style);
