@@ -75,38 +75,10 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
 $advgb_current_version = get_option('advgb_version', '0.0.0');
 global $wpdb;
 
-if (version_compare($advgb_current_version, '2.0.6', 'lt')) {
-    // Get all GB-ADV active profiles
-    $profiles = $wpdb->get_results('SELECT * FROM '. $wpdb->prefix. 'posts
-         WHERE post_type="advgb_profiles"');
-
-    if (!empty($profiles)) {
-        foreach ($profiles as $profile) {
-            $blocks_saved = get_post_meta($profile->ID, 'blocks', true);
-
-            if (!is_array($blocks_saved)) {
-                continue;
-            }
-
-            // Remove Container block from profile
-            $key = array_search('advgb/container', $blocks_saved['active_blocks']);
-            if ($key !== false) {
-                unset($blocks_saved['active_blocks'][$key]);
-            }
-
-            $keyIA = array_search('advgb/container', $blocks_saved['inactive_blocks']);
-            if ($keyIA === false) {
-                array_push($blocks_saved['inactive_blocks'], 'advgb/container');
-            }
-
-            update_post_meta($profile->ID, 'blocks', $blocks_saved);
-        }
-    }
-}
-
-// v2.10.0 - Migrate Block Access Profiles to Block Access by Roles
+// Migrate to Block Access by User Roles
 if( version_compare($advgb_current_version, '2.10.0', 'lt') && !get_option( 'advgb_blocks_user_roles') ) {
 
+    // Migrate Block Access Profiles to Block Access by Roles
     global $wpdb;
     $profiles = $wpdb->get_results(
         'SELECT * FROM '. $wpdb->prefix. 'posts
@@ -115,9 +87,6 @@ if( version_compare($advgb_current_version, '2.10.0', 'lt') && !get_option( 'adv
 
     if( !empty( $profiles ) ) {
 
-        //var_dump($profiles);
-        //exit;
-
         // Let's extract the user roles associated to Block Access profiles (we can't get all the user roles with regular WP way)
         $user_role_accesses = array();
         foreach ($profiles as $profile) {
@@ -125,12 +94,8 @@ if( version_compare($advgb_current_version, '2.10.0', 'lt') && !get_option( 'adv
             $user_role_accesses[]   = get_post_meta( $postID, 'roles_access', true );
         }
 
-        //var_dump($user_role_accesses);
         $user_role_accesses = call_user_func_array( 'array_merge', $user_role_accesses );
-        //var_dump( $user_role_accesses );
         $user_role_accesses = array_unique( $user_role_accesses );
-        //var_dump( $user_role_accesses );
-        //exit;
 
         // Find the most recent profile of each user role
         $blocks_by_role_access = array();
@@ -158,9 +123,6 @@ if( version_compare($advgb_current_version, '2.10.0', 'lt') && !get_option( 'adv
             }
         }
 
-        //var_dump( $blocks_by_role_access );
-        //exit;
-
         // Migrate Block Access by Profile to Block Access by Role
         if( $blocks_by_role_access ) {
             update_option( 'advgb_blocks_user_roles', $blocks_by_role_access, false );
@@ -168,34 +130,33 @@ if( version_compare($advgb_current_version, '2.10.0', 'lt') && !get_option( 'adv
 
         // Don't delete post type advgb_profile to keep a backup!
     }
-}
 
-// Deactivate Container block
-$advgb_blocks_user_roles = get_option( 'advgb_blocks_user_roles');
+    // Deactivate Container block
+    $advgb_blocks_user_roles            = get_option( 'advgb_blocks_user_roles');
+    $advgb_blocks_user_roles_updated    = array();
 
-if( is_array( $advgb_blocks_user_roles ) ) {
-    //var_dump( $advgb_blocks_user_roles );
-    //exit;
+    if( is_array( $advgb_blocks_user_roles ) ) {
 
-    foreach( $advgb_blocks_user_roles as $role ) {
-        //var_dump( $role );
+        foreach( $advgb_blocks_user_roles as $role => $blocks ) {
 
-        /*var_dump( $role['active_blocks'] );
-        var_dump( $role['inactive_blocks'] );
+            $key = array_search( 'advgb/container', $blocks['active_blocks'] );
+            if ($key !== false) {
+                unset( $blocks['active_blocks'][$key] );
+            }
 
-        $key = array_search( 'advgb/container', $role['active_blocks'] );
-        if ($key !== false) {
-            unset( $role['active_blocks'][$key] );
+            $keyIA = array_search( 'advgb/container', $blocks['inactive_blocks'] );
+            if ( $keyIA === false ) {
+                array_push( $blocks['inactive_blocks'], 'advgb/container' );
+            }
+
+            $advgb_blocks_user_roles_updated[$role]['active_blocks'] = $blocks['active_blocks'];
+            $advgb_blocks_user_roles_updated[$role]['inactive_blocks'] = $blocks['inactive_blocks'];
         }
 
-        $keyIA = array_search( 'advgb/container', $role['inactive_blocks'] );
-        if ( $keyIA === false ) {
-            array_push( $role['inactive_blocks'], 'advgb/container' );
-        }
-
-        update_option( 'advgb_blocks_user_roles', $role, false );*/
+        update_option( 'advgb_blocks_user_roles', $advgb_blocks_user_roles_updated, false );
     }
-    //exit;
+
+    // @TODO Refresh active/inactive blocks in js side
 }
 
 // Set version if needed
