@@ -4598,9 +4598,18 @@ if(!class_exists('AdvancedGutenbergMain')) {
 				: 'enable';
 			if ( $blockVisibility === 'enable' && isset($block['attrs']['bvEnabled']) && intval($block['attrs']['bvEnabled']) === 1 ) {
 				$dateFrom	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bvDateFrom'] );
-				$dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bvDateTo'] );
-				$now = new DateTime();
-				if ( ! ( $dateFrom->getTimestamp() < $now->getTimestamp() && $now->getTimestamp() < $dateTo->getTimestamp() ) ) {
+
+				// bvDateTo can be empty so that the block never stops showing.
+				$dateTo = null;
+				if ( ! empty( $block['attrs']['bvDateTo'] ) ) {
+					$dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bvDateTo'] );
+				}
+
+				// fetch current time keeping in mind the timezone
+				$now = DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
+
+				// compare the dates
+				if ( ! ( $dateFrom->getTimestamp() < $now->getTimestamp() && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) ) ) {
 					return null;
 				}
 			}
