@@ -124,7 +124,7 @@ if ( !current_user_can('administrator') ) {
                                     ?>
                                     <li class="block-item ju-settings-option">
                                         <label class="ju-setting-label">
-                                            <span class="block-icon"<?php echo $block['iconColor'] ? ' style="color:' . $block['iconColor'] . ';"' : ''; ?>">
+                                            <span class="block-icon"<?php echo $block['iconColor'] ? ' style="color:' . $block['iconColor'] . ';"' : ''; ?>>
                                                 <?php echo wp_specialchars_decode( $block['icon'], ENT_QUOTES ); ?>
                                             </span>
                                             <span class="block-title">
