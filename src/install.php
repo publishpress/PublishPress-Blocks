@@ -131,7 +131,7 @@ if( version_compare($advgb_current_version, '2.10.0', 'lt') && !get_option( 'adv
         // Don't delete post type advgb_profile to keep a backup!
     }
 
-    // Deactivate Container block
+    /*/ Deactivate Container block
     $advgb_blocks_user_roles            = get_option( 'advgb_blocks_user_roles');
     $advgb_blocks_user_roles_updated    = array();
 
@@ -155,8 +155,7 @@ if( version_compare($advgb_current_version, '2.10.0', 'lt') && !get_option( 'adv
 
         update_option( 'advgb_blocks_user_roles', $advgb_blocks_user_roles_updated, false );
     }
-
-    // @TODO Refresh active/inactive blocks in js side
+    // Even when this method updates the database option, requires a refresh in js side */
 }
 
 // Set version if needed
