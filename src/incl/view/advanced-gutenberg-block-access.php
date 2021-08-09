@@ -54,7 +54,7 @@ if ( !current_user_can('administrator') ) {
     <?php wp_nonce_field('advgb_nonce', 'advgb_nonce_field'); ?>
     <div>
 
-        <?php if ( isset($_GET['save_profile']) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display message, no action ?>
+        <?php if ( isset($_GET['save_access']) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display message, no action ?>
             <div class="ju-notice-msg ju-notice-success">
                 <?php esc_html_e('Block Access saved successfully!', 'advanced-gutenberg') ?>
                 <i class="dashicons dashicons-dismiss ju-notice-close"></i>

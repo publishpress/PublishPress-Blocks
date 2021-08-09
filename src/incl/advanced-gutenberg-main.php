@@ -16,7 +16,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public static $default_roles_access = array('administrator', 'editor', 'author', 'contributor', 'subscriber');
 
         /**
-         * Default active all blocks for new profile
+         * Default active all blocks
          *
          * @var string  All blocks
          */
@@ -129,18 +129,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
         );
 
         /**
-         * Store original editor settings value, before we modify it to allow/hide blocks based on profiles
+         * Store original editor settings value, before we modify it to allow/hide blocks based on user roles
          *
          * @var string Original settings
          */
         protected static $original_block_editor_settings;
-
-        /**
-         * Activated profile to get activated blocks array
-         *
-         * @var null    ID profiles
-         */
-        protected $active_profile = null;
 
         /**
          * AdvancedGutenbergMain constructor.
@@ -1889,15 +1882,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function saveAdvgbData()
         {
-            if (isset($_GET['view']) && $_GET['view'] === 'profile' && !isset($_GET['id'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- redirect only
-                wp_safe_redirect(admin_url('admin.php?page=advgb_main&view=profiles'));
-            }
-
             if( isset($_POST['advgb_block_access_save']) ) {
                 $this->saveAdvgbBlockAccess();
-            } elseif (isset($_POST['advgb_profile_save'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
-                $this->saveAdvgbProfile();
-            } elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            }  elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 $this->saveSettings();
             } elseif (isset($_POST['save_email_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 $this->saveEmailSettings();
@@ -2056,81 +2043,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Save profiles settings
-         *
-         * @return mixed
-         */
-        public function saveAdvgbProfile()
-        {
-            // Check nonce field exist
-            if (!isset($_POST['advgb_nonce_field'])) {
-                return false;
-            }
-            // Verify nonce
-            if (!wp_verify_nonce($_POST['advgb_nonce_field'], 'advgb_nonce')) {
-                return false;
-            }
-
-            $postID = $_POST['advgb_profile_id'];
-
-            // Save profile settings
-            if (current_user_can('publish_posts')) {
-                // Get list of active blocks
-                $active_blocks = array();
-                $inactive_blocks = array();
-                if (isset($_POST['active_blocks'])) {
-                    $blocks_list = json_decode(stripslashes($_POST['blocks_list']));
-                    $active_blocks = $_POST['active_blocks'];
-                    $inactive_blocks = array_values(array_diff($blocks_list, $active_blocks));
-                }
-
-                // Get users permission
-                $users_access = array();
-                $roles_access = array();
-                if (isset($_POST['advgb-users-access-list'])) {
-                    $users_access = trim($_POST['advgb-users-access-list']);
-                    $users_access = explode(' ', $users_access);
-                }
-                if (isset($_POST['advgb-roles'])) {
-                    $roles_access = $_POST['advgb-roles'];
-                }
-
-                // Get new profile title
-                $post_title = trim($_POST['advgb_profile_title']);
-
-                // Save data
-                if ($postID !== 'new') { // Update profile if have post ID
-                    if (!current_user_can('edit_post', $postID)) {
-                        return false;
-                    }
-
-                    update_post_meta($postID, 'blocks', array('active_blocks'=>$active_blocks, 'inactive_blocks'=>$inactive_blocks));
-                    update_post_meta($postID, 'users_access', $users_access);
-                    update_post_meta($postID, 'roles_access', $roles_access);
-                    wp_update_post(array(
-                        'ID' => $postID,
-                        'post_title' => $post_title,
-                    ));
-                } else { // Create new profile
-                    $postID = wp_insert_post(array(
-                        'post_title'  => $post_title,
-                        'post_type'   => 'advgb_profiles',
-                        'post_status' => 'publish',
-                        'meta_input'  => array(
-                            'blocks' => array('active_blocks'=>$active_blocks, 'inactive_blocks'=>$inactive_blocks),
-                            'roles_access'  => $roles_access,
-                            'users_access'  => $users_access,
-                        )
-                    ));
-                }
-
-                wp_safe_redirect(admin_url('admin.php?page=advgb_main&view=profile&id=' . $postID . '&save_profile=success'));
-            }
-
-            return $postID;
-        }
-
-        /**
          * Save block access by user role
          *
          * @return void
@@ -2146,8 +2058,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            $user_role          = $_POST['user_role'];
-            $blocks             = $_POST['blocks'];
+            if ( !current_user_can( 'administrator' ) ) {
+                return false;
+            }
+
+            $user_role         = $_POST['user_role'];
+            $blocks            = $_POST['blocks'];
             $active_blocks     = array();
             $inactive_blocks   = array();
 
@@ -2158,13 +2074,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             $block_access_by_role                                   = get_option( 'advgb_blocks_user_roles');
-            //$block_access_by_role[$user_role]['approach']           = 'checked';
             $block_access_by_role[$user_role]['active_blocks']     = isset( $active_blocks ) ? $active_blocks : '';
             $block_access_by_role[$user_role]['inactive_blocks']   = isset( $inactive_blocks ) ? $inactive_blocks : '';
 
             update_option( 'advgb_blocks_user_roles', $block_access_by_role, false );
 
-            wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_profile=success' ) );
+            wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=success' ) );
         }
 
         /**
@@ -2330,7 +2245,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Retrieve the active and inactive blocks for users regard to PublishPress Blocks profiles
+         * Retrieve the active and inactive blocks for users regard to PublishPress Blocks access
          *
          * @return array
          */
@@ -2352,54 +2267,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Include the blocks stored in advgb_blocks_list option but not detected by Block Access
                 //$advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
 
-                //var_dump( $advgb_blocks_user_roles );
-                //exit;
                 return $advgb_blocks_user_roles;
             }
-
-
-            /*/ Check if we are in profile view
-            if (isset($_GET['page']) && isset($_GET['view']) && $_GET['page'] === 'advgb_main' && $_GET['view'] === 'profile' ) { // phpcs:ignore -- WordPress.Security.NonceVerification.Recommended - view only
-                $postID = $_GET['id']; // phpcs:ignore -- WordPress.Security.NonceVerification.Recommended - view only
-                $blocks_saved  = get_post_meta($postID, 'blocks', true);
-                if (!is_array($blocks_saved)) {
-                    return array('active_blocks'=>array(), 'inactive_blocks'=>array());
-                }
-
-                // Return allowed blocks
-                return $blocks_saved;
-            }*/
-
-            /*/ Get all GB-ADV active profiles
-            global $wpdb;
-            $profiles = $wpdb->get_results('SELECT * FROM '. $wpdb->prefix. 'posts
-             WHERE post_type="advgb_profiles" AND post_status="publish" ORDER BY post_date_gmt DESC');
-
-            if (!empty($profiles)) {
-                foreach ($profiles as $profile) {
-                    $postID           = $profile->ID;
-                    $user_id_access   = get_post_meta($postID, 'users_access', true);
-                    $user_role_access = get_post_meta($postID, 'roles_access', true);
-
-                    // Check which profiles that current user has permission to use and take that ID
-                    // the ID of the profiles published most recently will be taken
-                    if (is_array($user_role_access) && is_array($user_id_access)) {
-                        if (in_array($current_user_id, $user_id_access)
-                            || in_array($current_user_role, $user_role_access)) {
-                            // Populate the ID
-                            $this->active_profile = $postID;
-                            $blocks_saved  = get_post_meta($this->active_profile, 'blocks', true);
-
-                            if (!is_array($blocks_saved)) {
-                                return array('active_blocks'=>array(), 'inactive_blocks'=>array());
-                            }
-
-                            // Return allowed blocks
-                            return $blocks_saved;
-                        }
-                    }
-                }
-            }*/
 
             // If advgb_blocks_user_roles option doesn't exists, then allow all blocks
             if (!is_array($all_blocks)) {
