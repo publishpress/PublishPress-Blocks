@@ -98,11 +98,85 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
 
                 if (missing_block) {
                     if (console !== undefined && console.error !== undefined) {
-                        //console.log('console: ' + console);
-                        console.error('Reloading editor by PublishPress Blocks plugin');
+                        // Let's output as log instead of error
+                        console.log('Reloading editor by PublishPress Blocks plugin');
                     }
                     // Replace original allowed block settings by our modified list
                     let new_settings = advgb_blocks_vars.original_settings;
+
+                    // Unregister core blocks to avoid registering twice later through wp.editPost.initializeEditor
+                    const core_blocks = [
+                        'core/paragraph',
+                        'core/image',
+                        'core/heading',
+                        'core/list',
+                        'core/quote',
+                        'core/archives',
+                        'core/audio',
+                        'core/button',
+                        'core/buttons',
+                        'core/calendar',
+                        'core/categories',
+                        'core/code',
+                        'core/columns',
+                        'core/column',
+                        'core/cover',
+                        'core/embed',
+                        'core/group',
+                        'core/freeform',
+                        'core/html',
+                        'core/media-text',
+                        'core/latest-comments',
+                        'core/latest-posts',
+                        'core/missing',
+                        'core/more',
+                        'core/nextpage',
+                        'core/page-list',
+                        'core/preformatted',
+                        'core/pullquote',
+                        'core/rss',
+                        'core/search',
+                        'core/separator',
+                        'core/block',
+                        'core/social-links',
+                        'core/social-link',
+                        'core/spacer',
+                        'core/table',
+                        'core/tag-cloud',
+                        'core/text-columns',
+                        'core/verse',
+                        'core/video',
+                        'core/site-logo',
+                        'core/site-tagline',
+                        'core/site-title',
+                        'core/query',
+                        'core/post-template',
+                        'core/query-title',
+                        'core/query-pagination',
+                        'core/query-pagination-next',
+                        'core/query-pagination-numbers',
+                        'core/query-pagination-previous',
+                        'core/post-title',
+                        'core/post-content',
+                        'core/post-date',
+                        'core/post-excerpt',
+                        'core/post-featured-image',
+                        'core/post-terms',
+                        'core/loginout',
+                        'core/legacy-widget',
+                        'core/widget-area',
+                        'core/gallery',
+                        'core/shortcode',
+                        'core/file'
+                    ];
+
+                    core_blocks.forEach( function( element ) {
+                        //console.log(element);
+                        if ( wp.data.select( 'core/blocks' ).getBlockType( element ) ) {
+                            wp.blocks.unregisterBlockType( element );
+                        }
+                    });
+
                     new_settings.allowedBlockTypes = granted_blocks;
                     const target = document.getElementById('editor');
 
