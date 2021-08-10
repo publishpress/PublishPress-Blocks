@@ -169,6 +169,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 = 2.10.0 =
   * Add: Block Access by User Roles
   * Remove: Block Access Profiles
+  * Fix: "Block is already registered" errors in console
 
 = 2.9.2 - 4 Aug 2021 =
  * Add: Toggle to disable all the avatars for Testimonial block
