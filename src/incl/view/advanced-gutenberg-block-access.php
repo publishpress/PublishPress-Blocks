@@ -143,18 +143,17 @@ if ( !current_user_can('administrator') ) {
                             }
                             ?>
                         </ul>
-                        <?php
-                        // Generate hidden fields with all the saved blocks (even the ones not listed here)
-                        foreach ($advgb_blocks_list as $block) {
-                            if( $block['name'] ) {
-                            ?>
-                                <input type="hidden" name="blocks_list[]" value="<?php echo esc_attr( $block['name'] ); ?>">
-                            <?php
-                            }
-                        }
-                        ?>
                     </div>
                     <?php
+                }
+                
+                // Generate hidden fields with all the saved blocks (even the ones not listed here)
+                foreach ($advgb_blocks_list as $block) {
+                    if( $block['name'] ) {
+                    ?>
+                        <input type="hidden" name="blocks_list[]" value="<?php echo esc_attr( $block['name'] ); ?>">
+                    <?php
+                    }
                 }
                 ?>
             </div>
