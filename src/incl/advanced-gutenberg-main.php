@@ -1784,13 +1784,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     : 'default';
                 $editorColsVGGlobal = $this->getAdvgbColsVisualGuideGlobal( $saved_settings['enable_columns_visual_guide'] );
 
-                $editorBlockVisibility = (
-                        isset($saved_settings['block_visibility'])
-                        && ($saved_settings['block_visibility'] == 0)
-                    )
-                    ? 'disable'
-                    : 'enable';
-
                 // Editor width
                 if(isset($editorWidth) && !empty($editorWidth)) {
                     // Editor width - Post meta
@@ -1816,7 +1809,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     [
                         'editor_width_global'                   => $editorWidthGlobal,
                         'enable_columns_visual_guide_global'    => $editorColsVGGlobal,
-                        'block_visibility'						=> $editorBlockVisibility,
                     ]
                 );
 
