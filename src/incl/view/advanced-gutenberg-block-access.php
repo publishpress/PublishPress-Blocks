@@ -29,7 +29,7 @@ wp_add_inline_script(
 );
 
 // Current role
-if( isset( $_REQUEST['user_role'] ) ) {
+if( isset( $_REQUEST['user_role'] ) && !empty( $_REQUEST['user_role'] ) ) {
     $current_user_role = $_REQUEST['user_role'];
 } else {
     $current_user_role = 'administrator';
@@ -38,8 +38,6 @@ if( isset( $_REQUEST['user_role'] ) ) {
 // Get disabled blocks by user roles option
 $advgb_blocks_user_roles = !empty( get_option('advgb_blocks_user_roles') ) ? get_option( 'advgb_blocks_user_roles' ) : [];
 $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
-//var_dump( $advgb_blocks_user_roles );
-//var_dump($blockCategories);
 
 // Saved blocks (the ones detected by PP Blocks)
 $advgb_blocks_list = get_option( 'advgb_blocks_list' );
@@ -54,12 +52,24 @@ if ( !current_user_can('administrator') ) {
     <?php wp_nonce_field('advgb_nonce', 'advgb_nonce_field'); ?>
     <div>
 
-        <?php if ( isset($_GET['save_access']) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display message, no action ?>
+        <?php
+        if ( isset($_GET['save_access']) && $_GET['save_access'] === 'success' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display message, no action ?>
             <div class="ju-notice-msg ju-notice-success">
                 <?php esc_html_e('Block Access saved successfully!', 'advanced-gutenberg') ?>
                 <i class="dashicons dashicons-dismiss ju-notice-close"></i>
             </div>
-        <?php endif; ?>
+        <?php
+        } elseif ( isset($_GET['save_access']) && $_GET['save_access'] === 'error' ) {
+            ?>
+            <div class="ju-notice-msg ju-notice-error">
+                <?php esc_html_e('Error: Block Access can\'t be saved.', 'advanced-gutenberg') ?>
+                <i class="dashicons dashicons-dismiss ju-notice-close"></i>
+            </div>
+            <?php
+        } else {
+            // Nothing to do here
+        }
+        ?>
 
         <div class="advgb-header profile-header">
             <h1 class="header-title"><?php esc_html_e('Block Access', 'advanced-gutenberg') ?></h1>
@@ -67,7 +77,7 @@ if ( !current_user_can('administrator') ) {
 
         <div class="profile-title">
             <div class="advgb-roles-wrapper">
-                <select name="user_role" id="user_role" class="ju-select" onchange="this.form.submit()">
+                <select name="user_role" id="user_role" class="ju-select">
                     <?php
                     global $wp_roles;
                     $roles_list = $wp_roles->get_names();
@@ -146,13 +156,25 @@ if ( !current_user_can('administrator') ) {
                     </div>
                     <?php
                 }
-                
-                // Generate hidden fields with all the saved blocks (even the ones not listed here)
+
+                // Extract the slug from the listed categories
+                $blockCategoriesSlug = [];
+                foreach( $blockCategories as $blockCategory ) {
+                    $blockCategoriesSlug[] = $blockCategory['slug'];
+                }
+
+                // Generate hidden fields with all the saved blocks (except the ones not listed in this page to avoid saving them as inactive)
                 foreach ($advgb_blocks_list as $block) {
-                    if( $block['name'] ) {
+                    if( $block['name'] && in_array( $block['category'], $blockCategoriesSlug ) ) {
                     ?>
                         <input type="hidden" name="blocks_list[]" value="<?php echo esc_attr( $block['name'] ); ?>">
                     <?php
+                    } elseif ( $block['name'] && !in_array( $block['category'], $blockCategoriesSlug ) ) {
+                        ?>
+                        <input type="hidden" name="blocks_list_undetected[]" value="<?php echo esc_attr( $block['name'] ); ?>">
+                        <?php
+                    } else {
+                        // Nothing to do here
                     }
                 }
                 ?>

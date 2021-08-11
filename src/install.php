@@ -130,32 +130,6 @@ if( version_compare($advgb_current_version, '2.10.0', 'lt') && !get_option( 'adv
 
         // Don't delete post type advgb_profile to keep a backup!
     }
-
-    /*/ Deactivate Container block
-    $advgb_blocks_user_roles            = get_option( 'advgb_blocks_user_roles');
-    $advgb_blocks_user_roles_updated    = array();
-
-    if( is_array( $advgb_blocks_user_roles ) ) {
-
-        foreach( $advgb_blocks_user_roles as $role => $blocks ) {
-
-            $key = array_search( 'advgb/container', $blocks['active_blocks'] );
-            if ($key !== false) {
-                unset( $blocks['active_blocks'][$key] );
-            }
-
-            $keyIA = array_search( 'advgb/container', $blocks['inactive_blocks'] );
-            if ( $keyIA === false ) {
-                array_push( $blocks['inactive_blocks'], 'advgb/container' );
-            }
-
-            $advgb_blocks_user_roles_updated[$role]['active_blocks'] = $blocks['active_blocks'];
-            $advgb_blocks_user_roles_updated[$role]['inactive_blocks'] = $blocks['inactive_blocks'];
-        }
-
-        update_option( 'advgb_blocks_user_roles', $advgb_blocks_user_roles_updated, false );
-    }
-    // Even when this method updates the database option, requires a refresh in js side */
 }
 
 // Set version if needed

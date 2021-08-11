@@ -452,7 +452,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $custom_styles_data = get_option('advgb_custom_styles');
             $recaptcha_config   = get_option('advgb_recaptcha_config');
             $recaptcha_config   = $recaptcha_config !== false ? $recaptcha_config : array('recaptcha_enable' => 0);
-            $blocks_icon_color  = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '';
+            $blocks_icon_color  = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#5952de';
             $rp_default_thumb   = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
             $icons              = array();
             $icons['material']  = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
@@ -483,21 +483,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $blocks_config_saved = get_option('advgb_blocks_default_config');
             $blocks_config_saved = $blocks_config_saved !== false ? $blocks_config_saved : array();
             wp_localize_script('wp-blocks', 'advgbDefaultConfig', $blocks_config_saved);
-
-            /*/ Block Access
-            $current_user       = wp_get_current_user();
-            $current_user_role  = $current_user->roles[0];
-
-            // Setup default config data for Block Access
-            $advgb_blocks_user_roles = get_option( 'advgb_blocks_user_roles' );
-            if( $advgb_blocks_user_roles ) {
-                $advgb_blocks_user_roles = $advgb_blocks_user_roles !== false ? $advgb_blocks_user_roles : array();
-                $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
-                wp_localize_script('wp-blocks', 'advgb_block_access', array(
-                    'block_access' => $advgb_blocks_user_roles,
-                    'user_role' => $current_user_role,
-                ));
-            }*/
         }
 
         /**
@@ -2063,19 +2048,37 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $active_blocks     = array();
             $inactive_blocks   = array();
 
-            if ( isset( $blocks ) ) {
-                $blocks_list        = $_POST['blocks_list'];
-                $active_blocks     = $blocks;
-                $inactive_blocks   = array_unique( array_values( array_diff( $blocks_list, $active_blocks ) ) );
+            if ( isset( $blocks ) && !empty( $blocks ) && isset( $user_role ) && !empty( $user_role ) ) {
+
+                /* Blocks saved in advgb_blocks_list but not listed in Block Access page
+                 * due their categories are not detected
+                 */
+                $blocks_list_undetected = $_POST['blocks_list_undetected'];
+
+                // Get all the blocks we can manage (which category is detected)
+                $blocks_list = $_POST['blocks_list'];
+
+                if( $blocks_list_undetected && is_array( $blocks_list_undetected ) ) {
+                    // Merge active blocks with the ones we can't manage
+                    $active_blocks = array_merge( $blocks, $blocks_list_undetected );
+                } else {
+                    $active_blocks = $blocks;
+                }
+
+                // Inactive blocks
+                $inactive_blocks = array_unique( array_values( array_diff( $blocks_list, $active_blocks ) ) );
+
+                // Define active and inactive blocks
+                $block_access_by_role                                  = get_option( 'advgb_blocks_user_roles');
+                $block_access_by_role[$user_role]['active_blocks']     = isset( $active_blocks ) ? $active_blocks : '';
+                $block_access_by_role[$user_role]['inactive_blocks']   = isset( $inactive_blocks ) ? $inactive_blocks : '';
+
+                update_option( 'advgb_blocks_user_roles', $block_access_by_role );
+
+                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=success' ) );
+            } else {
+                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=error' ) );
             }
-
-            $block_access_by_role                                   = get_option( 'advgb_blocks_user_roles');
-            $block_access_by_role[$user_role]['active_blocks']     = isset( $active_blocks ) ? $active_blocks : '';
-            $block_access_by_role[$user_role]['inactive_blocks']   = isset( $inactive_blocks ) ? $inactive_blocks : '';
-
-            update_option( 'advgb_blocks_user_roles', $block_access_by_role, false );
-
-            wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=success' ) );
         }
 
         /**
