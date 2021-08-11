@@ -770,29 +770,25 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 update_option('advgb_blocks_list', $blocksList);
             }
 
-            /*/ Check that profile blocks are up to date
-            $args     = array(
-                'fields'    => 'ids',
-                'post_type' => 'advgb_profiles',
-                'publish'   => true
-            );
+            // Check that advgb_blocks_user_roles is up to date
+            $advgb_blocks_user_roles            = get_option( 'advgb_blocks_user_roles');
+            $advgb_blocks_user_roles_updated    = array();
 
-            $postIDs = get_posts($args);
+            foreach ( $advgb_blocks_user_roles as $role => $blocks ) {
+                if (is_array($blocks) && is_array($blocks['active_blocks']) && is_array($blocks['inactive_blocks'])) {
+                    $allAccessBlocks = array_merge($blocks['active_blocks'], $blocks['inactive_blocks']);
 
-            foreach ($postIDs as $postID) {
-                $allBlocksMeta = get_post_meta($postID, 'blocks', true);
-                if (is_array($allBlocksMeta) && is_array($allBlocksMeta['active_blocks']) && is_array($allBlocksMeta['inactive_blocks'])) {
-                    $allProfileBlocks = array_merge($allBlocksMeta['active_blocks'], $allBlocksMeta['inactive_blocks']);
-
-                    $newAllowedBlocks = array_diff($blocksListName, $allProfileBlocks);
+                    $newAllowedBlocks = array_diff($blocksListName, $allAccessBlocks);
                     $newAllowedBlocks = array_unique($newAllowedBlocks);
 
                     if ($newAllowedBlocks) {
-                        $allBlocksMeta['active_blocks'] = array_merge($allBlocksMeta['active_blocks'], $newAllowedBlocks);
-                        update_post_meta($postID, 'blocks', $allBlocksMeta);
+                        $advgb_blocks_user_roles_updated[$role]['active_blocks'] = array_merge($blocks['active_blocks'], $newAllowedBlocks);
+                        $advgb_blocks_user_roles_updated[$role]['inactive_blocks'] = $blocks['inactive_blocks'];
                     }
                 }
-            }*/
+            }
+
+            update_option( 'advgb_blocks_user_roles', $advgb_blocks_user_roles_updated );
 
             if ((defined('GUTENBERG_VERSION')
                 && version_compare(get_option('advgb_gutenberg_version'), GUTENBERG_VERSION, '<'))
