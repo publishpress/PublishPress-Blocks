@@ -1,5 +1,11 @@
 if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
     wp.domReady(()=>{
+
+        if(advgb_blocks_vars.blocks.active_blocks === 'undefined' || advgb_blocks_vars.blocks.active_blocks.length === 0) {
+            // No Block Access defined for this role, so we stop the process here
+            return;
+        }
+        
         let gutenberg_init_function = null;
         if (typeof window._wpLoadGutenbergEditor !== 'undefined') {
             // Using WP core Gutenberg

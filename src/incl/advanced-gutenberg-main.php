@@ -306,6 +306,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $advgb_blocks_vars = array();
             $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
 
+            // No Block Access defined for this role, so we define empty arrays
+            if( !isset( $advgb_blocks_vars['blocks']['active_blocks'] ) && empty( $advgb_blocks_vars['blocks']['active_blocks'] ) ) {
+                $advgb_blocks_vars['blocks']['active_blocks']   = array();
+                $advgb_blocks_vars['blocks']['inactive_blocks'] = array();
+            }
+
             if ( is_array($settings['allowedBlockTypes']) ) { // @TODO This validation needs to be tested; can't find the proper scenario to do so
                 // Remove blocks from the list that are not allowed
                 // Note that we do not add missing blocks, because another plugin may have used the hook to remove some of them
@@ -430,6 +436,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             $advgb_blocks_vars = array();
             $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
+
+            // No Block Access defined for this role, so we define empty arrays
+            if( !isset( $advgb_blocks_vars['blocks']['active_blocks'] ) && empty( $advgb_blocks_vars['blocks']['active_blocks'] ) ) {
+                $advgb_blocks_vars['blocks']['active_blocks']   = array();
+                $advgb_blocks_vars['blocks']['inactive_blocks'] = array();
+            }
 
             global $post;
             if ($post) {
