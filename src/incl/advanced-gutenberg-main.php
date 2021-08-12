@@ -4600,6 +4600,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
 				// fetch current time keeping in mind the timezone
 				$now = DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
 
+				// reset seconds and microseconds to zero to enable proper comparison
+				// as the from and to dates have those as 0
+				$now->setTime( $now->format('H'), $now->format('i'), 0, 0 );
+
 				// compare the dates
 				if ( ! ( $dateFrom->getTimestamp() < $now->getTimestamp() && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) ) ) {
 					return null;
