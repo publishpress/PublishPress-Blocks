@@ -5,7 +5,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
             // No Block Access defined for this role, so we stop the process here
             return;
         }
-        
+
         let gutenberg_init_function = null;
         if (typeof window._wpLoadGutenbergEditor !== 'undefined') {
             // Using WP core Gutenberg
@@ -177,7 +177,6 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                     ];
 
                     core_blocks.forEach( function( element ) {
-                        //console.log(element);
                         if ( wp.data.select( 'core/blocks' ).getBlockType( element ) ) {
                             wp.blocks.unregisterBlockType( element );
                         }
