@@ -1,4 +1,4 @@
-window.onload = function () {
+window.addEventListener('load', function () {
     if (typeof wp.blocks !== 'undefined') {
         if (wp.blockLibrary && typeof wp.blockLibrary.registerCoreBlocks === 'function') {
             wp.blockLibrary.registerCoreBlocks();
