@@ -75,9 +75,9 @@ if ( !current_user_can('administrator') ) {
             <h1 class="header-title"><?php esc_html_e('Block Access', 'advanced-gutenberg') ?></h1>
         </div>
 
-        <div class="profile-title">
+        <div class="profile-title" style="padding-bottom: 20px;">
             <div class="advgb-roles-wrapper">
-                <select name="user_role" id="user_role" class="ju-select">
+                <select name="user_role" id="user_role">
                     <?php
                     global $wp_roles;
                     $roles_list = $wp_roles->get_names();
@@ -91,6 +91,12 @@ if ( !current_user_can('administrator') ) {
                     endforeach;
                     ?>
                 </select>
+                <div class="advgb-search-wrapper">
+                    <input type="text" class="blocks-search-input advgb-search-input"
+                           placeholder="<?php esc_html_e('Search blocks', 'advanced-gutenberg') ?>"
+                    >
+                    <i class="mi mi-search"></i>
+                </div>
                 <div class="inline-button-wrapper">
                     <span id="block-update-notice">
                         <?php esc_html_e('Blocks list updated.', 'advanced-gutenberg') ?>
@@ -100,7 +106,7 @@ if ( !current_user_can('administrator') ) {
                             type="submit"
                             name="advgb_block_access_save"
                     >
-                        <span><?php esc_html_e('Save', 'advanced-gutenberg') ?></span>
+                        <span><?php esc_html_e('Save Block Access', 'advanced-gutenberg') ?></span>
                     </button>
                 </div>
             </div>
@@ -108,13 +114,6 @@ if ( !current_user_can('administrator') ) {
 
         <!--Blocks list -->
         <div id="blocks-list-tab" class="tab-content">
-            <div class="advgb-search-wrapper">
-                <input type="text" class="blocks-search-input advgb-search-input"
-                       placeholder="<?php esc_html_e('Search blocks', 'advanced-gutenberg') ?>"
-                >
-                <i class="mi mi-search"></i>
-            </div>
-
             <div>
                 <?php
                 foreach( $blockCategories as $blockCategory ) {
@@ -184,9 +183,10 @@ if ( !current_user_can('administrator') ) {
         <!--Save button-->
         <button class="button button-primary pp-primary-button save-profile-button"
                 type="submit"
-                name="advgb_block_access_save"
+                name="advgb_block_access_save" 
+                style="margin-top: 20px;"
         >
-            <span><?php esc_html_e('Save', 'advanced-gutenberg') ?></span>
+            <span><?php esc_html_e('Save Block Access', 'advanced-gutenberg') ?></span>
         </button>
     </div>
 </form>
