@@ -1,4 +1,4 @@
-window.onload = function () {
+window.addEventListener('load', function () {
     var $ = jQuery;
 
     // Toggle blocks list in category when click category title
@@ -32,4 +32,4 @@ window.onload = function () {
     $('#user_role').on( 'change', function(){
         window.location = 'admin.php?page=advgb_main&user_role=' + $(this).val();
     });
-};
+});
