@@ -166,7 +166,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 == Changelog ==
 
-= 2.10.0 =
+= 2.10.0 - 16 Aug 2021 =
   * Add: Block Access by User Roles
   * Remove: Block Access Profiles
   * Fix: "Block is already registered" errors in console
