@@ -42,6 +42,25 @@ $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_u
 // Saved blocks (the ones detected by PP Blocks)
 $advgb_blocks_list = get_option( 'advgb_blocks_list' );
 
+// advgb_blocks_list option still doesn't exist in database (happens in fresh installs).
+// Let's show default blocks in the meanwhile.
+if( !$advgb_blocks_list ) {
+
+    // Extract the block name, title, category and icon
+    $defaultBlockTypes      = WP_Block_Type_Registry::get_instance()->get_all_registered();
+    $defaultBlockTypes      = json_decode( json_encode( $defaultBlockTypes ), true );
+    $advgb_blocks_list      = array();
+    $advgb_blocks_counter   = 0;
+
+    foreach( $defaultBlockTypes as $defaultBlockType ) {
+        $advgb_blocks_list[$advgb_blocks_counter]['title'] = $defaultBlockType['title'];
+        $advgb_blocks_list[$advgb_blocks_counter]['name'] = $defaultBlockType['name'];
+        $advgb_blocks_list[$advgb_blocks_counter]['category'] = $defaultBlockType['category'];
+        $advgb_blocks_list[$advgb_blocks_counter]['icon'] = $defaultBlockType['icon'];
+        $advgb_blocks_counter++;
+    }
+}
+
 // Check users permissions
 if ( !current_user_can('administrator') ) {
     wp_die( __('You do not have permission to manage Block Access', 'advanced-gutenberg') );
@@ -183,7 +202,7 @@ if ( !current_user_can('administrator') ) {
         <!--Save button-->
         <button class="button button-primary pp-primary-button save-profile-button"
                 type="submit"
-                name="advgb_block_access_save" 
+                name="advgb_block_access_save"
                 style="margin-top: 20px;"
         >
             <span><?php esc_html_e('Save Block Access', 'advanced-gutenberg') ?></span>

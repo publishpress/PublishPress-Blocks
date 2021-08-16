@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.10.0
+Stable tag: 2.10.1b1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -165,6 +165,9 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 1. Advanced Buttons block
 
 == Changelog ==
+
+= 2.10.1 - 16 Aug 2021 =
+  * Fix: Default block load in Block Access page for fresh installs
 
 = 2.10.0 - 16 Aug 2021 =
   * Add: Block Access by User Roles
