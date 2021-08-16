@@ -4602,10 +4602,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
 				// reset seconds and microseconds to zero to enable proper comparison
 				// as the from and to dates have those as 0
-				$now->setTime( $now->format('H'), $now->format('i'), 0, 0 );
+				// but do this only for the from comparison
+				// as we need the block to stop showing at the right time and not 1 minute extra
+				$nowFrom = clone $now;
+				$nowFrom->setTime( $now->format('H'), $now->format('i'), 0, 0 );
 
 				// compare the dates
-				if ( ! ( $dateFrom->getTimestamp() < $now->getTimestamp() && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) ) ) {
+				if ( ! ( $dateFrom->getTimestamp() <= $nowFrom->getTimestamp() && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) ) ) {
 					return null;
 				}
 			}
