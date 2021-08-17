@@ -776,6 +776,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $allAccessBlocks = array_merge($blocks['active_blocks'], $blocks['inactive_blocks']);
 
                     $newAllowedBlocks = array_diff($blocksListName, $allAccessBlocks);
+                    /*echo '$blocks';
+                    var_dump( $newAllowedBlocks );
+                    exit;*/
                     $newAllowedBlocks = array_unique($newAllowedBlocks);
 
                     if ($newAllowedBlocks) {
@@ -784,6 +787,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     }
                 }
             }
+
+            /*echo 'hey!';
+            var_dump( $advgb_blocks_user_roles_updated );
+            exit;*/
 
             update_option( 'advgb_blocks_user_roles', $advgb_blocks_user_roles_updated );
 
@@ -2088,6 +2095,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 update_option( 'advgb_blocks_user_roles', $block_access_by_role );
 
                 wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=success' ) );
+                /*echo 'aqui!';
+                var_dump( $block_access_by_role );
+                exit;*/
+
             } else {
                 wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=error' ) );
             }
