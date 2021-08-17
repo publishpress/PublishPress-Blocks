@@ -42,25 +42,6 @@ $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_u
 // Saved blocks (the ones detected by PP Blocks)
 $advgb_blocks_list = get_option( 'advgb_blocks_list' );
 
-// advgb_blocks_list option still doesn't exist in database (happens in fresh installs).
-// Let's show default blocks in the meanwhile.
-if( !$advgb_blocks_list ) {
-
-    // Extract the block name, title, category and icon
-    $defaultBlockTypes      = WP_Block_Type_Registry::get_instance()->get_all_registered();
-    $defaultBlockTypes      = json_decode( json_encode( $defaultBlockTypes ), true );
-    $advgb_blocks_list      = array();
-    $advgb_blocks_counter   = 0;
-
-    foreach( $defaultBlockTypes as $defaultBlockType ) {
-        $advgb_blocks_list[$advgb_blocks_counter]['title'] = $defaultBlockType['title'];
-        $advgb_blocks_list[$advgb_blocks_counter]['name'] = $defaultBlockType['name'];
-        $advgb_blocks_list[$advgb_blocks_counter]['category'] = $defaultBlockType['category'];
-        $advgb_blocks_list[$advgb_blocks_counter]['icon'] = $defaultBlockType['icon'];
-        $advgb_blocks_counter++;
-    }
-}
-
 // Check users permissions
 if ( !current_user_can('administrator') ) {
     wp_die( __('You do not have permission to manage Block Access', 'advanced-gutenberg') );
