@@ -4590,11 +4590,15 @@ if(!class_exists('AdvancedGutenbergMain')) {
 				: 'enable';
 			if ( $blockVisibility === 'enable' && isset($block['attrs']['bvEnabled']) && intval($block['attrs']['bvEnabled']) === 1 ) {
 				$dateFrom	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bvDateFrom'] );
+				// reset seconds and microseconds to zero to enable proper comparison
+				$dateFrom->setTime( $dateFrom->format('H'), $dateFrom->format('i'), 0, 0 );
 
 				// bvDateTo can be empty so that the block never stops showing.
 				$dateTo = null;
 				if ( ! empty( $block['attrs']['bvDateTo'] ) ) {
 					$dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bvDateTo'] );
+					// reset seconds and microseconds to zero to enable proper comparison
+					$dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0, 0 );
 				}
 
 				// fetch current time keeping in mind the timezone
