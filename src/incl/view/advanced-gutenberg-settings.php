@@ -297,6 +297,7 @@ if (!isset($saved_settings['block_visibility'])) {
                         </div>
                     </div>
                 </li>
+				<?php if( defined('ADVANCED_GUTENBERG_PRO') ) { ?>
                 <li class="ju-settings-option clearfix">
                     <div class="settings-option-wrapper clearfix">
                         <label for="block_visibility"
@@ -320,6 +321,7 @@ if (!isset($saved_settings['block_visibility'])) {
                         </div>
                     </div>
                 </li>
+				<?php } ?>
             </ul>
 
             <div class="save-settings-block">
