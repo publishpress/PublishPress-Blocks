@@ -34,6 +34,28 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
         }
     }
 
+    // Get all GB-ADV active profiles
+    $args     = array(
+        'post_type' => 'advgb_profiles',
+        'publish'   => true
+    );
+    $profiles = new WP_Query($args);
+
+    // Add default profiles if no profiles exist
+    if (!$profiles->have_posts()) {
+        $post_data = array(
+            'post_title'  => 'All User Roles',
+            'post_type'   => 'advgb_profiles',
+            'post_status' => 'publish',
+            'meta_input'  => array(
+                'blocks' => array('active_blocks'=>array(), 'inactive_blocks'=>array('advgb/container')),
+                'roles_access'  => AdvancedGutenbergMain::$default_roles_access,
+                'users_access'  => array(),
+            )
+        );
+        wp_insert_post($post_data, true);
+    }
+
     // Add default settings for first time install
     $saved_settings = get_option('advgb_settings');
 
@@ -75,60 +97,32 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
 $advgb_current_version = get_option('advgb_version', '0.0.0');
 global $wpdb;
 
-// Migrate to Block Access by User Roles
-if( version_compare($advgb_current_version, '2.10.0', 'lt') && !get_option( 'advgb_blocks_user_roles') ) {
+if (version_compare($advgb_current_version, '2.0.6', 'lt')) {
+    // Get all GB-ADV active profiles
+    $profiles = $wpdb->get_results('SELECT * FROM '. $wpdb->prefix. 'posts
+         WHERE post_type="advgb_profiles"');
 
-    // Migrate Block Access Profiles to Block Access by Roles
-    global $wpdb;
-    $profiles = $wpdb->get_results(
-        'SELECT * FROM '. $wpdb->prefix. 'posts
-        WHERE post_type="advgb_profiles" AND post_status="publish" ORDER BY post_date_gmt DESC'
-    );
-
-    if( !empty( $profiles ) ) {
-
-        // Let's extract the user roles associated to Block Access profiles (we can't get all the user roles with regular WP way)
-        $user_role_accesses = array();
+    if (!empty($profiles)) {
         foreach ($profiles as $profile) {
-            $postID                 = $profile->ID;
-            $user_role_accesses[]   = get_post_meta( $postID, 'roles_access', true );
-        }
+            $blocks_saved = get_post_meta($profile->ID, 'blocks', true);
 
-        $user_role_accesses = call_user_func_array( 'array_merge', $user_role_accesses );
-        $user_role_accesses = array_unique( $user_role_accesses );
-
-        // Find the most recent profile of each user role
-        $blocks_by_role_access = array();
-        foreach( $user_role_accesses as $user_role_access ) {
-
-            $profiles = $wpdb->get_results(
-                'SELECT * FROM '. $wpdb->prefix. 'posts
-                WHERE post_type="advgb_profiles" AND post_status="publish" ORDER BY post_date_gmt DESC'
-            );
-
-            if( !empty( $profiles ) ) {
-                $centinel[$user_role_access] = false; // A boolean to get the first profile (newest) and skip the rest
-                foreach ($profiles as $profile) {
-                    if( $centinel[$user_role_access] === false ) {
-                        $postID         = $profile->ID;
-                        $roles_access   = get_post_meta( $postID, 'roles_access', true );
-                        $blocks         = get_post_meta( $postID, 'blocks', true );
-
-                        if( in_array( $user_role_access, $roles_access ) ) {
-                            $blocks_by_role_access[$user_role_access] = $blocks;
-                            $centinel[$user_role_access] = true;
-                        }
-                    }
-                }
+            if (!is_array($blocks_saved)) {
+                continue;
             }
-        }
 
-        // Migrate Block Access by Profile to Block Access by Role
-        if( $blocks_by_role_access ) {
-            update_option( 'advgb_blocks_user_roles', $blocks_by_role_access, false );
-        }
+            // Remove Container block from profile
+            $key = array_search('advgb/container', $blocks_saved['active_blocks']);
+            if ($key !== false) {
+                unset($blocks_saved['active_blocks'][$key]);
+            }
 
-        // Don't delete post type advgb_profile to keep a backup!
+            $keyIA = array_search('advgb/container', $blocks_saved['inactive_blocks']);
+            if ($keyIA === false) {
+                array_push($blocks_saved['inactive_blocks'], 'advgb/container');
+            }
+
+            update_post_meta($profile->ID, 'blocks', $blocks_saved);
+        }
     }
 }
 
