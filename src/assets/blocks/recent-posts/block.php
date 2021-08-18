@@ -1188,27 +1188,28 @@ function advgbGetPostIdsForTitles( $titles, $post_type ) {
 }
 
 /**
- * Returns all valid authors (including those defined by PublishPress Authors plugin).
+ * Returns all valid authors.
+ *
+ * If PublishPress Authors plugin is active, only those authors are returned.
  *
  * @return array
  */
 function advgbGetAllAuthors( WP_REST_Request $request ) {
 	$authors = array();
-	$users = get_users( array( 'per_page' => -1, 'who' => 'authors', 'fields' => 'all' ) );
-	foreach ( $users as $user ) {
-		$author = $user->data;
-		$author->id = $author->ID;
-		$author->name = $author->display_name;
-		$authors[ $author->name ] = $author;
-	}
 
 	if ( function_exists( 'multiple_authors_get_all_authors' ) ) {
 		$coauthors = multiple_authors_get_all_authors();
 		foreach ( $coauthors as $coauthor ) {
 			$name = $coauthor->__get( 'display_name' );
-			if ( ! array_key_exists( $name, $authors ) ) {
-				$authors[ $name ] = (object) array( 'name' => $name, 'id' => $coauthor->__get( 'ID' ) );
-			}
+			$authors[ $name ] = (object) array( 'name' => $name, 'id' => $coauthor->__get( 'ID' ) );
+		}
+	} else {
+		$users = get_users( array( 'per_page' => -1, 'who' => 'authors', 'fields' => 'all' ) );
+		foreach ( $users as $user ) {
+			$author = $user->data;
+			$author->id = $author->ID;
+			$author->name = $author->display_name;
+			$authors[ $author->name ] = $author;
 		}
 	}
 	return array_values( $authors );
