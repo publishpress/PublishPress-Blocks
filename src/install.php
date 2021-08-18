@@ -125,7 +125,7 @@ if( version_compare($advgb_current_version, '2.10.2', 'lt') && !get_option( 'adv
 
         // Migrate Block Access by Profile to Block Access by Role
         if( $blocks_by_role_access ) {
-            update_option( 'advgb_blocks_user_roles', $blocks_by_role_access, false );
+            update_option( 'advgb_blocks_user_roles', $blocks_by_role_access );
         }
 
         // Don't delete post type advgb_profile to keep a backup!
