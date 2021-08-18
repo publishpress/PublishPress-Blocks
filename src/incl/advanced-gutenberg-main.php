@@ -749,12 +749,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $blocksListName = array();
             $savedBlocksListName = array();
 
+            // Blocks coming from Block Access admin screen form
             foreach ($blocksList as &$block) {
                 // Convert object to array
                 $block = (array)$block;
                 $blocksListName[] = $block['name'];
             }
 
+            // Blocks saved in advgb_blocks_list option
             foreach ($savedBlocksList as $block) {
                 // Convert object to array
                 $block = (array)$block;
@@ -781,18 +783,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     if ($newAllowedBlocks) {
                         $advgb_blocks_user_roles_updated[$role]['active_blocks'] = array_merge($blocks['active_blocks'], $newAllowedBlocks);
                         $advgb_blocks_user_roles_updated[$role]['inactive_blocks'] = $blocks['inactive_blocks'];
+                        update_option( 'advgb_blocks_user_roles', $advgb_blocks_user_roles_updated );
                     }
                 }
             }
-
-            update_option( 'advgb_blocks_user_roles', $advgb_blocks_user_roles_updated );
 
             if ((defined('GUTENBERG_VERSION')
                 && version_compare(get_option('advgb_gutenberg_version'), GUTENBERG_VERSION, '<'))
             ) {
                 update_option('advgb_gutenberg_version', GUTENBERG_VERSION);
             }
-
 
             wp_send_json(array(
                 'blocks_list' => $blocksList
