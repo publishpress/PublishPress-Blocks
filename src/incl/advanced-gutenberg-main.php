@@ -769,7 +769,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 update_option('advgb_blocks_list', $blocksList);
             }
 
-            // Check that advgb_blocks_user_roles is up to date
+            // Check that advgb_blocks_user_roles is up to date - The result of this check is not saved
             $advgb_blocks_user_roles            = get_option( 'advgb_blocks_user_roles');
             $advgb_blocks_user_roles_updated    = array();
 
@@ -783,10 +783,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     if ($newAllowedBlocks) {
                         $advgb_blocks_user_roles_updated[$role]['active_blocks'] = array_merge($blocks['active_blocks'], $newAllowedBlocks);
                         $advgb_blocks_user_roles_updated[$role]['inactive_blocks'] = $blocks['inactive_blocks'];
-                        update_option( 'advgb_blocks_user_roles', $advgb_blocks_user_roles_updated );
                     }
                 }
             }
+
+            /* We don't actually need to save the new blocks that are not detected by Access Blocks
+            if ($newAllowedBlocks) {
+                update_option( 'advgb_blocks_user_roles', $advgb_blocks_user_roles_updated );
+            }*/
 
             if ((defined('GUTENBERG_VERSION')
                 && version_compare(get_option('advgb_gutenberg_version'), GUTENBERG_VERSION, '<'))
