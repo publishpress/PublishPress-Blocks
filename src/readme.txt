@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenbergg
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.10.2
+Stable tag: 2.10.3
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -192,6 +192,9 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 1. Advanced Buttons block
 
 == Changelog ==
+
+= 2.10.3 - 23 Aug 2021 =
+  * Fix: Other Block Access by User Roles being deleted when updating advgb_blocks_list
 
 = 2.10.2 - 23 Aug 2021 =
   * Add: Block Access by User Roles
