@@ -136,15 +136,3 @@ if( version_compare($advgb_current_version, '2.10.2', 'lt') && !get_option( 'adv
 if ($advgb_current_version !== ADVANCED_GUTENBERG_VERSION) {
     update_option('advgb_version', ADVANCED_GUTENBERG_VERSION);
 }
-
-// Delete custom_styles.css if exists (created in 2.4.4 and older)
-require_once ABSPATH . 'wp-admin/includes/file.php';
-
-WP_Filesystem();
-global $wp_filesystem;
-$custom_styles_dir  = wp_upload_dir();
-$custom_styles_file = $custom_styles_dir['basedir'] . '/advgb/custom_styles.css';
-
-if ($wp_filesystem->exists($custom_styles_file)) {
-    $wp_filesystem->delete($custom_styles_file);
-}
