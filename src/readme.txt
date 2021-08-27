@@ -194,7 +194,9 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 == Changelog ==
 
 = 2.11.1 =
+  * Add: New ask for review system
   * Remove: Old custom_styles.css delete file process
+  * Remove: JUFeedback system
 
 = 2.11.0 =
 
