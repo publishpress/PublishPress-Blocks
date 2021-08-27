@@ -49,13 +49,5 @@ if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
 // Code shared with Pro version
 require_once __DIR__ . '/init.php';
 
-// Include jufeedback helpers
-require_once('jufeedback'. DIRECTORY_SEPARATOR . 'jufeedback.php');
-call_user_func(
-    '\Joomunited\ADVGB\Jufeedback\Jufeedback::init',
-    __FILE__,
-    'advgb',
-    'advanced-gutenberg',
-    'PublishPress Blocks',
-    'advanced-gutenberg'
-);
+// Ask for review
+require_once __DIR__ . '/review/review-request.php';
