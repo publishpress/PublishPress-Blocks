@@ -136,3 +136,7 @@ if( version_compare($advgb_current_version, '2.10.2', 'lt') && !get_option( 'adv
 if ($advgb_current_version !== ADVANCED_GUTENBERG_VERSION) {
     update_option('advgb_version', ADVANCED_GUTENBERG_VERSION);
 }
+
+// Delete deprecated options
+delete_option( 'advgb_jureview_installation_time' );
+delete_option( 'advgb_jufeedback_version' );
