@@ -51,3 +51,7 @@ require_once __DIR__ . '/init.php';
 
 // Ask for review
 require_once __DIR__ . '/review/review-request.php';
+
+// Delete deprecated options
+delete_option( 'advgb_jureview_installation_time' );
+delete_option( 'advgb_jufeedback_version' );
