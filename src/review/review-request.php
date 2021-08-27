@@ -234,14 +234,6 @@ if( !class_exists('PPB_Ask_For_Review') ) {
     			$triggers = apply_filters( 'ppb_reviews_triggers', array(
     				'time_installed' => array(
     					'triggers' => array(
-                            'one_minute'     => array(
-    							'message'    => sprintf( $time_message, __( '1 minute', 'advanced-gutenberg' ) ),
-    							'conditions' => array(
-    								strtotime( self::installed_on() . ' +1 minute' ) < time(),
-    							),
-    							'link'       => 'https://wordpress.org/support/plugin/advanced-gutenberg/reviews/?filter=5#rate-response',
-    							'pri'        => 5,
-    						),
                             'one_week'     => array(
     							'message'    => sprintf( $time_message, __( '1 week', 'advanced-gutenberg' ) ),
     							'conditions' => array(
