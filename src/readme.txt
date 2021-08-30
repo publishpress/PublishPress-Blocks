@@ -195,6 +195,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 
 = 2.11.1 =
   * Add: New ask for review system
+  * Add: Forced deactivation for Container block through Block Access screen
   * Remove: Old custom_styles.css delete file process
   * Remove: JUFeedback system
 
