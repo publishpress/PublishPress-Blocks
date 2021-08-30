@@ -144,7 +144,7 @@ if ( !current_user_can('administrator') ) {
                                         $advgb_block_status_ = empty( $advgb_blocks_user_roles['active_blocks'] ) || ( in_array($block['name'], $advgb_blocks_user_roles['active_blocks']) || !in_array($block['name'], $advgb_blocks_user_roles['inactive_blocks']) );
                                     }
                                     ?>
-                                    <li class="block-item ju-settings-option<?php echo ( $advgb_block_status_ === false ) ? ' ju-settings-option-deactivated' : '' ?>">
+                                    <li class="block-item ju-settings-option">
                                         <label class="ju-setting-label">
                                             <span class="block-icon"<?php echo isset( $block['iconColor'] ) && !empty( $block['iconColor'] ) ? ' style="color:' . $block['iconColor'] . ';"' : ''; ?>>
                                                 <?php echo wp_specialchars_decode( $block['icon'], ENT_QUOTES ); ?>
