@@ -4600,19 +4600,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
 					$dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bvDateTo'] );
 					// reset seconds and microseconds to zero to enable proper comparison
 					$dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0, 0 );
-				}
 
-				if ( $dateFrom ) {
-					// bvDateTo can be empty so that the block never stops showing.
-					if ( ! empty( $block['attrs']['bvDateTo'] ) ) {
-						$dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bvDateTo'] );
-						// reset seconds and microseconds to zero to enable proper comparison
-						$dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0, 0 );
-
+					if ( $dateFrom ) {
 						// recurrence is only relevant when both dateFrom and dateTo are defined
 						$recurrence = isset( $block['attrs']['bvRecur'] ) ? $block['attrs']['bvRecur'] : 'once';
 					}
+				}
 
+				if ( $dateFrom || $dateTo ) {
 					// fetch current time keeping in mind the timezone
 					$now = DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
 
@@ -4637,7 +4632,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 					}
 
 					// compare the dates
-					if ( ! ( $dateFrom->getTimestamp() <= $nowFrom->getTimestamp() && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) ) ) {
+					if ( ! ( ( ! $dateFrom || $dateFrom->getTimestamp() <= $nowFrom->getTimestamp() ) && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) ) ) {
 						return null;
 					}
 				}
