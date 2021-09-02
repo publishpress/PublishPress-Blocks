@@ -2082,7 +2082,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 /* Blocks saved in advgb_blocks_list but not listed in Block Access page
                  * due their categories are not detected
                  */
-                $blocks_list_undetected = $_POST['blocks_list_undetected'];
+                $blocks_list_undetected = ( !empty( $_POST['blocks_list_undetected'] ) ? $_POST['blocks_list_undetected'] : '' );
 
                 // Get all the blocks we can manage (which category is detected)
                 $blocks_list = $_POST['blocks_list'];
