@@ -1571,6 +1571,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION
                 );
 
+                // Pro
+                if(defined('ADVANCED_GUTENBERG_PRO')) {
+                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_register_scripts_admin' ) ) {
+                        PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_register_scripts_admin();
+                    }
+                }
+
                 $saved_settings = get_option('advgb_settings');
                 if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
                     wp_add_inline_style(
@@ -1890,6 +1897,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $this->saveCaptchaSettings();
             } elseif (isset($_POST['block_data_export'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 $this->downloadBlockFormData();
+            } elseif (isset($_POST['advgb_reusable_blocks_access_save']) && defined('ADVANCED_GUTENBERG_PRO')) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                // Pro
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_save_reusable_blocks_access' ) ) {
+                    PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_save_reusable_blocks_access();
+                }
             }
 
             return false;
