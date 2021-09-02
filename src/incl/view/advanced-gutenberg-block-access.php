@@ -82,7 +82,7 @@ if ( !current_user_can('administrator') ) {
                     global $wp_roles;
                     $roles_list = $wp_roles->get_names();
                     foreach ($roles_list as $roles => $role_name) :
-                        $name = translate_user_role($name);
+                        $role_name = translate_user_role($role_name);
                         ?>
                         <option value="<?php echo esc_attr($roles); ?>" <?php selected( $current_user_role, $roles ); ?>>
                             <?php echo $role_name; ?>
@@ -183,7 +183,7 @@ if ( !current_user_can('administrator') ) {
         <!--Save button-->
         <button class="button button-primary pp-primary-button save-profile-button"
                 type="submit"
-                name="advgb_block_access_save" 
+                name="advgb_block_access_save"
                 style="margin-top: 20px;"
         >
             <span><?php esc_html_e('Save Block Access', 'advanced-gutenberg') ?></span>
