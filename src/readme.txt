@@ -193,13 +193,11 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 
 == Changelog ==
 
-= 2.11.1 =
+= 2.10.4 =
   * Add: New ask for review system
   * Add: Forced deactivation for Container block through Block Access screen
   * Remove: Old custom_styles.css delete file process
   * Remove: JUFeedback system
-
-= 2.11.0 =
 
 = 2.10.3 - 23 Aug 2021 =
   * Fix: Other Block Access by User Roles being deleted when updating advgb_blocks_list
