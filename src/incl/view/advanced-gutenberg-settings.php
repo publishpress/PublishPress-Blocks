@@ -87,7 +87,7 @@ if (!isset($saved_settings['enable_custom_styles'])) {
                         <label for="enable_columns_visual_guide"
                                class="advgb_qtip ju-setting-label"
                                data-qtip="<?php esc_attr_e(
-                                   'Enable custom CSS classes to easy manage and apply to your blocks',
+                                   'Enable custom CSS classes to easily manage and apply to your blocks',
                                    'advanced-gutenberg'
                                ) ?>"
                         >
