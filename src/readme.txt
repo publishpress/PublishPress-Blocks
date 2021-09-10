@@ -199,6 +199,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
   * Add: Completed Spanish translation
   * Add: Unique JSON translation file to cover all teh JS files that needs translation
   * Add: Setting to disable Block Access
+  * Add: Setting to disable Custom Styles
   * Remove: Old custom_styles.css delete file process
   * Remove: JUFeedback system
 
