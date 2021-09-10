@@ -461,20 +461,21 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_localize_script('advgb_blocks', 'advgb_blocks_vars', $advgb_blocks_vars);
 
             // Set variable needed by blocks editor
-            $avatarHolder       = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', ADVANCED_GUTENBERG_PLUGIN);
-            $default_thumb      = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
-            $image_holder       = plugins_url('assets/blocks/advimage/imageholder.svg', ADVANCED_GUTENBERG_PLUGIN);
-            $login_logo         = plugins_url('assets/blocks/login-form/login.svg', ADVANCED_GUTENBERG_PLUGIN);
-            $reg_logo           = plugins_url('assets/blocks/login-form/reg.svg', ADVANCED_GUTENBERG_PLUGIN);
-            $saved_settings     = get_option('advgb_settings');
-            $custom_styles_data = get_option('advgb_custom_styles');
-            $recaptcha_config   = get_option('advgb_recaptcha_config');
-            $recaptcha_config   = $recaptcha_config !== false ? $recaptcha_config : array('recaptcha_enable' => 0);
-            $blocks_icon_color  = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#5952de';
-            $rp_default_thumb   = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
-            $icons              = array();
-            $icons['material']  = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
-            $icons['material']  = json_decode($icons['material'], true);
+            $avatarHolder           = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', ADVANCED_GUTENBERG_PLUGIN);
+            $default_thumb          = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
+            $image_holder           = plugins_url('assets/blocks/advimage/imageholder.svg', ADVANCED_GUTENBERG_PLUGIN);
+            $login_logo             = plugins_url('assets/blocks/login-form/login.svg', ADVANCED_GUTENBERG_PLUGIN);
+            $reg_logo               = plugins_url('assets/blocks/login-form/reg.svg', ADVANCED_GUTENBERG_PLUGIN);
+            $saved_settings         = get_option('advgb_settings');
+            $custom_styles_data     = get_option('advgb_custom_styles');
+            $recaptcha_config       = get_option('advgb_recaptcha_config');
+            $recaptcha_config       = $recaptcha_config !== false ? $recaptcha_config : array('recaptcha_enable' => 0);
+            $blocks_icon_color      = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#5952de';
+            $rp_default_thumb       = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
+            $icons                  = array();
+            $icons['material']      = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
+            $icons['material']      = json_decode($icons['material'], true);
+            $enable_custom_styles   = !isset($saved_settings['enable_custom_styles']) || $saved_settings['enable_custom_styles'] ? true : false;
 
             global $wp_version;
             $blocks_widget_support = ( $wp_version >= 5.8 ) ? true : false;
@@ -495,6 +496,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'iconList' => $icons,
                 'registerEnabled' => get_option('users_can_register'),
                 'blocks_widget_support' => $blocks_widget_support,
+                'enable_custom_styles' => $enable_custom_styles,
             ));
 
             // Setup default config data for blocks
@@ -511,8 +513,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function addEditorAndFrontendStyles()
         {
             // Load custom styles in the <head>
-            add_action('wp_head', array($this, 'loadCustomStylesFrontend'));
-            add_action('admin_head', array($this, 'loadCustomStylesAdmin'));
+            if( $this->customStylesEnabled() ) {
+                add_action('wp_head', array($this, 'loadCustomStylesFrontend'));
+                add_action('admin_head', array($this, 'loadCustomStylesAdmin'));
+            }
+
             add_action('admin_head', array($this, 'setBlocksSpacingAdmin'));
 
             wp_enqueue_style('dashicons');
@@ -1942,6 +1947,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['enable_block_access'] = 1;
                 } else {
                     $save_config['enable_block_access'] = 0;
+                }
+
+                if (isset($_POST['enable_custom_styles'])) {
+                    $save_config['enable_custom_styles'] = 1;
+                } else {
+                    $save_config['enable_custom_styles'] = 0;
                 }
 
                 $save_config['gallery_lightbox_caption'] = $_POST['gallery_lightbox_caption'];
@@ -5249,7 +5260,19 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
         }
 
-
+        /**
+         * Check if Custom Styles is enabled in settings
+         *
+         * @return boolean
+         */
+        public function customStylesEnabled() {
+            $saved_settings = get_option('advgb_settings');
+            if( !isset($saved_settings['enable_custom_styles']) || $saved_settings['enable_custom_styles'] ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
         /**
          * Set value to config field
