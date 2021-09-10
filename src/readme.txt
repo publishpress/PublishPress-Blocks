@@ -198,6 +198,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
   * Add: Forced deactivation for Container block through Block Access screen
   * Add: Completed Spanish translation
   * Add: Unique JSON translation file to cover all teh JS files that needs translation
+  * Add: Setting to disable Block Access
   * Remove: Old custom_styles.css delete file process
   * Remove: JUFeedback system
 

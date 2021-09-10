@@ -304,7 +304,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
             self::$original_block_editor_settings = $settings;
 
             $advgb_blocks_vars = array();
-            $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
+
+            if( $this->blockAccessEnabled() ) {
+                $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
+            }
 
             // No Block Access defined for this role, so we define empty arrays
             if( !isset( $advgb_blocks_vars['blocks']['active_blocks'] ) && empty( $advgb_blocks_vars['blocks']['active_blocks'] ) ) {
@@ -435,7 +438,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function advgbBlocksVariables($post = true)
         {
             $advgb_blocks_vars = array();
-            $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
+
+            if( $this->blockAccessEnabled() ) {
+                $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
+            }
 
             // No Block Access defined for this role, so we define empty arrays
             if( !isset( $advgb_blocks_vars['blocks']['active_blocks'] ) && empty( $advgb_blocks_vars['blocks']['active_blocks'] ) ) {
@@ -1930,6 +1936,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['enable_columns_visual_guide'] = 1;
                 } else {
                     $save_config['enable_columns_visual_guide'] = 0;
+                }
+
+                if (isset($_POST['enable_block_access'])) {
+                    $save_config['enable_block_access'] = 1;
+                } else {
+                    $save_config['enable_block_access'] = 0;
                 }
 
                 $save_config['gallery_lightbox_caption'] = $_POST['gallery_lightbox_caption'];
@@ -5222,6 +5234,22 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 );
             }
         }
+
+        /**
+         * Check if Block Access is enabled in settings
+         *
+         * @return boolean
+         */
+        public function blockAccessEnabled() {
+            $saved_settings = get_option('advgb_settings');
+            if( !isset($saved_settings['enable_block_access']) || $saved_settings['enable_block_access'] ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
 
         /**
          * Set value to config field
