@@ -22,6 +22,9 @@ PublishPress Blocks include accordions, galleries, sliders, tabs, maps and more.
 4. **Custom CSS styles for your blocks**: You can add your own CSS styles for your blocks. Anyone editing posts can quickly add the styles to blocks.
 5. **Block layout and page-builder features**: Choose from dozens of page builder layouts. Each one is customizable for desktop, tablet and mobile devices.
 
+> <strong>Blocks Pro</strong><br />
+> This plugin is the free version of the Blocks Pro plugin that comes with all the features you need to super-charge the WordPress block editor. <a href="https://publishpress.com/blocks"  title="Blocks Pro">Click here to purchase the best premium WordPress blocks plugin now!</a>
+
 ## The best Lastest News / Content block for WordPress
 
 PublishPress Blocks features **the best content block in WordPress**. You can use the "Content Display" block to create blog layouts, lists of posts by a specific author, or even complete newspaper frontpages.
