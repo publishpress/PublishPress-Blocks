@@ -278,7 +278,7 @@ if( !class_exists('PPB_Ask_For_Review') ) {
     				return false;
     			}
 
-    			return ! isset( $code ) ? $triggers[ $group ] : isset( $triggers[ $group ]['triggers'][ $code ] ) ? $triggers[ $group ]['triggers'][ $code ] : false;
+    			return ! ( isset( $code ) ? $triggers[ $group ] : ( isset( $triggers[ $group ]['triggers'][ $code ] ) ? $triggers[ $group ]['triggers'][ $code ] : false ) );
     		}
 
     		return $triggers;
