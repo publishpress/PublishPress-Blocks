@@ -7,33 +7,42 @@ if (!function_exists('register_block_type') && !defined('GUTENBERG_DEVELOPMENT_M
 }
 $phpver = phpversion();
 
-$tabs_data = array(
-    array(
+$saved_settings = get_option('advgb_settings');
+
+// Block Access page
+if( !isset($saved_settings['enable_block_access']) || $saved_settings['enable_block_access'] ) {
+    $tabs_data[] = [
         'id' => 'block-access',
         'title' => __('Block Access', 'advanced-gutenberg'),
         'icon' => 'account-circle',
-    ),
-    array(
-        'id' => 'settings',
-        'title' => __('Settings', 'advanced-gutenberg'),
-        'icon' => 'build',
-    ),
-    array(
-        'id' => 'block-settings',
-        'title' => __('Block Settings', 'advanced-gutenberg'),
-        'icon' => 'settings',
-    ),
-    array(
-        'id' => 'email-form',
-        'title' => __('Email & Form', 'advanced-gutenberg'),
-        'icon' => 'mail',
-    ),
-    array(
+    ];
+}
+
+// Rest of pages
+$tabs_data[] = [
+    'id' => 'settings',
+    'title' => __('Settings', 'advanced-gutenberg'),
+    'icon' => 'build',
+];
+$tabs_data[] = [
+    'id' => 'block-settings',
+    'title' => __('Block Settings', 'advanced-gutenberg'),
+    'icon' => 'settings',
+];
+$tabs_data[] = [
+    'id' => 'email-form',
+    'title' => __('Email & Form', 'advanced-gutenberg'),
+    'icon' => 'mail',
+];
+
+// Custom styles page
+if( !isset($saved_settings['enable_custom_styles']) || $saved_settings['enable_custom_styles'] ) {
+    $tabs_data[] = [
         'id' => 'custom-styles',
         'title' => __('Custom Styles', 'advanced-gutenberg'),
         'icon' => 'code',
-    ),
-);
+    ];
+}
 
 // Upgrade to Pro page
 if(!defined('ADVANCED_GUTENBERG_PRO')) {
