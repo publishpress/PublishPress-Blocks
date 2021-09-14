@@ -43,7 +43,9 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
             'gallery_lightbox_caption' => '1',
             'blocks_icon_color' => '#5952de',
             'disable_wpautop' => 0,
-            'enable_columns_visual_guide' => 1
+            'enable_columns_visual_guide' => 1,
+            'enable_block_access' => 1,
+            'enable_custom_styles' => 1
         ));
     }
 
@@ -136,3 +138,7 @@ if( version_compare($advgb_current_version, '2.10.2', 'lt') && !get_option( 'adv
 if ($advgb_current_version !== ADVANCED_GUTENBERG_VERSION) {
     update_option('advgb_version', ADVANCED_GUTENBERG_VERSION);
 }
+
+// Delete deprecated options
+delete_option( 'advgb_jureview_installation_time' );
+delete_option( 'advgb_jufeedback_version' );

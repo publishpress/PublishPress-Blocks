@@ -42,6 +42,12 @@ $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_u
 // Saved blocks (the ones detected by PP Blocks)
 $advgb_blocks_list = get_option( 'advgb_blocks_list' );
 
+// Deactivate these blocks
+$advgb_blocks_deactivate_force = array(
+    'advgb/container'
+);
+$advgb_block_status_ = null;
+
 // Check users permissions
 if ( !current_user_can('administrator') ) {
     wp_die( __('You do not have permission to manage Block Access', 'advanced-gutenberg') );
@@ -130,6 +136,13 @@ if ( !current_user_can('administrator') ) {
                                 if( $blockCategory['slug'] === $block['category'] ) {
                                     // Convert object to array
                                     $block = (array)$block;
+
+                                    // Disable some blocks such as Container
+                                    if( in_array($block['name'], $advgb_blocks_deactivate_force) ) {
+                                        $advgb_block_status_ = false;
+                                    } else {
+                                        $advgb_block_status_ = empty( $advgb_blocks_user_roles['active_blocks'] ) || ( in_array($block['name'], $advgb_blocks_user_roles['active_blocks']) || !in_array($block['name'], $advgb_blocks_user_roles['inactive_blocks']) );
+                                    }
                                     ?>
                                     <li class="block-item ju-settings-option">
                                         <label class="ju-setting-label">
@@ -142,7 +155,7 @@ if ( !current_user_can('administrator') ) {
                                         </label>
                                         <div class="ju-switch-button">
                                             <label class="switch">
-                                                <input type="checkbox" name="blocks[]" value="<?php echo esc_attr( $block['name'] ); ?>"<?php echo ( empty($advgb_blocks_user_roles['active_blocks']) || ( in_array($block['name'], $advgb_blocks_user_roles['active_blocks']) || !in_array($block['name'], $advgb_blocks_user_roles['inactive_blocks']) ) ) ? ' checked="checked"' : '' ?>>
+                                                <input type="checkbox" name="blocks[]" value="<?php echo esc_attr( $block['name'] ); ?>"<?php echo ( $advgb_block_status_ ) ? ' checked="checked"' : '' ?>>
                                                 <span class="slider"></span>
                                             </label>
                                         </div>

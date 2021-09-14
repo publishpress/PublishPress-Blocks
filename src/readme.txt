@@ -2,8 +2,8 @@
 Contributors: publishpress, stevejburge, htmgarcia, advancedgutenbergg
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
-Tested up to: 5.8
-Stable tag: 2.10.3
+Tested up to: 5.8.1
+Stable tag: 2.10.4
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -193,10 +193,15 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 
 == Changelog ==
 
-= 2.11.1 =
+= 2.10.4 - 14 Sep 2021 =
+  * Add: New ask for review system
+  * Add: Forced deactivation for Container block through Block Access screen
+  * Add: Completed Spanish translation
+  * Add: Unique JSON translation file to cover all the JS files that needs translation
+  * Add: Setting to disable Block Access
+  * Add: Setting to disable Custom Styles
   * Remove: Old custom_styles.css delete file process
-
-= 2.11.0 =
+  * Remove: JUFeedback system
 
 = 2.10.3 - 23 Aug 2021 =
   * Fix: Other Block Access by User Roles being deleted when updating advgb_blocks_list
