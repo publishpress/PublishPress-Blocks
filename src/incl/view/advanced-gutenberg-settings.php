@@ -41,6 +41,14 @@ if (!isset($saved_settings['enable_block_access'])) {
 if (!isset($saved_settings['enable_custom_styles'])) {
     $enable_custom_styles  = 'checked';
 }
+
+// Pro
+if(defined('ADVANCED_GUTENBERG_PRO')) {
+    $enable_reusable_blocks_access = isset($saved_settings['enable_reusable_blocks_access']) && $saved_settings['enable_reusable_blocks_access'] ? 'checked' : '';
+    if (!isset($saved_settings['enable_reusable_blocks_access'])) {
+        $enable_reusable_blocks_access  = 'checked';
+    }
+}
 ?>
 
 <div id="advgb-settings-container">
@@ -61,7 +69,7 @@ if (!isset($saved_settings['enable_custom_styles'])) {
             <ul class="settings-list clearfix">
                 <li class="ju-settings-option clearfix">
                     <div class="settings-option-wrapper clearfix">
-                        <label for="enable_columns_visual_guide"
+                        <label for="enable_block_access"
                                class="advgb_qtip ju-setting-label"
                                data-qtip="<?php esc_attr_e(
                                    'Enable block access to deactivate blocks by user role',
@@ -82,9 +90,41 @@ if (!isset($saved_settings['enable_custom_styles'])) {
                         </div>
                     </div>
                 </li>
+
+                <?php
+                // Pro
+                if(defined('ADVANCED_GUTENBERG_PRO')) {
+                    ?>
+                    <li class="ju-settings-option clearfix">
+                        <div class="settings-option-wrapper clearfix">
+                            <label for="enable_reusable_blocks_access"
+                                   class="advgb_qtip ju-setting-label"
+                                   data-qtip="<?php esc_attr_e(
+                                       'Enable reusable blocks access to deactivate blocks by user role',
+                                       'advanced-gutenberg'
+                                   ) ?>"
+                            >
+                                <?php esc_html_e('Enable reusable blocks access', 'advanced-gutenberg') ?>
+                            </label>
+                            <div class="ju-switch-button">
+                                <label class="switch">
+                                    <input type="checkbox" name="enable_reusable_blocks_access"
+                                           id="enable_reusable_blocks_access"
+                                           value="1"
+                                        <?php echo esc_attr($enable_reusable_blocks_access) ?>
+                                    />
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </li>
+                    <?php
+                }
+                ?>
+
                 <li class="ju-settings-option clearfix">
                     <div class="settings-option-wrapper clearfix">
-                        <label for="enable_columns_visual_guide"
+                        <label for="enable_custom_styles"
                                class="advgb_qtip ju-setting-label"
                                data-qtip="<?php esc_attr_e(
                                    'Enable custom CSS classes to easily manage and apply to your blocks',
