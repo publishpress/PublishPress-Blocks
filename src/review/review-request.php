@@ -237,7 +237,7 @@ if( !class_exists('AdvGb_Ask_For_Review') ) {
 
     		if ( ! isset( $triggers ) ) {
 
-                $time_message = __( "Hey, you've been using PublishPress Blocks for %s on your site! Would you consider leaving a review on the plugin directory? It helps us make the plugin & support better :)", 'advanced-gutenberg' );
+                $time_message = __( "Hey, you've been using PublishPress Blocks for %s on your site. We hope the plugin has been useful. Please could you quickly leave a 5-star rating on WordPress.org? It really does help to keep PublishPress Blocks growing.", 'advanced-gutenberg' );
 
     			$triggers = apply_filters( 'advgb_reviews_triggers', array(
     				'time_installed' => array(
@@ -379,15 +379,44 @@ if( !class_exists('AdvGb_Ask_For_Review') ) {
     					});
     			}(jQuery));
     		</script>
+			<style>
+            .ppb-notice {
+                min-height: 100px;
+            }
+            .ppb-notice img.logo {
+                float: right;
+                width: 75px;
+                padding: 10px 0 10px 20px;
+            }
+            .ppb-notice p,
+            .ppb-notice .button {
+                font-size: 15px;
+            }
+            .ppb-notice .button:not(.button-primary),
+            .ppb-notice .button:not(.button-primary):hover,
+            .ppb-notice .button:not(.button-primary):active,
+            .ppb-notice .button:not(.button-primary):focus {
+                border-color: #655897 !important;
+                color: #655897 !important;
+            }
+            .ppb-notice .button-primary,
+            .ppb-notice .button-primary:hover,
+            .ppb-notice .button-primary:active,
+            .ppb-notice .button-primary:focus {
+                background: #655897 !important;
+				border-color: #655897 !important;
+            }
+            </style>
 
     		<div class="notice notice-success is-dismissible ppb-notice">
 
+				<img src="<?php echo esc_url(plugins_url('assets/images/logo-notice.png', dirname(__FILE__))) ?>" class="logo" alt=""/>
     			<p>
     				<?php echo $tigger['message']; ?>
     			</p>
     			<p>
                     <a class="button button-primary ppb-dismiss" target="_blank" href="https://wordpress.org/support/plugin/advanced-gutenberg/reviews/?filter=5#rate-response" data-reason="am_now">
-                        <strong><?php _e( "Sure I'd love to", 'advanced-gutenberg' ); ?></strong>
+                        <strong><?php _e( "Click here to add your rating for PublishPress Blocks", 'advanced-gutenberg' ); ?></strong>
                     </a> <a href="#" class="button ppb-dismiss" data-reason="maybe_later">
                         <?php _e( 'Maybe later', 'advanced-gutenberg' ); ?>
                     </a> <a href="#" class="button ppb-dismiss" data-reason="already_did">
