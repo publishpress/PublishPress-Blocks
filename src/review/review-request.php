@@ -9,13 +9,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class PPB_Ask_For_Review
+ * Class AdvGb_Ask_For_Review
  *
  * This class adds a review request system for your plugin or theme to the WP dashboard.
  */
 
-if( !class_exists('PPB_Ask_For_Review') ) {
-    class PPB_Ask_For_Review {
+if( !class_exists('AdvGb_Ask_For_Review') ) {
+    class AdvGb_Ask_For_Review {
 
     	/**
     	 * Tracking API Endpoint.
@@ -29,7 +29,7 @@ if( !class_exists('PPB_Ask_For_Review') ) {
     	 */
     	public static function init() {
     		add_action( 'init', array( __CLASS__, 'hooks' ) );
-    		add_action( 'wp_ajax_ppb_review_action', array( __CLASS__, 'ajax_handler' ) );
+    		add_action( 'wp_ajax_advgb_review_action', array( __CLASS__, 'ajax_handler' ) );
     	}
 
     	/**
@@ -50,11 +50,11 @@ if( !class_exists('PPB_Ask_For_Review') ) {
     	 * @return false|string
     	 */
     	public static function installed_on() {
-    		$installed_on = get_option( 'ppb_reviews_installed_on', false );
+    		$installed_on = get_option( 'advgb_reviews_installed_on', false );
 
     		if ( ! $installed_on ) {
     			$installed_on = current_time( 'mysql' );
-    			update_option( 'ppb_reviews_installed_on', $installed_on );
+    			update_option( 'advgb_reviews_installed_on', $installed_on );
     		}
 
     		return $installed_on;
@@ -71,7 +71,7 @@ if( !class_exists('PPB_Ask_For_Review') ) {
     			'reason' => 'maybe_later',
     		) );
 
-    		if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'ppb_review_action' ) ) {
+    		if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'advgb_review_action' ) ) {
     			wp_send_json_error();
     		}
 
@@ -80,12 +80,12 @@ if( !class_exists('PPB_Ask_For_Review') ) {
 
     			$dismissed_triggers                   = self::dismissed_triggers();
     			$dismissed_triggers[ $args['group'] ] = $args['pri'];
-    			update_user_meta( $user_id, '_ppb_reviews_dismissed_triggers', $dismissed_triggers );
-    			update_user_meta( $user_id, '_ppb_reviews_last_dismissed', current_time( 'mysql' ) );
+    			update_user_meta( $user_id, '_advgb_reviews_dismissed_triggers', $dismissed_triggers );
+    			update_user_meta( $user_id, '_advgb_reviews_last_dismissed', current_time( 'mysql' ) );
 
     			switch ( $args['reason'] ) {
     				case 'maybe_later':
-    					update_user_meta( $user_id, '_ppb_reviews_last_dismissed', current_time( 'mysql' ) );
+    					update_user_meta( $user_id, '_advgb_reviews_last_dismissed', current_time( 'mysql' ) );
     					break;
     				case 'am_now':
     				case 'already_did':
@@ -196,7 +196,7 @@ if( !class_exists('PPB_Ask_For_Review') ) {
     	public static function dismissed_triggers() {
     		$user_id = get_current_user_id();
 
-    		$dismissed_triggers = get_user_meta( $user_id, '_ppb_reviews_dismissed_triggers', true );
+    		$dismissed_triggers = get_user_meta( $user_id, '_advgb_reviews_dismissed_triggers', true );
 
     		if ( ! $dismissed_triggers ) {
     			$dismissed_triggers = array();
@@ -216,12 +216,12 @@ if( !class_exists('PPB_Ask_For_Review') ) {
     		$user_id = get_current_user_id();
 
     		if ( $set ) {
-    			update_user_meta( $user_id, '_ppb_reviews_already_did', true );
+    			update_user_meta( $user_id, '_advgb_reviews_already_did', true );
 
     			return true;
     		}
 
-    		return (bool) get_user_meta( $user_id, '_ppb_reviews_already_did', true );
+    		return (bool) get_user_meta( $user_id, '_advgb_reviews_already_did', true );
     	}
 
     	/**
@@ -239,7 +239,7 @@ if( !class_exists('PPB_Ask_For_Review') ) {
 
                 $time_message = __( "Hey, you've been using PublishPress Blocks for %s on your site! Would you consider leaving a review on the plugin directory? It helps us make the plugin & support better :)", 'advanced-gutenberg' );
 
-    			$triggers = apply_filters( 'ppb_reviews_triggers', array(
+    			$triggers = apply_filters( 'advgb_reviews_triggers', array(
     				'time_installed' => array(
     					'triggers' => array(
                             'one_week'     => array(
@@ -332,8 +332,8 @@ if( !class_exists('PPB_Ask_For_Review') ) {
     						dataType: "json",
     						url: ajaxurl,
     						data: {
-    							action: 'ppb_review_action',
-    							nonce: '<?php echo wp_create_nonce( 'ppb_review_action' ); ?>',
+    							action: 'advgb_review_action',
+    							nonce: '<?php echo wp_create_nonce( 'advgb_review_action' ); ?>',
     							group: trigger.group,
     							code: trigger.code,
     							pri: trigger.pri,
@@ -423,7 +423,7 @@ if( !class_exists('PPB_Ask_For_Review') ) {
     	public static function last_dismissed() {
     		$user_id = get_current_user_id();
 
-    		return get_user_meta( $user_id, '_ppb_reviews_last_dismissed', true );
+    		return get_user_meta( $user_id, '_advgb_reviews_last_dismissed', true );
     	}
 
     	/**
@@ -460,4 +460,4 @@ if( !class_exists('PPB_Ask_For_Review') ) {
 
     }
 }
-PPB_Ask_For_Review::init();
+AdvGb_Ask_For_Review::init();

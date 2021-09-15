@@ -142,3 +142,4 @@ if ($advgb_current_version !== ADVANCED_GUTENBERG_VERSION) {
 // Delete deprecated options
 delete_option( 'advgb_jureview_installation_time' );
 delete_option( 'advgb_jufeedback_version' );
+delete_option( 'ppb_reviews_installed_on' ); // Added in 2.10.4 and disabled in 2.10.5
