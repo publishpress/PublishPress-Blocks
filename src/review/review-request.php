@@ -171,7 +171,15 @@ if( !class_exists('PPB_Ask_For_Review') ) {
 
     		$trigger = self::triggers( $group, $code );
 
-    		return empty( $key ) ? $trigger : ( isset( $trigger[ $key ] ) ? $trigger[ $key ] : false );
+			if(empty($key)){
+                $return = $trigger;
+            }elseif(isset($trigger[$key])){
+                 $return = $trigger[$key];
+            }else {
+               $return = false;
+            }
+
+            return $return;
     	}
 
     	/**
@@ -278,7 +286,15 @@ if( !class_exists('PPB_Ask_For_Review') ) {
     				return false;
     			}
 
-    			return ! ( isset( $code ) ? $triggers[ $group ] : ( isset( $triggers[ $group ]['triggers'][ $code ] ) ? $triggers[ $group ]['triggers'][ $code ] : false ) );
+				if (!isset($code)) {
+                    $return = $triggers[$group];
+                } elseif (isset($triggers[$group]['triggers'][$code])) {
+                    $return = $triggers[$group]['triggers'][$code];
+                } else {
+                    $return = false;
+                }
+
+				return $return;
     		}
 
     		return $triggers;
