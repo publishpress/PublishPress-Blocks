@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenbergg
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8.1
-Stable tag: 2.10.4
+Stable tag: 2.10.5
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -21,6 +21,9 @@ PublishPress Blocks include accordions, galleries, sliders, tabs, maps and more.
 3. **Permissions for the block editor**: You can control who can use each block, including default WordPress blocks.
 4. **Custom CSS styles for your blocks**: You can add your own CSS styles for your blocks. Anyone editing posts can quickly add the styles to blocks.
 5. **Block layout and page-builder features**: Choose from dozens of page builder layouts. Each one is customizable for desktop, tablet and mobile devices.
+
+> <strong>Blocks Pro</strong><br />
+> This plugin is the free version of the Blocks Pro plugin that comes with all the features you need to super-charge the WordPress block editor. <a href="https://publishpress.com/blocks"  title="Blocks Pro">Click here to purchase the best premium WordPress blocks plugin now!</a>
 
 ## The best Lastest News / Content block for WordPress
 
@@ -192,6 +195,9 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 1. Advanced Buttons block
 
 == Changelog ==
+
+= 2.10.5 - 14 Sep 2021 =
+  * Remove: New ask for review system
 
 = 2.10.4 - 14 Sep 2021 =
   * Add: New ask for review system
