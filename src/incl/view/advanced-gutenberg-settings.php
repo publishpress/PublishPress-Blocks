@@ -95,7 +95,7 @@ if (!isset($saved_settings['enable_reusable_blocks_access'])) {
                         <label for="enable_reusable_blocks_access"
                                class="advgb_qtip ju-setting-label"
                                data-qtip="<?php esc_attr_e(
-                                   'Enable reusable blocks access to deactivate blocks by user role',
+                                   'Enable reusable blocks access to deactivate reusable blocks by user role',
                                    'advanced-gutenberg'
                                ) ?>"
                         >
