@@ -114,7 +114,7 @@ echo '</pre>';*/
                 $current_user_role_name = $current_user_role_reusable_blocks ? wp_roles()->get_names()[$current_user_role_reusable_blocks] : '';
 
                 echo sprintf(
-                    __( 'Reusable Block type is disabled for the %s role. This means all the reusable blocks are deactivated.%sEnable %sReusable Block%s for %s and come back%s', 'advanced-gutenberg' ),
+                    __( 'Reusable Block type is disabled for the %s role through Block Access. This means all the reusable blocks are deactivated.%sEnable %sReusable Block%s for %s and come back%s', 'advanced-gutenberg' ),
                     translate_user_role( $current_user_role_name ),
                     '<br><a class="button button-primary pp-primary-button" href="' . admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . esc_html__( $current_user_role_reusable_blocks ) ) . '#block-access">',
                     '<strong>',
