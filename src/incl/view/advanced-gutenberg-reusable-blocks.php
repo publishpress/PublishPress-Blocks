@@ -26,9 +26,22 @@ $reusable_blocks = $wpdb->get_results(
 if ( !current_user_can('administrator') ) {
     wp_die( __('You do not have permission to manage Reusable Blocks Access', 'advanced-gutenberg') );
 }
+
+// Get disabled blocks by user roles option to check if core/block is active for this user role
+$advgb_blocks_user_roles_ = !empty( get_option('advgb_blocks_user_roles') ) ? get_option( 'advgb_blocks_user_roles' ) : [];
+$advgb_blocks_user_roles_ = array_key_exists( $current_user_role_reusable_blocks, $advgb_blocks_user_roles_ ) ? (array)$advgb_blocks_user_roles_[$current_user_role_reusable_blocks] : [];
+
+if( isset( $advgb_blocks_user_roles_['inactive_blocks'] ) && in_array( 'core/block', $advgb_blocks_user_roles_['inactive_blocks'] ) ) {
+    $reusable_block_enabled = false;
+} else {
+    $reusable_block_enabled = true;
+}
+/*echo '<pre>';
+var_dump( $advgb_blocks_user_roles_['inactive_blocks'] );
+echo '</pre>';*/
 ?>
 
-<form method="post">
+<form method="post" <?php echo $reusable_block_enabled === false ? 'class="advgb-reusable-block-disabled"' : ''; ?>>
     <?php wp_nonce_field('advgb_nonce', 'advgb_nonce_field'); ?>
     <div>
 
@@ -91,6 +104,29 @@ if ( !current_user_can('administrator') ) {
                 </div>
             </div>
         </div>
+
+        <?php
+        if( $reusable_block_enabled === false ) {
+            ?>
+            <div class="advgb-reusable-block-disabled-notice">
+                <?php
+                // Current role name
+                $current_user_role_name = $current_user_role_reusable_blocks ? wp_roles()->get_names()[$current_user_role_reusable_blocks] : '';
+
+                echo sprintf(
+                    __( 'Reusable Block type is disabled for the %s role. This means all the reusable blocks are deactivated.%sEnable %sReusable Block%s for %s and come back%s', 'advanced-gutenberg' ),
+                    translate_user_role( $current_user_role_name ),
+                    '<br><a class="button button-primary pp-primary-button" href="' . admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . esc_html__( $current_user_role_reusable_blocks ) ) . '#block-access">',
+                    '<strong>',
+                    '</strong>',
+                    translate_user_role( $current_user_role_name ),
+                    '</a>'
+                );
+                ?>
+            </div>
+            <?php
+        }
+        ?>
 
         <!--Blocks list -->
         <div id="blocks-list-tab" class="tab-content">
