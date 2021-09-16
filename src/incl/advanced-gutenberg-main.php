@@ -1557,6 +1557,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_script(
+                    'advgb_custom_styles_js',
+                    plugins_url('assets/js/custom-styles.js', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+                wp_register_script(
                     'velocity_js',
                     plugins_url('assets/js/velocity.min.js', dirname(__FILE__)),
                     array(),
