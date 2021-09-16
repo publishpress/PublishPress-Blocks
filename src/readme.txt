@@ -197,6 +197,8 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 == Changelog ==
 
 = 2.11.0 - 15 Sep 2021 =
+  * Add: Reusable Blocks Access by User Roles
+  * Add: Setting to disable Reusable Blocks Access
   * Add: New ask for review system
   * Add: Design improvements for review system
   * Remove: developer_documentation.html
