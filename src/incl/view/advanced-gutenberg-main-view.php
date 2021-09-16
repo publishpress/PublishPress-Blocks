@@ -19,6 +19,16 @@ if( !isset($saved_settings['enable_block_access']) || $saved_settings['enable_bl
     ];
 }
 
+// Reusable Blocks Access page
+if( !isset($saved_settings['enable_reusable_blocks_access']) || $saved_settings['enable_reusable_blocks_access'] ) {
+    $tabs_data[] = [
+        'id' => 'reusable-blocks',
+        'title' => __('Reusable Blocks', 'advanced-gutenberg'),
+        'icon' => 'sync',
+        'order' => 2,
+    ];
+}
+
 // Rest of pages
 $tabs_data[] = [
     'id' => 'settings',
