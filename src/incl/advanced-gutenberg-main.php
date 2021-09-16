@@ -1967,6 +1967,15 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['enable_custom_styles'] = 0;
                 }
 
+                // Pro
+                if(defined('ADVANCED_GUTENBERG_PRO')) {
+                    if (isset($_POST['enable_reusable_blocks_access'])) {
+                        $save_config['enable_reusable_blocks_access'] = 1;
+                    } else {
+                        $save_config['enable_reusable_blocks_access'] = 0;
+                    }
+                }
+
                 $save_config['gallery_lightbox_caption'] = $_POST['gallery_lightbox_caption'];
                 $save_config['google_api_key'] = $_POST['google_api_key'];
                 $save_config['blocks_spacing'] = $_POST['blocks_spacing'];
