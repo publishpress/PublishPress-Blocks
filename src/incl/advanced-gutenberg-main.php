@@ -5366,6 +5366,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Check if a setting is enabled
          *
+         * @param string $setting The setting from advgb_settings option field
+         *
          * @return boolean
          */
         public function settingIsEnabled( $setting ) {
