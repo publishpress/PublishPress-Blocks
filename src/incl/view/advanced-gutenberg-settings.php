@@ -44,13 +44,6 @@ $enable_custom_styles = isset($saved_settings['enable_custom_styles']) && $saved
 if (!isset($saved_settings['enable_custom_styles'])) {
     $enable_custom_styles  = 'checked';
 }
-
-// Pro
-if(defined('ADVANCED_GUTENBERG_PRO')) {
-    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_setting' ) ) {
-        $enable_reusable_blocks_access = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting( 'checkbox_status', 'enable_reusable_blocks_access' );
-    }
-}
 ?>
 
 <div id="advgb-settings-container">
