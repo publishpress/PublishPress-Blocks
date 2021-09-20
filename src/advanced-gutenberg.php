@@ -51,3 +51,10 @@ require_once __DIR__ . '/init.php';
 
 // Ask for review
 require_once __DIR__ . '/review/review-request.php';
+
+// Redirect /wp-admin/edit.php?post_type=wp_block to our own custom page
+$current_url = admin_url( $_SERVER['REQUEST_URI'] );
+if( strpos( $current_url, '/wp-admin/edit.php?post_type=wp_block' ) ) {
+    //wp_safe_redirect( admin_url( 'admin.php?page=advgb_main#reusable-blocks' ) );
+    header('Location: ' . admin_url( 'admin.php?page=advgb_main#reusable-blocks' ) );
+}
