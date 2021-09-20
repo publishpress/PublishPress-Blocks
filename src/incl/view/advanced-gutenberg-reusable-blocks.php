@@ -137,7 +137,13 @@ if( isset( $advgb_blocks_user_roles_['inactive_blocks'] ) && in_array( 'core/blo
                                     <label class="ju-setting-label">
                                         <span class="block-icon"></span>
                                         <span class="block-title">
-                                            <?php echo $reusable_block->post_title; ?>
+                                            <a href="<?php echo admin_url( 'post.php?post=' . esc_html( $reusable_block->ID ) . '&action=edit' ) ?>"
+                                                target="_blank"
+                                                class="advgb_qtip advgb_qtip_no_after advgb-icon-edit"
+                                                data-qtip="<?php _e( 'Edit', 'advanced-gutenberg' ) ?>">
+                                                <i class="mi mi-edit"></i>
+                                                <?php echo $reusable_block->post_title; ?>
+                                            </a>
                                         </span>
                                     </label>
                                     <div class="ju-switch-button">
