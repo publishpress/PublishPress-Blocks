@@ -36,9 +36,6 @@ if( isset( $advgb_blocks_user_roles_['inactive_blocks'] ) && in_array( 'core/blo
 } else {
     $reusable_block_enabled = true;
 }
-/*echo '<pre>';
-var_dump( $advgb_blocks_user_roles_['inactive_blocks'] );
-echo '</pre>';*/
 ?>
 
 <form method="post"<?php echo $reusable_block_enabled === false || empty( $reusable_blocks ) ? ' class="advgb-reusable-block-disabled"' : ''; ?>>
