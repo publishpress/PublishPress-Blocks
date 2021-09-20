@@ -131,7 +131,7 @@ echo '</pre>';*/
                         $current_user_role_name = $current_user_role_reusable_blocks ? wp_roles()->get_names()[$current_user_role_reusable_blocks] : '';
 
                         echo sprintf(
-                            __( 'Reusable Block type is disabled for the %s role through Block Access. This means all the reusable blocks are deactivated for this role.%sEnable %sReusable Block%s for %s and come back%s', 'advanced-gutenberg' ),
+                            __( 'Reusable Block type is disabled for the %s role through Block Access. This means all the reusable blocks are deactivated.%sEnable %sReusable Block%s for %s and come back%s', 'advanced-gutenberg' ),
                             translate_user_role( $current_user_role_name ),
                             '<br><a class="button button-primary pp-primary-button" href="' . admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . esc_html__( $current_user_role_reusable_blocks ) ) . '#block-access">',
                             '<strong>',
@@ -198,14 +198,13 @@ echo '</pre>';*/
         </form>
     </div>
 
-    <!-- Reusable Blocks edit lis -->
     <div id="reusable-blocks-edit-tab" class="tab-content clearfix">
         <div>
             <div class="advgb-header profile-header">
                 <h1 class="header-title"><?php esc_html_e('Reusable Blocks Edit', 'advanced-gutenberg') ?></h1>
             </div>
 
-            <!-- Blocks list -->
+            <!--Blocks list -->
             <div id="blocks-list-tab" class="tab-content">
 
                 <?php if( !empty( $reusable_blocks ) ) { ?>
@@ -242,7 +241,7 @@ echo '</pre>';*/
                                         type="checkbox" name="post[]" value="<?php echo esc_html( $reusable_block->ID ) ?>">
                         			</th>
                                     <td class="title column-title has-row-actions column-primary page-title" data-colname="Title">
-                                        <a href="<?php echo admin_url( 'post.php?post=' . esc_html( $reusable_block->ID ) .'&action=edit' ) ?>"
+                                        <a href="javascript:void(0)"
                                             data-reusable-block="<?php echo esc_html( $reusable_block->ID ) ?>"
                                             class="advgb_qtip advgb_qtip_no_after" data-qtip="<?php _e( 'Edit' ) ?>">
                                             <?php echo $reusable_block->post_title; ?>
