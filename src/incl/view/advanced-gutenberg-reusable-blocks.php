@@ -41,7 +41,7 @@ var_dump( $advgb_blocks_user_roles_['inactive_blocks'] );
 echo '</pre>';*/
 ?>
 
-<form method="post" <?php echo $reusable_block_enabled === false ? 'class="advgb-reusable-block-disabled"' : ''; ?>>
+<form method="post"<?php echo $reusable_block_enabled === false || empty( $reusable_blocks ) ? ' class="advgb-reusable-block-disabled"' : ''; ?>>
     <?php wp_nonce_field('advgb_nonce', 'advgb_nonce_field'); ?>
     <div>
 
@@ -114,7 +114,7 @@ echo '</pre>';*/
                 $current_user_role_name = $current_user_role_reusable_blocks ? wp_roles()->get_names()[$current_user_role_reusable_blocks] : '';
 
                 echo sprintf(
-                    __( 'Reusable Block type is disabled for the %s role through Block Access. This means all the reusable blocks are deactivated.%sEnable %sReusable Block%s for %s and come back%s', 'advanced-gutenberg' ),
+                    __( 'Reusable Block type is disabled for the %s role through Block Access. This means all the reusable blocks are deactivated for this role.%sEnable %sReusable Block%s for %s and come back%s', 'advanced-gutenberg' ),
                     translate_user_role( $current_user_role_name ),
                     '<br><a class="button button-primary pp-primary-button" href="' . admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . esc_html__( $current_user_role_reusable_blocks ) ) . '#block-access">',
                     '<strong>',
@@ -128,11 +128,10 @@ echo '</pre>';*/
         }
         ?>
 
-        <!--Blocks list -->
-        <div id="blocks-list-tab" class="tab-content">
+        <?php if( !empty( $reusable_blocks ) ) { ?>
 
-            <?php if( !empty( $reusable_blocks ) ) { ?>
-
+            <!--Blocks list -->
+            <div id="blocks-list-tab" class="tab-content">
                 <div>
                     <div class="category-block clearfix">
                         <ul class="blocks-list">
@@ -162,12 +161,24 @@ echo '</pre>';*/
                     <input type="hidden" name="reusable_blocks_list[]" value="<?php echo esc_html( $reusable_block->ID ) ?>">
                     <?php
                 }
+                ?>
+            </div>
 
-            } else {
-                _e( 'No reusable blocks.', 'advanced-gutenberg' );
-            }
+        <?php
+        } else {
             ?>
-        </div>
+            <div class="advgb-reusable-block-disabled-notice">
+                <?php
+                echo sprintf(
+                    __( 'No reusable blocks found.%sAdd New%s', 'advanced-gutenberg' ),
+                    '<br><a class="button button-primary pp-primary-button" target="_blank" href="' . admin_url( 'post-new.php?post_type=wp_block' ) . '">',
+                    '</a>'
+                );
+                ?>
+            </div>
+            <?php
+        }
+        ?>
 
         <!--Save button-->
         <button class="button button-primary pp-primary-button save-profile-button"
