@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenbergg
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8.1
-Stable tag: 2.11.0b1
+Stable tag: 2.11.0b2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -196,7 +196,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 
 == Changelog ==
 
-= 2.11.0 - 16 Sep 2021 =
+= 2.11.0 - 20 Sep 2021 =
   * Add: Reusable Blocks Access by User Roles
   * Add: Setting to disable Reusable Blocks Access
   * Add: New ask for review system
