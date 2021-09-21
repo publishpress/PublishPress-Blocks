@@ -329,6 +329,24 @@ ul.blocks-list li.block-item .ju-switch-button input:checked + .slider:before {
     right: 0;
 }
 
+.advgb-reusable-block-disabled {
+
+  &-notice {
+    background: #fff;
+    text-align: center;
+    padding: 30px;
+    line-height: 30px;
+    margin-bottom: 10px;
+  }
+
+  // Hide elements when reusable block type is disabled
+  .save-profile-button,
+  #blocks-list-tab,
+  .advgb-search-wrapper {
+    display: none !important;
+  }
+}
+
 @media screen and (max-width: 1065px) {
     .ju-button {
         display: block;

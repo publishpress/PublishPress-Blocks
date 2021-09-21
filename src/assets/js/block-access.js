@@ -16,16 +16,16 @@ window.addEventListener('load', function () {
     $('.blocks-search-input').on('input', function () {
         var searchKey = $(this).val().trim().toLowerCase();
 
-        $('.block-item .block-title').each(function () {
+        $('.block-access-item .block-title').each(function () {
             var blockTitle = $(this).text().toLowerCase().trim(),
-                blockItem = $(this).closest('.block-item');
+                blockItem = $(this).closest('.block-access-item');
 
             if (blockTitle.indexOf(searchKey) > -1) {
                 blockItem.show();
             } else {
                 blockItem.hide();
             }
-        })
+        });
     });
 
     // On change user role dropdown

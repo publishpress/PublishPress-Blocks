@@ -305,7 +305,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             $advgb_blocks_vars = array();
 
-            if( $this->blockAccessEnabled() ) {
+            if( $this->settingIsEnabled( 'enable_block_access' ) ) {
                 $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
             }
 
@@ -415,6 +415,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
             }
 
+            // Exclude specific reusable blocks by user role
+    		$this->advgbReusableBlocksAccess();
+
             // Include needed JS libraries
             wp_enqueue_script('jquery-ui-tabs');
             wp_enqueue_script('jquery-ui-sortable');
@@ -429,6 +432,50 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
+         * Output inline javascript to deactivate reusable blocks in Gutenberg
+         *
+         * @return void
+         */
+        public function advgbReusableBlocksAccess() {
+
+            if( $this->settingIsEnabled( 'enable_reusable_blocks_access' ) ) {
+
+                $user_meta = get_userdata( get_current_user_id() );
+                $reusable_blocks_user_roles = get_option( 'advgb_reusable_blocks_user_roles' );
+
+                $invisibleBlocks = array();
+                foreach( $user_meta->roles as $role ) {
+                	if ( isset( $reusable_blocks_user_roles[ $role ] ) ) {
+                		$invisibleBlocks = array_merge( $invisibleBlocks, $reusable_blocks_user_roles[ $role ]['inactive_blocks'] );
+                	}
+                }
+
+                $js = '
+                wp.domReady( function() {
+                	let subscribe_called = false;
+                	let exclude = ' . json_encode( $invisibleBlocks ) . ';
+                	if ( exclude && exclude.length > 0 ) {
+                		wp.data.subscribe( () => {
+                			const settings = wp.data.select( "core/block-editor" ).getSettings();
+                			if ( settings.__experimentalReusableBlocks && settings.__experimentalReusableBlocks.length > 0 && !subscribe_called ) {
+                				subscribe_called = true;
+                				const blocks = wp.data.select("core").getEntityRecords( "postType", "wp_block", { exclude: exclude } );
+                				wp.data.dispatch("core/block-editor").updateSettings( { __experimentalReusableBlocks: blocks } );
+                			}
+                		});
+
+                		const blocks = wp.data.select("core").getEntityRecords( "postType", "wp_block", { exclude: exclude } );
+                		wp.data.dispatch("core/block-editor").updateSettings( { __experimentalReusableBlocks: blocks } );
+
+                	}
+                } );
+                ';
+
+                wp_add_inline_script( 'advgb_blocks', $js );
+            }
+        }
+
+        /**
          * Output blocks data and settings as javascript objects (advgb_blocks_var, advgbBlocks and advgbDefaultConfig)
          *
          * @param boolean $post When the blocks load in post edit screen
@@ -439,7 +486,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             $advgb_blocks_vars = array();
 
-            if( $this->blockAccessEnabled() ) {
+            if( $this->settingIsEnabled( 'enable_block_access' ) ) {
                 $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
             }
 
@@ -513,7 +560,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function addEditorAndFrontendStyles()
         {
             // Load custom styles in the <head>
-            if( $this->customStylesEnabled() ) {
+            if( $this->settingIsEnabled( 'enable_custom_styles' ) ) {
                 add_action('wp_head', array($this, 'loadCustomStylesFrontend'));
                 add_action('admin_head', array($this, 'loadCustomStylesAdmin'));
             }
@@ -1510,6 +1557,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_script(
+                    'advgb_custom_styles_js',
+                    plugins_url('assets/js/custom-styles.js', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+                wp_register_script(
                     'velocity_js',
                     plugins_url('assets/js/velocity.min.js', dirname(__FILE__)),
                     array(),
@@ -1581,6 +1634,19 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array('jquery'),
                     ADVANCED_GUTENBERG_VERSION
                 );
+                wp_register_script(
+                    'advgb_reusable_blocks_js',
+                    plugins_url('assets/js/reusable-blocks.js', dirname(__FILE__)),
+                    array('jquery'),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+
+                /*/ Pro
+                if(defined('ADVANCED_GUTENBERG_PRO')) {
+                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_register_scripts_admin' ) ) {
+                        PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_register_scripts_admin();
+                    }
+                }*/
 
                 $saved_settings = get_option('advgb_settings');
                 if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
@@ -1901,6 +1967,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $this->saveCaptchaSettings();
             } elseif (isset($_POST['block_data_export'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 $this->downloadBlockFormData();
+            } elseif (isset($_POST['advgb_reusable_blocks_access_save'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                $this->saveAdvgbReusableBlocksAccess();
             }
 
             return false;
@@ -1953,6 +2021,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['enable_custom_styles'] = 1;
                 } else {
                     $save_config['enable_custom_styles'] = 0;
+                }
+
+                if (isset($_POST['enable_reusable_blocks_access'])) {
+                    $save_config['enable_reusable_blocks_access'] = 1;
+                } else {
+                    $save_config['enable_reusable_blocks_access'] = 0;
                 }
 
                 $save_config['gallery_lightbox_caption'] = $_POST['gallery_lightbox_caption'];
@@ -2093,7 +2167,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 /* Blocks saved in advgb_blocks_list but not listed in Block Access page
                  * due their categories are not detected
                  */
-                $blocks_list_undetected = $_POST['blocks_list_undetected'];
+                $blocks_list_undetected = ( !empty( $_POST['blocks_list_undetected'] ) ? $_POST['blocks_list_undetected'] : '' );
 
                 // Get all the blocks we can manage (which category is detected)
                 $blocks_list = $_POST['blocks_list'];
@@ -2118,6 +2192,55 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=success' ) );
             } else {
                 wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=error' ) );
+            }
+        }
+
+        /**
+         * Save reusable blocks access by user role
+         *
+         * @return void
+         */
+        public function saveAdvgbReusableBlocksAccess() {
+
+            // Check nonce field exist
+            if ( !isset( $_POST['advgb_nonce_field'] ) ) {
+                return false;
+            }
+            // Verify nonce
+            if ( !wp_verify_nonce( $_POST['advgb_nonce_field'], 'advgb_nonce' ) ) {
+                return false;
+            }
+
+            if ( !current_user_can( 'administrator' ) ) {
+                return false;
+            }
+
+            $user_role         = $_POST['user_role_reusable_blocks'];
+            $blocks            = isset( $_POST['reusable_blocks'] ) ? $_POST['reusable_blocks'] : array();
+            $active_blocks     = array();
+            $inactive_blocks   = array();
+
+            if ( isset( $blocks ) && isset( $user_role ) && !empty( $user_role ) ) {
+
+                // Get all the reusable blocks
+                $reusable_blocks_list = $_POST['reusable_blocks_list'];
+
+                // Active blocks
+                $active_blocks = $blocks;
+
+                // Inactive blocks
+                $inactive_blocks = array_unique( array_values( array_diff( $reusable_blocks_list, $active_blocks ) ) );
+
+                // Define active and inactive blocks
+                $reusable_blocks_access_by_role                                  = get_option( 'advgb_reusable_blocks_user_roles');
+                $reusable_blocks_access_by_role[$user_role]['active_blocks']     = isset( $active_blocks ) ? $active_blocks : '';
+                $reusable_blocks_access_by_role[$user_role]['inactive_blocks']   = isset( $inactive_blocks ) ? $inactive_blocks : '';
+
+                update_option( 'advgb_reusable_blocks_user_roles', $reusable_blocks_access_by_role );
+
+                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=reusable-blocks-access&user_role_reusable_blocks=' . $user_role . '&save_access=success' ) );
+            } else {
+                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=reusable-blocks-access&user_role_reusable_blocks=' . $user_role . '&save_access=error' ) );
             }
         }
 
@@ -5247,27 +5370,15 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Check if Block Access is enabled in settings
+         * Check if a setting is enabled
+         *
+         * @param string $setting The setting from advgb_settings option field
          *
          * @return boolean
          */
-        public function blockAccessEnabled() {
+        public function settingIsEnabled( $setting ) {
             $saved_settings = get_option('advgb_settings');
-            if( !isset($saved_settings['enable_block_access']) || $saved_settings['enable_block_access'] ) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        /**
-         * Check if Custom Styles is enabled in settings
-         *
-         * @return boolean
-         */
-        public function customStylesEnabled() {
-            $saved_settings = get_option('advgb_settings');
-            if( !isset($saved_settings['enable_custom_styles']) || $saved_settings['enable_custom_styles'] ) {
+            if( !isset($saved_settings[$setting]) || $saved_settings[$setting] ) {
                 return true;
             } else {
                 return false;

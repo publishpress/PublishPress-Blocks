@@ -88,7 +88,7 @@ if ( !current_user_can('administrator') ) {
                     global $wp_roles;
                     $roles_list = $wp_roles->get_names();
                     foreach ($roles_list as $roles => $role_name) :
-                        $name = translate_user_role($name);
+                        $role_name = translate_user_role($role_name);
                         ?>
                         <option value="<?php echo esc_attr($roles); ?>" <?php selected( $current_user_role, $roles ); ?>>
                             <?php echo $role_name; ?>
@@ -144,7 +144,7 @@ if ( !current_user_can('administrator') ) {
                                         $advgb_block_status_ = empty( $advgb_blocks_user_roles['active_blocks'] ) || ( in_array($block['name'], $advgb_blocks_user_roles['active_blocks']) || !in_array($block['name'], $advgb_blocks_user_roles['inactive_blocks']) );
                                     }
                                     ?>
-                                    <li class="block-item ju-settings-option">
+                                    <li class="block-item block-access-item ju-settings-option">
                                         <label class="ju-setting-label">
                                             <span class="block-icon"<?php echo isset( $block['iconColor'] ) && !empty( $block['iconColor'] ) ? ' style="color:' . $block['iconColor'] . ';"' : ''; ?>>
                                                 <?php echo wp_specialchars_decode( $block['icon'], ENT_QUOTES ); ?>
