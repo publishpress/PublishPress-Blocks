@@ -82,7 +82,7 @@ if( isset( $advgb_blocks_user_roles_['inactive_blocks'] ) && in_array( 'core/blo
                     ?>
                 </select>
                 <div class="advgb-search-wrapper">
-                    <input type="text" class="blocks-search-input advgb-search-input"
+                    <input type="text" class="reusable-blocks-search-input advgb-search-input"
                            placeholder="<?php esc_html_e('Search blocks', 'advanced-gutenberg') ?>"
                     >
                     <i class="mi mi-search"></i>
@@ -133,7 +133,7 @@ if( isset( $advgb_blocks_user_roles_['inactive_blocks'] ) && in_array( 'core/blo
                     <div class="category-block clearfix">
                         <ul class="blocks-list">
                             <?php foreach ($reusable_blocks as $reusable_block) { ?>
-                                <li class="block-item ju-settings-option">
+                                <li class="block-item reusable-block-access-item ju-settings-option">
                                     <label class="ju-setting-label">
                                         <span class="block-icon"></span>
                                         <span class="block-title">
