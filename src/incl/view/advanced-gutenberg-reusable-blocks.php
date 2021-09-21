@@ -142,8 +142,7 @@ if( isset( $advgb_blocks_user_roles_['inactive_blocks'] ) && in_array( 'core/blo
                                                 class="advgb_qtip advgb_qtip_no_after advgb-icon-edit"
                                                 data-qtip="<?php _e( 'Edit', 'advanced-gutenberg' ) ?>">
                                                 <i class="mi mi-edit"></i>
-                                                <?php echo $reusable_block->post_title; ?>
-                                            </a>
+                                            </a> <?php echo $reusable_block->post_title; ?>
                                         </span>
                                     </label>
                                     <div class="ju-switch-button">
