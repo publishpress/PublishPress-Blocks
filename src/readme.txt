@@ -1,5 +1,5 @@
 === Gutenberg Blocks - PublishPress Blocks Gutenberg Editor Plugin ===
-Contributors: publishpress, stevejburge, htmgarcia, advancedgutenbergg
+Contributors: publishpress, stevejburge, htmgarcia, rozroz, advancedgutenbergg
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8.1
