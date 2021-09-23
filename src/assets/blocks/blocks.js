@@ -10949,7 +10949,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         if (willSetContent) clearTimeout(willSetContent);
                                         lastValue = value;
                                         willSetContent = setTimeout(function () {
-                                            return _this3.updateCellContent(value, selectedCell);
+                                            _this3.setState({
+                                                selectedCell: cell,
+                                                sectionSelected: section
+                                            });
+                                            _this3.updateCellContent(value, selectedCell);
                                         }, 1000);
                                     },
                                     unstableOnFocus: function unstableOnFocus() {

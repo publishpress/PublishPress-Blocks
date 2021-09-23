@@ -868,7 +868,13 @@
                                     onChange={(value) => {
                                         if (willSetContent) clearTimeout(willSetContent);
                                         lastValue = value;
-                                        willSetContent = setTimeout(() => this.updateCellContent(value, selectedCell), 1000);
+                                        willSetContent = setTimeout(() => {
+                                            this.setState({
+                                                selectedCell: cell,
+                                                sectionSelected: section,
+                                            });
+                                            this.updateCellContent(value, selectedCell);
+                                        }, 1000);
                                     }}
                                     unstableOnFocus={() => {
                                         if (willSetContent) {
