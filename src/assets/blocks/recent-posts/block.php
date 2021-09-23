@@ -883,10 +883,6 @@ function advgbAllowCPTQueryVars( $query_params ) {
 	return $query_params;
 }
 
-foreach ( advgbGetCPTs() as $cpt ) {
-	add_filter( "rest_{$cpt}_collection_params", 'advgbAllowCPTQueryVars' );
-}
-
 /**
  * Returns the relative dates of the post.
  *
@@ -1032,7 +1028,10 @@ function advgbGetCoauthors( $post ) {
  * @return array
  */
 function advgbGetAuthorMeta( $page ) {
-	return array( 'author_link' => get_author_posts_url( $page['author'] ), 'display_name' => get_the_author_meta( 'display_name', $page['author'] ) );
+	if ( isset( $page['author'] ) ) {
+		return array( 'author_link' => get_author_posts_url( $page['author'] ), 'display_name' => get_the_author_meta( 'display_name', $page['author'] ) );
+	}
+	return array( 'author_link' => '', 'display_name' => '' );
 }
 
 /**
@@ -1050,37 +1049,78 @@ function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
         } elseif( advgbGetCurrentUserId() === 999999 ) {
             $args['author'] = advgbGetCurrentUserId();
         } else {
-            $user_id = advgbGetCurrentUserId();
-            $author = advgbGetAuthorByID( $user_id );
-            if ( $author ) {
-                $args['meta_query'][] = array(
-                    'key' => 'ppma_authors_name',
-                    'value' => $author->__get( 'display_name' ),
-                    'compare' => 'LIKE',
-                );
-            }
+			advgbSetPPAuthorArgs( advgbGetCurrentUserId(), $args );
         }
     } else {
         // Get author attribute
         if ( isset( $attributes['author'] ) && ! empty( $attributes['author'] ) ) {
-    		if ( ! function_exists('get_multiple_authors') ){
+			// WooCommerce Products don't support multiple authors...
+    		if (  $post_type === 'product' || ! function_exists('get_multiple_authors') ){
     			$args['author'] = $attributes['author'];
     		} else {
-    			$user_id = $attributes['author'];
-    			$author = advgbGetAuthorByID( $user_id );
-    			if ( $author ) {
-    				$args['meta_query'][] = array(
-    					'key' => 'ppma_authors_name',
-    					'value' => $author->__get( 'display_name' ),
-    					'compare' => 'LIKE',
-    				);
-    			}
-    		}
+				advgbSetPPAuthorArgs( $attributes['author'], $args );
+			}
     	}
     }
 	return $args;
 }
 add_filter( 'advgb_get_recent_posts_args', 'advgbGetAuthorFilter', 10, 3 );
+
+/**
+ * Populate the correct arguments in REST for filtering by author.
+ *
+ * The results depends on whether PublishPress Authors plugin is activated.
+ *
+ * @return array
+ */
+function advgbGetAuthorFilterREST( $args, $request ) {
+	if ( isset( $request['author'] ) && ! empty( $request['author'] ) ) {
+		// WooCommerce Products don't support multiple authors...
+		if ( $args['post_type'] !== 'product' && function_exists('get_multiple_authors') ) {
+			$author = $request['author'];
+			$user_id = is_array( $author ) ? reset( $author ) : $author;
+			advgbSetPPAuthorArgs( $user_id, $args );
+		} else {
+			unset( $args['author'] );
+			$args['author__in'] = $request['author'];
+		}
+	}
+	return $args;
+}
+add_filter( 'rest_post_query', 'advgbGetAuthorFilterREST', 10, 2 );
+add_filter( 'rest_page_query', 'advgbGetAuthorFilterREST', 10, 2 );
+
+/**
+ * Sets the author args for the meta_query.
+ */
+function advgbSetPPAuthorArgs( $user_id, &$args ) {
+	$author = advgbGetAuthorByID( $user_id );
+	if ( $author ) {
+		$args['meta_query'][] = array(
+			'key' => 'ppma_authors_name',
+			'value' => $author->__get( 'display_name' ),
+			'compare' => 'LIKE',
+		);
+		unset( $args['author'] );
+		unset( $args['author__in'] );
+	}
+}
+
+/**
+ * Populate the correct arguments in REST for sorting by author.
+ *
+ * The results depends on whether PublishPress Authors plugin is activated.
+ *
+ * @return array
+ */
+function advgbMultipleAuthorSortREST( $args, $request ) {
+	if ( isset( $request['orderby'] ) && 'author' === $request['orderby'] && function_exists('get_multiple_authors') ) {
+		$args['meta_key'] = 'ppma_authors_name';
+		$args['orderby'] = 'meta_value';
+	}
+	return $args;
+}
+add_filter( 'rest_post_query', 'advgbMultipleAuthorSortREST', 10, 2 );
 
 /**
  * Populate the correct arguments for filtering by author.
@@ -1101,55 +1141,6 @@ function advgbMultipleAuthorSort() {
 
 		} );
 	}
-}
-
-/**
- * Populate the correct arguments in REST for sorting by author.
- *
- * The results depends on whether PublishPress Authors plugin is activated.
- *
- * @return array
- */
-function advgbGetAuthorFilterREST( $args, $request ) {
-	if ( isset( $request['author'] ) && ! empty( $request['author'] ) && function_exists('get_multiple_authors') ) {
-			$author = $request['author'];
-			$user_id = reset( $author );
-			$author = advgbGetAuthorByID( $user_id );
-			if ( $author ) {
-				$args['meta_key'] = 'ppma_authors_name';
-				$args['meta_value'] = $author->__get( 'display_name' );
-				$args['meta_compare'] = 'LIKE';
-				unset( $args['author'] );
-				unset( $args['author__in'] );
-			}
-	}
-	return $args;
-}
-add_filter( 'rest_post_query', 'advgbGetAuthorFilterREST', 10, 2 );
-add_filter( 'rest_page_query', 'advgbGetAuthorFilterREST', 10, 2 );
-
-foreach ( advgbGetCPTs() as $cpt ) {
-	add_filter( "rest_{$cpt}_query", 'advgbGetAuthorFilterREST', 10, 2 );
-}
-
-/**
- * Populate the correct arguments in REST for filtering by author.
- *
- * The results depends on whether PublishPress Authors plugin is activated.
- *
- * @return array
- */
-function advgbMultipleAuthorSortREST( $args, $request ) {
-	if ( isset( $request['orderby'] ) && 'author' === $request['orderby'] && function_exists('get_multiple_authors') ) {
-		$args['meta_key'] = 'ppma_authors_name';
-		$args['orderby'] = 'meta_value';
-	}
-	return $args;
-}
-add_filter( 'rest_post_query', 'advgbMultipleAuthorSortREST', 10, 2 );
-
-foreach ( advgbGetCPTs() as $cpt ) {
-	add_filter( "rest_{$cpt}_query", 'advgbMultipleAuthorSortREST', 10, 2 );
 }
 
 /**
@@ -1197,27 +1188,28 @@ function advgbGetPostIdsForTitles( $titles, $post_type ) {
 }
 
 /**
- * Returns all valid authors (including those defined by PublishPress Authors plugin).
+ * Returns all valid authors.
+ *
+ * If PublishPress Authors plugin is active, only those authors are returned.
  *
  * @return array
  */
 function advgbGetAllAuthors( WP_REST_Request $request ) {
 	$authors = array();
-	$users = get_users( array( 'per_page' => -1, 'who' => 'authors', 'fields' => 'all' ) );
-	foreach ( $users as $user ) {
-		$author = $user->data;
-		$author->id = $author->ID;
-		$author->name = $author->display_name;
-		$authors[ $author->name ] = $author;
-	}
 
 	if ( function_exists( 'multiple_authors_get_all_authors' ) ) {
 		$coauthors = multiple_authors_get_all_authors();
 		foreach ( $coauthors as $coauthor ) {
 			$name = $coauthor->__get( 'display_name' );
-			if ( ! array_key_exists( $name, $authors ) ) {
-				$authors[ $name ] = (object) array( 'name' => $name, 'id' => $coauthor->__get( 'ID' ) );
-			}
+			$authors[ $name ] = (object) array( 'name' => $name, 'id' => $coauthor->__get( 'ID' ) );
+		}
+	} else {
+		$users = get_users( array( 'per_page' => -1, 'who' => 'authors', 'fields' => 'all' ) );
+		foreach ( $users as $user ) {
+			$author = $user->data;
+			$author->id = $author->ID;
+			$author->name = $author->display_name;
+			$authors[ $author->name ] = $author;
 		}
 	}
 	return array_values( $authors );
@@ -1263,3 +1255,15 @@ function advgbExcludePostTypes( WP_REST_Request $request ) {
 	// allow users to add more
 	return apply_filters( 'advgb_exclude_post_types', array( 'attachment', 'web-story' ) );
 }
+
+/**
+ * Fires all the relevant hooks for CPTs.
+ */
+function advgbInitializeHooksForCPTs() {
+	foreach ( advgbGetCPTs() as $cpt ) {
+		add_filter( "rest_{$cpt}_query", 'advgbGetAuthorFilterREST', 10, 2 );
+		add_filter( "rest_{$cpt}_query", 'advgbMultipleAuthorSortREST', 10, 2 );
+		add_filter( "rest_{$cpt}_collection_params", 'advgbAllowCPTQueryVars' );
+	}
+}
+add_action( 'init', 'advgbInitializeHooksForCPTs' );

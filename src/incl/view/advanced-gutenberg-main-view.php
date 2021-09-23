@@ -7,33 +7,57 @@ if (!function_exists('register_block_type') && !defined('GUTENBERG_DEVELOPMENT_M
 }
 $phpver = phpversion();
 
-$tabs_data = array(
-    array(
-        'id' => 'profiles',
+$saved_settings = get_option('advgb_settings');
+
+// Block Access page
+if( !isset($saved_settings['enable_block_access']) || $saved_settings['enable_block_access'] ) {
+    $tabs_data[] = [
+        'id' => 'block-access',
         'title' => __('Block Access', 'advanced-gutenberg'),
         'icon' => 'account-circle',
-    ),
-    array(
-        'id' => 'settings',
-        'title' => __('Settings', 'advanced-gutenberg'),
-        'icon' => 'build',
-    ),
-    array(
-        'id' => 'block-settings',
-        'title' => __('Block Settings', 'advanced-gutenberg'),
-        'icon' => 'settings',
-    ),
-    array(
-        'id' => 'email-form',
-        'title' => __('Email & Form', 'advanced-gutenberg'),
-        'icon' => 'mail',
-    ),
-    array(
+        'order' => 1,
+    ];
+}
+
+// Reusable Blocks Access page
+if( !isset($saved_settings['enable_reusable_blocks_access']) || $saved_settings['enable_reusable_blocks_access'] ) {
+    $tabs_data[] = [
+        'id' => 'reusable-blocks',
+        'title' => __('Reusable Blocks', 'advanced-gutenberg'),
+        'icon' => 'sync',
+        'order' => 2,
+    ];
+}
+
+// Rest of pages
+$tabs_data[] = [
+    'id' => 'settings',
+    'title' => __('Settings', 'advanced-gutenberg'),
+    'icon' => 'build',
+    'order' => 3,
+];
+$tabs_data[] = [
+    'id' => 'block-settings',
+    'title' => __('Block Settings', 'advanced-gutenberg'),
+    'icon' => 'settings',
+    'order' => 4,
+];
+$tabs_data[] = [
+    'id' => 'email-form',
+    'title' => __('Email & Form', 'advanced-gutenberg'),
+    'icon' => 'mail',
+    'order' => 5,
+];
+
+// Custom styles page
+if( !isset($saved_settings['enable_custom_styles']) || $saved_settings['enable_custom_styles'] ) {
+    $tabs_data[] = [
         'id' => 'custom-styles',
         'title' => __('Custom Styles', 'advanced-gutenberg'),
         'icon' => 'code',
-    ),
-);
+        'order' => 6,
+    ];
+}
 
 // Upgrade to Pro page
 if(!defined('ADVANCED_GUTENBERG_PRO')) {
@@ -43,17 +67,15 @@ if(!defined('ADVANCED_GUTENBERG_PRO')) {
             'id' => 'pro',
             'title' => __('Blocks Pro', 'advanced-gutenberg'),
             'icon' => 'star',
+            'order' => 7,
         )
     );
 }
 
-// Pro
+// Pro pages
 if(defined('ADVANCED_GUTENBERG_PRO')) {
-    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_license_page' ) ) {
-        array_push(
-            $tabs_data,
-            PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_license_page('tabs_data')
-        );
+    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_pages' ) ) {
+        $tabs_data = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_pages( $tabs_data );
     }
 }
 

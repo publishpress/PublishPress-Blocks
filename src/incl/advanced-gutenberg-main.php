@@ -16,7 +16,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public static $default_roles_access = array('administrator', 'editor', 'author', 'contributor', 'subscriber');
 
         /**
-         * Default active all blocks for new profile
+         * Default active all blocks
          *
          * @var string  All blocks
          */
@@ -129,18 +129,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
         );
 
         /**
-         * Store original editor settings value, before we modify it to allow/hide blocks based on profiles
+         * Store original editor settings value, before we modify it to allow/hide blocks based on user roles
          *
          * @var string Original settings
          */
         protected static $original_block_editor_settings;
-
-        /**
-         * Activated profile to get activated blocks array
-         *
-         * @var null    ID profiles
-         */
-        protected $active_profile = null;
 
         /**
          * AdvancedGutenbergMain constructor.
@@ -311,9 +304,18 @@ if(!class_exists('AdvancedGutenbergMain')) {
             self::$original_block_editor_settings = $settings;
 
             $advgb_blocks_vars = array();
-            $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
 
-            if (is_array($settings['allowedBlockTypes'])) {
+            if( $this->settingIsEnabled( 'enable_block_access' ) ) {
+                $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
+            }
+
+            // No Block Access defined for this role, so we define empty arrays
+            if( !isset( $advgb_blocks_vars['blocks']['active_blocks'] ) && empty( $advgb_blocks_vars['blocks']['active_blocks'] ) ) {
+                $advgb_blocks_vars['blocks']['active_blocks']   = array();
+                $advgb_blocks_vars['blocks']['inactive_blocks'] = array();
+            }
+
+            if ( is_array($settings['allowedBlockTypes']) ) {
                 // Remove blocks from the list that are not allowed
                 // Note that we do not add missing blocks, because another plugin may have used the hook to remove some of them
                 foreach ($settings['allowedBlockTypes'] as $key => $type) {
@@ -324,7 +326,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             } elseif ($settings['allowedBlockTypes'] === true) {
                 // All was allowed, only return what the profile allows
 
-                if (count($advgb_blocks_vars['blocks']['active_blocks']) || count($advgb_blocks_vars['blocks']['inactive_blocks'])) {
+                if ( count($advgb_blocks_vars['blocks']['active_blocks']) || count($advgb_blocks_vars['blocks']['inactive_blocks']) ) {
                     $settings['allowedBlockTypes'] = $advgb_blocks_vars['blocks']['active_blocks'];
                 }
             }
@@ -413,6 +415,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
             }
 
+            // Exclude specific reusable blocks by user role
+    		$this->advgbReusableBlocksAccess();
+
             // Include needed JS libraries
             wp_enqueue_script('jquery-ui-tabs');
             wp_enqueue_script('jquery-ui-sortable');
@@ -427,6 +432,50 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
+         * Output inline javascript to deactivate reusable blocks in Gutenberg
+         *
+         * @return void
+         */
+        public function advgbReusableBlocksAccess() {
+
+            if( $this->settingIsEnabled( 'enable_reusable_blocks_access' ) ) {
+
+                $user_meta = get_userdata( get_current_user_id() );
+                $reusable_blocks_user_roles = get_option( 'advgb_reusable_blocks_user_roles' );
+
+                $invisibleBlocks = array();
+                foreach( $user_meta->roles as $role ) {
+                	if ( isset( $reusable_blocks_user_roles[ $role ] ) ) {
+                		$invisibleBlocks = array_merge( $invisibleBlocks, $reusable_blocks_user_roles[ $role ]['inactive_blocks'] );
+                	}
+                }
+
+                $js = '
+                wp.domReady( function() {
+                	let subscribe_called = false;
+                	let exclude = ' . json_encode( $invisibleBlocks ) . ';
+                	if ( exclude && exclude.length > 0 ) {
+                		wp.data.subscribe( () => {
+                			const settings = wp.data.select( "core/block-editor" ).getSettings();
+                			if ( settings.__experimentalReusableBlocks && settings.__experimentalReusableBlocks.length > 0 && !subscribe_called ) {
+                				subscribe_called = true;
+                				const blocks = wp.data.select("core").getEntityRecords( "postType", "wp_block", { exclude: exclude } );
+                				wp.data.dispatch("core/block-editor").updateSettings( { __experimentalReusableBlocks: blocks } );
+                			}
+                		});
+
+                		const blocks = wp.data.select("core").getEntityRecords( "postType", "wp_block", { exclude: exclude } );
+                		wp.data.dispatch("core/block-editor").updateSettings( { __experimentalReusableBlocks: blocks } );
+
+                	}
+                } );
+                ';
+
+                wp_add_inline_script( 'advgb_blocks', $js );
+            }
+        }
+
+        /**
          * Output blocks data and settings as javascript objects (advgb_blocks_var, advgbBlocks and advgbDefaultConfig)
          *
          * @param boolean $post When the blocks load in post edit screen
@@ -436,7 +485,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function advgbBlocksVariables($post = true)
         {
             $advgb_blocks_vars = array();
-            $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
+
+            if( $this->settingIsEnabled( 'enable_block_access' ) ) {
+                $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
+            }
+
+            // No Block Access defined for this role, so we define empty arrays
+            if( !isset( $advgb_blocks_vars['blocks']['active_blocks'] ) && empty( $advgb_blocks_vars['blocks']['active_blocks'] ) ) {
+                $advgb_blocks_vars['blocks']['active_blocks']   = array();
+                $advgb_blocks_vars['blocks']['inactive_blocks'] = array();
+            }
 
             global $post;
             if ($post) {
@@ -450,20 +508,21 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_localize_script('advgb_blocks', 'advgb_blocks_vars', $advgb_blocks_vars);
 
             // Set variable needed by blocks editor
-            $avatarHolder       = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', ADVANCED_GUTENBERG_PLUGIN);
-            $default_thumb      = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
-            $image_holder       = plugins_url('assets/blocks/advimage/imageholder.svg', ADVANCED_GUTENBERG_PLUGIN);
-            $login_logo         = plugins_url('assets/blocks/login-form/login.svg', ADVANCED_GUTENBERG_PLUGIN);
-            $reg_logo           = plugins_url('assets/blocks/login-form/reg.svg', ADVANCED_GUTENBERG_PLUGIN);
-            $saved_settings     = get_option('advgb_settings');
-            $custom_styles_data = get_option('advgb_custom_styles');
-            $recaptcha_config   = get_option('advgb_recaptcha_config');
-            $recaptcha_config   = $recaptcha_config !== false ? $recaptcha_config : array('recaptcha_enable' => 0);
-            $blocks_icon_color  = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '';
-            $rp_default_thumb   = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
-            $icons              = array();
-            $icons['material']  = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
-            $icons['material']  = json_decode($icons['material'], true);
+            $avatarHolder           = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', ADVANCED_GUTENBERG_PLUGIN);
+            $default_thumb          = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
+            $image_holder           = plugins_url('assets/blocks/advimage/imageholder.svg', ADVANCED_GUTENBERG_PLUGIN);
+            $login_logo             = plugins_url('assets/blocks/login-form/login.svg', ADVANCED_GUTENBERG_PLUGIN);
+            $reg_logo               = plugins_url('assets/blocks/login-form/reg.svg', ADVANCED_GUTENBERG_PLUGIN);
+            $saved_settings         = get_option('advgb_settings');
+            $custom_styles_data     = get_option('advgb_custom_styles');
+            $recaptcha_config       = get_option('advgb_recaptcha_config');
+            $recaptcha_config       = $recaptcha_config !== false ? $recaptcha_config : array('recaptcha_enable' => 0);
+            $blocks_icon_color      = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#5952de';
+            $rp_default_thumb       = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
+            $icons                  = array();
+            $icons['material']      = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
+            $icons['material']      = json_decode($icons['material'], true);
+            $enable_custom_styles   = !isset($saved_settings['enable_custom_styles']) || $saved_settings['enable_custom_styles'] ? true : false;
 
             global $wp_version;
             $blocks_widget_support = ( $wp_version >= 5.8 ) ? true : false;
@@ -484,6 +543,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'iconList' => $icons,
                 'registerEnabled' => get_option('users_can_register'),
                 'blocks_widget_support' => $blocks_widget_support,
+                'enable_custom_styles' => $enable_custom_styles,
             ));
 
             // Setup default config data for blocks
@@ -500,8 +560,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function addEditorAndFrontendStyles()
         {
             // Load custom styles in the <head>
-            add_action('wp_head', array($this, 'loadCustomStylesFrontend'));
-            add_action('admin_head', array($this, 'loadCustomStylesAdmin'));
+            if( $this->settingIsEnabled( 'enable_custom_styles' ) ) {
+                add_action('wp_head', array($this, 'loadCustomStylesFrontend'));
+                add_action('admin_head', array($this, 'loadCustomStylesAdmin'));
+            }
+
             add_action('admin_head', array($this, 'setBlocksSpacingAdmin'));
 
             wp_enqueue_style('dashicons');
@@ -744,12 +807,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $blocksListName = array();
             $savedBlocksListName = array();
 
+            // Blocks coming from Block Access admin screen form
             foreach ($blocksList as &$block) {
                 // Convert object to array
                 $block = (array)$block;
                 $blocksListName[] = $block['name'];
             }
 
+            // Blocks saved in advgb_blocks_list option
             foreach ($savedBlocksList as $block) {
                 // Convert object to array
                 $block = (array)$block;
@@ -762,29 +827,28 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 update_option('advgb_blocks_list', $blocksList);
             }
 
-            // Check that profile blocks are up to date
-            $args     = array(
-                'fields'    => 'ids',
-                'post_type' => 'advgb_profiles',
-                'publish'   => true
-            );
+            // Check that advgb_blocks_user_roles is up to date - The result of this check is not saved
+            $advgb_blocks_user_roles            = get_option( 'advgb_blocks_user_roles');
+            $advgb_blocks_user_roles_updated    = array();
 
-            $postIDs = get_posts($args);
+            foreach ( $advgb_blocks_user_roles as $role => $blocks ) {
+                if (is_array($blocks) && is_array($blocks['active_blocks']) && is_array($blocks['inactive_blocks'])) {
+                    $allAccessBlocks = array_merge($blocks['active_blocks'], $blocks['inactive_blocks']);
 
-            foreach ($postIDs as $postID) {
-                $allBlocksMeta = get_post_meta($postID, 'blocks', true);
-                if (is_array($allBlocksMeta) && is_array($allBlocksMeta['active_blocks']) && is_array($allBlocksMeta['inactive_blocks'])) {
-                    $allProfileBlocks = array_merge($allBlocksMeta['active_blocks'], $allBlocksMeta['inactive_blocks']);
-
-                    $newAllowedBlocks = array_diff($blocksListName, $allProfileBlocks);
+                    $newAllowedBlocks = array_diff($blocksListName, $allAccessBlocks);
                     $newAllowedBlocks = array_unique($newAllowedBlocks);
 
                     if ($newAllowedBlocks) {
-                        $allBlocksMeta['active_blocks'] = array_merge($allBlocksMeta['active_blocks'], $newAllowedBlocks);
-                        update_post_meta($postID, 'blocks', $allBlocksMeta);
+                        $advgb_blocks_user_roles_updated[$role]['active_blocks'] = array_merge($blocks['active_blocks'], $newAllowedBlocks);
+                        $advgb_blocks_user_roles_updated[$role]['inactive_blocks'] = $blocks['inactive_blocks'];
                     }
                 }
             }
+
+            /* We don't actually need to save the new blocks that are not detected by Access Blocks
+            if ($newAllowedBlocks) {
+                update_option( 'advgb_blocks_user_roles', $advgb_blocks_user_roles_updated );
+            }*/
 
             if ((defined('GUTENBERG_VERSION')
                 && version_compare(get_option('advgb_gutenberg_version'), GUTENBERG_VERSION, '<'))
@@ -1481,9 +1545,21 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_script(
+                    'advgb_block_access_js',
+                    plugins_url('assets/js/block-access.js', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+                wp_register_script(
                     'advgb_settings_js',
                     plugins_url('assets/js/settings.js', dirname(__FILE__)),
                     array('wp-i18n'),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+                wp_register_script(
+                    'advgb_custom_styles_js',
+                    plugins_url('assets/js/custom-styles.js', dirname(__FILE__)),
+                    array(),
                     ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_script(
@@ -1558,6 +1634,19 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array('jquery'),
                     ADVANCED_GUTENBERG_VERSION
                 );
+                wp_register_script(
+                    'advgb_reusable_blocks_js',
+                    plugins_url('assets/js/reusable-blocks.js', dirname(__FILE__)),
+                    array('jquery'),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+
+                /*/ Pro
+                if(defined('ADVANCED_GUTENBERG_PRO')) {
+                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_register_scripts_admin' ) ) {
+                        PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_register_scripts_admin();
+                    }
+                }*/
 
                 $saved_settings = get_option('advgb_settings');
                 if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
@@ -1868,13 +1957,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function saveAdvgbData()
         {
-            if (isset($_GET['view']) && $_GET['view'] === 'profile' && !isset($_GET['id'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- redirect only
-                wp_safe_redirect(admin_url('admin.php?page=advgb_main&view=profiles'));
-            }
-
-            if (isset($_POST['advgb_profile_save'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
-                $this->saveAdvgbProfile();
-            } elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            if( isset($_POST['advgb_block_access_save']) ) {
+                $this->saveAdvgbBlockAccess();
+            }  elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 $this->saveSettings();
             } elseif (isset($_POST['save_email_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 $this->saveEmailSettings();
@@ -1882,6 +1967,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $this->saveCaptchaSettings();
             } elseif (isset($_POST['block_data_export'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 $this->downloadBlockFormData();
+            } elseif (isset($_POST['advgb_reusable_blocks_access_save'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                $this->saveAdvgbReusableBlocksAccess();
             }
 
             return false;
@@ -1924,10 +2011,30 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['enable_columns_visual_guide'] = 0;
                 }
 
+
                 if (isset($_POST['block_visibility'])) {
                     $save_config['block_visibility'] = 1;
                 } else {
                     $save_config['block_visibility'] = 0;
+                }
+
+                if (isset($_POST['enable_block_access'])) {
+                    $save_config['enable_block_access'] = 1;
+                } else {
+                    $save_config['enable_block_access'] = 0;
+                }
+
+                if (isset($_POST['enable_custom_styles'])) {
+                    $save_config['enable_custom_styles'] = 1;
+                } else {
+                    $save_config['enable_custom_styles'] = 0;
+                }
+
+                if (isset($_POST['enable_reusable_blocks_access'])) {
+                    $save_config['enable_reusable_blocks_access'] = 1;
+                } else {
+                    $save_config['enable_reusable_blocks_access'] = 0;
+
                 }
 
                 $save_config['gallery_lightbox_caption'] = $_POST['gallery_lightbox_caption'];
@@ -2039,78 +2146,110 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Save profiles settings
+         * Save block access by user role
          *
-         * @return mixed
+         * @return void
          */
-        public function saveAdvgbProfile()
-        {
+        public function saveAdvgbBlockAccess() {
+
             // Check nonce field exist
-            if (!isset($_POST['advgb_nonce_field'])) {
+            if ( !isset( $_POST['advgb_nonce_field'] ) ) {
                 return false;
             }
             // Verify nonce
-            if (!wp_verify_nonce($_POST['advgb_nonce_field'], 'advgb_nonce')) {
+            if ( !wp_verify_nonce( $_POST['advgb_nonce_field'], 'advgb_nonce' ) ) {
                 return false;
             }
 
-            $postID = $_POST['advgb_profile_id'];
-
-            // Save profile settings
-            if (current_user_can('publish_posts')) {
-                // Get list of active blocks
-                $active_blocks = array();
-                $inactive_blocks = array();
-                if (isset($_POST['active_blocks'])) {
-                    $blocks_list = json_decode(stripslashes($_POST['blocks_list']));
-                    $active_blocks = $_POST['active_blocks'];
-                    $inactive_blocks = array_values(array_diff($blocks_list, $active_blocks));
-                }
-
-                // Get users permission
-                $users_access = array();
-                $roles_access = array();
-                if (isset($_POST['advgb-users-access-list'])) {
-                    $users_access = trim($_POST['advgb-users-access-list']);
-                    $users_access = explode(' ', $users_access);
-                }
-                if (isset($_POST['advgb-roles'])) {
-                    $roles_access = $_POST['advgb-roles'];
-                }
-
-                // Get new profile title
-                $post_title = trim($_POST['advgb_profile_title']);
-
-                // Save data
-                if ($postID !== 'new') { // Update profile if have post ID
-                    if (!current_user_can('edit_post', $postID)) {
-                        return false;
-                    }
-
-                    update_post_meta($postID, 'blocks', array('active_blocks'=>$active_blocks, 'inactive_blocks'=>$inactive_blocks));
-                    update_post_meta($postID, 'users_access', $users_access);
-                    update_post_meta($postID, 'roles_access', $roles_access);
-                    wp_update_post(array(
-                        'ID' => $postID,
-                        'post_title' => $post_title,
-                    ));
-                } else { // Create new profile
-                    $postID = wp_insert_post(array(
-                        'post_title'  => $post_title,
-                        'post_type'   => 'advgb_profiles',
-                        'post_status' => 'publish',
-                        'meta_input'  => array(
-                            'blocks' => array('active_blocks'=>$active_blocks, 'inactive_blocks'=>$inactive_blocks),
-                            'roles_access'  => $roles_access,
-                            'users_access'  => $users_access,
-                        )
-                    ));
-                }
-
-                wp_safe_redirect(admin_url('admin.php?page=advgb_main&view=profile&id=' . $postID . '&save_profile=success'));
+            if ( !current_user_can( 'administrator' ) ) {
+                return false;
             }
 
-            return $postID;
+            $user_role         = $_POST['user_role'];
+            $blocks            = $_POST['blocks'];
+            $active_blocks     = array();
+            $inactive_blocks   = array();
+
+            if ( isset( $blocks ) && !empty( $blocks ) && isset( $user_role ) && !empty( $user_role ) ) {
+
+                /* Blocks saved in advgb_blocks_list but not listed in Block Access page
+                 * due their categories are not detected
+                 */
+                $blocks_list_undetected = ( !empty( $_POST['blocks_list_undetected'] ) ? $_POST['blocks_list_undetected'] : '' );
+
+                // Get all the blocks we can manage (which category is detected)
+                $blocks_list = $_POST['blocks_list'];
+
+                if( $blocks_list_undetected && is_array( $blocks_list_undetected ) ) {
+                    // Merge active blocks with the ones we can't manage
+                    $active_blocks = array_merge( $blocks, $blocks_list_undetected );
+                } else {
+                    $active_blocks = $blocks;
+                }
+
+                // Inactive blocks
+                $inactive_blocks = array_unique( array_values( array_diff( $blocks_list, $active_blocks ) ) );
+
+                // Define active and inactive blocks
+                $block_access_by_role                                  = get_option( 'advgb_blocks_user_roles');
+                $block_access_by_role[$user_role]['active_blocks']     = isset( $active_blocks ) ? $active_blocks : '';
+                $block_access_by_role[$user_role]['inactive_blocks']   = isset( $inactive_blocks ) ? $inactive_blocks : '';
+
+                update_option( 'advgb_blocks_user_roles', $block_access_by_role );
+
+                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=success' ) );
+            } else {
+                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=error' ) );
+            }
+        }
+
+        /**
+         * Save reusable blocks access by user role
+         *
+         * @return void
+         */
+        public function saveAdvgbReusableBlocksAccess() {
+
+            // Check nonce field exist
+            if ( !isset( $_POST['advgb_nonce_field'] ) ) {
+                return false;
+            }
+            // Verify nonce
+            if ( !wp_verify_nonce( $_POST['advgb_nonce_field'], 'advgb_nonce' ) ) {
+                return false;
+            }
+
+            if ( !current_user_can( 'administrator' ) ) {
+                return false;
+            }
+
+            $user_role         = $_POST['user_role_reusable_blocks'];
+            $blocks            = isset( $_POST['reusable_blocks'] ) ? $_POST['reusable_blocks'] : array();
+            $active_blocks     = array();
+            $inactive_blocks   = array();
+
+            if ( isset( $blocks ) && isset( $user_role ) && !empty( $user_role ) ) {
+
+                // Get all the reusable blocks
+                $reusable_blocks_list = $_POST['reusable_blocks_list'];
+
+                // Active blocks
+                $active_blocks = $blocks;
+
+                // Inactive blocks
+                $inactive_blocks = array_unique( array_values( array_diff( $reusable_blocks_list, $active_blocks ) ) );
+
+                // Define active and inactive blocks
+                $reusable_blocks_access_by_role                                  = get_option( 'advgb_reusable_blocks_user_roles');
+                $reusable_blocks_access_by_role[$user_role]['active_blocks']     = isset( $active_blocks ) ? $active_blocks : '';
+                $reusable_blocks_access_by_role[$user_role]['inactive_blocks']   = isset( $inactive_blocks ) ? $inactive_blocks : '';
+
+                update_option( 'advgb_reusable_blocks_user_roles', $reusable_blocks_access_by_role );
+
+                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=reusable-blocks-access&user_role_reusable_blocks=' . $user_role . '&save_access=success' ) );
+            } else {
+                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=reusable-blocks-access&user_role_reusable_blocks=' . $user_role . '&save_access=error' ) );
+            }
         }
 
         /**
@@ -2276,7 +2415,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Retrieve the active and inactive blocks for users regard to PublishPress Blocks profiles
+         * Retrieve the active and inactive blocks for users regard to PublishPress Blocks access
          *
          * @return array
          */
@@ -2284,54 +2423,24 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             // Get user info
             $current_user      = wp_get_current_user();
-            $current_user_id   = $current_user->ID;
+            //$current_user_id   = $current_user->ID;
             $current_user_role = $current_user->roles[0];
 
-            // Check if we are in profile view
-            if (isset($_GET['page']) && isset($_GET['view']) && $_GET['page'] === 'advgb_main' && $_GET['view'] === 'profile' ) { // phpcs:ignore -- WordPress.Security.NonceVerification.Recommended - view only
-                $postID = $_GET['id']; // phpcs:ignore -- WordPress.Security.NonceVerification.Recommended - view only
-                $blocks_saved  = get_post_meta($postID, 'blocks', true);
-                if (!is_array($blocks_saved)) {
-                    return array('active_blocks'=>array(), 'inactive_blocks'=>array());
-                }
+            // All saved blocks (even the ones not detected by Block Access)
+            $all_blocks = get_option( 'advgb_blocks_list' );
 
-                // Return allowed blocks
-                return $blocks_saved;
+            // Get the array from advgb_blocks_user_roles option that match current user role
+            if( get_option('advgb_blocks_user_roles') ) {
+                $advgb_blocks_user_roles = !empty( get_option('advgb_blocks_user_roles') ) ? get_option( 'advgb_blocks_user_roles' ) : [];
+                $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
+
+                // Include the blocks stored in advgb_blocks_list option but not detected by Block Access
+                //$advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
+
+                return $advgb_blocks_user_roles;
             }
 
-            // Get all GB-ADV active profiles
-            global $wpdb;
-            $profiles = $wpdb->get_results('SELECT * FROM '. $wpdb->prefix. 'posts
-             WHERE post_type="advgb_profiles" AND post_status="publish" ORDER BY post_date_gmt DESC');
-
-            if (!empty($profiles)) {
-                foreach ($profiles as $profile) {
-                    $postID           = $profile->ID;
-                    $user_id_access   = get_post_meta($postID, 'users_access', true);
-                    $user_role_access = get_post_meta($postID, 'roles_access', true);
-
-                    // Check which profiles that current user has permission to use and take that ID
-                    // the ID of the profiles published most recently will be taken
-                    if (is_array($user_role_access) && is_array($user_id_access)) {
-                        if (in_array($current_user_id, $user_id_access)
-                            || in_array($current_user_role, $user_role_access)) {
-                            // Populate the ID
-                            $this->active_profile = $postID;
-                            $blocks_saved  = get_post_meta($this->active_profile, 'blocks', true);
-
-                            if (!is_array($blocks_saved)) {
-                                return array('active_blocks'=>array(), 'inactive_blocks'=>array());
-                            }
-
-                            // Return allowed blocks
-                            return $blocks_saved;
-                        }
-                    }
-                }
-            }
-
-            // If user is not in any block then allow all blocks
-            $all_blocks = get_option('advgb_blocks_list');
+            // If advgb_blocks_user_roles option doesn't exists, then allow all blocks
             if (!is_array($all_blocks)) {
                 $all_blocks = array();
             } else {
@@ -2339,7 +2448,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $all_blocks[$block_key] = $all_blocks[$block_key]['name'];
                 }
             }
-            return array('active_blocks'=>$all_blocks, 'inactive_blocks'=>array());
+            return array(
+                'active_blocks' => $all_blocks,
+                'inactive_blocks' => array()
+            );
         }
 
         /**
@@ -5319,6 +5431,22 @@ if(!class_exists('AdvancedGutenbergMain')) {
                       }
                   }'
                 );
+            }
+        }
+
+        /**
+         * Check if a setting is enabled
+         *
+         * @param string $setting The setting from advgb_settings option field
+         *
+         * @return boolean
+         */
+        public function settingIsEnabled( $setting ) {
+            $saved_settings = get_option('advgb_settings');
+            if( !isset($saved_settings[$setting]) || $saved_settings[$setting] ) {
+                return true;
+            } else {
+                return false;
             }
         }
 
