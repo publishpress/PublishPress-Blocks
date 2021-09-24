@@ -4826,9 +4826,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             if (strpos($content, 'wp-block-gallery') !== false) {
-                if (!$saved_settings) {
-                    $saved_settings = get_option('advgb_settings');
-                }
+                $saved_settings = get_option('advgb_settings');
 
                 if ($saved_settings['gallery_lightbox']) {
                     wp_enqueue_style('colorbox_style');
