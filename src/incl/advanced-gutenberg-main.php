@@ -522,10 +522,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $icons                  = array();
             $icons['material']      = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
             $icons['material']      = json_decode($icons['material'], true);
-            $enable_custom_styles   = !isset($saved_settings['enable_custom_styles']) || $saved_settings['enable_custom_styles'] ? true : false;
+            $enable_custom_styles   = !isset($saved_settings['enable_custom_styles']) || $saved_settings['enable_custom_styles'] ? 1 : 0;
 
             global $wp_version;
-            $blocks_widget_support = ( $wp_version >= 5.8 ) ? true : false;
+            $blocks_widget_support = ( $wp_version >= 5.8 ) ? 1 : 0;
 
             wp_localize_script('wp-blocks', 'advgbBlocks', array(
                 'color' => $blocks_icon_color,
