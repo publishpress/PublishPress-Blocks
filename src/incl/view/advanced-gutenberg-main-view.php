@@ -29,19 +29,25 @@ if( !isset($saved_settings['enable_reusable_blocks_access']) || $saved_settings[
     ];
 }
 
-// Rest of pages
+// Settings
 $tabs_data[] = [
     'id' => 'settings',
     'title' => __('Settings', 'advanced-gutenberg'),
     'icon' => 'build',
     'order' => 3,
 ];
-$tabs_data[] = [
-    'id' => 'block-settings',
-    'title' => __('Block Settings', 'advanced-gutenberg'),
-    'icon' => 'settings',
-    'order' => 4,
-];
+
+// Block Settings page
+if( !isset($saved_settings['enable_advgb_blocks']) || $saved_settings['enable_advgb_blocks'] ) {
+    $tabs_data[] = [
+        'id' => 'block-settings',
+        'title' => __('Block Settings', 'advanced-gutenberg'),
+        'icon' => 'settings',
+        'order' => 4,
+    ];
+}
+
+// Rest of pages
 $tabs_data[] = [
     'id' => 'email-form',
     'title' => __('Email & Form', 'advanced-gutenberg'),

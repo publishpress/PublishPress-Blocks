@@ -224,7 +224,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             })
                         )
                     ),
-                    React.createElement(
+                    advgbBlocks.enable_advgb_blocks === '1' && React.createElement(
                         PanelBody,
                         { title: __('Columns Visual Guide', 'advanced-gutenberg'), initialOpen: false },
                         React.createElement(
