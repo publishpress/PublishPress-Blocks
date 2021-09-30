@@ -1665,14 +1665,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION
                 );
 
-                if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
-                    wp_register_script(
-                        'advgb_reusable_blocks_js',
-                        plugins_url('assets/js/reusable-blocks.js', dirname(__FILE__)),
-                        array('jquery'),
-                        ADVANCED_GUTENBERG_VERSION
-                    );
-                }
+                wp_register_script(
+                    'advgb_reusable_blocks_js',
+                    plugins_url('assets/js/reusable-blocks.js', dirname(__FILE__)),
+                    array('jquery'),
+                    ADVANCED_GUTENBERG_VERSION
+                );
 
                 /*/ Pro
                 if(defined('ADVANCED_GUTENBERG_PRO')) {
