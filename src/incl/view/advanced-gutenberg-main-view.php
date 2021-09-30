@@ -37,7 +37,7 @@ $tabs_data[] = [
     'order' => 3,
 ];
 
-// Block Settings page
+// Block Settings and Email Form pages
 if( !isset($saved_settings['enable_advgb_blocks']) || $saved_settings['enable_advgb_blocks'] ) {
     $tabs_data[] = [
         'id' => 'block-settings',
@@ -45,15 +45,13 @@ if( !isset($saved_settings['enable_advgb_blocks']) || $saved_settings['enable_ad
         'icon' => 'settings',
         'order' => 4,
     ];
+    $tabs_data[] = [
+        'id' => 'email-form',
+        'title' => __('Email & Form', 'advanced-gutenberg'),
+        'icon' => 'mail',
+        'order' => 5,
+    ];
 }
-
-// Rest of pages
-$tabs_data[] = [
-    'id' => 'email-form',
-    'title' => __('Email & Form', 'advanced-gutenberg'),
-    'icon' => 'mail',
-    'order' => 5,
-];
 
 // Custom styles page
 if( !isset($saved_settings['enable_custom_styles']) || $saved_settings['enable_custom_styles'] ) {
