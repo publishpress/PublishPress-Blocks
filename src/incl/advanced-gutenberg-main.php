@@ -175,10 +175,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 if($wp_version >= 5.8) {
                     add_action('admin_enqueue_scripts', array($this, 'addEditorAssetsWidgets'), 9999);
                     add_filter('block_editor_settings_all', array($this, 'replaceEditorSettings'), 9999);
-                    add_filter('block_categories_all', array($this, 'addAdvBlocksCategory'));
+
+                    if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                        add_filter('block_categories_all', array($this, 'addAdvBlocksCategory'));
+                    }
                 } else {
                     add_filter('block_editor_settings', array($this, 'replaceEditorSettings'), 9999);
-                    add_filter('block_categories', array($this, 'addAdvBlocksCategory'));
+
+                    if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                        add_filter('block_categories', array($this, 'addAdvBlocksCategory'));
+                    }
                 }
 
                 // Ajax
