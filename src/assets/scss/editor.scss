@@ -1,0 +1,96 @@
+/*Editor sidebar controls*/
+#widgets-editor,
+#editor {
+
+    .advgb-child-select,
+    .advgb-child-toggle {
+      margin-left: 47px;
+    }
+
+    .advgb-child-select {
+      max-width: 200px;
+    }
+
+    .advgb-custom-styles-wrapper {
+      padding-top: 16px;
+      border-top: 1px solid #e0e0e0;
+
+      .components-flex,
+      .components-base-control__help  {
+        padding: 0 16px;
+      }
+    }
+}
+
+body:not(.advgb-editor-width-default) {
+
+  #editor div.block-editor-writing-flow,
+  #editor .edit-post-visual-editor__post-title-wrapper .editor-post-title {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+  }
+
+  #editor .edit-post-visual-editor__post-title-wrapper .editor-post-title {
+    margin-bottom: 20px !important;
+  }
+}
+
+body.advgb-editor-width-large:not(.advgb-editor-width-default) #editor {
+
+  .edit-post-visual-editor__post-title-wrapper > .wp-block,
+  .block-editor-writing-flow > .block-editor-block-list__layout > .wp-block {
+      max-width: 75%;
+      width: 75%;
+      margin: 0 auto;
+  }
+}
+
+body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
+
+  .edit-post-visual-editor__post-title-wrapper > .wp-block,
+  .block-editor-writing-flow > .block-editor-block-list__layout > .wp-block {
+      max-width: 95%;
+      width: 95%;
+      margin: 0 auto;
+  }
+}
+
+.advgb-editor-col-guide-disable .advgb-columns > .block-editor-inner-blocks > .block-editor-block-list__layout>.wp-block:not(.is-selected) >.advgb-column {
+    border-style: none;
+    border-color: transparent;
+}
+
+.advgb-editor-col-guide-enable .advgb-columns > .block-editor-inner-blocks > .block-editor-block-list__layout>.wp-block:not(.is-selected) >.advgb-column {
+    border: 1px dashed #999;
+}
+
+.advgb-editor-sidebar-content .advgb-editor-sidebar-note {
+    font-size: 13px;
+    font-style: italic;
+    margin: 10px;
+}
+
+.advgb-editor-sidebar-content .components-button.advgb-button {
+
+  &:focus {
+
+  }
+
+  &.is-secondary {
+
+  }
+
+  &.is-primary {
+
+  }
+}
+
+/* Widgets Customizer */
+.customize-control-sidebar_block_editor .block-editor-writing-flow {
+
+  .advgb-lores-form-wrapper,
+  .advgb-search-bar-inner {
+    width: 100% !important;
+  }
+}
