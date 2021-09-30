@@ -94,7 +94,7 @@
                             ) ) }
                         </ButtonGroup>
                     </PanelBody>
-                    { advgbBlocks.enable_advgb_blocks === '1' &&
+                    { advgbBlocks.enable_advgb_blocks !== undefined && advgbBlocks.enable_advgb_blocks === '1' &&
                         <PanelBody title={ __( 'Columns Visual Guide', 'advanced-gutenberg' ) } initialOpen={ false }>
                             <div className="advgb-editor-sidebar-note">
                                 { __( 'Border to materialize PublishPress Blocks Column block', 'advanced-gutenberg' ) }
