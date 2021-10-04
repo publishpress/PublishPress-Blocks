@@ -196,7 +196,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 
 == Changelog ==
 
-= 2.11.0 - 30 Sep 2021 =
+= 2.11.0 - 4 Oct 2021 =
   * Add: Reusable Blocks Access by User Roles
   * Add: Setting to disable Reusable Blocks Access
   * Add: New ask for review system
@@ -205,6 +205,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
   * Remove: developer_documentation.html
   * Fix: Console warnings and errors when Custom Styles is disabled
   * Fix: Undefined variable $saved_settings when checking for Gallery block lightbox settings in frontend
+  * Fix: Legacy widgets are not available from migrated default Profile to Block Access
 
 = 2.10.5 - 14 Sep 2021 =
   * Remove: New ask for review system
