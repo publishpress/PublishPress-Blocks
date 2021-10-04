@@ -462,11 +462,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgbReusableBlocksAccess() {
 
-            // Make sure to run only in post edit and widgets.php!
+            // Make sure to run only in post and page edit (not in widgets.php; doesn't support reusable blocks!)
             if(
                 $this->settingIsEnabled( 'enable_reusable_blocks_access' )
                 && (
-                    'widgets' === get_current_screen()->id
+                    'page' === get_current_screen()->id
                     || 'post' === get_current_screen()->id
                 )
             ) {
