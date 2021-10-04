@@ -547,9 +547,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             global $wp_version;
             $blocks_widget_support = ( $wp_version >= 5.8 ) ? 1 : 0;
 
-            $missing_legacy_widget_block = $this->advgbCheckLegacyWidgetBlock();
-            $current_user_role = $this->advgbGetCurrentUserRole();
-
             wp_localize_script('wp-blocks', 'advgbBlocks', array(
                 'color' => $blocks_icon_color,
                 'post_thumb' => $rp_default_thumb['url'],
@@ -568,64 +565,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'blocks_widget_support' => $blocks_widget_support,
                 'enable_custom_styles' => $enable_custom_styles,
                 'enable_advgb_blocks' => $enable_advgb_blocks,
-                'missing_legacy_widget_block' => $missing_legacy_widget_block, // @TODO - Added in 2.11.0 - Remove in later versions
-                'current_user_role' => $current_user_role,
             ));
 
             // Setup default config data for blocks
             $blocks_config_saved = get_option('advgb_blocks_default_config');
             $blocks_config_saved = $blocks_config_saved !== false ? $blocks_config_saved : array();
             wp_localize_script('wp-blocks', 'advgbDefaultConfig', $blocks_config_saved);
-        }
-
-        /**
-         * Check if core/legacy-widget exists in current user role through advgb_blocks_user_roles option,
-         * either in inactive_blocks or active_blocks array.
-         * https://github.com/publishpress/PublishPress-Blocks/issues/756#issuecomment-932358037
-         *
-         * @return int
-         */
-        public function advgbCheckLegacyWidgetBlock()
-        {
-
-            global $wp_version;
-            if( $wp_version >= 5.8 ) {
-
-                $advgb_blocks_list          = !empty( get_option( 'advgb_blocks_list' ) ) ? get_option( 'advgb_blocks_list' ) : [];
-                $advgb_blocks_user_roles    = !empty( get_option( 'advgb_blocks_user_roles' ) ) ? get_option( 'advgb_blocks_user_roles' ) : [];
-                $current_user_role          = $this->advgbGetCurrentUserRole();
-
-                if(
-                    !in_array( 'core/legacy-widget', $advgb_blocks_user_roles[$current_user_role]['active_blocks'] )
-                    && !in_array( 'core/legacy-widget', $advgb_blocks_user_roles[$current_user_role]['inactive_blocks'] )
-                ) {
-
-                    array_push(
-                        $advgb_blocks_user_roles[$current_user_role]['active_blocks'],
-                        'core/legacy-widget'
-                    );
-                    update_option( 'advgb_blocks_user_roles', $advgb_blocks_user_roles );
-                    return 1;
-
-                } else {
-                    return 0;
-                }
-
-            } else {
-                return 0;
-            }
-        }
-
-        /**
-         * Get current user role
-         *
-         * @return string
-         */
-        public function advgbGetCurrentUserRole()
-        {
-            $current_user = wp_get_current_user();
-
-            return $current_user->roles[0];
         }
 
         /**
