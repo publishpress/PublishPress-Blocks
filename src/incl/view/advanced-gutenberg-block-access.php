@@ -40,7 +40,8 @@ $advgb_blocks_user_roles = !empty( get_option('advgb_blocks_user_roles') ) ? get
 $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
 
 // Saved blocks (the ones detected by PP Blocks)
-$advgb_blocks_list = get_option( 'advgb_blocks_list' );
+// @TODO if advgb_blocks_list is empty, maybe refresh to display the blocks automatically (?)
+$advgb_blocks_list = !empty( get_option( 'advgb_blocks_list' ) ) ? get_option( 'advgb_blocks_list' ) : [];
 
 // Deactivate these blocks
 $advgb_blocks_deactivate_force = array(
