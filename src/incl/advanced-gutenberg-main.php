@@ -404,8 +404,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 );
             }
 
-            // Custom styles
-            if( $this->settingIsEnabled( 'enable_custom_styles' ) ) {
+            $currentScreen = get_current_screen();
+
+            // Don't load custom-styles.js in widgets.php and Theme Customizer > Widgets
+            if(
+                $this->settingIsEnabled( 'enable_custom_styles' )
+                && $currentScreen->id !== 'widgets'
+                && is_customize_preview() === false
+            ) {
                 wp_enqueue_script(
                     'advgb_custom_styles_script',
                     plugins_url('assets/blocks/custom-styles.js', dirname(__FILE__)),
@@ -416,7 +422,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             // Don't load post-sidebar.js in widgets.php and Theme Customizer > Widgets
-            $currentScreen = get_current_screen();
             if( $currentScreen->id !== 'widgets' && is_customize_preview() === false ) {
                 wp_enqueue_script(
                     'advgb_post_sidebar',
@@ -541,7 +546,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $icons                  = array();
             $icons['material']      = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
             $icons['material']      = json_decode($icons['material'], true);
-            $enable_custom_styles   = !isset($saved_settings['enable_custom_styles']) || $saved_settings['enable_custom_styles'] ? 1 : 0;
             $enable_advgb_blocks    = !isset($saved_settings['enable_advgb_blocks']) || $saved_settings['enable_advgb_blocks'] ? 1 : 0;
 
             global $wp_version;
@@ -563,7 +567,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'iconList' => $icons,
                 'registerEnabled' => get_option('users_can_register'),
                 'blocks_widget_support' => $blocks_widget_support,
-                'enable_custom_styles' => $enable_custom_styles,
                 'enable_advgb_blocks' => $enable_advgb_blocks,
             ));
 
