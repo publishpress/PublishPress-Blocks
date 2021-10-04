@@ -462,13 +462,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgbReusableBlocksAccess() {
 
-            // Make sure to run only in post and page edit (not in widgets.php; doesn't support reusable blocks!)
+            // Make sure to run only in pages where Gutenberg editor is executed
+            $screen = get_current_screen();
             if(
                 $this->settingIsEnabled( 'enable_reusable_blocks_access' )
-                && (
-                    'page' === get_current_screen()->id
-                    || 'post' === get_current_screen()->id
-                )
+                && $screen->is_block_editor
             ) {
 
                 $user_meta = get_userdata( get_current_user_id() );
