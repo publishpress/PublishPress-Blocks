@@ -462,7 +462,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgbReusableBlocksAccess() {
 
-            if( $this->settingIsEnabled( 'enable_reusable_blocks_access' ) ) {
+            // Make sure to run only in post edit and widgets.php!
+            if(
+                $this->settingIsEnabled( 'enable_reusable_blocks_access' )
+                && (
+                    'widgets' === get_current_screen()->id
+                    || 'post' === get_current_screen()->id
+                )
+            ) {
 
                 $user_meta = get_userdata( get_current_user_id() );
                 $reusable_blocks_user_roles = get_option( 'advgb_reusable_blocks_user_roles' );
