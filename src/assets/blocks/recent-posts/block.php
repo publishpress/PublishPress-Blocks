@@ -743,6 +743,15 @@ function advgbRegisterCustomFields() {
         )
     );
 
+    register_rest_field( 'page',
+        'featured_img',
+        array(
+            'get_callback'  => 'advgbGetFeaturedImage',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
 	// CPT fields
 	foreach ( advgbGetCPTs() as $cpt ) {
 		register_rest_field( $cpt, 'author' );
