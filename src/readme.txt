@@ -202,6 +202,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
   * Add: New ask for review system
   * Add: Design improvements for review system
   * Add: Setting to disable blocks from PublishPress Blocks plugin
+  * Add: Order option by "oldest to newest" to Woo Products block
   * Remove: developer_documentation.html
   * Fix: Console warnings and errors when Custom Styles is disabled
   * Fix: Undefined variable $saved_settings when checking for Gallery block lightbox settings in frontend

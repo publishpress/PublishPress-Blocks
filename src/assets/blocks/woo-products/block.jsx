@@ -289,6 +289,7 @@
                                 value={ `${orderBy}-${order}` }
                                 options={ [
                                     { label: __( 'Newest to oldest', 'advanced-gutenberg' ), value: 'date-desc' },
+                                    { label: __( 'Oldest to newest', 'advanced-gutenberg' ), value: 'date-asc' },
                                     { label: __( 'Price: high to low', 'advanced-gutenberg' ), value: 'price-desc' },
                                     { label: __( 'Price: low to high', 'advanced-gutenberg' ), value: 'price-asc' },
                                     { label: __( 'Highest Rating first', 'advanced-gutenberg' ), value: 'rating-desc' },
