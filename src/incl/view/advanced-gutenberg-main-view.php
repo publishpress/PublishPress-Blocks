@@ -160,40 +160,42 @@ if(!defined('ADVANCED_GUTENBERG_PRO')) {
             </div>
         <?php endforeach; ?>
 
-        <footer>
-            <div class="ppma-rating">
-                <a href="https://wordpress.org/support/plugin/advanced-gutenberg/reviews/#new-post" target="_blank" rel="noopener noreferrer" class="ag-footer-link">If you like <strong>PublishPress Blocks</strong> please leave us a <span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span> rating. Thank you!</a>
-            </div>
-            <hr>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="https://publishpress.com" target="_blank" rel="noopener noreferrer" title="About PublishPress Blocks" class="ag-footer-link">About</a>
-                    </li>
-                    <li>
-                        <a href="https://publishpress.com/knowledge-base/installation/" target="_blank" rel="noopener noreferrer" title="Documentation" class="ag-footer-link">Documentation</a>
-                    </li>
-                    <li>
-                        <a href="https://publishpress.com/contact" target="_blank" rel="noopener noreferrer" title="Contact the PublishPress team" class="ag-footer-link">Contact</a>
-                    </li>
-                    <li>
-                        <a href="https://twitter.com/publishpresscom" target="_blank" rel="noopener noreferrer" class="ag-footer-link">
-                            <span class="dashicons dashicons-twitter"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://facebook.com/publishpress" target="_blank" rel="noopener noreferrer" class="ag-footer-link">
-                            <span class="dashicons dashicons-facebook"></span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="ppma-pressshack-logo">
-                <a href="https://publishpress.com" target="_blank" rel="noopener noreferrer">
-                    <img src="<?php echo esc_url(plugins_url('assets/images/publishpress-logo.png', dirname(dirname(__FILE__)))) ?>"
-                     alt="<?php esc_html_e('PublishPress Blocks logo', 'advanced-gutenberg') ?>">
-                </a>
-            </div>
-        </footer>
+        <?php if( !isset($saved_settings['enable_pp_branding']) || $saved_settings['enable_pp_branding'] ) { ?>
+            <footer>
+                <div class="ppma-rating">
+                    <a href="https://wordpress.org/support/plugin/advanced-gutenberg/reviews/#new-post" target="_blank" rel="noopener noreferrer" class="ag-footer-link">If you like <strong>PublishPress Blocks</strong> please leave us a <span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span> rating. Thank you!</a>
+                </div>
+                <hr>
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="https://publishpress.com" target="_blank" rel="noopener noreferrer" title="About PublishPress Blocks" class="ag-footer-link">About</a>
+                        </li>
+                        <li>
+                            <a href="https://publishpress.com/knowledge-base/installation/" target="_blank" rel="noopener noreferrer" title="Documentation" class="ag-footer-link">Documentation</a>
+                        </li>
+                        <li>
+                            <a href="https://publishpress.com/contact" target="_blank" rel="noopener noreferrer" title="Contact the PublishPress team" class="ag-footer-link">Contact</a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/publishpresscom" target="_blank" rel="noopener noreferrer" class="ag-footer-link">
+                                <span class="dashicons dashicons-twitter"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://facebook.com/publishpress" target="_blank" rel="noopener noreferrer" class="ag-footer-link">
+                                <span class="dashicons dashicons-facebook"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="ppma-pressshack-logo">
+                    <a href="https://publishpress.com" target="_blank" rel="noopener noreferrer">
+                        <img src="<?php echo esc_url(plugins_url('assets/images/publishpress-logo.png', dirname(dirname(__FILE__)))) ?>"
+                         alt="<?php esc_html_e('PublishPress Blocks logo', 'advanced-gutenberg') ?>">
+                    </a>
+                </div>
+            </footer>
+        <?php } ?>
     </div>
 </div>
