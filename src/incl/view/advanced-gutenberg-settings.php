@@ -164,6 +164,18 @@ if (!isset($saved_settings['enable_advgb_blocks'])) {
                         </div>
                     </div>
                 </li>
+                <?php
+                // Pro
+                if(defined('ADVANCED_GUTENBERG_PRO')) {
+                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_setting' ) ) {
+                        echo PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting(
+                            'enable_pp_branding',
+                            __('Display PublishPress branding', 'advanced-gutenberg'),
+                            __('Display PublishPress logo and links in the footer of the admin pages', 'advanced-gutenberg')
+                        );
+                    }
+                }
+                ?>
                 <li class="ju-settings-option clearfix">
                     <div class="settings-option-wrapper clearfix">
                         <label for="gallery_lightbox"

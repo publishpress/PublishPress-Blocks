@@ -2079,6 +2079,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['enable_advgb_blocks'] = 0;
                 }
 
+                // Pro
+                if(defined('ADVANCED_GUTENBERG_PRO')) {
+                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_setting_set_value' ) ) {
+                        // Display branding
+                        $save_config['enable_pp_branding'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_pp_branding' );
+                    }
+                }
+
                 $save_config['gallery_lightbox_caption'] = $_POST['gallery_lightbox_caption'];
                 $save_config['google_api_key'] = $_POST['google_api_key'];
                 $save_config['blocks_spacing'] = $_POST['blocks_spacing'];
