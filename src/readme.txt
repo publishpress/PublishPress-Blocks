@@ -210,6 +210,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
   * Fix: Legacy widgets are not available from migrated default Profile to Block Access
   * Fix: Custom Styles javascript validation load
   * Fix: Featured image display in editor when post type is page for Content Display block
+  * Fix: window._wpLoadGutenbergEditor is deprecated
 
 = 2.10.5 - 14 Sep 2021 =
   * Remove: New ask for review system
