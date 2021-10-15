@@ -31,7 +31,7 @@ jQuery(document).ready(function ($) {
                 if($(this).find('a').length) {
                     // Link to: Media File or Attachment
                     galImage = $(this).find('a');
-                    if(galImage.attr('href').indexOf('.jpg') > 0 || galImage.attr('href').indexOf('.png') > 0 || galImage.attr('href').indexOf('.gif') > 0) {
+                    if(galImage.attr('href').indexOf('.jpg') > 0 || galImage.attr('href').indexOf('.png') > 0 || galImage.attr('href').indexOf('.gif') > 0 || galImage.attr('href').indexOf('.jpeg') > 0 || galImage.attr('href').indexOf('.webp') > 0) {
                         // Link to: Media File
                         return $(this).find('a').attr('href');
                     } else {
