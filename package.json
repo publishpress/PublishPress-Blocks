@@ -31,6 +31,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "reflux": "^6.4.1",
+    "set-value": "^4.0.1",
     "string-replace-loader": "^2.3.0",
     "trim-newlines": "^3.0.1",
     "uglify-js": "^3.12.8",
