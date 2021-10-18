@@ -196,7 +196,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 
 == Changelog ==
 
-= 2.11.0 - 15 Oct 2021 =
+= 2.11.0 - 18 Oct 2021 =
   * Add: Reusable Blocks Access by User Roles
   * Add: Setting to disable Reusable Blocks Access
   * Add: New ask for review system
@@ -211,6 +211,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
   * Fix: Custom Styles javascript validation load
   * Fix: Featured image display in editor when post type is page for Content Display block
   * Fix: window._wpLoadGutenbergEditor is deprecated
+  * Fix: Forced margin-bottom and margin-top when using Editor width different to inherit
 
 = 2.10.5 - 14 Sep 2021 =
   * Remove: New ask for review system
