@@ -5113,7 +5113,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_enqueue_script(
                     'advgbNewsletter_js',
                     plugins_url('assets/blocks/newsletter/frontend.js', dirname(__FILE__)),
-                    array('jquery'),
+                    array('jquery', 'wp-i18n'),
                     ADVANCED_GUTENBERG_VERSION
                 );
                 wp_localize_script('advgbNewsletter_js', 'advgbNewsletter', array('ajax_url' => admin_url('admin-ajax.php')));

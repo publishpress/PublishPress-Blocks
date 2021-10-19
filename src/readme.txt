@@ -214,6 +214,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
   * Fix: window._wpLoadGutenbergEditor is deprecated
   * Fix: Forced margin-bottom and margin-top when using Editor width different to inherit
   * Fix: Attribute in default configuration for Advanced List block
+  * Fix: frontend.js text from Newsletter block support translations
 
 = 2.10.5 - 14 Sep 2021 =
   * Remove: New ask for review system
