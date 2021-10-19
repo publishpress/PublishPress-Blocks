@@ -27671,7 +27671,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 setAttributes({ items: newItems });
-                console.log('test...');
             }
         }, {
             key: "render",

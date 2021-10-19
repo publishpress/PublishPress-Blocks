@@ -177,7 +177,6 @@
             } );
 
             setAttributes( { items: newItems } );
-            console.log('test...');
         }
 
         render() {
