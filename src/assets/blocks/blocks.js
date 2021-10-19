@@ -26417,10 +26417,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var headingBlocks = [];
                 var allBlocks = select('core/block-editor').getBlocks();
                 var filteredBlocks = allBlocks.filter(function (block) {
-                    return block.name === 'core/heading' || block.name === 'core/columns';
+                    return block.name === 'core/heading' || block.name === 'core/columns' || block.name === 'core/cover' || block.name === 'core/group';
                 });
                 filteredBlocks.map(function (block) {
-                    if (block.name === 'core/columns') {
+                    if (block.name === 'core/columns' || block.name === 'core/cover' || block.name === 'core/group') {
                         SummaryBlock.getHeadingBlocksFromColumns(block, headingBlocks);
                     } else {
                         headingBlocks.push(block);
@@ -26593,7 +26593,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
              * @returns array   array Heading blocks from block given
              */
             value: function getHeadingBlocksFromColumns(block, storeData) {
-                if (block.name === 'core/columns' || block.name === 'core/column') {
+                if (block.name === 'core/columns' || block.name === 'core/column' || block.name === 'core/cover' || block.name === 'core/group') {
                     block.innerBlocks.map(function (bl) {
                         SummaryBlock.getHeadingBlocksFromColumns(bl, storeData);
                         return bl;

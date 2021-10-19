@@ -204,6 +204,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
   * Add: Setting to disable blocks from PublishPress Blocks plugin
   * Add: Order option by "oldest to newest" to Woo Products block
   * Add: Support for incoming renewed Gallery Block to integrate with "Open galleries in lightbox"
+  * Add: Support for headings inside Cover and Group for Table of Contents block
   * Remove: developer_documentation.html
   * Remove: Google+ icon from Social Links block
   * Fix: Console warnings and errors when Custom Styles is disabled
