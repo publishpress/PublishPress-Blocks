@@ -196,7 +196,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 
 == Changelog ==
 
-= 2.11.0 - 18 Oct 2021 =
+= 2.11.0 - 19 Oct 2021 =
   * Add: Reusable Blocks Access by User Roles
   * Add: Setting to disable Reusable Blocks Access
   * Add: New ask for review system
@@ -205,6 +205,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
   * Add: Order option by "oldest to newest" to Woo Products block
   * Add: Support for incoming renewed Gallery Block to integrate with "Open galleries in lightbox"
   * Remove: developer_documentation.html
+  * Remove: Google+ icon from Social Links block
   * Fix: Console warnings and errors when Custom Styles is disabled
   * Fix: Undefined variable $saved_settings when checking for Gallery block lightbox settings in frontend
   * Fix: Legacy widgets are not available from migrated default Profile to Block Access
