@@ -3020,7 +3020,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             array(
                                 'title' => __('Text Size', 'advanced-gutenberg'),
                                 'type'  => 'number',
-                                'name'  => 'textSize',
+                                'name'  => 'fontSize',
                                 'min'   => 10,
                                 'max'   => 100,
                             ),

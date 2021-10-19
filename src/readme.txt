@@ -213,6 +213,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
   * Fix: Featured image display in editor when post type is page for Content Display block
   * Fix: window._wpLoadGutenbergEditor is deprecated
   * Fix: Forced margin-bottom and margin-top when using Editor width different to inherit
+  * Fix: Attribute in default configuration for Advanced List block
 
 = 2.10.5 - 14 Sep 2021 =
   * Remove: New ask for review system
