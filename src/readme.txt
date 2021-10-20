@@ -190,8 +190,6 @@ The Columns Manager block is based on the default Columns block in Gutenberg. Th
 
 [Click here for more on Gutenberg columns blocks](https://publishpress.com/knowledge-base/columns-manager-block/).
 
-
-
 = Does PublishPress Blocks slow down my website? =
 
 No. The impact is minimal because our plugin relies heavily on tools provided by the native Gutenberg editor.
