@@ -481,22 +481,49 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 $js = '
                 wp.domReady( function() {
-                	let subscribe_called = false;
-                	let exclude = ' . json_encode( $invisibleBlocks ) . ';
+                    console.log("init");
+
+                    let subscribe_called = false;
+                	let exclude          = ' . json_encode( $invisibleBlocks ) . ';
+
+                    advgbExcludeReusableBlocks( exclude );
+
                 	if ( exclude && exclude.length > 0 ) {
+                        console.log("exclude exists and is not empty");
+
+                        const getBlockList = () => wp.data.select( "core/editor" ).getBlocks();
+                        let blockList      = getBlockList();
+
                 		wp.data.subscribe( () => {
-                			const settings = wp.data.select( "core/block-editor" ).getSettings();
+
+                            // When loading post edit
+                            const settings = wp.data.select( "core/block-editor" ).getSettings();
                 			if ( settings.__experimentalReusableBlocks && settings.__experimentalReusableBlocks.length > 0 && !subscribe_called ) {
                 				subscribe_called = true;
-                				const blocks = wp.data.select("core").getEntityRecords( "postType", "wp_block", { exclude: exclude } );
-                				wp.data.dispatch("core/block-editor").updateSettings( { __experimentalReusableBlocks: blocks } );
+                				advgbExcludeReusableBlocks( exclude );
+                                console.log("starter");
                 			}
+
+                            // A new block is inserted or an exiosting one is modified
+                            const newBlockList      = getBlockList();
+                            const blockListChanged  = newBlockList !== blockList;
+                            blockList               = newBlockList;
+                            if ( blockListChanged ) {
+                                console.log("block inserted or content modified");
+                                getBlockList().forEach( function( blockType ){
+                                    if( blockType.name === "core/block" ) {
+                                        console.log( blockType.name );
+                                        advgbExcludeReusableBlocks( exclude );
+                                    }
+                                });
+                            }
                 		});
-
-                		const blocks = wp.data.select("core").getEntityRecords( "postType", "wp_block", { exclude: exclude } );
-                		wp.data.dispatch("core/block-editor").updateSettings( { __experimentalReusableBlocks: blocks } );
-
                 	}
+
+                    function advgbExcludeReusableBlocks( exclude ) {
+                        const blocks = wp.data.select("core").getEntityRecords( "postType", "wp_block", { exclude: exclude } );
+                        wp.data.dispatch("core/block-editor").updateSettings( { __experimentalReusableBlocks: blocks } );
+                    }
                 } );
                 ';
 
