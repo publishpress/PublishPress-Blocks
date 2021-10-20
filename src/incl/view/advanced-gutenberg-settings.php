@@ -45,11 +45,6 @@ if (!isset($saved_settings['enable_custom_styles'])) {
     $enable_custom_styles  = 'checked';
 }
 
-$enable_reusable_blocks_access = isset($saved_settings['enable_reusable_blocks_access']) && $saved_settings['enable_reusable_blocks_access'] ? 'checked' : '';
-if (!isset($saved_settings['enable_reusable_blocks_access'])) {
-    $enable_reusable_blocks_access  = 'checked';
-}
-
 $enable_advgb_blocks = isset($saved_settings['enable_advgb_blocks']) && $saved_settings['enable_advgb_blocks'] ? 'checked' : '';
 if (!isset($saved_settings['enable_advgb_blocks'])) {
     $enable_advgb_blocks  = 'checked';
@@ -89,29 +84,6 @@ if (!isset($saved_settings['enable_advgb_blocks'])) {
                                        id="enable_block_access"
                                        value="1"
                                     <?php echo esc_attr($enable_block_access) ?>
-                                />
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="enable_reusable_blocks_access"
-                               class="advgb_qtip ju-setting-label"
-                               data-qtip="<?php esc_attr_e(
-                                   'Enable reusable blocks access to deactivate reusable blocks by user role',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e('Enable reusable blocks access', 'advanced-gutenberg') ?>
-                        </label>
-                        <div class="ju-switch-button">
-                            <label class="switch">
-                                <input type="checkbox" name="enable_reusable_blocks_access"
-                                       id="enable_reusable_blocks_access"
-                                       value="1"
-                                    <?php echo esc_attr($enable_reusable_blocks_access) ?>
                                 />
                                 <span class="slider"></span>
                             </label>

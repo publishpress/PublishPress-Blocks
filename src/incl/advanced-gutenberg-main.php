@@ -439,9 +439,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
             }
 
-            // Exclude specific reusable blocks by user role
-    		$this->advgbReusableBlocksAccess();
-
             // Include needed JS libraries
             wp_enqueue_script('jquery-ui-tabs');
             wp_enqueue_script('jquery-ui-sortable');
@@ -453,82 +450,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_style('material_icon_font_custom');
             wp_enqueue_style('slick_style');
             wp_enqueue_style('slick_theme_style');
-        }
-
-        /**
-         * Output inline javascript to deactivate reusable blocks in Gutenberg
-         *
-         * @return void
-         */
-        public function advgbReusableBlocksAccess() {
-
-            // Make sure to run only in pages where Gutenberg editor is executed
-            $screen = get_current_screen();
-            if(
-                $this->settingIsEnabled( 'enable_reusable_blocks_access' )
-                && $screen->is_block_editor
-            ) {
-
-                $user_meta = get_userdata( get_current_user_id() );
-                $reusable_blocks_user_roles = get_option( 'advgb_reusable_blocks_user_roles' );
-
-                $invisibleBlocks = array();
-                foreach( $user_meta->roles as $role ) {
-                	if ( isset( $reusable_blocks_user_roles[ $role ] ) ) {
-                		$invisibleBlocks = array_merge( $invisibleBlocks, $reusable_blocks_user_roles[ $role ]['inactive_blocks'] );
-                	}
-                }
-
-                $js = '
-                wp.domReady( function() {
-                    console.log("init");
-
-                    let subscribe_called = false;
-                	let exclude          = ' . json_encode( $invisibleBlocks ) . ';
-
-                    advgbExcludeReusableBlocks( exclude );
-
-                	if ( exclude && exclude.length > 0 ) {
-                        console.log("exclude exists and is not empty");
-
-                        const getBlockList = () => wp.data.select( "core/editor" ).getBlocks();
-                        let blockList      = getBlockList();
-
-                		wp.data.subscribe( () => {
-
-                            // When loading post edit
-                            const settings = wp.data.select( "core/block-editor" ).getSettings();
-                			if ( settings.__experimentalReusableBlocks && settings.__experimentalReusableBlocks.length > 0 && !subscribe_called ) {
-                				subscribe_called = true;
-                				advgbExcludeReusableBlocks( exclude );
-                                console.log("starter");
-                			}
-
-                            // A new block is inserted or an exiosting one is modified
-                            const newBlockList      = getBlockList();
-                            const blockListChanged  = newBlockList !== blockList;
-                            blockList               = newBlockList;
-                            if ( blockListChanged ) {
-                                console.log("block inserted or content modified");
-                                getBlockList().forEach( function( blockType ){
-                                    if( blockType.name === "core/block" ) {
-                                        console.log( blockType.name );
-                                        advgbExcludeReusableBlocks( exclude );
-                                    }
-                                });
-                            }
-                		});
-                	}
-
-                    function advgbExcludeReusableBlocks( exclude ) {
-                        const blocks = wp.data.select("core").getEntityRecords( "postType", "wp_block", { exclude: exclude } );
-                        wp.data.dispatch("core/block-editor").updateSettings( { __experimentalReusableBlocks: blocks } );
-                    }
-                } );
-                ';
-
-                wp_add_inline_script( 'wp-blocks', $js );
-            }
         }
 
         /**
@@ -1700,13 +1621,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION
                 );
 
-                wp_register_script(
-                    'advgb_reusable_blocks_js',
-                    plugins_url('assets/js/reusable-blocks.js', dirname(__FILE__)),
-                    array('jquery', 'wp-i18n'),
-                    ADVANCED_GUTENBERG_VERSION
-                );
-
                 /*/ Pro
                 if(defined('ADVANCED_GUTENBERG_PRO')) {
                     if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_register_scripts_admin' ) ) {
@@ -2038,8 +1952,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $this->saveCaptchaSettings();
             } elseif (isset($_POST['block_data_export'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 $this->downloadBlockFormData();
-            } elseif (isset($_POST['advgb_reusable_blocks_access_save'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
-                $this->saveAdvgbReusableBlocksAccess();
             }
 
             return false;
@@ -2092,12 +2004,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['enable_custom_styles'] = 1;
                 } else {
                     $save_config['enable_custom_styles'] = 0;
-                }
-
-                if (isset($_POST['enable_reusable_blocks_access'])) {
-                    $save_config['enable_reusable_blocks_access'] = 1;
-                } else {
-                    $save_config['enable_reusable_blocks_access'] = 0;
                 }
 
                 if (isset($_POST['enable_advgb_blocks'])) {
@@ -2277,55 +2183,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=success' ) );
             } else {
                 wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=error' ) );
-            }
-        }
-
-        /**
-         * Save reusable blocks access by user role
-         *
-         * @return void
-         */
-        public function saveAdvgbReusableBlocksAccess() {
-
-            // Check nonce field exist
-            if ( !isset( $_POST['advgb_nonce_field'] ) ) {
-                return false;
-            }
-            // Verify nonce
-            if ( !wp_verify_nonce( $_POST['advgb_nonce_field'], 'advgb_nonce' ) ) {
-                return false;
-            }
-
-            if ( !current_user_can( 'administrator' ) ) {
-                return false;
-            }
-
-            $user_role         = $_POST['user_role_reusable_blocks'];
-            $blocks            = isset( $_POST['reusable_blocks'] ) ? $_POST['reusable_blocks'] : array();
-            $active_blocks     = array();
-            $inactive_blocks   = array();
-
-            if ( isset( $blocks ) && isset( $user_role ) && !empty( $user_role ) ) {
-
-                // Get all the reusable blocks
-                $reusable_blocks_list = $_POST['reusable_blocks_list'];
-
-                // Active blocks
-                $active_blocks = $blocks;
-
-                // Inactive blocks
-                $inactive_blocks = array_unique( array_values( array_diff( $reusable_blocks_list, $active_blocks ) ) );
-
-                // Define active and inactive blocks
-                $reusable_blocks_access_by_role                                  = get_option( 'advgb_reusable_blocks_user_roles');
-                $reusable_blocks_access_by_role[$user_role]['active_blocks']     = isset( $active_blocks ) ? $active_blocks : '';
-                $reusable_blocks_access_by_role[$user_role]['inactive_blocks']   = isset( $inactive_blocks ) ? $inactive_blocks : '';
-
-                update_option( 'advgb_reusable_blocks_user_roles', $reusable_blocks_access_by_role );
-
-                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=reusable-blocks-access&user_role_reusable_blocks=' . $user_role . '&save_access=success' ) );
-            } else {
-                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=reusable-blocks-access&user_role_reusable_blocks=' . $user_role . '&save_access=error' ) );
             }
         }
 
