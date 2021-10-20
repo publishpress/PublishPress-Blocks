@@ -1676,7 +1676,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_register_script(
                     'advgb_reusable_blocks_js',
                     plugins_url('assets/js/reusable-blocks.js', dirname(__FILE__)),
-                    array('jquery'),
+                    array('jquery', 'wp-i18n'),
                     ADVANCED_GUTENBERG_VERSION
                 );
 
