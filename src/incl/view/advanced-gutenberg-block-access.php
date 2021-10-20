@@ -40,7 +40,8 @@ $advgb_blocks_user_roles = !empty( get_option('advgb_blocks_user_roles') ) ? get
 $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
 
 // Saved blocks (the ones detected by PP Blocks)
-$advgb_blocks_list = get_option( 'advgb_blocks_list' );
+// @TODO if advgb_blocks_list is empty, maybe refresh to display the blocks automatically (?)
+$advgb_blocks_list = !empty( get_option( 'advgb_blocks_list' ) ) ? get_option( 'advgb_blocks_list' ) : [];
 
 // Deactivate these blocks
 $advgb_blocks_deactivate_force = array(
@@ -88,7 +89,7 @@ if ( !current_user_can('administrator') ) {
                     global $wp_roles;
                     $roles_list = $wp_roles->get_names();
                     foreach ($roles_list as $roles => $role_name) :
-                        $name = translate_user_role($name);
+                        $role_name = translate_user_role($role_name);
                         ?>
                         <option value="<?php echo esc_attr($roles); ?>" <?php selected( $current_user_role, $roles ); ?>>
                             <?php echo $role_name; ?>
@@ -144,7 +145,7 @@ if ( !current_user_can('administrator') ) {
                                         $advgb_block_status_ = empty( $advgb_blocks_user_roles['active_blocks'] ) || ( in_array($block['name'], $advgb_blocks_user_roles['active_blocks']) || !in_array($block['name'], $advgb_blocks_user_roles['inactive_blocks']) );
                                     }
                                     ?>
-                                    <li class="block-item ju-settings-option">
+                                    <li class="block-item block-access-item ju-settings-option">
                                         <label class="ju-setting-label">
                                             <span class="block-icon"<?php echo isset( $block['iconColor'] ) && !empty( $block['iconColor'] ) ? ' style="color:' . $block['iconColor'] . ';"' : ''; ?>>
                                                 <?php echo wp_specialchars_decode( $block['icon'], ENT_QUOTES ); ?>

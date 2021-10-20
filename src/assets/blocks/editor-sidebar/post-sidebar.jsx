@@ -94,23 +94,25 @@
                             ) ) }
                         </ButtonGroup>
                     </PanelBody>
-                    <PanelBody title={ __( 'Columns Visual Guide', 'advanced-gutenberg' ) } initialOpen={ false }>
-                        <div className="advgb-editor-sidebar-note">
-                            { __( 'Border to materialize PublishPress Blocks Column block', 'advanced-gutenberg' ) }
-                        </div>
-                        <ButtonGroup className="advgb-button-group">
-                            {VISUAL_GUIDE_SETTINGS.map((setting, index) => (
-                                <Button className="advgb-button"
-                                        key={ index }
-                                        isSecondary={ setting.value !== columnsVisualGuide }
-                                        isPrimary={ setting.value === columnsVisualGuide }
-                                        onClick={ () => this.onUpdateMeta( { advgb_blocks_columns_visual_guide: setting.value } ) }
-                                >
-                                    { setting.label }
-                                </Button>
-                            ) ) }
-                        </ButtonGroup>
-                    </PanelBody>
+                    { advgbBlocks.enable_advgb_blocks !== undefined && advgbBlocks.enable_advgb_blocks === '1' &&
+                        <PanelBody title={ __( 'Columns Visual Guide', 'advanced-gutenberg' ) } initialOpen={ false }>
+                            <div className="advgb-editor-sidebar-note">
+                                { __( 'Border to materialize PublishPress Blocks Column block', 'advanced-gutenberg' ) }
+                            </div>
+                            <ButtonGroup className="advgb-button-group">
+                                {VISUAL_GUIDE_SETTINGS.map((setting, index) => (
+                                    <Button className="advgb-button"
+                                            key={ index }
+                                            isSecondary={ setting.value !== columnsVisualGuide }
+                                            isPrimary={ setting.value === columnsVisualGuide }
+                                            onClick={ () => this.onUpdateMeta( { advgb_blocks_columns_visual_guide: setting.value } ) }
+                                    >
+                                        { setting.label }
+                                    </Button>
+                                ) ) }
+                            </ButtonGroup>
+                        </PanelBody>
+                    }
                 </Fragment>
             )
         }

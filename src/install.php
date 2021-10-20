@@ -45,7 +45,9 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
             'disable_wpautop' => 0,
             'enable_columns_visual_guide' => 1,
             'enable_block_access' => 1,
-            'enable_custom_styles' => 1
+            'enable_custom_styles' => 1,
+            'enable_advgb_blocks' => 1,
+            'enable_pp_branding' => 1,
         ));
     }
 
@@ -142,3 +144,4 @@ if ($advgb_current_version !== ADVANCED_GUTENBERG_VERSION) {
 // Delete deprecated options
 delete_option( 'advgb_jureview_installation_time' );
 delete_option( 'advgb_jufeedback_version' );
+delete_option( 'ppb_reviews_installed_on' ); // Added in 2.10.4 and disabled in 2.10.5

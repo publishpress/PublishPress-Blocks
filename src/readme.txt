@@ -1,9 +1,9 @@
 === Gutenberg Blocks - PublishPress Blocks Gutenberg Editor Plugin ===
-Contributors: publishpress, stevejburge, htmgarcia, advancedgutenbergg
+Contributors: publishpress, stevejburge, htmgarcia, rozroz, advancedgutenbergg
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8.1
-Stable tag: 2.10.5
+Stable tag: 2.11.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -239,25 +239,43 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 
 == Screenshots ==
 
-1. Content Display Block: PublishPress Blocks include Content Display, a powerful block to show posts, pages and custom post types in many beautiful layouts. 
+1. Content Display Block: PublishPress Blocks include Content Display, a powerful block to show posts, pages and custom post types in many beautiful layouts.
 2. Block permissions: PublishPress Blocks allows you to enable or disable blocks for some users.
 3. Column Layouts: PublishPress Blocks allows you to create flexible and beautiful layouts. You get 24 layouts options with different options for desktop, tablet and mobile devices.
-4. WooCommerce Products: PublishPress Blocks comes with a block to display your latest WooCommerce products. 
-5. Countdown Block: Create a customizable countdown block with a lot of settings, including date and time layout, font size, and more. 
+4. WooCommerce Products: PublishPress Blocks comes with a block to display your latest WooCommerce products.
+5. Countdown Block: Create a customizable countdown block with a lot of settings, including date and time layout, font size, and more.
 6. Content Blocks: PublishPress Blocks has multiple blocks to improve your content. You can create a Table of Contents block, build stylish lists with icons, and add attractive buttons with many design options.
 7. Image and Video Blocks: With the Advanced Video block, you can display remote or local videos with a customizable player and tons of options. The Advanced Image block: get more controls over your images with zoom, opacity, captions and much more.
-8. Email and Contact Form Blocks: You can create Contact form and also Newsletter sign-up blocks. 
+8. Email and Contact Form Blocks: You can create Contact form and also Newsletter sign-up blocks.
 9. Gutenberg Accordion Block: You can display content in an accordion layout. The content of each accordions can be visually edited.
-10. Gutenberg Info Box and Icon Blocks: The Info Box blocks allows you to show information with an icon, title and text with custom styles. 
-11. Google Maps: With the Map block you can display a Google Map with a custom icon, tooltip and description. 
+10. Gutenberg Info Box and Icon Blocks: The Info Box blocks allows you to show information with an icon, title and text with custom styles.
+11. Google Maps: With the Map block you can display a Google Map with a custom icon, tooltip and description.
 12. Count up blocks: The Count Up block is perfect for showcasing numbers in Gutenberg. You can use it show how many clients you have, how much money you have raised etc.
-13. Testimonial Blocks: The Testimonial Block allows you to add clients testimonials to Gutenberg. 
-14. Login & Register Gutenberg Block: This block allows to load a WordPress login or registration form inside Gutenberg. 
+13. Testimonial Blocks: The Testimonial Block allows you to add clients testimonials to Gutenberg.
+14. Login & Register Gutenberg Block: This block allows to load a WordPress login or registration form inside Gutenberg.
 15. Gallery Enhancements: PublishPress Blocks has major improvements for the default WordPress galleries, including lightbox displays, image captions, and better image navigation.
-16. Custom Styles for Blocks: You create custom CSS styles and making them available to end users. 
-
+16. Custom Styles for Blocks: You create custom CSS styles and making them available to end users.
 
 == Changelog ==
+
+= 2.11.0 - 20 Oct 2021 =
+  * Add: New ask for review system
+  * Add: Design improvements for review system
+  * Add: Setting to disable blocks from PublishPress Blocks plugin
+  * Add: Order option by "oldest to newest" to Woo Products block
+  * Add: Support for incoming renewed Gallery Block to integrate with "Open galleries in lightbox"
+  * Add: Support for headings inside Cover and Group for Table of Contents block
+  * Remove: developer_documentation.html
+  * Remove: Google+ icon from Social Links block
+  * Fix: Console warnings and errors when Custom Styles is disabled
+  * Fix: Undefined variable $saved_settings when checking for Gallery block lightbox settings in frontend
+  * Fix: Legacy widgets are not available from migrated default Profile to Block Access
+  * Fix: Custom Styles javascript validation load
+  * Fix: Featured image display in editor when post type is page for Content Display block
+  * Fix: window._wpLoadGutenbergEditor is deprecated
+  * Fix: Forced margin-bottom and margin-top when using Editor width different to inherit
+  * Fix: Attribute in default configuration for Advanced List block
+  * Fix: frontend.js text from Newsletter block support translations
 
 = 2.10.5 - 14 Sep 2021 =
   * Remove: New ask for review system
