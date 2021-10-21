@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, rozroz, advancedgutenbergg
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8.1
-Stable tag: 2.11.0
+Stable tag: 2.12.0b1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -257,6 +257,9 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 16. Custom Styles for Blocks: You create custom CSS styles and making them available to end users.
 
 == Changelog ==
+
+= 2.12.0 - 21 Oct 2021 =
+  * Fix: Hide inserter for Advanced Tab item to avoid inserting automatically tabs inside tabs
 
 = 2.11.0 - 20 Oct 2021 =
   * Add: New ask for review system
