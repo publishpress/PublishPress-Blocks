@@ -7073,7 +7073,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         "div",
                         { className: "advgb-accordions-wrapper" },
                         React.createElement(InnerBlocks, {
-                            template: [['advgb/accordion-item'], ['advgb/accordion-item']],
+                            template: [['advgb/accordion-item']],
                             templateLock: false,
                             allowedBlocks: ['advgb/accordion-item']
                         })
