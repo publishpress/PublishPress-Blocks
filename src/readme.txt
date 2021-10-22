@@ -261,6 +261,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 = 2.12.0 - 22 Oct 2021 =
   * Fix: Hide inserter for Advanced Tab item to avoid inserting automatically tabs inside tabs
   * Fix: One accordion item in new Advanced Accordion block insertions
+  * Fix: Genesis Custom Blocks (uses default block icon in Block Access)
 
 = 2.11.0 - 20 Oct 2021 =
   * Add: New ask for review system
