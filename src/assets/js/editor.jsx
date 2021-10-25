@@ -7,11 +7,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
         }
 
         let gutenberg_init_function = null;
-        if (typeof window._wpLoadGutenbergEditor !== 'undefined') {
-            // Using WP core Gutenberg
-            gutenberg_init_function = window._wpLoadGutenbergEditor;
-        } else if (typeof window._wpLoadBlockEditor !== 'undefined') {
-            // Using Gutenberg plugin
+        if (typeof window._wpLoadBlockEditor !== 'undefined') {
             gutenberg_init_function = window._wpLoadBlockEditor;
         }
 

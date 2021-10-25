@@ -175,10 +175,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 if($wp_version >= 5.8) {
                     add_action('admin_enqueue_scripts', array($this, 'addEditorAssetsWidgets'), 9999);
                     add_filter('block_editor_settings_all', array($this, 'replaceEditorSettings'), 9999);
-                    add_filter('block_categories_all', array($this, 'addAdvBlocksCategory'));
+
+                    if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                        add_filter('block_categories_all', array($this, 'addAdvBlocksCategory'));
+                    }
                 } else {
                     add_filter('block_editor_settings', array($this, 'replaceEditorSettings'), 9999);
-                    add_filter('block_categories', array($this, 'addAdvBlocksCategory'));
+
+                    if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                        add_filter('block_categories', array($this, 'addAdvBlocksCategory'));
+                    }
                 }
 
                 // Ajax
@@ -388,35 +394,50 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function enqueueEditorAssets()
         {
-            wp_enqueue_script(
-                'advgb_blocks',
-                plugins_url('assets/blocks/blocks.js', dirname(__FILE__)),
-                array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor', 'wp-plugins', 'wp-compose' ),
-                ADVANCED_GUTENBERG_VERSION,
-                true
-            );
+            if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                wp_enqueue_script(
+                    'advgb_blocks',
+                    plugins_url('assets/blocks/blocks.js', dirname(__FILE__)),
+                    array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor', 'wp-plugins', 'wp-compose' ),
+                    ADVANCED_GUTENBERG_VERSION,
+                    true
+                );
+            }
+
+            $currentScreen = get_current_screen();
+
+            // Don't load custom-styles.js in widgets.php and Theme Customizer > Widgets
+            if(
+                $this->settingIsEnabled( 'enable_custom_styles' )
+                && $currentScreen->id !== 'widgets'
+                && is_customize_preview() === false
+            ) {
+                wp_enqueue_script(
+                    'advgb_custom_styles_script',
+                    plugins_url('assets/blocks/custom-styles.js', dirname(__FILE__)),
+                    array( 'wp-blocks' ),
+                    ADVANCED_GUTENBERG_VERSION,
+                    true
+                );
+            }
 
             // Don't load post-sidebar.js in widgets.php and Theme Customizer > Widgets
-            $currentScreen = get_current_screen();
             if( $currentScreen->id !== 'widgets' && is_customize_preview() === false ) {
                 wp_enqueue_script(
                     'advgb_post_sidebar',
                     plugins_url('assets/blocks/post-sidebar.js', dirname(__FILE__)),
-                    array( 'advgb_blocks' ),
+                    array( 'wp-blocks' ),
                     ADVANCED_GUTENBERG_VERSION,
                     true
                 );
             }
 
             // Pro
-            if(defined('ADVANCED_GUTENBERG_PRO')) {
+            if( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                 if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_scripts_editor' ) ) {
                     PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_scripts_editor();
                 }
             }
-
-            // Exclude specific reusable blocks by user role
-    		$this->advgbReusableBlocksAccess();
 
             // Include needed JS libraries
             wp_enqueue_script('jquery-ui-tabs');
@@ -429,50 +450,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_style('material_icon_font_custom');
             wp_enqueue_style('slick_style');
             wp_enqueue_style('slick_theme_style');
-        }
-
-        /**
-         * Output inline javascript to deactivate reusable blocks in Gutenberg
-         *
-         * @return void
-         */
-        public function advgbReusableBlocksAccess() {
-
-            if( $this->settingIsEnabled( 'enable_reusable_blocks_access' ) ) {
-
-                $user_meta = get_userdata( get_current_user_id() );
-                $reusable_blocks_user_roles = get_option( 'advgb_reusable_blocks_user_roles' );
-
-                $invisibleBlocks = array();
-                foreach( $user_meta->roles as $role ) {
-                	if ( isset( $reusable_blocks_user_roles[ $role ] ) ) {
-                		$invisibleBlocks = array_merge( $invisibleBlocks, $reusable_blocks_user_roles[ $role ]['inactive_blocks'] );
-                	}
-                }
-
-                $js = '
-                wp.domReady( function() {
-                	let subscribe_called = false;
-                	let exclude = ' . json_encode( $invisibleBlocks ) . ';
-                	if ( exclude && exclude.length > 0 ) {
-                		wp.data.subscribe( () => {
-                			const settings = wp.data.select( "core/block-editor" ).getSettings();
-                			if ( settings.__experimentalReusableBlocks && settings.__experimentalReusableBlocks.length > 0 && !subscribe_called ) {
-                				subscribe_called = true;
-                				const blocks = wp.data.select("core").getEntityRecords( "postType", "wp_block", { exclude: exclude } );
-                				wp.data.dispatch("core/block-editor").updateSettings( { __experimentalReusableBlocks: blocks } );
-                			}
-                		});
-
-                		const blocks = wp.data.select("core").getEntityRecords( "postType", "wp_block", { exclude: exclude } );
-                		wp.data.dispatch("core/block-editor").updateSettings( { __experimentalReusableBlocks: blocks } );
-
-                	}
-                } );
-                ';
-
-                wp_add_inline_script( 'advgb_blocks', $js );
-            }
         }
 
         /**
@@ -505,7 +482,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $advgb_blocks_vars['original_settings'] = self::$original_block_editor_settings;
             $advgb_blocks_vars['ajaxurl'] = admin_url('admin-ajax.php');
             $advgb_blocks_vars['nonce'] = wp_create_nonce('advgb_update_blocks_list');
-            wp_localize_script('advgb_blocks', 'advgb_blocks_vars', $advgb_blocks_vars);
+            wp_localize_script('wp-blocks', 'advgb_blocks_vars', $advgb_blocks_vars);
 
             // Set variable needed by blocks editor
             $avatarHolder           = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', ADVANCED_GUTENBERG_PLUGIN);
@@ -522,10 +499,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $icons                  = array();
             $icons['material']      = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
             $icons['material']      = json_decode($icons['material'], true);
-            $enable_custom_styles   = !isset($saved_settings['enable_custom_styles']) || $saved_settings['enable_custom_styles'] ? true : false;
+            $enable_advgb_blocks    = !isset($saved_settings['enable_advgb_blocks']) || $saved_settings['enable_advgb_blocks'] ? 1 : 0;
 
             global $wp_version;
-            $blocks_widget_support = ( $wp_version >= 5.8 ) ? true : false;
+            $blocks_widget_support = ( $wp_version >= 5.8 ) ? 1 : 0;
 
             wp_localize_script('wp-blocks', 'advgbBlocks', array(
                 'color' => $blocks_icon_color,
@@ -543,7 +520,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'iconList' => $icons,
                 'registerEnabled' => get_option('users_can_register'),
                 'blocks_widget_support' => $blocks_widget_support,
-                'enable_custom_styles' => $enable_custom_styles,
+                'enable_advgb_blocks' => $enable_advgb_blocks,
             ));
 
             // Setup default config data for blocks
@@ -569,7 +546,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             wp_enqueue_style('dashicons');
 
-            if (is_admin()) {
+            if ( is_admin() && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                 wp_enqueue_style(
                     'advgb_blocks_styles',
                     plugins_url('assets/css/blocks.css', dirname(__FILE__)),
@@ -590,6 +567,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     }
                 }
             }
+
+            wp_enqueue_style(
+                'advgb_editor_styles',
+                plugins_url('assets/css/editor.css', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
 
             if (!function_exists('advgbAddScriptAttributes')) {
                 /**
@@ -666,14 +650,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgbDisableBlocksWidgetAreas()
         {
-            wp_add_inline_script(
-                'advgb_blocks',
-                'wp.domReady( function () {
-                    if ( wp.data.select("core/blocks").getBlockType( "advgb/summary" ) ) {
-                        wp.blocks.unregisterBlockType( "advgb/summary" );
-                    }
-                } );'
-            );
+            if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                wp_add_inline_script(
+                    'advgb_blocks',
+                    'wp.domReady( function () {
+                        if ( wp.data.select("core/blocks").getBlockType( "advgb/summary" ) ) {
+                            wp.blocks.unregisterBlockType( "advgb/summary" );
+                        }
+                    } );'
+                );
+            }
         }
 
         /**
@@ -1634,12 +1620,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array('jquery'),
                     ADVANCED_GUTENBERG_VERSION
                 );
-                wp_register_script(
-                    'advgb_reusable_blocks_js',
-                    plugins_url('assets/js/reusable-blocks.js', dirname(__FILE__)),
-                    array('jquery'),
-                    ADVANCED_GUTENBERG_VERSION
-                );
 
                 /*/ Pro
                 if(defined('ADVANCED_GUTENBERG_PRO')) {
@@ -1652,7 +1632,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
                     wp_add_inline_style(
                         'dashicons',
-                        'body:not(.advgb-editor-width-default) #editor .edit-post-visual-editor__post-title-wrapper > .wp-block,body:not(.advgb-editor-width-default) #editor .block-editor-writing-flow > .block-editor-block-list__layout > .wp-block{max-width:' . $saved_settings['editor_width'] . '%;width:' . $saved_settings['editor_width'] . '%;margin:0 auto}'
+                        'body:not(.advgb-editor-width-default) #editor .edit-post-visual-editor__post-title-wrapper > .wp-block,body:not(.advgb-editor-width-default) #editor .block-editor-writing-flow > .block-editor-block-list__layout > .wp-block{max-width:' . $saved_settings['editor_width'] . '%;width:' . $saved_settings['editor_width'] . '%;margin-left:auto;margin-right:auto}'
                     );
                 }
             }
@@ -1665,17 +1645,19 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function registerStylesScriptsFrontend()
         {
-            wp_register_script(
-                'advgb_blocks_frontend_scripts',
-                plugins_url('assets/blocks/frontend.js', dirname(__FILE__)),
-                array(),
-                ADVANCED_GUTENBERG_VERSION
-            );
+            if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                wp_register_script(
+                    'advgb_blocks_frontend_scripts',
+                    plugins_url('assets/blocks/frontend.js', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
+                );
 
-            // Pro
-            if(defined('ADVANCED_GUTENBERG_PRO')) {
-                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_register_scripts_frontend' ) ) {
-                    PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_register_scripts_frontend();
+                // Pro
+                if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_register_scripts_frontend' ) ) {
+                        PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_register_scripts_frontend();
+                    }
                 }
             }
 
@@ -1701,18 +1683,21 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'material_icon_font_custom',
                 plugins_url('assets/css/fonts/material-icons-custom.min.css', dirname(__FILE__))
             );
-            wp_register_style(
-                'advgb_columns_styles',
-                plugins_url('assets/css/columns.css', dirname(__FILE__)),
-                array(),
-                ADVANCED_GUTENBERG_VERSION
-            );
-            wp_register_style(
-                'advgb_recent_posts_styles',
-                plugins_url('assets/css/recent-posts.css', dirname(__FILE__)),
-                array(),
-                ADVANCED_GUTENBERG_VERSION
-            );
+
+            if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                wp_register_style(
+                    'advgb_columns_styles',
+                    plugins_url('assets/css/columns.css', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+                wp_register_style(
+                    'advgb_recent_posts_styles',
+                    plugins_url('assets/css/recent-posts.css', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+            }
 
             wp_register_script(
                 'colorbox_js',
@@ -1893,7 +1878,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 // Global settings as javascript variables
                 wp_localize_script(
-                    'advgb_blocks',
+                    'wp-blocks',
                     'advg_settings',
                     [
                         'editor_width_global'                   => $editorWidthGlobal,
@@ -1967,8 +1952,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $this->saveCaptchaSettings();
             } elseif (isset($_POST['block_data_export'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 $this->downloadBlockFormData();
-            } elseif (isset($_POST['advgb_reusable_blocks_access_save'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
-                $this->saveAdvgbReusableBlocksAccess();
             }
 
             return false;
@@ -2030,11 +2013,18 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['enable_custom_styles'] = 0;
                 }
 
-                if (isset($_POST['enable_reusable_blocks_access'])) {
-                    $save_config['enable_reusable_blocks_access'] = 1;
+                if (isset($_POST['enable_advgb_blocks'])) {
+                    $save_config['enable_advgb_blocks'] = 1;
                 } else {
-                    $save_config['enable_reusable_blocks_access'] = 0;
+                    $save_config['enable_advgb_blocks'] = 0;
+                }
 
+                // Pro
+                if(defined('ADVANCED_GUTENBERG_PRO')) {
+                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_setting_set_value' ) ) {
+                        // Display branding
+                        $save_config['enable_pp_branding'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_pp_branding' );
+                    }
                 }
 
                 $save_config['gallery_lightbox_caption'] = $_POST['gallery_lightbox_caption'];
@@ -2200,55 +2190,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=success' ) );
             } else {
                 wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=error' ) );
-            }
-        }
-
-        /**
-         * Save reusable blocks access by user role
-         *
-         * @return void
-         */
-        public function saveAdvgbReusableBlocksAccess() {
-
-            // Check nonce field exist
-            if ( !isset( $_POST['advgb_nonce_field'] ) ) {
-                return false;
-            }
-            // Verify nonce
-            if ( !wp_verify_nonce( $_POST['advgb_nonce_field'], 'advgb_nonce' ) ) {
-                return false;
-            }
-
-            if ( !current_user_can( 'administrator' ) ) {
-                return false;
-            }
-
-            $user_role         = $_POST['user_role_reusable_blocks'];
-            $blocks            = isset( $_POST['reusable_blocks'] ) ? $_POST['reusable_blocks'] : array();
-            $active_blocks     = array();
-            $inactive_blocks   = array();
-
-            if ( isset( $blocks ) && isset( $user_role ) && !empty( $user_role ) ) {
-
-                // Get all the reusable blocks
-                $reusable_blocks_list = $_POST['reusable_blocks_list'];
-
-                // Active blocks
-                $active_blocks = $blocks;
-
-                // Inactive blocks
-                $inactive_blocks = array_unique( array_values( array_diff( $reusable_blocks_list, $active_blocks ) ) );
-
-                // Define active and inactive blocks
-                $reusable_blocks_access_by_role                                  = get_option( 'advgb_reusable_blocks_user_roles');
-                $reusable_blocks_access_by_role[$user_role]['active_blocks']     = isset( $active_blocks ) ? $active_blocks : '';
-                $reusable_blocks_access_by_role[$user_role]['inactive_blocks']   = isset( $inactive_blocks ) ? $inactive_blocks : '';
-
-                update_option( 'advgb_reusable_blocks_user_roles', $reusable_blocks_access_by_role );
-
-                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=reusable-blocks-access&user_role_reusable_blocks=' . $user_role . '&save_access=success' ) );
-            } else {
-                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=reusable-blocks-access&user_role_reusable_blocks=' . $user_role . '&save_access=error' ) );
             }
         }
 
@@ -2970,7 +2911,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             array(
                                 'title' => __('Text Size', 'advanced-gutenberg'),
                                 'type'  => 'number',
-                                'name'  => 'textSize',
+                                'name'  => 'fontSize',
                                 'min'   => 10,
                                 'max'   => 100,
                             ),
@@ -4880,7 +4821,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 );
 
                 // Pro
-                if(defined('ADVANCED_GUTENBERG_PRO')) {
+                if( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                     if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_widgets_customizer_frontend' ) ) {
                         PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_widgets_customizer_frontend();
                     }
@@ -4891,9 +4832,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             if (strpos($content, 'wp-block-gallery') !== false) {
-                if (!$saved_settings) {
-                    $saved_settings = get_option('advgb_settings');
-                }
+                $saved_settings = get_option('advgb_settings');
 
                 if ($saved_settings['gallery_lightbox']) {
                     wp_enqueue_style('colorbox_style');
@@ -5122,7 +5061,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_enqueue_script(
                     'advgbNewsletter_js',
                     plugins_url('assets/blocks/newsletter/frontend.js', dirname(__FILE__)),
-                    array('jquery'),
+                    array('jquery', 'wp-i18n'),
                     ADVANCED_GUTENBERG_VERSION
                 );
                 wp_localize_script('advgbNewsletter_js', 'advgbNewsletter', array('ajax_url' => admin_url('admin-ajax.php')));
@@ -5180,7 +5119,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             // Pro
-            if(defined('ADVANCED_GUTENBERG_PRO')) {
+            if( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                 if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_scripts_frontend' ) ) {
                     PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_scripts_frontend($content);
                 }
@@ -5524,7 +5463,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             // Load common CSS
-            if (in_array($blockName, $availableBlocks)) {
+            if ( in_array( $blockName, $availableBlocks ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                 wp_enqueue_style(
                     'advgb_blocks_styles',
                     plugins_url('assets/css/blocks.css', dirname(__FILE__)),

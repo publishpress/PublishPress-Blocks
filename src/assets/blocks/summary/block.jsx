@@ -119,7 +119,10 @@ import latinize from "latinize";
          */
         static getHeadingBlocksFromColumns( block, storeData )
         {
-            if ( block.name === 'core/columns' || block.name === 'core/column' ) {
+            if (
+                block.name === 'core/columns' || block.name === 'core/column'
+                || block.name === 'core/cover' || block.name === 'core/group'
+            ) {
                 block.innerBlocks.map(function ( bl ) {
                     SummaryBlock.getHeadingBlocksFromColumns( bl, storeData );
                     return bl;
@@ -149,9 +152,12 @@ import latinize from "latinize";
             let headingDatas = [];
             let headingBlocks = [];
             const allBlocks = select( 'core/block-editor' ).getBlocks();
-            const filteredBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' || block.name === 'core/columns' ) );
+            const filteredBlocks = allBlocks.filter( ( block ) => (
+                block.name === 'core/heading' || block.name === 'core/columns'
+                || block.name === 'core/cover' || block.name === 'core/group'
+            ) );
             filteredBlocks.map(function ( block ) {
-                if (block.name === 'core/columns') {
+                if (block.name === 'core/columns' || block.name === 'core/cover' || block.name === 'core/group') {
                     SummaryBlock.getHeadingBlocksFromColumns( block, headingBlocks );
                 } else {
                     headingBlocks.push( block );
