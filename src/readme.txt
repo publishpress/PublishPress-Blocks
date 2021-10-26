@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, rozroz, advancedgutenbergg
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8.1
-Stable tag: 2.12.0b1
+Stable tag: 2.11.1b1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -258,7 +258,8 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 
 == Changelog ==
 
-= 2.12.0 - 22 Oct 2021 =
+= 2.11.1 - 26 Oct 2021 =
+  * Add: Ask for review library through composer
   * Fix: Hide inserter for Advanced Tab item to avoid inserting automatically tabs inside tabs
   * Fix: One accordion item in new Advanced Accordion block insertions
   * Fix: Don't allow to insert Advanced Tabs and Tab items blocks inside Tabs
