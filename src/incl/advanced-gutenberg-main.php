@@ -486,21 +486,23 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     let subscribe_called = false;
                 	let exclude          = ' . json_encode( $invisibleBlocks ) . ';
 
-                    advgbExcludeReusableBlocks( exclude );
-
                 	if ( exclude && exclude.length > 0 ) {
                         console.log("exclude exists and is not empty");
+                        let _allowedBlocks = null;
 
-                        const getBlockList = () => wp.data.select( "core/editor" ).getBlocks();
+						const getBlockList = () => wp.data.select( "core/block-editor" ).getBlocks();
                         let blockList      = getBlockList();
 
                 		wp.data.subscribe( () => {
+							if(!_allowedBlocks || _allowedBlocks.length === 0){
+								_allowedBlocks = wp.data.select("core").getEntityRecords( "postType", "wp_block", { exclude: exclude } );
+							}
 
                             // When loading post edit
                             const settings = wp.data.select( "core/block-editor" ).getSettings();
                 			if ( settings.__experimentalReusableBlocks && settings.__experimentalReusableBlocks.length > 0 && !subscribe_called ) {
                 				subscribe_called = true;
-                				advgbExcludeReusableBlocks( exclude );
+                				advgbAllowReusableBlocks( _allowedBlocks );
                                 console.log("starter");
                 			}
 
@@ -510,20 +512,21 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             blockList               = newBlockList;
                             if ( blockListChanged ) {
                                 console.log("block inserted or content modified");
-                                getBlockList().forEach( function( blockType ){
+                                newBlockList.forEach( function( blockType ){
                                     if( blockType.name === "core/block" ) {
                                         console.log( blockType.name );
-                                        advgbExcludeReusableBlocks( exclude );
+                                        advgbAllowReusableBlocks( _allowedBlocks );
                                     }
                                 });
                             }
                 		});
                 	}
 
-                    function advgbExcludeReusableBlocks( exclude ) {
-                        const blocks = wp.data.select("core").getEntityRecords( "postType", "wp_block", { exclude: exclude } );
-                        wp.data.dispatch("core/block-editor").updateSettings( { __experimentalReusableBlocks: blocks } );
+                    function advgbAllowReusableBlocks( allowedBlocks ) {
+                        wp.data.dispatch("core/block-editor").updateSettings( { __experimentalReusableBlocks: [] } );
+                        wp.data.dispatch("core/block-editor").updateSettings( { __experimentalReusableBlocks: allowedBlocks } );
                     }
+
                 } );
                 ';
 
