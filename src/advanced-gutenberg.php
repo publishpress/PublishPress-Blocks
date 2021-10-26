@@ -49,5 +49,8 @@ if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
 // Code shared with Pro version
 require_once __DIR__ . '/init.php';
 
+// Vendor
+require_once __DIR__ . '/vendor/autoload.php';
+
 // Ask for review
 require_once __DIR__ . '/review/review-request.php';
