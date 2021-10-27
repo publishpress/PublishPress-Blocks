@@ -20,6 +20,11 @@
         padding: 0 16px;
       }
     }
+
+    // Hide inserter for Adv Tab item to avoid inserting tabs inside tabs
+    .advgb-tab-body-wrapper .block-editor-inner-blocks .block-list-appender {
+      display: none !important;
+    }
 }
 
 body:not(.advgb-editor-width-default) {

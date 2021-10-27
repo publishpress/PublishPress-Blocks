@@ -7073,7 +7073,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         "div",
                         { className: "advgb-accordions-wrapper" },
                         React.createElement(InnerBlocks, {
-                            template: [['advgb/accordion-item'], ['advgb/accordion-item']],
+                            template: [['advgb/accordion-item']],
                             templateLock: false,
                             allowedBlocks: ['advgb/accordion-item']
                         })
@@ -13035,6 +13035,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     uniqueID = attributes.uniqueID;
 
 
+                var ALLOWED_BLOCKS = wp.blocks.getBlockTypes().map(function (block) {
+                    return block.name;
+                }).filter(function (blockName) {
+                    return blockName !== 'advgb/adv-tabs' && blockName !== 'advgb/tab';
+                });
+
                 var tabClassName = ["advgb-tab-" + uniqueID, 'advgb-tab-body'].filter(Boolean).join(' ');
                 return React.createElement(
                     Fragment,
@@ -13048,7 +13054,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         },
                         React.createElement(InnerBlocks, {
                             template: [['core/paragraph']],
-                            templateLock: false
+                            templateLock: false,
+                            allowedBlocks: ALLOWED_BLOCKS
                         })
                     )
                 );
