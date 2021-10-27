@@ -258,7 +258,7 @@ All of these are good plugins. PublishPress Blocks has particular strengths with
 
 == Changelog ==
 
-= 2.11.1 - 26 Oct 2021 =
+= 2.11.1 - 27 Oct 2021 =
   * Add: Ask for review library through composer
   * Fix: Hide inserter for Advanced Tab item to avoid inserting automatically tabs inside tabs
   * Fix: One accordion item in new Advanced Accordion block insertions
