@@ -263,7 +263,6 @@ All of these are good Gutenberg block plugins. PublishPress Blocks has particula
   * Fix: One accordion item in new Advanced Accordion block insertions
   * Fix: Don't allow to insert Advanced Tabs and Tab items blocks inside Tabs
 
-
 = 2.11.0 - 20 Oct 2021 =
   * Add: New ask for review system
   * Add: Design improvements for review system
