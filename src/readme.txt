@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8.1
-Stable tag: 2.11.1
+Stable tag: 2.12.0b1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -252,6 +252,10 @@ All of these are good Gutenberg block plugins. PublishPress Blocks has particula
 16. Custom Styles for Blocks: You create custom CSS styles and make them available to end users.
 
 == Changelog ==
+
+= 2.12.0 - 2 Nov 2021 =
+  * Fix: Genesis Custom Blocks compatibility
+  * Fix: Save icon type function in advgb_blocks_list option
 
 = 2.11.1 - 27 Oct 2021 =
   * Add: Ask for review library through composer
