@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "publishpress/wordpress-reviews",
-            "version": "v1.1.8",
+            "version": "v1.1.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/wordpress-reviews.git",
-                "reference": "cdb61a0367975f1daf10e42f52eda1cf291909a5"
+                "reference": "a257ebca0a72a7a3f59e6ed831752ab17f016983"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/wordpress-reviews/zipball/cdb61a0367975f1daf10e42f52eda1cf291909a5",
-                "reference": "cdb61a0367975f1daf10e42f52eda1cf291909a5",
+                "url": "https://api.github.com/repos/publishpress/wordpress-reviews/zipball/a257ebca0a72a7a3f59e6ed831752ab17f016983",
+                "reference": "a257ebca0a72a7a3f59e6ed831752ab17f016983",
                 "shasum": ""
             },
             "require": {
@@ -55,9 +55,9 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/wordpress-reviews/issues",
-                "source": "https://github.com/publishpress/wordpress-reviews/tree/v1.1.8"
+                "source": "https://github.com/publishpress/wordpress-reviews/tree/v1.1.12"
             },
-            "time": "2021-10-21T21:57:05+00:00"
+            "time": "2021-11-12T18:57:53+00:00"
         }
     ],
     "packages-dev": [],
