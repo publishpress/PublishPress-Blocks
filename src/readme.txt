@@ -253,7 +253,8 @@ All of these are good Gutenberg block plugins. PublishPress Blocks has particula
 
 == Changelog ==
 
-= 2.12.0 - 2 Nov 2021 =
+= 2.12.0 - 15 Nov 2021 =
+  * Add: WordPress Reviews version 1.1.12
   * Fix: Genesis Custom Blocks compatibility
   * Fix: Save icon type function in advgb_blocks_list option
 
