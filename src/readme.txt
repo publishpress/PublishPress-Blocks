@@ -232,6 +232,10 @@ All of these are good Gutenberg block plugins. PublishPress Blocks has particula
 * Custom CSS styles for your blocks
 * Block layout and page-builder features
 
+= Can I share a link to install PublishPress Blocks? =
+
+Yes, we use the phrase "publishpress-ppcore-install" to share install links. You will see that text included in the links from other PublishPress plugins.
+
 == Screenshots ==
 
 1. Content Display Block: PublishPress Blocks include Content Display, a powerful block to show posts, pages and custom post types in many beautiful layouts.
