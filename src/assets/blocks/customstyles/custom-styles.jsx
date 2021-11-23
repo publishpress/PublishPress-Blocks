@@ -20,6 +20,7 @@
         'core/image',
     ];
 
+
     // Register custom styles to blocks attributes
     addFilter( 'blocks.registerBlockType', 'advgb/registerCustomStyleClass', function ( settings ) {
         if (SUPPORTED_BLOCKS.includes( settings.name )) {

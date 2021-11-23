@@ -269,7 +269,7 @@
                     </InspectorControls>
                     <div className="advgb-accordions-wrapper">
                         <InnerBlocks
-                            template={ [ ['advgb/accordion-item'], ['advgb/accordion-item'] ] }
+                            template={ [ ['advgb/accordion-item'] ] }
                             templateLock={ false }
                             allowedBlocks={ [ 'advgb/accordion-item' ] }
                         />

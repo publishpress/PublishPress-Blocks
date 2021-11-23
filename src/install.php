@@ -43,7 +43,11 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
             'gallery_lightbox_caption' => '1',
             'blocks_icon_color' => '#5952de',
             'disable_wpautop' => 0,
-            'enable_columns_visual_guide' => 1
+            'enable_columns_visual_guide' => 1,
+            'enable_block_access' => 1,
+            'enable_custom_styles' => 1,
+            'enable_advgb_blocks' => 1,
+            'enable_pp_branding' => 1,
         ));
     }
 
@@ -137,14 +141,8 @@ if ($advgb_current_version !== ADVANCED_GUTENBERG_VERSION) {
     update_option('advgb_version', ADVANCED_GUTENBERG_VERSION);
 }
 
-// Delete custom_styles.css if exists (created in 2.4.4 and older)
-require_once ABSPATH . 'wp-admin/includes/file.php';
-
-WP_Filesystem();
-global $wp_filesystem;
-$custom_styles_dir  = wp_upload_dir();
-$custom_styles_file = $custom_styles_dir['basedir'] . '/advgb/custom_styles.css';
-
-if ($wp_filesystem->exists($custom_styles_file)) {
-    $wp_filesystem->delete($custom_styles_file);
-}
+// Delete deprecated options
+delete_option( 'advgb_jureview_installation_time' );
+delete_option( 'advgb_jufeedback_version' );
+delete_option( 'ppb_reviews_installed_on' ); // Added in 2.10.4 and disabled in 2.10.5
+delete_option( 'advgb_reviews_installed_on' ); // Added in 2.11.0 and disabled in 2.11.1

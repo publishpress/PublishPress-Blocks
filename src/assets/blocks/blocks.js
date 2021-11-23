@@ -7073,7 +7073,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         "div",
                         { className: "advgb-accordions-wrapper" },
                         React.createElement(InnerBlocks, {
-                            template: [['advgb/accordion-item'], ['advgb/accordion-item']],
+                            template: [['advgb/accordion-item']],
                             templateLock: false,
                             allowedBlocks: ['advgb/accordion-item']
                         })
@@ -13035,6 +13035,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     uniqueID = attributes.uniqueID;
 
 
+                var ALLOWED_BLOCKS = wp.blocks.getBlockTypes().map(function (block) {
+                    return block.name;
+                }).filter(function (blockName) {
+                    return blockName !== 'advgb/adv-tabs' && blockName !== 'advgb/tab';
+                });
+
                 var tabClassName = ["advgb-tab-" + uniqueID, 'advgb-tab-body'].filter(Boolean).join(' ');
                 return React.createElement(
                     Fragment,
@@ -13048,7 +13054,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         },
                         React.createElement(InnerBlocks, {
                             template: [['core/paragraph']],
-                            templateLock: false
+                            templateLock: false,
+                            allowedBlocks: ALLOWED_BLOCKS
                         })
                     )
                 );
@@ -17001,139 +17008,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         save: AdvCountUpSave
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
-
-/***/ }),
-
-/***/ "./src/assets/blocks/customstyles/custom-styles.jsx":
-/*!**********************************************************!*\
-  !*** ./src/assets/blocks/customstyles/custom-styles.jsx ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-(function (wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose) {
-    wpBlockEditor = wp.blockEditor || wp.editor;
-    var addFilter = wpHooks.addFilter;
-    var __ = wpI18n.__;
-    var hasBlockSupport = wpBlocks.hasBlockSupport;
-    var _wpBlockEditor = wpBlockEditor,
-        InspectorControls = _wpBlockEditor.InspectorControls;
-    var SelectControl = wpComponents.SelectControl;
-    var createHigherOrderComponent = wpCompose.createHigherOrderComponent;
-
-
-    var SUPPORTED_BLOCKS = ['core/paragraph', 'core/heading', 'core/list', 'core/code', 'core/preformatted', 'core/table', 'core/columns', 'core/column', 'core/group', 'core/image'];
-
-    // Register custom styles to blocks attributes
-    addFilter('blocks.registerBlockType', 'advgb/registerCustomStyleClass', function (settings) {
-        if (SUPPORTED_BLOCKS.includes(settings.name)) {
-            settings.attributes = _extends(settings.attributes, {
-                customStyle: {
-                    type: 'string'
-                },
-                identifyColor: {
-                    type: 'string'
-                }
-            });
-        }
-
-        return settings;
-    });
-
-    // Add option to return to default style
-    if (typeof advgbBlocks.customStyles !== 'undefined' && advgbBlocks.customStyles) {
-        advgbBlocks.customStyles.unshift({
-            id: 0,
-            label: __('Select a custom style', 'advanced-gutenberg'),
-            value: '',
-            identifyColor: ''
-        });
-    }
-
-    // Add option to select custom styles for supported blocks
-    addFilter('editor.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
-        return function (props) {
-            return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-class-name' }, props)), props.isSelected && SUPPORTED_BLOCKS.includes(props.name) && React.createElement(
-                InspectorControls,
-                { key: 'advgb-custom-controls' },
-                React.createElement(
-                    'div',
-                    { className: 'advgb-custom-styles-wrapper' },
-                    React.createElement(SelectControl, {
-                        label: [__('Custom styles', 'advanced-gutenberg'), React.createElement('span', { className: 'components-panel__color-area',
-                            key: 'customstyle-identify',
-                            style: {
-                                background: props.attributes.identifyColor,
-                                verticalAlign: 'text-bottom',
-                                borderRadius: '50%',
-                                border: 'none',
-                                width: '16px',
-                                height: '16px',
-                                display: 'inline-block',
-                                marginLeft: '10px'
-                            } })],
-                        help: __('This option let you add custom style for the current block', 'advanced-gutenberg'),
-                        value: props.attributes.customStyle,
-                        options: advgbBlocks.customStyles.map(function (cstyle, index) {
-                            if (cstyle.title) advgbBlocks.customStyles[index].label = cstyle.title;
-                            if (cstyle.name) advgbBlocks.customStyles[index].value = cstyle.name;
-
-                            return cstyle;
-                        }),
-                        onChange: function onChange(cstyle) {
-                            var identifyColor = advgbBlocks.customStyles.filter(function (style) {
-                                return style.value === cstyle;
-                            })[0].identifyColor;
-
-                            props.setAttributes({
-                                customStyle: cstyle,
-                                identifyColor: identifyColor,
-                                backgroundColor: undefined,
-                                textColor: undefined,
-                                fontSize: undefined
-                            });
-                        }
-                    })
-                )
-            )];
-        };
-    });
-
-    // Apply custom styles on front-end
-    addFilter('blocks.getSaveContent.extraProps', 'advgb/loadFrontendCustomStyles', function (extraProps, blockType, attributes) {
-        if (hasBlockSupport(blockType, 'customStyle', true) && attributes.customStyle) {
-            if (typeof extraProps.className === 'undefined') {
-                extraProps.className = attributes.customStyle;
-            } else {
-                extraProps.className += ' ' + attributes.customStyle;
-                extraProps.className = extraProps.className.trim();
-            }
-        }
-
-        return extraProps;
-    });
-
-    var withStyleClasses = createHigherOrderComponent(function (BlockListBlock) {
-        return function (props) {
-            if (!SUPPORTED_BLOCKS.includes(props.name) || !hasBlockSupport(props.name, 'customStyle', true)) {
-                return React.createElement(BlockListBlock, props);
-            }
-
-            var customStyle = props.attributes.customStyle;
-
-
-            return React.createElement(BlockListBlock, _extends({}, props, { className: '' + customStyle }));
-        };
-    }, 'withStyleClasses');
-
-    // Apply custom styles on back-end
-    wp.hooks.addFilter('editor.BlockListBlock', 'advgb/loadBackendCustomStyles', withStyleClasses);
-})(wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components, wp.compose);
 
 /***/ }),
 
@@ -25813,15 +25687,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 React.createElement("path", { d: "M0,25 C0,38.8071194 11.1928806,50 25,50 C38.8071194,50 50,38.8071194 50,25 C50,11.1928806 38.8071194,0 25,0 C11.1928806,0 0,11.1928806 0,25 Z M3,25 C3,37.1502651 12.8497349,47 25,47 C37.1502651,47 47,37.1502651 47,25 C47,12.8497349 37.1502651,3 25,3 C12.8497349,3 3,12.8497349 3,25 Z M11,24.3933898 C11,27.9245881 13.8664452,30.7868324 17.4026552,30.7868852 C20.9389182,30.7868852 23.8053634,27.9245881 23.8053634,24.3933898 C23.8053634,20.8622443 20.9389711,17.9999472 17.4026552,18 C13.8664452,18 11,20.8622443 11,24.3933898 Z M33.4026552,30.7868852 C36.9389711,30.7868852 39.8053634,27.9245881 39.8053634,24.3933898 C39.8053634,20.8622971 36.9389182,18 33.4026552,18 C29.8663923,18 27,20.8622971 27,24.3933898 C27,27.9245881 29.8664452,30.7868852 33.4026552,30.7868852 Z M33.394864,19.9672131 C35.8394032,19.9672131 37.8210935,21.9489034 37.8210935,24.3934426 C37.8210935,26.8379818 35.8394032,28.8196721 33.394864,28.8196721 C30.9503248,28.8196721 28.9686345,26.8379818 28.9686345,24.3934426 C28.9686345,21.9489034 30.9503248,19.9672131 33.394864,19.9672131 Z M33.394864,19.9672131" })
             )
         ),
-        google: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "currentColor", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement("path", { d: "M25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 C38.8071194,50 50,38.8071194 50,25 C50,11.1928806 38.8071194,0 25,0 Z M25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 C37.1502651,47 47,37.1502651 47,25 C47,12.8497349 37.1502651,3 25,3 Z M38.2449877,22.1097512 L38.2449877,27.3881872 L36.0036768,27.3881872 L36.0036768,22.1097512 L30.7739796,22.1097512 L30.7739796,19.9128403 L36.0036768,19.9128403 L36.0036768,14.6807808 L38.2449877,14.6807808 L38.2449877,19.9128403 L42.2375586,19.9128403 C42.5324436,20.6254301 42.7875249,21.3586918 43,22.1097512 L38.2449877,22.1097512 Z M11.7255525,37.2757943 C14.6396541,35.4919506 18.5644269,35.2563486 20.6868362,35.1217189 C20.0299,34.2802832 19.2718967,33.3883614 19.2718967,31.9242632 C19.2718967,31.1333137 19.5077199,30.6621097 19.7435432,30.1067621 C19.2213631,30.1572483 18.7160276,30.2077344 18.2443811,30.2077344 C13.2752481,30.2077344 10.4622136,26.5054173 10.4622136,22.8535864 C10.4622136,20.699511 11.4560402,18.3064679 13.4605378,16.5747932 C16.1388163,14.3752803 19.3224302,14 21.849108,14 L31.501017,14 L28.5026927,15.6845543 L25.6054356,15.6845543 C26.6834848,16.5747932 28.9238057,18.4478291 28.9238057,22.0121507 C28.9238057,25.4788658 26.952997,27.1112511 24.9990329,28.6594927 C24.3757857,29.2653264 23.6851605,29.9216463 23.6851605,30.9481978 C23.6851605,31.9747494 24.3757857,32.5469257 24.8979658,32.9676435 L26.5824176,34.2802832 C28.6542934,35.996812 30.5240349,37.5955399 30.5240349,40.8266529 C30.5240349,42.9574523 29.5287217,45.0961123 27.5894278,46.7373863 C26.5459915,46.9073414 25.4755787,46.9970613 24.3847411,47 C26.3539444,46.1370063 27.37411,44.55802 27.37411,42.6609828 C27.37411,40.2713054 25.8412588,39.0091518 22.2702209,36.468016 C21.8996415,36.4343586 21.6638183,36.4343586 21.1921718,36.4343586 C20.7710588,36.4343586 18.2443811,36.5185022 16.2735724,37.174822 C15.2460568,37.5450537 12.2477325,38.6725775 12.2477325,42.0046629 C12.2477325,42.3667791 12.2863178,42.7178526 12.3616005,43.0559755 C7.42272978,39.3956824 9.56224074,39.9122538 9,39.9122529 C9.5622407,38.9676509 10.4340377,38.0389613 11.7255525,37.2757943 Z M18.9013173,15.5448759 C17.688512,15.5448759 16.3746395,16.1540754 15.6166362,17.0914348 C14.8249438,18.0742317 14.5891206,19.3363852 14.5891206,20.5480526 C14.5891206,23.6950221 16.4083286,28.8950947 20.451013,28.8950947 C21.6132847,28.8950947 22.8766236,28.3229185 23.6346269,27.582455 C24.7126761,26.5054173 24.7968987,25.0076618 24.7968987,24.1662261 C24.7968987,20.7836546 22.792401,15.5448759 18.9013173,15.5448759 Z M18.9013173,15.5448759" })
-            )
-        ),
         instagram: React.createElement(
             Fragment,
             null,
@@ -26559,10 +26424,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var headingBlocks = [];
                 var allBlocks = select('core/block-editor').getBlocks();
                 var filteredBlocks = allBlocks.filter(function (block) {
-                    return block.name === 'core/heading' || block.name === 'core/columns';
+                    return block.name === 'core/heading' || block.name === 'core/columns' || block.name === 'core/cover' || block.name === 'core/group';
                 });
                 filteredBlocks.map(function (block) {
-                    if (block.name === 'core/columns') {
+                    if (block.name === 'core/columns' || block.name === 'core/cover' || block.name === 'core/group') {
                         SummaryBlock.getHeadingBlocksFromColumns(block, headingBlocks);
                     } else {
                         headingBlocks.push(block);
@@ -26735,7 +26600,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
              * @returns array   array Heading blocks from block given
              */
             value: function getHeadingBlocksFromColumns(block, storeData) {
-                if (block.name === 'core/columns' || block.name === 'core/column') {
+                if (block.name === 'core/columns' || block.name === 'core/column' || block.name === 'core/cover' || block.name === 'core/group') {
                     block.innerBlocks.map(function (bl) {
                         SummaryBlock.getHeadingBlocksFromColumns(bl, storeData);
                         return bl;
@@ -27813,7 +27678,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 setAttributes({ items: newItems });
-                console.log('test...');
             }
         }, {
             key: "render",
@@ -29001,7 +28865,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(SelectControl, {
                                 label: __('Order', 'advanced-gutenberg'),
                                 value: orderBy + "-" + order,
-                                options: [{ label: __('Newest to oldest', 'advanced-gutenberg'), value: 'date-desc' }, { label: __('Price: high to low', 'advanced-gutenberg'), value: 'price-desc' }, { label: __('Price: low to high', 'advanced-gutenberg'), value: 'price-asc' }, { label: __('Highest Rating first', 'advanced-gutenberg'), value: 'rating-desc' }, { label: __('Most sale first', 'advanced-gutenberg'), value: 'popularity-desc' }, { label: __('Title: Alphabetical', 'advanced-gutenberg'), value: 'title-asc' }, { label: __('Title: Alphabetical reversed', 'advanced-gutenberg'), value: 'title-desc' }],
+                                options: [{ label: __('Newest to oldest', 'advanced-gutenberg'), value: 'date-desc' }, { label: __('Oldest to newest', 'advanced-gutenberg'), value: 'date-asc' }, { label: __('Price: high to low', 'advanced-gutenberg'), value: 'price-desc' }, { label: __('Price: low to high', 'advanced-gutenberg'), value: 'price-asc' }, { label: __('Highest Rating first', 'advanced-gutenberg'), value: 'rating-desc' }, { label: __('Most sale first', 'advanced-gutenberg'), value: 'popularity-desc' }, { label: __('Title: Alphabetical', 'advanced-gutenberg'), value: 'title-asc' }, { label: __('Title: Alphabetical reversed', 'advanced-gutenberg'), value: 'title-desc' }],
                                 onChange: function onChange(value) {
                                     var splitedVal = value.split('-');
                                     return setAttributes({
@@ -29225,11 +29089,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
         }
 
         var gutenberg_init_function = null;
-        if (typeof window._wpLoadGutenbergEditor !== 'undefined') {
-            // Using WP core Gutenberg
-            gutenberg_init_function = window._wpLoadGutenbergEditor;
-        } else if (typeof window._wpLoadBlockEditor !== 'undefined') {
-            // Using Gutenberg plugin
+        if (typeof window._wpLoadBlockEditor !== 'undefined') {
             gutenberg_init_function = window._wpLoadBlockEditor;
         }
 
@@ -29284,13 +29144,8 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 
                     if (blocks[block].icon.foreground !== undefined) blockItem.iconColor = blocks[block].icon.foreground;
 
-                    if (typeof savedIcon === 'function') {
-                        if (!!savedIcon.prototype.render) {
-                            blockItem.icon = wp.element.renderToString(wp.element.createElement(savedIcon));
-                        } else {
-                            blockItem.icon = wp.element.renderToString(savedIcon);
-                        }
-
+                    if (typeof savedIcon === 'function' && typeof savedIcon.prototype !== 'undefined') {
+                        blockItem.icon = wp.element.renderToString(wp.element.createElement(savedIcon));
                         blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
                         blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
                     } else if ((typeof savedIcon === 'undefined' ? 'undefined' : _typeof(savedIcon)) === 'object') {
@@ -29299,6 +29154,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                         blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
                     } else if (typeof savedIcon === 'string') {
                         blockItemIcon = wp.element.createElement(wp.components.Dashicon, { icon: savedIcon });
+                        blockItem.icon = wp.element.renderToString(blockItemIcon);
+                    } else {
+                        blockItemIcon = wp.element.createElement(wp.components.Dashicon, { icon: 'block-default' });
                         blockItem.icon = wp.element.renderToString(blockItemIcon);
                     }
                     list_blocks.push(blockItem);
@@ -29370,9 +29228,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./src/assets/blocks/0-adv-components/components.jsx ./src/assets/blocks/0-adv-components/icon-class.jsx ./src/assets/blocks/accordion/block.jsx ./src/assets/blocks/advaccordion/accordion.jsx ./src/assets/blocks/advaccordion/block.jsx ./src/assets/blocks/advbutton/block.jsx ./src/assets/blocks/advicon/block.jsx ./src/assets/blocks/advimage/block.jsx ./src/assets/blocks/advlist/block.jsx ./src/assets/blocks/advtable/block.jsx ./src/assets/blocks/advtabs/block.jsx ./src/assets/blocks/advtabs/tab.jsx ./src/assets/blocks/advvideo/block.jsx ./src/assets/blocks/columns/block.jsx ./src/assets/blocks/columns/column.jsx ./src/assets/blocks/contact-form/block.jsx ./src/assets/blocks/container/block.jsx ./src/assets/blocks/count-up/block.jsx ./src/assets/blocks/customstyles/custom-styles.jsx ./src/assets/blocks/images-slider/block.jsx ./src/assets/blocks/infobox/block.jsx ./src/assets/blocks/login-form/block.jsx ./src/assets/blocks/map/block.jsx ./src/assets/blocks/newsletter/block.jsx ./src/assets/blocks/recent-posts/block.jsx ./src/assets/blocks/recent-posts/query-controls.jsx ./src/assets/blocks/search-bar/block.jsx ./src/assets/blocks/social-links/block.jsx ./src/assets/blocks/summary/block.jsx ./src/assets/blocks/tabs/block.jsx ./src/assets/blocks/testimonial/block.jsx ./src/assets/blocks/woo-products/block.jsx ./src/assets/js/editor.jsx ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./src/assets/blocks/0-adv-components/components.jsx ./src/assets/blocks/0-adv-components/icon-class.jsx ./src/assets/blocks/accordion/block.jsx ./src/assets/blocks/advaccordion/accordion.jsx ./src/assets/blocks/advaccordion/block.jsx ./src/assets/blocks/advbutton/block.jsx ./src/assets/blocks/advicon/block.jsx ./src/assets/blocks/advimage/block.jsx ./src/assets/blocks/advlist/block.jsx ./src/assets/blocks/advtable/block.jsx ./src/assets/blocks/advtabs/block.jsx ./src/assets/blocks/advtabs/tab.jsx ./src/assets/blocks/advvideo/block.jsx ./src/assets/blocks/columns/block.jsx ./src/assets/blocks/columns/column.jsx ./src/assets/blocks/contact-form/block.jsx ./src/assets/blocks/container/block.jsx ./src/assets/blocks/count-up/block.jsx ./src/assets/blocks/images-slider/block.jsx ./src/assets/blocks/infobox/block.jsx ./src/assets/blocks/login-form/block.jsx ./src/assets/blocks/map/block.jsx ./src/assets/blocks/newsletter/block.jsx ./src/assets/blocks/recent-posts/block.jsx ./src/assets/blocks/recent-posts/query-controls.jsx ./src/assets/blocks/search-bar/block.jsx ./src/assets/blocks/social-links/block.jsx ./src/assets/blocks/summary/block.jsx ./src/assets/blocks/tabs/block.jsx ./src/assets/blocks/testimonial/block.jsx ./src/assets/blocks/woo-products/block.jsx ./src/assets/js/editor.jsx ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -29394,7 +29252,6 @@ __webpack_require__(/*! ./src/assets/blocks/columns/column.jsx */"./src/assets/b
 __webpack_require__(/*! ./src/assets/blocks/contact-form/block.jsx */"./src/assets/blocks/contact-form/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/container/block.jsx */"./src/assets/blocks/container/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/count-up/block.jsx */"./src/assets/blocks/count-up/block.jsx");
-__webpack_require__(/*! ./src/assets/blocks/customstyles/custom-styles.jsx */"./src/assets/blocks/customstyles/custom-styles.jsx");
 __webpack_require__(/*! ./src/assets/blocks/images-slider/block.jsx */"./src/assets/blocks/images-slider/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/infobox/block.jsx */"./src/assets/blocks/infobox/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/login-form/block.jsx */"./src/assets/blocks/login-form/block.jsx");

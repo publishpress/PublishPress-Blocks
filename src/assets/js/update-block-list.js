@@ -44,13 +44,8 @@ window.addEventListener('load', function () {
 
             if (block.icon.foreground !== undefined) blockItem.iconColor = block.icon.foreground;
 
-            if (typeof savedIcon === 'function') {
-                if (!!savedIcon.prototype.render) {
-                    blockItem.icon = wp.element.renderToString(wp.element.createElement(savedIcon));
-                } else {
-                    blockItem.icon = wp.element.renderToString(savedIcon());
-                }
-
+            if (typeof savedIcon === 'function' && typeof savedIcon.prototype !== 'undefined') {
+                blockItem.icon = wp.element.renderToString(wp.element.createElement(savedIcon));
                 blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
                 blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
             } else if (typeof savedIcon === 'object') {
@@ -59,6 +54,9 @@ window.addEventListener('load', function () {
                 blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
             } else if (typeof savedIcon === 'string') {
                 blockItemIcon = wp.element.createElement(wp.components.Dashicon, {icon: savedIcon});
+                blockItem.icon = wp.element.renderToString(blockItemIcon);
+            } else {
+                blockItemIcon = wp.element.createElement(wp.components.Dashicon, {icon: 'block-default'});
                 blockItem.icon = wp.element.renderToString(blockItemIcon);
             }
 

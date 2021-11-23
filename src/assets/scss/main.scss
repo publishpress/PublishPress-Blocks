@@ -25,15 +25,27 @@
     background: #000000;
     color: #ffffff;
     border: 1px solid #000000;
+
+
 }
 
-.advgb_qtip:after {
+.advgb_qtip:not(.advgb_qtip_no_after):after {
     content: "\e0cb";
     font-family: 'Material Icons';
     font-size: 15px;
     vertical-align: middle;
     margin-left: 5px;
     color: inherit;
+}
+
+.advgb-icon-edit {
+  text-decoration: none;
+
+  &:focus,
+  &:active {
+    box-shadow: none;
+    text-decoration: none;
+  }
 }
 
 .ju-main-wrapper .ju-right-panel .ju-content-wrapper {

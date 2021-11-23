@@ -17,6 +17,8 @@ function bundle() {
         "!package.json",
         "!README.md",
         "!webpack.config.js",
+        "!src/composer.json",
+        "!src/composer.lock",
         "!src/assets/**/*.jsx",
         "!src/assets/scss/**",
         "!src/assets/blocks/*.js.map",

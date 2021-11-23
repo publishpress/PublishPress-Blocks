@@ -71,6 +71,10 @@
             const { attributes } = this.props;
             const {tabActive, id, uniqueID} = attributes;
 
+            const ALLOWED_BLOCKS = wp.blocks.getBlockTypes().map(block => block.name).filter(
+                blockName => ( blockName !== 'advgb/adv-tabs' && blockName !== 'advgb/tab' )
+            );
+
             const tabClassName = [
                 `advgb-tab-${uniqueID}`,
                 'advgb-tab-body'
@@ -85,6 +89,7 @@
                         <InnerBlocks
                             template={[ [ 'core/paragraph' ] ]}
                             templateLock={false}
+                            allowedBlocks={ ALLOWED_BLOCKS }
                         />
                     </div>
                 </Fragment>
