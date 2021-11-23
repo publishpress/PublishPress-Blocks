@@ -234,7 +234,7 @@ All of these are good Gutenberg block plugins. PublishPress Blocks has particula
 
 = Can I share a link to install PublishPress Blocks? =
 
-Yes, we use the phrase "publishpress-ppcore-install" to share install links. You will see that text included in the links from other PublishPress plugins.
+Yes, we use the phrase "publishpress-advg-install" to share install links. You will see that text included in the links from other PublishPress plugins.
 
 == Screenshots ==
 
