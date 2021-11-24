@@ -257,10 +257,11 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.12.0 - 15 Nov 2021 =
+= 2.12.0 - 23 Nov 2021 =
   * Add: WordPress Reviews version 1.1.12
   * Fix: Genesis Custom Blocks compatibility
   * Fix: Save icon type function in advgb_blocks_list option
+  * Fix: Top Pro banner Javascript resize conflict with WooCommerce in admin dashboard
 
 = 2.11.1 - 27 Oct 2021 =
   * Add: Ask for review library through composer
