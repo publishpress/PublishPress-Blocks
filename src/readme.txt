@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8.1
-Stable tag: 2.12.0b1
+Stable tag: 2.11.2b1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -257,11 +257,12 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.12.0 - 23 Nov 2021 =
+= 2.11.2 - 2 Dec 2021 =
   * Add: WordPress Reviews version 1.1.12
   * Fix: Genesis Custom Blocks compatibility
   * Fix: Save icon type function in advgb_blocks_list option
   * Fix: Top Pro banner Javascript resize conflict with WooCommerce in admin dashboard
+  * Fix: "wp-editor" call notice in Widgets
 
 = 2.11.1 - 27 Oct 2021 =
   * Add: Ask for review library through composer
