@@ -350,7 +350,8 @@ import { AuthorSelect } from './query-controls.jsx';
 
             let recentPosts = this.props.recentPosts;
 
-            const isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
+            // We need to check if we're in post edit or widgets screen
+            const isInPost = wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostType() === 'post';
 
             let postType = attributes.postType;
             if(postType === undefined){
