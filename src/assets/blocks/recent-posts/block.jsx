@@ -1396,7 +1396,8 @@ import { AuthorSelect } from './query-controls.jsx';
 
             const catIds = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
 
-            const postId = wp.data.select('core/editor').getCurrentPostId();
+            // We need to check if we're in post edit or widgets screen
+            const postId = wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
             const recentPostsQuery = pickBy( {
                 categories: catIds,
                 tags: tagIds,

@@ -24694,7 +24694,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return cat.id;
             }) : [];
 
-            var postId = wp.data.select('core/editor').getCurrentPostId();
+            // We need to check if we're in post edit or widgets screen
+            var postId = wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
             var recentPostsQuery = pickBy({
                 categories: catIds,
                 tags: tagIds,
