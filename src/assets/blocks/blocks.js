@@ -26305,7 +26305,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     // Add button to insert summary inside table of contents component
     (function () {
         jQuery(window).on('load', function () {
-            if (typeof dispatch('core/editor') === 'undefined') {
+            if (!dispatch('core/editor') || typeof dispatch('core/editor') === 'undefined') {
                 return false;
             }
 
