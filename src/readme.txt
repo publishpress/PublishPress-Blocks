@@ -264,6 +264,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Top Pro banner Javascript resize conflict with WooCommerce in admin dashboard
   * Fix: "wp-editor" call notice in Widgets
   * Fix: Don't run Summary block code in Widgets
+  * Fix: Check if we're in Widgets or Post edit screen to define some variables for Content Display block
 
 = 2.11.1 - 27 Oct 2021 =
   * Add: Ask for review library through composer
