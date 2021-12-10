@@ -98,22 +98,25 @@ if (! function_exists('advg_check_legacy_widget_block_init')) {
         global $pagenow;
         if( ( $pagenow === 'widgets.php' || $pagenow === 'customize.php' ) && $wp_version >= 5.8 ) {
 
-            $advgb_blocks_list          = !empty( get_option( 'advgb_blocks_list' ) ) ? get_option( 'advgb_blocks_list' ) : [];
-            $advgb_blocks_user_roles    = !empty( get_option( 'advgb_blocks_user_roles' ) ) ? get_option( 'advgb_blocks_user_roles' ) : [];
+            $advgb_blocks_list          = get_option( 'advgb_blocks_list' ) && !empty( get_option( 'advgb_blocks_list' ) ) ? get_option( 'advgb_blocks_list' ) : [];
+            $advgb_blocks_user_roles    = get_option( 'advgb_blocks_user_roles' ) && !empty( get_option( 'advgb_blocks_user_roles' ) ) ? get_option( 'advgb_blocks_user_roles' ) : [];
             $current_user               = wp_get_current_user();
             $current_user_role          = $current_user->roles[0];
 
-            if(
-                !in_array( 'core/legacy-widget', $advgb_blocks_user_roles[$current_user_role]['active_blocks'] )
-                && !in_array( 'core/legacy-widget', $advgb_blocks_user_roles[$current_user_role]['inactive_blocks'] )
-                && !empty( $current_user_role )
-            ) {
+            if( count( $advgb_blocks_list ) && count( $advgb_blocks_user_roles ) ) {
 
-                array_push(
-                    $advgb_blocks_user_roles[$current_user_role]['active_blocks'],
-                    'core/legacy-widget'
-                );
-                update_option( 'advgb_blocks_user_roles', $advgb_blocks_user_roles );
+                if(
+                    !in_array( 'core/legacy-widget', $advgb_blocks_user_roles[$current_user_role]['active_blocks'] )
+                    && !in_array( 'core/legacy-widget', $advgb_blocks_user_roles[$current_user_role]['inactive_blocks'] )
+                    && !empty( $current_user_role )
+                ) {
+
+                    array_push(
+                        $advgb_blocks_user_roles[$current_user_role]['active_blocks'],
+                        'core/legacy-widget'
+                    );
+                    update_option( 'advgb_blocks_user_roles', $advgb_blocks_user_roles );
+                }
             }
         }
     }
