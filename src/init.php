@@ -124,9 +124,9 @@ add_action( 'init', 'advg_check_legacy_widget_block_init' );
 if( file_exists( __DIR__ . '/vendor/autoload.php') && !defined('ADVANCED_GUTENBERG_VENDOR_LOADED') ) {
     require_once __DIR__ . '/vendor/autoload.php';
     define('ADVANCED_GUTENBERG_VENDOR_LOADED', true);
-}
 
-// Ask for review
-if( file_exists(__DIR__ . '/review/review-request.php') ) {
-    require_once __DIR__ . '/review/review-request.php';
+    // Ask for review
+    if( file_exists(__DIR__ . '/review/review-request.php') ) {
+        require_once __DIR__ . '/review/review-request.php';
+    }
 }
