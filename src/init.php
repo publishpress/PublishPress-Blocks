@@ -119,3 +119,14 @@ if (! function_exists('advg_check_legacy_widget_block_init')) {
     }
 }
 add_action( 'init', 'advg_check_legacy_widget_block_init' );
+
+// Load Vendor just once. Case scenario: when Free and Pro are activated
+if( file_exists( __DIR__ . '/vendor/autoload.php') && !defined('ADVANCED_GUTENBERG_VENDOR_LOADED') ) {
+    require_once __DIR__ . '/vendor/autoload.php';
+    define('ADVANCED_GUTENBERG_VENDOR_LOADED', true);
+}
+
+// Ask for review
+if( file_exists(__DIR__ . '/review/review-request.php') ) {
+    require_once __DIR__ . '/review/review-request.php';
+}
