@@ -395,20 +395,24 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function enqueueEditorAssets()
         {
             $currentScreen = get_current_screen();
-            
+
             if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
 
-                // Load wp-editor dependency for posts, and wp-edit-widgets for widgets
-                if( $currentScreen->id !== 'widgets' && is_customize_preview() === false ) {
-                    $deps = array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor', 'wp-plugins', 'wp-compose' );
+                if( $currentScreen->id === 'customize' ) {
+                    // Customizer > Widgets
+                    $wp_editor_dep = 'wp-customize-widgets';
+                } elseif( $currentScreen->id === 'widgets' ) {
+                    // Appearance > Widgets
+                    $wp_editor_dep = 'wp-edit-widgets';
                 } else {
-                    $deps = array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-edit-widgets', 'wp-plugins', 'wp-compose' );
+                    // Post edit
+                    $wp_editor_dep = 'wp-editor';
                 }
 
                 wp_enqueue_script(
                     'advgb_blocks',
                     plugins_url('assets/blocks/blocks.js', dirname(__FILE__)),
-                    $deps,
+                    array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', $wp_editor_dep, 'wp-plugins', 'wp-compose' ),
                     ADVANCED_GUTENBERG_VERSION,
                     true
                 );
