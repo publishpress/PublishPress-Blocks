@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.11.2 - 9 Dec 2021 =
+= 2.11.2 - 10 Dec 2021 =
   * Add: WordPress Reviews version 1.1.12
   * Fix: Top Pro banner Javascript resize conflict with WooCommerce in admin dashboard
   * Fix: "wp-editor" call notice in Widgets
@@ -266,6 +266,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Slow content refresh for Content Display block
   * Fix: Update to Reviews library v1.1.17
   * Fix: Use wp-customize-widgets dependency in customizer screen
+  * Fix: Notice and warnings in Widgets when trying to update Block Access User Roles with possible missing block
 
 = 2.11.1 - 27 Oct 2021 =
   * Add: Ask for review library through composer
