@@ -264,7 +264,8 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Don't run Summary block code in Widgets
   * Fix: Check if we're in Widgets or Post edit screen to define some variables for Content Display block
   * Fix: Slow content refresh for Content Display block
-  # Fix: Update to Reviews library v1.1.17
+  * Fix: Update to Reviews library v1.1.17
+  * Fix: Use wp-customize-widgets dependency in customizer screen
 
 = 2.11.1 - 27 Oct 2021 =
   * Add: Ask for review library through composer
