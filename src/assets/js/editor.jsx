@@ -69,7 +69,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                         } else {
                             blockItem.icon = wp.element.renderToString(savedIcon);
                         }
-                        
+
                         blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
                         blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
                     } else if (typeof savedIcon === 'object') {
