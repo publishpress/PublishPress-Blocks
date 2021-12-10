@@ -121,7 +121,7 @@ if (! function_exists('advg_check_legacy_widget_block_init')) {
         }
     }
 }
-add_action( 'init', 'advg_check_legacy_widget_block_init' );
+add_action( 'admin_init', 'advg_check_legacy_widget_block_init' );
 
 // Load Vendor just once. Case scenario: when Free and Pro are activated
 if( file_exists( __DIR__ . '/vendor/autoload.php') && !defined('ADVANCED_GUTENBERG_VENDOR_LOADED') ) {
