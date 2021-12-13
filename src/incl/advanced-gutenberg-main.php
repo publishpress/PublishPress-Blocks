@@ -1042,7 +1042,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $regex = '/^[a-zA-Z0-9_\-]+$/';
             $regexWithSpaces = '/^[\p{L}\p{N}_\- ]+$/u';
 
-            if (!wp_verify_nonce($_POST['nonce'], 'advgb_settings_nonce')) {
+            if (!wp_verify_nonce($_POST['nonce'], 'advgb_cstyles_nonce')) {
                 wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
             }
 
