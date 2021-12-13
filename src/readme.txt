@@ -267,7 +267,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Update to Reviews library v1.1.17
   * Fix: Use wp-customize-widgets dependency in customizer screen
   * Fix: Notice and warnings in Widgets when trying to update Block Access User Roles with possible missing block
-  * Fix: Validate using the right nonce for Custom styles
+  * Fix: Check the right nonce for Custom styles
 
 = 2.11.1 - 27 Oct 2021 =
   * Add: Ask for review library through composer
