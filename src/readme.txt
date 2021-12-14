@@ -260,6 +260,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 = 2.11.2 - 14 Dec 2021 =
   * Add: WordPress Reviews version 1.1.12
   * Add: Nonce to block forms
+  * Add: Add capability check for save method
   * Fix: Top Pro banner Javascript resize conflict with WooCommerce in admin dashboard
   * Fix: "wp-editor" call notice in Widgets
   * Fix: Don't run Summary block code in Widgets

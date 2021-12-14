@@ -1963,6 +1963,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function saveAdvgbData()
         {
+            if (!current_user_can('activate_plugins')) {
+                return false;
+            }
+
             if( isset($_POST['advgb_block_access_save']) ) {
                 $this->saveAdvgbBlockAccess();
             }  elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
