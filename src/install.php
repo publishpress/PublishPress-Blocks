@@ -73,6 +73,12 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
 
     $wp_roles->add_cap('contributor', 'read_advgb_profile');
     $wp_roles->add_cap('contributor', 'read_private_advgb_profiles');
+
+    // Delete deprecated options
+    delete_option( 'advgb_jureview_installation_time' );
+    delete_option( 'advgb_jufeedback_version' );
+    delete_option( 'ppb_reviews_installed_on' ); // Added in 2.10.4 and disabled in 2.10.5
+    delete_option( 'advgb_reviews_installed_on' ); // Added in 2.11.0 and disabled in 2.11.1
 });
 
 // Run the updates from here
@@ -80,7 +86,11 @@ $advgb_current_version = get_option('advgb_version', '0.0.0');
 global $wpdb;
 
 // Migrate to Block Access by User Roles
-if( version_compare($advgb_current_version, '2.10.2', 'lt') && !get_option( 'advgb_blocks_user_roles') ) {
+if(
+    version_compare($advgb_current_version, '2.10.2', 'lt')
+    && !get_option( 'advgb_blocks_user_roles')
+    && current_user_can('activate_plugins')
+) {
 
     // Migrate Block Access Profiles to Block Access by Roles
     global $wpdb;
@@ -140,9 +150,3 @@ if( version_compare($advgb_current_version, '2.10.2', 'lt') && !get_option( 'adv
 if ($advgb_current_version !== ADVANCED_GUTENBERG_VERSION) {
     update_option('advgb_version', ADVANCED_GUTENBERG_VERSION);
 }
-
-// Delete deprecated options
-delete_option( 'advgb_jureview_installation_time' );
-delete_option( 'advgb_jufeedback_version' );
-delete_option( 'ppb_reviews_installed_on' ); // Added in 2.10.4 and disabled in 2.10.5
-delete_option( 'advgb_reviews_installed_on' ); // Added in 2.11.0 and disabled in 2.11.1
