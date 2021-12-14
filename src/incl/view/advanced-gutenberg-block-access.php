@@ -1,6 +1,11 @@
 <?php
 defined('ABSPATH') || die;
 
+// Check users permissions
+if ( !current_user_can('administrator') ) {
+    wp_die( __('You do not have permission to manage Block Access', 'advanced-gutenberg') );
+}
+
 wp_enqueue_style('advgb_profile_style');
 wp_enqueue_script('advgb_update_list');
 wp_enqueue_script('advgb_block_access_js');
@@ -30,7 +35,7 @@ wp_add_inline_script(
 
 // Current role
 if( isset( $_REQUEST['user_role'] ) && !empty( $_REQUEST['user_role'] ) ) {
-    $current_user_role = $_REQUEST['user_role'];
+    $current_user_role = sanitize_text_field($_REQUEST['user_role']);
 } else {
     $current_user_role = 'administrator';
 }
@@ -48,11 +53,6 @@ $advgb_blocks_deactivate_force = array(
     'advgb/container'
 );
 $advgb_block_status_ = null;
-
-// Check users permissions
-if ( !current_user_can('administrator') ) {
-    wp_die( __('You do not have permission to manage Block Access', 'advanced-gutenberg') );
-}
 ?>
 
 <form method="post">
