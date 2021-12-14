@@ -197,6 +197,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Front-end
                 add_filter('render_block_data', array($this, 'contentPreRender'));
                 add_filter('the_content', array($this, 'addFrontendContentAssets'), 9);
+                add_filter('the_content', array($this, 'addNonceToFormBlocks'), 99);
 
                 if($wp_version >= 5.8) {
                     add_filter('widget_block_content', array($this, 'addFrontendWidgetAssets'), 9);
@@ -1264,6 +1265,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function saveContactFormData()
         {
+            if (!wp_verify_nonce($_POST['nonce'], 'advgb_blockform_nonce_field')) {
+                wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
+            }
+
             // phpcs:disable -- WordPress.Security.NonceVerification.Recommended - frontend form, no nonce
             if (!isset($_POST['action'])) {
                 wp_send_json(__('Bad Request!', 'advanced-gutenberg'), 400);
@@ -1338,6 +1343,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function saveNewsletterData()
         {
+            if (!wp_verify_nonce($_POST['nonce'], 'advgb_blockform_nonce_field')) {
+                wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
+            }
+
             // phpcs:disable -- WordPress.Security.NonceVerification.Recommended - frontend form, no nonce
             if (!isset($_POST['action'])) {
                 wp_send_json(__('Bad Request!', 'advanced-gutenberg'), 400);
@@ -4701,6 +4710,24 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     remove_filter($filter_name, 'wpautop');
                 }
             }
+        }
+
+        /**
+         * Add nonce to blocks with form tag
+         *
+         * @param string $content Post content
+         *
+         * @return string
+         */
+        public function addNonceToFormBlocks($content)
+        {
+            $content = str_replace(
+                '<div class="advgb-form-submit-wrapper"',
+                '<input type="hidden" name="advgb_blockform_nonce_field" value="' . wp_create_nonce('advgb_blockform_nonce_field') . '"><div class="advgb-form-submit-wrapper"',
+                $content
+            );
+
+            return $content;
         }
 
         /**
