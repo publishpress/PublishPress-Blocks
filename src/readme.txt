@@ -258,7 +258,6 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 == Changelog ==
 
 = 2.11.2 - 15 Dec 2021 =
-  * Add: WordPress Reviews version 1.1.18
   * Add: Nonce to block forms
   * Add: Add capability check for save method
   * Add: Update form submit fields check
@@ -267,7 +266,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Don't run Summary block code in Widgets
   * Fix: Check if we're in Widgets or Post edit screen to define some variables for Content Display block
   * Fix: Slow content refresh for Content Display block
-  * Fix: Update to Reviews library v1.1.17
+  * Fix: Update to Reviews library v1.1.18
   * Fix: Use wp-customize-widgets dependency in customizer screen
   * Fix: Notice and warnings in Widgets when trying to update Block Access User Roles with possible missing block
   * Fix: Check the right nonce for Custom styles
