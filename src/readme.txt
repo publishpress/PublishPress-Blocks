@@ -258,7 +258,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 == Changelog ==
 
 = 2.11.2 - 15 Dec 2021 =
-  * Add: WordPress Reviews version 1.1.12
+  * Add: WordPress Reviews version 1.1.18
   * Add: Nonce to block forms
   * Add: Add capability check for save method
   * Add: Update form submit fields check
