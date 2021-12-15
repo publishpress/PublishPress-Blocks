@@ -1265,6 +1265,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function saveContactFormData()
         {
+            // Don't save if Settings > PublishPress Blocks are disabled
+            if( !$this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                return false;
+            }
+
             if (!wp_verify_nonce($_POST['nonce'], 'advgb_blockform_nonce_field')) {
                 wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
             }
@@ -1343,6 +1348,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function saveNewsletterData()
         {
+            // Don't save if Settings > PublishPress Blocks are disabled
+            if( !$this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                return false;
+            }
+
             if (!wp_verify_nonce($_POST['nonce'], 'advgb_blockform_nonce_field')) {
                 wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
             }

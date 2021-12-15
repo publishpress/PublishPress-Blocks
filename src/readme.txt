@@ -270,6 +270,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Use wp-customize-widgets dependency in customizer screen
   * Fix: Notice and warnings in Widgets when trying to update Block Access User Roles with possible missing block
   * Fix: Check the right nonce for Custom styles
+  * Fix: Disable save form functionality when PublishPress blocks are disabled for Newsletter and Contact Form blocks
 
 = 2.11.1 - 27 Oct 2021 =
   * Add: Ask for review library through composer
