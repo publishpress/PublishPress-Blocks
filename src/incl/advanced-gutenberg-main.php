@@ -1097,7 +1097,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             'id' => $new_id['id'] + 1,
                             'title' => sanitize_text_field($data['title']),
                             'name' => sanitize_text_field($data['name']),
-                            'css' => $data['css'],
+                            'css' => wp_strip_all_tags($data['css']),
                             'identifyColor' => sanitize_hex_color($data['identifyColor']),
                         );
 
@@ -1127,7 +1127,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $style_id = (int)$_POST['id'];
                 $new_classname = sanitize_text_field($_POST['name']);
                 $new_identify_color = sanitize_hex_color($_POST['mycolor']);
-                $new_css = $_POST['mycss'];
+                $new_css = wp_strip_all_tags($_POST['mycss']);
                 // Validate new name
                 if (!preg_match($regex, $new_classname)) {
                     wp_send_json('Invalid characters, please enter another!', 403);
