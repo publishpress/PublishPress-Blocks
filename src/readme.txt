@@ -262,6 +262,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Add: Add capability check for save method
   * Add: Update form submit fields check
   * Add: Custom Styles CSS field sanitization
+  * Add: Blocks arrays sanitization
   * Fix: Top Pro banner Javascript resize conflict with WooCommerce in admin dashboard
   * Fix: "wp-editor" call notice in Widgets
   * Fix: Don't run Summary block code in Widgets
