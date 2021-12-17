@@ -264,6 +264,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Add: Custom Styles CSS field sanitization
   * Add: Blocks arrays sanitization
   * Add: Add redirection when Block Access role is not saved
+  * Add: Clearer "Block Access can't be saved" message
   * Fix: Top Pro banner Javascript resize conflict with WooCommerce in admin dashboard
   * Fix: "wp-editor" call notice in Widgets
   * Fix: Don't run Summary block code in Widgets
