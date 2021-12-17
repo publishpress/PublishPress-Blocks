@@ -257,10 +257,11 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.11.2 - 15 Dec 2021 =
+= 2.11.2 - 17 Dec 2021 =
   * Add: Nonce to block forms
   * Add: Add capability check for save method
   * Add: Update form submit fields check
+  * Add: Custom Styles CSS field sanitization
   * Fix: Top Pro banner Javascript resize conflict with WooCommerce in admin dashboard
   * Fix: "wp-editor" call notice in Widgets
   * Fix: Don't run Summary block code in Widgets
