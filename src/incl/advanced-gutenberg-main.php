@@ -2183,8 +2183,18 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
+            /* Get blocks array.
+             * If 'blocks' doesn't exist (because advgb_blocks_list option is still not saved),
+             * redirect to error page and skip saving.
+             */
+            if( isset($_POST['blocks']) && is_array($_POST['blocks']) ) {
+                $blocks = array_map('sanitize_text_field', $_POST['blocks']);
+            } else {
+                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=error' ) );
+                exit;
+            }
+
             $user_role         = sanitize_text_field($_POST['user_role']);
-            $blocks            = array_map('sanitize_text_field', $_POST['blocks']);
             $active_blocks     = array();
             $inactive_blocks   = array();
 
@@ -2194,11 +2204,19 @@ if(!class_exists('AdvancedGutenbergMain')) {
                  * due their categories are not detected
                  */
                 $blocks_list_undetected = (
-                    $_POST['blocks_list_undetected'] && is_array($_POST['blocks_list_undetected']) ? array_map('sanitize_text_field', $_POST['blocks_list_undetected']) : ''
+                    isset($_POST['blocks_list_undetected']) && is_array($_POST['blocks_list_undetected']) ? array_map('sanitize_text_field', $_POST['blocks_list_undetected']) : ''
                 );
 
-                // Get all the blocks we can manage (which category is detected)
-                $blocks_list = array_map('sanitize_text_field', $_POST['blocks_list']);
+                /* Get all the blocks we can manage (which category is detected).
+                 * If 'blocks_list' doesn't exist (because advgb_blocks_list option is still not saved),
+                 * redirect to error page and skip saving.
+                 */
+                if( isset($_POST['blocks_list']) && is_array($_POST['blocks_list']) ) {
+                    $blocks_list = array_map('sanitize_text_field', $_POST['blocks_list']);
+                } else {
+                    wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=error' ) );
+                    exit;
+                }
 
                 if( $blocks_list_undetected && is_array( $blocks_list_undetected ) ) {
                     // Merge active blocks with the ones we can't manage
