@@ -2183,15 +2183,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            /*$blocks = [];
-            if( !empty($_POST['blocks']) ) {
-                foreach( $_POST['blocks'] as $block ) {
-                    array_push($blocks, sanitize_text_field($block));
-                }
-            }*/
-
             $user_role         = sanitize_text_field($_POST['user_role']);
-            $blocks            = $_POST['blocks'];
+            $blocks            = array_map('sanitize_text_field', $_POST['blocks']);
             $active_blocks     = array();
             $inactive_blocks   = array();
 
@@ -2200,10 +2193,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 /* Blocks saved in advgb_blocks_list but not listed in Block Access page
                  * due their categories are not detected
                  */
-                $blocks_list_undetected = ( !empty( $_POST['blocks_list_undetected'] ) ? $_POST['blocks_list_undetected'] : '' );
+                $blocks_list_undetected = (
+                    $_POST['blocks_list_undetected'] && is_array($_POST['blocks_list_undetected']) ? array_map('sanitize_text_field', $_POST['blocks_list_undetected']) : ''
+                );
 
                 // Get all the blocks we can manage (which category is detected)
-                $blocks_list = $_POST['blocks_list'];
+                $blocks_list = array_map('sanitize_text_field', $_POST['blocks_list']);
 
                 if( $blocks_list_undetected && is_array( $blocks_list_undetected ) ) {
                     // Merge active blocks with the ones we can't manage
