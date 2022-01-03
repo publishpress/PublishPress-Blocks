@@ -50,7 +50,13 @@ if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
 require_once __DIR__ . '/init.php';
 
 // Vendor
-require_once __DIR__ . '/vendor/autoload.php';
+if( file_exists(__DIR__ . '/vendor/autoload.php') && !defined('ADVANCED_GUTENBERG_VENDOR_LOADED') && is_admin() ) {
 
-// Ask for review
-require_once __DIR__ . '/review/review-request.php';
+    require_once __DIR__ . '/vendor/autoload.php';
+    define('ADVANCED_GUTENBERG_VENDOR_LOADED', true);
+
+    if( file_exists(__DIR__ . '/review/review-request.php') ) {
+        // Ask for review
+        require_once __DIR__ . '/review/review-request.php';
+    }
+}
