@@ -153,5 +153,5 @@ if ( !function_exists('advgb_some_specific_updates') ) {
             update_option('advgb_version', ADVANCED_GUTENBERG_VERSION);
         }
     }
-    add_action('init', 'advgb_some_specific_updates');
+    add_action('admin_init', 'advgb_some_specific_updates');
 }
