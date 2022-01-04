@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.11.2 - 3 Jan 2022 =
+= 2.11.2 - 4 Jan 2022 =
   * Add: Nonce to block forms
   * Add: Add capability check for save method
   * Add: Update form submit fields check
