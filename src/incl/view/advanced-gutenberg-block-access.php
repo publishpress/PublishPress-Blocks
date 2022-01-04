@@ -1,6 +1,11 @@
 <?php
 defined('ABSPATH') || die;
 
+// Check users permissions
+if ( !current_user_can('administrator') ) {
+    wp_die( __('You do not have permission to manage Block Access', 'advanced-gutenberg') );
+}
+
 wp_enqueue_style('advgb_profile_style');
 wp_enqueue_script('advgb_update_list');
 wp_enqueue_script('advgb_block_access_js');
@@ -30,7 +35,7 @@ wp_add_inline_script(
 
 // Current role
 if( isset( $_REQUEST['user_role'] ) && !empty( $_REQUEST['user_role'] ) ) {
-    $current_user_role = $_REQUEST['user_role'];
+    $current_user_role = sanitize_text_field($_REQUEST['user_role']);
 } else {
     $current_user_role = 'administrator';
 }
@@ -48,11 +53,6 @@ $advgb_blocks_deactivate_force = array(
     'advgb/container'
 );
 $advgb_block_status_ = null;
-
-// Check users permissions
-if ( !current_user_can('administrator') ) {
-    wp_die( __('You do not have permission to manage Block Access', 'advanced-gutenberg') );
-}
 ?>
 
 <form method="post">
@@ -69,7 +69,7 @@ if ( !current_user_can('administrator') ) {
         } elseif ( isset($_GET['save_access']) && $_GET['save_access'] === 'error' ) {
             ?>
             <div class="ju-notice-msg ju-notice-error">
-                <?php esc_html_e('Error: Block Access can\'t be saved.', 'advanced-gutenberg') ?>
+                <?php esc_html_e('Block Access can\'t be saved. Please try again.', 'advanced-gutenberg') ?>
                 <i class="dashicons dashicons-dismiss ju-notice-close"></i>
             </div>
             <?php

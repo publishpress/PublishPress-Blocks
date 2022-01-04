@@ -197,6 +197,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Front-end
                 add_filter('render_block_data', array($this, 'contentPreRender'));
                 add_filter('the_content', array($this, 'addFrontendContentAssets'), 9);
+                add_filter('the_content', array($this, 'addNonceToFormBlocks'), 99);
 
                 if($wp_version >= 5.8) {
                     add_filter('widget_block_content', array($this, 'addFrontendWidgetAssets'), 9);
@@ -394,17 +395,29 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function enqueueEditorAssets()
         {
+            $currentScreen = get_current_screen();
+
             if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+
+                if( $currentScreen->id === 'customize' ) {
+                    // Customizer > Widgets
+                    $wp_editor_dep = 'wp-customize-widgets';
+                } elseif( $currentScreen->id === 'widgets' ) {
+                    // Appearance > Widgets
+                    $wp_editor_dep = 'wp-edit-widgets';
+                } else {
+                    // Post edit
+                    $wp_editor_dep = 'wp-editor';
+                }
+
                 wp_enqueue_script(
                     'advgb_blocks',
                     plugins_url('assets/blocks/blocks.js', dirname(__FILE__)),
-                    array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor', 'wp-plugins', 'wp-compose' ),
+                    array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', $wp_editor_dep, 'wp-plugins', 'wp-compose' ),
                     ADVANCED_GUTENBERG_VERSION,
                     true
                 );
             }
-
-            $currentScreen = get_current_screen();
 
             // Don't load custom-styles.js in widgets.php and Theme Customizer > Widgets
             if(
@@ -1030,7 +1043,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $regex = '/^[a-zA-Z0-9_\-]+$/';
             $regexWithSpaces = '/^[\p{L}\p{N}_\- ]+$/u';
 
-            if (!wp_verify_nonce($_POST['nonce'], 'advgb_settings_nonce')) {
+            if (!wp_verify_nonce($_POST['nonce'], 'advgb_cstyles_nonce')) {
                 wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
             }
 
@@ -1084,8 +1097,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             'id' => $new_id['id'] + 1,
                             'title' => sanitize_text_field($data['title']),
                             'name' => sanitize_text_field($data['name']),
-                            'css' => $data['css'],
-                            'identifyColor' => $data['identifyColor'],
+                            'css' => wp_strip_all_tags($data['css']),
+                            'identifyColor' => sanitize_hex_color($data['identifyColor']),
                         );
 
                         array_push($new_style_copied_array, $copied_styles);
@@ -1113,8 +1126,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             } elseif ($task === 'style_save') {
                 $style_id = (int)$_POST['id'];
                 $new_classname = sanitize_text_field($_POST['name']);
-                $new_identify_color = sanitize_text_field($_POST['mycolor']);
-                $new_css = $_POST['mycss'];
+                $new_identify_color = sanitize_hex_color($_POST['mycolor']);
+                $new_css = wp_strip_all_tags($_POST['mycss']);
                 // Validate new name
                 if (!preg_match($regex, $new_classname)) {
                     wp_send_json('Invalid characters, please enter another!', 403);
@@ -1252,6 +1265,15 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function saveContactFormData()
         {
+            // Don't save if Settings > PublishPress Blocks are disabled
+            if( !$this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                return false;
+            }
+
+            if (!wp_verify_nonce($_POST['nonce'], 'advgb_blockform_nonce_field')) {
+                wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
+            }
+
             // phpcs:disable -- WordPress.Security.NonceVerification.Recommended - frontend form, no nonce
             if (!isset($_POST['action'])) {
                 wp_send_json(__('Bad Request!', 'advanced-gutenberg'), 400);
@@ -1326,6 +1348,15 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function saveNewsletterData()
         {
+            // Don't save if Settings > PublishPress Blocks are disabled
+            if( !$this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                return false;
+            }
+
+            if (!wp_verify_nonce($_POST['nonce'], 'advgb_blockform_nonce_field')) {
+                wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
+            }
+
             // phpcs:disable -- WordPress.Security.NonceVerification.Recommended - frontend form, no nonce
             if (!isset($_POST['action'])) {
                 wp_send_json(__('Bad Request!', 'advanced-gutenberg'), 400);
@@ -1942,6 +1973,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function saveAdvgbData()
         {
+            if (!current_user_can('activate_plugins')) {
+                return false;
+            }
+
             if( isset($_POST['advgb_block_access_save']) ) {
                 $this->saveAdvgbBlockAccess();
             }  elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
@@ -2020,14 +2055,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     }
                 }
 
-                $save_config['gallery_lightbox_caption'] = $_POST['gallery_lightbox_caption'];
-                $save_config['google_api_key'] = $_POST['google_api_key'];
-                $save_config['blocks_spacing'] = $_POST['blocks_spacing'];
-                $save_config['blocks_icon_color'] = $_POST['blocks_icon_color'];
-                $save_config['editor_width'] = $_POST['editor_width'];
+                $save_config['gallery_lightbox_caption'] = (int) $_POST['gallery_lightbox_caption'];
+                $save_config['google_api_key'] = sanitize_text_field($_POST['google_api_key']);
+                $save_config['blocks_spacing'] = (int) $_POST['blocks_spacing'];
+                $save_config['blocks_icon_color'] = sanitize_hex_color($_POST['blocks_icon_color']);
+                $save_config['editor_width'] = sanitize_text_field($_POST['editor_width']);
                 $save_config['rp_default_thumb'] = array(
-                    'url' => $_POST['post_default_thumb'],
-                    'id'  => $_POST['post_default_thumb_id']
+                    'url' => esc_url_raw($_POST['post_default_thumb']),
+                    'id'  => (int) $_POST['post_default_thumb_id']
                 );
 
                 update_option('advgb_settings', $save_config);
@@ -2148,8 +2183,18 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            $user_role         = $_POST['user_role'];
-            $blocks            = $_POST['blocks'];
+            /* Get blocks array.
+             * If 'blocks' doesn't exist (because advgb_blocks_list option is still not saved),
+             * redirect to error page and skip saving.
+             */
+            if( isset($_POST['blocks']) && is_array($_POST['blocks']) ) {
+                $blocks = array_map('sanitize_text_field', $_POST['blocks']);
+            } else {
+                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=error' ) );
+                exit;
+            }
+
+            $user_role         = sanitize_text_field($_POST['user_role']);
             $active_blocks     = array();
             $inactive_blocks   = array();
 
@@ -2158,10 +2203,20 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 /* Blocks saved in advgb_blocks_list but not listed in Block Access page
                  * due their categories are not detected
                  */
-                $blocks_list_undetected = ( !empty( $_POST['blocks_list_undetected'] ) ? $_POST['blocks_list_undetected'] : '' );
+                $blocks_list_undetected = (
+                    isset($_POST['blocks_list_undetected']) && is_array($_POST['blocks_list_undetected']) ? array_map('sanitize_text_field', $_POST['blocks_list_undetected']) : ''
+                );
 
-                // Get all the blocks we can manage (which category is detected)
-                $blocks_list = $_POST['blocks_list'];
+                /* Get all the blocks we can manage (which category is detected).
+                 * If 'blocks_list' doesn't exist (because advgb_blocks_list option is still not saved),
+                 * redirect to error page and skip saving.
+                 */
+                if( isset($_POST['blocks_list']) && is_array($_POST['blocks_list']) ) {
+                    $blocks_list = array_map('sanitize_text_field', $_POST['blocks_list']);
+                } else {
+                    wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=error' ) );
+                    exit;
+                }
 
                 if( $blocks_list_undetected && is_array( $blocks_list_undetected ) ) {
                     // Merge active blocks with the ones we can't manage
@@ -2301,10 +2356,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             $save_config = array();
-            $save_config['contact_form_sender_name'] = $_POST['contact_form_sender_name'];
-            $save_config['contact_form_sender_email'] = $_POST['contact_form_sender_email'];
-            $save_config['contact_form_email_title'] = $_POST['contact_form_email_title'];
-            $save_config['contact_form_email_receiver'] = $_POST['contact_form_email_receiver'];
+            $save_config['contact_form_sender_name'] = sanitize_text_field($_POST['contact_form_sender_name']);
+            $save_config['contact_form_sender_email'] = sanitize_email($_POST['contact_form_sender_email']);
+            $save_config['contact_form_email_title'] = sanitize_text_field($_POST['contact_form_email_title']);
+            $save_config['contact_form_email_receiver'] = sanitize_email($_POST['contact_form_email_receiver']);
 
             update_option('advgb_email_sender', $save_config);
 
@@ -2335,10 +2390,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
             } else {
                 $save_config['recaptcha_enable'] = 0;
             }
-            $save_config['recaptcha_site_key'] = $_POST['recaptcha_site_key'];
-            $save_config['recaptcha_secret_key'] = $_POST['recaptcha_secret_key'];
-            $save_config['recaptcha_language'] = $_POST['recaptcha_language'];
-            $save_config['recaptcha_theme'] = $_POST['recaptcha_theme'];
+            $save_config['recaptcha_site_key'] = sanitize_text_field($_POST['recaptcha_site_key']);
+            $save_config['recaptcha_secret_key'] = sanitize_text_field($_POST['recaptcha_secret_key']);
+            $save_config['recaptcha_language'] = sanitize_text_field($_POST['recaptcha_language']);
+            $save_config['recaptcha_theme'] = sanitize_text_field($_POST['recaptcha_theme']);
 
             update_option('advgb_recaptcha_config', $save_config);
 
@@ -4689,6 +4744,24 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     remove_filter($filter_name, 'wpautop');
                 }
             }
+        }
+
+        /**
+         * Add nonce to blocks with form tag
+         *
+         * @param string $content Post content
+         *
+         * @return string
+         */
+        public function addNonceToFormBlocks($content)
+        {
+            $content = str_replace(
+                '<div class="advgb-form-submit-wrapper"',
+                '<input type="hidden" name="advgb_blockform_nonce_field" value="' . wp_create_nonce('advgb_blockform_nonce_field') . '"><div class="advgb-form-submit-wrapper"',
+                $content
+            );
+
+            return $content;
         }
 
         /**

@@ -23511,7 +23511,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var recentPosts = this.props.recentPosts;
 
-                var isInPost = wp.data.select('core/editor').getCurrentPostType() === 'post';
+                // We need to check if we're in post edit or widgets screen
+                var isInPost = wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostType() === 'post';
 
                 var postType = attributes.postType;
                 if (postType === undefined) {
@@ -24693,7 +24694,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return cat.id;
             }) : [];
 
-            var postId = wp.data.select('core/editor').getCurrentPostId();
+            // We need to check if we're in post edit or widgets screen
+            var postId = wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
             var recentPostsQuery = pickBy({
                 categories: catIds,
                 tags: tagIds,
@@ -26305,7 +26307,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     // Add button to insert summary inside table of contents component
     (function () {
         jQuery(window).on('load', function () {
-            if (typeof dispatch('core/editor') === 'undefined') {
+            if (!dispatch('core/editor') || typeof dispatch('core/editor') === 'undefined') {
                 return false;
             }
 
