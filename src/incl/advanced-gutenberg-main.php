@@ -780,21 +780,26 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             /**
-             * Remove slashes on svg icon
+             * Cleanup block list
              *
              * @param array $block Block to remove slashes
              *
              * @return mixed
              */
-            function removeSlashes(array $block)
+            function cleanupBlockList(array $block)
             {
-                $block['icon'] = htmlentities(stripslashes($block['icon']), ENT_QUOTES);
+                $block['icon']      = htmlentities(stripslashes($block['icon']), ENT_QUOTES);
+                $block['name']      = sanitize_text_field($block['name']);
+                $block['title']     = sanitize_text_field($block['title']);
+                $block['category']  = sanitize_text_field($block['category']);
                 return $block;
             }
 
             if (is_array($_POST['blocksList'])) {
-                $blocksList  = array_map('removeSlashes', $_POST['blocksList']);
+                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $blocksList  = array_map('cleanupBlockList', $_POST['blocksList']);
             } else {
+                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 $blocksList  = json_decode(stripslashes($_POST['blocksList']));
             }
 
