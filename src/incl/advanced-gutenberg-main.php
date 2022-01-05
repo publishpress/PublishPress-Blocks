@@ -1226,7 +1226,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             $blockType  = sanitize_text_field($_POST['blockType']);
-            $settings   = map_deep($_POST['settings'], 'sanitize_text_field');
+            $settings   = $_POST['settings']; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
             foreach ($settings as $key => $setting) {
                 foreach ($setting as $k => $option) {
