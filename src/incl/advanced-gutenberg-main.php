@@ -782,7 +782,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             /**
              * Cleanup block list
              *
-             * @param array $block Block to remove slashes
+             * @param array $block Block
              *
              * @return mixed
              */
