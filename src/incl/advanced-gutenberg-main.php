@@ -773,8 +773,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_send_json('', 400);
             }
 
-            if (!wp_verify_nonce($_POST['nonce'], 'advgb_update_blocks_list')
-                && !wp_verify_nonce($_POST['nonce'], 'advgb_nonce')
+            if (!wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'advgb_update_blocks_list')
+                && !wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'advgb_nonce')
             ) {
                 wp_send_json('', 400);
             }
@@ -880,8 +880,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             // phpcs:disable WordPress.Security.NonceVerification.Recommended -- View request, no action
-            $usersearch     = isset($_REQUEST['search']) ? wp_unslash(trim($_REQUEST['search'])) : '';
-            $role           = isset($_REQUEST['role']) ? $_REQUEST['role'] : '';
+            $usersearch     = isset($_REQUEST['search']) ? wp_unslash(trim(sanitize_text_field($_REQUEST['search']))) : '';
+            $role           = isset($_REQUEST['role']) ? sanitize_text_field($_REQUEST['role']) : '';
             $users_per_page = 20;
             $pagenum        = 1;
             if ($role === 'none') {
@@ -1048,7 +1048,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $regex = '/^[a-zA-Z0-9_\-]+$/';
             $regexWithSpaces = '/^[\p{L}\p{N}_\- ]+$/u';
 
-            if (!wp_verify_nonce($_POST['nonce'], 'advgb_cstyles_nonce')) {
+            if (!wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'advgb_cstyles_nonce')) {
                 wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
             }
 
@@ -1058,7 +1058,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             $custom_style_data = get_option('advgb_custom_styles');
-            $task = isset($_POST['task']) ? $_POST['task'] : '';
+            $task = isset($_POST['task']) ? sanitize_text_field($_POST['task']) : '';
             if ($task === '') {
                 return false;
             } elseif ($task === 'new') {
@@ -1184,11 +1184,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            if (!wp_verify_nonce($_POST['pNonce'], 'advgb_profiles_nonce')) {
+            if (!wp_verify_nonce(sanitize_text_field($_POST['pNonce']), 'advgb_profiles_nonce')) {
                 wp_send_json(__('Fail to verify nonce!', 'advanced-gutenberg'), 400);
                 return false;
             };
 
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $profiles_to_delete = $_POST['ids'];
             if (count($profiles_to_delete)) {
                 $deleted = array();
@@ -1215,7 +1216,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            if (!wp_verify_nonce($_POST['nonce'], 'advgb_block_config_nonce')) {
+            if (!wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'advgb_block_config_nonce')) {
                 wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
             }
 
@@ -1275,7 +1276,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            if (!wp_verify_nonce($_POST['nonce'], 'advgb_blockform_nonce_field')) {
+            if (!wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'advgb_blockform_nonce_field')) {
                 wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
             }
 
@@ -1358,7 +1359,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            if (!wp_verify_nonce($_POST['nonce'], 'advgb_blockform_nonce_field')) {
+            if (!wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'advgb_blockform_nonce_field')) {
                 wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
             }
 
@@ -2005,7 +2006,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function saveSettings()
         {
             if (isset($_POST['save_settings'])) {
-                if (!wp_verify_nonce($_POST['advgb_settings_nonce_field'], 'advgb_settings_nonce')) {
+                if (!wp_verify_nonce(sanitize_text_field($_POST['advgb_settings_nonce_field']), 'advgb_settings_nonce')) {
                     return false;
                 }
 
@@ -2079,7 +2080,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             if (isset($_POST['save_custom_styles'])) {
-                if (!wp_verify_nonce($_POST['advgb_cstyles_nonce_field'], 'advgb_cstyles_nonce')) {
+                if (!wp_verify_nonce(sanitize_text_field($_POST['advgb_cstyles_nonce_field']), 'advgb_cstyles_nonce')) {
                     return false;
                 }
 
@@ -2180,7 +2181,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
             // Verify nonce
-            if ( !wp_verify_nonce( $_POST['advgb_nonce_field'], 'advgb_nonce' ) ) {
+            if ( !wp_verify_nonce( sanitize_text_field($_POST['advgb_nonce_field']), 'advgb_nonce' ) ) {
                 return false;
             }
 
@@ -2254,7 +2255,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         private function downloadBlockFormData()
         {
             // Verify nonce
-            if (!wp_verify_nonce($_POST['advgb_export_data_nonce_field'], 'advgb_export_data_nonce')) {
+            if (!wp_verify_nonce(sanitize_text_field($_POST['advgb_export_data_nonce_field']), 'advgb_export_data_nonce')) {
                 return false;
             }
 
@@ -2356,7 +2357,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            if (!wp_verify_nonce($_POST['advgb_email_config_nonce_field'], 'advgb_email_config_nonce')) {
+            if (!wp_verify_nonce(sanitize_text_field($_POST['advgb_email_config_nonce_field']), 'advgb_email_config_nonce')) {
                 return false;
             }
 
@@ -2385,7 +2386,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            if (!wp_verify_nonce($_POST['advgb_captcha_nonce_field'], 'advgb_captcha_nonce')) {
+            if (!wp_verify_nonce(sanitize_text_field($_POST['advgb_captcha_nonce_field']), 'advgb_captcha_nonce')) {
                 return false;
             }
 
@@ -2486,7 +2487,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function loadBlockConfigView($block = '')
         {
             if (!$block) {
-                $block = $_GET['page']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- view only
+                $block = sanitize_text_field($_GET['page']); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- view only
             }
 
             wp_enqueue_style('roboto_font', 'https://fonts.googleapis.com/css?family=Roboto');
