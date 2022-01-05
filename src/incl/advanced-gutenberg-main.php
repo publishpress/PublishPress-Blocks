@@ -1225,8 +1225,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $blocks_config_saved = array();
             }
 
-            $blockType = sanitize_text_field($_POST['blockType']);
-            $settings = $_POST['settings'];
+            $blockType  = sanitize_text_field($_POST['blockType']);
+            $settings   = map_deep($_POST['settings'], 'sanitize_text_field');
 
             foreach ($settings as $key => $setting) {
                 foreach ($setting as $k => $option) {
