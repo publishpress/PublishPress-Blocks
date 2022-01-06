@@ -66,7 +66,7 @@ if(defined('ADVANCED_GUTENBERG_PRO')) {
         <div class="advgb-search-wrapper">
             <input type="text"
                    class="advgb-search-input blocks-config-search"
-                   placeholder="<?php esc_html_e('Search blocks', 'advanced-gutenberg') ?>"
+                   placeholder="<?php esc_attr_e('Search blocks', 'advanced-gutenberg') ?>"
             >
             <i class="mi mi-search"></i>
         </div>
@@ -85,7 +85,7 @@ if(defined('ADVANCED_GUTENBERG_PRO')) {
                 </span>
                 <span class="block-title"><?php echo esc_html( __($block['title'], 'advanced-gutenberg') ); ?></span>
                 <i class="mi mi-settings block-config-button"
-                   title="<?php esc_html_e('Edit', 'advanced-gutenberg') ?>"
+                   title="<?php esc_attr_e('Edit', 'advanced-gutenberg') ?>"
                    data-block="<?php echo esc_attr($block['name']); ?>"
                 ></i>
             </li>

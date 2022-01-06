@@ -2128,7 +2128,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
 
                 if( !empty($css) ) {
-                    echo '<style type="text/css">' . $css . '</style>';
+                    echo '<style type="text/css">' . esc_html($css) . '</style>';
                 }
             }
         }
@@ -2150,7 +2150,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $content .= $styles['css'] . "\n} \n";
                 }
 
-                echo '<style type="text/css">' . $content . '</style>';
+                echo '<style type="text/css">' . esc_html($content) . '</style>';
 
             }
         }
@@ -2165,7 +2165,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             if (isset($saved_settings['enable_blocks_spacing']) && $saved_settings['enable_blocks_spacing']) {
                 $blocks_spacing = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
-                echo '<style type="text/css">.editor-styles-wrapper [data-block] { margin-bottom: ' . $blocks_spacing . 'px !important; }</style>';
+                echo '<style type="text/css">.editor-styles-wrapper [data-block] { margin-bottom: ' . esc_html($blocks_spacing) . 'px !important; }</style>';
             }
         }
 
