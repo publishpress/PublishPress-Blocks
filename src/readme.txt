@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 5.8.2
-Stable tag: 2.11.2
+Stable tag: 2.11.3b1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.12.0 - 6 Jan 2022 =
+= 2.11.3 - 6 Jan 2022 =
   * Add: Sanitization cleanup
 
 = 2.11.2 - 4 Jan 2022 =
