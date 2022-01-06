@@ -1454,7 +1454,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             $from_advgb = isset($_POST['advgb_login_form']); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- redirect
             if (!empty($_SERVER['HTTP_REFERER']) && $from_advgb) {
-                $redirect = add_query_arg('login', 'failed', $_SERVER['HTTP_REFERER']);
+                $redirect = add_query_arg('login', 'failed', $_SERVER['HTTP_REFERER']); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 wp_safe_redirect($redirect);
                 exit;
             }
@@ -2259,7 +2259,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            $postValue = $_POST['block_data_export'];
+            $postValue = sanitize_text_field($_POST['block_data_export']);
             $postValue = explode('.', $postValue);
             $dataExport = $postValue[0];
             $dataType = $postValue[1];
