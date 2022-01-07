@@ -5254,40 +5254,40 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $html = '';
             foreach ($fieldset as $category) {
                 $html .= '<div class="block-config-category">';
-                $html .= '<h3 class="block-config-category-title">' . $category['label'] . '</h3>';
+                $html .= '<h3 class="block-config-category-title">' . esc_html($category['label']) . '</h3>';
                 $html .= '<ul class="block-config-settings clearfix">';
 
                 foreach ($category['settings'] as $setting) {
                     $settingValue = $this->setConfigValue($data, $setting['name']);
 
                     if ($setting['type'] === 'hidden') {
-                        $html .= '<input type="hidden" class="block-config-input" name="'. $setting['name'] .'" value="'. $setting['value'] .'" />';
+                        $html .= '<input type="hidden" class="block-config-input" name="'. esc_attr($setting['name']) .'" value="'. esc_attr($setting['value']) .'" />';
                         continue;
                     }
 
                     $html .= '<li class="ju-settings-option full-width block-config-option clearfix">';
-                    $html .= '<label for="setting-'. $setting['name'] .'" class="ju-setting-label">' . $setting['title'] . '</label>';
+                    $html .= '<label for="setting-'. esc_attr($setting['name']) .'" class="ju-setting-label">' . esc_html($setting['title']) . '</label>';
                     $html .= '<div class="block-config-input-wrapper">';
 
                     switch ($setting['type']) {
                         case 'text':
                         case 'number':
-                            $html .= '<input type="' . $setting['type'] . '" class="ju-input block-config-input" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '" ';
+                            $html .= '<input type="' . esc_attr($setting['type']) . '" class="ju-input block-config-input" id="setting-'. esc_attr($setting['name']) .'" name="' . esc_attr($setting['name']) . '" ';
                             if ($setting['type'] === 'number' && (isset($setting['min']) || isset($setting['max']))) {
-                                $html .= ' min="' . $setting['min'] . '" max="' . $setting['max'] . '" ';
+                                $html .= ' min="' . esc_attr($setting['min']) . '" max="' . esc_attr($setting['max']) . '" ';
                             }
-                            $html .= ' value="'. $settingValue .'" />';
+                            $html .= ' value="'. esc_attr($settingValue) .'" />';
                             break;
                         case 'color':
-                            $html .= '<input type="text" class="minicolors minicolors-input ju-input block-config-input" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '" value="'. $settingValue .'" />';
+                            $html .= '<input type="text" class="minicolors minicolors-input ju-input block-config-input" id="setting-'. esc_attr($setting['name']) .'" name="' . esc_attr($setting['name']) . '" value="'. esc_attr($settingValue) .'" />';
                             break;
                         case 'select':
-                            $html .= '<select class="block-config-input ju-select" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '">';
+                            $html .= '<select class="block-config-input ju-select" id="setting-'. esc_attr($setting['name']) .'" name="' . esc_attr($setting['name']) . '">';
                             $html .= '<option value="">'. __('Default', 'advanced-gutenberg') .'</option>';
 
                             foreach ($setting['options'] as $option) {
                                 $selected = $option['value'] === $settingValue ? 'selected' : '';
-                                $html .= '<option value="' . $option['value'] . '" ' . $selected . '>' . $option['label'] . '</option>';
+                                $html .= '<option value="' . esc_attr($option['value']) . '" ' . $selected . '>' . esc_html($option['label']) . '</option>';
                             }
 
                             $html .= '</select>';
@@ -5296,7 +5296,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             $checked = (int)$settingValue === 1 ? 'checked' : '';
                             $html .= '<div class="ju-switch-button">';
                             $html .= '<label class="switch">';
-                            $html .=    '<input type="checkbox" value="1" class="block-config-input" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '" ' . $checked . '/>';
+                            $html .=    '<input type="checkbox" value="1" class="block-config-input" id="setting-'. esc_attr($setting['name']) .'" name="' . esc_attr($setting['name']) . '" ' . $checked . '/>';
                             $html .=    '<span class="slider"></span>';
                             $html .= '</label>';
                             $html .= '</div>';

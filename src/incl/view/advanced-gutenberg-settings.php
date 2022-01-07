@@ -333,9 +333,15 @@ if (!isset($saved_settings['enable_advgb_blocks'])) {
                         </label>
                         <div>
                             <select class="ju-select" name="editor_width" id="editor_width">
-                                <option value="" <?php echo $editor_width === '' ? 'selected' : '' ?>>Original</option>
-                                <option value="75" <?php echo $editor_width === '75' ? 'selected' : '' ?>>Large</option>
-                                <option value="95" <?php echo $editor_width === '95' ? 'selected' : '' ?>>Full width</option>
+                                <option value="" <?php echo $editor_width === '' ? 'selected' : '' ?>>
+                                    <?php esc_html_e('Original', 'advanced-gutenberg'); ?>
+                                </option>
+                                <option value="75" <?php echo $editor_width === '75' ? 'selected' : '' ?>>
+                                    <?php esc_html_e('Large', 'advanced-gutenberg'); ?>
+                                </option>
+                                <option value="95" <?php echo $editor_width === '95' ? 'selected' : '' ?>>
+                                    <?php esc_html_e('Full width', 'advanced-gutenberg'); ?>
+                                </option>
                             </select>
                         </div>
                     </div>
