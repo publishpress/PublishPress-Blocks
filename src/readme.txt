@@ -257,8 +257,9 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.11.3 - 6 Jan 2022 =
+= 2.11.3 - 7 Jan 2022 =
   * Add: Sanitization cleanup
+  * Add: Improve escaping output
 
 = 2.11.2 - 4 Jan 2022 =
   * Add: Nonce to block forms

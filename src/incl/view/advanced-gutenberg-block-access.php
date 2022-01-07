@@ -3,7 +3,7 @@ defined('ABSPATH') || die;
 
 // Check users permissions
 if ( !current_user_can('administrator') ) {
-    wp_die( __('You do not have permission to manage Block Access', 'advanced-gutenberg') );
+    wp_die( esc_html__('You do not have permission to manage Block Access', 'advanced-gutenberg') );
 }
 
 wp_enqueue_style('advgb_profile_style');
@@ -34,8 +34,8 @@ wp_add_inline_script(
 );
 
 // Current role
-if( isset( $_REQUEST['user_role'] ) && !empty( $_REQUEST['user_role'] ) ) {
-    $current_user_role = sanitize_text_field($_REQUEST['user_role']);
+if( isset( $_REQUEST['user_role'] ) && !empty( $_REQUEST['user_role'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- advgb_nonce in place
+    $current_user_role = sanitize_text_field($_REQUEST['user_role']); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- advgb_nonce in place
 } else {
     $current_user_role = 'administrator';
 }
@@ -66,7 +66,7 @@ $advgb_block_status_ = null;
                 <i class="dashicons dashicons-dismiss ju-notice-close"></i>
             </div>
         <?php
-        } elseif ( isset($_GET['save_access']) && $_GET['save_access'] === 'error' ) {
+    } elseif ( isset($_GET['save_access']) && $_GET['save_access'] === 'error' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- advgb_nonce in place
             ?>
             <div class="ju-notice-msg ju-notice-error">
                 <?php esc_html_e('Block Access can\'t be saved. Please try again.', 'advanced-gutenberg') ?>
@@ -92,7 +92,7 @@ $advgb_block_status_ = null;
                         $role_name = translate_user_role($role_name);
                         ?>
                         <option value="<?php echo esc_attr($roles); ?>" <?php selected( $current_user_role, $roles ); ?>>
-                            <?php echo $role_name; ?>
+                            <?php echo esc_html($role_name); ?>
                         </option>
                     <?php
                     endforeach;
@@ -100,7 +100,7 @@ $advgb_block_status_ = null;
                 </select>
                 <div class="advgb-search-wrapper">
                     <input type="text" class="blocks-search-input advgb-search-input"
-                           placeholder="<?php esc_html_e('Search blocks', 'advanced-gutenberg') ?>"
+                           placeholder="<?php esc_attr_e('Search blocks', 'advanced-gutenberg') ?>"
                     >
                     <i class="mi mi-search"></i>
                 </div>
@@ -128,7 +128,7 @@ $advgb_block_status_ = null;
                     <div class="category-block clearfix">
                         <h3 class="category-name">
                             <span>
-                                <?php echo $blockCategory['title']; ?>
+                                <?php echo esc_html($blockCategory['title']); ?>
                             </span><i class="mi"></i>
                         </h3>
                         <ul class="blocks-list">
@@ -147,11 +147,13 @@ $advgb_block_status_ = null;
                                     ?>
                                     <li class="block-item block-access-item ju-settings-option">
                                         <label class="ju-setting-label">
-                                            <span class="block-icon"<?php echo isset( $block['iconColor'] ) && !empty( $block['iconColor'] ) ? ' style="color:' . $block['iconColor'] . ';"' : ''; ?>>
-                                                <?php echo wp_specialchars_decode( $block['icon'], ENT_QUOTES ); ?>
+                                            <span class="block-icon"<?php echo isset( $block['iconColor'] ) && !empty( $block['iconColor'] ) ? ' style="color:' . esc_attr($block['iconColor']) . ';"' : ''; ?>>
+                                                <?php
+                                                echo wp_specialchars_decode( $block['icon'], ENT_QUOTES ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                                ?>
                                             </span>
                                             <span class="block-title">
-                                                <?php echo $block['title']; ?>
+                                                <?php echo esc_html($block['title']); ?>
                                             </span>
                                         </label>
                                         <div class="ju-switch-button">
