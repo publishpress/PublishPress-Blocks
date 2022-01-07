@@ -66,7 +66,7 @@ $advgb_block_status_ = null;
                 <i class="dashicons dashicons-dismiss ju-notice-close"></i>
             </div>
         <?php
-        } elseif ( isset($_GET['save_access']) && $_GET['save_access'] === 'error' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    } elseif ( isset($_GET['save_access']) && $_GET['save_access'] === 'error' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- advgb_nonce in place
             ?>
             <div class="ju-notice-msg ju-notice-error">
                 <?php esc_html_e('Block Access can\'t be saved. Please try again.', 'advanced-gutenberg') ?>
