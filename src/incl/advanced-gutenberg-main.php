@@ -2128,7 +2128,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
 
                 if( !empty($css) ) {
-                    echo '<style type="text/css">' . esc_html($css) . '</style>';
+                    echo '<style type="text/css">' . $css . '</style>';
                 }
             }
         }
@@ -2146,11 +2146,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 $content = '';
                 foreach ($custom_styles as $styles) {
-                    $content .= '.block-editor-writing-flow .' .$styles['name'] . " {\n";
+                    $content .= '.block-editor-writing-flow .' . esc_html($styles['name']) . " {\n";
                     $content .= $styles['css'] . "\n} \n";
                 }
 
-                echo '<style type="text/css">' . esc_html($content) . '</style>';
+                echo '<style type="text/css">' . $content . '</style>';
 
             }
         }
