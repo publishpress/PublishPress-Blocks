@@ -2128,7 +2128,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
 
                 if( !empty($css) ) {
-                    echo '<style type="text/css">' . $css . '</style>';
+                    echo '<style type="text/css">' . strip_tags($css) . '</style>';
                 }
             }
         }
@@ -2150,7 +2150,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $content .= $styles['css'] . "\n} \n";
                 }
 
-                echo '<style type="text/css">' . $content . '</style>';
+                echo '<style type="text/css">' . strip_tags($content) . '</style>';
 
             }
         }
