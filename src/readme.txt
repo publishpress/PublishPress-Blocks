@@ -260,8 +260,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 = 2.11.3 - 13 Jan 2022 =
   * Add: Sanitization cleanup
   * Add: Improve escaping output
-  * Fix: Don't output CSS properties in frontend when values are empty for Advanced Button block
-  * Fix: Don't output CSS properties in frontend when values are empty for Search Bar block
+  * Fix: Don't output CSS properties in frontend when values are empty for Advanced Button, Search Bar and Login / Register blocks
 
 = 2.11.2 - 4 Jan 2022 =
   * Add: Nonce to block forms
