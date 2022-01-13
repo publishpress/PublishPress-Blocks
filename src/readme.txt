@@ -261,6 +261,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Add: Sanitization cleanup
   * Add: Improve escaping output
   * Fix: Timeout when editing a cell for Advanced Table block
+  * Fix: Change cell content onClick for Advanced Table block
 
 = 2.11.2 - 4 Jan 2022 =
   * Add: Nonce to block forms
