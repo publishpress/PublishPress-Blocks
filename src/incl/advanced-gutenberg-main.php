@@ -5637,14 +5637,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $style_html .= 'margin:'.$mg_top.'px '.$mg_right.'px '.$mg_bottom.'px '.$mg_left.'px !important;';
             $style_html .= 'padding:'.$pd_top.'px '.$pd_right.'px '.$pd_bottom.'px '.$pd_left.'px;';
             $style_html .= 'border-width:'.$border_width.'px !important;';
-            $style_html .= 'border-color:'.$border_color.' !important;';
+            if(!empty($border_color)) $style_html .= 'border-color:'.$border_color.' !important;';
             $style_html .= 'border-style:'.$border_style. ($border_style === 'none' ? '' : ' !important') .';';
             $style_html .= 'border-radius:'.$border_radius.'px !important;';
             $style_html .= '}';
 
             $style_html .= '.'. $block_class . ':hover{';
-            $style_html .= 'color:'.$hover_t_color.' !important;';
-            $style_html .= 'background-color:'.$hover_bg_color.' !important;';
+            if(!empty($hover_t_color)) $style_html .= 'color:'.$hover_t_color.' !important;';
+            if(!empty($hover_bg_color)) $style_html .= 'background-color:'.$hover_bg_color.' !important;';
             $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.';';
             $style_html .= 'opacity:'.$hover_opacity.';';
             $style_html .= 'transition:all '.$transition_spd.'s ease;';
@@ -5751,8 +5751,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $transition_spd = isset($blockAttrs['submitHoverTranSpeed']) ? esc_html(floatval($blockAttrs['submitHoverTranSpeed'])/1000) : 0.2;
 
             $style_html  = '.'. $block_class . ':hover{';
-            $style_html .= 'color:'.$hover_t_color.' !important;';
-            $style_html .= 'background-color:'.$hover_bg_color.' !important;';
+            if(!empty($hover_t_color)) $style_html .= 'color:'.$hover_t_color.' !important;';
+            if(!empty($hover_bg_color)) $style_html .= 'background-color:'.$hover_bg_color.' !important;';
             $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.' !important;';
             $style_html .= 'opacity:'.$hover_opacity.';';
             $style_html .= 'transition:all '.$transition_spd.'s ease;';
@@ -5782,8 +5782,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $transition_spd = isset($blockAttrs['searchBtnHoverTranSpeed']) ? esc_html(floatval($blockAttrs['searchBtnHoverTranSpeed'])/1000) : 0.2;
 
             $style_html  = '.'. $block_class . ':hover{';
-            $style_html .= 'color:'.$hover_t_color.' !important;';
-            $style_html .= 'background-color:'.$hover_bg_color.' !important;';
+            if(!empty($hover_t_color)) $style_html .= 'color:'.$hover_t_color.' !important;';
+            if(!empty($hover_bg_color)) $style_html .= 'background-color:'.$hover_bg_color.' !important;';
             $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.' !important;';
             $style_html .= 'opacity:'.$hover_opacity.';';
             $style_html .= 'transition:all '.$transition_spd.'s ease;';
