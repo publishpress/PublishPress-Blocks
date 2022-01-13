@@ -879,7 +879,20 @@
                                         this.setState({
                                             selectedCell: cell,
                                             sectionSelected: section,
-                                        })
+                                        });
+                                    }}
+                                    /* onClick jump to the rescue in case unstableOnFocus
+                                     * doesn't work due the cell is not focused */
+                                    onClick={() => {
+                                        if (willSetContent) {
+                                            this.updateCellContent(lastValue, selectedCell);
+                                            clearTimeout(willSetContent);
+                                            willSetContent = null;
+                                        }
+                                        this.setState({
+                                            selectedCell: cell,
+                                            sectionSelected: section,
+                                        });
                                     }}
                                 />
                             </td>

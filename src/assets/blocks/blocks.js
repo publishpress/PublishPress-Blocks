@@ -10963,6 +10963,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             sectionSelected: section
                                         });
                                     }
+                                    /* onClick jump to the rescue in case unstableOnFocus
+                                     * doesn't work due the cell is not focused */
+                                    , onClick: function onClick() {
+                                        if (willSetContent) {
+                                            _this3.updateCellContent(lastValue, selectedCell);
+                                            clearTimeout(willSetContent);
+                                            willSetContent = null;
+                                        }
+                                        _this3.setState({
+                                            selectedCell: cell,
+                                            sectionSelected: section
+                                        });
+                                    }
                                 })
                             );
                         })
