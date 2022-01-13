@@ -10950,7 +10950,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         lastValue = value;
                                         willSetContent = setTimeout(function () {
                                             return _this3.updateCellContent(value, selectedCell);
-                                        }, 1000);
+                                        }, 10);
                                     },
                                     unstableOnFocus: function unstableOnFocus() {
                                         if (willSetContent) {
