@@ -5751,8 +5751,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $transition_spd = isset($blockAttrs['submitHoverTranSpeed']) ? esc_html(floatval($blockAttrs['submitHoverTranSpeed'])/1000) : 0.2;
 
             $style_html  = '.'. $block_class . ':hover{';
-            $style_html .= 'color:'.$hover_t_color.' !important;';
-            $style_html .= 'background-color:'.$hover_bg_color.' !important;';
+            if(!empty($hover_t_color)) $style_html .= 'color:'.$hover_t_color.' !important;';
+            if(!empty($hover_bg_color)) $style_html .= 'background-color:'.$hover_bg_color.' !important;';
             $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.' !important;';
             $style_html .= 'opacity:'.$hover_opacity.';';
             $style_html .= 'transition:all '.$transition_spd.'s ease;';
