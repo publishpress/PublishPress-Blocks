@@ -868,7 +868,7 @@
                                     onChange={(value) => {
                                         if (willSetContent) clearTimeout(willSetContent);
                                         lastValue = value;
-                                        willSetContent = setTimeout(() => this.updateCellContent(value, selectedCell), 1000);
+                                        willSetContent = setTimeout(() => this.updateCellContent(value, selectedCell), 10);
                                     }}
                                     unstableOnFocus={() => {
                                         if (willSetContent) {
@@ -879,7 +879,20 @@
                                         this.setState({
                                             selectedCell: cell,
                                             sectionSelected: section,
-                                        })
+                                        });
+                                    }}
+                                    /* onClick jump to the rescue in case unstableOnFocus
+                                     * doesn't work due the cell is not focused */
+                                    onClick={() => {
+                                        if (willSetContent) {
+                                            this.updateCellContent(lastValue, selectedCell);
+                                            clearTimeout(willSetContent);
+                                            willSetContent = null;
+                                        }
+                                        this.setState({
+                                            selectedCell: cell,
+                                            sectionSelected: section,
+                                        });
                                     }}
                                 />
                             </td>

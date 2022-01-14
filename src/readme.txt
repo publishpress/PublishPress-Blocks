@@ -260,6 +260,8 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 = 2.11.3 - 13 Jan 2022 =
   * Add: Sanitization cleanup
   * Add: Improve escaping output
+  * Fix: Timeout when editing a cell for Advanced Table block
+  * Fix: Change cell content onClick for Advanced Table block
   * Fix: Don't output CSS properties in frontend when values are empty for Advanced Button, Search Bar and Login / Register blocks
 
 = 2.11.2 - 4 Jan 2022 =
