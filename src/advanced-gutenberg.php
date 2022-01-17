@@ -55,8 +55,8 @@ if( file_exists(__DIR__ . '/vendor/autoload.php') && !defined('ADVANCED_GUTENBER
     require_once __DIR__ . '/vendor/autoload.php';
     define('ADVANCED_GUTENBERG_VENDOR_LOADED', true);
 
+    // Ask for review
     if( file_exists(__DIR__ . '/review/review-request.php') ) {
-        // Ask for review
         require_once __DIR__ . '/review/review-request.php';
     }
 }
