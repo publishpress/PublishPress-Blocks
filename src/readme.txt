@@ -259,6 +259,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 = 2.11.4 - 17 Jan 2022 =
   * Add: Set Block Access as disabled for new installations
+  * Fix: Include 0 on the left when hours or minutes are 0-9 for Newsletter and Contact Form blocks
 
 = 2.11.3 - 17 Jan 2022 =
   * Add: Sanitization cleanup

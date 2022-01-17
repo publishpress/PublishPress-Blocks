@@ -13,7 +13,7 @@ jQuery(document).ready(function ($) {
         var contactEmail = $(this).find('.advgb-form-input-email').val();
         var contactMsg = $(this).find('.advgb-form-input-msg').val();
         var date = new Date();
-        var submitDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' - ' + date.getHours() + ':' + date.getMinutes();
+        var submitDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' - ' + ( date.getHours() < 10 ? '0' : '' ) + date.getHours() + ':' + ( date.getMinutes() < 10 ? '0' : '' ) + date.getMinutes();
         var g_id = parseInt($thisForm.find('.advgb-grecaptcha').data('gid'));
 
         if (contactName === '' || contactEmail === '' || contactMsg === '') {
@@ -46,6 +46,7 @@ jQuery(document).ready(function ($) {
                 var successText = $thisForm.find('.advgb-form-submit').data('success');
                 successText = successText ? successText : 'Message sent with success!';
                 $thisForm.append('<div class="advgb-form-submit-success">'+ successText +'</div>');
+                console.log(submitDate);
             },
             error: function ( jqxhr, textStatus, error ) {
                 alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
