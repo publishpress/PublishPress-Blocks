@@ -10950,9 +10950,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         lastValue = value;
                                         willSetContent = setTimeout(function () {
                                             return _this3.updateCellContent(value, selectedCell);
-                                        }, 1000);
+                                        }, 10);
                                     },
                                     unstableOnFocus: function unstableOnFocus() {
+                                        if (willSetContent) {
+                                            _this3.updateCellContent(lastValue, selectedCell);
+                                            clearTimeout(willSetContent);
+                                            willSetContent = null;
+                                        }
+                                        _this3.setState({
+                                            selectedCell: cell,
+                                            sectionSelected: section
+                                        });
+                                    }
+                                    /* onClick jump to the rescue in case unstableOnFocus
+                                     * doesn't work due the cell is not focused */
+                                    , onClick: function onClick() {
                                         if (willSetContent) {
                                             _this3.updateCellContent(lastValue, selectedCell);
                                             clearTimeout(willSetContent);
