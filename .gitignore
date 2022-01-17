@@ -4,3 +4,4 @@ vendor/
 node_modules/
 src/assets/blocks/*.js.map
 .DS_Store*
+report.csv

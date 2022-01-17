@@ -10950,9 +10950,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         lastValue = value;
                                         willSetContent = setTimeout(function () {
                                             return _this3.updateCellContent(value, selectedCell);
-                                        }, 1000);
+                                        }, 10);
                                     },
                                     unstableOnFocus: function unstableOnFocus() {
+                                        if (willSetContent) {
+                                            _this3.updateCellContent(lastValue, selectedCell);
+                                            clearTimeout(willSetContent);
+                                            willSetContent = null;
+                                        }
+                                        _this3.setState({
+                                            selectedCell: cell,
+                                            sectionSelected: section
+                                        });
+                                    }
+                                    /* onClick jump to the rescue in case unstableOnFocus
+                                     * doesn't work due the cell is not focused */
+                                    , onClick: function onClick() {
                                         if (willSetContent) {
                                             _this3.updateCellContent(lastValue, selectedCell);
                                             clearTimeout(willSetContent);
@@ -29147,14 +29160,14 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                     if (blocks[block].icon.foreground !== undefined) blockItem.iconColor = blocks[block].icon.foreground;
 
                     if (typeof savedIcon === 'function') {
-                        if (!!savedIcon.prototype.render) {
+                        if (typeof savedIcon.prototype !== 'undefined') {
                             blockItem.icon = wp.element.renderToString(wp.element.createElement(savedIcon));
+                            blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
+                            blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
                         } else {
-                            blockItem.icon = wp.element.renderToString(savedIcon);
+                            blockItemIcon = wp.element.createElement(wp.components.Dashicon, { icon: 'block-default' });
+                            blockItem.icon = wp.element.renderToString(blockItemIcon);
                         }
-
-                        blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
-                        blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
                     } else if ((typeof savedIcon === 'undefined' ? 'undefined' : _typeof(savedIcon)) === 'object') {
                         blockItem.icon = wp.element.renderToString(savedIcon);
                         blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
