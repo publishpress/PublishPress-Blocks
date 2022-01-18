@@ -165,8 +165,6 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                         'core/post-featured-image',
                         'core/post-terms',
                         'core/loginout',
-                        'core/legacy-widget',
-                        'core/widget-area',
                         'core/gallery',
                         'core/shortcode',
                         'core/file'
