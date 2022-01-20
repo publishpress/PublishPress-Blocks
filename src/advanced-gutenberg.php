@@ -49,9 +49,13 @@ if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
 // Code shared with Pro version
 require_once __DIR__ . '/init.php';
 
-// Vendor
-if( file_exists(__DIR__ . '/vendor/autoload.php') && !defined('ADVANCED_GUTENBERG_VENDOR_LOADED') && is_admin() ) {
-
+// Vendor and Ask-for-Review 
+if(
+    file_exists(__DIR__ . '/vendor/autoload.php')
+    && !defined('ADVANCED_GUTENBERG_VENDOR_LOADED')
+    && is_admin()
+    && !class_exists('PublishPress\WordPressReviews\ReviewsController')
+) {
     require_once __DIR__ . '/vendor/autoload.php';
     define('ADVANCED_GUTENBERG_VENDOR_LOADED', true);
 
