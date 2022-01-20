@@ -94,6 +94,10 @@ if (! function_exists('advg_check_legacy_widget_block_init')) {
      */
     function advg_check_legacy_widget_block_init()
     {
+        if(!current_user_can('edit_theme_options')) {
+            return false;
+        }
+
         global $wp_version;
         global $pagenow;
         if( ( $pagenow === 'widgets.php' || $pagenow === 'customize.php' ) && $wp_version >= 5.8 ) {
