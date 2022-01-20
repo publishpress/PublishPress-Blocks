@@ -106,8 +106,8 @@ if (! function_exists('advg_check_legacy_widget_block_init')) {
             if( count( $advgb_blocks_list ) && count( $advgb_blocks_user_roles ) ) {
 
                 if(
-                    array_key_exists('active_blocks', $advgb_blocks_user_roles[$current_user_role])
-                    && array_key_exists('inactive_blocks', $advgb_blocks_user_roles[$current_user_role])
+                    is_array($advgb_blocks_user_roles[$current_user_role]['active_blocks'])
+                    && is_array($advgb_blocks_user_roles[$current_user_role]['inactive_blocks'])
                     && !in_array( 'core/legacy-widget', $advgb_blocks_user_roles[$current_user_role]['active_blocks'] )
                     && !in_array( 'core/legacy-widget', $advgb_blocks_user_roles[$current_user_role]['inactive_blocks'] )
                     && !empty( $current_user_role )
