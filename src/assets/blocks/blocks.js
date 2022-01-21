@@ -29126,25 +29126,6 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                     inactive_blocks: Object.values(advgb_blocks_vars.blocks.inactive_blocks)
                 };
 
-                // Add Widgets Legacy and Area blocks manually
-                if (advgbBlocks.blocks_widget_support) {
-                    blocks.push({
-                        "name": "core/legacy-widget",
-                        "icon": {
-                            "src": "block-default"
-                        },
-                        "title": "Legacy Widget",
-                        "category": "widgets"
-                    }, {
-                        "name": "core/widget-area",
-                        "icon": {
-                            "src": "block-default"
-                        },
-                        "category": "widgets",
-                        "title": "Widget Area"
-                    });
-                }
-
                 for (var block in blocks) {
                     var blockItemIcon = '';
                     var blockItem = {

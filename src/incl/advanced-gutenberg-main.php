@@ -2432,6 +2432,23 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Include the blocks stored in advgb_blocks_list option but not detected by Block Access
                 //$advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
 
+                // Make sure core/legacy-widget is included as active - Since 2.11.4
+                if(!in_array('core/legacy-widget', $advgb_blocks_user_roles['active_blocks'])) {
+                    /* Remove from inactive blocks if is saved for the current user role.
+                     * The lines below won't save nothing in db, is just for execution on editor. */
+                    foreach ($advgb_blocks_user_roles['inactive_blocks'] as $key => $type) {
+                        if (in_array('core/legacy-widget', $advgb_blocks_user_roles['inactive_blocks'])) {
+                            unset($advgb_blocks_user_roles['inactive_blocks'][$key]);
+                        }
+                    }
+                    /* Add to active blocks.
+                     * The lines below won't save nothing in db, is just for execution on editor. */
+                    array_push(
+                        $advgb_blocks_user_roles['active_blocks'],
+                        'core/legacy-widget'
+                    );
+                }
+
                 return $advgb_blocks_user_roles;
             }
 
@@ -2443,6 +2460,15 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $all_blocks[$block_key] = $all_blocks[$block_key]['name'];
                 }
             }
+
+            // Make sure core/legacy-widget is included as active - Since 2.11.4
+            if(!in_array('core/legacy-widget', $all_blocks)) {
+                array_push(
+                    $all_blocks,
+                    'core/legacy-widget'
+                );
+            }
+
             return array(
                 'active_blocks' => $all_blocks,
                 'inactive_blocks' => array()

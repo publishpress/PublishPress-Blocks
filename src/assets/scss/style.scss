@@ -365,6 +365,10 @@ input.ju-radiobox:focus {
     transform: translateX(20px);
 }
 
+.block-item-readonly .ju-switch-button .switch {
+  opacity: 0.3;
+}
+
 .settings-list {
     display: flex;
     flex-wrap: wrap;
