@@ -78,21 +78,6 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
     margin: 10px;
 }
 
-.advgb-editor-sidebar-content .components-button.advgb-button {
-
-  &:focus {
-
-  }
-
-  &.is-secondary {
-
-  }
-
-  &.is-primary {
-
-  }
-}
-
 /* Widgets Customizer */
 .customize-control-sidebar_block_editor .block-editor-writing-flow {
 
@@ -100,4 +85,10 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
   .advgb-search-bar-inner {
     width: 100% !important;
   }
+}
+
+/* Custom UI */
+.components-button.is-style-selected {
+  box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
+  outline: 3px solid transparent;
 }

@@ -234,16 +234,16 @@
                                 } ) }
                             </div>
                             <div className="advgb-tabs-styles">
-                                {TABS_STYLES.map((style, index) => (
+                                {TABS_STYLES.map( (style, index) => (
                                     <Tooltip key={index} text={style.label}>
-                                        <Button className="advgb-tabs-style"
+                                        <Button className={ 'advgb-tabs-style' + (style.name === attributes[`tabsStyle${deviceLetter}`] ? ' is-style-selected' : '') }
                                                 isToggled={ style.name === attributes[`tabsStyle${deviceLetter}`] }
                                                 onClick={ () => setAttributes( { [`tabsStyle${deviceLetter}`]: style.name } ) }
                                         >
                                             {style.icon}
                                         </Button>
                                     </Tooltip>
-                                ))}
+                                ) ) }
                                 {viewport === 'mobile' && (
                                     <Tooltip text={ __( 'Stacked', 'advanced-gutenberg' ) }>
                                         <Button className="advgb-tabs-style"
