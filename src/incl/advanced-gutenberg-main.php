@@ -434,8 +434,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 );
             }
 
-            // Don't load post-sidebar.js in widgets.php and Theme Customizer > Widgets
-            if( $currentScreen->id !== 'widgets' && is_customize_preview() === false ) {
+            // Don't load post-sidebar.js in widgets.php, Theme Customizer > Widgets and Site Editor
+            if( $currentScreen->id !== 'site-editor' && $currentScreen->id !== 'widgets' && is_customize_preview() === false ) {
                 wp_enqueue_script(
                     'advgb_post_sidebar',
                     plugins_url('assets/blocks/post-sidebar.js', dirname(__FILE__)),
