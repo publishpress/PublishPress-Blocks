@@ -12334,7 +12334,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         { key: index, text: style.label },
                                         React.createElement(
                                             Button,
-                                            { className: "advgb-tabs-style",
+                                            { className: 'advgb-tabs-style' + (style.name === attributes["tabsStyle" + deviceLetter] ? ' is-style-selected' : ''),
                                                 isToggled: style.name === attributes["tabsStyle" + deviceLetter],
                                                 onClick: function onClick() {
                                                     return setAttributes(_defineProperty({}, "tabsStyle" + deviceLetter, style.name));

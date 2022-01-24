@@ -264,6 +264,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Don't unregister widget blocks
   * Fix: Warning when missing Legacy widget in Block Access
   * Fix: Legacy Widget is always activated and can't be disabled
+  * Fix: Add a visual indicator the Tabs style is selected for Advanced Tabs block
 
 = 2.11.3 - 17 Jan 2022 =
   * Add: Sanitization cleanup
