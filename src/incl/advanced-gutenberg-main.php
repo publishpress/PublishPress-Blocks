@@ -593,14 +593,17 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 && $pagenow !== 'site-editor.php'
             ) {
                 wp_enqueue_style(
-                    'advgb_blocks_styles',
-                    plugins_url('assets/css/blocks.css', dirname(__FILE__)),
+                    'advgb_recent_posts_styles',
+                    plugins_url('assets/css/recent-posts.css', dirname(__FILE__)),
                     array(),
                     ADVANCED_GUTENBERG_VERSION
                 );
+            }
+
+            if (is_admin() && $this->settingIsEnabled( 'enable_advgb_blocks' )) {
                 wp_enqueue_style(
-                    'advgb_recent_posts_styles',
-                    plugins_url('assets/css/recent-posts.css', dirname(__FILE__)),
+                    'advgb_blocks_styles',
+                    plugins_url('assets/css/blocks.css', dirname(__FILE__)),
                     array(),
                     ADVANCED_GUTENBERG_VERSION
                 );
