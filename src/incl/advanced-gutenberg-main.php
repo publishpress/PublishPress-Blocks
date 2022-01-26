@@ -616,12 +616,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
             }
 
-            wp_enqueue_style(
-                'advgb_editor_styles',
-                plugins_url('assets/css/editor.css', dirname(__FILE__)),
-                array(),
-                ADVANCED_GUTENBERG_VERSION
-            );
+            if (is_admin()) {
+                wp_enqueue_style(
+                    'advgb_editor_styles',
+                    plugins_url('assets/css/editor.css', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+            }
 
             if (!function_exists('advgbAddScriptAttributes')) {
                 /**
