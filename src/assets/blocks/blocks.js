@@ -18219,9 +18219,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var blockIDX = attributes.blockIDX;
 
 
-                if (!blockIDX) {
-                    setAttributes({ blockIDX: "advgb-infobox-" + clientId });
-                }
+                setAttributes({ blockIDX: "advgb-infobox-" + clientId });
             }
         }, {
             key: "componentDidUpdate",
