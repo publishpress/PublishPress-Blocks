@@ -392,6 +392,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_editor_style(plugins_url('assets/css/fonts/material-icons-custom.min.css', dirname(__FILE__))); // 'material_icon_font_custom'
                 add_editor_style(plugins_url('assets/css/slick.css', dirname(__FILE__))); // 'slick_style'
                 add_editor_style(plugins_url('assets/css/slick-theme.css', dirname(__FILE__))); // 'slick_theme_style'
+
+                // Pro
+                if(defined('ADVANCED_GUTENBERG_PRO')) {
+                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_main_styles_inline' ) ) {
+                        PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_main_styles_inline();
+                    }
+                }
             }
         }
 
