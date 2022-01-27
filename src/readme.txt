@@ -266,6 +266,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Don't load post-sidebar.js in Site Editor screen
   * Fix: Load assets in frontend for pages generated through Site Editor
   * Fix: Load CSS in Site Editor
+  * Fix: Adapt advgb_pro_enqueue_scripts_frontend() enqueue assets to make it compatible with Site Editor
 
 = 2.11.3 - 17 Jan 2022 =
   * Add: Sanitization cleanup
