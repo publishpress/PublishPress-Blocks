@@ -4923,13 +4923,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 );
             }
 
-            // Pro
-            if( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
-                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_scripts_frontend' ) ) {
-                    PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_scripts_frontend($content);
-                }
-            }
-
             return $content;
         }
 
@@ -5373,6 +5366,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 case 'advgb/recent-posts':
                     $this->advgb_AdvancedRecentPostsAssets($blockAttrs);
+                    break;
+
+                case 'advgb/countdown':
+                    $this->advgb_AdvancedCountdownAssets($blockAttrs);
                     break;
 
                 case 'core/gallery':
@@ -6298,6 +6295,23 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array('jquery'),
                     ADVANCED_GUTENBERG_VERSION
                 );
+            }
+        }
+
+        /**
+         * Assets for Countdown Block
+         *
+         * @since    2.11.4
+         * @param   $blockAttrs The block attributes
+         * @return  void
+         */
+        public function advgb_AdvancedCountdownAssets($blockAttrs)
+        {
+            // Pro
+            if( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_scripts_frontend_countdown' ) ) {
+                    PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_scripts_frontend_countdown();
+                }
             }
         }
 
