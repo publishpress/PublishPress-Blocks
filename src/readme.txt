@@ -268,6 +268,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Load CSS in Site Editor
   * Fix: Adapt advgb_pro_enqueue_scripts_frontend() enqueue assets to make it compatible with Site Editor
   * Fix: New block types already registered error in console
+  * Fix: Login / Register Form design in Site Editor
 
 = 2.11.3 - 17 Jan 2022 =
   * Add: Sanitization cleanup
