@@ -399,6 +399,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_main_styles_inline();
                     }
                 }
+
+                $this->advgbDisableBlocks();
             }
         }
 
@@ -417,7 +419,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             $this->enqueueEditorAssets();
             $this->advgbBlocksVariables(false);
-            $this->advgbDisableBlocksWidgetAreas();
+            $this->advgbDisableBlocks();
         }
 
         /**
@@ -701,13 +703,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Unregister Table of Contents block in Widgets page
+         * Unregister Table of Contents block in Widgets and Site Editor
          *
          * @return void
          */
-        public function advgbDisableBlocksWidgetAreas()
+        public function advgbDisableBlocks()
         {
             if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                /*/ Disabled since doesn't work in Site Editor
                 wp_add_inline_script(
                     'advgb_blocks',
                     'wp.domReady( function () {
@@ -715,6 +718,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             wp.blocks.unregisterBlockType( "advgb/summary" );
                         }
                     } );'
+                );*/
+                wp_enqueue_script(
+                    'advgb_disable_blocks_js',
+                    plugins_url('assets/js/disable-blocks.js', dirname(__FILE__)),
+                    array('advgb_blocks'),
+                    ADVANCED_GUTENBERG_VERSION
                 );
             }
         }

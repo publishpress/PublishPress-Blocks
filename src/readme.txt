@@ -259,6 +259,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 = 2.11.4 - 27 Jan 2022 =
   * Add: Set Block Access as disabled for new installations
+  * Add: Disable Table of Contents in Site Editor
   * Fix: Include 0 on the left when hours or minutes are 0-9 for Newsletter and Contact Form blocks
   * Fix: Don't unregister widget blocks
   * Fix: Warning when missing Legacy widget in Block Access
