@@ -272,6 +272,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Login / Register Form design in Site Editor
   * Fix: Duplicated id for Info Box block
   * Fix: UI settings in Site Editor
+  * Fix: Load Dashicons in Site Editor iframe
 
 = 2.11.3 - 17 Jan 2022 =
   * Add: Sanitization cleanup
