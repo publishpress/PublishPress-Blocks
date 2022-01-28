@@ -23162,7 +23162,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate, wpCompose) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var __ = wpI18n.__;
     var Component = wpElement.Component,
@@ -23171,7 +23171,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
-        BlockControls = _wpBlockEditor.BlockControls;
+        BlockControls = _wpBlockEditor.BlockControls,
+        useBlockProps = _wpBlockEditor.useBlockProps;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         ToggleControl = wpComponents.ToggleControl,
@@ -23199,6 +23200,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         find = lodash.find;
     var decodeEntities = wpHtmlEntities.decodeEntities;
     var dateI18n = wpDate.dateI18n;
+    var useRefEffect = wpCompose.useRefEffect;
 
 
     var advRecentPostsBlockIcon = React.createElement(
@@ -24743,7 +24745,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             return null;
         }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data, lodash, wp.htmlEntities, wp.date);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data, lodash, wp.htmlEntities, wp.date, wp.compose);
 
 /***/ }),
 

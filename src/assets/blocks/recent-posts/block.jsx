@@ -1,17 +1,18 @@
 import AdvQueryControls from './query-controls.jsx';
 import { AuthorSelect } from './query-controls.jsx';
 
-(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate, wpCompose ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment, RawHTML } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, BlockControls } = wpBlockEditor;
+    const { InspectorControls, BlockControls, useBlockProps } = wpBlockEditor;
     const { PanelBody, RangeControl, ToggleControl, TextControl, TextareaControl, FormTokenField, Spinner, ToolbarGroup, ToolbarButton, Placeholder, Tooltip, SelectControl } = wpComponents;
     const { withSelect } = wpData;
     const { pickBy, isUndefined, isArray, isNull, uniqWith, isEqual, omit, union, sortBy, unset, set, find } = lodash;
     const { decodeEntities } = wpHtmlEntities;
     const { dateI18n } = wpDate;
+    const { useRefEffect } = wpCompose;
 
     const advRecentPostsBlockIcon = (
         <svg width="20" height="20" viewBox="2 2 22 22">
@@ -1431,4 +1432,4 @@ import { AuthorSelect } from './query-controls.jsx';
             return null;
         },
     } )
-})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data, lodash, wp.htmlEntities, wp.date );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data, lodash, wp.htmlEntities, wp.date, wp.compose );
