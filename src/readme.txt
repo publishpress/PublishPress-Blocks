@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.11.4 - 27 Jan 2022 =
+= 2.11.4 - 28 Jan 2022 =
   * Add: Set Block Access as disabled for new installations
   * Add: Disable Table of Contents in Site Editor
   * Fix: Include 0 on the left when hours or minutes are 0-9 for Newsletter and Contact Form blocks
@@ -271,6 +271,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: New block types already registered error in console
   * Fix: Login / Register Form design in Site Editor
   * Fix: Duplicated id for Info Box block
+  * Fix: UI settings in Site Editor
 
 = 2.11.3 - 17 Jan 2022 =
   * Add: Sanitization cleanup
