@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.11.4 - 27 Jan 2022 =
+= 2.11.4 - 31 Jan 2022 =
   * Add: Set Block Access as disabled for new installations
   * Fix: Include 0 on the left when hours or minutes are 0-9 for Newsletter and Contact Form blocks
   * Fix: Don't unregister widget blocks
@@ -265,6 +265,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Add a visual indicator the Tabs style is selected for Advanced Tabs block
   * Fix: Don't load post-sidebar.js in Site Editor screen
   * Fix: Duplicated id for Info Box block
+  * Fix: Padding Unit for Mobile in frontend for Columns Manager block
 
 = 2.11.3 - 17 Jan 2022 =
   * Add: Sanitization cleanup
