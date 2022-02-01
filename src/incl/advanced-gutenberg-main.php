@@ -2484,7 +2484,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
 
                 // Include the blocks stored in advgb_blocks_list option but not detected by Block Access
-                //$advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
+                foreach($all_blocks as $one_block) {
+                    if(
+                        !in_array($one_block['name'], $advgb_blocks_user_roles['active_blocks']) &&
+                        !in_array($one_block['name'], $advgb_blocks_user_roles['inactive_blocks'])
+                    ) {
+                        array_push($advgb_blocks_user_roles['active_blocks'], $one_block['name']);
+                    }
+                }
 
                 return $advgb_blocks_user_roles;
             }
@@ -5570,10 +5577,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $style_html .= isset($blockAttrs['marginRightM']) ? 'margin-right:'.esc_html($blockAttrs['marginRightM']).$marginUnit.';' : '';
             $style_html .= isset($blockAttrs['marginBottomM']) ? 'margin-bottom:'.esc_html($blockAttrs['marginBottomM']).$marginUnit.';' : '';
             $style_html .= isset($blockAttrs['marginLeftM']) ? 'margin-left:'.esc_html($blockAttrs['marginLeftM']).$marginUnit.';' : '';
-            $style_html .= isset($blockAttrs['paddingTopM']) ? 'padding-top:'.esc_html($blockAttrs['paddingTopM']).'px;' : '';
-            $style_html .= isset($blockAttrs['paddingRightM']) ? 'padding-right:'.esc_html($blockAttrs['paddingRightM']).'px;' : '';
-            $style_html .= isset($blockAttrs['paddingBottomM']) ? 'padding-bottom:'.esc_html($blockAttrs['paddingBottomM']).'px;' : '';
-            $style_html .= isset($blockAttrs['paddingLeftM']) ? 'padding-left:'.esc_html($blockAttrs['paddingLeftM']).'px;' : '';
+            $style_html .= isset($blockAttrs['paddingTopM']) ? 'padding-top:'.esc_html($blockAttrs['paddingTopM']).$paddingUnit.';' : '';
+            $style_html .= isset($blockAttrs['paddingRightM']) ? 'padding-right:'.esc_html($blockAttrs['paddingRightM']).$paddingUnit.';' : '';
+            $style_html .= isset($blockAttrs['paddingBottomM']) ? 'padding-bottom:'.esc_html($blockAttrs['paddingBottomM']).$paddingUnit.';' : '';
+            $style_html .= isset($blockAttrs['paddingLeftM']) ? 'padding-left:'.esc_html($blockAttrs['paddingLeftM']).$paddingUnit.';' : '';
             $style_html .=  '}';
             $style_html .= '}';
 

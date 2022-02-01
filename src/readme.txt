@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.11.4 - 28 Jan 2022 =
+= 2.11.4 - 1 Feb 2022 =
   * Add: Set Block Access as disabled for new installations
   * Add: Disable Table of Contents in Site Editor
   * Fix: Include 0 on the left when hours or minutes are 0-9 for Newsletter and Contact Form blocks
@@ -273,6 +273,8 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Duplicated id for Info Box block
   * Fix: UI settings in Site Editor
   * Fix: Load Dashicons in Site Editor iframe
+  * Fix: Padding Unit for Mobile in frontend for Columns Manager block
+  * Fix: Include in Gutenberg Site Editor the blocks stored in advgb_blocks_list option but not detected by Block Access
 
 = 2.11.3 - 17 Jan 2022 =
   * Add: Sanitization cleanup
