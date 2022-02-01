@@ -2484,7 +2484,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
 
                 // Include the blocks stored in advgb_blocks_list option but not detected by Block Access
-                //$advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
+                foreach($all_blocks as $one_block) {
+                    if(
+                        !in_array($one_block['name'], $advgb_blocks_user_roles['active_blocks']) &&
+                        !in_array($one_block['name'], $advgb_blocks_user_roles['inactive_blocks'])
+                    ) {
+                        array_push($advgb_blocks_user_roles['active_blocks'], $one_block['name']);
+                    }
+                }
 
                 return $advgb_blocks_user_roles;
             }
