@@ -417,6 +417,23 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION,
                     true
                 );
+
+                // Pro Ads in some blocks for free version
+                if( !defined('ADVANCED_GUTENBERG_PRO') ){
+                    wp_enqueue_script(
+                        'advgb_pro_ad_js',
+                        plugins_url('assets/blocks/pro-ad.js', dirname(__FILE__)),
+                        array( 'advgb_blocks' ),
+                        ADVANCED_GUTENBERG_VERSION,
+                        true
+                    );
+                    wp_enqueue_style(
+                        'advgb_pro_ad_css',
+                        plugins_url('assets/css/pro-ad.css', dirname(__FILE__)),
+                        array(),
+                        ADVANCED_GUTENBERG_VERSION
+                    );
+                }
             }
 
             // Don't load custom-styles.js in widgets.php and Theme Customizer > Widgets
@@ -534,6 +551,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'registerEnabled' => get_option('users_can_register'),
                 'blocks_widget_support' => $blocks_widget_support,
                 'enable_advgb_blocks' => $enable_advgb_blocks,
+                'advgb_pro_active' => defined('ADVANCED_GUTENBERG_PRO') ? 1 : 0
             ));
 
             // Setup default config data for blocks

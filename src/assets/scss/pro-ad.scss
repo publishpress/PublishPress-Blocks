@@ -1,0 +1,32 @@
+@import "variables";
+
+.advgb-pro-ad-wrapper {
+  padding: 6px 16px 18px;
+  box-sizing: border-box;
+  text-align: center;
+  background: $purple;
+  color: $white;
+  line-height: 34px;
+
+  .advgb-pro-ad-btn {
+    background: $yellow;
+    color: $black;
+    font-weight: normal;
+    text-decoration: none;
+    padding: 9px 12px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    border: 1px solid #fca871;
+    break-inside: avoid;
+    white-space: nowrap;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background: $yellow-hover;
+      color: $black;
+    }
+  }
+}
