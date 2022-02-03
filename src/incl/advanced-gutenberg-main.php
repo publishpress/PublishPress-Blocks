@@ -4934,6 +4934,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             if (strpos($content, 'advgb-accordion-wrapper') !== false) {
                 wp_enqueue_script('jquery-ui-accordion');
+
+                if( defined( 'ADVANCED_GUTENBERG_PRO' ) ){
+                    $accordion_pro_js = 'var accordion_anchor = $(window.location.hash);
+                    if (accordion_anchor.length > 0 && accordion_anchor.hasClass("ui-accordion-header-collapsed")){
+                        accordion_anchor.click();
+                    }';
+                } else {
+                    $accordion_pro_js = '';
+                }
+
                 wp_add_inline_script('jquery-ui-accordion', 'jQuery(document).ready(function($){
                     $(".advgb-accordion-wrapper").each(function() {
                         $(this).accordion({
@@ -4943,6 +4953,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             active: $(this).data("collapsed") ? false : 0,
                         });
                     });
+                    ' . $accordion_pro_js . '
                 });');
                 $content = preg_replace_callback(
                     '@<div[^>]*?advgb\-accordion\-wrapper.*?(</div></div>.?</div>)@s',
