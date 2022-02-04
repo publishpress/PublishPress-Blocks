@@ -13,7 +13,7 @@
         switch(name){
             case 'advgb/accordion-item':
             case 'advgb/accordions':
-                return __( 'Advanced Accordion', 'advanced-gutenberg' );
+                return __( 'Accordion', 'advanced-gutenberg' );
                 break;
         }
     }
