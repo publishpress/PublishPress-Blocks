@@ -107,13 +107,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         InspectorControls = _wpBlockEditor.InspectorControls;
 
 
-    var SUPPORTED_BLOCKS = ['advgb/accordion-item', 'advgb/accordions'];
+    var SUPPORTED_BLOCKS = ['advgb/accordion-item', 'advgb/accordions', 'advgb/adv-tabs', 'advgb/adv-tab'];
 
     function advgbGetBlockTitle(name) {
         switch (name) {
             case 'advgb/accordion-item':
             case 'advgb/accordions':
                 return __('Accordion', 'advanced-gutenberg');
+                break;
+
+            case 'advgb/adv-tabs':
+            case 'advgb/tab':
+                return __('Tabs', 'advanced-gutenberg');
+                break;
+
+            default:
+                return __('PublishPress', 'advanced-gutenberg');
                 break;
         }
     }

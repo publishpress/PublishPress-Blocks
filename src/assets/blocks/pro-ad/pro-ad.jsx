@@ -6,7 +6,9 @@
 
     const SUPPORTED_BLOCKS = [
         'advgb/accordion-item',
-        'advgb/accordions'
+        'advgb/accordions',
+        'advgb/adv-tabs',
+        'advgb/adv-tab'
     ];
 
     function advgbGetBlockTitle(name){
@@ -15,6 +17,15 @@
             case 'advgb/accordions':
                 return __( 'Accordion', 'advanced-gutenberg' );
                 break;
+
+            case 'advgb/adv-tabs':
+            case 'advgb/tab':
+                return __( 'Tabs', 'advanced-gutenberg' );
+                break;
+
+            default:
+                return __( 'PublishPress', 'advanced-gutenberg' );
+                break
         }
     }
 
