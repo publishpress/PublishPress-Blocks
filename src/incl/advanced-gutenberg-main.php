@@ -4986,13 +4986,20 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             if (strpos($content, 'advgb-tabs-wrapper') !== false) {
-                wp_enqueue_script('jquery-ui-tabs');
                 wp_enqueue_script(
                     'advgb_tabs_js',
                     plugins_url('assets/blocks/advtabs/frontend.js', dirname(__FILE__)),
                     array(),
                     ADVANCED_GUTENBERG_VERSION
                 );
+
+                if (
+                    defined( 'ADVANCED_GUTENBERG_PRO' )
+                    && method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_inline_scripts_frontend' )
+                ) {
+                    PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_inline_scripts_frontend('advgb/adv-tabs');
+                }
+
                 // Fix broken tags: &lt;strong> and &lt;em>
                 $content = preg_replace_callback(
                     array(
