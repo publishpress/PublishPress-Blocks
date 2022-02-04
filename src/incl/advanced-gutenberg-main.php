@@ -4989,7 +4989,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_enqueue_script(
                     'advgb_tabs_js',
                     plugins_url('assets/blocks/advtabs/frontend.js', dirname(__FILE__)),
-                    array(),
+                    array('jquery'),
                     ADVANCED_GUTENBERG_VERSION
                 );
 
