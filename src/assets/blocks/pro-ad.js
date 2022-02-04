@@ -101,12 +101,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 (function (wpI18n, wpHooks, wpBlockEditor) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var addFilter = wpHooks.addFilter;
-    var __ = wpI18n.__;
+    var sprintf = wpI18n.sprintf,
+        __ = wpI18n.__;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls;
 
 
     var SUPPORTED_BLOCKS = ['advgb/accordion-item', 'advgb/accordions'];
+
+    function advgbGetBlockTitle(name) {
+        switch (name) {
+            case 'advgb/accordion-item':
+            case 'advgb/accordions':
+                return __('Advanced Accordion', 'advanced-gutenberg');
+                break;
+        }
+    }
 
     // Add Upgrade to Pro Ad in sidebar
     addFilter('editor.BlockEdit', 'advgb/proAd', function (BlockEdit) {
@@ -116,8 +126,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 { key: 'advgb-custom-controls' },
                 React.createElement(
                     'div',
-                    { className: 'advgb-pro-ad-wrapper' },
-                    __('Want more features?', 'advanced-gutenberg'),
+                    { className: 'components-panel__body advgb-pro-ad-wrapper' },
+                    sprintf(__('Want more features in your %s blocks?', 'advanced-gutenberg'), advgbGetBlockTitle(props.name)),
                     React.createElement('br', null),
                     React.createElement(
                         'a',
