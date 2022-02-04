@@ -1,12 +1,11 @@
 @import "variables";
 
 .advgb-pro-ad-wrapper {
-  padding: 6px 16px 18px;
+  padding: 16px;
   box-sizing: border-box;
   text-align: center;
   background: $purple;
   color: $white;
-  line-height: 34px;
 
   .advgb-pro-ad-btn {
     background: $yellow;
@@ -21,6 +20,8 @@
     border: 1px solid #fca871;
     break-inside: avoid;
     white-space: nowrap;
+    display: inline-block;
+    margin-top: 10px;
 
     &:hover,
     &:focus,
