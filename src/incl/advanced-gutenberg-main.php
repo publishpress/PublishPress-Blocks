@@ -4952,15 +4952,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             if (strpos($content, 'advgb-accordion-wrapper') !== false) {
                 wp_enqueue_script('jquery-ui-accordion');
-
-                $accordion_extra_js = '';
-                if (
-                    defined( 'ADVANCED_GUTENBERG_PRO' )
-                    && method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_inline_scripts_frontend' )
-                ) {
-                    $accordion_extra_js = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_inline_scripts_frontend('advgb/accordion-item');
-                }
-
                 wp_add_inline_script('jquery-ui-accordion', 'jQuery(document).ready(function($){
                     $(".advgb-accordion-wrapper").each(function() {
                         $(this).accordion({
@@ -4970,8 +4961,15 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             active: $(this).data("collapsed") ? false : 0,
                         });
                     });
-                    ' . $accordion_extra_js . '
                 });');
+
+                if (
+                    defined( 'ADVANCED_GUTENBERG_PRO' )
+                    && method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_inline_scripts_frontend' )
+                ) {
+                    PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_inline_scripts_frontend('advgb/accordion-item');
+                }
+
                 $content = preg_replace_callback(
                     '@<div[^>]*?advgb\-accordion\-wrapper.*?(</div></div>.?</div>)@s',
                     array($this, 'decodeHtmlEntity'),
