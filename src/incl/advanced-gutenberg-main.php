@@ -551,7 +551,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'registerEnabled' => get_option('users_can_register'),
                 'blocks_widget_support' => $blocks_widget_support,
                 'enable_advgb_blocks' => $enable_advgb_blocks,
-                'advgb_pro_active' => defined('ADVANCED_GUTENBERG_PRO') ? 1 : 0
+                'advgb_pro' => defined('ADVANCED_GUTENBERG_PRO') ? 1 : 0
             ));
 
             // Setup default config data for blocks
