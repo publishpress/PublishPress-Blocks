@@ -88,6 +88,13 @@ import { AuthorSelect } from './query-controls.jsx';
         { layout: 'np-3-3', icon: 'np-3-3', items: 5, title: __( 'The leading post on top, below 2 columns with 1 post in the left and 3 posts in the right', 'advanced-gutenberg' ) },
     ];
 
+    const ORDER_SECTIONS = [
+        { label: 'Default', value: 'default' },
+        { label: 'Title, Image, Info, Text', value: 'title-image-info-text' },
+        { label: 'Image, Title, Text, Info', value: 'image-title-text-info' },
+        { label: 'Title, Image, Text, Info', value: 'title-image-text-info' },
+    ];
+
     const CUSTOM_TAX_PREFIX = 'custom-tax-';
 
     let initSlider = null;
@@ -346,6 +353,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 showCustomTaxList,
                 imagePosition,
                 onlyFromCurrentUser,
+                orderSections,
             } = attributes;
 
             let recentPosts = this.props.recentPosts;
@@ -831,6 +839,18 @@ import { AuthorSelect } from './query-controls.jsx';
                             onChange={ ( value ) => setAttributes( { textBeforeReadmore: value } ) }
                         />
                     </PanelBody>
+
+                    {advgbBlocks.advgb_pro === '1' && (
+                        <PanelBody title={ __( 'Order Settings', 'advanced-gutenberg' ) }>
+                            <SelectControl
+                                label={ __( 'Sections order', 'advanced-gutenberg' ) }
+                                help={ __( 'When the image in desktop floats next to the content, or is displayed as background, the image order is ignored. Also the image order in mobile is ignored.', 'advanced-gutenberg' ) }
+                                value={ orderSections }
+                                options={ ORDER_SECTIONS }
+                                onChange={ (value) => setAttributes( { orderSections: value } ) }
+                            />
+                        </PanelBody>
+                    ) }
                 </InspectorControls>
             );
 
@@ -913,6 +933,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 ( ( postView === 'frontpage' ) || ( postView === 'masonry' ) ) && gap && 'gap-' + gap,
                 postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle,
                 postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout,
+                advgbBlocks.advgb_pro === '1' && orderSections && 'sections-' + orderSections,
             ].filter( Boolean ).join( ' ' );
 
             return (
@@ -938,9 +959,13 @@ import { AuthorSelect } from './query-controls.jsx';
                                 <article key={ index }
                                 className={`advgb-recent-post ${ this.getDisplayImageStatus( attributes, index ) && ( post.featured_img || enablePlaceholderImage ) ? "" : "advgb-recent-post--no-image"}` }
                                 >
-
+                                    { /* Output image's HTML inside .advgb-recent-post; orderSections is not allowed for images */ }
                                     {(() => {
-                                        if( this.getDisplayImageStatus( attributes, index ) && ( post.featured_img || enablePlaceholderImage ) ) {
+                                        if(
+                                            this.getDisplayImageStatus( attributes, index )
+                                            && ( post.featured_img || enablePlaceholderImage )
+                                            && this.getDisplayImageVsOrder( attributes, index ) === 'ignore-order'
+                                        ) {
                                             return(
                                                 <div className="advgb-post-thumbnail">
                                                     <a href={ post.link } target="_blank">
@@ -953,7 +978,11 @@ import { AuthorSelect } from './query-controls.jsx';
                                                     </a>
                                                 </div>
                                             )
-                                        } else if( ( postView === 'frontpage' && frontpageStyle === 'headline' ) || ( postView === 'slider' && sliderStyle === 'headline' ) ) {
+                                        } else if(
+                                            ( postView === 'frontpage' && frontpageStyle === 'headline' )
+                                            || ( postView === 'slider' && sliderStyle === 'headline' )
+                                            && this.getDisplayImageVsOrder( attributes, index ) === 'ignore-order'
+                                        ) {
                                             return (
                                                 <div className="advgb-post-thumbnail advgb-post-thumbnail-no-image">
                                                     <a href={ post.link } target="_blank"></a>
@@ -965,6 +994,29 @@ import { AuthorSelect } from './query-controls.jsx';
                                     })()}
 
                                     <div className="advgb-post-wrapper">
+
+                                        { /* Output image's HTML inside .advgb-post-wrapper to allow orderSections for images */ }
+                                        {(() => {
+                                            if(
+                                                this.getDisplayImageStatus( attributes, index )
+                                                && ( post.featured_img || enablePlaceholderImage )
+                                                && this.getDisplayImageVsOrder( attributes, index ) === 'apply-order'
+                                            ) {
+                                                return(
+                                                    <div className="advgb-post-thumbnail">
+                                                        <a href={ post.link } target="_blank">
+                                                            <img src={ post.featured_img ? post.featured_img : advgbBlocks.post_thumb } alt={ __( 'Post Image', 'advanced-gutenberg' ) } />
+                                                            {displayFeaturedImageCaption && post.featured_img_caption.length > 0 && (
+                                                                <span class="advgb-post-caption">
+                                                                    { post.featured_img_caption }
+                                                                </span>
+                                                            )}
+                                                        </a>
+                                                    </div>
+                                                )
+                                            }
+                                        })()}
+
                                         <h2 className="advgb-post-title">
                                             <a href={ post.link } target="_blank">{ decodeEntities( post.title.rendered ) }</a>
                                         </h2>
@@ -1333,6 +1385,32 @@ import { AuthorSelect } from './query-controls.jsx';
             return(
                 attributes.displayFeaturedImage && ( attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor)
             )
+        }
+
+        // Skip images floating on left or right, and with headline style
+        getDisplayImageVsOrder( attributes, index ){
+            if(
+                (
+                    attributes.orderSections === 'default'
+                    || attributes.orderSections === 'image-title-info-text'
+                )
+                || (
+                    ( attributes.postView === 'frontpage' && attributes.frontpageStyle === 'headline' )
+                    || ( attributes.postView === 'slider' && attributes.sliderStyle === 'headline' )
+                    || attributes.postView === 'list'
+                )
+                || (
+                    attributes.postView === 'newspaper'
+                    && (
+                        ( ['np-2','np-3-1','np-3-2','np-3-3'].indexOf(attributes.newspaperLayout) > -1 )
+                        || index > 0
+                    )
+                )
+            ) {
+                return 'ignore-order';
+            } else  {
+                return 'apply-order';
+            }
         }
 
         refreshOnChangeItems(numberOfPosts) {
