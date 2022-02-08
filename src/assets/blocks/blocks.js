@@ -12334,7 +12334,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         { key: index, text: style.label },
                                         React.createElement(
                                             Button,
-                                            { className: "advgb-tabs-style",
+                                            { className: 'advgb-tabs-style' + (style.name === attributes["tabsStyle" + deviceLetter] ? ' is-style-selected' : ''),
                                                 isToggled: style.name === attributes["tabsStyle" + deviceLetter],
                                                 onClick: function onClick() {
                                                     return setAttributes(_defineProperty({}, "tabsStyle" + deviceLetter, style.name));
@@ -18219,9 +18219,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var blockIDX = attributes.blockIDX;
 
 
-                if (!blockIDX) {
-                    setAttributes({ blockIDX: "advgb-infobox-" + clientId });
-                }
+                setAttributes({ blockIDX: "advgb-infobox-" + clientId });
             }
         }, {
             key: "componentDidUpdate",
@@ -29202,7 +29200,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                     var new_settings = advgb_blocks_vars.original_settings;
 
                     // Unregister core blocks to avoid registering twice later through wp.editPost.initializeEditor
-                    var core_blocks = ['core/paragraph', 'core/image', 'core/heading', 'core/list', 'core/quote', 'core/archives', 'core/audio', 'core/button', 'core/buttons', 'core/calendar', 'core/categories', 'core/code', 'core/columns', 'core/column', 'core/cover', 'core/embed', 'core/group', 'core/freeform', 'core/html', 'core/media-text', 'core/latest-comments', 'core/latest-posts', 'core/missing', 'core/more', 'core/nextpage', 'core/page-list', 'core/preformatted', 'core/pullquote', 'core/rss', 'core/search', 'core/separator', 'core/block', 'core/social-links', 'core/social-link', 'core/spacer', 'core/table', 'core/tag-cloud', 'core/text-columns', 'core/verse', 'core/video', 'core/site-logo', 'core/site-tagline', 'core/site-title', 'core/query', 'core/post-template', 'core/query-title', 'core/query-pagination', 'core/query-pagination-next', 'core/query-pagination-numbers', 'core/query-pagination-previous', 'core/post-title', 'core/post-content', 'core/post-date', 'core/post-excerpt', 'core/post-featured-image', 'core/post-terms', 'core/loginout', 'core/legacy-widget', 'core/widget-area', 'core/gallery', 'core/shortcode', 'core/file'];
+                    var core_blocks = ['core/paragraph', 'core/image', 'core/heading', 'core/list', 'core/quote', 'core/archives', 'core/audio', 'core/button', 'core/buttons', 'core/calendar', 'core/categories', 'core/code', 'core/columns', 'core/column', 'core/cover', 'core/embed', 'core/group', 'core/freeform', 'core/html', 'core/media-text', 'core/latest-comments', 'core/latest-posts', 'core/missing', 'core/more', 'core/nextpage', 'core/page-list', 'core/preformatted', 'core/pullquote', 'core/rss', 'core/search', 'core/separator', 'core/block', 'core/social-links', 'core/social-link', 'core/spacer', 'core/table', 'core/tag-cloud', 'core/text-columns', 'core/verse', 'core/video', 'core/site-logo', 'core/site-tagline', 'core/site-title', 'core/query', 'core/post-template', 'core/query-title', 'core/query-pagination', 'core/query-pagination-next', 'core/query-pagination-numbers', 'core/query-pagination-previous', 'core/post-title', 'core/post-content', 'core/post-date', 'core/post-excerpt', 'core/post-featured-image', 'core/post-terms', 'core/loginout', 'core/gallery', 'core/shortcode', 'core/file', 'core/pattern', 'core/navigation', 'core/navigation-link', 'core/navigation-submenu', 'core/template-part', 'core/post-author', 'core/post-navigation-link', 'core/post-comments', 'core/term-description'];
 
                     core_blocks.forEach(function (element) {
                         if (wp.data.select('core/blocks').getBlockType(element)) {

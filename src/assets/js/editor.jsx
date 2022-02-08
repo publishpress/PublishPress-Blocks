@@ -165,11 +165,18 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                         'core/post-featured-image',
                         'core/post-terms',
                         'core/loginout',
-                        'core/legacy-widget',
-                        'core/widget-area',
                         'core/gallery',
                         'core/shortcode',
-                        'core/file'
+                        'core/file',
+                        'core/pattern',
+                        'core/navigation',
+                        'core/navigation-link',
+                        'core/navigation-submenu',
+                        'core/template-part',
+                        'core/post-author',
+                        'core/post-navigation-link',
+                        'core/post-comments',
+                        'core/term-description'
                     ];
 
                     core_blocks.forEach( function( element ) {
