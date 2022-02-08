@@ -1199,24 +1199,26 @@ function advgbCheckImageStatus( $attributes, $key )  {
 function getDisplayImageVsOrder( $attributes, $key )  {
     if(
         (
-            isset($attributes['orderSections']) && $attributes['orderSections']
-            && (in_array($attributes['orderSections'], array('default', 'image-title-info-text')))
-        ) || (
             (
-                $attributes['postView'] === 'frontpage' && $attributes['frontpageStyle'] === 'headline'
-            ) || (
-                $attributes['postView'] === 'slider' && $attributes['sliderStyle'] === 'headline'
-            ) || (
-                $attributes['postView'] === 'list'
+                isset($attributes['orderSections']) && $attributes['orderSections']
+                && (in_array($attributes['orderSections'], array('default', 'image-title-info-text')))
             ) || (
                 (
-                    $attributes['postView'] === 'newspaper'
-                ) && (
-                    in_array($attributes['newspaperLayout'], array('np-2','np-3-1','np-3-2','np-3-3'))
-                    || $key > 0
+                    $attributes['postView'] === 'frontpage' && $attributes['frontpageStyle'] === 'headline'
+                ) || (
+                    $attributes['postView'] === 'slider' && $attributes['sliderStyle'] === 'headline'
+                ) || (
+                    $attributes['postView'] === 'list'
+                ) || (
+                    (
+                        $attributes['postView'] === 'newspaper'
+                    ) && (
+                        in_array($attributes['newspaperLayout'], array('np-2','np-3-1','np-3-2','np-3-3'))
+                        || $key > 0
+                    )
                 )
             )
-        )
+        ) || !defined('ADVANCED_GUTENBERG_PRO')
     ) {
         return 'ignore-order';
     } else {

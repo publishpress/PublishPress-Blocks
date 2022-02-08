@@ -1391,21 +1391,23 @@ import { AuthorSelect } from './query-controls.jsx';
         getDisplayImageVsOrder( attributes, index ){
             if(
                 (
-                    attributes.orderSections === 'default'
-                    || attributes.orderSections === 'image-title-info-text'
-                )
-                || (
-                    ( attributes.postView === 'frontpage' && attributes.frontpageStyle === 'headline' )
-                    || ( attributes.postView === 'slider' && attributes.sliderStyle === 'headline' )
-                    || attributes.postView === 'list'
-                )
-                || (
-                    attributes.postView === 'newspaper'
-                    && (
-                        ( ['np-2','np-3-1','np-3-2','np-3-3'].indexOf(attributes.newspaperLayout) > -1 )
-                        || index > 0
+                    (
+                        attributes.orderSections === 'default'
+                        || attributes.orderSections === 'image-title-info-text'
                     )
-                )
+                    || (
+                        ( attributes.postView === 'frontpage' && attributes.frontpageStyle === 'headline' )
+                        || ( attributes.postView === 'slider' && attributes.sliderStyle === 'headline' )
+                        || attributes.postView === 'list'
+                    )
+                    || (
+                        attributes.postView === 'newspaper'
+                        && (
+                            ( ['np-2','np-3-1','np-3-2','np-3-3'].indexOf(attributes.newspaperLayout) > -1 )
+                            || index > 0
+                        )
+                    )
+                ) || advgbBlocks.advgb_pro === '0'
             ) {
                 return 'ignore-order';
             } else  {
