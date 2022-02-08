@@ -711,15 +711,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function advgbDisableBlocks()
         {
             if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
-                /*/ Disabled since doesn't work in Site Editor
-                wp_add_inline_script(
-                    'advgb_blocks',
-                    'wp.domReady( function () {
-                        if ( wp.data.select("core/blocks").getBlockType( "advgb/summary" ) ) {
-                            wp.blocks.unregisterBlockType( "advgb/summary" );
-                        }
-                    } );'
-                );*/
                 wp_enqueue_script(
                     'advgb_disable_blocks_js',
                     plugins_url('assets/js/disable-blocks.js', dirname(__FILE__)),
