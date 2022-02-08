@@ -6307,7 +6307,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_enqueue_script(
                     'advgb_recent_posts_masonry_js',
                     plugins_url('assets/blocks/recent-posts/masonry.js', dirname(__FILE__)),
-                    array('jquery'),
+                    array('jquery', 'advgb_masonry_js'),
                     ADVANCED_GUTENBERG_VERSION
                 );
             }
