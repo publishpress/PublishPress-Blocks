@@ -46,7 +46,6 @@ jQuery(document).ready(function ($) {
                 var successText = $thisForm.find('.advgb-form-submit').data('success');
                 successText = successText ? successText : 'Message sent with success!';
                 $thisForm.append('<div class="advgb-form-submit-success">'+ successText +'</div>');
-                console.log(submitDate);
             },
             error: function ( jqxhr, textStatus, error ) {
                 alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);

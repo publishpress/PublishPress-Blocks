@@ -604,6 +604,7 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 }
 
 /*Count Up block styles*/
+#site-editor,
 #widgets-editor,
 #editor {
 
@@ -1713,6 +1714,7 @@ form .advgb-grecaptcha > div {
 .advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner {
     padding: 20px 50px;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-login-failed-notice {
