@@ -8,7 +8,8 @@
         'advgb/accordion-item',
         'advgb/accordions',
         'advgb/adv-tabs',
-        'advgb/adv-tab'
+        'advgb/adv-tab',
+        'advgb/recent-posts'
     ];
 
     function advgbGetBlockTitle(name){
@@ -21,6 +22,10 @@
             case 'advgb/adv-tabs':
             case 'advgb/tab':
                 return __( 'Tabs', 'advanced-gutenberg' );
+                break;
+
+            case 'advgb/recent-posts':
+                return __( 'Content Display', 'advanced-gutenberg' );
                 break;
 
             default:

@@ -23229,6 +23229,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var NEWSPAPER_LAYOUTS = [{ layout: 'np-1-1', icon: 'np-1-1', items: 2, title: __('The leading post in the left, 1 post in the right', 'advanced-gutenberg') }, { layout: 'np-1-2', icon: 'np-1-2', items: 3, title: __('The leading post in the left, 2 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-3', icon: 'np-1-3', items: 4, title: __('The leading post in the left, 3 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-4', icon: 'np-1-4', items: 5, title: __('The leading post in the left, 4 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-5', icon: 'np-1-5', items: 6, title: __('The leading post in the left, 5 posts in the right', 'advanced-gutenberg') }, { layout: 'np-1-1-r', icon: 'np-1-1-r', items: 2, title: __('The leading post in the right, 1 post in the left', 'advanced-gutenberg') }, { layout: 'np-1-2-r', icon: 'np-1-2-r', items: 3, title: __('The leading post in the right, 2 posts in the left', 'advanced-gutenberg') }, { layout: 'np-1-3-r', icon: 'np-1-3-r', items: 4, title: __('The leading post in the right, 3 posts in the left', 'advanced-gutenberg') }, { layout: 'np-1-4-r', icon: 'np-1-4-r', items: 5, title: __('The leading post in the right, 4 posts in the left', 'advanced-gutenberg') }, { layout: 'np-1-5-r', icon: 'np-1-5-r', items: 6, title: __('The leading post in the right, 5 posts in the left', 'advanced-gutenberg') }, { layout: 'np-2', icon: 'np-2', items: 3, title: __('The leading post on top, the rest of posts below', 'advanced-gutenberg') }, { layout: 'np-3-1', icon: 'np-3-1', items: 3, title: __('The leading post on top, below 2 columns with 1 post in the left and 1 post in the right', 'advanced-gutenberg') }, { layout: 'np-3-2', icon: 'np-3-2', items: 4, title: __('The leading post on top, below 2 columns with 1 post in the left and 2 posts in the right', 'advanced-gutenberg') }, { layout: 'np-3-3', icon: 'np-3-3', items: 5, title: __('The leading post on top, below 2 columns with 1 post in the left and 3 posts in the right', 'advanced-gutenberg') }];
 
+    var ORDER_SECTIONS = [{ label: 'Default', value: 'default' }, { label: 'Title, Image, Info, Text', value: 'title-image-info-text' }, { label: 'Image, Title, Text, Info', value: 'image-title-text-info' }, { label: 'Title, Image, Text, Info', value: 'title-image-text-info' }, { label: 'Title, Info, Text, Image', value: 'title-info-text-image' }, { label: 'Title, Text, Info, Image', value: 'title-text-info-image' }, { label: 'Title, Text, Image, Info', value: 'title-text-image-info' }];
+
     var CUSTOM_TAX_PREFIX = 'custom-tax-';
 
     var initSlider = null;
@@ -23517,7 +23519,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     linkCustomTax = attributes.linkCustomTax,
                     showCustomTaxList = attributes.showCustomTaxList,
                     imagePosition = attributes.imagePosition,
-                    onlyFromCurrentUser = attributes.onlyFromCurrentUser;
+                    onlyFromCurrentUser = attributes.onlyFromCurrentUser,
+                    orderSections = attributes.orderSections;
 
 
                 var recentPosts = this.props.recentPosts;
@@ -24023,6 +24026,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ textBeforeReadmore: value });
                             }
                         })
+                    ),
+                    advgbBlocks.advgb_pro === '1' && React.createElement(
+                        PanelBody,
+                        { title: __('Order Settings', 'advanced-gutenberg') },
+                        React.createElement(SelectControl, {
+                            label: __('Sections order', 'advanced-gutenberg'),
+                            help: __('When the image in desktop floats next to the content, or is displayed as background, the image order is ignored. Also the image order in mobile can be ignored for some views.', 'advanced-gutenberg'),
+                            value: orderSections,
+                            options: ORDER_SECTIONS,
+                            onChange: function onChange(value) {
+                                return setAttributes({ orderSections: value });
+                            }
+                        })
                     )
                 );
 
@@ -24090,7 +24106,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'masonry'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView && postView + '-view', postView === 'list' && imagePosition !== 'left' && 'image-' + imagePosition, (postView === 'grid' || postView === 'masonry') && 'columns-' + columns, postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM, postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, (postView === 'frontpage' || postView === 'masonry') && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView && postView + '-view', postView === 'list' && imagePosition !== 'left' && 'image-' + imagePosition, (postView === 'grid' || postView === 'masonry') && 'columns-' + columns, postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM, postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, (postView === 'frontpage' || postView === 'masonry') && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout, advgbBlocks.advgb_pro === '1' && orderSections && 'sections-' + orderSections].filter(Boolean).join(' ');
 
                 return isPreview ? React.createElement('img', { alt: __('Content Display', 'advanced-gutenberg'), width: '100%', src: previewImageData }) : React.createElement(
                     Fragment,
@@ -24126,7 +24142,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         className: 'advgb-recent-post ' + (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage) ? "" : "advgb-recent-post--no-image")
                                     },
                                     function () {
-                                        if (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage)) {
+                                        if (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage) && _this3.getDisplayImageVsOrder(attributes, index) === 'ignore-order') {
                                             return React.createElement(
                                                 'div',
                                                 { className: 'advgb-post-thumbnail' },
@@ -24141,7 +24157,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     )
                                                 )
                                             );
-                                        } else if (postView === 'frontpage' && frontpageStyle === 'headline' || postView === 'slider' && sliderStyle === 'headline') {
+                                        } else if (postView === 'frontpage' && frontpageStyle === 'headline' || postView === 'slider' && sliderStyle === 'headline' && _this3.getDisplayImageVsOrder(attributes, index) === 'ignore-order') {
                                             return React.createElement(
                                                 'div',
                                                 { className: 'advgb-post-thumbnail advgb-post-thumbnail-no-image' },
@@ -24154,6 +24170,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     React.createElement(
                                         'div',
                                         { className: 'advgb-post-wrapper' },
+                                        function () {
+                                            if (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage) && _this3.getDisplayImageVsOrder(attributes, index) === 'apply-order') {
+                                                return React.createElement(
+                                                    'div',
+                                                    { className: 'advgb-post-thumbnail' },
+                                                    React.createElement(
+                                                        'a',
+                                                        { href: post.link, target: '_blank' },
+                                                        React.createElement('img', { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') }),
+                                                        displayFeaturedImageCaption && post.featured_img_caption.length > 0 && React.createElement(
+                                                            'span',
+                                                            { 'class': 'advgb-post-caption' },
+                                                            post.featured_img_caption
+                                                        )
+                                                    )
+                                                );
+                                            }
+                                        }(),
                                         React.createElement(
                                             'h2',
                                             { className: 'advgb-post-title' },
@@ -24582,6 +24616,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: 'getDisplayImageStatus',
             value: function getDisplayImageStatus(attributes, index) {
                 return attributes.displayFeaturedImage && (attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor);
+            }
+
+            // Skip images floating on left or right, and with headline style
+
+        }, {
+            key: 'getDisplayImageVsOrder',
+            value: function getDisplayImageVsOrder(attributes, index) {
+                if (attributes.orderSections === 'default' || attributes.orderSections === 'image-title-info-text' || attributes.postView === 'frontpage' && attributes.frontpageStyle === 'headline' || attributes.postView === 'slider' && attributes.sliderStyle === 'headline' || attributes.postView === 'list' || attributes.postView === 'newspaper' && (['np-2', 'np-3-1', 'np-3-2', 'np-3-3'].indexOf(attributes.newspaperLayout) > -1 || index > 0) || advgbBlocks.advgb_pro === '0') {
+                    return 'ignore-order';
+                } else {
+                    return 'apply-order';
+                }
             }
         }, {
             key: 'refreshOnChangeItems',
