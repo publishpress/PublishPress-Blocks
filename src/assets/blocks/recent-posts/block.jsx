@@ -93,6 +93,9 @@ import { AuthorSelect } from './query-controls.jsx';
         { label: 'Title, Image, Info, Text', value: 'title-image-info-text' },
         { label: 'Image, Title, Text, Info', value: 'image-title-text-info' },
         { label: 'Title, Image, Text, Info', value: 'title-image-text-info' },
+        { label: 'Title, Info, Text, Image', value: 'title-info-text-image' },
+        { label: 'Title, Text, Info, Image', value: 'title-text-info-image' },
+        { label: 'Title, Text, Image, Info', value: 'title-text-image-info' },
     ];
 
     const CUSTOM_TAX_PREFIX = 'custom-tax-';
@@ -844,7 +847,7 @@ import { AuthorSelect } from './query-controls.jsx';
                         <PanelBody title={ __( 'Order Settings', 'advanced-gutenberg' ) }>
                             <SelectControl
                                 label={ __( 'Sections order', 'advanced-gutenberg' ) }
-                                help={ __( 'When the image in desktop floats next to the content, or is displayed as background, the image order is ignored. Also the image order in mobile is ignored.', 'advanced-gutenberg' ) }
+                                help={ __( 'When the image in desktop floats next to the content, or is displayed as background, the image order is ignored. Also the image order in mobile can be ignored for some views.', 'advanced-gutenberg' ) }
                                 value={ orderSections }
                                 options={ ORDER_SECTIONS }
                                 onChange={ (value) => setAttributes( { orderSections: value } ) }
