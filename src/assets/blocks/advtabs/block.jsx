@@ -4,7 +4,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpBlockEditor;
-    const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl, Button } = wpComponents;
+    const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl, Button, TextControl } = wpComponents;
     const { withDispatch, select, dispatch } = wp.data;
     const { compose } = wpCompose;
     const { times } = lodash;
@@ -146,6 +146,35 @@
             childBlocks.forEach( childBlockId => updateBlockAttributes( childBlockId, {tabHeaders: tabHeaders} ) );
         }
 
+        updateTabsAnchor(anchor, index) {
+            const { attributes, setAttributes, clientId } = this.props;
+            const { tabAnchors } = attributes;
+            const { updateBlockAttributes } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const childBlocks = getBlockOrder(clientId);
+
+            let newAnchors = tabAnchors.map( ( item, idx ) => {
+                if ( index === idx ) {
+                    item = anchor;
+                }
+                return item;
+            } );
+
+            setAttributes( { tabAnchors: newAnchors} );
+            updateBlockAttributes(childBlocks[index], {anchor: anchor});
+            this.updateTabAnchors();
+        }
+
+        updateTabAnchors() {
+            const { attributes, clientId } = this.props;
+            const { tabAnchors } = attributes;
+            const { updateBlockAttributes } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const childBlocks = getBlockOrder(clientId);
+
+            childBlocks.forEach( childBlockId => updateBlockAttributes( childBlockId, {tabAnchors: tabAnchors} ) );
+        }
+
         addTab() {
             const { attributes, setAttributes, clientId } = this.props;
             const { insertBlock } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
@@ -197,6 +226,7 @@
                 activeTabBgColor,
                 activeTabTextColor,
                 isPreview,
+                tabAnchors,
             } = attributes;
             const blockClass = [
                 `advgb-tabs-wrapper`,
@@ -364,7 +394,7 @@
                                         borderRadius: borderRadius + 'px',
                                     } }
                                 >
-                                    <a style={ { color: headerTextColor } }
+                                    <a id={tabAnchors[index]} style={ { color: headerTextColor } }
                                        onClick={ () => {
                                            this.props.updateTabActive( index );
                                        } }
@@ -386,6 +416,16 @@
                                             </span>
                                         </Tooltip>
                                     )}
+
+                                    {advgbBlocks.advgb_pro === '1' && (
+                                        <TextControl
+                                            placeholder={ __( 'HTML Anchor', 'advanced-gutenberg' ) }
+                                            value={ tabAnchors[index] }
+                                            onChange={ ( value ) => this.updateTabsAnchor(value, index) }
+                                            className="advgb-floating-anchor-field"
+                                        />
+                                    ) }
+
                                 </li>
                             ) ) }
                             <li className="advgb-tab advgb-add-tab"
@@ -523,7 +563,15 @@
         isTransform: {
             type: 'boolean',
             default: false
-        }
+        },
+        tabAnchors: {
+            type: 'array',
+            default: [
+                '',
+                '',
+                ''
+            ]
+        },
     };
 
     registerBlockType( 'advgb/adv-tabs', {
@@ -591,7 +639,8 @@
                 borderWidth,
                 borderColor,
                 borderRadius,
-                pid
+                pid,
+                tabAnchors
             } = attributes;
             const blockClass = [
                 `advgb-tabs-wrapper`,
@@ -614,7 +663,7 @@
                                     borderRadius: borderRadius + 'px',
                                 } }
                             >
-                                <a href={`#advgb-tabs-tab${index}`}
+                                <a id={tabAnchors[index]} href={`#advgb-tabs-tab${index}`}
                                    style={ { color: headerTextColor } }
                                 >
                                     <RichText.Content
@@ -641,6 +690,75 @@
             );
         },
         deprecated: [
+            {
+                attributes: {
+                    ...tabBlockAttrs,
+                },
+                save: function ( { attributes } ) {
+                    const {
+                        tabHeaders,
+                        tabActiveFrontend,
+                        tabsStyleD,
+                        tabsStyleT,
+                        tabsStyleM,
+                        headerBgColor,
+                        headerTextColor,
+                        bodyBgColor,
+                        bodyTextColor,
+                        borderStyle,
+                        borderWidth,
+                        borderColor,
+                        borderRadius,
+                        pid
+                    } = attributes;
+                    const blockClass = [
+                        `advgb-tabs-wrapper`,
+                        `advgb-tab-${tabsStyleD}-desktop`,
+                        `advgb-tab-${tabsStyleT}-tablet`,
+                        `advgb-tab-${tabsStyleM}-mobile`,
+                        pid
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <div className={blockClass} data-tab-active={tabActiveFrontend}>
+                            <ul className="advgb-tabs-panel">
+                                {tabHeaders.map( ( header, index ) => (
+                                    <li key={ index } className="advgb-tab"
+                                        style={ {
+                                            backgroundColor: headerBgColor,
+                                            borderStyle: borderStyle,
+                                            borderWidth: borderWidth + 'px',
+                                            borderColor: borderColor,
+                                            borderRadius: borderRadius + 'px',
+                                        } }
+                                    >
+                                        <a href={`#advgb-tabs-tab${index}`}
+                                           style={ { color: headerTextColor } }
+                                        >
+                                            <RichText.Content
+                                                tagName="span"
+                                                value={ header }
+                                            />
+                                        </a>
+                                    </li>
+                                ) ) }
+                            </ul>
+                            <div className="advgb-tab-body-wrapper"
+                                 style={ {
+                                     backgroundColor: bodyBgColor,
+                                     color: bodyTextColor,
+                                     borderStyle: borderStyle,
+                                     borderWidth: borderWidth + 'px',
+                                     borderColor: borderColor,
+                                     borderRadius: borderRadius + 'px',
+                                 } }
+                            >
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+                }
+            },
             {
                 attributes: {
                     ...tabBlockAttrs,
