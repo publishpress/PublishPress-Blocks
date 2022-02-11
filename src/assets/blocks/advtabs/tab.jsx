@@ -63,9 +63,15 @@
             }
 
             setAttributes({
-                header: tabHeaders[id],
-                anchor: tabAnchors[id]
+                header: tabHeaders[id]
             })
+
+            if(typeof tabAnchors !== 'undefined'){
+                setAttributes({
+                    anchor: tabAnchors[id]
+                });
+            }
+
         }
 
         render() {

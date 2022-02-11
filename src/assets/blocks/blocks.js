@@ -13173,9 +13173,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 setAttributes({
-                    header: tabHeaders[id],
-                    anchor: tabAnchors[id]
+                    header: tabHeaders[id]
                 });
+
+                if (typeof tabAnchors !== 'undefined') {
+                    setAttributes({
+                        anchor: tabAnchors[id]
+                    });
+                }
             }
         }, {
             key: "render",
