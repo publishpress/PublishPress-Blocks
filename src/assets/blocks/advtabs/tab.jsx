@@ -164,7 +164,7 @@
 
             return (
                 <div className="advgb-tab-body-container">
-                    <div className={`advgb-tab-body-header ${anchor}`}>{header}</div>
+                    <div className={`advgb-tab-body-header advgb-tab-class-${anchor}`}>{header}</div>
                     <div className={tabClassName} aria-labelledby={`advgb-tabs-tab${id}`}>
                         <InnerBlocks.Content />
                     </div>

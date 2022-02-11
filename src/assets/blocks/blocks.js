@@ -13279,7 +13279,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 { className: "advgb-tab-body-container" },
                 React.createElement(
                     "div",
-                    { className: "advgb-tab-body-header " + anchor },
+                    { className: "advgb-tab-body-header advgb-tab-class-" + anchor },
                     header
                 ),
                 React.createElement(
