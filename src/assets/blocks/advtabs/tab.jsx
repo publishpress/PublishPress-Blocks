@@ -46,7 +46,7 @@
 
         componentDidMount() {
             const { attributes, setAttributes } = this.props;
-            const {id, tabHeaders} = attributes;
+            const {id, tabHeaders, tabAnchors} = attributes;
 
             if ( ! this.props.attributes.uniqueID ) {
                 this.props.setAttributes( {
@@ -63,7 +63,8 @@
             }
 
             setAttributes({
-                header: tabHeaders[id]
+                header: tabHeaders[id],
+                anchor: tabAnchors[id]
             })
         }
 
@@ -116,6 +117,9 @@
             header: {
                 type: 'html',
             },
+            anchor: {
+                type: 'string',
+            },
             tabActive: {
                 type: 'number',
                 default: 0,
@@ -132,6 +136,14 @@
                     __( 'Tab 3', 'advanced-gutenberg' ),
                 ]
             },
+            tabAnchors: {
+                type: 'array',
+                default: [
+                    '',
+                    '',
+                    ''
+                ]
+            },
             uniqueID: {
                 type: 'string',
                 default: '',
@@ -143,7 +155,7 @@
         keywords: [ __( 'tab', 'advanced-gutenberg' ) ],
         edit: TabItemEdit,
         save: function( { attributes } ) {
-            const {id, uniqueID, header} = attributes;
+            const {id, uniqueID, header, anchor } = attributes;
 
             const tabClassName = [
                 `advgb-tab-${uniqueID}`,
@@ -152,7 +164,7 @@
 
             return (
                 <div className="advgb-tab-body-container">
-                    <div className="advgb-tab-body-header">{header}</div>
+                    <div className={`advgb-tab-body-header ${anchor}`}>{header}</div>
                     <div className={tabClassName} aria-labelledby={`advgb-tabs-tab${id}`}>
                         <InnerBlocks.Content />
                     </div>
@@ -160,6 +172,60 @@
             );
         },
         deprecated: [
+            {
+                attributes: {
+                    id: {
+                        type: 'number',
+                        default: 0
+                    },
+                    pid: {
+                        type: 'string',
+                    },
+                    header: {
+                        type: 'html',
+                    },
+                    tabActive: {
+                        type: 'number',
+                        default: 0,
+                    },
+                    changed: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    tabHeaders: {
+                        type: 'array',
+                        default: [
+                            __( 'Tab 1', 'advanced-gutenberg' ),
+                            __( 'Tab 2', 'advanced-gutenberg' ),
+                            __( 'Tab 3', 'advanced-gutenberg' ),
+                        ]
+                    },
+                    uniqueID: {
+                        type: 'string',
+                        default: '',
+                    }
+                },
+                supports: {
+                    reusable: false,
+                },
+                save: function( { attributes } ) {
+                    const {id, uniqueID, header} = attributes;
+
+                    const tabClassName = [
+                        `advgb-tab-${uniqueID}`,
+                        'advgb-tab-body'
+                    ].filter(Boolean).join(' ');
+
+                    return (
+                        <div className="advgb-tab-body-container">
+                            <div className="advgb-tab-body-header">{header}</div>
+                            <div className={tabClassName} aria-labelledby={`advgb-tabs-tab${id}`}>
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+                }
+            },
             {
                 attributes: {
                     pid: {
