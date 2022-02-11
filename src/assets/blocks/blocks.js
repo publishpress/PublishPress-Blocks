@@ -12149,6 +12149,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     pid: "advgb-tabs-" + this.props.clientId
                 });
                 this.updateTabHeaders();
+                this.updateTabAnchors();
                 this.props.resetOrder();
             }
         }, {
@@ -12283,7 +12284,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 insertBlock(tabItemBlock, attributes.tabHeaders.length, clientId);
                 setAttributes({
-                    tabHeaders: [].concat(_toConsumableArray(attributes.tabHeaders), ['Tab header'])
+                    tabHeaders: [].concat(_toConsumableArray(attributes.tabHeaders), ['Tab header']),
+                    tabAnchors: [].concat(_toConsumableArray(attributes.tabAnchors), [''])
                 });
                 this.props.resetOrder();
             }
@@ -12307,6 +12309,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 setAttributes({
                     tabHeaders: attributes.tabHeaders.filter(function (vl, idx) {
                         return idx !== index;
+                    }),
+                    tabAnchors: attributes.tabAnchors.filter(function (vl, idx) {
+                        return idx !== index;
                     })
                 });
                 this.updateTabsAttr({ tabActive: 0 });
@@ -12323,6 +12328,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     clientId = _props10.clientId;
                 var viewport = this.state.viewport;
                 var tabHeaders = attributes.tabHeaders,
+                    tabAnchors = attributes.tabAnchors,
                     tabActive = attributes.tabActive,
                     tabActiveFrontend = attributes.tabActiveFrontend,
                     tabsStyleD = attributes.tabsStyleD,
@@ -12339,8 +12345,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     pid = attributes.pid,
                     activeTabBgColor = attributes.activeTabBgColor,
                     activeTabTextColor = attributes.activeTabTextColor,
-                    isPreview = attributes.isPreview,
-                    tabAnchors = attributes.tabAnchors;
+                    isPreview = attributes.isPreview;
 
                 var blockClass = ["advgb-tabs-wrapper", "advgb-tab-" + tabsStyleD + "-desktop", "advgb-tab-" + tabsStyleT + "-tablet", "advgb-tab-" + tabsStyleM + "-mobile"].filter(Boolean).join(' ');
 
@@ -12778,6 +12783,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         save: function save(_ref16) {
             var attributes = _ref16.attributes;
             var tabHeaders = attributes.tabHeaders,
+                tabAnchors = attributes.tabAnchors,
                 tabActiveFrontend = attributes.tabActiveFrontend,
                 tabsStyleD = attributes.tabsStyleD,
                 tabsStyleT = attributes.tabsStyleT,
@@ -12790,8 +12796,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderWidth = attributes.borderWidth,
                 borderColor = attributes.borderColor,
                 borderRadius = attributes.borderRadius,
-                pid = attributes.pid,
-                tabAnchors = attributes.tabAnchors;
+                pid = attributes.pid;
 
             var blockClass = ["advgb-tabs-wrapper", "advgb-tab-" + tabsStyleD + "-desktop", "advgb-tab-" + tabsStyleT + "-tablet", "advgb-tab-" + tabsStyleM + "-mobile", pid].filter(Boolean).join(' ');
 
@@ -13149,7 +13154,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes;
                 var id = attributes.id,
-                    tabHeaders = attributes.tabHeaders;
+                    tabHeaders = attributes.tabHeaders,
+                    tabAnchors = attributes.tabAnchors;
 
 
                 if (!this.props.attributes.uniqueID) {
@@ -13169,6 +13175,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 setAttributes({
                     header: tabHeaders[id]
                 });
+
+                if (typeof tabAnchors !== 'undefined') {
+                    setAttributes({
+                        anchor: tabAnchors[id]
+                    });
+                }
             }
         }, {
             key: "render",
@@ -13228,6 +13240,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             header: {
                 type: 'html'
             },
+            anchor: {
+                type: 'string'
+            },
             tabActive: {
                 type: 'number',
                 default: 0
@@ -13239,6 +13254,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             tabHeaders: {
                 type: 'array',
                 default: [__('Tab 1', 'advanced-gutenberg'), __('Tab 2', 'advanced-gutenberg'), __('Tab 3', 'advanced-gutenberg')]
+            },
+            tabAnchors: {
+                type: 'array',
+                default: ['', '', '']
             },
             uniqueID: {
                 type: 'string',
@@ -13254,7 +13273,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var attributes = _ref2.attributes;
             var id = attributes.id,
                 uniqueID = attributes.uniqueID,
-                header = attributes.header;
+                header = attributes.header,
+                anchor = attributes.anchor;
 
 
             var tabClassName = ["advgb-tab-" + uniqueID, 'advgb-tab-body'].filter(Boolean).join(' ');
@@ -13264,7 +13284,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 { className: "advgb-tab-body-container" },
                 React.createElement(
                     "div",
-                    { className: "advgb-tab-body-header" },
+                    { className: "advgb-tab-body-header advgb-tab-class-" + anchor },
                     header
                 ),
                 React.createElement(
@@ -13275,6 +13295,62 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             );
         },
         deprecated: [{
+            attributes: {
+                id: {
+                    type: 'number',
+                    default: 0
+                },
+                pid: {
+                    type: 'string'
+                },
+                header: {
+                    type: 'html'
+                },
+                tabActive: {
+                    type: 'number',
+                    default: 0
+                },
+                changed: {
+                    type: 'boolean',
+                    default: false
+                },
+                tabHeaders: {
+                    type: 'array',
+                    default: [__('Tab 1', 'advanced-gutenberg'), __('Tab 2', 'advanced-gutenberg'), __('Tab 3', 'advanced-gutenberg')]
+                },
+                uniqueID: {
+                    type: 'string',
+                    default: ''
+                }
+            },
+            supports: {
+                reusable: false
+            },
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
+                var id = attributes.id,
+                    uniqueID = attributes.uniqueID,
+                    header = attributes.header;
+
+
+                var tabClassName = ["advgb-tab-" + uniqueID, 'advgb-tab-body'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-tab-body-container" },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-tab-body-header" },
+                        header
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: tabClassName, "aria-labelledby": "advgb-tabs-tab" + id },
+                        React.createElement(InnerBlocks.Content, null)
+                    )
+                );
+            }
+        }, {
             attributes: {
                 pid: {
                     type: 'string'
@@ -13299,8 +13375,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     default: ''
                 }
             },
-            save: function save(_ref3) {
-                var attributes = _ref3.attributes;
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
                 var pid = attributes.pid,
                     header = attributes.header;
 

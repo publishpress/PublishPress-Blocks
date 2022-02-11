@@ -103,6 +103,7 @@
                 pid: `advgb-tabs-${this.props.clientId}`,
             } );
             this.updateTabHeaders();
+            this.updateTabAnchors();
             this.props.resetOrder();
         }
 
@@ -185,6 +186,10 @@
                 tabHeaders: [
                     ...attributes.tabHeaders,
                     'Tab header'
+                ],
+                tabAnchors: [
+                    ...attributes.tabAnchors,
+                    ''
                 ]
             } );
             this.props.resetOrder();
@@ -198,7 +203,8 @@
 
             removeBlock(childBlocks[index], false);
             setAttributes( {
-                tabHeaders: attributes.tabHeaders.filter( (vl, idx) => idx !== index )
+                tabHeaders: attributes.tabHeaders.filter( (vl, idx) => idx !== index ),
+                tabAnchors: attributes.tabAnchors.filter( (vl, idx) => idx !== index )
             } );
             this.updateTabsAttr({tabActive: 0});
             this.props.resetOrder();
@@ -209,6 +215,7 @@
             const { viewport } = this.state;
             const {
                 tabHeaders,
+                tabAnchors,
                 tabActive,
                 tabActiveFrontend,
                 tabsStyleD,
@@ -226,7 +233,6 @@
                 activeTabBgColor,
                 activeTabTextColor,
                 isPreview,
-                tabAnchors,
             } = attributes;
             const blockClass = [
                 `advgb-tabs-wrapper`,
@@ -416,7 +422,6 @@
                                             </span>
                                         </Tooltip>
                                     )}
-
                                     {advgbBlocks.advgb_pro === '1' && (
                                         <TextControl
                                             placeholder={ __( 'HTML Anchor', 'advanced-gutenberg' ) }
@@ -425,7 +430,6 @@
                                             className="advgb-floating-anchor-field"
                                         />
                                     ) }
-
                                 </li>
                             ) ) }
                             <li className="advgb-tab advgb-add-tab"
@@ -627,6 +631,7 @@
         save: function ( { attributes } ) {
             const {
                 tabHeaders,
+                tabAnchors,
                 tabActiveFrontend,
                 tabsStyleD,
                 tabsStyleT,
@@ -640,7 +645,6 @@
                 borderColor,
                 borderRadius,
                 pid,
-                tabAnchors
             } = attributes;
             const blockClass = [
                 `advgb-tabs-wrapper`,
