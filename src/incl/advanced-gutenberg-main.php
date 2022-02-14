@@ -389,6 +389,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_editor_style(plugins_url('assets/css/blocks.css', dirname(__FILE__))); // 'advgb_blocks_styles'
                 add_editor_style(plugins_url('assets/css/recent-posts.css', dirname(__FILE__))); // 'advgb_recent_posts_styles'
                 add_editor_style(plugins_url('assets/css/editor.css', dirname(__FILE__))); // 'advgb_editor_styles'
+                add_editor_style(plugins_url('assets/css/site-editor.css', dirname(__FILE__))); // Site editor iframe styles only
                 add_editor_style(plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))); // 'material_icon_font'
                 add_editor_style(plugins_url('assets/css/fonts/material-icons-custom.min.css', dirname(__FILE__))); // 'material_icon_font_custom'
                 add_editor_style(plugins_url('assets/css/slick.css', dirname(__FILE__))); // 'slick_style'
@@ -452,6 +453,23 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION,
                     true
                 );
+
+                // Pro Ads in some blocks for free version
+                if( !defined('ADVANCED_GUTENBERG_PRO') ){
+                    wp_enqueue_script(
+                        'advgb_pro_ad_js',
+                        plugins_url('assets/blocks/pro-ad.js', dirname(__FILE__)),
+                        array( 'advgb_blocks' ),
+                        ADVANCED_GUTENBERG_VERSION,
+                        true
+                    );
+                    wp_enqueue_style(
+                        'advgb_pro_ad_css',
+                        plugins_url('assets/css/pro-ad.css', dirname(__FILE__)),
+                        array(),
+                        ADVANCED_GUTENBERG_VERSION
+                    );
+                }
             }
 
             // Don't load custom-styles.js in widgets.php, Theme Customizer > Widgets and Site Editor
@@ -570,6 +588,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'registerEnabled' => get_option('users_can_register'),
                 'blocks_widget_support' => $blocks_widget_support,
                 'enable_advgb_blocks' => $enable_advgb_blocks,
+                'advgb_pro' => defined('ADVANCED_GUTENBERG_PRO') ? 1 : 0
             ));
 
             // Setup default config data for blocks
@@ -6087,6 +6106,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 plugins_url('assets/blocks/advaccordion/frontend.js', dirname(__FILE__)),
                 array('jquery', 'jquery-ui-accordion')
             );
+            if (
+                defined( 'ADVANCED_GUTENBERG_PRO' )
+                && method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_inline_scripts_frontend' )
+            ) {
+                PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_inline_scripts_frontend('advgb/accordion-item');
+            }
         }
 
         /**
@@ -6105,6 +6130,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 array('jquery'),
                 ADVANCED_GUTENBERG_VERSION
             );
+            if (
+                defined( 'ADVANCED_GUTENBERG_PRO' )
+                && method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_inline_scripts_frontend' )
+            ) {
+                PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_inline_scripts_frontend('advgb/adv-tabs');
+            }
         }
 
         /**
