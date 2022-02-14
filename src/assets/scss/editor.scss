@@ -2,29 +2,57 @@
 #widgets-editor,
 #editor {
 
-    .advgb-child-select,
-    .advgb-child-toggle {
-      margin-left: 47px;
+  .advgb-tabs-block,
+  .advgb-tabs-wrapper {
+    padding: 15px 0;
+
+    .advgb-tab p.mce-content-body,
+    .advgb-tab-body p.mce-content-body {
+        color: inherit;
     }
+  }
 
-    .advgb-child-select {
-      max-width: 200px;
-    }
+  .advgb-tabs-wrapper {
 
-    .advgb-custom-styles-wrapper {
-      padding-top: 16px;
-      border-top: 1px solid #e0e0e0;
+    // Vertical tabs
+    &.advgb-tab-vert-desktop {
 
-      .components-flex,
-      .components-base-control__help  {
-        padding: 0 16px;
+      .advgb-floating-anchor-field {
+        right: unset;
+        left: 14px;
+        width: 130px;
+
+        &:after {
+          right: unset;
+          left: 20px;
+        }
       }
     }
+  }
 
-    // Hide inserter for Adv Tab item to avoid inserting tabs inside tabs
-    .advgb-tab-body-wrapper .block-editor-inner-blocks .block-list-appender {
-      display: none !important;
+  .advgb-child-select,
+  .advgb-child-toggle {
+    margin-left: 47px;
+  }
+
+  .advgb-child-select {
+    max-width: 200px;
+  }
+
+  .advgb-custom-styles-wrapper {
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e0;
+
+    .components-flex,
+    .components-base-control__help  {
+      padding: 0 16px;
     }
+  }
+
+  // Hide inserter for Adv Tab item to avoid inserting tabs inside tabs
+  .advgb-tab-body-wrapper .block-editor-inner-blocks .block-list-appender {
+    display: none !important;
+  }
 }
 
 body:not(.advgb-editor-width-default) {
