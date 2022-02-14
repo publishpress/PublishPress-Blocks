@@ -967,41 +967,6 @@ span.advgb-tab-remove svg {
     display: block;
 }
 
-.advgb-floating-anchor-field {
-  position: absolute;
-  top: -23px;
-  right: 14px;
-  height: 22px;
-  display: none;
-  z-index: 1;
-  width: 150px;
-
-  > .components-base-control__field {
-    margin-bottom: 0;
-
-    input {
-      font-size: 0.9em;
-      border: none;
-      height: 20px;
-      min-height: 20px;
-      text-align: center;
-    }
-  }
-
-  &:after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    right: 10px;
-    margin-left: -8px;
-    width: 0;
-    height: 0;
-    border-top: 8px solid #fff;
-    border-right: 8px solid transparent;
-    border-left: 8px solid transparent;
-  }
-}
-
 div.advgb-tab-body {
     padding: 10px 10px 10px 15px;
     border: 1px solid #e0e0e0;

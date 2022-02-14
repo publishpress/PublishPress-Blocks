@@ -12,24 +12,6 @@
     }
   }
 
-  .advgb-tabs-wrapper {
-
-    // Vertical tabs
-    &.advgb-tab-vert-desktop {
-
-      .advgb-floating-anchor-field {
-        right: unset;
-        left: 14px;
-        width: 130px;
-
-        &:after {
-          right: unset;
-          left: 20px;
-        }
-      }
-    }
-  }
-
   .advgb-child-select,
   .advgb-child-toggle {
     margin-left: 47px;

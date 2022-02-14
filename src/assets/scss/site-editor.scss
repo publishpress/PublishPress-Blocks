@@ -1,0 +1,21 @@
+// Styles to load in Site editor iframe only
+
+// Adv. Tabs
+.advgb-tabs-wrapper {
+  padding: 15px 0;
+
+  // Vertical tabs
+  &.advgb-tab-vert-desktop {
+
+    .advgb-floating-anchor-field {
+      right: unset;
+      left: 14px;
+      width: 130px;
+
+      &:after {
+        right: unset;
+        left: 20px;
+      }
+    }
+  }
+}
