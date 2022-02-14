@@ -389,6 +389,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_editor_style(plugins_url('assets/css/blocks.css', dirname(__FILE__))); // 'advgb_blocks_styles'
                 add_editor_style(plugins_url('assets/css/recent-posts.css', dirname(__FILE__))); // 'advgb_recent_posts_styles'
                 add_editor_style(plugins_url('assets/css/editor.css', dirname(__FILE__))); // 'advgb_editor_styles'
+                add_editor_style(plugins_url('assets/css/site-editor.css', dirname(__FILE__))); // Site editor iframe styles only
                 add_editor_style(plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))); // 'material_icon_font'
                 add_editor_style(plugins_url('assets/css/fonts/material-icons-custom.min.css', dirname(__FILE__))); // 'material_icon_font_custom'
                 add_editor_style(plugins_url('assets/css/slick.css', dirname(__FILE__))); // 'slick_style'
