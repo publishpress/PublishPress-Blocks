@@ -2,29 +2,39 @@
 #widgets-editor,
 #editor {
 
-    .advgb-child-select,
-    .advgb-child-toggle {
-      margin-left: 47px;
-    }
+  .advgb-tabs-block,
+  .advgb-tabs-wrapper {
+    padding: 15px 0;
 
-    .advgb-child-select {
-      max-width: 200px;
+    .advgb-tab p.mce-content-body,
+    .advgb-tab-body p.mce-content-body {
+        color: inherit;
     }
+  }
 
-    .advgb-custom-styles-wrapper {
-      padding-top: 16px;
-      border-top: 1px solid #e0e0e0;
+  .advgb-child-select,
+  .advgb-child-toggle {
+    margin-left: 47px;
+  }
 
-      .components-flex,
-      .components-base-control__help  {
-        padding: 0 16px;
-      }
+  .advgb-child-select {
+    max-width: 200px;
+  }
+
+  .advgb-custom-styles-wrapper {
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e0;
+
+    .components-flex,
+    .components-base-control__help  {
+      padding: 0 16px;
     }
+  }
 
-    // Hide inserter for Adv Tab item to avoid inserting tabs inside tabs
-    .advgb-tab-body-wrapper .block-editor-inner-blocks .block-list-appender {
-      display: none !important;
-    }
+  // Hide inserter for Adv Tab item to avoid inserting tabs inside tabs
+  .advgb-tab-body-wrapper .block-editor-inner-blocks .block-list-appender {
+    display: none !important;
+  }
 }
 
 body:not(.advgb-editor-width-default) {
