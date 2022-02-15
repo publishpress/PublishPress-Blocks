@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 5.9
-Stable tag: 2.11.5
+Stable tag: 2.11.6b1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -257,17 +257,19 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
+= 2.11.6 - 15 Feb 2022 =
+  * Remove: Manual block registration for Legacy Widget and Widget Area
+  * Fix: Legacy Widget is always activated and can't be disabled
+
 = 2.11.5 - 14 Feb 2022 =
   * Add: Ad to upgrade to Pro for Advanced Tabs, Advanced Accordions and Content Display blocks
 
 = 2.11.4 - 8 Feb 2022 =
   * Add: Set Block Access as disabled for new installations
-  * Remove: Manual block registration for Legacy Widget and Widget Area
   * Add: Disable Table of Contents in Site Editor
   * Fix: Include 0 on the left when hours or minutes are 0-9 for Newsletter and Contact Form blocks
   * Fix: Don't unregister widget blocks
   * Fix: Warning when missing Legacy widget in Block Access
-  * Fix: Legacy Widget is always activated and can't be disabled
   * Fix: Add a visual indicator the Tabs style is selected for Advanced Tabs block
   * Fix: Don't load post-sidebar.js in Site Editor screen
   * Fix: Load assets in frontend for pages generated through Site Editor
