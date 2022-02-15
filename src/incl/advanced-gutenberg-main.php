@@ -2496,8 +2496,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Include the blocks stored in advgb_blocks_list option but not detected by Block Access
                 foreach($all_blocks as $one_block) {
                     if(
-                        is_array($advgb_blocks_user_roles['active_blocks']) &&
-                        is_array($advgb_blocks_user_roles['inactive_blocks']) &&
                         !in_array($one_block['name'], $advgb_blocks_user_roles['active_blocks']) &&
                         !in_array($one_block['name'], $advgb_blocks_user_roles['inactive_blocks'])
                     ) {
