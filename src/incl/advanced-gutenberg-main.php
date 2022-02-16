@@ -5497,6 +5497,20 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgb_AdvancedButtonStyles($blockAttrs)
         {
+            // Decide to include or not CSS color property for outlined styles
+            if(
+                !isset($blockAttrs['textColor'])
+                && isset($blockAttrs['className'])
+                && (
+                    strpos($blockAttrs['className'], 'is-style-squared-outline') !== false
+                    || strpos($blockAttrs['className'], 'is-style-outlined') !== false
+                )
+            ){
+                $enable_text_color = false;
+            } else {
+                $enable_text_color = true;
+            }
+
             $block_class    = esc_html($blockAttrs['id']);
             $font_size      = isset($blockAttrs['textSize']) ? esc_html(intval($blockAttrs['textSize'])) : 18;
             $color          = isset($blockAttrs['textColor']) ? esc_html($blockAttrs['textColor']) : '#fff';
@@ -5525,7 +5539,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             $style_html  = '.'. $block_class . '{';
             $style_html .= 'font-size:'.$font_size.'px;';
-            $style_html .= 'color:'.$color.' !important;';
+            if($enable_text_color == true) $style_html .= 'color:'.$color.' !important;';
             $style_html .= 'background-color:'.$bg_color.' !important;';
             $style_html .= 'margin:'.$mg_top.'px '.$mg_right.'px '.$mg_bottom.'px '.$mg_left.'px !important;';
             $style_html .= 'padding:'.$pd_top.'px '.$pd_right.'px '.$pd_bottom.'px '.$pd_left.'px;';
