@@ -262,6 +262,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Legacy Widget is always activated and can't be disabled
   * Fix: Local video cropped in mobile for Advanced Video block
   * Fix: Default text color for outlined styles in frontend for Advanced Button block
+  * Fix: Check current user role exists as array in advgb_blocks_user_roles option
 
 = 2.11.5 - 14 Feb 2022 =
   * Add: Ad to upgrade to Pro for Advanced Tabs, Advanced Accordions and Content Display blocks

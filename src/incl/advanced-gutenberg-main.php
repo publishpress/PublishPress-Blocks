@@ -2489,9 +2489,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $all_blocks = get_option( 'advgb_blocks_list' );
 
             // Get the array from advgb_blocks_user_roles option that match current user role
-            if( get_option('advgb_blocks_user_roles') ) {
-                $advgb_blocks_user_roles = !empty( get_option('advgb_blocks_user_roles') ) ? get_option( 'advgb_blocks_user_roles' ) : [];
-                $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
+            $advgb_blocks_user_roles = !empty( get_option('advgb_blocks_user_roles') ) ? get_option( 'advgb_blocks_user_roles' ) : [];
+            $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
+
+            if(is_array($advgb_blocks_user_roles) && count($advgb_blocks_user_roles) > 0) {
 
                 // Include the blocks stored in advgb_blocks_list option but not detected by Block Access
                 foreach($all_blocks as $one_block) {
