@@ -253,6 +253,7 @@
             this.updateTabHeaders();
             this.updateTabAnchors();
             this.props.resetOrder();
+            this.props.updateTabActive(newIndex)
         }
 
         render() {

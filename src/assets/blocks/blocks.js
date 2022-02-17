@@ -12367,6 +12367,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.updateTabHeaders();
                 this.updateTabAnchors();
                 this.props.resetOrder();
+                this.props.updateTabActive(newIndex);
             }
         }, {
             key: "render",
