@@ -12318,14 +12318,75 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.props.resetOrder();
             }
         }, {
-            key: "render",
-            value: function render() {
-                var _this2 = this;
-
+            key: "moveTab",
+            value: function moveTab(index, direction) {
                 var _props10 = this.props,
                     attributes = _props10.attributes,
                     setAttributes = _props10.setAttributes,
                     clientId = _props10.clientId;
+
+                var _ref14 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    updateBlockAttributes = _ref14.updateBlockAttributes,
+                    moveBlockToPosition = _ref14.moveBlockToPosition;
+
+                var _ref15 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref15.getBlockOrder,
+                    getBlock = _ref15.getBlock,
+                    getBlockAttributes = _ref15.getBlockAttributes;
+
+                var childBlocks = getBlockOrder(clientId);
+                var headers = attributes.tabHeaders;
+                var header = headers.splice(index, 1);
+                var anchors = attributes.tabAnchors;
+                var anchor = anchors.splice(index, 1);
+
+                console.log(index, headers.length);
+
+                switch (direction) {
+                    case 'back':
+                        if (index === 0) {
+                            return;
+                        }
+                        headers.splice(index - 1, 0, header[0]);
+                        this.updateTabsHeader(attributes.tabHeaders[index], index - 1);
+                        this.updateTabsHeader(attributes.tabHeaders[index - 1], index - 1);
+                        anchors.splice(index - 1, 0, anchor[0]);
+                        moveBlockToPosition(childBlocks[index], clientId, clientId, index - 1);
+                        break;
+                    case 'forward':
+                        if (index === headers.length) {
+                            return;
+                        }
+                        headers.splice(index + 1, 0, header[0]);
+                        this.updateTabsHeader(attributes.tabHeaders[index], index + 1);
+                        this.updateTabsHeader(attributes.tabHeaders[index + 1], index + 1);
+                        anchors.splice(index + 1, 0, anchor[0]);
+                        moveBlockToPosition(childBlocks[index], clientId, clientId, index + 1);
+                        break;
+                }
+
+                this.updateTabHeaders();
+                this.updateTabAnchors();
+                this.props.resetOrder();
+            }
+        }, {
+            key: "onMove",
+            value: function onMove(newIndex) {
+                headers.splice(newIndex, 0, header[0]);
+                this.updateTabsHeader(attributes.tabHeaders[index], newIndex);
+                this.updateTabsHeader(attributes.tabHeaders[newIndex], newIndex);
+                anchors.splice(newIndex, 0, anchor[0]);
+                moveBlockToPosition(childBlocks[index], clientId, clientId, newIndex);
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _this2 = this;
+
+                var _props11 = this.props,
+                    attributes = _props11.attributes,
+                    setAttributes = _props11.setAttributes,
+                    clientId = _props11.clientId;
                 var viewport = this.state.viewport;
                 var tabHeaders = attributes.tabHeaders,
                     tabAnchors = attributes.tabAnchors,
@@ -12574,14 +12635,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             React.createElement(Dashicon, { icon: "no" })
                                         )
                                     ),
-                                    advgbBlocks.advgb_pro === '1' && React.createElement(TextControl, {
-                                        placeholder: __('HTML Anchor', 'advanced-gutenberg'),
-                                        value: tabAnchors[index],
-                                        onChange: function onChange(value) {
-                                            return _this2.updateTabsAnchor(value, index);
-                                        },
-                                        className: "advgb-floating-anchor-field"
-                                    })
+                                    advgbBlocks.advgb_pro === '1' && React.createElement(
+                                        Fragment,
+                                        null,
+                                        React.createElement(TextControl, {
+                                            placeholder: __('HTML Anchor', 'advanced-gutenberg'),
+                                            value: tabAnchors[index],
+                                            onChange: function onChange(value) {
+                                                return _this2.updateTabsAnchor(value, index);
+                                            },
+                                            className: "advgb-floating-anchor-field"
+                                        }),
+                                        index > 0 && React.createElement(
+                                            Tooltip,
+                                            { text: __('Move back', 'advanced-gutenberg') },
+                                            React.createElement(
+                                                "span",
+                                                { className: "advgb-tab-move-back",
+                                                    onClick: function onClick() {
+                                                        return _this2.moveTab(index, 'back');
+                                                    }
+                                                },
+                                                React.createElement(Dashicon, { icon: "arrow-left-alt2" })
+                                            )
+                                        ),
+                                        index < tabHeaders.length - 1 && React.createElement(
+                                            Tooltip,
+                                            { text: __('Move forward', 'advanced-gutenberg') },
+                                            React.createElement(
+                                                "span",
+                                                { className: "advgb-tab-move-forward",
+                                                    onClick: function onClick() {
+                                                        return _this2.moveTab(index, 'forward');
+                                                    }
+                                                },
+                                                React.createElement(Dashicon, { icon: "arrow-right-alt2" })
+                                            )
+                                        )
+                                    )
                                 );
                             }),
                             React.createElement(
@@ -12748,9 +12839,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         supports: {
             anchor: true
         },
-        edit: compose(withDispatch(function (dispatch, _ref14, _ref15) {
-            var clientId = _ref14.clientId;
-            var select = _ref15.select;
+        edit: compose(withDispatch(function (dispatch, _ref16, _ref17) {
+            var clientId = _ref16.clientId;
+            var select = _ref17.select;
 
             var _select = select('core/block-editor'),
                 getBlock = _select.getBlock;
@@ -12765,6 +12856,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         updateBlockAttributes(block.innerBlocks[n].clientId, {
                             id: n
                         });
+                        //console.log(block.innerBlocks[ n ].attributes.header);
                     });
                 },
                 updateTabActive: function updateTabActive(tabActive) {
@@ -12780,8 +12872,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             };
         }))(AdvTabsWrapper),
-        save: function save(_ref16) {
-            var attributes = _ref16.attributes;
+        save: function save(_ref18) {
+            var attributes = _ref18.attributes;
             var tabHeaders = attributes.tabHeaders,
                 tabAnchors = attributes.tabAnchors,
                 tabActiveFrontend = attributes.tabActiveFrontend,
@@ -12849,8 +12941,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         deprecated: [{
             attributes: _extends({}, tabBlockAttrs),
-            save: function save(_ref17) {
-                var attributes = _ref17.attributes;
+            save: function save(_ref19) {
+                var attributes = _ref19.attributes;
                 var tabHeaders = attributes.tabHeaders,
                     tabActiveFrontend = attributes.tabActiveFrontend,
                     tabsStyleD = attributes.tabsStyleD,
@@ -12922,8 +13014,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     default: false
                 }
             }),
-            save: function save(_ref18) {
-                var attributes = _ref18.attributes;
+            save: function save(_ref20) {
+                var attributes = _ref20.attributes;
                 var tabHeaders = attributes.tabHeaders,
                     tabActiveFrontend = attributes.tabActiveFrontend,
                     tabsStyleD = attributes.tabsStyleD,
@@ -12996,8 +13088,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     default: ''
                 }
             }),
-            save: function save(_ref19) {
-                var attributes = _ref19.attributes;
+            save: function save(_ref21) {
+                var attributes = _ref21.attributes;
                 var tabHeaders = attributes.tabHeaders,
                     tabActiveFrontend = attributes.tabActiveFrontend,
                     tabsStyleD = attributes.tabsStyleD,

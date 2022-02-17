@@ -210,6 +210,69 @@
             this.props.resetOrder();
         }
 
+        moveTab(index, direction) {
+            const { attributes, setAttributes, clientId } = this.props;
+            const { updateBlockAttributes, moveBlockToPosition } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder, getBlock, getBlockAttributes } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const childBlocks   = getBlockOrder(clientId);
+            const headers       = attributes.tabHeaders;
+            const header        = headers.splice( index, 1 );
+            const anchors       = attributes.tabAnchors;
+            const anchor        = anchors.splice( index, 1 );
+
+            console.log(index, headers.length);
+
+            switch(direction){
+                case 'back':
+                    if(index === 0) {
+                        return;
+                    }
+                    headers.splice( index - 1, 0, header[0] );
+                    this.updateTabsHeader(attributes.tabHeaders[index], index - 1);
+                    this.updateTabsHeader(attributes.tabHeaders[index - 1], index - 1);
+                    anchors.splice( index - 1, 0, anchor[0] );
+                    moveBlockToPosition(
+                        childBlocks[index],
+                        clientId,
+                        clientId,
+                        index - 1
+                    );
+                break;
+                case 'forward':
+                    if(index === headers.length) {
+                        return;
+                    }
+                    headers.splice( index + 1, 0, header[0] );
+                    this.updateTabsHeader(attributes.tabHeaders[index], index + 1);
+                    this.updateTabsHeader(attributes.tabHeaders[index + 1], index + 1);
+                    anchors.splice( index + 1, 0, anchor[0] );
+                    moveBlockToPosition(
+                        childBlocks[index],
+                        clientId,
+                        clientId,
+                        index + 1
+                    );
+                break;
+            }
+
+            this.updateTabHeaders();
+            this.updateTabAnchors();
+            this.props.resetOrder();
+        }
+
+        onMove(newIndex){
+            headers.splice( newIndex, 0, header[0] );
+            this.updateTabsHeader(attributes.tabHeaders[index], newIndex);
+            this.updateTabsHeader(attributes.tabHeaders[newIndex], newIndex);
+            anchors.splice( newIndex, 0, anchor[0] );
+            moveBlockToPosition(
+                childBlocks[index],
+                clientId,
+                clientId,
+                newIndex
+            );
+        }
+
         render() {
             const { attributes, setAttributes, clientId } = this.props;
             const { viewport } = this.state;
@@ -422,13 +485,33 @@
                                             </span>
                                         </Tooltip>
                                     )}
-                                    {advgbBlocks.advgb_pro === '1' && (
-                                        <TextControl
-                                            placeholder={ __( 'HTML Anchor', 'advanced-gutenberg' ) }
-                                            value={ tabAnchors[index] }
-                                            onChange={ ( value ) => this.updateTabsAnchor(value, index) }
-                                            className="advgb-floating-anchor-field"
-                                        />
+                                    { advgbBlocks.advgb_pro === '1' && (
+                                        <Fragment>
+                                            <TextControl
+                                                placeholder={ __( 'HTML Anchor', 'advanced-gutenberg' ) }
+                                                value={ tabAnchors[index] }
+                                                onChange={ ( value ) => this.updateTabsAnchor(value, index) }
+                                                className="advgb-floating-anchor-field"
+                                            />
+                                            { index > 0 && (
+                                                <Tooltip text={ __( 'Move back', 'advanced-gutenberg' ) }>
+                                                    <span className="advgb-tab-move-back"
+                                                          onClick={ () => this.moveTab(index,'back') }
+                                                    >
+                                                        <Dashicon icon="arrow-left-alt2"/>
+                                                    </span>
+                                                </Tooltip>
+                                            ) }
+                                            { index < tabHeaders.length - 1 && (
+                                                <Tooltip text={ __( 'Move forward', 'advanced-gutenberg' ) }>
+                                                    <span className="advgb-tab-move-forward"
+                                                          onClick={ () => this.moveTab(index,'forward') }
+                                                    >
+                                                        <Dashicon icon="arrow-right-alt2"/>
+                                                    </span>
+                                                </Tooltip>
+                                            ) }
+                                        </Fragment>
                                     ) }
                                 </li>
                             ) ) }
@@ -611,6 +694,7 @@
                             updateBlockAttributes( block.innerBlocks[ n ].clientId, {
                                 id: n,
                             } );
+                            //console.log(block.innerBlocks[ n ].attributes.header);
                         } );
                     },
                     updateTabActive(tabActive) {
