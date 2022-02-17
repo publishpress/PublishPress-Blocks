@@ -211,56 +211,34 @@
         }
 
         moveTab(index, direction) {
-            const { attributes, setAttributes, clientId } = this.props;
-            const { updateBlockAttributes, moveBlockToPosition } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
-            const { getBlockOrder, getBlock, getBlockAttributes } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
-            const childBlocks   = getBlockOrder(clientId);
-            const headers       = attributes.tabHeaders;
-            const header        = headers.splice( index, 1 );
-            const anchors       = attributes.tabAnchors;
-            const anchor        = anchors.splice( index, 1 );
-
-            console.log(index, headers.length);
+            const { attributes } = this.props;
+            const headers = attributes.tabHeaders;
+            const header = headers.splice( index, 1 );
+            const anchors = attributes.tabAnchors;
+            const anchor = anchors.splice( index, 1 );
 
             switch(direction){
                 case 'back':
                     if(index === 0) {
                         return;
                     }
-                    headers.splice( index - 1, 0, header[0] );
-                    this.updateTabsHeader(attributes.tabHeaders[index], index - 1);
-                    this.updateTabsHeader(attributes.tabHeaders[index - 1], index - 1);
-                    anchors.splice( index - 1, 0, anchor[0] );
-                    moveBlockToPosition(
-                        childBlocks[index],
-                        clientId,
-                        clientId,
-                        index - 1
-                    );
+                    this.onMove(index, index - 1, headers, header, anchors, anchor);
                 break;
                 case 'forward':
                     if(index === headers.length) {
                         return;
                     }
-                    headers.splice( index + 1, 0, header[0] );
-                    this.updateTabsHeader(attributes.tabHeaders[index], index + 1);
-                    this.updateTabsHeader(attributes.tabHeaders[index + 1], index + 1);
-                    anchors.splice( index + 1, 0, anchor[0] );
-                    moveBlockToPosition(
-                        childBlocks[index],
-                        clientId,
-                        clientId,
-                        index + 1
-                    );
+                    this.onMove(index, index + 1, headers, header, anchors, anchor);
                 break;
             }
-
-            this.updateTabHeaders();
-            this.updateTabAnchors();
-            this.props.resetOrder();
         }
 
-        onMove(newIndex){
+        onMove(index, newIndex, headers, header, anchors, anchor){
+            const { attributes, setAttributes, clientId } = this.props;
+            const { moveBlockToPosition } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const childBlocks = getBlockOrder(clientId);
+
             headers.splice( newIndex, 0, header[0] );
             this.updateTabsHeader(attributes.tabHeaders[index], newIndex);
             this.updateTabsHeader(attributes.tabHeaders[newIndex], newIndex);
@@ -271,6 +249,10 @@
                 clientId,
                 newIndex
             );
+
+            this.updateTabHeaders();
+            this.updateTabAnchors();
+            this.props.resetOrder();
         }
 
         render() {

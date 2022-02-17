@@ -12320,63 +12320,53 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "moveTab",
             value: function moveTab(index, direction) {
-                var _props10 = this.props,
-                    attributes = _props10.attributes,
-                    setAttributes = _props10.setAttributes,
-                    clientId = _props10.clientId;
+                var attributes = this.props.attributes;
 
-                var _ref14 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
-                    updateBlockAttributes = _ref14.updateBlockAttributes,
-                    moveBlockToPosition = _ref14.moveBlockToPosition;
-
-                var _ref15 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
-                    getBlockOrder = _ref15.getBlockOrder,
-                    getBlock = _ref15.getBlock,
-                    getBlockAttributes = _ref15.getBlockAttributes;
-
-                var childBlocks = getBlockOrder(clientId);
                 var headers = attributes.tabHeaders;
                 var header = headers.splice(index, 1);
                 var anchors = attributes.tabAnchors;
                 var anchor = anchors.splice(index, 1);
-
-                console.log(index, headers.length);
 
                 switch (direction) {
                     case 'back':
                         if (index === 0) {
                             return;
                         }
-                        headers.splice(index - 1, 0, header[0]);
-                        this.updateTabsHeader(attributes.tabHeaders[index], index - 1);
-                        this.updateTabsHeader(attributes.tabHeaders[index - 1], index - 1);
-                        anchors.splice(index - 1, 0, anchor[0]);
-                        moveBlockToPosition(childBlocks[index], clientId, clientId, index - 1);
+                        this.onMove(index, index - 1, headers, header, anchors, anchor);
                         break;
                     case 'forward':
                         if (index === headers.length) {
                             return;
                         }
-                        headers.splice(index + 1, 0, header[0]);
-                        this.updateTabsHeader(attributes.tabHeaders[index], index + 1);
-                        this.updateTabsHeader(attributes.tabHeaders[index + 1], index + 1);
-                        anchors.splice(index + 1, 0, anchor[0]);
-                        moveBlockToPosition(childBlocks[index], clientId, clientId, index + 1);
+                        this.onMove(index, index + 1, headers, header, anchors, anchor);
                         break;
                 }
-
-                this.updateTabHeaders();
-                this.updateTabAnchors();
-                this.props.resetOrder();
             }
         }, {
             key: "onMove",
-            value: function onMove(newIndex) {
+            value: function onMove(index, newIndex, headers, header, anchors, anchor) {
+                var _props10 = this.props,
+                    attributes = _props10.attributes,
+                    setAttributes = _props10.setAttributes,
+                    clientId = _props10.clientId;
+
+                var _ref14 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    moveBlockToPosition = _ref14.moveBlockToPosition;
+
+                var _ref15 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref15.getBlockOrder;
+
+                var childBlocks = getBlockOrder(clientId);
+
                 headers.splice(newIndex, 0, header[0]);
                 this.updateTabsHeader(attributes.tabHeaders[index], newIndex);
                 this.updateTabsHeader(attributes.tabHeaders[newIndex], newIndex);
                 anchors.splice(newIndex, 0, anchor[0]);
                 moveBlockToPosition(childBlocks[index], clientId, clientId, newIndex);
+
+                this.updateTabHeaders();
+                this.updateTabAnchors();
+                this.props.resetOrder();
             }
         }, {
             key: "render",
