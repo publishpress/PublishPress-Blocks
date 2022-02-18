@@ -459,15 +459,6 @@
                                             placeholder={ __( 'Title…', 'advanced-gutenberg' ) }
                                         />
                                     </a>
-                                    {tabHeaders.length > 1 && (
-                                        <Tooltip text={ __( 'Remove tab', 'advanced-gutenberg' ) }>
-                                            <span className="advgb-tab-remove"
-                                                  onClick={ () => this.removeTab(index) }
-                                            >
-                                                <Dashicon icon="no"/>
-                                            </span>
-                                        </Tooltip>
-                                    )}
                                     { advgbBlocks.advgb_pro === '1' && (
                                         <Fragment>
                                             <TextControl
@@ -475,11 +466,13 @@
                                                 value={ tabAnchors[index] }
                                                 onChange={ ( value ) => this.updateTabsAnchor(value, index) }
                                                 className="advgb-floating-anchor-field"
+                                                style={ { display: tabActive === index ? 'block' : 'none' } }
                                             />
                                             { index > 0 && (
                                                 <Tooltip text={ __( 'Move back', 'advanced-gutenberg' ) }>
                                                     <span className="advgb-tab-move-back"
                                                           onClick={ () => this.moveTab(index,'back') }
+                                                          style={ { display: tabActive === index ? 'block' : 'none' } }
                                                     >
                                                         <Dashicon icon="arrow-left-alt2"/>
                                                     </span>
@@ -489,6 +482,7 @@
                                                 <Tooltip text={ __( 'Move forward', 'advanced-gutenberg' ) }>
                                                     <span className="advgb-tab-move-forward"
                                                           onClick={ () => this.moveTab(index,'forward') }
+                                                          style={ { display: tabActive === index ? 'block' : 'none' } }
                                                     >
                                                         <Dashicon icon="arrow-right-alt2"/>
                                                     </span>
@@ -496,6 +490,16 @@
                                             ) }
                                         </Fragment>
                                     ) }
+                                    {tabHeaders.length > 1 && (
+                                        <Tooltip text={ __( 'Remove tab', 'advanced-gutenberg' ) }>
+                                            <span className="advgb-tab-remove"
+                                                  onClick={ () => this.removeTab(index) }
+                                                  style={ { display: tabActive === index ? 'block' : 'none' } }
+                                            >
+                                                <Dashicon icon="no"/>
+                                            </span>
+                                        </Tooltip>
+                                    )}
                                 </li>
                             ) ) }
                             <li className="advgb-tab advgb-add-tab"
