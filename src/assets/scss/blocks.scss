@@ -947,20 +947,14 @@ ul.advgb-tabs-panel li.advgb-add-tab:hover {
 
 span.advgb-tab-remove {
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: -22px;
+    right: 0;
     height: 20px;
     color: #fff;
     background-color: #FCB908;
-    border-radius: 50%;
+    border-radius: 3px;
     cursor: pointer;
-    display: none;
     z-index: 1;
-}
-
-li.advgb-tab:hover .advgb-floating-anchor-field,
-li.advgb-tab:hover span.advgb-tab-remove {
-    display: block;
 }
 
 span.advgb-tab-remove svg {
@@ -1013,11 +1007,6 @@ div.advgb-tab-body {
     flex-grow: 1;
     min-width: 25%;
     max-width: 25%;
-}
-
-.advgb-tabs-wrapper.advgb-tab-vert-desktop ul.advgb-tabs-panel span.advgb-tab-remove {
-    left: -8px;
-    right: unset;
 }
 
 .advgb-tabs-wrapper.advgb-tab-vert-desktop .advgb-tab-body-wrapper {

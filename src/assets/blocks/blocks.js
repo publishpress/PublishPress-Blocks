@@ -12613,19 +12613,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             placeholder: __('Title…', 'advanced-gutenberg')
                                         })
                                     ),
-                                    tabHeaders.length > 1 && React.createElement(
-                                        Tooltip,
-                                        { text: __('Remove tab', 'advanced-gutenberg') },
-                                        React.createElement(
-                                            "span",
-                                            { className: "advgb-tab-remove",
-                                                onClick: function onClick() {
-                                                    return _this2.removeTab(index);
-                                                }
-                                            },
-                                            React.createElement(Dashicon, { icon: "no" })
-                                        )
-                                    ),
                                     advgbBlocks.advgb_pro === '1' && React.createElement(
                                         Fragment,
                                         null,
@@ -12635,7 +12622,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             onChange: function onChange(value) {
                                                 return _this2.updateTabsAnchor(value, index);
                                             },
-                                            className: "advgb-floating-anchor-field"
+                                            className: "advgb-floating-anchor-field",
+                                            style: { display: tabActive === index ? 'block' : 'none' }
                                         }),
                                         index > 0 && React.createElement(
                                             Tooltip,
@@ -12645,7 +12633,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 { className: "advgb-tab-move-back",
                                                     onClick: function onClick() {
                                                         return _this2.moveTab(index, 'back');
-                                                    }
+                                                    },
+                                                    style: { display: tabActive === index ? 'block' : 'none' }
                                                 },
                                                 React.createElement(Dashicon, { icon: "arrow-left-alt2" })
                                             )
@@ -12658,10 +12647,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 { className: "advgb-tab-move-forward",
                                                     onClick: function onClick() {
                                                         return _this2.moveTab(index, 'forward');
-                                                    }
+                                                    },
+                                                    style: { display: tabActive === index ? 'block' : 'none' }
                                                 },
                                                 React.createElement(Dashicon, { icon: "arrow-right-alt2" })
                                             )
+                                        )
+                                    ),
+                                    tabHeaders.length > 1 && React.createElement(
+                                        Tooltip,
+                                        { text: __('Remove tab', 'advanced-gutenberg') },
+                                        React.createElement(
+                                            "span",
+                                            { className: "advgb-tab-remove",
+                                                onClick: function onClick() {
+                                                    return _this2.removeTab(index);
+                                                },
+                                                style: { display: tabActive === index ? 'block' : 'none' }
+                                            },
+                                            React.createElement(Dashicon, { icon: "no" })
                                         )
                                     )
                                 );
