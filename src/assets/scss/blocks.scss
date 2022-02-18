@@ -824,108 +824,109 @@ ul.advgb-toc {
 
 /*Tabs block styles*/
 .advgb-tabs-styles {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .advgb-tabs-styles .advgb-tabs-style {
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid transparent;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid transparent;
 }
 
 .advgb-tabs-styles .advgb-tabs-style.is-toggled {
-    border: 1px solid #000;
-    background-color: #eee;
+  border: 1px solid #000;
+  background-color: #eee;
 }
 
 .advgb-tab-body-wrapper > .editor-inner-blocks > .editor-block-list__layout > .block-list-appender {
-    display: none !important;
+  display: none !important;
 }
 .advgb-tab-body-wrapper > .editor-inner-blocks > .editor-block-list__layout > .wp-block > .editor-block-list__insertion-point {
-    display: none !important;
+  display: none !important;
 }
 
 ul.advgb-tabs-panel {
-    list-style-type: none !important;
-    border: none;
-    margin: 0 !important;
-    padding: 0 !important;
-    background: none;
+  list-style-type: none !important;
+  border: none;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: none;
 }
 
 ul.advgb-tabs-panel:after {
-    content: '';
-    display: block;
-    clear: both;
+  content: '';
+  display: block;
+  clear: both;
 }
 
 ul.advgb-tabs-panel li.advgb-tab, ul.advgb-tabs-panel li.advgb-tab.ui-state-default {
-    float: left;
-    margin: 0 8px 8px 0;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    position: relative;
-    background: none;
+  float: left;
+  margin: 0 8px 8px 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  position: relative;
+  background: none;
 }
 
 ul.advgb-tabs-panel li.advgb-tab:first-child {
-    margin-left: 0 !important;
+  margin-left: 0 !important;
 }
 
 ul.advgb-tabs-panel li.advgb-tab > a, li.advgb-add-tab > span {
-    padding: 10px 15px;
-    display: inline-block;
+  padding: 10px 15px;
+  display: inline-block;
 }
 
 ul.advgb-tabs-panel li.advgb-tab a, ul.advgb-tabs-panel li.advgb-tab a:focus, ul.advgb-tabs-panel li.advgb-tab a:hover {
-    text-decoration: none;
-    box-shadow: none;
-    outline: none;
-    display: block;
-    overflow: hidden;
-    -ms-text-overflow: ellipsis;
-    text-overflow: ellipsis;
+  text-decoration: none;
+  box-shadow: none;
+  outline: none;
+  display: block;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 
 ul.advgb-tabs-panel li.advgb-tab a p {
-    margin: 0;
+  margin: 0;
 }
 
 ul.advgb-tabs-panel li.advgb-tab.ui-tabs-active,
 ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active {
-    background-color: #5954d6 !important;
-    border-color: transparent !important;
-    color: #fff !important;
+  background-color: #5954d6 !important;
+  border-color: transparent !important;
+  color: #fff !important;
 }
 
 ul.advgb-tabs-panel li.advgb-tab.ui-tabs-active a,
 ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active a {
-    color: inherit !important;
+  color: inherit !important;
 }
 
 ul.advgb-tabs-panel li.advgb-tab a {
 
   &:hover,
   &:focus {
-      background: none !important;
-      text-decoration: none !important;
+    background: none !important;
+    text-decoration: none !important;
   }
 }
 
 ul.advgb-tabs-panel li.advgb-add-tab {
-    text-align: center;
-    background: #2196f3;
-    color: #fff;
-    max-width: 70px;
+  text-align: center;
+  background: #2196f3;
+  color: #fff;
+  max-width: 70px;
+  border-color: #2196f3;
 }
 
 ul.advgb-tabs-panel li.advgb-tab.advgb-add-tab.ui-state-default {
-    border: 1px solid transparent;
+  border: 1px solid transparent;
 }
 
 ul.advgb-tabs-panel li.advgb-tab.advgb-add-tab.ui-state-default:hover {
-    background: #ccc;
+  background: #ccc;
 }
 
 ul.advgb-tabs-panel li.advgb-add-tab span {
@@ -941,12 +942,12 @@ ul.advgb-tabs-panel li.advgb-add-tab span {
 }
 
 ul.advgb-tabs-panel li.advgb-add-tab svg {
-    color: #e0e0e0;
-    vertical-align: sub;
+  color: #e0e0e0;
+  vertical-align: sub;
 }
 
 ul.advgb-tabs-panel li.advgb-add-tab:hover svg {
-    color: #5954d6;
+  color: #5954d6;
 }
 
 ul.advgb-tabs-panel li.advgb-add-tab:hover {
@@ -955,81 +956,81 @@ ul.advgb-tabs-panel li.advgb-add-tab:hover {
 }
 
 span.advgb-tab-remove {
-    position: absolute;
-    top: -22px;
-    right: 0;
-    height: 20px;
-    color: #fff;
-    background-color: #FCB908;
-    border-radius: 3px;
-    cursor: pointer;
-    z-index: 1;
+  position: absolute;
+  top: -22px;
+  right: 0;
+  height: 20px;
+  color: #fff;
+  background-color: #FCB908;
+  border-radius: 3px;
+  cursor: pointer;
+  z-index: 1;
 }
 
 span.advgb-tab-remove svg {
-    display: block;
+  display: block;
 }
 
 div.advgb-tab-body {
-    padding: 10px 10px 10px 15px;
-    border: 1px solid #e0e0e0;
-    background: none;
-    display: none;
+  padding: 10px 10px 10px 15px;
+  border: 1px solid #e0e0e0;
+  background: none;
+  display: none;
 }
 
 #editor div.advgb-tab-body {
-    padding: 0;
+  padding: 0;
 }
 #editor .advgb-tab-body-wrapper {
-    padding: 20px;
+  padding: 20px;
 }
 .edit-post-visual-editor .advgb-tabs-wrapper .block-editor-button-block-appender {
     /* display: none; Why this was set as none? */
 }
 
 .advgb-tab-body-wrapper {
-    border: 1px solid #ccc;
-    max-width: 100%;
+  border: 1px solid #ccc;
+  max-width: 100%;
 }
 
 .advgb-tab-body-wrapper div.advgb-tab-body {
-    border: none;
+  border: none;
 }
 
 .advgb-tab-body-wrapper .advgb-tab-body-header {
-    cursor: pointer;
-    padding: 10px 15px;
-    display: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  display: none;
 }
 
 .advgb-tabs-wrapper[class *= 'advgb-tab-vert'] {
-    display: flex;
+  display: flex;
 }
 
 .advgb-tabs-wrapper.advgb-tab-horz-desktop {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .advgb-tabs-wrapper.advgb-tab-vert-desktop ul.advgb-tabs-panel {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    min-width: 25%;
-    max-width: 25%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 25%;
+  max-width: 25%;
 }
 
 .advgb-tabs-wrapper.advgb-tab-vert-desktop .advgb-tab-body-wrapper {
-    flex-grow: 3;
-    max-width: 75%;
+  flex-grow: 3;
+  max-width: 75%;
 }
 
 #editor [data-type="advgb/tab"] > .editor-block-list__block-edit > .editor-block-mover,
 #editor [data-type="advgb/tab"] > .editor-block-list__block-edit > .editor-block-contextual-toolbar {
-    display: none !important;
+  display: none !important;
 }
 #editor [data-type="advgb/tab"] > .editor-block-list__block-edit::before {
-    box-shadow: none;
-    border: none;
+  box-shadow: none;
+  border: none;
 }
 
 /*Testimonial block styles*/
