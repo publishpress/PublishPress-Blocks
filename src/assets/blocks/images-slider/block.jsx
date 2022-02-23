@@ -74,13 +74,19 @@
 
         componentDidUpdate(prevProps) {
             const {attributes, clientId} = this.props;
-            const {images} = attributes;
+            const {images, sliderAutoplay} = attributes;
             const {images: prevImages} = prevProps.attributes;
 
             if (images.length !== prevImages.length) {
                 if (images.length) {
                     this.initSlider();
                 }
+            }
+
+            if( sliderAutoplay && advgbBlocks.advgb_pro === '1' ) {
+                $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('slickSetOption', 'autoplay', true, true);
+            } else {
+                $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('slickSetOption', 'autoplay', false, true);
             }
 
             if (this.state.imageLoaded) {
@@ -94,7 +100,7 @@
         }
 
         initSlider() {
-            const {clientId} = this.props;
+            const {clientId, attributes } = this.props;
 
             $(`#block-${clientId} .advgb-images-slider:not(.slick-initialized)`).slick({
                 dots: true,

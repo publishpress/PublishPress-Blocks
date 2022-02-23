@@ -17448,7 +17448,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props3 = this.props,
                     attributes = _props3.attributes,
                     clientId = _props3.clientId;
-                var images = attributes.images;
+                var images = attributes.images,
+                    sliderAutoplay = attributes.sliderAutoplay;
                 var prevImages = prevProps.attributes.images;
 
 
@@ -17456,6 +17457,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     if (images.length) {
                         this.initSlider();
                     }
+                }
+
+                if (sliderAutoplay && advgbBlocks.advgb_pro === '1') {
+                    $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplay', true, true);
+                } else {
+                    $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplay', false, true);
                 }
 
                 if (this.state.imageLoaded) {
@@ -17469,7 +17476,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function initSlider() {
                 var _this2 = this;
 
-                var clientId = this.props.clientId;
+                var _props4 = this.props,
+                    clientId = _props4.clientId,
+                    attributes = _props4.attributes;
 
 
                 $("#block-" + clientId + " .advgb-images-slider:not(.slick-initialized)").slick({
@@ -17486,9 +17495,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "moveImage",
             value: function moveImage(currentIndex, newIndex) {
-                var _props4 = this.props,
-                    setAttributes = _props4.setAttributes,
-                    attributes = _props4.attributes;
+                var _props5 = this.props,
+                    setAttributes = _props5.setAttributes,
+                    attributes = _props5.attributes;
                 var images = attributes.images;
 
 
@@ -17510,9 +17519,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props5 = this.props,
-                    attributes = _props5.attributes,
-                    setAttributes = _props5.setAttributes;
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes;
                 var images = attributes.images;
 
 
@@ -17531,11 +17540,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this3 = this;
 
-                var _props6 = this.props,
-                    attributes = _props6.attributes,
-                    setAttributes = _props6.setAttributes,
-                    isSelected = _props6.isSelected,
-                    clientId = _props6.clientId;
+                var _props7 = this.props,
+                    attributes = _props7.attributes,
+                    setAttributes = _props7.setAttributes,
+                    isSelected = _props7.isSelected,
+                    clientId = _props7.clientId;
                 var _state = this.state,
                     currentSelected = _state.currentSelected,
                     imageLoaded = _state.imageLoaded;
