@@ -17552,7 +17552,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     textColor = attributes.textColor,
                     hAlign = attributes.hAlign,
                     vAlign = attributes.vAlign,
-                    isPreview = attributes.isPreview;
+                    isPreview = attributes.isPreview,
+                    sliderAutoplay = attributes.sliderAutoplay;
 
                 if (images.length === 0) {
                     return isPreview ? React.createElement("img", { alt: __('Images Slider', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
@@ -17590,7 +17591,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     );
                 }
 
-                var blockClass = ['advgb-images-slider-block', imageLoaded === false && 'advgb-ajax-loading'].filter(Boolean).join(' ');
+                var blockClass = ['advgb-images-slider-block', imageLoaded === false && 'advgb-ajax-loading', sliderAutoplay && 'slider-autoplay'].filter(Boolean).join(' ');
 
                 return isPreview ? React.createElement("img", { alt: __('Images Slider', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
                     Fragment,
@@ -17607,6 +17608,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 options: [{ label: __('None', 'advanced-gutenberg'), value: '' }, { label: __('Open image in lightbox', 'advanced-gutenberg'), value: 'lightbox' }, { label: __('Open custom link', 'advanced-gutenberg'), value: 'link' }],
                                 onChange: function onChange(value) {
                                     return setAttributes({ actionOnClick: value });
+                                }
+                            }),
+                            advgbBlocks.advgb_pro === '1' && React.createElement(ToggleControl, {
+                                label: __('Autoplay', 'advanced-gutenberg'),
+                                checked: sliderAutoplay,
+                                onChange: function onChange() {
+                                    return setAttributes({ sliderAutoplay: !sliderAutoplay });
                                 }
                             }),
                             React.createElement(ToggleControl, {
@@ -17954,6 +17962,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string',
             default: 'center'
         },
+        sliderAutoplay: {
+            type: 'boolean',
+            default: false
+        },
         changed: {
             type: 'boolean',
             default: false
@@ -17997,9 +18009,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 titleColor = attributes.titleColor,
                 textColor = attributes.textColor,
                 hAlign = attributes.hAlign,
-                vAlign = attributes.vAlign;
+                vAlign = attributes.vAlign,
+                sliderAutoplay = attributes.sliderAutoplay;
 
-            var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox'].filter(Boolean).join(' ');
+            var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox', sliderAutoplay && 'slider-autoplay'].filter(Boolean).join(' ');
 
             return React.createElement(
                 "div",

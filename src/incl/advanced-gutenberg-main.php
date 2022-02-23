@@ -6217,12 +6217,20 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_style('slick_style');
             wp_enqueue_style('slick_theme_style');
             wp_enqueue_script('slick_js');
-            wp_enqueue_script(
-                'advgbImageSliderLightbox_frontent_js',
-                plugins_url('assets/blocks/images-slider/frontend.js', dirname(__FILE__)),
-                array(),
-                ADVANCED_GUTENBERG_VERSION
-            );
+
+            if (
+                defined( 'ADVANCED_GUTENBERG_PRO' )
+                && method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_inline_scripts_frontend' )
+            ) {
+                PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_inline_scripts_frontend('advgb/images-slider');
+            } else {
+                wp_enqueue_script(
+                    'advgbImageSliderLightbox_frontent_js',
+                    plugins_url('assets/blocks/images-slider/frontend.js', dirname(__FILE__)),
+                    array('jquery'),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+            }
 
             // When lightbox is enabled
             if (array_key_exists('actionOnClick', $blockAttrs) && $blockAttrs['actionOnClick'] == 'lightbox') {

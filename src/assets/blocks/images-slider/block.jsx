@@ -160,6 +160,7 @@
                 hAlign,
                 vAlign,
                 isPreview,
+                sliderAutoplay
             } = attributes;
             if (images.length === 0) {
                 return (
@@ -201,6 +202,7 @@
             const blockClass = [
                 'advgb-images-slider-block',
                 imageLoaded === false && 'advgb-ajax-loading',
+                sliderAutoplay && 'slider-autoplay'
             ].filter(Boolean).join(' ');
 
             return (
@@ -220,6 +222,13 @@
                                     ]}
                                     onChange={(value) => setAttributes({actionOnClick: value})}
                                 />
+                                {advgbBlocks.advgb_pro === '1' && (
+                                    <ToggleControl
+                                        label={ __( 'Autoplay', 'advanced-gutenberg' ) }
+                                        checked={ sliderAutoplay }
+                                        onChange={ () => setAttributes( { sliderAutoplay: !sliderAutoplay } ) }
+                                    />
+                                ) }
                                 <ToggleControl
                                     label={__('Full width', 'advanced-gutenberg')}
                                     checked={fullWidth}
@@ -511,6 +520,10 @@
             type: 'string',
             default: 'center',
         },
+        sliderAutoplay: {
+            type: 'boolean',
+            default: false,
+        },
         changed: {
             type: 'boolean',
             default: false,
@@ -555,10 +568,12 @@
                 textColor,
                 hAlign,
                 vAlign,
+                sliderAutoplay
             } = attributes;
             const blockClassName = [
                 'advgb-images-slider-block',
                 actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox',
+                sliderAutoplay && 'slider-autoplay'
             ].filter(Boolean).join(' ');
 
             return (
