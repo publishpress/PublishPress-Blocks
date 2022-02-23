@@ -74,7 +74,7 @@
 
         componentDidUpdate(prevProps) {
             const {attributes, clientId} = this.props;
-            const {images, sliderAutoplay} = attributes;
+            const {images, autoplay} = attributes;
             const {images: prevImages} = prevProps.attributes;
 
             if (images.length !== prevImages.length) {
@@ -83,7 +83,7 @@
                 }
             }
 
-            if( sliderAutoplay && advgbBlocks.advgb_pro === '1' ) {
+            if( autoplay && advgbBlocks.advgb_pro === '1' ) {
                 $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('slickSetOption', 'autoplay', true, true);
             } else {
                 $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('slickSetOption', 'autoplay', false, true);
@@ -166,7 +166,7 @@
                 hAlign,
                 vAlign,
                 isPreview,
-                sliderAutoplay
+                autoplay
             } = attributes;
             if (images.length === 0) {
                 return (
@@ -208,7 +208,7 @@
             const blockClass = [
                 'advgb-images-slider-block',
                 imageLoaded === false && 'advgb-ajax-loading',
-                sliderAutoplay && 'slider-autoplay'
+                autoplay && 'slider-autoplay'
             ].filter(Boolean).join(' ');
 
             return (
@@ -231,8 +231,8 @@
                                 {advgbBlocks.advgb_pro === '1' && (
                                     <ToggleControl
                                         label={ __( 'Autoplay', 'advanced-gutenberg' ) }
-                                        checked={ sliderAutoplay }
-                                        onChange={ () => setAttributes( { sliderAutoplay: !sliderAutoplay } ) }
+                                        checked={ autoplay }
+                                        onChange={ () => setAttributes( { autoplay: !autoplay } ) }
                                     />
                                 ) }
                                 <ToggleControl
@@ -526,7 +526,7 @@
             type: 'string',
             default: 'center',
         },
-        sliderAutoplay: {
+        autoplay: {
             type: 'boolean',
             default: false,
         },
@@ -574,12 +574,12 @@
                 textColor,
                 hAlign,
                 vAlign,
-                sliderAutoplay
+                autoplay
             } = attributes;
             const blockClassName = [
                 'advgb-images-slider-block',
                 actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox',
-                sliderAutoplay && 'slider-autoplay'
+                autoplay && 'slider-autoplay'
             ].filter(Boolean).join(' ');
 
             return (

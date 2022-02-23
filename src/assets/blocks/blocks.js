@@ -17449,7 +17449,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes = _props3.attributes,
                     clientId = _props3.clientId;
                 var images = attributes.images,
-                    sliderAutoplay = attributes.sliderAutoplay;
+                    autoplay = attributes.autoplay;
                 var prevImages = prevProps.attributes.images;
 
 
@@ -17459,7 +17459,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     }
                 }
 
-                if (sliderAutoplay && advgbBlocks.advgb_pro === '1') {
+                if (autoplay && advgbBlocks.advgb_pro === '1') {
                     $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplay', true, true);
                 } else {
                     $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplay', false, true);
@@ -17562,7 +17562,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     hAlign = attributes.hAlign,
                     vAlign = attributes.vAlign,
                     isPreview = attributes.isPreview,
-                    sliderAutoplay = attributes.sliderAutoplay;
+                    autoplay = attributes.autoplay;
 
                 if (images.length === 0) {
                     return isPreview ? React.createElement("img", { alt: __('Images Slider', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
@@ -17600,7 +17600,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     );
                 }
 
-                var blockClass = ['advgb-images-slider-block', imageLoaded === false && 'advgb-ajax-loading', sliderAutoplay && 'slider-autoplay'].filter(Boolean).join(' ');
+                var blockClass = ['advgb-images-slider-block', imageLoaded === false && 'advgb-ajax-loading', autoplay && 'slider-autoplay'].filter(Boolean).join(' ');
 
                 return isPreview ? React.createElement("img", { alt: __('Images Slider', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
                     Fragment,
@@ -17621,9 +17621,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             advgbBlocks.advgb_pro === '1' && React.createElement(ToggleControl, {
                                 label: __('Autoplay', 'advanced-gutenberg'),
-                                checked: sliderAutoplay,
+                                checked: autoplay,
                                 onChange: function onChange() {
-                                    return setAttributes({ sliderAutoplay: !sliderAutoplay });
+                                    return setAttributes({ autoplay: !autoplay });
                                 }
                             }),
                             React.createElement(ToggleControl, {
@@ -17971,7 +17971,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string',
             default: 'center'
         },
-        sliderAutoplay: {
+        autoplay: {
             type: 'boolean',
             default: false
         },
@@ -18019,9 +18019,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 textColor = attributes.textColor,
                 hAlign = attributes.hAlign,
                 vAlign = attributes.vAlign,
-                sliderAutoplay = attributes.sliderAutoplay;
+                autoplay = attributes.autoplay;
 
-            var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox', sliderAutoplay && 'slider-autoplay'].filter(Boolean).join(' ');
+            var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox', autoplay && 'slider-autoplay'].filter(Boolean).join(' ');
 
             return React.createElement(
                 "div",
