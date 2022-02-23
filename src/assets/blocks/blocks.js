@@ -17420,8 +17420,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentDidMount",
             value: function componentDidMount() {
-                var attributes = this.props.attributes;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
 
+
+                setAttributes({ id: 'advg-images-slider-' + clientId });
 
                 if (attributes.images.length) {
                     this.initSlider();
@@ -17430,9 +17435,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentWillUpdate",
             value: function componentWillUpdate(nextProps) {
-                var _props2 = this.props,
-                    clientId = _props2.clientId,
-                    attributes = _props2.attributes;
+                var _props3 = this.props,
+                    clientId = _props3.clientId,
+                    attributes = _props3.attributes;
                 var images = attributes.images;
                 var nextImages = nextProps.attributes.images;
 
@@ -17445,11 +17450,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentDidUpdate",
             value: function componentDidUpdate(prevProps) {
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    clientId = _props3.clientId;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    clientId = _props4.clientId;
                 var images = attributes.images,
-                    autoplay = attributes.autoplay;
+                    autoplay = attributes.autoplay,
+                    autoplaySpeed = attributes.autoplaySpeed;
                 var prevImages = prevProps.attributes.images;
 
 
@@ -17459,10 +17465,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     }
                 }
 
+                // Autoplay
                 if (autoplay && advgbBlocks.advgb_pro === '1') {
                     $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplay', true, true);
                 } else {
                     $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplay', false, true);
+                }
+
+                // Autoplay speed
+                if (autoplay && autoplaySpeed && advgbBlocks.advgb_pro === '1') {
+                    $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplaySpeed', autoplaySpeed, true);
+                } else {
+                    $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplaySpeed', 3000, true);
                 }
 
                 if (this.state.imageLoaded) {
@@ -17476,9 +17490,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function initSlider() {
                 var _this2 = this;
 
-                var _props4 = this.props,
-                    clientId = _props4.clientId,
-                    attributes = _props4.attributes;
+                var _props5 = this.props,
+                    clientId = _props5.clientId,
+                    attributes = _props5.attributes;
 
 
                 $("#block-" + clientId + " .advgb-images-slider:not(.slick-initialized)").slick({
@@ -17495,9 +17509,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "moveImage",
             value: function moveImage(currentIndex, newIndex) {
-                var _props5 = this.props,
-                    setAttributes = _props5.setAttributes,
-                    attributes = _props5.attributes;
+                var _props6 = this.props,
+                    setAttributes = _props6.setAttributes,
+                    attributes = _props6.attributes;
                 var images = attributes.images;
 
 
@@ -17519,9 +17533,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props6 = this.props,
-                    attributes = _props6.attributes,
-                    setAttributes = _props6.setAttributes;
+                var _props7 = this.props,
+                    attributes = _props7.attributes,
+                    setAttributes = _props7.setAttributes;
                 var images = attributes.images;
 
 
@@ -17540,11 +17554,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this3 = this;
 
-                var _props7 = this.props,
-                    attributes = _props7.attributes,
-                    setAttributes = _props7.setAttributes,
-                    isSelected = _props7.isSelected,
-                    clientId = _props7.clientId;
+                var _props8 = this.props,
+                    attributes = _props8.attributes,
+                    setAttributes = _props8.setAttributes,
+                    isSelected = _props8.isSelected,
+                    clientId = _props8.clientId;
                 var _state = this.state,
                     currentSelected = _state.currentSelected,
                     imageLoaded = _state.imageLoaded;
@@ -17562,7 +17576,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     hAlign = attributes.hAlign,
                     vAlign = attributes.vAlign,
                     isPreview = attributes.isPreview,
-                    autoplay = attributes.autoplay;
+                    autoplay = attributes.autoplay,
+                    autoplaySpeed = attributes.autoplaySpeed,
+                    id = attributes.id;
 
                 if (images.length === 0) {
                     return isPreview ? React.createElement("img", { alt: __('Images Slider', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
@@ -17600,7 +17616,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     );
                 }
 
-                var blockClass = ['advgb-images-slider-block', imageLoaded === false && 'advgb-ajax-loading', autoplay && 'slider-autoplay'].filter(Boolean).join(' ');
+                var blockClass = ['advgb-images-slider-block', imageLoaded === false && 'advgb-ajax-loading', id].filter(Boolean).join(' ');
 
                 return isPreview ? React.createElement("img", { alt: __('Images Slider', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
                     Fragment,
@@ -17619,13 +17635,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ actionOnClick: value });
                                 }
                             }),
-                            advgbBlocks.advgb_pro === '1' && React.createElement(ToggleControl, {
-                                label: __('Autoplay', 'advanced-gutenberg'),
-                                checked: autoplay,
-                                onChange: function onChange() {
-                                    return setAttributes({ autoplay: !autoplay });
-                                }
-                            }),
+                            advgbBlocks.advgb_pro === '1' && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(ToggleControl, {
+                                    label: __('Autoplay', 'advanced-gutenberg'),
+                                    checked: autoplay,
+                                    onChange: function onChange() {
+                                        return setAttributes({ autoplay: !autoplay });
+                                    }
+                                }),
+                                autoplay && React.createElement(RangeControl, {
+                                    label: __('Autoplay Speed', 'advanced-gutenberg'),
+                                    help: __('Change interval between slides in miliseconds.', 'advanced-gutenberg'),
+                                    min: 1000,
+                                    max: 20000,
+                                    value: autoplaySpeed,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ autoplaySpeed: value });
+                                    }
+                                })
+                            ),
                             React.createElement(ToggleControl, {
                                 label: __('Full width', 'advanced-gutenberg'),
                                 checked: fullWidth,
@@ -17975,9 +18005,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'boolean',
             default: false
         },
+        autoplaySpeed: {
+            type: 'number',
+            default: 3000
+        },
         changed: {
             type: 'boolean',
             default: false
+        },
+        id: {
+            type: 'string'
         },
         isPreview: {
             type: 'boolean',
@@ -18019,9 +18056,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 textColor = attributes.textColor,
                 hAlign = attributes.hAlign,
                 vAlign = attributes.vAlign,
-                autoplay = attributes.autoplay;
+                id = attributes.id;
 
-            var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox', autoplay && 'slider-autoplay'].filter(Boolean).join(' ');
+            var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox', id].filter(Boolean).join(' ');
 
             return React.createElement(
                 "div",
