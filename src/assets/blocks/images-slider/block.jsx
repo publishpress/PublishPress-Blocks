@@ -111,7 +111,7 @@
         }
 
         initSlider() {
-            const {clientId, attributes } = this.props;
+            const {clientId} = this.props;
 
             $(`#block-${clientId} .advgb-images-slider:not(.slick-initialized)`).slick({
                 dots: true,

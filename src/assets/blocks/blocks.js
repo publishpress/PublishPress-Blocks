@@ -17490,9 +17490,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function initSlider() {
                 var _this2 = this;
 
-                var _props5 = this.props,
-                    clientId = _props5.clientId,
-                    attributes = _props5.attributes;
+                var clientId = this.props.clientId;
 
 
                 $("#block-" + clientId + " .advgb-images-slider:not(.slick-initialized)").slick({
@@ -17509,9 +17507,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "moveImage",
             value: function moveImage(currentIndex, newIndex) {
-                var _props6 = this.props,
-                    setAttributes = _props6.setAttributes,
-                    attributes = _props6.attributes;
+                var _props5 = this.props,
+                    setAttributes = _props5.setAttributes,
+                    attributes = _props5.attributes;
                 var images = attributes.images;
 
 
@@ -17533,9 +17531,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props7 = this.props,
-                    attributes = _props7.attributes,
-                    setAttributes = _props7.setAttributes;
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes;
                 var images = attributes.images;
 
 
@@ -17554,11 +17552,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this3 = this;
 
-                var _props8 = this.props,
-                    attributes = _props8.attributes,
-                    setAttributes = _props8.setAttributes,
-                    isSelected = _props8.isSelected,
-                    clientId = _props8.clientId;
+                var _props7 = this.props,
+                    attributes = _props7.attributes,
+                    setAttributes = _props7.setAttributes,
+                    isSelected = _props7.isSelected,
+                    clientId = _props7.clientId;
                 var _state = this.state,
                     currentSelected = _state.currentSelected,
                     imageLoaded = _state.imageLoaded;
