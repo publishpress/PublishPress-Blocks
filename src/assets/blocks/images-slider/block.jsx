@@ -51,11 +51,14 @@
         }
 
         componentDidMount() {
-            const {attributes} = this.props;
+            const {attributes, setAttributes, clientId} = this.props;
+
+            setAttributes( { id: 'advg-images-slider-' + clientId } );
 
             if (attributes.images.length) {
                 this.initSlider();
             }
+
         }
 
         componentWillUpdate(nextProps) {
@@ -74,13 +77,27 @@
 
         componentDidUpdate(prevProps) {
             const {attributes, clientId} = this.props;
-            const {images} = attributes;
+            const {images, autoplay, autoplaySpeed} = attributes;
             const {images: prevImages} = prevProps.attributes;
 
             if (images.length !== prevImages.length) {
                 if (images.length) {
                     this.initSlider();
                 }
+            }
+
+            // Autoplay
+            if( autoplay && advgbBlocks.advgb_pro === '1' ) {
+                $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('slickSetOption', 'autoplay', true, true);
+            } else {
+                $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('slickSetOption', 'autoplay', false, true);
+            }
+
+            // Autoplay speed
+            if( autoplay && autoplaySpeed && advgbBlocks.advgb_pro === '1' ) {
+                $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('slickSetOption', 'autoplaySpeed', autoplaySpeed, true);
+            } else {
+                $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('slickSetOption', 'autoplaySpeed', 3000, true);
             }
 
             if (this.state.imageLoaded) {
@@ -160,6 +177,9 @@
                 hAlign,
                 vAlign,
                 isPreview,
+                autoplay,
+                autoplaySpeed,
+                id
             } = attributes;
             if (images.length === 0) {
                 return (
@@ -201,6 +221,7 @@
             const blockClass = [
                 'advgb-images-slider-block',
                 imageLoaded === false && 'advgb-ajax-loading',
+                id
             ].filter(Boolean).join(' ');
 
             return (
@@ -220,6 +241,25 @@
                                     ]}
                                     onChange={(value) => setAttributes({actionOnClick: value})}
                                 />
+                                {advgbBlocks.advgb_pro === '1' && (
+                                    <Fragment>
+                                        <ToggleControl
+                                            label={ __( 'Autoplay', 'advanced-gutenberg' ) }
+                                            checked={ autoplay }
+                                            onChange={ () => setAttributes( { autoplay: !autoplay } ) }
+                                        />
+                                        { autoplay && (
+                                            <RangeControl
+                                                label={ __( 'Autoplay Speed', 'advanced-gutenberg' ) }
+                                                help={ __( 'Change interval between slides in miliseconds.', 'advanced-gutenberg' ) }
+                                                min={ 1000 }
+                                                max={ 20000 }
+                                                value={ autoplaySpeed }
+                                                onChange={ (value) => setAttributes( { autoplaySpeed: value } ) }
+                                            />
+                                        ) }
+                                    </Fragment>
+                                ) }
                                 <ToggleControl
                                     label={__('Full width', 'advanced-gutenberg')}
                                     checked={fullWidth}
@@ -511,9 +551,20 @@
             type: 'string',
             default: 'center',
         },
+        autoplay: {
+            type: 'boolean',
+            default: false,
+        },
+        autoplaySpeed: {
+            type: 'number',
+            default: 3000,
+        },
         changed: {
             type: 'boolean',
             default: false,
+        },
+        id: {
+            type: 'string',
         },
         isPreview: {
             type: 'boolean',
@@ -555,10 +606,12 @@
                 textColor,
                 hAlign,
                 vAlign,
+                id
             } = attributes;
             const blockClassName = [
                 'advgb-images-slider-block',
                 actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox',
+                id
             ].filter(Boolean).join(' ');
 
             return (
