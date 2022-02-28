@@ -7261,6 +7261,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ "./src/assets/blocks/0-adv-components/components.jsx");
 
+var _iconClass = __webpack_require__(/*! ../0-adv-components/icon-class.jsx */ "./src/assets/blocks/0-adv-components/icon-class.jsx");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -7283,7 +7285,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         ToggleControl = wpComponents.ToggleControl,
-        SelectControl = wpComponents.SelectControl;
+        SelectControl = wpComponents.SelectControl,
+        Button = wpComponents.Button;
 
     // Preview style images
 
@@ -7299,11 +7302,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         function AdvButton() {
             _classCallCheck(this, AdvButton);
 
-            return _possibleConstructorReturn(this, (AdvButton.__proto__ || Object.getPrototypeOf(AdvButton)).apply(this, arguments));
+            var _this = _possibleConstructorReturn(this, (AdvButton.__proto__ || Object.getPrototypeOf(AdvButton)).apply(this, arguments));
+
+            _this.state = {
+                showPopup: false,
+                iconSelected: '',
+                selectedIcon: false,
+                iconThemeSelected: 'outlined',
+                selectedIconTheme: false
+            };
+            _this.togglePopup = _this.togglePopup.bind(_this);
+            _this.handleIcon = _this.handleIcon.bind(_this);
+            _this.handleIconTheme = _this.handleIconTheme.bind(_this);
+            return _this;
         }
 
         _createClass(AdvButton, [{
-            key: 'componentWillMount',
+            key: "componentWillMount",
             value: function componentWillMount() {
                 var _props = this.props,
                     attributes = _props.attributes,
@@ -7313,7 +7328,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
-                    if ((typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
                         Object.keys(currentBlockConfig).map(function (attribute) {
                             if (typeof attributes[attribute] === 'boolean') {
                                 attributes[attribute] = !!currentBlockConfig[attribute];
@@ -7328,7 +7343,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: 'componentDidMount',
+            key: "componentDidMount",
             value: function componentDidMount() {
                 var _props2 = this.props,
                     attributes = _props2.attributes,
@@ -7338,15 +7353,76 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 setAttributes({ id: 'advgbbtn-' + clientId });
             }
         }, {
-            key: 'render',
-            value: function render() {
-                var listBorderStyles = [{ label: __('None', 'advanced-gutenberg'), value: 'none' }, { label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Double', 'advanced-gutenberg'), value: 'double' }, { label: __('Groove', 'advanced-gutenberg'), value: 'groove' }, { label: __('Ridge', 'advanced-gutenberg'), value: 'ridge' }, { label: __('Inset', 'advanced-gutenberg'), value: 'inset' }, { label: __('Outset', 'advanced-gutenberg'), value: 'outset' }];
+            key: "componentDidUpdate",
+            value: function componentDidUpdate() {
+                var _state = this.state,
+                    iconSelected = _state.iconSelected,
+                    selectedIcon = _state.selectedIcon,
+                    iconThemeSelected = _state.iconThemeSelected,
+                    selectedIconTheme = _state.selectedIconTheme;
                 var _props3 = this.props,
                     attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes,
-                    isSelected = _props3.isSelected,
-                    className = _props3.className,
-                    blockID = _props3.clientId;
+                    setAttributes = _props3.setAttributes;
+
+                if (selectedIcon) {
+
+                    this.setState({
+                        selectedIcon: false
+                    });
+                    setAttributes({
+                        icon: iconSelected,
+                        iconTheme: iconThemeSelected
+                    });
+                }
+
+                if (selectedIconTheme) {
+                    this.setState({
+                        selectedIconTheme: false
+                    });
+                    setAttributes({
+                        iconTheme: iconThemeSelected
+                    });
+                }
+            }
+        }, {
+            key: "togglePopup",
+            value: function togglePopup() {
+                var showPopup = this.state.showPopup;
+
+
+                this.setState({
+                    showPopup: !showPopup
+                });
+            }
+        }, {
+            key: "handleIcon",
+            value: function handleIcon(iconValue) {
+                this.setState({
+                    iconSelected: iconValue,
+                    selectedIcon: true
+                });
+            }
+        }, {
+            key: "handleIconTheme",
+            value: function handleIconTheme(iconThemeValue) {
+                this.setState({
+                    iconThemeSelected: iconThemeValue,
+                    selectedIconTheme: true
+                });
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _this2 = this;
+
+                var listBorderStyles = [{ label: __('None', 'advanced-gutenberg'), value: 'none' }, { label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Double', 'advanced-gutenberg'), value: 'double' }, { label: __('Groove', 'advanced-gutenberg'), value: 'groove' }, { label: __('Ridge', 'advanced-gutenberg'), value: 'ridge' }, { label: __('Inset', 'advanced-gutenberg'), value: 'inset' }, { label: __('Outset', 'advanced-gutenberg'), value: 'outset' }];
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes,
+                    isSelected = _props4.isSelected,
+                    className = _props4.className,
+                    blockID = _props4.clientId;
+                var showPopup = this.state.showPopup;
                 var id = attributes.id,
                     align = attributes.align,
                     url = attributes.url,
@@ -7377,6 +7453,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     hoverShadowSpread = attributes.hoverShadowSpread,
                     hoverOpacity = attributes.hoverOpacity,
                     transitionSpeed = attributes.transitionSpeed,
+                    iconDisplay = attributes.iconDisplay,
+                    icon = attributes.icon,
+                    iconSize = attributes.iconSize,
+                    iconColor = attributes.iconColor,
+                    iconTheme = attributes.iconTheme,
+                    iconPosition = attributes.iconPosition,
+                    iconSpacing = attributes.iconSpacing,
                     isPreview = attributes.isPreview;
 
 
@@ -7415,32 +7498,58 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     previewImageData = previewImageDataDefault;
                 }
 
-                return isPreview ? React.createElement('img', { alt: __('Advanced Button', 'advanced-gutenberg'), width: '100%', src: previewImageData }) : React.createElement(
+                var iconClass = ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join('');
+
+                return isPreview ? React.createElement("img", { alt: __('Advanced Button', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
                     Fragment,
                     null,
                     React.createElement(
-                        'span',
-                        { className: className + ' align' + align,
+                        "span",
+                        { className: className + " align" + align,
                             style: { display: 'inline-block' }
                         },
-                        React.createElement(RichText, {
-                            tagName: 'span',
-                            placeholder: __('Add text…', 'advanced-gutenberg'),
-                            value: text,
-                            onChange: function onChange(value) {
-                                return setAttributes({ text: value });
-                            },
-                            allowedFormats: ['core/bold', 'core/italic', 'core/strikethrough'],
-                            isSelected: isSelected,
-                            className: 'wp-block-advgb-button_link ' + id,
-                            keepPlaceholderOnFocus: true
-                        })
+                        React.createElement(
+                            "span",
+                            { className: "wp-block-advgb-button_link " + id },
+                            iconDisplay && React.createElement(
+                                "i",
+                                { className: iconClass },
+                                icon
+                            ),
+                            React.createElement(RichText, {
+                                tagName: "span",
+                                placeholder: __('Add text…', 'advanced-gutenberg'),
+                                value: text,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ text: value });
+                                },
+                                allowedFormats: ['core/bold', 'core/italic', 'core/strikethrough'],
+                                isSelected: isSelected,
+                                keepPlaceholderOnFocus: true
+                            })
+                        )
                     ),
                     React.createElement(
-                        'style',
+                        "style",
                         null,
-                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ' !important;\n                        background-color: ' + bgColor + ' !important;\n                        margin: ' + marginTop + 'px ' + marginRight + 'px ' + marginBottom + 'px ' + marginLeft + 'px;\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px !important;\n                        border-color: ' + borderColor + ' !important;\n                        border-radius: ' + borderRadius + 'px !important;\n                        border-style: ' + borderStyle + ' ' + (borderStyle !== 'none' && '!important') + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ' !important;\n                        background-color: ' + hoverBgColor + ' !important;\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                        opacity: ' + hoverOpacity / 100 + '\n                    }'
+                        "." + id + " {\n                        font-size: " + textSize + "px;\n                        color: " + textColor + " !important;\n                        background-color: " + bgColor + " !important;\n                        margin: " + marginTop + "px " + marginRight + "px " + marginBottom + "px " + marginLeft + "px;\n                        padding: " + paddingTop + "px " + paddingRight + "px " + paddingBottom + "px " + paddingLeft + "px;\n                        border-width: " + borderWidth + "px !important;\n                        border-color: " + borderColor + " !important;\n                        border-radius: " + borderRadius + "px !important;\n                        border-style: " + borderStyle + " " + (borderStyle !== 'none' && '!important') + ";\n                    }\n                    ." + id + ":hover {\n                        color: " + hoverTextColor + " !important;\n                        background-color: " + hoverBgColor + " !important;\n                        box-shadow: " + hoverShadowH + "px " + hoverShadowV + "px " + hoverShadowBlur + "px " + hoverShadowSpread + "px " + hoverShadowColor + ";\n                        transition: all " + transitionSpeed + "s ease;\n                        opacity: " + hoverOpacity / 100 + "\n                    }\n                    ." + id + " i {\n                        font-size: " + iconSize + "px;\n                        float: " + iconPosition + ";\n                    }",
+                        iconColor && "." + id + " i {\n                            color: " + iconColor + ";\n                        }",
+                        iconPosition === 'left' && "." + id + " i {\n                            margin-right: " + iconSpacing + "px;\n                        }",
+                        iconPosition === 'right' && "." + id + " i {\n                            margin-left: " + iconSpacing + "px;\n                        }",
+                        advgbBlocks.advgb_pro !== '1' && "." + id + " i {\n                            display: none !important;\n                        }"
                     ),
+                    showPopup ? React.createElement(_iconClass.IconListPopupHook, {
+                        content: "iconpopup",
+                        closePopup: function closePopup() {
+                            if (showPopup) {
+                                _this2.togglePopup();
+                            }
+                        },
+                        onSelectIcon: this.handleIcon,
+                        onSelectIconTheme: this.handleIconTheme,
+                        selectedIcon: icon,
+                        selectedIconTheme: iconTheme
+                    }) : null,
                     React.createElement(
                         InspectorControls,
                         null,
@@ -7451,8 +7560,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 BaseControl,
                                 {
                                     label: [__('Link URL', 'advanced-gutenberg'), url && React.createElement(
-                                        'a',
-                                        { href: url || '#', key: 'link_url', target: '_blank', style: { float: 'right' } },
+                                        "a",
+                                        { href: url || '#', key: "link_url", target: "_blank", style: { float: 'right' } },
                                         __('Preview', 'advanced-gutenberg')
                                     )]
                                 },
@@ -7485,7 +7594,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 },
                                 min: 10,
                                 max: 100,
-                                beforeIcon: 'editor-textcolor',
+                                beforeIcon: "editor-textcolor",
                                 allowReset: true
                             }),
                             !isStyleOutlined && React.createElement(_components.AdvColorControl, {
@@ -7694,6 +7803,78 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 50
                                 })
                             )
+                        ),
+                        advgbBlocks.advgb_pro === '1' && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Icon', 'advanced-gutenberg'), initialOpen: false },
+                                React.createElement(ToggleControl, {
+                                    label: __('Display icon', 'advanced-gutenberg'),
+                                    checked: iconDisplay,
+                                    onChange: function onChange() {
+                                        return setAttributes({ iconDisplay: !iconDisplay });
+                                    },
+                                    className: "advgb-child-toggle"
+                                }),
+                                iconDisplay && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(
+                                        BaseControl,
+                                        {
+                                            label: __('Icon Library (Material Icon)', 'advanced-gutenberg')
+                                        },
+                                        React.createElement(
+                                            Button,
+                                            {
+                                                className: "button button-large advgb-browse-icon-btn",
+                                                onClick: function onClick() {
+                                                    if (!showPopup) {
+                                                        _this2.togglePopup();
+                                                    }
+                                                }
+                                            },
+                                            __('Icon Selection', 'advanced-gutenberg')
+                                        )
+                                    ),
+                                    React.createElement(RangeControl, {
+                                        label: __('Icon Size (px)', 'advanced-gutenberg'),
+                                        value: iconSize,
+                                        min: 1,
+                                        max: 200,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ iconSize: value });
+                                        }
+                                    }),
+                                    React.createElement(_components.AdvColorControl, {
+                                        label: __('Icon Color', 'advanced-gutenberg'),
+                                        value: iconColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ iconColor: value });
+                                        }
+                                    }),
+                                    React.createElement(SelectControl, {
+                                        label: __('Icon Position', 'advanced-gutenberg'),
+                                        value: iconPosition,
+                                        options: [{ label: __('Left', 'advanced-gutenberg'), value: 'left' }, { label: __('Right', 'advanced-gutenberg'), value: 'right' }],
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ iconPosition: value });
+                                        }
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Icon Spacing (px)', 'advanced-gutenberg'),
+                                        value: iconSpacing,
+                                        min: 0,
+                                        max: 100,
+                                        help: __('Spacing between icon and text', 'advanced-gutenberg'),
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ iconSpacing: value });
+                                        }
+                                    })
+                                )
+                            )
                         )
                     )
                 );
@@ -7704,10 +7885,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }(Component);
 
     var buttonBlockIcon = React.createElement(
-        'svg',
-        { xmlns: 'http://www.w3.org/2000/svg', width: '20', height: '20', viewBox: '2 2 22 22' },
-        React.createElement('path', { fill: 'none', d: 'M0 0h24v24H0V0z' }),
-        React.createElement('path', { d: 'M19 7H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm0 8H5V9h14v6z' })
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+        React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
+        React.createElement("path", { d: "M19 7H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm0 8H5V9h14v6z" })
     );
     var blockAttrs = {
         id: {
@@ -7724,7 +7905,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string'
         },
         text: {
-            source: 'children',
             selector: 'a',
             default: 'PUSH THE BUTTON'
         },
@@ -7823,6 +8003,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string',
             default: 'none'
         },
+        iconDisplay: {
+            type: 'boolean',
+            default: false
+        },
+        icon: {
+            type: 'string',
+            default: 'insert_link'
+        },
+        iconSize: {
+            type: 'number',
+            default: 30
+        },
+        iconColor: {
+            type: 'string'
+        },
+        iconTheme: {
+            type: 'string',
+            default: 'outlined'
+        },
+        iconPosition: {
+            type: 'string',
+            default: 'left'
+        },
+        iconSpacing: {
+            type: 'number',
+            default: 7
+        },
         changed: {
             type: 'boolean',
             default: false
@@ -7881,21 +8088,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 url = attributes.url,
                 urlOpenNewTab = attributes.urlOpenNewTab,
                 title = attributes.title,
-                text = attributes.text;
+                text = attributes.text,
+                iconDisplay = attributes.iconDisplay,
+                icon = attributes.icon,
+                iconSize = attributes.iconSize,
+                iconColor = attributes.iconColor,
+                iconTheme = attributes.iconTheme,
+                iconPosition = attributes.iconPosition,
+                iconSpacing = attributes.iconSpacing;
 
+
+            var iconClass = ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join('');
 
             return React.createElement(
-                'div',
-                { className: 'align' + align },
-                React.createElement(RichText.Content, {
-                    tagName: 'a',
-                    className: 'wp-block-advgb-button_link ' + id,
-                    href: url || '#',
-                    title: title,
-                    target: !urlOpenNewTab ? '_self' : '_blank',
-                    value: text,
-                    rel: 'noopener noreferrer'
-                })
+                "div",
+                { className: "align" + align },
+                React.createElement(
+                    "a",
+                    { className: "wp-block-advgb-button_link " + id,
+                        href: url || '#',
+                        title: title,
+                        target: !urlOpenNewTab ? '_self' : '_blank',
+                        rel: "noopener noreferrer" },
+                    iconDisplay && React.createElement(
+                        "i",
+                        { className: iconClass },
+                        icon
+                    ),
+                    React.createElement(RichText.Content, {
+                        tagName: "span",
+                        value: text
+                    })
+                )
             );
         },
         getEditWrapperProps: function getEditWrapperProps(attributes) {
@@ -7912,6 +8136,46 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         deprecated: [{
             attributes: _extends({}, blockAttrs, {
+                text: {
+                    source: 'children',
+                    selector: 'a',
+                    default: 'PUSH THE BUTTON'
+                }
+            }),
+            supports: {
+                anchor: true,
+                align: ['right', 'left', 'center', 'full']
+            },
+            save: function save(_ref2) {
+                var attributes = _ref2.attributes;
+                var id = attributes.id,
+                    align = attributes.align,
+                    url = attributes.url,
+                    urlOpenNewTab = attributes.urlOpenNewTab,
+                    title = attributes.title,
+                    text = attributes.text,
+                    icon = attributes.icon,
+                    iconSize = attributes.iconSize,
+                    iconColor = attributes.iconColor,
+                    iconTheme = attributes.iconTheme;
+
+
+                return React.createElement(
+                    "div",
+                    { className: "align" + align },
+                    React.createElement(RichText.Content, {
+                        tagName: "a",
+                        className: "wp-block-advgb-button_link " + id,
+                        href: url || '#',
+                        title: title,
+                        target: !urlOpenNewTab ? '_self' : '_blank',
+                        value: text,
+                        rel: "noopener noreferrer"
+                    })
+                );
+            }
+        }, {
+            attributes: _extends({}, blockAttrs, {
                 transitionSpeed: {
                     type: 'number',
                     default: 0.2
@@ -7923,8 +8187,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     transitionSpeed: transitionSpeed
                 });
             },
-            save: function save(_ref2) {
-                var attributes = _ref2.attributes;
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
                 var id = attributes.id,
                     align = attributes.align,
                     url = attributes.url,
@@ -7934,16 +8198,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
                 return React.createElement(
-                    'div',
-                    { className: 'align' + align },
+                    "div",
+                    { className: "align" + align },
                     React.createElement(RichText.Content, {
-                        tagName: 'a',
-                        className: 'wp-block-advgb-button_link ' + id,
+                        tagName: "a",
+                        className: "wp-block-advgb-button_link " + id,
                         href: url || '#',
                         title: title,
                         target: !urlOpenNewTab ? '_self' : '_blank',
                         value: text,
-                        rel: 'noopener noreferrer'
+                        rel: "noopener noreferrer"
                     })
                 );
             }

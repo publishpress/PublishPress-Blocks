@@ -5355,6 +5355,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 case 'advgb/button':
                     $html_style = $this->advgb_AdvancedButtonStyles($blockAttrs);
+                    $this->advgb_AdvancedButtonAssets($blockAttrs);
                     break;
 
                 case 'advgb/column':
@@ -5563,6 +5564,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $style_html .= 'opacity:'.$hover_opacity.';';
             $style_html .= 'transition:all '.$transition_spd.'s ease;';
             $style_html .= '}';
+
+            if(!defined('ADVANCED_GUTENBERG_PRO')) {
+                $style_html  .= '.'. $block_class . ' > i {';
+                $style_html .= 'display: none !important;';
+                $style_html .= '}';
+            }
 
             return $style_html;
         }
@@ -6034,7 +6041,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Adv. Image Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6056,7 +6063,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Adv. Video Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6079,7 +6086,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Map Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6097,7 +6104,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Gallery Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6125,7 +6132,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Summary Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6141,7 +6148,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Advanced Accordion Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6164,7 +6171,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Advanced Tabs Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6188,7 +6195,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Woo Products Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6214,7 +6221,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Images Slider Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6260,7 +6267,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Contact Form Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6279,7 +6286,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Newsletter Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6298,7 +6305,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Testimonial Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6324,7 +6331,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Columns Manager Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6336,7 +6343,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Login / Register Form Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6367,7 +6374,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Recent Posts Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6405,7 +6412,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Assets for Countdown Block
          *
-         * @since    2.11.4
+         * @since   2.11.4
          * @param   $blockAttrs The block attributes
          * @return  void
          */
@@ -6415,6 +6422,27 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                 if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_scripts_frontend_countdown' ) ) {
                     PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_scripts_frontend_countdown();
+                }
+            }
+        }
+
+        /**
+         * Assets for Advanced Button Block
+         *
+         * @since   2.11.6
+         * @param   $blockAttrs The block attributes
+         * @return  void
+         */
+        public function advgb_AdvancedButtonAssets($blockAttrs)
+        {
+            // Pro
+            if(
+                defined( 'ADVANCED_GUTENBERG_PRO' ) &&
+                $this->settingIsEnabled( 'enable_advgb_blocks' ) &&
+                isset($blockAttrs['iconDisplay'])
+            ) {
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_styles_frontend_advbutton' ) ) {
+                    PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_styles_frontend_advbutton();
                 }
             }
         }
