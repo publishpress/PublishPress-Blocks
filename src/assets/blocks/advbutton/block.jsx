@@ -1,4 +1,5 @@
 import {AdvColorControl} from "../0-adv-components/components.jsx";
+import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
 
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
@@ -6,7 +7,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, URLInput } = wpBlockEditor;
-    const { BaseControl, RangeControl, PanelBody, ToggleControl, SelectControl } = wpComponents;
+    const { BaseControl, RangeControl, PanelBody, ToggleControl, SelectControl, Button } = wpComponents;
 
     // Preview style images
     let previewImageData = '';
@@ -18,6 +19,16 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
     class AdvButton extends Component {
         constructor() {
             super( ...arguments );
+            this.state = {
+                showPopup: false,
+                iconSelected: '',
+                selectedIcon: false,
+                iconThemeSelected: 'outlined',
+                selectedIconTheme: false,
+            };
+            this.togglePopup = this.togglePopup.bind(this);
+            this.handleIcon = this.handleIcon.bind(this);
+            this.handleIconTheme = this.handleIconTheme.bind(this);
         }
 
         componentWillMount() {
@@ -46,6 +57,52 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             setAttributes( { id: 'advgbbtn-' + clientId } );
         }
 
+        componentDidUpdate() {
+            const {iconSelected, selectedIcon, iconThemeSelected, selectedIconTheme} = this.state;
+            const {attributes, setAttributes} = this.props;
+            if(selectedIcon) {
+
+                this.setState({
+                    selectedIcon: false
+                });
+                setAttributes({
+                    icon: iconSelected,
+                    iconTheme: iconThemeSelected
+                });
+            }
+
+            if(selectedIconTheme) {
+                this.setState({
+                    selectedIconTheme: false
+                });
+                setAttributes({
+                    iconTheme: iconThemeSelected
+                });
+            }
+        }
+
+        togglePopup() {
+            const {showPopup} = this.state;
+
+            this.setState( {
+                showPopup: !showPopup
+            } );
+        }
+
+        handleIcon(iconValue) {
+            this.setState({
+                iconSelected: iconValue,
+                selectedIcon: true,
+            });
+        }
+
+        handleIconTheme(iconThemeValue) {
+            this.setState({
+                iconThemeSelected: iconThemeValue,
+                selectedIconTheme: true,
+            });
+        }
+
         render() {
             const listBorderStyles = [
                 { label: __( 'None', 'advanced-gutenberg' ), value: 'none' },
@@ -65,13 +122,14 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 className,
                 clientId: blockID,
             } = this.props;
+            const {showPopup} = this.state;
             const {
                 id, align, url, urlOpenNewTab, title, text, bgColor, textColor, textSize,
                 marginTop, marginRight, marginBottom, marginLeft,
                 paddingTop, paddingRight, paddingBottom, paddingLeft,
                 borderWidth, borderColor, borderRadius, borderStyle,
                 hoverTextColor, hoverBgColor, hoverShadowColor, hoverShadowH, hoverShadowV, hoverShadowBlur, hoverShadowSpread,
-                hoverOpacity, transitionSpeed, isPreview
+                hoverOpacity, transitionSpeed, iconDisplay, icon, iconSize, iconColor, iconTheme, isPreview
             } = attributes;
 
             const isStyleSquared        = className.indexOf('-squared') > -1;
@@ -107,6 +165,11 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 previewImageData = previewImageDataDefault;
             }
 
+            const iconClass = [
+                'material-icons',
+                iconTheme !== '' && `-${iconTheme}`
+            ].filter( Boolean ).join('');
+
             return (
                 isPreview ?
                     <img alt={__('Advanced Button', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
@@ -115,16 +178,22 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     <span className={`${className} align${align}`}
                           style={ { display: 'inline-block' } }
                     >
-                        <RichText
-                            tagName="span"
-                            placeholder={ __( 'Add text…', 'advanced-gutenberg' ) }
-                            value={ text }
-                            onChange={ ( value ) => setAttributes( { text: value } ) }
-                            allowedFormats={ [ 'core/bold', 'core/italic', 'core/strikethrough' ] }
-                            isSelected={ isSelected }
-                            className={ `wp-block-advgb-button_link ${id}` }
-                            keepPlaceholderOnFocus
-                        />
+                        <span className={ `wp-block-advgb-button_link ${id}` }>
+                            { iconDisplay && (
+                                <i className={iconClass}>
+                                    {icon}
+                                </i>
+                            ) }
+                            <RichText
+                                tagName="span"
+                                placeholder={ __( 'Add text…', 'advanced-gutenberg' ) }
+                                value={ text }
+                                onChange={ ( value ) => setAttributes( { text: value } ) }
+                                allowedFormats={ [ 'core/bold', 'core/italic', 'core/strikethrough' ] }
+                                isSelected={ isSelected }
+                                keepPlaceholderOnFocus
+                            />
+                        </span>
                     </span>
                     <style>
                         {`.${id} {
@@ -144,8 +213,35 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                         box-shadow: ${hoverShadowH}px ${hoverShadowV}px ${hoverShadowBlur}px ${hoverShadowSpread}px ${hoverShadowColor};
                         transition: all ${transitionSpeed}s ease;
                         opacity: ${hoverOpacity/100}
+                    }
+                    .${id} i {
+                        font-size: ${iconSize}px;
+                        color: ${iconColor};
                     }`}
+                    { advgbBlocks.advgb_pro !== '1' && (
+                        `.${id} i {
+                            display: none !important;
+                        }`
+                    ) }
                     </style>
+                    {
+                        showPopup ?
+                            <IconListPopupHook
+                                content='iconpopup'
+                                closePopup={ () => {
+                                    if(showPopup) {
+                                        this.togglePopup();
+                                    }
+                                }
+                                }
+                                onSelectIcon={ this.handleIcon }
+                                onSelectIconTheme={ this.handleIconTheme }
+                                selectedIcon={icon}
+                                selectedIconTheme={iconTheme}
+                            />
+                            :
+                            null
+                    }
                     <InspectorControls>
                         <PanelBody title={ __( 'Button link', 'advanced-gutenberg' ) }>
                             <BaseControl
@@ -343,6 +439,48 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 />
                             </PanelBody>
                         </PanelBody>
+                        {advgbBlocks.advgb_pro === '1' && (
+                            <Fragment>
+                                <PanelBody title={ __( 'Icon', 'advanced-gutenberg' ) } initialOpen={ false } >
+                                    <ToggleControl
+                                        label={ __( 'Display icon', 'advanced-gutenberg' ) }
+                                        checked={ iconDisplay }
+                                        onChange={ () => setAttributes( { iconDisplay: !iconDisplay } ) }
+                                        className="advgb-child-toggle"
+                                    />
+                                    { iconDisplay && (
+                                        <Fragment>
+                                            <BaseControl
+                                                label={ __( 'Icon Library (Material Icon)', 'advanced-gutenberg' )}
+                                            >
+                                                <Button
+                                                    className="button button-large advgb-browse-icon-btn"
+                                                    onClick={ () => {
+                                                        if(!showPopup) {
+                                                            this.togglePopup();
+                                                        }
+                                                    } }
+                                                >
+                                                    { __( 'Icon Selection', 'advanced-gutenberg' ) }
+                                                </Button>
+                                            </BaseControl>
+                                            <RangeControl
+                                                label={ __( 'Icon Size (px)', 'advanced-gutenberg' ) }
+                                                value={iconSize}
+                                                min={1}
+                                                max={200}
+                                                onChange={( value ) => setAttributes( { iconSize: value } )}
+                                            />
+                                            <AdvColorControl
+                                                label={ __( 'Icon Color', 'advanced-gutenberg' ) }
+                                                value={ iconColor }
+                                                onChange={ (value) => setAttributes( {iconColor: value} ) }
+                                            />
+                                        </Fragment>
+                                    ) }
+                                </PanelBody>
+                            </Fragment>
+                        ) }
                     </InspectorControls>
                 </Fragment>
             )
@@ -370,7 +508,6 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             type: 'string',
         },
         text: {
-            source: 'children',
             selector: 'a',
             default: 'PUSH THE BUTTON',
         },
@@ -469,6 +606,26 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             type: 'string',
             default: 'none',
         },
+        iconDisplay: {
+            type: 'boolean',
+            default: false,
+        },
+        icon: {
+            type: 'string',
+            default: 'insert_link'
+        },
+        iconSize: {
+            type: 'number',
+            default: 18
+        },
+        iconColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        iconTheme: {
+            type: 'string',
+            default: 'outlined'
+        },
         changed: {
             type: 'boolean',
             default: false,
@@ -539,19 +696,36 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 urlOpenNewTab,
                 title,
                 text,
+                iconDisplay,
+                icon,
+                iconSize,
+                iconColor,
+                iconTheme
             } = attributes;
+
+            const iconClass = [
+                'material-icons',
+                iconTheme !== '' && `-${iconTheme}`
+            ].filter( Boolean ).join('');
+
 
             return (
                 <div className={ `align${align}` }>
-                    <RichText.Content
-                        tagName="a"
-                        className={ `wp-block-advgb-button_link ${id}` }
+                    <a className={ `wp-block-advgb-button_link ${id}` }
                         href={ url || '#' }
                         title={ title }
                         target={ !urlOpenNewTab ? '_self' : '_blank' }
+                        rel="noopener noreferrer">
+                        { iconDisplay && (
+                            <i className={iconClass}>
+                                {icon}
+                            </i>
+                        ) }
+                        <RichText.Content
+                        tagName="span"
                         value={ text }
-                        rel="noopener noreferrer"
-                    />
+                        />
+                    </a>
                 </div>
             );
         },
@@ -566,6 +740,48 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             return props;
         },
         deprecated: [
+            {
+                attributes: {
+                    ...blockAttrs,
+                    text: {
+                        source: 'children',
+                        selector: 'a',
+                        default: 'PUSH THE BUTTON',
+                    }
+                },
+                supports: {
+                    anchor: true,
+                    align: ['right', 'left', 'center', 'full'],
+                },
+                save: function ( { attributes } ) {
+                    const {
+                        id,
+                        align,
+                        url,
+                        urlOpenNewTab,
+                        title,
+                        text,
+                        icon,
+                        iconSize,
+                        iconColor,
+                        iconTheme
+                    } = attributes;
+
+                    return (
+                        <div className={ `align${align}` }>
+                            <RichText.Content
+                                tagName="a"
+                                className={ `wp-block-advgb-button_link ${id}` }
+                                href={ url || '#' }
+                                title={ title }
+                                target={ !urlOpenNewTab ? '_self' : '_blank' }
+                                value={ text }
+                                rel="noopener noreferrer"
+                            />
+                        </div>
+                    );
+                }
+            },
             {
                 attributes: {
                     ...blockAttrs,
