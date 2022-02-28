@@ -129,7 +129,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 paddingTop, paddingRight, paddingBottom, paddingLeft,
                 borderWidth, borderColor, borderRadius, borderStyle,
                 hoverTextColor, hoverBgColor, hoverShadowColor, hoverShadowH, hoverShadowV, hoverShadowBlur, hoverShadowSpread,
-                hoverOpacity, transitionSpeed, iconDisplay, icon, iconSize, iconColor, iconTheme, isPreview
+                hoverOpacity, transitionSpeed, iconDisplay, icon, iconSize, iconColor, iconTheme, iconPosition, iconSpacing, isPreview
             } = attributes;
 
             const isStyleSquared        = className.indexOf('-squared') > -1;
@@ -216,8 +216,23 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                     }
                     .${id} i {
                         font-size: ${iconSize}px;
-                        color: ${iconColor};
+                        float: ${iconPosition};
                     }`}
+                    { iconColor && (
+                        `.${id} i {
+                            color: ${iconColor};
+                        }`
+                    ) }
+                    { iconPosition === 'left' && (
+                        `.${id} i {
+                            margin-right: ${iconSpacing}px;
+                        }`
+                    ) }
+                    { iconPosition === 'right' && (
+                        `.${id} i {
+                            margin-left: ${iconSpacing}px;
+                        }`
+                    ) }
                     { advgbBlocks.advgb_pro !== '1' && (
                         `.${id} i {
                             display: none !important;
@@ -476,6 +491,23 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                                                 value={ iconColor }
                                                 onChange={ (value) => setAttributes( {iconColor: value} ) }
                                             />
+                                            <SelectControl
+                                                label={ __( 'Icon Position', 'advanced-gutenberg' ) }
+                                                value={iconPosition}
+                                                options={[
+                                                    { label: __( 'Left', 'advanced-gutenberg' ), value: 'left' },
+                                                    { label: __( 'Right', 'advanced-gutenberg' ), value: 'right' },
+                                                ]}
+                                                onChange={ ( value ) => setAttributes( { iconPosition: value } ) }
+                                            />
+                                            <RangeControl
+                                                label={ __( 'Icon Spacing (px)', 'advanced-gutenberg' ) }
+                                                value={iconSpacing}
+                                                min={0}
+                                                max={100}
+                                                help={ __( 'Spacing between icon and text', 'advanced-gutenberg' ) }
+                                                onChange={( value ) => setAttributes( { iconSpacing: value } )}
+                                            />
                                         </Fragment>
                                     ) }
                                 </PanelBody>
@@ -616,15 +648,22 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
         },
         iconSize: {
             type: 'number',
-            default: 18
+            default: 30
         },
         iconColor: {
             type: 'string',
-            default: '#fff'
         },
         iconTheme: {
             type: 'string',
             default: 'outlined'
+        },
+        iconPosition: {
+            type: 'string',
+            default: 'left',
+        },
+        iconSpacing: {
+            type: 'number',
+            default: 7,
         },
         changed: {
             type: 'boolean',
@@ -700,7 +739,9 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 icon,
                 iconSize,
                 iconColor,
-                iconTheme
+                iconTheme,
+                iconPosition,
+                iconSpacing
             } = attributes;
 
             const iconClass = [

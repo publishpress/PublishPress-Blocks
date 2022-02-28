@@ -7458,6 +7458,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     iconSize = attributes.iconSize,
                     iconColor = attributes.iconColor,
                     iconTheme = attributes.iconTheme,
+                    iconPosition = attributes.iconPosition,
+                    iconSpacing = attributes.iconSpacing,
                     isPreview = attributes.isPreview;
 
 
@@ -7530,7 +7532,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "style",
                         null,
-                        "." + id + " {\n                        font-size: " + textSize + "px;\n                        color: " + textColor + " !important;\n                        background-color: " + bgColor + " !important;\n                        margin: " + marginTop + "px " + marginRight + "px " + marginBottom + "px " + marginLeft + "px;\n                        padding: " + paddingTop + "px " + paddingRight + "px " + paddingBottom + "px " + paddingLeft + "px;\n                        border-width: " + borderWidth + "px !important;\n                        border-color: " + borderColor + " !important;\n                        border-radius: " + borderRadius + "px !important;\n                        border-style: " + borderStyle + " " + (borderStyle !== 'none' && '!important') + ";\n                    }\n                    ." + id + ":hover {\n                        color: " + hoverTextColor + " !important;\n                        background-color: " + hoverBgColor + " !important;\n                        box-shadow: " + hoverShadowH + "px " + hoverShadowV + "px " + hoverShadowBlur + "px " + hoverShadowSpread + "px " + hoverShadowColor + ";\n                        transition: all " + transitionSpeed + "s ease;\n                        opacity: " + hoverOpacity / 100 + "\n                    }\n                    ." + id + " i {\n                        font-size: " + iconSize + "px;\n                        color: " + iconColor + ";\n                    }",
+                        "." + id + " {\n                        font-size: " + textSize + "px;\n                        color: " + textColor + " !important;\n                        background-color: " + bgColor + " !important;\n                        margin: " + marginTop + "px " + marginRight + "px " + marginBottom + "px " + marginLeft + "px;\n                        padding: " + paddingTop + "px " + paddingRight + "px " + paddingBottom + "px " + paddingLeft + "px;\n                        border-width: " + borderWidth + "px !important;\n                        border-color: " + borderColor + " !important;\n                        border-radius: " + borderRadius + "px !important;\n                        border-style: " + borderStyle + " " + (borderStyle !== 'none' && '!important') + ";\n                    }\n                    ." + id + ":hover {\n                        color: " + hoverTextColor + " !important;\n                        background-color: " + hoverBgColor + " !important;\n                        box-shadow: " + hoverShadowH + "px " + hoverShadowV + "px " + hoverShadowBlur + "px " + hoverShadowSpread + "px " + hoverShadowColor + ";\n                        transition: all " + transitionSpeed + "s ease;\n                        opacity: " + hoverOpacity / 100 + "\n                    }\n                    ." + id + " i {\n                        font-size: " + iconSize + "px;\n                        float: " + iconPosition + ";\n                    }",
+                        iconColor && "." + id + " i {\n                            color: " + iconColor + ";\n                        }",
+                        iconPosition === 'left' && "." + id + " i {\n                            margin-right: " + iconSpacing + "px;\n                        }",
+                        iconPosition === 'right' && "." + id + " i {\n                            margin-left: " + iconSpacing + "px;\n                        }",
                         advgbBlocks.advgb_pro !== '1' && "." + id + " i {\n                            display: none !important;\n                        }"
                     ),
                     showPopup ? React.createElement(_iconClass.IconListPopupHook, {
@@ -7849,6 +7854,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         onChange: function onChange(value) {
                                             return setAttributes({ iconColor: value });
                                         }
+                                    }),
+                                    React.createElement(SelectControl, {
+                                        label: __('Icon Position', 'advanced-gutenberg'),
+                                        value: iconPosition,
+                                        options: [{ label: __('Left', 'advanced-gutenberg'), value: 'left' }, { label: __('Right', 'advanced-gutenberg'), value: 'right' }],
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ iconPosition: value });
+                                        }
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Icon Spacing (px)', 'advanced-gutenberg'),
+                                        value: iconSpacing,
+                                        min: 0,
+                                        max: 100,
+                                        help: __('Spacing between icon and text', 'advanced-gutenberg'),
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ iconSpacing: value });
+                                        }
                                     })
                                 )
                             )
@@ -7990,15 +8013,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         iconSize: {
             type: 'number',
-            default: 18
+            default: 30
         },
         iconColor: {
-            type: 'string',
-            default: '#fff'
+            type: 'string'
         },
         iconTheme: {
             type: 'string',
             default: 'outlined'
+        },
+        iconPosition: {
+            type: 'string',
+            default: 'left'
+        },
+        iconSpacing: {
+            type: 'number',
+            default: 7
         },
         changed: {
             type: 'boolean',
@@ -8063,7 +8093,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 icon = attributes.icon,
                 iconSize = attributes.iconSize,
                 iconColor = attributes.iconColor,
-                iconTheme = attributes.iconTheme;
+                iconTheme = attributes.iconTheme,
+                iconPosition = attributes.iconPosition,
+                iconSpacing = attributes.iconSpacing;
 
 
             var iconClass = ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join('');
