@@ -25084,7 +25084,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         }).then(function (taxAttributes) {
                             // fetch all terms
                             wp.apiFetch({
-                                path: wp.url.addQueryArgs('wp/v2/' + taxAttributes.rest_base, { context: 'edit' })
+                                path: wp.url.addQueryArgs('wp/v2/' + taxAttributes.rest_base + '?per_page=-1&hide_empty=true', { context: 'edit' })
                             }).then(function (terms) {
                                 var suggestions = [];
                                 var map = [];
