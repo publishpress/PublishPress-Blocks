@@ -17386,11 +17386,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             React.createElement(
                 'div',
                 { className: 'advgb-count-up-columns-one', style: { textAlign: 'center' } },
-                React.createElement(
-                    'h4',
-                    { className: 'advgb-count-up-header', style: { color: headerTextColor } },
-                    headerText
-                ),
+                React.createElement(RichText.Content, {
+                    tagName: 'h4',
+                    value: headerText,
+                    style: { color: headerTextColor },
+                    className: 'advgb-count-up-header'
+                }),
                 React.createElement(
                     'div',
                     { className: 'advgb-counter',
@@ -17404,20 +17405,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     !!countUpSymbolAfter && countSymbolElm
                 ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-count-up-desc', style: { color: descTextColor } },
-                    descText
-                )
+                React.createElement(RichText.Content, {
+                    tagName: 'p',
+                    value: descText,
+                    style: { color: descTextColor },
+                    className: 'advgb-count-up-desc'
+                })
             ),
             parseInt(columns) > 1 && React.createElement(
                 'div',
                 { className: 'advgb-count-up-columns-two', style: { textAlign: 'center' } },
-                React.createElement(
-                    'h4',
-                    { className: 'advgb-count-up-header', style: { color: headerTextColor } },
-                    headerText2
-                ),
+                React.createElement(RichText.Content, {
+                    tagName: 'h4',
+                    value: headerText2,
+                    style: { color: headerTextColor },
+                    className: 'advgb-count-up-header'
+                }),
                 React.createElement(
                     'div',
                     { className: 'advgb-counter',
@@ -17431,20 +17434,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     !!countUpSymbolAfter2 && countSymbolElm2
                 ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-count-up-desc', style: { color: descTextColor } },
-                    descText2
-                )
+                React.createElement(RichText.Content, {
+                    tagName: 'p',
+                    value: descText2,
+                    style: { color: descTextColor },
+                    className: 'advgb-count-up-desc'
+                })
             ),
             parseInt(columns) > 2 && React.createElement(
                 'div',
                 { className: 'advgb-count-up-columns-three', style: { textAlign: 'center' } },
-                React.createElement(
-                    'h4',
-                    { className: 'advgb-count-up-header', style: { color: headerTextColor } },
-                    headerText3
-                ),
+                React.createElement(RichText.Content, {
+                    tagName: 'h4',
+                    value: headerText3,
+                    style: { color: headerTextColor },
+                    className: 'advgb-count-up-header'
+                }),
                 React.createElement(
                     'div',
                     { className: 'advgb-counter',
@@ -17458,11 +17463,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     !!countUpSymbolAfter3 && countSymbolElm3
                 ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-count-up-desc', style: { color: descTextColor } },
-                    descText3
-                )
+                React.createElement(RichText.Content, {
+                    tagName: 'p',
+                    value: descText3,
+                    style: { color: descTextColor },
+                    className: 'advgb-count-up-desc'
+                })
             )
         );
     }
