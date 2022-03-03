@@ -348,9 +348,12 @@
         return (
             <div className="advgb-count-up" style={ { display: 'flex' } }>
                 <div className="advgb-count-up-columns-one" style={ { textAlign: 'center' } }>
-                    <h4 className="advgb-count-up-header" style={ { color: headerTextColor } }>
-                        { headerText }
-                    </h4>
+                    <RichText.Content
+                        tagName="h4"
+                        value={ headerText }
+                        style={ { color: headerTextColor } }
+                        className="advgb-count-up-header"
+                    />
                     <div className="advgb-counter"
                          style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
                     >
@@ -358,15 +361,21 @@
                         <span className="advgb-counter-number">{ countUpNumber }</span>
                         {!!countUpSymbolAfter && countSymbolElm}
                     </div>
-                    <p className="advgb-count-up-desc" style={ { color: descTextColor } }>
-                        { descText }
-                    </p>
+                    <RichText.Content
+                        tagName="p"
+                        value={ descText }
+                        style={ { color: descTextColor } }
+                        className="advgb-count-up-desc"
+                    />
                 </div>
                 {parseInt(columns) > 1 && (
                     <div className="advgb-count-up-columns-two" style={ { textAlign: 'center' } }>
-                        <h4 className="advgb-count-up-header" style={ { color: headerTextColor } }>
-                            { headerText2 }
-                        </h4>
+                        <RichText.Content
+                            tagName="h4"
+                            value={ headerText2 }
+                            style={ { color: headerTextColor } }
+                            className="advgb-count-up-header"
+                        />
                         <div className="advgb-counter"
                              style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
                         >
@@ -374,16 +383,22 @@
                             <span className="advgb-counter-number">{ countUpNumber2 }</span>
                             {!!countUpSymbolAfter2 && countSymbolElm2}
                         </div>
-                        <p className="advgb-count-up-desc" style={ { color: descTextColor } }>
-                            { descText2 }
-                        </p>
+                        <RichText.Content
+                            tagName="p"
+                            value={ descText2 }
+                            style={ { color: descTextColor } }
+                            className="advgb-count-up-desc"
+                        />
                     </div>
                 ) }
                 {parseInt(columns) > 2 && (
                     <div className="advgb-count-up-columns-three" style={ { textAlign: 'center' } }>
-                        <h4 className="advgb-count-up-header" style={ { color: headerTextColor } }>
-                            { headerText3 }
-                        </h4>
+                        <RichText.Content
+                            tagName="h4"
+                            value={ headerText3 }
+                            style={ { color: headerTextColor } }
+                            className="advgb-count-up-header"
+                        />
                         <div className="advgb-counter"
                              style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
                         >
@@ -391,9 +406,12 @@
                             <span className="advgb-counter-number">{ countUpNumber3 }</span>
                             {!!countUpSymbolAfter3 && countSymbolElm3}
                         </div>
-                        <p className="advgb-count-up-desc" style={ { color: descTextColor } }>
-                            { descText3 }
-                        </p>
+                        <RichText.Content
+                            tagName="p"
+                            value={ descText3 }
+                            style={ { color: descTextColor } }
+                            className="advgb-count-up-desc"
+                        />
                     </div>
                 ) }
             </div>

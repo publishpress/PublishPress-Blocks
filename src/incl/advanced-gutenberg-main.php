@@ -433,8 +433,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             $currentScreen = get_current_screen();
 
-            if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
-
+            if(
+                $this->settingIsEnabled('enable_advgb_blocks')
+                || $this->settingIsEnabled('enable_block_access')
+            ) {
+                // Define the dependency for the editor based on current screen
                 if( $currentScreen->id === 'customize' ) {
                     // Customizer > Widgets
                     $wp_editor_dep = 'wp-customize-widgets';
@@ -446,28 +449,41 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $wp_editor_dep = 'wp-editor';
                 }
 
-                wp_enqueue_script(
-                    'advgb_blocks',
-                    plugins_url('assets/blocks/blocks.js', dirname(__FILE__)),
-                    array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', $wp_editor_dep, 'wp-plugins', 'wp-compose' ),
-                    ADVANCED_GUTENBERG_VERSION,
-                    true
-                );
+                if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
 
-                // Pro Ads in some blocks for free version
-                if( !defined('ADVANCED_GUTENBERG_PRO') ){
                     wp_enqueue_script(
-                        'advgb_pro_ad_js',
-                        plugins_url('assets/blocks/pro-ad.js', dirname(__FILE__)),
-                        array( 'advgb_blocks' ),
+                        'advgb_blocks',
+                        plugins_url('assets/blocks/blocks.js', dirname(__FILE__)),
+                        array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', $wp_editor_dep, 'wp-plugins', 'wp-compose' ),
                         ADVANCED_GUTENBERG_VERSION,
                         true
                     );
-                    wp_enqueue_style(
-                        'advgb_pro_ad_css',
-                        plugins_url('assets/css/pro-ad.css', dirname(__FILE__)),
-                        array(),
-                        ADVANCED_GUTENBERG_VERSION
+
+                    // Pro Ads in some blocks for free version
+                    if( !defined('ADVANCED_GUTENBERG_PRO') ){
+                        wp_enqueue_script(
+                            'advgb_pro_ad_js',
+                            plugins_url('assets/blocks/pro-ad.js', dirname(__FILE__)),
+                            array( 'advgb_blocks' ),
+                            ADVANCED_GUTENBERG_VERSION,
+                            true
+                        );
+                        wp_enqueue_style(
+                            'advgb_pro_ad_css',
+                            plugins_url('assets/css/pro-ad.css', dirname(__FILE__)),
+                            array(),
+                            ADVANCED_GUTENBERG_VERSION
+                        );
+                    }
+                }
+
+                if( $this->settingIsEnabled( 'enable_block_access' ) ) {
+                    wp_enqueue_script(
+                        'advgb_blocks_editor',
+                        plugins_url('assets/blocks/editor.js', dirname(__FILE__)),
+                        array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', $wp_editor_dep, 'wp-plugins', 'wp-compose' ),
+                        ADVANCED_GUTENBERG_VERSION,
+                        true
                     );
                 }
             }

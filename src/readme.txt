@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.11.6 - 1 Mar 2022 =
+= 2.11.6 - 3 Mar 2022 =
   * Add: Improved design for Advanced Tabs remove and add settings
   * Add: Ad to upgrade to Pro for Images Slider block
   * Remove: Manual block registration for Legacy Widget and Widget Area
@@ -266,6 +266,8 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Default text color for outlined styles in frontend for Advanced Button block
   * Fix: Check current user role exists as array in advgb_blocks_user_roles option
   * Fix: Get all the taxonomy values for CPT filters in Content Display block
+  * Fix: Text format displayed as raw HTML in frontend for Count Up block
+  * Fix: Handle editor javascrit as separate file to load when Block Access is enabled
 
 = 2.11.5 - 14 Feb 2022 =
   * Add: Ad to upgrade to Pro for Advanced Tabs, Advanced Accordions and Content Display blocks
