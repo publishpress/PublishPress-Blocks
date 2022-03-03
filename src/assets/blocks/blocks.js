@@ -29748,152 +29748,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /***/ }),
 
-/***/ "./src/assets/js/editor.jsx":
-/*!**********************************!*\
-  !*** ./src/assets/js/editor.jsx ***!
-  \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
-    wp.domReady(function () {
-
-        if (advgb_blocks_vars.blocks.active_blocks === 'undefined' || advgb_blocks_vars.blocks.active_blocks.length === 0) {
-            // No Block Access defined for this role, so we stop the process here
-            return;
-        }
-
-        var gutenberg_init_function = null;
-        if (typeof window._wpLoadBlockEditor !== 'undefined') {
-            gutenberg_init_function = window._wpLoadBlockEditor;
-        }
-
-        if (gutenberg_init_function !== null) {
-            // Wait for Gutenberg editor to be ready
-            gutenberg_init_function.then(function () {
-                if (advgb_blocks_vars.original_settings.allowedBlockTypes !== true) {
-                    // allowed_block_types filter has been used, in this case we do nothing as we don't know why blocks have been filtered
-                    return;
-                }
-
-                var list_blocks = [];
-                var granted_blocks = [];
-                var missing_block = false;
-                // Retrieve all registered blocks
-                var blocks = wp.blocks.getBlockTypes();
-                var savedBlocks = {
-                    active_blocks: Object.values(advgb_blocks_vars.blocks.active_blocks),
-                    inactive_blocks: Object.values(advgb_blocks_vars.blocks.inactive_blocks)
-                };
-
-                for (var block in blocks) {
-                    var blockItemIcon = '';
-                    var blockItem = {
-                        name: blocks[block].name,
-                        icon: blocks[block].icon.src,
-                        title: blocks[block].title,
-                        category: blocks[block].category,
-                        parent: blocks[block].parent
-                    };
-
-                    var savedIcon = !!blocks[block].icon.src ? blocks[block].icon.src : blocks[block].icon;
-
-                    if (blocks[block].icon.foreground !== undefined) blockItem.iconColor = blocks[block].icon.foreground;
-
-                    if (typeof savedIcon === 'function') {
-                        if (typeof savedIcon.prototype !== 'undefined') {
-                            blockItem.icon = wp.element.renderToString(wp.element.createElement(savedIcon));
-                            blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
-                            blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
-                        } else {
-                            blockItemIcon = wp.element.createElement(wp.components.Dashicon, { icon: 'block-default' });
-                            blockItem.icon = wp.element.renderToString(blockItemIcon);
-                        }
-                    } else if ((typeof savedIcon === 'undefined' ? 'undefined' : _typeof(savedIcon)) === 'object') {
-                        blockItem.icon = wp.element.renderToString(savedIcon);
-                        blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
-                        blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
-                    } else if (typeof savedIcon === 'string') {
-                        blockItemIcon = wp.element.createElement(wp.components.Dashicon, { icon: savedIcon });
-                        blockItem.icon = wp.element.renderToString(blockItemIcon);
-                    }
-                    list_blocks.push(blockItem);
-
-                    // Compare current block with the list of blocks we have
-                    if (savedBlocks.active_blocks.indexOf(blocks[block].name) >= 0) {
-                        // Block is active
-                        granted_blocks.push(blocks[block].name);
-                    } else if (savedBlocks.inactive_blocks.indexOf(blocks[block].name) >= 0) {
-                        // Block is inactive
-                    } else {
-                        // This block is not in our database yet, but by default we allow the usage
-                        granted_blocks.push(blocks[block].name);
-                        missing_block = true;
-                    }
-                }
-
-                //console.log('missing_block: ' + missing_block);
-
-                if (missing_block) {
-                    if (console !== undefined && console.error !== undefined) {
-                        // Let's output as log instead of error
-                        console.log('Reloading editor by PublishPress Blocks plugin');
-                    }
-                    // Replace original allowed block settings by our modified list
-                    var new_settings = advgb_blocks_vars.original_settings;
-
-                    // Unregister core blocks to avoid registering twice later through wp.editPost.initializeEditor
-                    var core_blocks = ['core/paragraph', 'core/image', 'core/heading', 'core/list', 'core/quote', 'core/archives', 'core/audio', 'core/button', 'core/buttons', 'core/calendar', 'core/categories', 'core/code', 'core/columns', 'core/column', 'core/cover', 'core/embed', 'core/group', 'core/freeform', 'core/html', 'core/media-text', 'core/latest-comments', 'core/latest-posts', 'core/missing', 'core/more', 'core/nextpage', 'core/page-list', 'core/preformatted', 'core/pullquote', 'core/rss', 'core/search', 'core/separator', 'core/block', 'core/social-links', 'core/social-link', 'core/spacer', 'core/table', 'core/tag-cloud', 'core/text-columns', 'core/verse', 'core/video', 'core/site-logo', 'core/site-tagline', 'core/site-title', 'core/query', 'core/post-template', 'core/query-title', 'core/query-pagination', 'core/query-pagination-next', 'core/query-pagination-numbers', 'core/query-pagination-previous', 'core/post-title', 'core/post-content', 'core/post-date', 'core/post-excerpt', 'core/post-featured-image', 'core/post-terms', 'core/loginout', 'core/gallery', 'core/shortcode', 'core/file', 'core/pattern', 'core/navigation', 'core/navigation-link', 'core/navigation-submenu', 'core/template-part', 'core/post-author', 'core/post-navigation-link', 'core/post-comments', 'core/term-description'];
-
-                    core_blocks.forEach(function (element) {
-                        if (wp.data.select('core/blocks').getBlockType(element)) {
-                            wp.blocks.unregisterBlockType(element);
-                        }
-                    });
-
-                    new_settings.allowedBlockTypes = granted_blocks;
-                    var target = document.getElementById('editor');
-
-                    // Initialize again the editor
-                    wp.editPost.initializeEditor('editor', advgb_blocks_vars.post_type, advgb_blocks_vars.post_id, new_settings, window._wpGutenbergDefaultPost);
-
-                    var list_categories = wp.blocks.getCategories();
-
-                    try {
-                        // Use this ajax query to update the block list in db
-                        jQuery.ajax({
-                            url: advgb_blocks_vars.ajaxurl,
-                            method: 'POST',
-                            data: {
-                                action: 'advgb_update_blocks_list',
-                                blocksList: JSON.stringify(list_blocks),
-                                categoriesList: JSON.stringify(list_categories),
-                                nonce: advgb_blocks_vars.nonce
-                            },
-                            success: function success(data) {
-                                //console.log(data);
-                            }
-                        });
-                    } catch (e) {
-                        //console.log(e);
-                    }
-                }
-            });
-        }
-    });
-}
-
-/***/ }),
-
 /***/ 0:
-/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./src/assets/blocks/0-adv-components/components.jsx ./src/assets/blocks/0-adv-components/icon-class.jsx ./src/assets/blocks/accordion/block.jsx ./src/assets/blocks/advaccordion/accordion.jsx ./src/assets/blocks/advaccordion/block.jsx ./src/assets/blocks/advbutton/block.jsx ./src/assets/blocks/advicon/block.jsx ./src/assets/blocks/advimage/block.jsx ./src/assets/blocks/advlist/block.jsx ./src/assets/blocks/advtable/block.jsx ./src/assets/blocks/advtabs/block.jsx ./src/assets/blocks/advtabs/tab.jsx ./src/assets/blocks/advvideo/block.jsx ./src/assets/blocks/columns/block.jsx ./src/assets/blocks/columns/column.jsx ./src/assets/blocks/contact-form/block.jsx ./src/assets/blocks/container/block.jsx ./src/assets/blocks/count-up/block.jsx ./src/assets/blocks/images-slider/block.jsx ./src/assets/blocks/infobox/block.jsx ./src/assets/blocks/login-form/block.jsx ./src/assets/blocks/map/block.jsx ./src/assets/blocks/newsletter/block.jsx ./src/assets/blocks/recent-posts/block.jsx ./src/assets/blocks/recent-posts/query-controls.jsx ./src/assets/blocks/search-bar/block.jsx ./src/assets/blocks/social-links/block.jsx ./src/assets/blocks/summary/block.jsx ./src/assets/blocks/tabs/block.jsx ./src/assets/blocks/testimonial/block.jsx ./src/assets/blocks/woo-products/block.jsx ./src/assets/js/editor.jsx ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./src/assets/blocks/0-adv-components/components.jsx ./src/assets/blocks/0-adv-components/icon-class.jsx ./src/assets/blocks/accordion/block.jsx ./src/assets/blocks/advaccordion/accordion.jsx ./src/assets/blocks/advaccordion/block.jsx ./src/assets/blocks/advbutton/block.jsx ./src/assets/blocks/advicon/block.jsx ./src/assets/blocks/advimage/block.jsx ./src/assets/blocks/advlist/block.jsx ./src/assets/blocks/advtable/block.jsx ./src/assets/blocks/advtabs/block.jsx ./src/assets/blocks/advtabs/tab.jsx ./src/assets/blocks/advvideo/block.jsx ./src/assets/blocks/columns/block.jsx ./src/assets/blocks/columns/column.jsx ./src/assets/blocks/contact-form/block.jsx ./src/assets/blocks/container/block.jsx ./src/assets/blocks/count-up/block.jsx ./src/assets/blocks/images-slider/block.jsx ./src/assets/blocks/infobox/block.jsx ./src/assets/blocks/login-form/block.jsx ./src/assets/blocks/map/block.jsx ./src/assets/blocks/newsletter/block.jsx ./src/assets/blocks/recent-posts/block.jsx ./src/assets/blocks/recent-posts/query-controls.jsx ./src/assets/blocks/search-bar/block.jsx ./src/assets/blocks/social-links/block.jsx ./src/assets/blocks/summary/block.jsx ./src/assets/blocks/tabs/block.jsx ./src/assets/blocks/testimonial/block.jsx ./src/assets/blocks/woo-products/block.jsx ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -29927,8 +29785,7 @@ __webpack_require__(/*! ./src/assets/blocks/social-links/block.jsx */"./src/asse
 __webpack_require__(/*! ./src/assets/blocks/summary/block.jsx */"./src/assets/blocks/summary/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/tabs/block.jsx */"./src/assets/blocks/tabs/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/testimonial/block.jsx */"./src/assets/blocks/testimonial/block.jsx");
-__webpack_require__(/*! ./src/assets/blocks/woo-products/block.jsx */"./src/assets/blocks/woo-products/block.jsx");
-module.exports = __webpack_require__(/*! ./src/assets/js/editor.jsx */"./src/assets/js/editor.jsx");
+module.exports = __webpack_require__(/*! ./src/assets/blocks/woo-products/block.jsx */"./src/assets/blocks/woo-products/block.jsx");
 
 
 /***/ })
