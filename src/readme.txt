@@ -260,6 +260,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 = 2.11.6 - 4 Mar 2022 =
   * Add: Improved design for Advanced Tabs remove and add settings
   * Add: Ad to upgrade to Pro for Images Slider block
+  * Add: Missing Spanish translations
   * Remove: Manual block registration for Legacy Widget and Widget Area
   * Fix: Legacy Widget is always activated and can't be disabled
   * Fix: Local video cropped in mobile for Advanced Video block
