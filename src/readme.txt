@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 5.9
-Stable tag: 2.11.6b2
+Stable tag: 2.11.6b3
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.11.6 - 4 Mar 2022 =
+= 2.11.6 - 9 Mar 2022 =
   * Add: Improved design for Advanced Tabs remove and add settings
   * Add: Ad to upgrade to Pro for Images Slider block
   * Add: Missing Spanish translations
