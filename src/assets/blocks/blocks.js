@@ -13115,7 +13115,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         updateBlockAttributes(block.innerBlocks[n].clientId, {
                             id: n
                         });
-                        //console.log(block.innerBlocks[ n ].attributes.header);
                     });
                 },
                 updateTabActive: function updateTabActive(tabActive) {
