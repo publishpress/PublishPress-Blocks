@@ -268,7 +268,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Check current user role exists as array in advgb_blocks_user_roles option
   * Fix: Get all the taxonomy values for CPT filters in Content Display block
   * Fix: Text format displayed as raw HTML in frontend for Count Up block
-  * Fix: Handle editor javascrit as separate file to load when Block Access is enabled
+  * Fix: Handle editor javascript as separate file to load when Block Access is enabled
 
 = 2.11.5 - 14 Feb 2022 =
   * Add: Ad to upgrade to Pro for Advanced Tabs, Advanced Accordions and Content Display blocks
