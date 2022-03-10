@@ -1258,7 +1258,7 @@ import { AuthorSelect } from './query-controls.jsx';
                     } ).then( ( taxAttributes ) => {
                         // fetch all terms
                         wp.apiFetch( {
-                            path: wp.url.addQueryArgs( `wp/v2/${taxAttributes.rest_base}`, { context: 'edit' } ),
+                            path: wp.url.addQueryArgs( `wp/v2/${taxAttributes.rest_base}?per_page=-1&hide_empty=true`, { context: 'edit' } ),
                         } ).then( ( terms ) => {
                             let suggestions = [];
                             let map = [];

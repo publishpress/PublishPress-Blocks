@@ -1,10 +1,11 @@
-/*Editor sidebar controls*/
+// Editor
 #widgets-editor,
-#editor {
+#editor,
+.customize-control-sidebar_block_editor {
 
   .advgb-tabs-block,
   .advgb-tabs-wrapper {
-    padding: 15px 0;
+    padding: 25px 0 15px;
 
     .advgb-tab p.mce-content-body,
     .advgb-tab-body p.mce-content-body {

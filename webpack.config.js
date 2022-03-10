@@ -9,7 +9,8 @@ module.exports = [
                 "./src/assets/blocks/customstyles/*.jsx",
                 "./src/assets/blocks/pro-ad/*.jsx",
                 "./src/assets/blocks/editor-sidebar/*.jsx",
-                "./src/assets/blocks/**/*.frontend.jsx"
+                "./src/assets/blocks/**/*.frontend.jsx",
+                "./src/assets/js/editor.jsx"
             ]}
             ),
         devtool: 'source-map',
@@ -110,6 +111,28 @@ module.exports = [
                     test: /\.(frontend.jsx)$/, // Identifies which file or files should be transformed.
                     use: { loader: "babel-loader" }, // Babel loader to transpile modern JavaScript.
                     exclude: /(node_modules|bower_components)/ // JavaScript files to be ignored.
+                }
+            ]
+        }
+    },
+    {
+        entry: glob.sync(
+            "./src/assets/js/editor.jsx",
+            ),
+        devtool: 'source-map',
+        output: {
+            path: path.join(__dirname, "src", "assets", "blocks"),
+            filename: "editor.js"
+        },
+
+        module: {
+            rules: [
+                {
+                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
+                    use: { loader: "babel-loader" }, // Babel loader to transpile modern JavaScript.
+                    exclude: [
+                        /(node_modules|bower_components)/,
+                    ]// JavaScript files to be ignored.
                 }
             ]
         }
