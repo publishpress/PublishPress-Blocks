@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.11.6 - 9 Mar 2022 =
+= 2.11.6 - 10 Mar 2022 =
   * Add: Improved design for Advanced Tabs remove and add settings
   * Add: Ad to upgrade to Pro for Images Slider block
   * Add: Missing Spanish translations
