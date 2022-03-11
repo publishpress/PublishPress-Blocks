@@ -11,7 +11,8 @@
         'advgb/adv-tab',
         'advgb/recent-posts',
         'advgb/images-slider',
-        'advgb/button'
+        'advgb/button',
+        'advgb/list'
     ];
 
     function advgbGetBlockTitle(name){
@@ -36,6 +37,10 @@
 
             case 'advgb/button':
                 return __( 'Button', 'advanced-gutenberg' );
+                break;
+
+            case 'advgb/list':
+                return __( 'List', 'advanced-gutenberg' );
                 break;
 
             default:
