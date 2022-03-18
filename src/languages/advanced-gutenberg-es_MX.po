@@ -65,8 +65,8 @@ msgid ""
 msgstr ""
 "Este bloque de acordeón ha sido reemplazado por una nueva y mejor versión.\n"
 "Este bloque se eliminará en el futuro.\n"
-"Transforme esto en un bloque de Artículo de Acordeón\n"
-"y arrástrelos al nuevo bloque Acordeón Avanzado."
+"Transforme esto en un bloque de artículo de acordeón\n"
+"y arrástrelos al nuevo bloque acordeón avanzado."
 
 #: assets/blocks/blocks.js:5477 assets/blocks/blocks.js:6063
 #: assets/blocks/blocks.js:6939 incl/advanced-gutenberg-main.php:2645
@@ -289,7 +289,7 @@ msgstr "lista"
 #: assets/blocks/blocks.js:7167 assets/blocks/blocks.js:21338
 #: assets/blocks/blocks.js:26182
 msgid "faq"
-msgstr "preguntas frecuentes"
+msgstr "FAQ"
 
 #: assets/blocks/blocks.js:6067 assets/blocks/blocks.js:6943
 msgid "Define space between each accordion (Frontend view only)"
@@ -297,7 +297,7 @@ msgstr "Define el espacio entre cada acordeón (sólo en frontend)"
 
 #: assets/blocks/blocks.js:6076 assets/blocks/blocks.js:6952
 msgid "Make all accordions collapsed by default."
-msgstr "Haz que todos los acordeones se contraigan de forma predeterminada."
+msgstr "Haz que todos los acordeones se contraigan por defecto."
 
 #: assets/blocks/blocks.js:6083
 msgid "Header Tag"
@@ -492,7 +492,7 @@ msgstr "Mostrar ícono"
 #: assets/blocks/blocks.js:7827 assets/blocks/blocks.js:8531
 #: assets/blocks/blocks.js:19097
 msgid "Icon Library (Material Icon)"
-msgstr "Librería de iconos (Material Icon)"
+msgstr "Librería de íconos (Material Icon)"
 
 #: assets/blocks/blocks.js:7839 assets/blocks/blocks.js:8545
 #: assets/blocks/blocks.js:19109
@@ -551,7 +551,7 @@ msgstr "enlace"
 #: assets/blocks/blocks.js:24169 assets/blocks/blocks.js:24271
 #: assets/blocks/blocks.js:26193 incl/advanced-gutenberg-main.php:5152
 msgid "Default"
-msgstr "Defecto"
+msgstr "Predeterminado"
 
 #: assets/blocks/blocks.js:8078
 msgid "Squared"
@@ -641,7 +641,7 @@ msgstr "Bloque de íconos avanzado con más opciones y estilos."
 #: assets/blocks/blocks.js:8879 assets/blocks/blocks.js:10139
 #: assets/blocks/blocks.js:19941
 msgid "icon"
-msgstr "icono"
+msgstr "ícono"
 
 #: assets/blocks/blocks.js:9232 assets/blocks/blocks.js:9270
 #: assets/blocks/blocks.js:9574
@@ -1585,7 +1585,7 @@ msgstr "Administrador de columnas"
 
 #: assets/blocks/blocks.js:14843
 msgid "Choose a columns layout"
-msgstr "Elige un diseño de columnas"
+msgstr "Elige un layout de columnas"
 
 #: assets/blocks/blocks.js:14891
 msgid "Vertical Align Top"
@@ -1683,7 +1683,7 @@ msgstr "fila"
 
 #: assets/blocks/blocks.js:15572 assets/blocks/blocks.js:16149
 msgid "layout"
-msgstr "diseño"
+msgstr "layout"
 
 #: assets/blocks/blocks.js:15880 incl/advanced-gutenberg-main.php:4382
 msgid "Column Settings"
@@ -1702,7 +1702,7 @@ msgid ""
 "Set to 0 = auto. This will override predefine layout styles. Recommend for "
 "experience users!"
 msgstr ""
-"Establecer en 0 = automático. Esto anulará los estilos de diseño "
+"Establecer en 0 = automático. Esto anulará los estilos de layout "
 "predefinidos. ¡Recomendado para usuarios con experiencia!"
 
 #: assets/blocks/blocks.js:15930 assets/blocks/blocks.js:16487
@@ -2102,7 +2102,7 @@ msgstr "información"
 
 #: assets/blocks/blocks.js:20277 assets/blocks/blocks.js:20314
 msgid "Click to change logo"
-msgstr "Click para cambiar logo"
+msgstr "Clic para cambiar logo"
 
 #: assets/blocks/blocks.js:20357 assets/blocks/blocks.js:28753
 #: assets/blocks/blocks.js:28768 assets/blocks/blocks.js:28783
@@ -2188,7 +2188,7 @@ msgstr "Inicio"
 
 #: assets/blocks/blocks.js:20822
 msgid "Dashboard"
-msgstr "Tablero"
+msgstr "Escritorio"
 
 #: assets/blocks/blocks.js:20822 assets/blocks/blocks.js:22896
 #: incl/advanced-gutenberg-main.php:3396
@@ -2301,7 +2301,7 @@ msgstr "Dirección"
 
 #: assets/blocks/blocks.js:22743
 msgid "Use Lat/Lng"
-msgstr "User lat/lng"
+msgstr "Usar lat/lng"
 
 #: assets/blocks/blocks.js:22746
 msgid "Enter address…"
@@ -3022,11 +3022,11 @@ msgstr "Configuración del ícono de búsqueda"
 
 #: assets/blocks/blocks.js:25852
 msgid "Search icon on the right"
-msgstr "Icono de búsqueda a la derecha"
+msgstr "Ícono de búsqueda a la derecha"
 
 #: assets/blocks/blocks.js:25864
 msgid "Search icon"
-msgstr "Icono de búsqueda"
+msgstr "Ícono de búsqueda"
 
 #: assets/blocks/blocks.js:25889
 msgid "Search Input Settings"
@@ -3348,7 +3348,7 @@ msgstr "Color de posición"
 
 #: assets/blocks/blocks.js:28712
 msgid "Click to change avatar"
-msgstr "Click para cambiar el avatar"
+msgstr "Clic para cambiar el avatar"
 
 #: assets/blocks/blocks.js:28728
 msgid "Show default avatar"
@@ -3872,7 +3872,7 @@ msgstr "Velocidad de transición"
 
 #: incl/advanced-gutenberg-main.php:2965
 msgid "Click action"
-msgstr "Acción al dar click"
+msgstr "Acción al dar clic"
 
 #: incl/advanced-gutenberg-main.php:2977
 msgid "Open image in a lightbox"
@@ -4732,7 +4732,7 @@ msgstr "Espaciado de bloques"
 #: incl/view/advanced-gutenberg-settings.php:308
 msgid "Set color for blocks icons on admin, only apply to PublishPress Blocks"
 msgstr ""
-"Establezca el color para los iconos de bloques en el administrador, solo "
+"Establece el color para los íconos de bloques en el administrador, sólo "
 "aplica para PublishPress Blocks"
 
 #: incl/view/advanced-gutenberg-settings.php:312
@@ -4751,7 +4751,7 @@ msgstr ""
 
 #: incl/view/advanced-gutenberg-settings.php:358
 msgid "Default thumbnail"
-msgstr "Miniatura por defecto"
+msgstr "Miniatura predeterminada"
 
 #: incl/view/advanced-gutenberg-settings.php:370
 msgid "Reset to default"
