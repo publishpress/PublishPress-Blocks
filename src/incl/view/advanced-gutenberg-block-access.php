@@ -139,7 +139,7 @@ $advgb_block_readonly_  = null;
                         <ul class="blocks-list">
                             <?php
                             foreach ($advgb_blocks_list as $block) {
-                                if( $blockCategory['slug'] === $block['category'] ) {
+                                if( isset($block['category']) && $blockCategory['slug'] === $block['category'] ) {
                                     // Convert object to array
                                     $block = (array)$block;
 
@@ -195,11 +195,11 @@ $advgb_block_readonly_  = null;
 
                 // Generate hidden fields with all the saved blocks (except the ones not listed in this page to avoid saving them as inactive)
                 foreach ($advgb_blocks_list as $block) {
-                    if( $block['name'] && in_array( $block['category'], $blockCategoriesSlug ) ) {
+                    if( $block['name'] && isset($block['category']) && in_array( $block['category'], $blockCategoriesSlug ) ) {
                     ?>
                         <input type="hidden" name="blocks_list[]" value="<?php echo esc_attr( $block['name'] ); ?>">
                     <?php
-                    } elseif ( $block['name'] && !in_array( $block['category'], $blockCategoriesSlug ) ) {
+                    } elseif ( $block['name'] && isset($block['category']) && !in_array( $block['category'], $blockCategoriesSlug ) ) {
                         ?>
                         <input type="hidden" name="blocks_list_undetected[]" value="<?php echo esc_attr( $block['name'] ); ?>">
                         <?php
