@@ -37,10 +37,16 @@
             }
         }
 
+        componentDidMount() {
+            const { attributes, setAttributes, clientId } = this.props;
+            setAttributes( { id: 'count-up-' + clientId } );
+        }
+
         render() {
             const { currentEdit } = this.state;
             const { attributes, setAttributes, isSelected } = this.props;
             const {
+                id,
                 headerText,
                 headerText2,
                 headerText3,
@@ -63,6 +69,11 @@
                 columns,
                 isPreview,
             } = attributes;
+
+            const countUpNameClass = [
+                `advgb-count-up advgb-column-${columns}`,
+                id
+            ].filter( Boolean ).join(' ');
 
             return (
                 isPreview ?
@@ -151,8 +162,8 @@
                             </p>
                         </PanelBody>
                     </InspectorControls>
-                    <div className={`advgb-count-up advgb-column-${columns}`} style={ { display: 'flex' } }>
-                        <div className="advgb-count-up-columns-one" style={ { textAlign: 'center' } }>
+                    <div className={countUpNameClass} style={ { display: 'flex' } }>
+                        <div className="advgb-count-up-columns-one">
                             <RichText
                                 tagName="h4"
                                 value={ headerText }
@@ -205,7 +216,7 @@
                                 className="advgb-count-up-desc"
                             />
                         </div>
-                        <div className="advgb-count-up-columns-two" style={ { textAlign: 'center' } }>
+                        <div className="advgb-count-up-columns-two">
                             <RichText
                                 tagName="h4"
                                 value={ headerText2 }
@@ -258,7 +269,7 @@
                                 className="advgb-count-up-desc"
                             />
                         </div>
-                        <div className="advgb-count-up-columns-three" style={ { textAlign: 'center' } }>
+                        <div className="advgb-count-up-columns-three">
                             <RichText
                                 tagName="h4"
                                 value={ headerText3 }
@@ -317,113 +328,100 @@
         }
     }
 
-    function AdvCountUpSave( { attributes } ) {
-        const {
-            headerText,
-            headerText2,
-            headerText3,
-            headerTextColor,
-            countUpNumber,
-            countUpNumber2,
-            countUpNumber3,
-            countUpNumberColor,
-            countUpNumberSize,
-            countUpSymbol,
-            countUpSymbol2,
-            countUpSymbol3,
-            countUpSymbolAfter,
-            countUpSymbolAfter2,
-            countUpSymbolAfter3,
-            descText,
-            descText2,
-            descText3,
-            descTextColor,
-            columns,
-        } = attributes;
-
-        const countSymbolElm = countUpSymbol ? <span className="advgb-counter-symbol">{ countUpSymbol }</span> : '';
-        const countSymbolElm2 = countUpSymbol2 ? <span className="advgb-counter-symbol">{ countUpSymbol2 }</span> : '';
-        const countSymbolElm3 = countUpSymbol3 ? <span className="advgb-counter-symbol">{ countUpSymbol3 }</span> : '';
-
-        return (
-            <div className="advgb-count-up" style={ { display: 'flex' } }>
-                <div className="advgb-count-up-columns-one" style={ { textAlign: 'center' } }>
-                    <RichText.Content
-                        tagName="h4"
-                        value={ headerText }
-                        style={ { color: headerTextColor } }
-                        className="advgb-count-up-header"
-                    />
-                    <div className="advgb-counter"
-                         style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
-                    >
-                        {!countUpSymbolAfter && countSymbolElm}
-                        <span className="advgb-counter-number">{ countUpNumber }</span>
-                        {!!countUpSymbolAfter && countSymbolElm}
-                    </div>
-                    <RichText.Content
-                        tagName="p"
-                        value={ descText }
-                        style={ { color: descTextColor } }
-                        className="advgb-count-up-desc"
-                    />
-                </div>
-                {parseInt(columns) > 1 && (
-                    <div className="advgb-count-up-columns-two" style={ { textAlign: 'center' } }>
-                        <RichText.Content
-                            tagName="h4"
-                            value={ headerText2 }
-                            style={ { color: headerTextColor } }
-                            className="advgb-count-up-header"
-                        />
-                        <div className="advgb-counter"
-                             style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
-                        >
-                            {!countUpSymbolAfter2 && countSymbolElm2}
-                            <span className="advgb-counter-number">{ countUpNumber2 }</span>
-                            {!!countUpSymbolAfter2 && countSymbolElm2}
-                        </div>
-                        <RichText.Content
-                            tagName="p"
-                            value={ descText2 }
-                            style={ { color: descTextColor } }
-                            className="advgb-count-up-desc"
-                        />
-                    </div>
-                ) }
-                {parseInt(columns) > 2 && (
-                    <div className="advgb-count-up-columns-three" style={ { textAlign: 'center' } }>
-                        <RichText.Content
-                            tagName="h4"
-                            value={ headerText3 }
-                            style={ { color: headerTextColor } }
-                            className="advgb-count-up-header"
-                        />
-                        <div className="advgb-counter"
-                             style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
-                        >
-                            {!countUpSymbolAfter3 && countSymbolElm3}
-                            <span className="advgb-counter-number">{ countUpNumber3 }</span>
-                            {!!countUpSymbolAfter3 && countSymbolElm3}
-                        </div>
-                        <RichText.Content
-                            tagName="p"
-                            value={ descText3 }
-                            style={ { color: descTextColor } }
-                            className="advgb-count-up-desc"
-                        />
-                    </div>
-                ) }
-            </div>
-        );
-    }
-
     const countUpBlockIcon = (
         <svg height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0h24v24H0zm0 0h24v24H0z" fill="none"/>
             <path d="M16.05 16.29l2.86-3.07c.38-.39.72-.79 1.04-1.18.32-.39.59-.78.82-1.17.23-.39.41-.78.54-1.17.13-.39.19-.79.19-1.18 0-.53-.09-1.02-.27-1.46-.18-.44-.44-.81-.78-1.11-.34-.31-.77-.54-1.26-.71-.51-.16-1.08-.24-1.72-.24-.69 0-1.31.11-1.85.32-.54.21-1 .51-1.36.88-.37.37-.65.8-.84 1.3-.18.47-.27.97-.28 1.5h2.14c.01-.31.05-.6.13-.87.09-.29.23-.54.4-.75.18-.21.41-.37.68-.49.27-.12.6-.18.96-.18.31 0 .58.05.81.15.23.1.43.25.59.43.16.18.28.4.37.65.08.25.13.52.13.81 0 .22-.03.43-.08.65-.06.22-.15.45-.29.7-.14.25-.32.53-.56.83-.23.3-.52.65-.88 1.03l-4.17 4.55V18H22v-1.71h-5.95zM8 7H6v4H2v2h4v4h2v-4h4v-2H8V7z"/>
         </svg>
     );
+
+    const blockAttrs = {
+        id: {
+            type: 'string',
+        },
+        headerText: {
+            type: 'string',
+            default: 'Header text',
+        },
+        headerText2: {
+            type: 'string',
+            default: 'Header text',
+        },
+        headerText3: {
+            type: 'string',
+            default: 'Header text',
+        },
+        headerTextColor: {
+            type: 'string',
+        },
+        countUpNumber: {
+            type: 'string',
+            default: '56789'
+        },
+        countUpNumber2: {
+            type: 'string',
+            default: '56789'
+        },
+        countUpNumber3: {
+            type: 'string',
+            default: '56789'
+        },
+        countUpNumberColor: {
+            type: 'string',
+        },
+        countUpNumberSize: {
+            type: 'number',
+            default: 55,
+        },
+        countUpSymbol: {
+            type: 'string',
+        },
+        countUpSymbol2: {
+            type: 'string',
+        },
+        countUpSymbol3: {
+            type: 'string',
+        },
+        countUpSymbolAfter: {
+            type: 'boolean',
+            default: false,
+        },
+        countUpSymbolAfter2: {
+            type: 'boolean',
+            default: false,
+        },
+        countUpSymbolAfter3: {
+            type: 'boolean',
+            default: false,
+        },
+        descText: {
+            type: 'string',
+            default: 'and description',
+        },
+        descText2: {
+            type: 'string',
+            default: 'and description',
+        },
+        descText3: {
+            type: 'string',
+            default: 'and description',
+        },
+        descTextColor: {
+            type: 'string',
+        },
+        columns: {
+            type: 'number',
+            default: 1,
+        },
+        changed: {
+            type: 'boolean',
+            default: false,
+        },
+        isPreview: {
+            type: 'boolean',
+            default: false,
+        },
+    };
 
     registerBlockType( 'advgb/count-up', {
         title: __( 'Count Up', 'advanced-gutenberg' ),
@@ -434,90 +432,7 @@
         },
         category: 'advgb-category',
         keywords: [ __( 'numbers', 'advanced-gutenberg' ), __( 'count', 'advanced-gutenberg' ), __( 'increase', 'advanced-gutenberg' ) ],
-        attributes: {
-            headerText: {
-                type: 'string',
-                default: 'Header text',
-            },
-            headerText2: {
-                type: 'string',
-                default: 'Header text',
-            },
-            headerText3: {
-                type: 'string',
-                default: 'Header text',
-            },
-            headerTextColor: {
-                type: 'string',
-            },
-            countUpNumber: {
-                type: 'string',
-                default: '56789'
-            },
-            countUpNumber2: {
-                type: 'string',
-                default: '56789'
-            },
-            countUpNumber3: {
-                type: 'string',
-                default: '56789'
-            },
-            countUpNumberColor: {
-                type: 'string',
-            },
-            countUpNumberSize: {
-                type: 'number',
-                default: 55,
-            },
-            countUpSymbol: {
-                type: 'string',
-            },
-            countUpSymbol2: {
-                type: 'string',
-            },
-            countUpSymbol3: {
-                type: 'string',
-            },
-            countUpSymbolAfter: {
-                type: 'boolean',
-                default: false,
-            },
-            countUpSymbolAfter2: {
-                type: 'boolean',
-                default: false,
-            },
-            countUpSymbolAfter3: {
-                type: 'boolean',
-                default: false,
-            },
-            descText: {
-                type: 'string',
-                default: 'and description',
-            },
-            descText2: {
-                type: 'string',
-                default: 'and description',
-            },
-            descText3: {
-                type: 'string',
-                default: 'and description',
-            },
-            descTextColor: {
-                type: 'string',
-            },
-            columns: {
-                type: 'number',
-                default: 1,
-            },
-            changed: {
-                type: 'boolean',
-                default: false,
-            },
-            isPreview: {
-                type: 'boolean',
-                default: false,
-            },
-        },
+        attributes: blockAttrs,
         example: {
             attributes: {
                 isPreview: true
@@ -527,6 +442,216 @@
             anchor: true
         },
         edit: AdvCountUp,
-        save: AdvCountUpSave,
+        save: function ({attributes}) {
+            const {
+                id,
+                headerText,
+                headerText2,
+                headerText3,
+                headerTextColor,
+                countUpNumber,
+                countUpNumber2,
+                countUpNumber3,
+                countUpNumberColor,
+                countUpNumberSize,
+                countUpSymbol,
+                countUpSymbol2,
+                countUpSymbol3,
+                countUpSymbolAfter,
+                countUpSymbolAfter2,
+                countUpSymbolAfter3,
+                descText,
+                descText2,
+                descText3,
+                descTextColor,
+                columns,
+            } = attributes;
+
+            const countSymbolElm = countUpSymbol ? <span className="advgb-counter-symbol">{ countUpSymbol }</span> : '';
+            const countSymbolElm2 = countUpSymbol2 ? <span className="advgb-counter-symbol">{ countUpSymbol2 }</span> : '';
+            const countSymbolElm3 = countUpSymbol3 ? <span className="advgb-counter-symbol">{ countUpSymbol3 }</span> : '';
+
+            const countUpNameClass = [
+                'advgb-count-up',
+                id
+            ].filter( Boolean ).join(' ');
+
+            return (
+                <div className={countUpNameClass} style={ { display: 'flex' } }>
+                    <div className="advgb-count-up-columns-one">
+                        <RichText.Content
+                            tagName="h4"
+                            value={ headerText }
+                            style={ { color: headerTextColor } }
+                            className="advgb-count-up-header"
+                        />
+                        <div className="advgb-counter"
+                             style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
+                        >
+                            {!countUpSymbolAfter && countSymbolElm}
+                            <span className="advgb-counter-number">{ countUpNumber }</span>
+                            {!!countUpSymbolAfter && countSymbolElm}
+                        </div>
+                        <RichText.Content
+                            tagName="p"
+                            value={ descText }
+                            style={ { color: descTextColor } }
+                            className="advgb-count-up-desc"
+                        />
+                    </div>
+                    {parseInt(columns) > 1 && (
+                        <div className="advgb-count-up-columns-two">
+                            <RichText.Content
+                                tagName="h4"
+                                value={ headerText2 }
+                                style={ { color: headerTextColor } }
+                                className="advgb-count-up-header"
+                            />
+                            <div className="advgb-counter"
+                                 style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
+                            >
+                                {!countUpSymbolAfter2 && countSymbolElm2}
+                                <span className="advgb-counter-number">{ countUpNumber2 }</span>
+                                {!!countUpSymbolAfter2 && countSymbolElm2}
+                            </div>
+                            <RichText.Content
+                                tagName="p"
+                                value={ descText2 }
+                                style={ { color: descTextColor } }
+                                className="advgb-count-up-desc"
+                            />
+                        </div>
+                    ) }
+                    {parseInt(columns) > 2 && (
+                        <div className="advgb-count-up-columns-three">
+                            <RichText.Content
+                                tagName="h4"
+                                value={ headerText3 }
+                                style={ { color: headerTextColor } }
+                                className="advgb-count-up-header"
+                            />
+                            <div className="advgb-counter"
+                                 style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
+                            >
+                                {!countUpSymbolAfter3 && countSymbolElm3}
+                                <span className="advgb-counter-number">{ countUpNumber3 }</span>
+                                {!!countUpSymbolAfter3 && countSymbolElm3}
+                            </div>
+                            <RichText.Content
+                                tagName="p"
+                                value={ descText3 }
+                                style={ { color: descTextColor } }
+                                className="advgb-count-up-desc"
+                            />
+                        </div>
+                    ) }
+                </div>
+            );
+        },
+        deprecated: [
+            {
+                attributes: blockAttrs,
+                save: ( { attributes } ) => {
+                    const {
+                        headerText,
+                        headerText2,
+                        headerText3,
+                        headerTextColor,
+                        countUpNumber,
+                        countUpNumber2,
+                        countUpNumber3,
+                        countUpNumberColor,
+                        countUpNumberSize,
+                        countUpSymbol,
+                        countUpSymbol2,
+                        countUpSymbol3,
+                        countUpSymbolAfter,
+                        countUpSymbolAfter2,
+                        countUpSymbolAfter3,
+                        descText,
+                        descText2,
+                        descText3,
+                        descTextColor,
+                        columns,
+                    } = attributes;
+
+                    const countSymbolElm = countUpSymbol ? <span className="advgb-counter-symbol">{ countUpSymbol }</span> : '';
+                    const countSymbolElm2 = countUpSymbol2 ? <span className="advgb-counter-symbol">{ countUpSymbol2 }</span> : '';
+                    const countSymbolElm3 = countUpSymbol3 ? <span className="advgb-counter-symbol">{ countUpSymbol3 }</span> : '';
+
+                    return (
+                        <div className="advgb-count-up" style={ { display: 'flex' } }>
+                            <div className="advgb-count-up-columns-one" style={ { textAlign: 'center' } }>
+                                <RichText.Content
+                                    tagName="h4"
+                                    value={ headerText }
+                                    style={ { color: headerTextColor } }
+                                    className="advgb-count-up-header"
+                                />
+                                <div className="advgb-counter"
+                                     style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
+                                >
+                                    {!countUpSymbolAfter && countSymbolElm}
+                                    <span className="advgb-counter-number">{ countUpNumber }</span>
+                                    {!!countUpSymbolAfter && countSymbolElm}
+                                </div>
+                                <RichText.Content
+                                    tagName="p"
+                                    value={ descText }
+                                    style={ { color: descTextColor } }
+                                    className="advgb-count-up-desc"
+                                />
+                            </div>
+                            {parseInt(columns) > 1 && (
+                                <div className="advgb-count-up-columns-two" style={ { textAlign: 'center' } }>
+                                    <RichText.Content
+                                        tagName="h4"
+                                        value={ headerText2 }
+                                        style={ { color: headerTextColor } }
+                                        className="advgb-count-up-header"
+                                    />
+                                    <div className="advgb-counter"
+                                         style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
+                                    >
+                                        {!countUpSymbolAfter2 && countSymbolElm2}
+                                        <span className="advgb-counter-number">{ countUpNumber2 }</span>
+                                        {!!countUpSymbolAfter2 && countSymbolElm2}
+                                    </div>
+                                    <RichText.Content
+                                        tagName="p"
+                                        value={ descText2 }
+                                        style={ { color: descTextColor } }
+                                        className="advgb-count-up-desc"
+                                    />
+                                </div>
+                            ) }
+                            {parseInt(columns) > 2 && (
+                                <div className="advgb-count-up-columns-three" style={ { textAlign: 'center' } }>
+                                    <RichText.Content
+                                        tagName="h4"
+                                        value={ headerText3 }
+                                        style={ { color: headerTextColor } }
+                                        className="advgb-count-up-header"
+                                    />
+                                    <div className="advgb-counter"
+                                         style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
+                                    >
+                                        {!countUpSymbolAfter3 && countSymbolElm3}
+                                        <span className="advgb-counter-number">{ countUpNumber3 }</span>
+                                        {!!countUpSymbolAfter3 && countSymbolElm3}
+                                    </div>
+                                    <RichText.Content
+                                        tagName="p"
+                                        value={ descText3 }
+                                        style={ { color: descTextColor } }
+                                        className="advgb-count-up-desc"
+                                    />
+                                </div>
+                            ) }
+                        </div>
+                    );
+                }
+            }
+        ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
