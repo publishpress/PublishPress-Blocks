@@ -16976,16 +16976,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: 'componentDidMount',
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
+
+                setAttributes({ id: 'count-up-' + clientId });
+            }
+        }, {
             key: 'render',
             value: function render() {
                 var _this2 = this;
 
                 var currentEdit = this.state.currentEdit;
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes,
-                    isSelected = _props2.isSelected;
-                var headerText = attributes.headerText,
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes,
+                    isSelected = _props3.isSelected;
+                var id = attributes.id,
+                    headerText = attributes.headerText,
                     headerText2 = attributes.headerText2,
                     headerText3 = attributes.headerText3,
                     headerTextColor = attributes.headerTextColor,
@@ -17007,6 +17018,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     columns = attributes.columns,
                     isPreview = attributes.isPreview;
 
+
+                var countUpNameClass = ['advgb-count-up advgb-column-' + columns, id].filter(Boolean).join(' ');
 
                 return isPreview ? React.createElement('img', { alt: __('Count Up', 'advanced-gutenberg'), width: '100%', src: previewImageData }) : React.createElement(
                     Fragment,
@@ -17123,7 +17136,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         'div',
-                        { className: 'advgb-count-up advgb-column-' + columns, style: { display: 'flex' } },
+                        { className: countUpNameClass, style: { display: 'flex' } },
                         React.createElement(
                             'div',
                             { className: 'advgb-count-up-columns-one', style: { textAlign: 'center' } },
@@ -17339,145 +17352,100 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return AdvCountUp;
     }(Component);
 
-    function AdvCountUpSave(_ref) {
-        var attributes = _ref.attributes;
-        var headerText = attributes.headerText,
-            headerText2 = attributes.headerText2,
-            headerText3 = attributes.headerText3,
-            headerTextColor = attributes.headerTextColor,
-            countUpNumber = attributes.countUpNumber,
-            countUpNumber2 = attributes.countUpNumber2,
-            countUpNumber3 = attributes.countUpNumber3,
-            countUpNumberColor = attributes.countUpNumberColor,
-            countUpNumberSize = attributes.countUpNumberSize,
-            countUpSymbol = attributes.countUpSymbol,
-            countUpSymbol2 = attributes.countUpSymbol2,
-            countUpSymbol3 = attributes.countUpSymbol3,
-            countUpSymbolAfter = attributes.countUpSymbolAfter,
-            countUpSymbolAfter2 = attributes.countUpSymbolAfter2,
-            countUpSymbolAfter3 = attributes.countUpSymbolAfter3,
-            descText = attributes.descText,
-            descText2 = attributes.descText2,
-            descText3 = attributes.descText3,
-            descTextColor = attributes.descTextColor,
-            columns = attributes.columns;
-
-
-        var countSymbolElm = countUpSymbol ? React.createElement(
-            'span',
-            { className: 'advgb-counter-symbol' },
-            countUpSymbol
-        ) : '';
-        var countSymbolElm2 = countUpSymbol2 ? React.createElement(
-            'span',
-            { className: 'advgb-counter-symbol' },
-            countUpSymbol2
-        ) : '';
-        var countSymbolElm3 = countUpSymbol3 ? React.createElement(
-            'span',
-            { className: 'advgb-counter-symbol' },
-            countUpSymbol3
-        ) : '';
-
-        return React.createElement(
-            'div',
-            { className: 'advgb-count-up', style: { display: 'flex' } },
-            React.createElement(
-                'div',
-                { className: 'advgb-count-up-columns-one', style: { textAlign: 'center' } },
-                React.createElement(RichText.Content, {
-                    tagName: 'h4',
-                    value: headerText,
-                    style: { color: headerTextColor },
-                    className: 'advgb-count-up-header'
-                }),
-                React.createElement(
-                    'div',
-                    { className: 'advgb-counter',
-                        style: { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' }
-                    },
-                    !countUpSymbolAfter && countSymbolElm,
-                    React.createElement(
-                        'span',
-                        { className: 'advgb-counter-number' },
-                        countUpNumber
-                    ),
-                    !!countUpSymbolAfter && countSymbolElm
-                ),
-                React.createElement(RichText.Content, {
-                    tagName: 'p',
-                    value: descText,
-                    style: { color: descTextColor },
-                    className: 'advgb-count-up-desc'
-                })
-            ),
-            parseInt(columns) > 1 && React.createElement(
-                'div',
-                { className: 'advgb-count-up-columns-two', style: { textAlign: 'center' } },
-                React.createElement(RichText.Content, {
-                    tagName: 'h4',
-                    value: headerText2,
-                    style: { color: headerTextColor },
-                    className: 'advgb-count-up-header'
-                }),
-                React.createElement(
-                    'div',
-                    { className: 'advgb-counter',
-                        style: { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' }
-                    },
-                    !countUpSymbolAfter2 && countSymbolElm2,
-                    React.createElement(
-                        'span',
-                        { className: 'advgb-counter-number' },
-                        countUpNumber2
-                    ),
-                    !!countUpSymbolAfter2 && countSymbolElm2
-                ),
-                React.createElement(RichText.Content, {
-                    tagName: 'p',
-                    value: descText2,
-                    style: { color: descTextColor },
-                    className: 'advgb-count-up-desc'
-                })
-            ),
-            parseInt(columns) > 2 && React.createElement(
-                'div',
-                { className: 'advgb-count-up-columns-three', style: { textAlign: 'center' } },
-                React.createElement(RichText.Content, {
-                    tagName: 'h4',
-                    value: headerText3,
-                    style: { color: headerTextColor },
-                    className: 'advgb-count-up-header'
-                }),
-                React.createElement(
-                    'div',
-                    { className: 'advgb-counter',
-                        style: { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' }
-                    },
-                    !countUpSymbolAfter3 && countSymbolElm3,
-                    React.createElement(
-                        'span',
-                        { className: 'advgb-counter-number' },
-                        countUpNumber3
-                    ),
-                    !!countUpSymbolAfter3 && countSymbolElm3
-                ),
-                React.createElement(RichText.Content, {
-                    tagName: 'p',
-                    value: descText3,
-                    style: { color: descTextColor },
-                    className: 'advgb-count-up-desc'
-                })
-            )
-        );
-    }
-
     var countUpBlockIcon = React.createElement(
         'svg',
         { height: '20', viewBox: '2 2 22 22', width: '20', xmlns: 'http://www.w3.org/2000/svg' },
         React.createElement('path', { d: 'M0 0h24v24H0zm0 0h24v24H0z', fill: 'none' }),
         React.createElement('path', { d: 'M16.05 16.29l2.86-3.07c.38-.39.72-.79 1.04-1.18.32-.39.59-.78.82-1.17.23-.39.41-.78.54-1.17.13-.39.19-.79.19-1.18 0-.53-.09-1.02-.27-1.46-.18-.44-.44-.81-.78-1.11-.34-.31-.77-.54-1.26-.71-.51-.16-1.08-.24-1.72-.24-.69 0-1.31.11-1.85.32-.54.21-1 .51-1.36.88-.37.37-.65.8-.84 1.3-.18.47-.27.97-.28 1.5h2.14c.01-.31.05-.6.13-.87.09-.29.23-.54.4-.75.18-.21.41-.37.68-.49.27-.12.6-.18.96-.18.31 0 .58.05.81.15.23.1.43.25.59.43.16.18.28.4.37.65.08.25.13.52.13.81 0 .22-.03.43-.08.65-.06.22-.15.45-.29.7-.14.25-.32.53-.56.83-.23.3-.52.65-.88 1.03l-4.17 4.55V18H22v-1.71h-5.95zM8 7H6v4H2v2h4v4h2v-4h4v-2H8V7z' })
     );
+
+    var blockAttrs = {
+        id: {
+            type: 'string'
+        },
+        headerText: {
+            type: 'string',
+            default: 'Header text'
+        },
+        headerText2: {
+            type: 'string',
+            default: 'Header text'
+        },
+        headerText3: {
+            type: 'string',
+            default: 'Header text'
+        },
+        headerTextColor: {
+            type: 'string'
+        },
+        countUpNumber: {
+            type: 'string',
+            default: '56789'
+        },
+        countUpNumber2: {
+            type: 'string',
+            default: '56789'
+        },
+        countUpNumber3: {
+            type: 'string',
+            default: '56789'
+        },
+        countUpNumberColor: {
+            type: 'string'
+        },
+        countUpNumberSize: {
+            type: 'number',
+            default: 55
+        },
+        countUpSymbol: {
+            type: 'string'
+        },
+        countUpSymbol2: {
+            type: 'string'
+        },
+        countUpSymbol3: {
+            type: 'string'
+        },
+        countUpSymbolAfter: {
+            type: 'boolean',
+            default: false
+        },
+        countUpSymbolAfter2: {
+            type: 'boolean',
+            default: false
+        },
+        countUpSymbolAfter3: {
+            type: 'boolean',
+            default: false
+        },
+        descText: {
+            type: 'string',
+            default: 'and description'
+        },
+        descText2: {
+            type: 'string',
+            default: 'and description'
+        },
+        descText3: {
+            type: 'string',
+            default: 'and description'
+        },
+        descTextColor: {
+            type: 'string'
+        },
+        columns: {
+            type: 'number',
+            default: 1
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        },
+        isPreview: {
+            type: 'boolean',
+            default: false
+        }
+    };
 
     registerBlockType('advgb/count-up', {
         title: __('Count Up', 'advanced-gutenberg'),
@@ -17488,90 +17456,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'advgb-category',
         keywords: [__('numbers', 'advanced-gutenberg'), __('count', 'advanced-gutenberg'), __('increase', 'advanced-gutenberg')],
-        attributes: {
-            headerText: {
-                type: 'string',
-                default: 'Header text'
-            },
-            headerText2: {
-                type: 'string',
-                default: 'Header text'
-            },
-            headerText3: {
-                type: 'string',
-                default: 'Header text'
-            },
-            headerTextColor: {
-                type: 'string'
-            },
-            countUpNumber: {
-                type: 'string',
-                default: '56789'
-            },
-            countUpNumber2: {
-                type: 'string',
-                default: '56789'
-            },
-            countUpNumber3: {
-                type: 'string',
-                default: '56789'
-            },
-            countUpNumberColor: {
-                type: 'string'
-            },
-            countUpNumberSize: {
-                type: 'number',
-                default: 55
-            },
-            countUpSymbol: {
-                type: 'string'
-            },
-            countUpSymbol2: {
-                type: 'string'
-            },
-            countUpSymbol3: {
-                type: 'string'
-            },
-            countUpSymbolAfter: {
-                type: 'boolean',
-                default: false
-            },
-            countUpSymbolAfter2: {
-                type: 'boolean',
-                default: false
-            },
-            countUpSymbolAfter3: {
-                type: 'boolean',
-                default: false
-            },
-            descText: {
-                type: 'string',
-                default: 'and description'
-            },
-            descText2: {
-                type: 'string',
-                default: 'and description'
-            },
-            descText3: {
-                type: 'string',
-                default: 'and description'
-            },
-            descTextColor: {
-                type: 'string'
-            },
-            columns: {
-                type: 'number',
-                default: 1
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            },
-            isPreview: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: blockAttrs,
         example: {
             attributes: {
                 isPreview: true
@@ -17581,7 +17466,141 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             anchor: true
         },
         edit: AdvCountUp,
-        save: AdvCountUpSave
+        save: function save(_ref) {
+            var attributes = _ref.attributes;
+            var id = attributes.id,
+                headerText = attributes.headerText,
+                headerText2 = attributes.headerText2,
+                headerText3 = attributes.headerText3,
+                headerTextColor = attributes.headerTextColor,
+                countUpNumber = attributes.countUpNumber,
+                countUpNumber2 = attributes.countUpNumber2,
+                countUpNumber3 = attributes.countUpNumber3,
+                countUpNumberColor = attributes.countUpNumberColor,
+                countUpNumberSize = attributes.countUpNumberSize,
+                countUpSymbol = attributes.countUpSymbol,
+                countUpSymbol2 = attributes.countUpSymbol2,
+                countUpSymbol3 = attributes.countUpSymbol3,
+                countUpSymbolAfter = attributes.countUpSymbolAfter,
+                countUpSymbolAfter2 = attributes.countUpSymbolAfter2,
+                countUpSymbolAfter3 = attributes.countUpSymbolAfter3,
+                descText = attributes.descText,
+                descText2 = attributes.descText2,
+                descText3 = attributes.descText3,
+                descTextColor = attributes.descTextColor,
+                columns = attributes.columns;
+
+
+            var countSymbolElm = countUpSymbol ? React.createElement(
+                'span',
+                { className: 'advgb-counter-symbol' },
+                countUpSymbol
+            ) : '';
+            var countSymbolElm2 = countUpSymbol2 ? React.createElement(
+                'span',
+                { className: 'advgb-counter-symbol' },
+                countUpSymbol2
+            ) : '';
+            var countSymbolElm3 = countUpSymbol3 ? React.createElement(
+                'span',
+                { className: 'advgb-counter-symbol' },
+                countUpSymbol3
+            ) : '';
+
+            var countUpNameClass = ['advgb-count-up', id].filter(Boolean).join(' ');
+
+            return React.createElement(
+                'div',
+                { className: countUpNameClass, style: { display: 'flex' } },
+                React.createElement(
+                    'div',
+                    { className: 'advgb-count-up-columns-one', style: { textAlign: 'center' } },
+                    React.createElement(RichText.Content, {
+                        tagName: 'h4',
+                        value: headerText,
+                        style: { color: headerTextColor },
+                        className: 'advgb-count-up-header'
+                    }),
+                    React.createElement(
+                        'div',
+                        { className: 'advgb-counter',
+                            style: { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' }
+                        },
+                        !countUpSymbolAfter && countSymbolElm,
+                        React.createElement(
+                            'span',
+                            { className: 'advgb-counter-number' },
+                            countUpNumber
+                        ),
+                        !!countUpSymbolAfter && countSymbolElm
+                    ),
+                    React.createElement(RichText.Content, {
+                        tagName: 'p',
+                        value: descText,
+                        style: { color: descTextColor },
+                        className: 'advgb-count-up-desc'
+                    })
+                ),
+                parseInt(columns) > 1 && React.createElement(
+                    'div',
+                    { className: 'advgb-count-up-columns-two', style: { textAlign: 'center' } },
+                    React.createElement(RichText.Content, {
+                        tagName: 'h4',
+                        value: headerText2,
+                        style: { color: headerTextColor },
+                        className: 'advgb-count-up-header'
+                    }),
+                    React.createElement(
+                        'div',
+                        { className: 'advgb-counter',
+                            style: { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' }
+                        },
+                        !countUpSymbolAfter2 && countSymbolElm2,
+                        React.createElement(
+                            'span',
+                            { className: 'advgb-counter-number' },
+                            countUpNumber2
+                        ),
+                        !!countUpSymbolAfter2 && countSymbolElm2
+                    ),
+                    React.createElement(RichText.Content, {
+                        tagName: 'p',
+                        value: descText2,
+                        style: { color: descTextColor },
+                        className: 'advgb-count-up-desc'
+                    })
+                ),
+                parseInt(columns) > 2 && React.createElement(
+                    'div',
+                    { className: 'advgb-count-up-columns-three', style: { textAlign: 'center' } },
+                    React.createElement(RichText.Content, {
+                        tagName: 'h4',
+                        value: headerText3,
+                        style: { color: headerTextColor },
+                        className: 'advgb-count-up-header'
+                    }),
+                    React.createElement(
+                        'div',
+                        { className: 'advgb-counter',
+                            style: { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' }
+                        },
+                        !countUpSymbolAfter3 && countSymbolElm3,
+                        React.createElement(
+                            'span',
+                            { className: 'advgb-counter-number' },
+                            countUpNumber3
+                        ),
+                        !!countUpSymbolAfter3 && countSymbolElm3
+                    ),
+                    React.createElement(RichText.Content, {
+                        tagName: 'p',
+                        value: descText3,
+                        style: { color: descTextColor },
+                        className: 'advgb-count-up-desc'
+                    })
+                )
+            );
+        }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
