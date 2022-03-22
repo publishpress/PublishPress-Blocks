@@ -17527,11 +17527,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             style: { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' }
                         },
                         !countUpSymbolAfter && countSymbolElm,
-                        React.createElement(
-                            'span',
-                            { className: 'advgb-counter-number' },
-                            countUpNumber
-                        ),
+                        React.createElement(RichText.Content, {
+                            tagName: 'span',
+                            value: countUpNumber,
+                            className: 'advgb-counter-number'
+                        }),
                         !!countUpSymbolAfter && countSymbolElm
                     ),
                     React.createElement(RichText.Content, {
@@ -17556,11 +17556,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             style: { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' }
                         },
                         !countUpSymbolAfter2 && countSymbolElm2,
-                        React.createElement(
-                            'span',
-                            { className: 'advgb-counter-number' },
-                            countUpNumber2
-                        ),
+                        React.createElement(RichText.Content, {
+                            tagName: 'span',
+                            value: countUpNumber2,
+                            className: 'advgb-counter-number'
+                        }),
                         !!countUpSymbolAfter2 && countSymbolElm2
                     ),
                     React.createElement(RichText.Content, {
@@ -17585,11 +17585,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             style: { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' }
                         },
                         !countUpSymbolAfter3 && countSymbolElm3,
-                        React.createElement(
-                            'span',
-                            { className: 'advgb-counter-number' },
-                            countUpNumber3
-                        ),
+                        React.createElement(RichText.Content, {
+                            tagName: 'span',
+                            value: countUpNumber3,
+                            className: 'advgb-counter-number'
+                        }),
                         !!countUpSymbolAfter3 && countSymbolElm3
                     ),
                     React.createElement(RichText.Content, {

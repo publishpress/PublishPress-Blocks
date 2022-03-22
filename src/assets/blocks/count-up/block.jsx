@@ -489,7 +489,11 @@
                              style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
                         >
                             {!countUpSymbolAfter && countSymbolElm}
-                            <span className="advgb-counter-number">{ countUpNumber }</span>
+                            <RichText.Content
+                                tagName="span"
+                                value={ countUpNumber }
+                                className="advgb-counter-number"
+                            />
                             {!!countUpSymbolAfter && countSymbolElm}
                         </div>
                         <RichText.Content
@@ -511,7 +515,11 @@
                                  style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
                             >
                                 {!countUpSymbolAfter2 && countSymbolElm2}
-                                <span className="advgb-counter-number">{ countUpNumber2 }</span>
+                                <RichText.Content
+                                    tagName="span"
+                                    value={ countUpNumber2 }
+                                    className="advgb-counter-number"
+                                />
                                 {!!countUpSymbolAfter2 && countSymbolElm2}
                             </div>
                             <RichText.Content
@@ -534,7 +542,11 @@
                                  style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
                             >
                                 {!countUpSymbolAfter3 && countSymbolElm3}
-                                <span className="advgb-counter-number">{ countUpNumber3 }</span>
+                                <RichText.Content
+                                    tagName="span"
+                                    value={ countUpNumber3 }
+                                    className="advgb-counter-number"
+                                />
                                 {!!countUpSymbolAfter3 && countSymbolElm3}
                             </div>
                             <RichText.Content
