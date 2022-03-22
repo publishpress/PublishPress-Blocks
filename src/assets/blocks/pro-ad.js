@@ -107,7 +107,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         InspectorControls = _wpBlockEditor.InspectorControls;
 
 
-    var SUPPORTED_BLOCKS = ['advgb/accordion-item', 'advgb/accordions', 'advgb/adv-tabs', 'advgb/adv-tab', 'advgb/recent-posts', 'advgb/images-slider', 'advgb/button', 'advgb/list', 'advgb/count-up'];
+    var SUPPORTED_BLOCKS = ['advgb/accordion-item', 'advgb/accordions', 'advgb/adv-tabs', 'advgb/adv-tab', 'advgb/recent-posts', 'advgb/images-slider', 'advgb/button', 'advgb/list', 'advgb/count-up', 'advgb/testimonial'];
 
     function advgbGetBlockTitle(name) {
         switch (name) {
@@ -139,6 +139,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             case 'advgb/count-up':
                 return __('Count Up', 'advanced-gutenberg');
+                break;
+
+            case 'advgb/testimonial':
+                return __('Testimonial', 'advanced-gutenberg');
                 break;
 
             default:

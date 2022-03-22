@@ -28336,9 +28336,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     sliderItemsToScroll = attributes.sliderItemsToScroll;
 
 
-                if (!pid) {
-                    setAttributes({ pid: "advgb-testimonial-" + clientId });
-                }
+                setAttributes({ pid: "advgb-testimonial-" + clientId });
 
                 if (sliderView) {
                     jQuery("#block-" + clientId + " .advgb-testimonial.slider-view").slick({

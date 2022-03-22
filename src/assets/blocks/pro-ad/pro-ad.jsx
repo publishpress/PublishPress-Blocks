@@ -13,7 +13,8 @@
         'advgb/images-slider',
         'advgb/button',
         'advgb/list',
-        'advgb/count-up'
+        'advgb/count-up',
+        'advgb/testimonial'
     ];
 
     function advgbGetBlockTitle(name){
@@ -46,6 +47,10 @@
 
             case 'advgb/count-up':
                 return __( 'Count Up', 'advanced-gutenberg' );
+                break;
+
+            case 'advgb/testimonial':
+                return __( 'Testimonial', 'advanced-gutenberg' );
                 break;
 
             default:
