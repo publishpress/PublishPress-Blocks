@@ -3,7 +3,7 @@
     const {__} = wpI18n;
     const {Component, Fragment} = wpElement;
     const {registerBlockType} = wpBlocks;
-    const {InspectorControls, PanelColorSettings, MediaUpload} = wpBlockEditor;
+    const {InspectorControls, PanelColorSettings, MediaUpload, RichText} = wpBlockEditor;
     const {PanelBody, RangeControl, ToggleControl, SelectControl, TextControl, TextareaControl, Button, Placeholder, Tooltip} = wpComponents;
     const $ = jQuery;
 
@@ -57,6 +57,14 @@
 
             if (attributes.images.length) {
                 this.initSlider();
+            }
+
+            // Reset attributes when Pro is not available
+            if( advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1' ) {
+                setAttributes( {
+                    titleTag: 'h4',
+                    textTag: 'p'
+                } );
             }
 
         }
@@ -179,7 +187,9 @@
                 isPreview,
                 autoplay,
                 autoplaySpeed,
-                id
+                id,
+                titleTag,
+                textTag
             } = attributes;
             if (images.length === 0) {
                 return (
@@ -382,18 +392,20 @@
                                                       }}
                                                 />)}
                                             {image.title && (
-                                                <h4 className="advgb-image-slider-title"
+                                                <RichText
+                                                    tagName={ titleTag }
+                                                    className="advgb-image-slider-title"
                                                     style={{color: titleColor}}
-                                                >
-                                                    {image.title}
-                                                </h4>
+                                                    value={ image.title }
+                                                />
                                             )}
                                             {image.text && (
-                                                <p className="advgb-image-slider-text"
-                                                   style={{color: textColor}}
-                                                >
-                                                    {image.text}
-                                                </p>
+                                                <RichText
+                                                    tagName={ textTag }
+                                                    className="advgb-image-slider-text"
+                                                    style={{color: titleColor}}
+                                                    value={ image.text }
+                                                />
                                             )}
                                         </div>
                                     </div>
@@ -570,6 +582,14 @@
             type: 'boolean',
             default: false,
         },
+        titleTag: {
+            type: 'string',
+            default: 'h4'
+        },
+        textTag: {
+            type: 'string',
+            default: 'p'
+        }
     };
 
     registerBlockType('advgb/images-slider', {
@@ -606,7 +626,9 @@
                 textColor,
                 hAlign,
                 vAlign,
-                id
+                id,
+                titleTag,
+                textTag
             } = attributes;
             const blockClassName = [
                 'advgb-images-slider-block',
@@ -644,18 +666,20 @@
                                            }}
                                         />)}
                                     {image.title && (
-                                        <h4 className="advgb-image-slider-title"
+                                        <RichText.Content
+                                            tagName={ titleTag }
+                                            className="advgb-image-slider-title"
                                             style={{color: titleColor}}
-                                        >
-                                            {image.title}
-                                        </h4>
+                                            value={ image.title }
+                                        />
                                     )}
                                     {image.text && (
-                                        <p className="advgb-image-slider-text"
-                                           style={{color: textColor}}
-                                        >
-                                            {image.text}
-                                        </p>
+                                        <RichText.Content
+                                            tagName={ textTag }
+                                            className="advgb-image-slider-text"
+                                            style={{color: textColor}}
+                                            value={ image.text }
+                                        />
                                     )}
                                 </div>
                             </div>
