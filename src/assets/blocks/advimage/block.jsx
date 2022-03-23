@@ -43,7 +43,7 @@
             setAttributes({blockIDX: `advgb-img-${clientId}`});
 
             // Reset attributes when Pro is not available
-            if( advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '0' ) {
+            if( advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1' ) {
                 setAttributes( {
                     titleTag: 'h4',
                     subtitleTag: 'p'
