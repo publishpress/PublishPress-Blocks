@@ -18234,7 +18234,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         image.text && React.createElement(RichText, {
                                             tagName: textTag,
                                             className: "advgb-image-slider-text",
-                                            style: { color: titleColor },
+                                            style: { color: textColor },
                                             value: image.text
                                         })
                                     )
