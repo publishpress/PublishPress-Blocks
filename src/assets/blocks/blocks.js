@@ -17796,7 +17796,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
         PanelColorSettings = _wpBlockEditor.PanelColorSettings,
-        MediaUpload = _wpBlockEditor.MediaUpload;
+        MediaUpload = _wpBlockEditor.MediaUpload,
+        RichText = _wpBlockEditor.RichText;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         ToggleControl = wpComponents.ToggleControl,
@@ -17876,6 +17877,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (attributes.images.length) {
                     this.initSlider();
                 }
+
+                // Reset attributes when Pro is not available
+                if (advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1') {
+                    setAttributes({
+                        titleTag: 'h4',
+                        textTag: 'p'
+                    });
+                }
             }
         }, {
             key: "componentWillUpdate",
@@ -17911,14 +17920,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 // Autoplay
-                if (autoplay && advgbBlocks.advgb_pro === '1') {
+                if (autoplay && advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1') {
                     $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplay', true, true);
                 } else {
                     $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplay', false, true);
                 }
 
                 // Autoplay speed
-                if (autoplay && autoplaySpeed && advgbBlocks.advgb_pro === '1') {
+                if (autoplay && autoplaySpeed && advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1') {
                     $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplaySpeed', autoplaySpeed, true);
                 } else {
                     $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplaySpeed', 3000, true);
@@ -18021,7 +18030,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isPreview = attributes.isPreview,
                     autoplay = attributes.autoplay,
                     autoplaySpeed = attributes.autoplaySpeed,
-                    id = attributes.id;
+                    id = attributes.id,
+                    titleTag = attributes.titleTag,
+                    textTag = attributes.textTag;
 
                 if (images.length === 0) {
                     return isPreview ? React.createElement("img", { alt: __('Images Slider', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
@@ -18078,27 +18089,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ actionOnClick: value });
                                 }
                             }),
-                            advgbBlocks.advgb_pro === '1' && React.createElement(
-                                Fragment,
-                                null,
-                                React.createElement(ToggleControl, {
-                                    label: __('Autoplay', 'advanced-gutenberg'),
-                                    checked: autoplay,
-                                    onChange: function onChange() {
-                                        return setAttributes({ autoplay: !autoplay });
-                                    }
-                                }),
-                                autoplay && React.createElement(RangeControl, {
-                                    label: __('Autoplay Speed', 'advanced-gutenberg'),
-                                    help: __('Change interval between slides in miliseconds.', 'advanced-gutenberg'),
-                                    min: 1000,
-                                    max: 20000,
-                                    value: autoplaySpeed,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ autoplaySpeed: value });
-                                    }
-                                })
-                            ),
                             React.createElement(ToggleControl, {
                                 label: __('Full width', 'advanced-gutenberg'),
                                 checked: fullWidth,
@@ -18235,20 +18225,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 opacity: alwaysShowOverlay ? 0.5 : undefined
                                             }
                                         }),
-                                        image.title && React.createElement(
-                                            "h4",
-                                            { className: "advgb-image-slider-title",
-                                                style: { color: titleColor }
-                                            },
-                                            image.title
-                                        ),
-                                        image.text && React.createElement(
-                                            "p",
-                                            { className: "advgb-image-slider-text",
-                                                style: { color: textColor }
-                                            },
-                                            image.text
-                                        )
+                                        image.title && React.createElement(RichText, {
+                                            tagName: titleTag,
+                                            className: "advgb-image-slider-title",
+                                            style: { color: titleColor },
+                                            value: image.title
+                                        }),
+                                        image.text && React.createElement(RichText, {
+                                            tagName: textTag,
+                                            className: "advgb-image-slider-text",
+                                            style: { color: textColor },
+                                            value: image.text
+                                        })
                                     )
                                 );
                             })
@@ -18462,6 +18450,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         isPreview: {
             type: 'boolean',
             default: false
+        },
+        titleTag: {
+            type: 'string',
+            default: 'h4'
+        },
+        textTag: {
+            type: 'string',
+            default: 'p'
         }
     };
 
@@ -18499,7 +18495,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 textColor = attributes.textColor,
                 hAlign = attributes.hAlign,
                 vAlign = attributes.vAlign,
-                id = attributes.id;
+                id = attributes.id,
+                titleTag = attributes.titleTag,
+                textTag = attributes.textTag;
 
             var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox', id].filter(Boolean).join(' ');
 
@@ -18538,20 +18536,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         opacity: alwaysShowOverlay ? 0.5 : undefined
                                     }
                                 }),
-                                image.title && React.createElement(
-                                    "h4",
-                                    { className: "advgb-image-slider-title",
-                                        style: { color: titleColor }
-                                    },
-                                    image.title
-                                ),
-                                image.text && React.createElement(
-                                    "p",
-                                    { className: "advgb-image-slider-text",
-                                        style: { color: textColor }
-                                    },
-                                    image.text
-                                )
+                                image.title && React.createElement(RichText.Content, {
+                                    tagName: titleTag,
+                                    className: "advgb-image-slider-title",
+                                    style: { color: titleColor },
+                                    value: image.title
+                                }),
+                                image.text && React.createElement(RichText.Content, {
+                                    tagName: textTag,
+                                    className: "advgb-image-slider-text",
+                                    style: { color: textColor },
+                                    value: image.text
+                                })
                             )
                         );
                     })

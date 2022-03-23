@@ -266,6 +266,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Text format for counter displayed as raw HTML in frontend for Count Up block
   * Fix: Duplicated id for Testimonial block
   * Fix: Title and subtitle output with RichText for Advanced Image block
+  * Fix: Title and text output with RichText for Images Slider block
   * Remove: Inline center alignment for Count Up block
 
 = 2.11.6 - 10 Mar 2022 =
