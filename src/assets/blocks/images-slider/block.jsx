@@ -95,14 +95,14 @@
             }
 
             // Autoplay
-            if( autoplay && advgbBlocks.advgb_pro === '1' ) {
+            if( autoplay && advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1' ) {
                 $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('slickSetOption', 'autoplay', true, true);
             } else {
                 $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('slickSetOption', 'autoplay', false, true);
             }
 
             // Autoplay speed
-            if( autoplay && autoplaySpeed && advgbBlocks.advgb_pro === '1' ) {
+            if( autoplay && autoplaySpeed && advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1' ) {
                 $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('slickSetOption', 'autoplaySpeed', autoplaySpeed, true);
             } else {
                 $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('slickSetOption', 'autoplaySpeed', 3000, true);
@@ -251,25 +251,6 @@
                                     ]}
                                     onChange={(value) => setAttributes({actionOnClick: value})}
                                 />
-                                {advgbBlocks.advgb_pro === '1' && (
-                                    <Fragment>
-                                        <ToggleControl
-                                            label={ __( 'Autoplay', 'advanced-gutenberg' ) }
-                                            checked={ autoplay }
-                                            onChange={ () => setAttributes( { autoplay: !autoplay } ) }
-                                        />
-                                        { autoplay && (
-                                            <RangeControl
-                                                label={ __( 'Autoplay Speed', 'advanced-gutenberg' ) }
-                                                help={ __( 'Change interval between slides in miliseconds.', 'advanced-gutenberg' ) }
-                                                min={ 1000 }
-                                                max={ 20000 }
-                                                value={ autoplaySpeed }
-                                                onChange={ (value) => setAttributes( { autoplaySpeed: value } ) }
-                                            />
-                                        ) }
-                                    </Fragment>
-                                ) }
                                 <ToggleControl
                                     label={__('Full width', 'advanced-gutenberg')}
                                     checked={fullWidth}

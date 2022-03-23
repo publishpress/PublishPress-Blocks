@@ -17920,14 +17920,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 // Autoplay
-                if (autoplay && advgbBlocks.advgb_pro === '1') {
+                if (autoplay && advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1') {
                     $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplay', true, true);
                 } else {
                     $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplay', false, true);
                 }
 
                 // Autoplay speed
-                if (autoplay && autoplaySpeed && advgbBlocks.advgb_pro === '1') {
+                if (autoplay && autoplaySpeed && advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1') {
                     $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplaySpeed', autoplaySpeed, true);
                 } else {
                     $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('slickSetOption', 'autoplaySpeed', 3000, true);
@@ -18089,27 +18089,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ actionOnClick: value });
                                 }
                             }),
-                            advgbBlocks.advgb_pro === '1' && React.createElement(
-                                Fragment,
-                                null,
-                                React.createElement(ToggleControl, {
-                                    label: __('Autoplay', 'advanced-gutenberg'),
-                                    checked: autoplay,
-                                    onChange: function onChange() {
-                                        return setAttributes({ autoplay: !autoplay });
-                                    }
-                                }),
-                                autoplay && React.createElement(RangeControl, {
-                                    label: __('Autoplay Speed', 'advanced-gutenberg'),
-                                    help: __('Change interval between slides in miliseconds.', 'advanced-gutenberg'),
-                                    min: 1000,
-                                    max: 20000,
-                                    value: autoplaySpeed,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ autoplaySpeed: value });
-                                    }
-                                })
-                            ),
                             React.createElement(ToggleControl, {
                                 label: __('Full width', 'advanced-gutenberg'),
                                 checked: fullWidth,
