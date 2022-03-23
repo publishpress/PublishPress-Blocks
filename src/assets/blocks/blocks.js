@@ -9195,6 +9195,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
                 setAttributes({ blockIDX: 'advgb-img-' + clientId });
+
+                // Reset attributes when Pro is not available
+                if (advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '0') {
+                    setAttributes({
+                        titleTag: 'h4',
+                        subtitleTag: 'p'
+                    });
+                }
             }
         }, {
             key: 'render',
