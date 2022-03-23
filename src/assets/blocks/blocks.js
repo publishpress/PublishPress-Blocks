@@ -9195,6 +9195,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
                 setAttributes({ blockIDX: 'advgb-img-' + clientId });
+
+                // Reset attributes when Pro is not available
+                if (advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '0') {
+                    setAttributes({
+                        titleTag: 'h4',
+                        subtitleTag: 'p'
+                    });
+                }
             }
         }, {
             key: 'render',
@@ -9225,7 +9233,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     hAlign = attributes.hAlign,
                     overlayOpacity = attributes.overlayOpacity,
                     focalPoint = attributes.focalPoint,
-                    isPreview = attributes.isPreview;
+                    isPreview = attributes.isPreview,
+                    titleTag = attributes.titleTag,
+                    subtitleTag = attributes.subtitleTag;
 
                 var blockClassName = ['advgb-image-block', fullWidth && 'full-width', blockIDX].filter(Boolean).join(' ');
 
@@ -9433,7 +9443,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }
                         }),
                         React.createElement(RichText, {
-                            tagName: 'h4',
+                            tagName: titleTag,
                             className: 'advgb-image-title',
                             value: title,
                             onChange: function onChange(value) {
@@ -9451,7 +9461,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             allowedFormats: []
                         }),
                         React.createElement(RichText, {
-                            tagName: 'p',
+                            tagName: subtitleTag,
                             className: 'advgb-image-subtitle',
                             value: subtitle,
                             onChange: function onChange(value) {
@@ -9567,6 +9577,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         isPreview: {
             type: 'boolean',
             default: false
+        },
+        titleTag: {
+            type: 'string',
+            default: 'h4'
+        },
+        subtitleTag: {
+            type: 'string',
+            default: 'p'
         }
     };
 
@@ -9607,7 +9625,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 height = attributes.height,
                 vAlign = attributes.vAlign,
                 hAlign = attributes.hAlign,
-                focalPoint = attributes.focalPoint;
+                focalPoint = attributes.focalPoint,
+                titleTag = attributes.titleTag,
+                subtitleTag = attributes.subtitleTag;
 
             var linkURL = openOnClick === 'url' && !!openUrl ? openUrl : undefined;
             var blockClassName = ['advgb-image-block', fullWidth && 'full-width', openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox', blockIDX].filter(Boolean).join(' ');
@@ -9631,16 +9651,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     rel: 'noopener noreferrer',
                     href: linkURL
                 }),
-                title && React.createElement(
-                    'h4',
-                    { className: 'advgb-image-title', style: { color: titleColor } },
-                    title
-                ),
-                subtitle && React.createElement(
-                    'p',
-                    { className: 'advgb-image-subtitle', style: { color: subtitleColor } },
-                    subtitle
-                )
+                title && React.createElement(RichText.Content, {
+                    tagName: titleTag,
+                    className: 'advgb-image-title',
+                    style: { color: titleColor },
+                    value: title
+                }),
+                subtitle && React.createElement(RichText.Content, {
+                    tagName: subtitleTag,
+                    className: 'advgb-image-subtitle',
+                    style: { color: subtitleColor },
+                    value: subtitle
+                })
             );
         },
         deprecated: [{
