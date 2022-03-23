@@ -257,8 +257,8 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.12.0 - 22 Mar 2022 =
-  * Add: Ad to upgrade to Pro for Advanced List, Count Up and Testimonial blocks
+= 2.12.0 - 23 Mar 2022 =
+  * Add: Ad to upgrade to Pro for Advanced List, Count Up, Testimonial and Advanced Image blocks
   * Add: Updated translations for French, Norwegian and Danish
   * Add: Id attribute to Count Up block
   * Add: Center alignment through CSS file for Count Up block
