@@ -73,8 +73,9 @@ function advgbRenderBlockRecentPosts($attributes)
 		$categories = $attributes['category'];
 	}
 
+	$post_type = isset($attributes['postType']) ? $attributes['postType'] : 'post';
 	$tax_query = [];
-	if ( !empty($attributes['tags'] ) ){
+	if ( ! empty( $attributes['tags'] ) && ($post_type === 'post' || $post_type === 'page') ){
 		$tax_query = array(
 				array(
 					'taxonomy' => 'post_tag',
@@ -99,7 +100,6 @@ function advgbRenderBlockRecentPosts($attributes)
 		advgbMultipleAuthorSort();
 	}
 
-	$post_type = isset($attributes['postType']) ? $attributes['postType'] : 'post';
 	$args = array(
 			'post_type' => $post_type,
             'numberposts' => empty($attributes['numberOfPosts'])?8:$attributes['numberOfPosts'],
