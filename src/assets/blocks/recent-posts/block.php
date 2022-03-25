@@ -626,37 +626,6 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'string',
                 'default' => 'image-title-info-text',
             ),
-            'readMoreTextColor' => array(
-                'type' => 'string',
-            ),
-            'readMoreBgColor' => array(
-                'type' => 'string',
-            ),
-            'readMoreBorderStyle' => array(
-                'type' => 'string',
-            ),
-            'readMoreBorderColor' => array(
-                'type' => 'string',
-            ),
-            'readMoreBorderWidth' => array(
-                'type' => 'string',
-            ),
-            'readMorePaddingTop' => array(
-                'type' => 'string',
-                'default' => '5',
-            ),
-            'readMorePaddingBottom' => array(
-                'type' => 'string',
-                'default' => '5',
-            ),
-            'readMorePaddingLeft' => array(
-                'type' => 'string',
-                'default' => '10',
-            ),
-            'readMorePaddingRight' => array(
-                'type' => 'string',
-                'default' => '10',
-            ),
 			// deprecrated attributes...
             'displayDate' => array(
                 'type' => 'boolean',

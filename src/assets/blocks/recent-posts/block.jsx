@@ -99,18 +99,6 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
         { label: 'Title, Text, Image, Info', value: 'title-text-image-info' },
     ];
 
-    const BORDER_STYLES = [
-        { label: __( 'None', 'advanced-gutenberg' ), value: 'none' },
-        { label: __( 'Solid', 'advanced-gutenberg' ), value: 'solid' },
-        { label: __( 'Dotted', 'advanced-gutenberg' ), value: 'dotted' },
-        { label: __( 'Dashed', 'advanced-gutenberg' ), value: 'dashed' },
-        { label: __( 'Double', 'advanced-gutenberg' ), value: 'double' },
-        { label: __( 'Groove', 'advanced-gutenberg' ), value: 'groove' },
-        { label: __( 'Ridge', 'advanced-gutenberg' ), value: 'ridge' },
-        { label: __( 'Inset', 'advanced-gutenberg' ), value: 'inset' },
-        { label: __( 'Outset', 'advanced-gutenberg' ), value: 'outset' },
-    ];
-
     const CUSTOM_TAX_PREFIX = 'custom-tax-';
 
     let initSlider = null;
@@ -370,15 +358,6 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
                 imagePosition,
                 onlyFromCurrentUser,
                 orderSections,
-                readMoreTextColor,
-                readMoreBgColor,
-                readMoreBorderStyle,
-                readMoreBorderColor,
-                readMoreBorderWidth,
-                readMorePaddingTop,
-                readMorePaddingBottom,
-                readMorePaddingLeft,
-                readMorePaddingRight
             } = attributes;
 
             let recentPosts = this.props.recentPosts;
@@ -864,68 +843,6 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
                             onChange={ ( value ) => setAttributes( { textBeforeReadmore: value } ) }
                         />
                     </PanelBody>
-                    { displayReadMore && advgbBlocks.advgb_pro === '1' && (
-                        <Fragment>
-                            <PanelBody title={ __( 'Read more design', 'advanced-gutenberg' ) }>
-                                <AdvColorControl
-                                    label={ __('Text Color', 'advanced-gutenberg') }
-                                    value={ readMoreTextColor }
-                                    onChange={ (value) => setAttributes( { readMoreTextColor: value } ) }
-                                />
-                                <AdvColorControl
-                                    label={ __('Background Color', 'advanced-gutenberg') }
-                                    value={ readMoreBgColor }
-                                    onChange={ (value) => setAttributes( { readMoreBgColor: value } ) }
-                                />
-                                <SelectControl
-                                    label={ __( 'Border style', 'advanced-gutenberg' ) }
-                                    value={ readMoreBorderStyle }
-                                    options={ BORDER_STYLES }
-                                    onChange={ ( value ) => setAttributes( { readMoreBorderStyle: value } ) }
-                                />
-                                <AdvColorControl
-                                    label={ __('Border Color', 'advanced-gutenberg') }
-                                    value={ readMoreBorderColor }
-                                    onChange={ (value) => setAttributes( { readMoreBorderColor: value } ) }
-                                />
-                                <RangeControl
-                                    label={ __( 'Border width', 'advanced-gutenberg' ) }
-                                    value={ readMoreBorderWidth || '' }
-                                    onChange={ ( value ) => setAttributes( { readMoreBorderWidth: value } ) }
-                                    min={ 0 }
-                                    max={ 100 }
-                                />
-                                <RangeControl
-                                    label={ __( 'Padding top', 'advanced-gutenberg' ) }
-                                    value={ readMorePaddingTop || '' }
-                                    onChange={ ( value ) => setAttributes( { readMorePaddingTop: value } ) }
-                                    min={ 0 }
-                                    max={ 100 }
-                                />
-                                <RangeControl
-                                    label={ __( 'Padding right', 'advanced-gutenberg' ) }
-                                    value={ readMorePaddingRight || '' }
-                                    onChange={ ( value ) => setAttributes( { readMorePaddingRight: value } ) }
-                                    min={ 0 }
-                                    max={ 100 }
-                                />
-                                <RangeControl
-                                    label={ __( 'Padding bottom', 'advanced-gutenberg' ) }
-                                    value={ readMorePaddingBottom || '' }
-                                    onChange={ ( value ) => setAttributes( { readMorePaddingBottom: value } ) }
-                                    min={ 0 }
-                                    max={ 100 }
-                                />
-                                <RangeControl
-                                    label={ __( 'Padding left', 'advanced-gutenberg' ) }
-                                    value={ readMorePaddingLeft || '' }
-                                    onChange={ ( value ) => setAttributes( { readMorePaddingLeft: value } ) }
-                                    min={ 0 }
-                                    max={ 100 }
-                                />
-                            </PanelBody>
-                        </Fragment>
-                    ) }
                     {advgbBlocks.advgb_pro === '1' && (
                         <PanelBody title={ __( 'Order Settings', 'advanced-gutenberg' ) }>
                             <SelectControl

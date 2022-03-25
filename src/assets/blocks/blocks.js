@@ -24025,8 +24025,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var ORDER_SECTIONS = [{ label: 'Default', value: 'default' }, { label: 'Title, Image, Info, Text', value: 'title-image-info-text' }, { label: 'Image, Title, Text, Info', value: 'image-title-text-info' }, { label: 'Title, Image, Text, Info', value: 'title-image-text-info' }, { label: 'Title, Info, Text, Image', value: 'title-info-text-image' }, { label: 'Title, Text, Info, Image', value: 'title-text-info-image' }, { label: 'Title, Text, Image, Info', value: 'title-text-image-info' }];
 
-    var BORDER_STYLES = [{ label: __('None', 'advanced-gutenberg'), value: 'none' }, { label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Double', 'advanced-gutenberg'), value: 'double' }, { label: __('Groove', 'advanced-gutenberg'), value: 'groove' }, { label: __('Ridge', 'advanced-gutenberg'), value: 'ridge' }, { label: __('Inset', 'advanced-gutenberg'), value: 'inset' }, { label: __('Outset', 'advanced-gutenberg'), value: 'outset' }];
-
     var CUSTOM_TAX_PREFIX = 'custom-tax-';
 
     var initSlider = null;
@@ -24316,16 +24314,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     showCustomTaxList = attributes.showCustomTaxList,
                     imagePosition = attributes.imagePosition,
                     onlyFromCurrentUser = attributes.onlyFromCurrentUser,
-                    orderSections = attributes.orderSections,
-                    readMoreTextColor = attributes.readMoreTextColor,
-                    readMoreBgColor = attributes.readMoreBgColor,
-                    readMoreBorderStyle = attributes.readMoreBorderStyle,
-                    readMoreBorderColor = attributes.readMoreBorderColor,
-                    readMoreBorderWidth = attributes.readMoreBorderWidth,
-                    readMorePaddingTop = attributes.readMorePaddingTop,
-                    readMorePaddingBottom = attributes.readMorePaddingBottom,
-                    readMorePaddingLeft = attributes.readMorePaddingLeft,
-                    readMorePaddingRight = attributes.readMorePaddingRight;
+                    orderSections = attributes.orderSections;
 
 
                 var recentPosts = this.props.recentPosts;
@@ -24831,88 +24820,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ textBeforeReadmore: value });
                             }
                         })
-                    ),
-                    displayReadMore && advgbBlocks.advgb_pro === '1' && React.createElement(
-                        Fragment,
-                        null,
-                        React.createElement(
-                            PanelBody,
-                            { title: __('Read more design', 'advanced-gutenberg') },
-                            React.createElement(_components.AdvColorControl, {
-                                label: __('Text Color', 'advanced-gutenberg'),
-                                value: readMoreTextColor,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ readMoreTextColor: value });
-                                }
-                            }),
-                            React.createElement(_components.AdvColorControl, {
-                                label: __('Background Color', 'advanced-gutenberg'),
-                                value: readMoreBgColor,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ readMoreBgColor: value });
-                                }
-                            }),
-                            React.createElement(SelectControl, {
-                                label: __('Border style', 'advanced-gutenberg'),
-                                value: readMoreBorderStyle,
-                                options: BORDER_STYLES,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ readMoreBorderStyle: value });
-                                }
-                            }),
-                            React.createElement(_components.AdvColorControl, {
-                                label: __('Border Color', 'advanced-gutenberg'),
-                                value: readMoreBorderColor,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ readMoreBorderColor: value });
-                                }
-                            }),
-                            React.createElement(RangeControl, {
-                                label: __('Border width', 'advanced-gutenberg'),
-                                value: readMoreBorderWidth || '',
-                                onChange: function onChange(value) {
-                                    return setAttributes({ readMoreBorderWidth: value });
-                                },
-                                min: 0,
-                                max: 100
-                            }),
-                            React.createElement(RangeControl, {
-                                label: __('Padding top', 'advanced-gutenberg'),
-                                value: readMorePaddingTop || '',
-                                onChange: function onChange(value) {
-                                    return setAttributes({ readMorePaddingTop: value });
-                                },
-                                min: 0,
-                                max: 100
-                            }),
-                            React.createElement(RangeControl, {
-                                label: __('Padding right', 'advanced-gutenberg'),
-                                value: readMorePaddingRight || '',
-                                onChange: function onChange(value) {
-                                    return setAttributes({ readMorePaddingRight: value });
-                                },
-                                min: 0,
-                                max: 100
-                            }),
-                            React.createElement(RangeControl, {
-                                label: __('Padding bottom', 'advanced-gutenberg'),
-                                value: readMorePaddingBottom || '',
-                                onChange: function onChange(value) {
-                                    return setAttributes({ readMorePaddingBottom: value });
-                                },
-                                min: 0,
-                                max: 100
-                            }),
-                            React.createElement(RangeControl, {
-                                label: __('Padding left', 'advanced-gutenberg'),
-                                value: readMorePaddingLeft || '',
-                                onChange: function onChange(value) {
-                                    return setAttributes({ readMorePaddingLeft: value });
-                                },
-                                min: 0,
-                                max: 100
-                            })
-                        )
                     ),
                     advgbBlocks.advgb_pro === '1' && React.createElement(
                         PanelBody,
