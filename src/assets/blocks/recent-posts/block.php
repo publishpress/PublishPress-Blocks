@@ -417,6 +417,10 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass .= ' ' . esc_html($attributes['className']);
     }
 
+    if(isset($attributes['id'])){
+        $blockClass .= ' ' . esc_html($attributes['id']);
+    }
+
     $blockHtml = sprintf(
         '<div class="advgb-recent-posts-block %2$s"><div class="advgb-recent-posts">%1$s</div></div>',
         $postHtml,
@@ -439,6 +443,9 @@ function advgbRegisterBlockRecentPosts()
 
     register_block_type('advgb/recent-posts', array(
         'attributes' => array(
+            'id' => array(
+                'type' => 'string',
+            ),
             'postView' => array(
                 'type' => 'string',
                 'default' => 'grid',
