@@ -681,7 +681,6 @@
                             updateBlockAttributes( block.innerBlocks[ n ].clientId, {
                                 id: n,
                             } );
-                            //console.log(block.innerBlocks[ n ].attributes.header);
                         } );
                     },
                     updateTabActive(tabActive) {

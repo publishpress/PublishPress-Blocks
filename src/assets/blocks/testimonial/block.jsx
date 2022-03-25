@@ -58,9 +58,7 @@
                 sliderDotsShown, sliderSpeed, sliderArrowShown, sliderItemsToScroll,
             } = attributes;
 
-            if (!pid) {
-                setAttributes( { pid: `advgb-testimonial-${clientId}` } );
-            }
+            setAttributes( { pid: `advgb-testimonial-${clientId}` } );
 
             if (sliderView) {
                 jQuery(`#block-${clientId} .advgb-testimonial.slider-view`).slick({

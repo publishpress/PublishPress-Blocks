@@ -41,6 +41,14 @@
             const { blockIDX } = attributes;
 
             setAttributes({blockIDX: `advgb-img-${clientId}`});
+
+            // Reset attributes when Pro is not available
+            if( advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1' ) {
+                setAttributes( {
+                    titleTag: 'h4',
+                    subtitleTag: 'p'
+                } );
+            }
         }
 
         render() {
@@ -50,7 +58,7 @@
                 blockIDX, openOnClick, openUrl, linkInNewTab, imageUrl, imageID,
                 title, titleColor, subtitle, subtitleColor, overlayColor, defaultOpacity,
                 fullWidth, width, height, vAlign, hAlign, overlayOpacity, focalPoint,
-                isPreview,
+                isPreview, titleTag, subtitleTag
             } = attributes;
             const blockClassName = [
                 'advgb-image-block',
@@ -236,7 +244,7 @@
                         />
                         }
                         <RichText
-                            tagName="h4"
+                            tagName={ titleTag }
                             className="advgb-image-title"
                             value={ title }
                             onChange={ (value) => setAttributes( { title: value.trim() } ) }
@@ -248,7 +256,7 @@
                             allowedFormats={ [] }
                         />
                         <RichText
-                            tagName="p"
+                            tagName={ subtitleTag }
                             className="advgb-image-subtitle"
                             value={ subtitle }
                             onChange={ (value) => setAttributes( { subtitle: value.trim() } ) }
@@ -354,6 +362,14 @@
         isPreview: {
             type: 'boolean',
             default: false,
+        },
+        titleTag: {
+            type: 'string',
+            default: 'h4'
+        },
+        subtitleTag: {
+            type: 'string',
+            default: 'p'
         }
     };
 
@@ -395,6 +411,8 @@
                 vAlign,
                 hAlign,
                 focalPoint,
+                titleTag,
+                subtitleTag
             } = attributes;
             const linkURL = ( openOnClick === 'url' && !!openUrl ) ? openUrl : undefined;
             const blockClassName = [
@@ -423,14 +441,20 @@
                        href={ linkURL }
                     />
                     {title && (
-                        <h4 className="advgb-image-title" style={ { color: titleColor } }>
-                            {title}
-                        </h4>
+                        <RichText.Content
+                            tagName={ titleTag }
+                            className="advgb-image-title"
+                            style={ { color: titleColor } }
+                            value={ title }
+                        />
                     ) }
                     {subtitle && (
-                        <p className="advgb-image-subtitle" style={ { color: subtitleColor } }>
-                            {subtitle}
-                        </p>
+                        <RichText.Content
+                            tagName={ subtitleTag }
+                            className="advgb-image-subtitle"
+                            style={ { color: subtitleColor } }
+                            value={ subtitle }
+                        />
                     ) }
                 </div>
             );

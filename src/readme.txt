@@ -2,8 +2,8 @@
 Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
-Tested up to: 5.9
-Stable tag: 2.11.6b2
+Tested up to: 5.9.2
+Stable tag: 2.12.0b2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -257,9 +257,24 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.11.6 - 3 Mar 2022 =
+= 2.12.0 - 25 Mar 2022 =
+  * Add: Ad to upgrade to Pro for Advanced List, Count Up, Testimonial and Advanced Image blocks
+  * Add: Updated translations for Spanish (ES), French, Norwegian and Danish
+  * Add: Spanish (MX) translations
+  * Add: Id attribute to Count Up block
+  * Add: Center alignment through CSS file for Count Up block
+  * Fix: Check if category exists when outputting blocks in access screen
+  * Fix: Text format for counter displayed as raw HTML in frontend for Count Up block
+  * Fix: Duplicated id for Testimonial block
+  * Fix: Title and subtitle output with RichText for Advanced Image block
+  * Fix: Title and text output with RichText for Images Slider block
+  * Fix: Tags attribute messing with CPT in frontend after switching from post to CPT
+  * Remove: Inline center alignment for Count Up block
+
+= 2.11.6 - 10 Mar 2022 =
   * Add: Improved design for Advanced Tabs remove and add settings
   * Add: Ad to upgrade to Pro for Images Slider block
+  * Add: Missing Spanish translations
   * Remove: Manual block registration for Legacy Widget and Widget Area
   * Fix: Legacy Widget is always activated and can't be disabled
   * Fix: Local video cropped in mobile for Advanced Video block
@@ -267,7 +282,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Check current user role exists as array in advgb_blocks_user_roles option
   * Fix: Get all the taxonomy values for CPT filters in Content Display block
   * Fix: Text format displayed as raw HTML in frontend for Count Up block
-  * Fix: Handle editor javascrit as separate file to load when Block Access is enabled
+  * Fix: Handle editor javascript as separate file to load when Block Access is enabled
 
 = 2.11.5 - 14 Feb 2022 =
   * Add: Ad to upgrade to Pro for Advanced Tabs, Advanced Accordions and Content Display blocks
