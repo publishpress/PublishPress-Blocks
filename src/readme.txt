@@ -269,6 +269,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Title and subtitle output with RichText for Advanced Image block
   * Fix: Title and text output with RichText for Images Slider block
   * Fix: Tags attribute messing with CPT in frontend after switching from post to CPT
+  * Fix: Load styles in frontend for Content Display block
   * Remove: Inline center alignment for Count Up block
 
 = 2.11.6 - 10 Mar 2022 =
