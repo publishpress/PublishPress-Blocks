@@ -260,6 +260,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 = 2.12.0 - 25 Mar 2022 =
   * Add: Ad to upgrade to Pro for Advanced List, Count Up, Testimonial and Advanced Image blocks
   * Add: Updated translations for Spanish (ES), French, Norwegian and Danish
+  * Add: Spanish (MX) translations
   * Add: Id attribute to Count Up block
   * Add: Center alignment through CSS file for Count Up block
   * Fix: Check if category exists when outputting blocks in access screen
