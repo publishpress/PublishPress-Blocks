@@ -4810,18 +4810,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             // Search for needed blocks then add styles to it
             $style = $this->addBlocksStyles($block);
-
-            /* Content Display block doesn't render styles as the rest of blocks,
-             * so we add the inline CSS in head */
-            if( $block['blockName'] === 'advgb/recent-posts' ) {
-                wp_add_inline_style(
-                    'advgb_recent_posts_styles',
-                    strip_tags($style)
-                );
-            } else {
-                // Rest of the blocks
-                array_push($block['innerContent'], $style);
-            }
+            array_push($block['innerContent'], $style);
 
             return $block;
         }
