@@ -4814,7 +4814,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
             /* Content Display block doesn't render styles
              * as the rest of blocks as first level block (not as a child),
              * so we add the inline CSS in head */
-            if( $block['blockName'] === 'advgb/recent-posts' ) {
+            if(
+                defined('ADVANCED_GUTENBERG_PRO') 
+                && $block['blockName'] === 'advgb/recent-posts'
+                && !empty($style)
+            ) {
                 wp_add_inline_style(
                     'advgb_recent_posts_styles',
                     strip_tags($style)
