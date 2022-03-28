@@ -24187,13 +24187,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: 'componentDidMount',
+            value: function componentDidMount() {
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes,
+                    clientId = _props3.clientId;
+
+                setAttributes({ id: 'recent-posts-' + clientId });
+            }
+        }, {
             key: 'componentDidUpdate',
             value: function componentDidUpdate(prevProps) {
                 var that = this;
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    clientId = _props3.clientId,
-                    postList = _props3.postList;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    clientId = _props4.clientId,
+                    postList = _props4.postList;
                 var postView = attributes.postView,
                     updatePostSuggestions = attributes.updatePostSuggestions,
                     sliderAutoplay = attributes.sliderAutoplay;
@@ -24264,11 +24274,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     authorList = _state.authorList,
                     postSuggestions = _state.postSuggestions,
                     taxonomyList = _state.taxonomyList;
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes,
-                    recentPostsList = _props4.recentPosts;
-                var postView = attributes.postView,
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes,
+                    recentPostsList = _props5.recentPosts;
+                var id = attributes.id,
+                    postView = attributes.postView,
                     order = attributes.order,
                     orderBy = attributes.orderBy,
                     numberOfPosts = attributes.numberOfPosts,
@@ -24898,7 +24909,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'masonry'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView && postView + '-view', postView === 'list' && imagePosition !== 'left' && 'image-' + imagePosition, (postView === 'grid' || postView === 'masonry') && 'columns-' + columns, postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM, postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, (postView === 'frontpage' || postView === 'masonry') && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout, advgbBlocks.advgb_pro === '1' && orderSections && 'sections-' + orderSections].filter(Boolean).join(' ');
+                var blockClassName = [id, 'advgb-recent-posts-block', this.state.updating && 'loading', postView && postView + '-view', postView === 'list' && imagePosition !== 'left' && 'image-' + imagePosition, (postView === 'grid' || postView === 'masonry') && 'columns-' + columns, postView === 'masonry' && 'tbl-columns-' + columnsT + ' ' + 'mbl-columns-' + columnsM, postView === 'slider' && sliderStyle && 'style-' + sliderStyle, postView === 'frontpage' && frontpageLayout && 'layout-' + frontpageLayout, postView === 'frontpage' && frontpageLayoutT && 'tbl-layout-' + frontpageLayoutT, postView === 'frontpage' && frontpageLayoutM && 'mbl-layout-' + frontpageLayoutM, (postView === 'frontpage' || postView === 'masonry') && gap && 'gap-' + gap, postView === 'frontpage' && frontpageStyle && 'style-' + frontpageStyle, postView === 'newspaper' && newspaperLayout && 'layout-' + newspaperLayout, advgbBlocks.advgb_pro === '1' && orderSections && 'sections-' + orderSections].filter(Boolean).join(' ');
 
                 return isPreview ? React.createElement('img', { alt: __('Content Display', 'advanced-gutenberg'), width: '100%', src: previewImageData }) : React.createElement(
                     Fragment,

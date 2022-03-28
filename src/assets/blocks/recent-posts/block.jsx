@@ -251,6 +251,11 @@ import { AuthorSelect } from './query-controls.jsx';
 
         }
 
+        componentDidMount() {
+            const { attributes, setAttributes, clientId } = this.props;
+            setAttributes( { id: 'recent-posts-' + clientId } );
+        }
+
         componentDidUpdate( prevProps ) {
             const that = this;
             const { attributes, clientId, postList } = this.props;
@@ -314,6 +319,7 @@ import { AuthorSelect } from './query-controls.jsx';
             const { categoriesList, tagsList, postTypeList, tabSelected, authorList, postSuggestions, taxonomyList } = this.state;
             const { attributes, setAttributes, recentPosts: recentPostsList } = this.props;
             const {
+                id,
                 postView,
                 order,
                 orderBy,
@@ -842,7 +848,6 @@ import { AuthorSelect } from './query-controls.jsx';
                             onChange={ ( value ) => setAttributes( { textBeforeReadmore: value } ) }
                         />
                     </PanelBody>
-
                     {advgbBlocks.advgb_pro === '1' && (
                         <PanelBody title={ __( 'Order Settings', 'advanced-gutenberg' ) }>
                             <SelectControl
@@ -923,6 +928,7 @@ import { AuthorSelect } from './query-controls.jsx';
             ];
 
             const blockClassName = [
+                id,
                 'advgb-recent-posts-block',
                 this.state.updating && 'loading',
                 postView && postView + '-view',
