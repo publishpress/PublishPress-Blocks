@@ -849,7 +849,7 @@ import { AuthorSelect } from './query-controls.jsx';
                         />
                     </PanelBody>
                     {advgbBlocks.advgb_pro === '1' && (
-                        <PanelBody title={ __( 'Order Settings', 'advanced-gutenberg' ) }>
+                        <PanelBody title={ __( 'Reorder Sections', 'advanced-gutenberg' ) } className="advgb-pro-icon">
                             <SelectControl
                                 label={ __( 'Sections order', 'advanced-gutenberg' ) }
                                 help={ __( 'When the image in desktop floats next to the content, or is displayed as background, the image order is ignored. Also the image order in mobile can be ignored for some views.', 'advanced-gutenberg' ) }

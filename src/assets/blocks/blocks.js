@@ -7809,7 +7809,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             null,
                             React.createElement(
                                 PanelBody,
-                                { title: __('Icon', 'advanced-gutenberg'), initialOpen: false },
+                                { title: __('Icon', 'advanced-gutenberg'), initialOpen: false, className: "advgb-pro-icon" },
                                 React.createElement(ToggleControl, {
                                     label: __('Display icon', 'advanced-gutenberg'),
                                     checked: iconDisplay,
@@ -24832,7 +24832,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     advgbBlocks.advgb_pro === '1' && React.createElement(
                         PanelBody,
-                        { title: __('Order Settings', 'advanced-gutenberg') },
+                        { title: __('Reorder Sections', 'advanced-gutenberg'), className: 'advgb-pro-icon' },
                         React.createElement(SelectControl, {
                             label: __('Sections order', 'advanced-gutenberg'),
                             help: __('When the image in desktop floats next to the content, or is displayed as background, the image order is ignored. Also the image order in mobile can be ignored for some views.', 'advanced-gutenberg'),
