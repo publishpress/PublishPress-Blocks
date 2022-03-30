@@ -1440,12 +1440,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_script(
-                    'advgb_profile_js',
-                    plugins_url('assets/js/profile.js', dirname(__FILE__)),
-                    array(),
-                    ADVANCED_GUTENBERG_VERSION
-                );
-                wp_register_script(
                     'advgb_block_access_js',
                     plugins_url('assets/js/block-access.js', dirname(__FILE__)),
                     array(),
