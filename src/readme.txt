@@ -2,8 +2,8 @@
 Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
-Tested up to: 5.9.1
-Stable tag: 2.11.6
+Tested up to: 5.9.2
+Stable tag: 2.12.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -256,6 +256,22 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 16. Custom Styles for Blocks: You create custom CSS styles and make them available to end users.
 
 == Changelog ==
+
+= 2.12.0 - 30 Mar 2022 =
+  * Add: Ad to upgrade to Pro for Advanced List, Count Up, Testimonial and Advanced Image blocks
+  * Add: Updated translations for Spanish (ES), French, Norwegian and Danish
+  * Add: Spanish (MX) translations
+  * Add: Id attribute to Count Up block
+  * Add: Center alignment through CSS file for Count Up block
+  * Add: Block id as class to Content Display block
+  * Fix: Check if category exists when outputting blocks in access screen
+  * Fix: Text format for counter displayed as raw HTML in frontend for Count Up block
+  * Fix: Duplicated id for Testimonial block
+  * Fix: Title and subtitle output with RichText for Advanced Image block
+  * Fix: Title and text output with RichText for Images Slider block
+  * Fix: Tags attribute messing with CPT in frontend after switching from post to CPT
+  * Fix: Load styles in frontend for Content Display block
+  * Remove: Inline center alignment for Count Up block
 
 = 2.11.6 - 10 Mar 2022 =
   * Add: Improved design for Advanced Tabs remove and add settings

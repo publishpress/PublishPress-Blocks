@@ -456,7 +456,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                         </PanelBody>
                         {advgbBlocks.advgb_pro === '1' && (
                             <Fragment>
-                                <PanelBody title={ __( 'Icon', 'advanced-gutenberg' ) } initialOpen={ false } >
+                                <PanelBody title={ __( 'Icon', 'advanced-gutenberg' ) } initialOpen={ false } className="advgb-pro-icon">
                                     <ToggleControl
                                         label={ __( 'Display icon', 'advanced-gutenberg' ) }
                                         checked={ iconDisplay }

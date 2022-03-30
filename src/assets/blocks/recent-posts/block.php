@@ -73,8 +73,9 @@ function advgbRenderBlockRecentPosts($attributes)
 		$categories = $attributes['category'];
 	}
 
+	$post_type = isset($attributes['postType']) ? $attributes['postType'] : 'post';
 	$tax_query = [];
-	if ( !empty($attributes['tags'] ) ){
+	if ( ! empty( $attributes['tags'] ) && ($post_type === 'post' || $post_type === 'page') ){
 		$tax_query = array(
 				array(
 					'taxonomy' => 'post_tag',
@@ -99,7 +100,6 @@ function advgbRenderBlockRecentPosts($attributes)
 		advgbMultipleAuthorSort();
 	}
 
-	$post_type = isset($attributes['postType']) ? $attributes['postType'] : 'post';
 	$args = array(
 			'post_type' => $post_type,
             'numberposts' => empty($attributes['numberOfPosts'])?8:$attributes['numberOfPosts'],
@@ -417,6 +417,10 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass .= ' ' . esc_html($attributes['className']);
     }
 
+    if(isset($attributes['id'])){
+        $blockClass .= ' ' . esc_html($attributes['id']);
+    }
+
     $blockHtml = sprintf(
         '<div class="advgb-recent-posts-block %2$s"><div class="advgb-recent-posts">%1$s</div></div>',
         $postHtml,
@@ -439,6 +443,9 @@ function advgbRegisterBlockRecentPosts()
 
     register_block_type('advgb/recent-posts', array(
         'attributes' => array(
+            'id' => array(
+                'type' => 'string',
+            ),
             'postView' => array(
                 'type' => 'string',
                 'default' => 'grid',
