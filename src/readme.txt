@@ -258,7 +258,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 == Changelog ==
 
 = 2.13.0 - 31 Mar 2022 =
-  * Remove: Deprecated profiles capabilities
+  * Remove: Deprecated profiles post type and its capabilities
 
 = 2.12.0 - 30 Mar 2022 =
   * Add: Ad to upgrade to Pro for Advanced List, Count Up, Testimonial and Advanced Image blocks
