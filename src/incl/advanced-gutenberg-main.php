@@ -162,7 +162,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             add_action('wp_ajax_nopriv_advgb_lores_validate', array($this, 'validateLoresForm'));
 
             if (is_admin()) {
-                add_action('admin_init', array($this, 'registerAdvgbProfile'));
                 add_action('admin_footer', array($this, 'initBlocksList'));
                 add_action('admin_menu', array($this, 'registerMainMenu'));
                 add_action('admin_menu', array($this, 'registerBlockConfigPage'));
@@ -193,9 +192,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 // Ajax
                 add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
-                add_action('wp_ajax_advgb_get_users', array($this, 'getUsers'));
                 add_action('wp_ajax_advgb_custom_styles_ajax', array($this, 'customStylesAjax'));
-                add_action('wp_ajax_advgb_delete_profiles', array($this, 'deleteProfiles'));
                 add_action('wp_ajax_advgb_block_config_save', array($this, 'saveBlockConfig'));
             } else {
                 // Front-end
@@ -947,173 +944,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Ajax to get list of users
-         *
-         * @return boolean,void     Return false if failure, echo json on success
-         */
-        public function getUsers()
-        {
-            // Check users permissions
-            if (! current_user_can('create_advgb_profiles')) {
-                wp_send_json(__('No permission!', 'advanced-gutenberg'), 403);
-                return false;
-            }
-
-            // phpcs:disable WordPress.Security.NonceVerification.Recommended -- View request, no action
-            $usersearch     = isset($_REQUEST['search']) ? wp_unslash(trim(sanitize_text_field($_REQUEST['search']))) : '';
-            $role           = isset($_REQUEST['role']) ? sanitize_text_field($_REQUEST['role']) : '';
-            $users_per_page = 20;
-            $pagenum        = 1;
-            if ($role === 'none') {
-                $args_all = array(
-                    'include' => wp_get_users_with_no_role(),
-                    'search'  => $usersearch,
-                    'fields'  => 'all_with_meta'
-                );
-            } else {
-                $args_all = array(
-                    'role'   => $role,
-                    'search' => $usersearch,
-                    'fields' => 'all_with_meta'
-                );
-            }
-            if ($args_all['search'] !== '') {
-                $args_all['search'] = '*' . $args_all['search'] . '*';
-            }
-
-            $total_users = count(get_users($args_all));
-            $total_pages = (int)ceil($total_users / $users_per_page);
-            if (isset($_REQUEST['paged'])) {
-                if ($_REQUEST['paged'] === 'first') {
-                    $pagenum = 1;
-                } elseif ($_REQUEST['paged'] === 'last') {
-                    $pagenum = (int)$total_pages;
-                } else {
-                    $pagenum = (int)$_REQUEST['paged'];
-                }
-            }
-            // phpcs:enable
-            $paged = max(1, $pagenum);
-
-            if ($role === 'none') {
-                $args = array(
-                    'number'  => $users_per_page,
-                    'offset'  => ($paged - 1) * $users_per_page,
-                    'include' => wp_get_users_with_no_role(),
-                    'search'  => $usersearch,
-                    'fields'  => 'all_with_meta'
-                );
-            } else {
-                $args = array(
-                    'number' => $users_per_page,
-                    'offset' => ($paged - 1) * $users_per_page,
-                    'role'   => $role,
-                    'search' => $usersearch,
-                    'fields' => 'all_with_meta'
-                );
-            }
-
-            if ($args['search'] !== '') {
-                $args['search'] = '*' . $args['search'] . '*';
-            }
-
-            // Query the user IDs for this page
-            $wp_user_search = get_users($args);
-
-            $users_list = '';
-            $pages_list = '';
-
-            if (count($wp_user_search)) {
-                foreach ($wp_user_search as $userid => $user_object) {
-                    $users_list .= '<tr>';
-                    $users_list .= '<td class="select-box">';
-                    $users_list .= '<input class="ju-checkbox" type="checkbox" name="advgb-users[]" value="' . $userid . '" />';
-                    $users_list .= '</td>';
-                    $users_list .= '<td class="name column-name">';
-                    $users_list .= '<span>' . $user_object->display_name . '</span>';
-                    $users_list .= '</td>';
-                    $users_list .= '<td class="username column-username">';
-                    $users_list .= '<strong>' . $user_object->user_login . '</strong>';
-                    $users_list .= '</td>';
-                    $users_list .= '<td class="email column-email">' . $user_object->user_email . '</td>';
-
-                    $role_list = array();
-                    global $wp_roles;
-                    foreach ($user_object->roles as $role) {
-                        if (isset($wp_roles->role_names[ $role ])) {
-                            $role_list[ $role ] = translate_user_role($wp_roles->role_names[ $role ]);
-                        }
-                    }
-
-                    if (empty($role_list)) {
-                        $role_list['none'] = _x('None', 'no user roles', 'advanced-gutenberg');
-                    }
-                    $roles_list = implode(', ', $role_list);
-
-                    $users_list .= '<td class="role column-role">' . $roles_list . '</td>';
-                    $users_list .= '</tr>';
-                }
-            } else {
-                $users_list .= '<tr><td colspan="5"> ';
-                $users_list .= __('No users found.', 'advanced-gutenberg');
-                $users_list .= '</td></tr>';
-            }
-
-            $doneLeft = false;
-            $doneRight = false;
-            $skipLeft = false;
-            $skipRight = false;
-            if ($total_pages > 1) {
-                for ($i = 1; $i <= $total_pages; $i ++) {
-                    if ($i < $pagenum - 2) {
-                        $skipLeft = true;
-                    } elseif ($i > $pagenum + 2) {
-                        $skipRight = true;
-                    } else {
-                        $skipLeft  = false;
-                        $skipRight = false;
-                    }
-                    if ($i === 1) {
-                        if ($pagenum === 1) {
-                            $pages_list .= '<i class="dashicons dashicons-controls-skipback" id="first-page"></i>';
-                        } else {
-                            $pages_list .= '<a class="dashicons dashicons-controls-skipback" id="first-page" ';
-                            $pages_list .= 'title="' . __('First page', 'advanced-gutenberg') . '"></a>';
-                        }
-                    }
-                    if (! $skipLeft && ! $skipRight) {
-                        if ($i === $pagenum) {
-                            $pages_list .= '<strong>' . $i . '</strong>';
-                        } else {
-                            $pages_list .= '<a class="switch-page">' . $i . '</a>';
-                        }
-                    } elseif ($skipLeft) {
-                        if (! $doneLeft) {
-                            $pages_list .= '<span>...</span>';
-                            $doneLeft   = true;
-                        }
-                    } elseif ($skipRight) {
-                        if (! $doneRight) {
-                            $pages_list .= '<span>...</span>';
-                            $doneRight  = true;
-                        }
-                    }
-
-                    if ($i === $total_pages) {
-                        if ($pagenum === $total_pages) {
-                            $pages_list .= '<i class="dashicons dashicons-controls-skipforward" id="last-page"></i>';
-                        } else {
-                            $pages_list .= '<a class="dashicons dashicons-controls-skipforward" id="last-page" ';
-                            $pages_list .= 'title="' . __('Last page', 'advanced-gutenberg') . '"></a>';
-                        }
-                    }
-                }
-            }
-            $response = array('users_list' => $users_list, 'pages_list' => $pages_list);
-            wp_send_json($response);
-        }
-
-        /**
          * Ajax for custom styles
          *
          * @return boolean,void     Return false if failure, echo json on success
@@ -1248,38 +1078,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_send_json(array('title' => $new_title), 200);
             } else {
                 wp_send_json(null, 404);
-            }
-        }
-
-        /**
-         * Ajax for delete profiles
-         *
-         * @return boolean,void     Return false if failure, echo json on success
-         */
-        public function deleteProfiles()
-        {
-            // Check users permissions
-            if (!current_user_can('delete_pages')) {
-                wp_send_json(__('No permission!', 'advanced-gutenberg'), 403);
-                return false;
-            }
-
-            if (!wp_verify_nonce(sanitize_text_field($_POST['pNonce']), 'advgb_profiles_nonce')) {
-                wp_send_json(__('Fail to verify nonce!', 'advanced-gutenberg'), 400);
-                return false;
-            };
-
-            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-            $profiles_to_delete = $_POST['ids'];
-            if (count($profiles_to_delete)) {
-                $deleted = array();
-                foreach ($profiles_to_delete as $profile) {
-                    if (wp_delete_post($profile)) {
-                        array_push($deleted, $profile);
-                    }
-                }
-
-                wp_send_json(array('deleted' => $deleted), 200);
             }
         }
 
@@ -1639,12 +1437,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'advgb_update_list',
                     plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
                     array('jquery'),
-                    ADVANCED_GUTENBERG_VERSION
-                );
-                wp_register_script(
-                    'advgb_profile_js',
-                    plugins_url('assets/js/profile.js', dirname(__FILE__)),
-                    array(),
                     ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_script(
@@ -2010,46 +1802,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $classes .= ' advgb-editor-col-guide-' . $editorColsVGGlobal;
             }
             return $classes;
-        }
-
-        /**
-         * Register profiles custom post type
-         *
-         * @return void
-         */
-        public function registerAdvgbProfile()
-        {
-            $labels = array(
-                'name'               => __('PublishPress Blocks Profiles', 'advanced-gutenberg'),  // Profile title
-                'singular_name'      => __('PublishPress Blocks Profiles', 'advanced-gutenberg'),
-                'add_new'            => __('New Profile', 'advanced-gutenberg'),                  // New profile menu title
-                'add_new_item'       => __('Add New Profile', 'advanced-gutenberg'),              // New profile title
-                'edit_item'          => __('Edit Profile', 'advanced-gutenberg'),                 // Edit profile title
-                'all_items'          => __('Profiles', 'advanced-gutenberg'),                     // All profiles menu title
-                'view_item'          => __('View Profile', 'advanced-gutenberg'),
-                'search_items'       => __('Search Profiles', 'advanced-gutenberg'),              // Search button title
-                'not_found'          => __('No profiles found', 'advanced-gutenberg'),
-                'not_found_in_trash' => __('No profiles found in trash', 'advanced-gutenberg'),
-                'parent_item_colon'  => '',
-                'menu_name'          => __('Profiles', 'advanced-gutenberg')
-            );
-            register_post_type('advgb_profiles', array(
-                'labels'       => $labels,
-                'public'       => false,
-                'show_ui'      => false,
-                'supports'     => array('title', 'author'),
-                'capabilities' => array(
-                    'edit_posts'          => 'edit_advgb_profiles',
-                    'edit_others_posts'   => 'edit_others_advgb_profiles',
-                    'publish_posts'       => 'publish_advgb_profiles',
-                    'read'                => 'read_advgb_profile',
-                    'read_private_posts'  => 'read_private_advgb_profiles',
-                    'delete_posts'        => 'delete_advgb_profiles',
-                    'delete_others_posts' => 'delete_others_advgb_profiles',
-                    'create_posts'        => 'create_advgb_profiles',
-                ),
-                'map_meta_cap' => true
-            ));
         }
 
         /**
@@ -4815,7 +4567,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
              * as the rest of blocks as first level block (not as a child),
              * so we add the inline CSS in head */
             if(
-                defined('ADVANCED_GUTENBERG_PRO') 
+                defined('ADVANCED_GUTENBERG_PRO')
                 && $block['blockName'] === 'advgb/recent-posts'
                 && !empty($style)
             ) {
