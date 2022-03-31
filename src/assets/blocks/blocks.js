@@ -12656,6 +12656,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.props.updateTabActive(newIndex);
             }
         }, {
+            key: "translatableText",
+            value: function translatableText(text) {
+                switch (text) {
+                    case 'desktop':
+                        return __('desktop', 'advanced-gutenberg');
+                        break;
+                    case 'tablet':
+                        return __('tablet', 'advanced-gutenberg');
+                        break;
+                    case 'mobile':
+                        return __('mobile', 'advanced-gutenberg');
+                        break;
+                }
+            }
+        }, {
             key: "render",
             value: function render() {
                 var _this2 = this;
@@ -12714,7 +12729,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 return _this2.setState({ viewport: device });
                                             }
                                         },
-                                        device
+                                        _this2.translatableText(device)
                                     );
                                 })
                             ),
@@ -14806,6 +14821,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: 'translatableText',
+            value: function translatableText(text) {
+                switch (text) {
+                    case 'desktop':
+                        return __('desktop', 'advanced-gutenberg');
+                        break;
+                    case 'tablet':
+                        return __('tablet', 'advanced-gutenberg');
+                        break;
+                    case 'mobile':
+                        return __('mobile', 'advanced-gutenberg');
+                        break;
+                }
+            }
+        }, {
             key: 'render',
             value: function render() {
                 var _this2 = this;
@@ -14989,7 +15019,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     return _this2.setState({ tabSelected: device });
                                                 }
                                             },
-                                            device
+                                            _this2.translatableText(device)
                                         );
                                     })
                                 ),
@@ -24262,6 +24292,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: 'translatableText',
+            value: function translatableText(text) {
+                switch (text) {
+                    case 'desktop':
+                        return __('desktop', 'advanced-gutenberg');
+                        break;
+                    case 'tablet':
+                        return __('tablet', 'advanced-gutenberg');
+                        break;
+                    case 'mobile':
+                        return __('mobile', 'advanced-gutenberg');
+                        break;
+                }
+            }
+        }, {
             key: 'render',
             value: function render() {
                 var _this3 = this;
@@ -24379,7 +24424,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             return _this3.setState({ tabSelected: device });
                                         }
                                     },
-                                    device
+                                    _this3.translatableText(device)
                                 );
                             })
                         ),

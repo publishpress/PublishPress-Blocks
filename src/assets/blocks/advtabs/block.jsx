@@ -256,6 +256,20 @@
             this.props.updateTabActive(newIndex)
         }
 
+        translatableText(text) {
+            switch(text){
+                case 'desktop':
+                    return __('desktop', 'advanced-gutenberg');
+                    break;
+                case 'tablet':
+                    return __('tablet', 'advanced-gutenberg');
+                    break;
+                case 'mobile':
+                    return __('mobile', 'advanced-gutenberg');
+                    break;
+            }
+        }
+
         render() {
             const { attributes, setAttributes, clientId } = this.props;
             const { viewport } = this.state;
@@ -310,7 +324,7 @@
                                              key={ index }
                                              onClick={ () => this.setState( { viewport: device } ) }
                                         >
-                                            {device}
+                                            {this.translatableText(device)}
                                         </div>
                                     )
                                 } ) }
