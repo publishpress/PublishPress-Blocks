@@ -6200,7 +6200,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             // Pro
-            if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+            if( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                 if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_styles_frontend_recentposts' ) ) {
                     PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_styles_frontend_recentposts($blockAttrs);
                 }
