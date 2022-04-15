@@ -608,6 +608,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $blocks_config_saved = get_option('advgb_blocks_default_config');
             $blocks_config_saved = $blocks_config_saved !== false ? $blocks_config_saved : array();
             wp_localize_script('wp-blocks', 'advgbDefaultConfig', $blocks_config_saved);
+
+            // Pro
+            if(defined('ADVANCED_GUTENBERG_PRO')) {
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_fonts_list' ) ) {
+                    PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_fonts_list();
+                }
+            }
         }
 
         /**
@@ -6190,6 +6197,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array('jquery', 'advgb_masonry_js'),
                     ADVANCED_GUTENBERG_VERSION
                 );
+            }
+
+            // Pro
+            if( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_styles_frontend_recentposts' ) ) {
+                    PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_styles_frontend_recentposts($blockAttrs);
+                }
             }
         }
 
