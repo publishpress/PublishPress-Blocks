@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.13.0 - 31 Mar 2022 =
+= 2.13.0 - 19 Apr 2022 =
   * Fix: Make responsive headings translatable
   * Remove: Deprecated profiles post type and its capabilities
 

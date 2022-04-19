@@ -2,7 +2,7 @@
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
-    const { registerBlockType, createBlock } = wpBlocks;
+    const { registerBlockType, createBlock, cloneBlock } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpBlockEditor;
     const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl, Button, TextControl } = wpComponents;
     const { withDispatch, select, dispatch } = wp.data;
@@ -174,6 +174,28 @@
             const childBlocks = getBlockOrder(clientId);
 
             childBlocks.forEach( childBlockId => updateBlockAttributes( childBlockId, {tabAnchors: tabAnchors} ) );
+        }
+
+        duplicateTab(index) {
+            const { attributes, setAttributes, clientId } = this.props;
+            const { insertBlock } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder, getBlock } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const childBlocks = getBlockOrder(clientId);
+            const blockTab = getBlock(childBlocks[index]);
+            const clonedTab = cloneBlock(blockTab);
+
+            insertBlock(clonedTab, attributes.tabHeaders.length, clientId);
+            setAttributes( {
+                tabHeaders: [
+                    ...attributes.tabHeaders,
+                    `${attributes.tabHeaders[index]} (${__('copy', 'advanced-gutenberg')})`
+                ],
+                tabAnchors: [
+                    ...attributes.tabAnchors,
+                    ''
+                ]
+            } );
+            this.props.resetOrder();
         }
 
         addTab() {
@@ -502,6 +524,14 @@
                                                     </span>
                                                 </Tooltip>
                                             ) }
+                                            <Tooltip text={ __( 'Duplicate tab', 'advanced-gutenberg' ) }>
+                                                <span className="advgb-tab-duplicate"
+                                                      onClick={ () => this.duplicateTab(index) }
+                                                      style={ { display: tabActive === index ? 'block' : 'none' } }
+                                                >
+                                                    <Dashicon icon="admin-page"/>
+                                                </span>
+                                            </Tooltip>
                                         </Fragment>
                                     ) }
                                     {tabHeaders.length > 1 && (

@@ -12306,7 +12306,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType,
-        createBlock = wpBlocks.createBlock;
+        createBlock = wpBlocks.createBlock,
+        cloneBlock = wpBlocks.cloneBlock;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
         RichText = _wpBlockEditor.RichText,
@@ -12556,8 +12557,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
         }, {
-            key: "addTab",
-            value: function addTab() {
+            key: "duplicateTab",
+            value: function duplicateTab(index) {
                 var _props8 = this.props,
                     attributes = _props8.attributes,
                     setAttributes = _props8.setAttributes,
@@ -12565,6 +12566,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var _ref11 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
                     insertBlock = _ref11.insertBlock;
+
+                var _ref12 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref12.getBlockOrder,
+                    getBlock = _ref12.getBlock;
+
+                var childBlocks = getBlockOrder(clientId);
+                var blockTab = getBlock(childBlocks[index]);
+                var clonedTab = cloneBlock(blockTab);
+
+                insertBlock(clonedTab, attributes.tabHeaders.length, clientId);
+                setAttributes({
+                    tabHeaders: [].concat(_toConsumableArray(attributes.tabHeaders), [attributes.tabHeaders[index] + " (" + __('copy', 'advanced-gutenberg') + ")"]),
+                    tabAnchors: [].concat(_toConsumableArray(attributes.tabAnchors), [''])
+                });
+                this.props.resetOrder();
+            }
+        }, {
+            key: "addTab",
+            value: function addTab() {
+                var _props9 = this.props,
+                    attributes = _props9.attributes,
+                    setAttributes = _props9.setAttributes,
+                    clientId = _props9.clientId;
+
+                var _ref13 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    insertBlock = _ref13.insertBlock;
 
                 var tabItemBlock = createBlock('advgb/tab');
 
@@ -12578,16 +12605,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "removeTab",
             value: function removeTab(index) {
-                var _props9 = this.props,
-                    attributes = _props9.attributes,
-                    setAttributes = _props9.setAttributes,
-                    clientId = _props9.clientId;
+                var _props10 = this.props,
+                    attributes = _props10.attributes,
+                    setAttributes = _props10.setAttributes,
+                    clientId = _props10.clientId;
 
-                var _ref12 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
-                    removeBlock = _ref12.removeBlock;
+                var _ref14 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    removeBlock = _ref14.removeBlock;
 
-                var _ref13 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
-                    getBlockOrder = _ref13.getBlockOrder;
+                var _ref15 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref15.getBlockOrder;
 
                 var childBlocks = getBlockOrder(clientId);
 
@@ -12631,16 +12658,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "onMove",
             value: function onMove(index, newIndex, headers, header, anchors, anchor) {
-                var _props10 = this.props,
-                    attributes = _props10.attributes,
-                    setAttributes = _props10.setAttributes,
-                    clientId = _props10.clientId;
+                var _props11 = this.props,
+                    attributes = _props11.attributes,
+                    setAttributes = _props11.setAttributes,
+                    clientId = _props11.clientId;
 
-                var _ref14 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
-                    moveBlockToPosition = _ref14.moveBlockToPosition;
+                var _ref16 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    moveBlockToPosition = _ref16.moveBlockToPosition;
 
-                var _ref15 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
-                    getBlockOrder = _ref15.getBlockOrder;
+                var _ref17 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref17.getBlockOrder;
 
                 var childBlocks = getBlockOrder(clientId);
 
@@ -12675,10 +12702,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this2 = this;
 
-                var _props11 = this.props,
-                    attributes = _props11.attributes,
-                    setAttributes = _props11.setAttributes,
-                    clientId = _props11.clientId;
+                var _props12 = this.props,
+                    attributes = _props12.attributes,
+                    setAttributes = _props12.setAttributes,
+                    clientId = _props12.clientId;
                 var viewport = this.state.viewport;
                 var tabHeaders = attributes.tabHeaders,
                     tabAnchors = attributes.tabAnchors,
@@ -12953,6 +12980,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 },
                                                 React.createElement(Dashicon, { icon: "arrow-right-alt2" })
                                             )
+                                        ),
+                                        React.createElement(
+                                            Tooltip,
+                                            { text: __('Duplicate tab', 'advanced-gutenberg') },
+                                            React.createElement(
+                                                "span",
+                                                { className: "advgb-tab-duplicate",
+                                                    onClick: function onClick() {
+                                                        return _this2.duplicateTab(index);
+                                                    },
+                                                    style: { display: tabActive === index ? 'block' : 'none' }
+                                                },
+                                                React.createElement(Dashicon, { icon: "admin-page" })
+                                            )
                                         )
                                     ),
                                     tabHeaders.length > 1 && React.createElement(
@@ -13135,9 +13176,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         supports: {
             anchor: true
         },
-        edit: compose(withDispatch(function (dispatch, _ref16, _ref17) {
-            var clientId = _ref16.clientId;
-            var select = _ref17.select;
+        edit: compose(withDispatch(function (dispatch, _ref18, _ref19) {
+            var clientId = _ref18.clientId;
+            var select = _ref19.select;
 
             var _select = select('core/block-editor'),
                 getBlock = _select.getBlock;
@@ -13167,8 +13208,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             };
         }))(AdvTabsWrapper),
-        save: function save(_ref18) {
-            var attributes = _ref18.attributes;
+        save: function save(_ref20) {
+            var attributes = _ref20.attributes;
             var tabHeaders = attributes.tabHeaders,
                 tabAnchors = attributes.tabAnchors,
                 tabActiveFrontend = attributes.tabActiveFrontend,
@@ -13236,8 +13277,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         deprecated: [{
             attributes: _extends({}, tabBlockAttrs),
-            save: function save(_ref19) {
-                var attributes = _ref19.attributes;
+            save: function save(_ref21) {
+                var attributes = _ref21.attributes;
                 var tabHeaders = attributes.tabHeaders,
                     tabActiveFrontend = attributes.tabActiveFrontend,
                     tabsStyleD = attributes.tabsStyleD,
@@ -13309,8 +13350,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     default: false
                 }
             }),
-            save: function save(_ref20) {
-                var attributes = _ref20.attributes;
+            save: function save(_ref22) {
+                var attributes = _ref22.attributes;
                 var tabHeaders = attributes.tabHeaders,
                     tabActiveFrontend = attributes.tabActiveFrontend,
                     tabsStyleD = attributes.tabsStyleD,
@@ -13383,8 +13424,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     default: ''
                 }
             }),
-            save: function save(_ref21) {
-                var attributes = _ref21.attributes;
+            save: function save(_ref23) {
+                var attributes = _ref23.attributes;
                 var tabHeaders = attributes.tabHeaders,
                     tabActiveFrontend = attributes.tabActiveFrontend,
                     tabsStyleD = attributes.tabsStyleD,
