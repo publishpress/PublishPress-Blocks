@@ -6241,13 +6241,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function advgb_AdvancedButtonAssets($blockAttrs)
         {
             // Pro
-            if(
-                defined( 'ADVANCED_GUTENBERG_PRO' ) &&
-                $this->settingIsEnabled( 'enable_advgb_blocks' ) &&
-                isset($blockAttrs['iconDisplay'])
-            ) {
-                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_styles_frontend_advbutton' ) ) {
+            if(defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' )) {
+                if ( isset($blockAttrs['iconDisplay']) && method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_styles_frontend_advbutton' ) ) {
                     PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_styles_frontend_advbutton();
+                }
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_font_styles_frontend' ) ) {
+                    PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_font_styles_frontend('advgb/button', $blockAttrs);
                 }
             }
         }
