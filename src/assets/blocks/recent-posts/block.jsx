@@ -346,6 +346,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 displayFeaturedImageCaption,
                 enablePlaceholderImage,
                 displayAuthor,
+                authorLinkTarget,
                 displayDate,
                 postDate,
                 postDateFormat,
@@ -737,6 +738,18 @@ import { AuthorSelect } from './query-controls.jsx';
                             checked={ displayAuthor }
                             onChange={ () => setAttributes( { displayAuthor: !displayAuthor } ) }
                         />
+                        { displayAuthor &&
+                            <SelectControl
+                                label={ __( 'Target', 'advanced-gutenberg' ) }
+                                value={ authorLinkTarget }
+                                options={ [
+                                    { label: __( '_blank', 'advanced-gutenberg' ), value: '_blank' },
+                                    { label: __( '_self', 'advanced-gutenberg' ), value: '_self' },
+                                ] }
+                                onChange={ ( value ) => setAttributes( { authorLinkTarget: value } ) }
+                                className="advgb-child-select"
+                            />
+                        }
                         <SelectControl
                             label={ __( 'Display Post Date', 'advanced-gutenberg' ) }
                             value={ postDate }

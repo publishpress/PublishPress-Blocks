@@ -258,6 +258,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 == Changelog ==
 
 = 2.13.0 - 21 Apr 2022 =
+  * Add: Target support to author link for Content Display block
   * Fix: Make responsive headings translatable
   * Remove: Deprecated profiles post type and its capabilities
 

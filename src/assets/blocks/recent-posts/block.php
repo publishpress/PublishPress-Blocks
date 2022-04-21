@@ -217,14 +217,16 @@ function advgbRenderBlockRecentPosts($attributes)
             $postHtml .= '<div class="advgb-post-info">';
 
             if (isset($attributes['displayAuthor']) && $attributes['displayAuthor']) {
-				$coauthors = advgbGetCoauthors( array( 'id' => $post->ID ) );
-				if ( ! empty( $coauthors ) ) {
+				$coauthors          = advgbGetCoauthors( array( 'id' => $post->ID ) );
+				$authorLinkTarget   = isset($attributes['authorLinkTarget']) && $attributes['authorLinkTarget'] ? esc_html($attributes['authorLinkTarget']) : '_blank';
+                if ( ! empty( $coauthors ) ) {
 					$index = 0;
 					foreach ( $coauthors as $coauthor ) {
 						$postHtml .= sprintf(
-							'<a href="%1$s" class="advgb-post-author" target="_blank">%2$s</a>',
+							'<a href="%1$s" class="advgb-post-author" target="%3$s">%2$s</a>',
 							$coauthor['link'],
-							$coauthor['display_name']
+							$coauthor['display_name'],
+							$authorLinkTarget
 						);
 						if ( $index++ < count( $coauthors ) - 1 ) {
 							$postHtml .= '<span>, </span>';
@@ -232,9 +234,10 @@ function advgbRenderBlockRecentPosts($attributes)
 					}
 				} else {
 					$postHtml .= sprintf(
-						'<a href="%1$s" class="advgb-post-author" target="_blank">%2$s</a>',
+						'<a href="%1$s" class="advgb-post-author" target="%3$s">%2$s</a>',
 						get_author_posts_url($post->post_author),
-						get_the_author_meta('display_name', $post->post_author)
+						get_the_author_meta('display_name', $post->post_author),
+						$authorLinkTarget
 					);
 				}
             }
@@ -505,6 +508,10 @@ function advgbRegisterBlockRecentPosts()
             'displayAuthor' => array(
                 'type' => 'boolean',
                 'default' => false,
+            ),
+            'authorLinkTarget' => array(
+                'type' => 'string',
+                'default' => '_blank',
             ),
             'postDate' => array(
                 'type' => 'string',
