@@ -24403,7 +24403,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayFeaturedImageCaption = attributes.displayFeaturedImageCaption,
                     enablePlaceholderImage = attributes.enablePlaceholderImage,
                     displayAuthor = attributes.displayAuthor,
-                    authorLinkTarget = attributes.authorLinkTarget,
+                    authorLinkNewTab = attributes.authorLinkNewTab,
                     displayDate = attributes.displayDate,
                     postDate = attributes.postDate,
                     postDateFormat = attributes.postDateFormat,
@@ -24812,14 +24812,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayAuthor: !displayAuthor });
                             }
                         }),
-                        displayAuthor && React.createElement(SelectControl, {
-                            label: __('Target', 'advanced-gutenberg'),
-                            value: authorLinkTarget,
-                            options: [{ label: __('_blank', 'advanced-gutenberg'), value: '_blank' }, { label: __('_self', 'advanced-gutenberg'), value: '_self' }],
-                            onChange: function onChange(value) {
-                                return setAttributes({ authorLinkTarget: value });
+                        displayAuthor && React.createElement(ToggleControl, {
+                            label: __('Open link in new tab', 'advanced-gutenberg'),
+                            checked: !!authorLinkNewTab,
+                            onChange: function onChange() {
+                                return setAttributes({ authorLinkNewTab: !authorLinkNewTab });
                             },
-                            className: 'advgb-child-select'
+                            className: 'advgb-child-toggle'
                         }),
                         React.createElement(SelectControl, {
                             label: __('Display Post Date', 'advanced-gutenberg'),
