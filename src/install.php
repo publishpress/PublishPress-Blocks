@@ -120,8 +120,6 @@ if ( !function_exists('advgb_some_specific_updates') ) {
                 if( $blocks_by_role_access ) {
                     update_option( 'advgb_blocks_user_roles', $blocks_by_role_access );
                 }
-
-                // Don't delete post type advgb_profile to keep a backup!
             }
         }
 
