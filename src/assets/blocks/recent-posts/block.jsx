@@ -259,10 +259,12 @@ import { AuthorSelect } from './query-controls.jsx';
         componentDidUpdate( prevProps ) {
             const that = this;
             const { attributes, clientId, postList } = this.props;
-            const { postView, updatePostSuggestions, sliderAutoplay } = attributes;
+            const { postView, updatePostSuggestions, sliderAutoplay, sliderAutoplaySpeed } = attributes;
             const $ = jQuery;
 
             if (postView === 'slider') {
+
+                // Autoplay
                 initSlider = setTimeout(function () {
                     $(`#block-${clientId} .advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)`).slick( {
                         dots: true,
@@ -276,6 +278,14 @@ import { AuthorSelect } from './query-controls.jsx';
                         that.setState( { updating: false } );
                     }
                 }, 100 );
+
+                // Autoplay speed
+                if( sliderAutoplay && sliderAutoplaySpeed && advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1' ) {
+                    $(`#block-${clientId} .advgb-recent-posts-block.slider-view .advgb-recent-posts.slick-initialized`).slick('slickSetOption', 'autoplaySpeed', sliderAutoplaySpeed, true);
+                } else {
+                    $(`#block-${clientId} .advgb-recent-posts-block.slider-view .advgb-recent-posts.slick-initialized`).slick('slickSetOption', 'autoplaySpeed', 3000, true);
+                }
+
             } else {
                 $(`#block-${clientId} .advgb-recent-posts.slick-initialized`).slick('unslick');
             }

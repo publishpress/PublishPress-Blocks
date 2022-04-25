@@ -6192,6 +6192,17 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION
                 );
 
+                if (
+                    defined( 'ADVANCED_GUTENBERG_PRO' )
+                    && method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_inline_scripts_frontend' )
+                ) {
+                    $script = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_inline_scripts_frontend('advgb/recent-posts', $blockAttrs);
+                    wp_add_inline_script(
+                        'advgb_recent_posts_slider_js',
+                        $script
+                    );
+                }
+
                 // Patch for Twenty Twenty-One
                 $this->fixCssGridFooterWidgets();
 

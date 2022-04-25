@@ -573,6 +573,10 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'boolean',
                 'default' => false,
             ),
+            'sliderAutoplaySpeed' => array(
+                'type' => 'number',
+                'default' => 3000,
+            ),
             'newspaperLayout' => array(
                 'type' => 'string',
                 'default' => 'np-1-3',
