@@ -68,7 +68,6 @@
     addFilter( 'editor.BlockEdit', 'advgb/proAd', function ( BlockEdit ) {
         return ( props ) => {
             return ( [
-                <BlockEdit key="block-edit-custom-class-name" {...props} />,
                 props.isSelected && SUPPORTED_BLOCKS.includes( props.name ) &&
                 <InspectorControls key="advgb-custom-controls">
                     <div className="components-panel__body advgb-pro-ad-wrapper">
@@ -82,6 +81,7 @@
                         </a>
                     </div>
                 </InspectorControls>,
+                <BlockEdit key="block-edit-custom-class-name" {...props} />,
             ] )
         }
     } );
