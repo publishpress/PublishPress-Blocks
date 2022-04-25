@@ -6033,10 +6033,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 && method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_inline_scripts_frontend' )
             ) {
                 $script = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_inline_scripts_frontend('advgb/images-slider', $blockAttrs);
-                wp_add_inline_script(
-                    'advgbImageSliderLightbox_frontent_js',
-                    $script
-                );
+                if(!empty($script)) {
+                    wp_add_inline_script(
+                        'advgbImageSliderLightbox_frontent_js',
+                        $script
+                    );
+                }
             }
 
             // When lightbox is enabled
@@ -6197,10 +6199,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     && method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_inline_scripts_frontend' )
                 ) {
                     $script = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_inline_scripts_frontend('advgb/recent-posts', $blockAttrs);
-                    wp_add_inline_script(
-                        'advgb_recent_posts_slider_js',
-                        $script
-                    );
+                    if(!empty($script)) {
+                        wp_add_inline_script(
+                            'advgb_recent_posts_slider_js',
+                            $script
+                        );
+                    }
                 }
 
                 // Patch for Twenty Twenty-One
