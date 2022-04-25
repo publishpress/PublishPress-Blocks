@@ -332,7 +332,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     }
                 }
             } elseif ($settings['allowedBlockTypes'] === true) {
-                // All was allowed, only return what the profile allows
+                // All was allowed, only return what the block access by user role allows
 
                 if ( count($advgb_blocks_vars['blocks']['active_blocks']) || count($advgb_blocks_vars['blocks']['inactive_blocks']) ) {
                     $settings['allowedBlockTypes'] = $advgb_blocks_vars['blocks']['active_blocks'];
