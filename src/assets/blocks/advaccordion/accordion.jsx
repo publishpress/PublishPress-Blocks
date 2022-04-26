@@ -280,7 +280,7 @@
 
     registerBlockType( 'advgb/accordion-item', {
         title: __( 'Accordion Item', 'advanced-gutenberg' ),
-        description: __( 'Easy to create an accordion for your post/page.', 'advanced-gutenberg' ),
+        description: __( 'Create a sliding accordion display for your content.', 'advanced-gutenberg' ),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,

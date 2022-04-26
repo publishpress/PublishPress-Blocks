@@ -51,29 +51,6 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
         ));
     }
 
-    // Add cap to users
-    global $wp_roles;
-
-    $wp_roles->add_cap('administrator', 'edit_advgb_profiles');
-    $wp_roles->add_cap('administrator', 'edit_others_advgb_profiles');
-    $wp_roles->add_cap('administrator', 'create_advgb_profiles');
-    $wp_roles->add_cap('administrator', 'publish_advgb_profiles');
-    $wp_roles->add_cap('administrator', 'delete_advgb_profiles');
-    $wp_roles->add_cap('administrator', 'delete_others_advgb_profiles');
-    $wp_roles->add_cap('administrator', 'read_advgb_profile');
-    $wp_roles->add_cap('administrator', 'read_private_advgb_profiles');
-
-    $wp_roles->add_cap('editor', 'read_advgb_profile');
-    $wp_roles->add_cap('editor', 'read_private_advgb_profiles');
-    $wp_roles->add_cap('editor', 'edit_advgb_profiles');
-
-    $wp_roles->add_cap('author', 'edit_advgb_profiles');
-    $wp_roles->add_cap('author', 'read_advgb_profile');
-    $wp_roles->add_cap('author', 'read_private_advgb_profiles');
-
-    $wp_roles->add_cap('contributor', 'read_advgb_profile');
-    $wp_roles->add_cap('contributor', 'read_private_advgb_profiles');
-
     // Delete deprecated options
     delete_option( 'advgb_jureview_installation_time' );
     delete_option( 'advgb_jufeedback_version' );
@@ -143,8 +120,6 @@ if ( !function_exists('advgb_some_specific_updates') ) {
                 if( $blocks_by_role_access ) {
                     update_option( 'advgb_blocks_user_roles', $blocks_by_role_access );
                 }
-
-                // Don't delete post type advgb_profile to keep a backup!
             }
         }
 

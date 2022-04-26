@@ -217,14 +217,16 @@ function advgbRenderBlockRecentPosts($attributes)
             $postHtml .= '<div class="advgb-post-info">';
 
             if (isset($attributes['displayAuthor']) && $attributes['displayAuthor']) {
-				$coauthors = advgbGetCoauthors( array( 'id' => $post->ID ) );
-				if ( ! empty( $coauthors ) ) {
+				$coauthors          = advgbGetCoauthors( array( 'id' => $post->ID ) );
+				$authorLinkNewTab   = isset($attributes['authorLinkNewTab']) && $attributes['authorLinkNewTab'] ? '_blank' : '_self';
+                if ( ! empty( $coauthors ) ) {
 					$index = 0;
 					foreach ( $coauthors as $coauthor ) {
 						$postHtml .= sprintf(
-							'<a href="%1$s" class="advgb-post-author" target="_blank">%2$s</a>',
+							'<a href="%1$s" class="advgb-post-author" target="%3$s">%2$s</a>',
 							$coauthor['link'],
-							$coauthor['display_name']
+							$coauthor['display_name'],
+							$authorLinkNewTab
 						);
 						if ( $index++ < count( $coauthors ) - 1 ) {
 							$postHtml .= '<span>, </span>';
@@ -232,9 +234,10 @@ function advgbRenderBlockRecentPosts($attributes)
 					}
 				} else {
 					$postHtml .= sprintf(
-						'<a href="%1$s" class="advgb-post-author" target="_blank">%2$s</a>',
+						'<a href="%1$s" class="advgb-post-author" target="%3$s">%2$s</a>',
 						get_author_posts_url($post->post_author),
-						get_the_author_meta('display_name', $post->post_author)
+						get_the_author_meta('display_name', $post->post_author),
+						$authorLinkNewTab
 					);
 				}
             }
@@ -506,6 +509,10 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'boolean',
                 'default' => false,
             ),
+            'authorLinkNewTab' => array(
+                'type' => 'boolean',
+                'default' => true,
+            ),
             'postDate' => array(
                 'type' => 'string',
                 'default' => 'hide',
@@ -565,6 +572,10 @@ function advgbRegisterBlockRecentPosts()
             'sliderAutoplay' => array(
                 'type' => 'boolean',
                 'default' => false,
+            ),
+            'sliderAutoplaySpeed' => array(
+                'type' => 'number',
+                'default' => 3000,
             ),
             'newspaperLayout' => array(
                 'type' => 'string',

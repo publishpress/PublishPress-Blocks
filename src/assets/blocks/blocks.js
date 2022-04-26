@@ -5736,7 +5736,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/accordion', {
         title: __('Accordion', 'advanced-gutenberg'),
-        description: __('Easy to create an accordion for your post/page.', 'advanced-gutenberg'),
+        description: __('Create a sliding accordion display for your content.', 'advanced-gutenberg'),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -6272,7 +6272,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/accordion-item', {
         title: __('Accordion Item', 'advanced-gutenberg'),
-        description: __('Easy to create an accordion for your post/page.', 'advanced-gutenberg'),
+        description: __('Create a sliding accordion display for your content.', 'advanced-gutenberg'),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -7158,7 +7158,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/accordions', {
         title: __('Advanced Accordion', 'advanced-gutenberg'),
-        description: __('Easy to create an accordion for your post/page.', 'advanced-gutenberg'),
+        description: __('Create a sliding accordion display for your content.', 'advanced-gutenberg'),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -7296,6 +7296,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var previewImageDataSquaredOutline = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAABoCAYAAADYQu11AAAE1ElEQVR4nO3d4VHrOhCG4T13bgO0EErYlHAoIZSQlEBKgBJICaSEnBJQCaSFlHDPiLuZ8YhVbDkOTLLvM8OfYBJs9FnSWjYCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAmH5Nudeq+h/tCJhOSmmSjP7D3wS4ff9eaA8nHSkAAU06OqZHBwIg6EAABB0IgKADARB0IACCDgRA0IEACDoQAEEHAiDoQAAEHQiAoAMBEHQgAIIOBEDQgQAIOhAAQQcCIOhAAAQdCICgAwEQdCCASz0F9toMfeLmQUReRGSfUtrWNlLVnYj8Ll5+SCn9OfEzTyLyXLy8Tim92PdnIvJx5nH9k1J6UNVXEVme+V59+5P3X+1zZsW387FLIrJJKR2GfFjxPwP29vn7YhvvR/Mx637+2v6GoRD0NnfHMKpqbqiPZWOLzgL+bCGvWdjXs6pu7IQ2KPAmB/dNRObRj/dQDN3Hyw15p6p317oDU1PVHPBdT8hLucf/sBNEC1XVt2s6Pj+JoFfkf4XT/bLeIxVbzyYYAt8Emw48jdyXOztptpwgsoVNedCDoftAKaWkqmvrsboW3zHnsynCl/+AU5m7f87FT7zXSkRWznt5c/eTc3H7uWXlhJdPjNtjnaHz+y6ceoRY2O8bh/F5+J/3tzwJo4MevUGlwYceutvUxQttLrTNuyEXO2HZa3MrqnXV3qvPzk4gqCDo52vpfW7R0jnZ7W3UUGU9sLfNckTd486Kc6gg6A0qBaOTw9oAFs4uDprK2AjJO37ee5bKE6yOHA2EQNAHUtXc+F6LrfcRr8kWvAJadY2Bwwv6kKLcixP2pzMKgjeNYlxFsUDDkxvzqrFwdFMq8+J94zHximhD5tv5M3LB8b14/dlOHhTnOujRx9naNDP6/PxH2Tx/7fwOb9GLpCWCPs5xVdcH1d6fZRX8cqowcy6DhkbQK8oFM7Zopuw9QjeoyvLfWWPV3JuPNy0rTik9OkP1Y3Eu/BJlIehtar2HFeq6vMbV1/i971/D1MCbCw+pmh95VzLGzK8fK8W51tV2N4mgt/Ma4ZfryM42fQ1uqgb/3bwK+6DKt12u9Pa7pWr/yUYX3nX58HN1IegX410yWtbm87ZeuzwRHK5kWefG6Ulntpy2yo6Ft83gW1cd20pxLjyC3q6357WAlmHPPcu7rQv/lOeydseXt9DjKq7PWyi9cOUT23t500kOuL1W3icudsI4N6je9Co8rqMP1FnTXQa9dkPF2rnGm9/jta+3s6H/5uI7NZGU0sbuPCtvbFG7nXToirWHiS5ZruyzuSJiCHrFgAUzYj2Qu6bb7nZbVYanp+wnbPDfJq9tV9XDyJVpB3uIx1RTlYMV53bM0f/H0H283Cjnp54wk3s6W7019BLP1ntE0rVIKa1tf1sCm4/Rfd+tsCPUbpoJiR693brvmXFd1oDvbW4+c3q843PobuKeatvf+dTPjBvpWJwLf7PLlwcZnKMz3J30fYGAPrNkC7XOxtAdCICgAwEQdCAAgg4EQNCBAAg6EABBBwIg6EAABB0IgKADARB0IACCDgRA0IEACDoQAEEHAiDoQAAEHQjgUo+SGvJgRQDfhB4dAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgPBH5CxnLf2zPqO7iAAAAAElFTkSuQmCC';
     var previewImageDataSquared = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAABoCAYAAADYQu11AAAFXklEQVR4nO3c6ytsURzG8XUOUUSIXCNEFK/M//8XjFcUEUWuESKKyOmZ0z5nz7L22WuNfWjm9/3UlMbc9p71rPtsBwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJt+VHnU9Xr9nXIEVKdWq1WS0Z98J0DnI+iAAQQdMICgAwYQdMAAgg4YQNABAwg6YABBBwwg6IABBB0wgKADBhB0wACCDhhA0AEDCDpgAEEHDCDogAEEHTCAoAMGEHTAAIIOGEDQAQO6+ZKd29jYiHrc29ubu7y8dM/Pz+7m5qbwccvLy25gYKDpvv39fXd/f1/4nMnJSTc1NdV039nZmTs/P2/83dvb69bW1qI+Z5GHhwe3t7fn5ubm3Ojo6Kdeq+x4BgcHXX9/f+N9enp6mv53d3fnnp6e3NXVlXt9fY16v/x39PLy0jgOfQ9l1tfXm94/f04tIegJurq6/oRxfHzcHR4eRhU2SxTw6elp19fXV3jUQ0NDjZvO5fX1tTs9PY0OvCi4CwsLbmdnx/rpjkbXvUUqyGq5u7upKzMzMzNuaWnpnyH3qcVXT0UVRAq9x+Li4lcdWtujlBbY3Nxs+oe6obOzs02FWC3L2NiYya6g7zPDAfWUVEHs7u66x8fH6OepV6AhD+e/HEGPpAKoLqYKZJ4K21cUNA0R/MrHFYzds7F4kaOjo8bNFwpr2VhcVNmFQq5xuMbj+fOjzzsyMvJhPkJ0bre3t5O68Xodfb6UCsIiuu4JQgXeetddx68xuU9jb42h/UpQFZbuU+utSbU8teyh1yqjCkIVCIoR9E9KaX06kVpzBTRPAQ71GPLUAoceo55BauWp99fkHIoR9AShCSN1ky3T0MV3cXERdUbUQwqdv+Hh4dLnaqkzT3MnmgxEGEGPpHGlxrB5arliC3WnCs2w397eRh9tKOgxs/baz+CHXUuempzDR0zGFSjbRKNJJnU9LXfdQ+NiVX4p5yQ0iRYz3tZ7aKJwZWWl6X4m58Jo0VuQ7eyyPj7/bgqzdrr5NF63PknqI+gtyHZ1aXsls73fSzP4qnjztL/BXwa1jmqvQGjN2t+PrgKl3XFbW1vf/nm/Q2j7r86JWtPY3o42IvlStxUfHBy41dXVprF9Njmn1/L32ltEi56gqPXQRF1eqKCWdSX9JSrXJkt3GsL4YmbNM/6Pf4pes4x+dxCanEvZjtvJCHqiUCEMrSP7ygpcVQX+q/kVn0xMTER9Ci1Xho47ZdY+o8r1+Pj4w/2hCtQigv4fhHbQaSNI0XheQwK/IlDr1A4zx/qpqd+SqpfjL0X6dC5Cj9GOulZ7MvrpcGhyDgQ9WUzLq4D668NqWTSO1E6yjLrzGkeG9n1rnbgdKJT6DYBPFZuO11/XVsB1n/bn+2NnVRih10oRGl6Bybho2Z5uP+gKdKjlVYH113gVdv0CTrd/UddfLWW70GdVj8T/YYvu0y1UkYVoXbyKeQntb9D7Mgn3F0EvEHPVGbVARXu6FX6NGctC7cuuntJua/Q6DzofmgBLpedpMq2qoYrOnV5PS2yM0X8j6C1Sd73sCjNq6fR/jUVjWhd1OU9OTtr2qjX67JqfKLvCTF4rV5iJkVW08/Pzlb5uuyLoiTTZU3bNuDwVfK2za2yu8anf4mXXoeuUbZs6Dt2qvmZcK/Qd6ZzHDh062Y8qj61er79bP6FAlWq1WiUZZdYdMICgAwYQdMAAgg4YQNABAwg6YABBBwwg6IABBB0wgKADBhB0wACCDhhA0AEDCDpgAEEHDCDogAEEHTCAoAMGEHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIDWOed+AS3cOPlbAUbbAAAAAElFTkSuQmCC';
 
+    function advgb_relAttribute(attributes) {
+        var values = [attributes.noreferrer ? 'noreferrer' : '', attributes.nofollow ? 'nofollow' : ''].filter(Boolean).join(' ');
+
+        return values;
+    }
+
     var AdvButton = function (_Component) {
         _inherits(AdvButton, _Component);
 
@@ -7351,6 +7357,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     clientId = _props2.clientId;
 
                 setAttributes({ id: 'advgbbtn-' + clientId });
+
+                // Reset attributes when Pro is not available
+                if (advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1') {
+                    setAttributes({
+                        noreferrer: true,
+                        nofollow: false
+                    });
+                }
             }
         }, {
             key: "componentDidUpdate",
@@ -7460,6 +7474,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     iconTheme = attributes.iconTheme,
                     iconPosition = attributes.iconPosition,
                     iconSpacing = attributes.iconSpacing,
+                    noreferrer = attributes.noreferrer,
+                    nofollow = attributes.nofollow,
                     isPreview = attributes.isPreview;
 
 
@@ -7510,7 +7526,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         },
                         React.createElement(
                             "span",
-                            { className: "wp-block-advgb-button_link " + id },
+                            { className: "wp-block-advgb-button_link " + id, rel: advgb_relAttribute(attributes) },
                             iconDisplay && React.createElement(
                                 "i",
                                 { className: iconClass },
@@ -8030,6 +8046,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'number',
             default: 7
         },
+        noreferrer: {
+            type: 'boolean',
+            default: true
+        },
+        nofollow: {
+            type: 'boolean',
+            default: false
+        },
         changed: {
             type: 'boolean',
             default: false
@@ -8042,7 +8066,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/button', {
         title: __('Advanced Button', 'advanced-gutenberg'),
-        description: __('New button with more styles.', 'advanced-gutenberg'),
+        description: __('Advanced button block with more options and styles.', 'advanced-gutenberg'),
         icon: {
             src: buttonBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -8095,7 +8119,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 iconColor = attributes.iconColor,
                 iconTheme = attributes.iconTheme,
                 iconPosition = attributes.iconPosition,
-                iconSpacing = attributes.iconSpacing;
+                iconSpacing = attributes.iconSpacing,
+                noreferrer = attributes.noreferrer,
+                nofollow = attributes.nofollow;
 
 
             var iconClass = ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join('');
@@ -8109,7 +8135,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         href: url || '#',
                         title: title,
                         target: !urlOpenNewTab ? '_self' : '_blank',
-                        rel: "noopener noreferrer" },
+                        rel: 'noopener ' + advgb_relAttribute(attributes) },
                     iconDisplay && React.createElement(
                         "i",
                         { className: iconClass },
@@ -12306,7 +12332,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType,
-        createBlock = wpBlocks.createBlock;
+        createBlock = wpBlocks.createBlock,
+        cloneBlock = wpBlocks.cloneBlock;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
         RichText = _wpBlockEditor.RichText,
@@ -12556,8 +12583,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
         }, {
-            key: "addTab",
-            value: function addTab() {
+            key: "duplicateTab",
+            value: function duplicateTab(index) {
                 var _props8 = this.props,
                     attributes = _props8.attributes,
                     setAttributes = _props8.setAttributes,
@@ -12565,6 +12592,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var _ref11 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
                     insertBlock = _ref11.insertBlock;
+
+                var _ref12 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref12.getBlockOrder,
+                    getBlock = _ref12.getBlock;
+
+                var childBlocks = getBlockOrder(clientId);
+                var blockTab = getBlock(childBlocks[index]);
+                var clonedTab = cloneBlock(blockTab);
+
+                insertBlock(clonedTab, attributes.tabHeaders.length, clientId);
+                setAttributes({
+                    tabHeaders: [].concat(_toConsumableArray(attributes.tabHeaders), [attributes.tabHeaders[index] + " (" + __('copy', 'advanced-gutenberg') + ")"]),
+                    tabAnchors: [].concat(_toConsumableArray(attributes.tabAnchors), [''])
+                });
+                this.props.resetOrder();
+            }
+        }, {
+            key: "addTab",
+            value: function addTab() {
+                var _props9 = this.props,
+                    attributes = _props9.attributes,
+                    setAttributes = _props9.setAttributes,
+                    clientId = _props9.clientId;
+
+                var _ref13 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    insertBlock = _ref13.insertBlock;
 
                 var tabItemBlock = createBlock('advgb/tab');
 
@@ -12578,16 +12631,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "removeTab",
             value: function removeTab(index) {
-                var _props9 = this.props,
-                    attributes = _props9.attributes,
-                    setAttributes = _props9.setAttributes,
-                    clientId = _props9.clientId;
+                var _props10 = this.props,
+                    attributes = _props10.attributes,
+                    setAttributes = _props10.setAttributes,
+                    clientId = _props10.clientId;
 
-                var _ref12 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
-                    removeBlock = _ref12.removeBlock;
+                var _ref14 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    removeBlock = _ref14.removeBlock;
 
-                var _ref13 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
-                    getBlockOrder = _ref13.getBlockOrder;
+                var _ref15 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref15.getBlockOrder;
 
                 var childBlocks = getBlockOrder(clientId);
 
@@ -12631,16 +12684,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "onMove",
             value: function onMove(index, newIndex, headers, header, anchors, anchor) {
-                var _props10 = this.props,
-                    attributes = _props10.attributes,
-                    setAttributes = _props10.setAttributes,
-                    clientId = _props10.clientId;
+                var _props11 = this.props,
+                    attributes = _props11.attributes,
+                    setAttributes = _props11.setAttributes,
+                    clientId = _props11.clientId;
 
-                var _ref14 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
-                    moveBlockToPosition = _ref14.moveBlockToPosition;
+                var _ref16 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    moveBlockToPosition = _ref16.moveBlockToPosition;
 
-                var _ref15 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
-                    getBlockOrder = _ref15.getBlockOrder;
+                var _ref17 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref17.getBlockOrder;
 
                 var childBlocks = getBlockOrder(clientId);
 
@@ -12656,14 +12709,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.props.updateTabActive(newIndex);
             }
         }, {
+            key: "translatableText",
+            value: function translatableText(text) {
+                switch (text) {
+                    case 'desktop':
+                        return __('desktop', 'advanced-gutenberg');
+                        break;
+                    case 'tablet':
+                        return __('tablet', 'advanced-gutenberg');
+                        break;
+                    case 'mobile':
+                        return __('mobile', 'advanced-gutenberg');
+                        break;
+                }
+            }
+        }, {
             key: "render",
             value: function render() {
                 var _this2 = this;
 
-                var _props11 = this.props,
-                    attributes = _props11.attributes,
-                    setAttributes = _props11.setAttributes,
-                    clientId = _props11.clientId;
+                var _props12 = this.props,
+                    attributes = _props12.attributes,
+                    setAttributes = _props12.setAttributes,
+                    clientId = _props12.clientId;
                 var viewport = this.state.viewport;
                 var tabHeaders = attributes.tabHeaders,
                     tabAnchors = attributes.tabAnchors,
@@ -12714,7 +12782,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 return _this2.setState({ viewport: device });
                                             }
                                         },
-                                        device
+                                        _this2.translatableText(device)
                                     );
                                 })
                             ),
@@ -12938,6 +13006,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 },
                                                 React.createElement(Dashicon, { icon: "arrow-right-alt2" })
                                             )
+                                        ),
+                                        React.createElement(
+                                            Tooltip,
+                                            { text: __('Duplicate tab', 'advanced-gutenberg') },
+                                            React.createElement(
+                                                "span",
+                                                { className: "advgb-tab-duplicate",
+                                                    onClick: function onClick() {
+                                                        return _this2.duplicateTab(index);
+                                                    },
+                                                    style: { display: tabActive === index ? 'block' : 'none' }
+                                                },
+                                                React.createElement(Dashicon, { icon: "admin-page" })
+                                            )
                                         )
                                     ),
                                     tabHeaders.length > 1 && React.createElement(
@@ -13104,7 +13186,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/adv-tabs', {
         title: __('Advanced Tabs', 'advanced-gutenberg'),
-        description: __('Create your own tabs never easy like this.', 'advanced-gutenberg'),
+        description: __('Create horizontal or vertical tabs to display your content.', 'advanced-gutenberg'),
         icon: {
             src: tabsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -13120,9 +13202,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         supports: {
             anchor: true
         },
-        edit: compose(withDispatch(function (dispatch, _ref16, _ref17) {
-            var clientId = _ref16.clientId;
-            var select = _ref17.select;
+        edit: compose(withDispatch(function (dispatch, _ref18, _ref19) {
+            var clientId = _ref18.clientId;
+            var select = _ref19.select;
 
             var _select = select('core/block-editor'),
                 getBlock = _select.getBlock;
@@ -13152,8 +13234,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             };
         }))(AdvTabsWrapper),
-        save: function save(_ref18) {
-            var attributes = _ref18.attributes;
+        save: function save(_ref20) {
+            var attributes = _ref20.attributes;
             var tabHeaders = attributes.tabHeaders,
                 tabAnchors = attributes.tabAnchors,
                 tabActiveFrontend = attributes.tabActiveFrontend,
@@ -13221,8 +13303,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         deprecated: [{
             attributes: _extends({}, tabBlockAttrs),
-            save: function save(_ref19) {
-                var attributes = _ref19.attributes;
+            save: function save(_ref21) {
+                var attributes = _ref21.attributes;
                 var tabHeaders = attributes.tabHeaders,
                     tabActiveFrontend = attributes.tabActiveFrontend,
                     tabsStyleD = attributes.tabsStyleD,
@@ -13294,8 +13376,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     default: false
                 }
             }),
-            save: function save(_ref20) {
-                var attributes = _ref20.attributes;
+            save: function save(_ref22) {
+                var attributes = _ref22.attributes;
                 var tabHeaders = attributes.tabHeaders,
                     tabActiveFrontend = attributes.tabActiveFrontend,
                     tabsStyleD = attributes.tabsStyleD,
@@ -13368,8 +13450,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     default: ''
                 }
             }),
-            save: function save(_ref21) {
-                var attributes = _ref21.attributes;
+            save: function save(_ref23) {
+                var attributes = _ref23.attributes;
                 var tabHeaders = attributes.tabHeaders,
                     tabActiveFrontend = attributes.tabActiveFrontend,
                     tabsStyleD = attributes.tabsStyleD,
@@ -14466,7 +14548,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/video', {
         title: __('Advanced Video', 'advanced-gutenberg'),
-        description: __('Powerful block for insert and embed video.', 'advanced-gutenberg'),
+        description: __('Add more options and styles for videos in your Media Library.', 'advanced-gutenberg'),
         icon: {
             src: advVideoBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -14806,6 +14888,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: 'translatableText',
+            value: function translatableText(text) {
+                switch (text) {
+                    case 'desktop':
+                        return __('desktop', 'advanced-gutenberg');
+                        break;
+                    case 'tablet':
+                        return __('tablet', 'advanced-gutenberg');
+                        break;
+                    case 'mobile':
+                        return __('mobile', 'advanced-gutenberg');
+                        break;
+                }
+            }
+        }, {
             key: 'render',
             value: function render() {
                 var _this2 = this;
@@ -14989,7 +15086,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     return _this2.setState({ tabSelected: device });
                                                 }
                                             },
-                                            device
+                                            _this2.translatableText(device)
                                         );
                                     })
                                 ),
@@ -15585,7 +15682,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/columns', {
         title: __('Columns Manager', 'advanced-gutenberg'),
-        description: __('Row layout with columns you decided.', 'advanced-gutenberg'),
+        description: __('Create flexible layouts for your content with advanced options and styles.', 'advanced-gutenberg'),
         icon: {
             src: 'layout',
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -17471,7 +17568,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/count-up', {
         title: __('Count Up', 'advanced-gutenberg'),
-        description: __('Make a block with animate counting numbers.', 'advanced-gutenberg'),
+        description: __('Create an animated display for important numbers.', 'advanced-gutenberg'),
         icon: {
             src: countUpBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -23176,7 +23273,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/map', {
         title: __('Map', 'advanced-gutenberg'),
-        description: __('Block for inserting location map.', 'advanced-gutenberg'),
+        description: __('Display a location using Google Maps.', 'advanced-gutenberg'),
         icon: {
             src: mapBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -24206,11 +24303,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     postList = _props4.postList;
                 var postView = attributes.postView,
                     updatePostSuggestions = attributes.updatePostSuggestions,
-                    sliderAutoplay = attributes.sliderAutoplay;
+                    sliderAutoplay = attributes.sliderAutoplay,
+                    sliderAutoplaySpeed = attributes.sliderAutoplaySpeed;
 
                 var $ = jQuery;
 
                 if (postView === 'slider') {
+
+                    // Autoplay
                     initSlider = setTimeout(function () {
                         $('#block-' + clientId + ' .advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)').slick({
                             dots: true,
@@ -24224,6 +24324,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             that.setState({ updating: false });
                         }
                     }, 100);
+
+                    // Autoplay speed
+                    if (sliderAutoplay && sliderAutoplaySpeed && advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1') {
+                        $('#block-' + clientId + ' .advgb-recent-posts-block.slider-view .advgb-recent-posts.slick-initialized').slick('slickSetOption', 'autoplaySpeed', sliderAutoplaySpeed, true);
+                    } else {
+                        $('#block-' + clientId + ' .advgb-recent-posts-block.slider-view .advgb-recent-posts.slick-initialized').slick('slickSetOption', 'autoplaySpeed', 3000, true);
+                    }
                 } else {
                     $('#block-' + clientId + ' .advgb-recent-posts.slick-initialized').slick('unslick');
                 }
@@ -24262,6 +24369,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: 'translatableText',
+            value: function translatableText(text) {
+                switch (text) {
+                    case 'desktop':
+                        return __('desktop', 'advanced-gutenberg');
+                        break;
+                    case 'tablet':
+                        return __('tablet', 'advanced-gutenberg');
+                        break;
+                    case 'mobile':
+                        return __('mobile', 'advanced-gutenberg');
+                        break;
+                }
+            }
+        }, {
             key: 'render',
             value: function render() {
                 var _this3 = this;
@@ -24291,6 +24413,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayFeaturedImageCaption = attributes.displayFeaturedImageCaption,
                     enablePlaceholderImage = attributes.enablePlaceholderImage,
                     displayAuthor = attributes.displayAuthor,
+                    authorLinkNewTab = attributes.authorLinkNewTab,
                     displayDate = attributes.displayDate,
                     postDate = attributes.postDate,
                     postDateFormat = attributes.postDateFormat,
@@ -24379,7 +24502,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             return _this3.setState({ tabSelected: device });
                                         }
                                     },
-                                    device
+                                    _this3.translatableText(device)
                                 );
                             })
                         ),
@@ -24698,6 +24821,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onChange: function onChange() {
                                 return setAttributes({ displayAuthor: !displayAuthor });
                             }
+                        }),
+                        displayAuthor && React.createElement(ToggleControl, {
+                            label: __('Open link in new tab', 'advanced-gutenberg'),
+                            checked: !!authorLinkNewTab,
+                            onChange: function onChange() {
+                                return setAttributes({ authorLinkNewTab: !authorLinkNewTab });
+                            },
+                            className: 'advgb-child-toggle'
                         }),
                         React.createElement(SelectControl, {
                             label: __('Display Post Date', 'advanced-gutenberg'),
@@ -26981,7 +27112,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/social-links', {
         title: __('Social Links', 'advanced-gutenberg'),
-        description: __('Insert your social link with icon.', 'advanced-gutenberg'),
+        description: __('Create a styling display of links to your social media profiles.', 'advanced-gutenberg'),
         icon: {
             src: socialBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -28134,7 +28265,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/tabs', {
         title: __('Tabs', 'advanced-gutenberg'),
-        description: __('Create your own tabs never easy like this.', 'advanced-gutenberg'),
+        description: __('Create horizontal or vertical tabs to display your content.', 'advanced-gutenberg'),
         icon: {
             src: tabsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined

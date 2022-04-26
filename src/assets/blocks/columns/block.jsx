@@ -130,6 +130,20 @@
             }
         }
 
+        translatableText(text) {
+            switch(text){
+                case 'desktop':
+                    return __('desktop', 'advanced-gutenberg');
+                    break;
+                case 'tablet':
+                    return __('tablet', 'advanced-gutenberg');
+                    break;
+                case 'mobile':
+                    return __('mobile', 'advanced-gutenberg');
+                    break;
+            }
+        }
+
         static prepareColumnClass(layout, extraClass, classObj) {
             switch (layout) {
                 case '12-12':
@@ -439,7 +453,7 @@
                                                  key={ index }
                                                  onClick={ () => this.setState( { tabSelected: device } ) }
                                             >
-                                                {device}
+                                                {this.translatableText(device)}
                                             </div>
                                         )
                                     } ) }
@@ -848,7 +862,7 @@
 
     registerBlockType( 'advgb/columns', {
         title: __( 'Columns Manager', 'advanced-gutenberg' ),
-        description: __( 'Row layout with columns you decided.', 'advanced-gutenberg' ),
+        description: __( 'Create flexible layouts for your content with advanced options and styles.', 'advanced-gutenberg' ),
         icon: {
             src: 'layout',
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,

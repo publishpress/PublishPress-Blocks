@@ -259,10 +259,12 @@ import { AuthorSelect } from './query-controls.jsx';
         componentDidUpdate( prevProps ) {
             const that = this;
             const { attributes, clientId, postList } = this.props;
-            const { postView, updatePostSuggestions, sliderAutoplay } = attributes;
+            const { postView, updatePostSuggestions, sliderAutoplay, sliderAutoplaySpeed } = attributes;
             const $ = jQuery;
 
             if (postView === 'slider') {
+
+                // Autoplay
                 initSlider = setTimeout(function () {
                     $(`#block-${clientId} .advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)`).slick( {
                         dots: true,
@@ -276,6 +278,14 @@ import { AuthorSelect } from './query-controls.jsx';
                         that.setState( { updating: false } );
                     }
                 }, 100 );
+
+                // Autoplay speed
+                if( sliderAutoplay && sliderAutoplaySpeed && advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1' ) {
+                    $(`#block-${clientId} .advgb-recent-posts-block.slider-view .advgb-recent-posts.slick-initialized`).slick('slickSetOption', 'autoplaySpeed', sliderAutoplaySpeed, true);
+                } else {
+                    $(`#block-${clientId} .advgb-recent-posts-block.slider-view .advgb-recent-posts.slick-initialized`).slick('slickSetOption', 'autoplaySpeed', 3000, true);
+                }
+
             } else {
                 $(`#block-${clientId} .advgb-recent-posts.slick-initialized`).slick('unslick');
             }
@@ -315,6 +325,20 @@ import { AuthorSelect } from './query-controls.jsx';
 
         }
 
+        translatableText(text) {
+            switch(text){
+                case 'desktop':
+                    return __('desktop', 'advanced-gutenberg');
+                    break;
+                case 'tablet':
+                    return __('tablet', 'advanced-gutenberg');
+                    break;
+                case 'mobile':
+                    return __('mobile', 'advanced-gutenberg');
+                    break;
+            }
+        }
+
         render() {
             const { categoriesList, tagsList, postTypeList, tabSelected, authorList, postSuggestions, taxonomyList } = this.state;
             const { attributes, setAttributes, recentPosts: recentPostsList } = this.props;
@@ -332,6 +356,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 displayFeaturedImageCaption,
                 enablePlaceholderImage,
                 displayAuthor,
+                authorLinkNewTab,
                 displayDate,
                 postDate,
                 postDateFormat,
@@ -413,7 +438,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                          key={ index }
                                          onClick={ () => this.setState( { tabSelected: device } ) }
                                     >
-                                        {device}
+                                        {this.translatableText(device)}
                                     </div>
                                 )
                             } ) }
@@ -723,6 +748,14 @@ import { AuthorSelect } from './query-controls.jsx';
                             checked={ displayAuthor }
                             onChange={ () => setAttributes( { displayAuthor: !displayAuthor } ) }
                         />
+                        { displayAuthor &&
+                            <ToggleControl
+                                label={ __( 'Open link in new tab', 'advanced-gutenberg' ) }
+                                checked={ !!authorLinkNewTab }
+                                onChange={ () => setAttributes( { authorLinkNewTab: !authorLinkNewTab } ) }
+                                className="advgb-child-toggle"
+                            />
+                        }
                         <SelectControl
                             label={ __( 'Display Post Date', 'advanced-gutenberg' ) }
                             value={ postDate }

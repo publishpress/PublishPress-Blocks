@@ -16,6 +16,15 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
     const previewImageDataSquaredOutline = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAABoCAYAAADYQu11AAAE1ElEQVR4nO3d4VHrOhCG4T13bgO0EErYlHAoIZSQlEBKgBJICaSEnBJQCaSFlHDPiLuZ8YhVbDkOTLLvM8OfYBJs9FnSWjYCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAmH5Nudeq+h/tCJhOSmmSjP7D3wS4ff9eaA8nHSkAAU06OqZHBwIg6EAABB0IgKADARB0IACCDgRA0IEACDoQAEEHAiDoQAAEHQiAoAMBEHQgAIIOBEDQgQAIOhAAQQcCIOhAAAQdCICgAwEQdCCASz0F9toMfeLmQUReRGSfUtrWNlLVnYj8Ll5+SCn9OfEzTyLyXLy8Tim92PdnIvJx5nH9k1J6UNVXEVme+V59+5P3X+1zZsW387FLIrJJKR2GfFjxPwP29vn7YhvvR/Mx637+2v6GoRD0NnfHMKpqbqiPZWOLzgL+bCGvWdjXs6pu7IQ2KPAmB/dNRObRj/dQDN3Hyw15p6p317oDU1PVHPBdT8hLucf/sBNEC1XVt2s6Pj+JoFfkf4XT/bLeIxVbzyYYAt8Emw48jdyXOztptpwgsoVNedCDoftAKaWkqmvrsboW3zHnsynCl/+AU5m7f87FT7zXSkRWznt5c/eTc3H7uWXlhJdPjNtjnaHz+y6ceoRY2O8bh/F5+J/3tzwJo4MevUGlwYceutvUxQttLrTNuyEXO2HZa3MrqnXV3qvPzk4gqCDo52vpfW7R0jnZ7W3UUGU9sLfNckTd486Kc6gg6A0qBaOTw9oAFs4uDprK2AjJO37ee5bKE6yOHA2EQNAHUtXc+F6LrfcRr8kWvAJadY2Bwwv6kKLcixP2pzMKgjeNYlxFsUDDkxvzqrFwdFMq8+J94zHximhD5tv5M3LB8b14/dlOHhTnOujRx9naNDP6/PxH2Tx/7fwOb9GLpCWCPs5xVdcH1d6fZRX8cqowcy6DhkbQK8oFM7Zopuw9QjeoyvLfWWPV3JuPNy0rTik9OkP1Y3Eu/BJlIehtar2HFeq6vMbV1/i971/D1MCbCw+pmh95VzLGzK8fK8W51tV2N4mgt/Ma4ZfryM42fQ1uqgb/3bwK+6DKt12u9Pa7pWr/yUYX3nX58HN1IegX410yWtbm87ZeuzwRHK5kWefG6Ulntpy2yo6Ft83gW1cd20pxLjyC3q6357WAlmHPPcu7rQv/lOeydseXt9DjKq7PWyi9cOUT23t500kOuL1W3icudsI4N6je9Co8rqMP1FnTXQa9dkPF2rnGm9/jta+3s6H/5uI7NZGU0sbuPCtvbFG7nXToirWHiS5ZruyzuSJiCHrFgAUzYj2Qu6bb7nZbVYanp+wnbPDfJq9tV9XDyJVpB3uIx1RTlYMV53bM0f/H0H283Cjnp54wk3s6W7019BLP1ntE0rVIKa1tf1sCm4/Rfd+tsCPUbpoJiR693brvmXFd1oDvbW4+c3q843PobuKeatvf+dTPjBvpWJwLf7PLlwcZnKMz3J30fYGAPrNkC7XOxtAdCICgAwEQdCAAgg4EQNCBAAg6EABBBwIg6EAABB0IgKADARB0IACCDgRA0IEACDoQAEEHAiDoQAAEHQjgUo+SGvJgRQDfhB4dAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgPBH5CxnLf2zPqO7iAAAAAElFTkSuQmCC';
     const previewImageDataSquared = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAABoCAYAAADYQu11AAAFXklEQVR4nO3c6ytsURzG8XUOUUSIXCNEFK/M//8XjFcUEUWuESKKyOmZ0z5nz7L22WuNfWjm9/3UlMbc9p71rPtsBwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJt+VHnU9Xr9nXIEVKdWq1WS0Z98J0DnI+iAAQQdMICgAwYQdMAAgg4YQNABAwg6YABBBwwg6IABBB0wgKADBhB0wACCDhhA0AEDCDpgAEEHDCDogAEEHTCAoAMGEHTAAIIOGEDQAQO6+ZKd29jYiHrc29ubu7y8dM/Pz+7m5qbwccvLy25gYKDpvv39fXd/f1/4nMnJSTc1NdV039nZmTs/P2/83dvb69bW1qI+Z5GHhwe3t7fn5ubm3Ojo6Kdeq+x4BgcHXX9/f+N9enp6mv53d3fnnp6e3NXVlXt9fY16v/x39PLy0jgOfQ9l1tfXm94/f04tIegJurq6/oRxfHzcHR4eRhU2SxTw6elp19fXV3jUQ0NDjZvO5fX1tTs9PY0OvCi4CwsLbmdnx/rpjkbXvUUqyGq5u7upKzMzMzNuaWnpnyH3qcVXT0UVRAq9x+Li4lcdWtujlBbY3Nxs+oe6obOzs02FWC3L2NiYya6g7zPDAfWUVEHs7u66x8fH6OepV6AhD+e/HEGPpAKoLqYKZJ4K21cUNA0R/MrHFYzds7F4kaOjo8bNFwpr2VhcVNmFQq5xuMbj+fOjzzsyMvJhPkJ0bre3t5O68Xodfb6UCsIiuu4JQgXeetddx68xuU9jb42h/UpQFZbuU+utSbU8teyh1yqjCkIVCIoR9E9KaX06kVpzBTRPAQ71GPLUAoceo55BauWp99fkHIoR9AShCSN1ky3T0MV3cXERdUbUQwqdv+Hh4dLnaqkzT3MnmgxEGEGPpHGlxrB5arliC3WnCs2w397eRh9tKOgxs/baz+CHXUuempzDR0zGFSjbRKNJJnU9LXfdQ+NiVX4p5yQ0iRYz3tZ7aKJwZWWl6X4m58Jo0VuQ7eyyPj7/bgqzdrr5NF63PknqI+gtyHZ1aXsls73fSzP4qnjztL/BXwa1jmqvQGjN2t+PrgKl3XFbW1vf/nm/Q2j7r86JWtPY3o42IvlStxUfHBy41dXVprF9Njmn1/L32ltEi56gqPXQRF1eqKCWdSX9JSrXJkt3GsL4YmbNM/6Pf4pes4x+dxCanEvZjtvJCHqiUCEMrSP7ygpcVQX+q/kVn0xMTER9Ci1Xho47ZdY+o8r1+Pj4w/2hCtQigv4fhHbQaSNI0XheQwK/IlDr1A4zx/qpqd+SqpfjL0X6dC5Cj9GOulZ7MvrpcGhyDgQ9WUzLq4D668NqWTSO1E6yjLrzGkeG9n1rnbgdKJT6DYBPFZuO11/XVsB1n/bn+2NnVRih10oRGl6Bybho2Z5uP+gKdKjlVYH113gVdv0CTrd/UddfLWW70GdVj8T/YYvu0y1UkYVoXbyKeQntb9D7Mgn3F0EvEHPVGbVARXu6FX6NGctC7cuuntJua/Q6DzofmgBLpedpMq2qoYrOnV5PS2yM0X8j6C1Sd73sCjNq6fR/jUVjWhd1OU9OTtr2qjX67JqfKLvCTF4rV5iJkVW08/Pzlb5uuyLoiTTZU3bNuDwVfK2za2yu8anf4mXXoeuUbZs6Dt2qvmZcK/Qd6ZzHDh062Y8qj61er79bP6FAlWq1WiUZZdYdMICgAwYQdMAAgg4YQNABAwg6YABBBwwg6IABBB0wgKADBhB0wACCDhhA0AEDCDpgAEEHDCDogAEEHTCAoAMGEHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIDWOed+AS3cOPlbAUbbAAAAAElFTkSuQmCC';
 
+    function advgb_relAttribute(attributes) {
+        let values = [
+            attributes.noreferrer ? 'noreferrer' : '',
+            attributes.nofollow ? 'nofollow' : ''
+        ].filter( Boolean ).join(' ');
+
+        return values;
+    }
+
     class AdvButton extends Component {
         constructor() {
             super( ...arguments );
@@ -55,6 +64,14 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
         componentDidMount() {
             const { attributes, setAttributes, clientId } = this.props;
             setAttributes( { id: 'advgbbtn-' + clientId } );
+
+            // Reset attributes when Pro is not available
+            if( advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1' ) {
+                setAttributes( {
+                    noreferrer: true,
+                    nofollow: false
+                } );
+            }
         }
 
         componentDidUpdate() {
@@ -129,7 +146,8 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 paddingTop, paddingRight, paddingBottom, paddingLeft,
                 borderWidth, borderColor, borderRadius, borderStyle,
                 hoverTextColor, hoverBgColor, hoverShadowColor, hoverShadowH, hoverShadowV, hoverShadowBlur, hoverShadowSpread,
-                hoverOpacity, transitionSpeed, iconDisplay, icon, iconSize, iconColor, iconTheme, iconPosition, iconSpacing, isPreview
+                hoverOpacity, transitionSpeed, iconDisplay, icon, iconSize, iconColor, iconTheme, iconPosition, iconSpacing,
+                noreferrer, nofollow, isPreview
             } = attributes;
 
             const isStyleSquared        = className.indexOf('-squared') > -1;
@@ -178,7 +196,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                     <span className={`${className} align${align}`}
                           style={ { display: 'inline-block' } }
                     >
-                        <span className={ `wp-block-advgb-button_link ${id}` }>
+                        <span className={ `wp-block-advgb-button_link ${id}` } rel={ advgb_relAttribute(attributes) }>
                             { iconDisplay && (
                                 <i className={iconClass}>
                                     {icon}
@@ -665,6 +683,14 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
             type: 'number',
             default: 7,
         },
+        noreferrer: {
+            type: 'boolean',
+            default: true,
+        },
+        nofollow: {
+            type: 'boolean',
+            default: false,
+        },
         changed: {
             type: 'boolean',
             default: false,
@@ -677,7 +703,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
 
     registerBlockType( 'advgb/button', {
         title: __( 'Advanced Button', 'advanced-gutenberg' ),
-        description: __( 'New button with more styles.', 'advanced-gutenberg' ),
+        description: __( 'Advanced button block with more options and styles.', 'advanced-gutenberg' ),
         icon: {
             src: buttonBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
@@ -741,7 +767,9 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 iconColor,
                 iconTheme,
                 iconPosition,
-                iconSpacing
+                iconSpacing,
+                noreferrer,
+                nofollow
             } = attributes;
 
             const iconClass = [
@@ -756,7 +784,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                         href={ url || '#' }
                         title={ title }
                         target={ !urlOpenNewTab ? '_self' : '_blank' }
-                        rel="noopener noreferrer">
+                        rel={ 'noopener ' + advgb_relAttribute(attributes) }>
                         { iconDisplay && (
                             <i className={iconClass}>
                                 {icon}

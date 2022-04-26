@@ -158,7 +158,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     // Add Upgrade to Pro Ad in sidebar
     addFilter('editor.BlockEdit', 'advgb/proAd', function (BlockEdit) {
         return function (props) {
-            return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-class-name' }, props)), props.isSelected && SUPPORTED_BLOCKS.includes(props.name) && React.createElement(
+            return [props.isSelected && SUPPORTED_BLOCKS.includes(props.name) && React.createElement(
                 InspectorControls,
                 { key: 'advgb-custom-controls' },
                 React.createElement(
@@ -172,7 +172,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         __('Upgrade to Pro', 'advanced-gutenberg')
                     )
                 )
-            )];
+            ), React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-class-name' }, props))];
         };
     });
 })(wp.i18n, wp.hooks, wp.blockEditor);
