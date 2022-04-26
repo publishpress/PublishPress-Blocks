@@ -600,7 +600,7 @@
 
     registerBlockType( 'advgb/video', {
         title: __( 'Advanced Video', 'advanced-gutenberg' ),
-        description: __( 'Powerful block for insert and embed video.', 'advanced-gutenberg' ),
+        description: __( 'Add more options and styles for videos in your Media Library.', 'advanced-gutenberg' ),
         icon: {
             src: advVideoBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,

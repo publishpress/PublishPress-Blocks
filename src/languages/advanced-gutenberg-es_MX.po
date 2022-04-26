@@ -269,7 +269,7 @@ msgstr "Acordeón"
 
 #: assets/blocks/blocks.js:5739 assets/blocks/blocks.js:6275
 #: assets/blocks/blocks.js:7161
-msgid "Easy to create an accordion for your post/page."
+msgid "Create a sliding accordion display for your content."
 msgstr "Crea fácilmente un acordeón para su entrada/página."
 
 #: assets/blocks/blocks.js:5745 assets/blocks/blocks.js:6282
@@ -535,7 +535,7 @@ msgid "Spacing between icon and text"
 msgstr "Espaciado entre el ícono y el texto"
 
 #: assets/blocks/blocks.js:8045
-msgid "New button with more styles."
+msgid "Advanced button block with more options and styles."
 msgstr "Nuevo botón con más estilos."
 
 #: assets/blocks/blocks.js:8051
@@ -1235,7 +1235,7 @@ msgid "Tab 3"
 msgstr "Pestaña 3"
 
 #: assets/blocks/blocks.js:13085 assets/blocks/blocks.js:27954
-msgid "Create your own tabs never easy like this."
+msgid "Create horizontal or vertical tabs to display your content."
 msgstr "Crear tus propias pestañas nunca fue tan fácil."
 
 #: assets/blocks/blocks.js:13091 assets/blocks/blocks.js:27960
@@ -1360,7 +1360,7 @@ msgid "Not selected yet."
 msgstr "Aún no seleccionado."
 
 #: assets/blocks/blocks.js:14447
-msgid "Powerful block for insert and embed video."
+msgid "Add more options and styles for videos in your Media Library."
 msgstr "Potente bloque para insertar e incrustar video."
 
 #: assets/blocks/blocks.js:14453
@@ -1669,7 +1669,7 @@ msgid "Content Max Height"
 msgstr "Altura máxima del contenido"
 
 #: assets/blocks/blocks.js:15566
-msgid "Row layout with columns you decided."
+msgid "Create flexible layouts for your content with advanced options and styles."
 msgstr "Diseño de fila con columnas elegido."
 
 #: assets/blocks/blocks.js:15572 assets/blocks/blocks.js:16149
@@ -1932,7 +1932,7 @@ msgid "Enter text…"
 msgstr "Introduce el texto…"
 
 #: assets/blocks/blocks.js:17484
-msgid "Make a block with animate counting numbers."
+msgid "Create an animated display for important numbers."
 msgstr "Haz un bloque con números de conteo animados."
 
 #: assets/blocks/blocks.js:17490
@@ -2433,7 +2433,7 @@ msgid "Add Google API Key"
 msgstr "Agregar clave API de Google"
 
 #: assets/blocks/blocks.js:23007
-msgid "Block for inserting location map."
+msgid "Display a location using Google Maps."
 msgstr "Bloque para insertar mapa de ubicación."
 
 #: assets/blocks/blocks.js:23013
@@ -3118,7 +3118,7 @@ msgid "Enter social link…"
 msgstr "Introduce un enlace social…"
 
 #: assets/blocks/blocks.js:26801
-msgid "Insert your social link with icon."
+msgid "Create a styling display of links to your social media profiles."
 msgstr "Inserta tu enlace social con ícono."
 
 #: assets/blocks/blocks.js:26807

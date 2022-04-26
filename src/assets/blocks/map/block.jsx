@@ -1438,7 +1438,7 @@
 
     registerBlockType( 'advgb/map', {
         title: __( 'Map', 'advanced-gutenberg' ),
-        description: __( 'Block for inserting location map.', 'advanced-gutenberg' ),
+        description: __( 'Display a location using Google Maps.', 'advanced-gutenberg' ),
         icon: {
             src: mapBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,

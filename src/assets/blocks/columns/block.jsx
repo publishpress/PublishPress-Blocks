@@ -862,7 +862,7 @@
 
     registerBlockType( 'advgb/columns', {
         title: __( 'Columns Manager', 'advanced-gutenberg' ),
-        description: __( 'Row layout with columns you decided.', 'advanced-gutenberg' ),
+        description: __( 'Create flexible layouts for your content with advanced options and styles.', 'advanced-gutenberg' ),
         icon: {
             src: 'layout',
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,

@@ -378,7 +378,7 @@
 
     registerBlockType( 'advgb/social-links', {
         title: __( 'Social Links', 'advanced-gutenberg' ),
-        description: __( 'Insert your social link with icon.', 'advanced-gutenberg' ),
+        description: __( 'Create a styling display of links to your social media profiles.', 'advanced-gutenberg' ),
         icon: {
             src: socialBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,

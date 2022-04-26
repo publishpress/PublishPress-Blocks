@@ -5736,7 +5736,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/accordion', {
         title: __('Accordion', 'advanced-gutenberg'),
-        description: __('Easy to create an accordion for your post/page.', 'advanced-gutenberg'),
+        description: __('Create a sliding accordion display for your content.', 'advanced-gutenberg'),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -6272,7 +6272,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/accordion-item', {
         title: __('Accordion Item', 'advanced-gutenberg'),
-        description: __('Easy to create an accordion for your post/page.', 'advanced-gutenberg'),
+        description: __('Create a sliding accordion display for your content.', 'advanced-gutenberg'),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -7158,7 +7158,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/accordions', {
         title: __('Advanced Accordion', 'advanced-gutenberg'),
-        description: __('Easy to create an accordion for your post/page.', 'advanced-gutenberg'),
+        description: __('Create a sliding accordion display for your content.', 'advanced-gutenberg'),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -8066,7 +8066,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/button', {
         title: __('Advanced Button', 'advanced-gutenberg'),
-        description: __('New button with more styles.', 'advanced-gutenberg'),
+        description: __('Advanced button block with more options and styles.', 'advanced-gutenberg'),
         icon: {
             src: buttonBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -13186,7 +13186,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/adv-tabs', {
         title: __('Advanced Tabs', 'advanced-gutenberg'),
-        description: __('Create your own tabs never easy like this.', 'advanced-gutenberg'),
+        description: __('Create horizontal or vertical tabs to display your content.', 'advanced-gutenberg'),
         icon: {
             src: tabsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -14548,7 +14548,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/video', {
         title: __('Advanced Video', 'advanced-gutenberg'),
-        description: __('Powerful block for insert and embed video.', 'advanced-gutenberg'),
+        description: __('Add more options and styles for videos in your Media Library.', 'advanced-gutenberg'),
         icon: {
             src: advVideoBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -15682,7 +15682,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/columns', {
         title: __('Columns Manager', 'advanced-gutenberg'),
-        description: __('Row layout with columns you decided.', 'advanced-gutenberg'),
+        description: __('Create flexible layouts for your content with advanced options and styles.', 'advanced-gutenberg'),
         icon: {
             src: 'layout',
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -17568,7 +17568,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/count-up', {
         title: __('Count Up', 'advanced-gutenberg'),
-        description: __('Make a block with animate counting numbers.', 'advanced-gutenberg'),
+        description: __('Create an animated display for important numbers.', 'advanced-gutenberg'),
         icon: {
             src: countUpBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -23273,7 +23273,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/map', {
         title: __('Map', 'advanced-gutenberg'),
-        description: __('Block for inserting location map.', 'advanced-gutenberg'),
+        description: __('Display a location using Google Maps.', 'advanced-gutenberg'),
         icon: {
             src: mapBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -27112,7 +27112,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/social-links', {
         title: __('Social Links', 'advanced-gutenberg'),
-        description: __('Insert your social link with icon.', 'advanced-gutenberg'),
+        description: __('Create a styling display of links to your social media profiles.', 'advanced-gutenberg'),
         icon: {
             src: socialBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -28265,7 +28265,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/tabs', {
         title: __('Tabs', 'advanced-gutenberg'),
-        description: __('Create your own tabs never easy like this.', 'advanced-gutenberg'),
+        description: __('Create horizontal or vertical tabs to display your content.', 'advanced-gutenberg'),
         icon: {
             src: tabsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined

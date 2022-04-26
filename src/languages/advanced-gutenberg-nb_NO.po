@@ -1678,7 +1678,7 @@ msgid "columns"
 msgstr "kolonner"
 
 #: assets/blocks/blocks.js:15566
-msgid "Row layout with columns you decided."
+msgid "Create flexible layouts for your content with advanced options and styles."
 msgstr "Radoppsett med de kolonnene du bestemte."
 
 #: assets/blocks/blocks.js:14837 assets/blocks/blocks.js:15565
@@ -2622,7 +2622,7 @@ msgid "tabs"
 msgstr "faner"
 
 #: assets/blocks/blocks.js:13085 assets/blocks/blocks.js:27954
-msgid "Create your own tabs never easy like this."
+msgid "Create horizontal or vertical tabs to display your content."
 msgstr "Lag dine egen faner aldri å enkelt som dette."
 
 #: assets/blocks/blocks.js:27953 assets/blocks/pro-ad.js:121
@@ -2729,7 +2729,7 @@ msgid "social icons"
 msgstr "sosiale ikoner"
 
 #: assets/blocks/blocks.js:26801
-msgid "Insert your social link with icon."
+msgid "Create a styling display of links to your social media profiles."
 msgstr "Sett inn din sosiale lenke med ikon."
 
 #: assets/blocks/blocks.js:26541 assets/blocks/blocks.js:26800
@@ -2871,7 +2871,7 @@ msgid "google map"
 msgstr "google-kart"
 
 #: assets/blocks/blocks.js:23007
-msgid "Block for inserting location map."
+msgid "Display a location using Google Maps."
 msgstr "Blokk for å sette inn plasseringskart."
 
 #: assets/blocks/blocks.js:22722 assets/blocks/blocks.js:23006
@@ -3046,7 +3046,7 @@ msgid "numbers"
 msgstr "tall"
 
 #: assets/blocks/blocks.js:17484
-msgid "Make a block with animate counting numbers."
+msgid "Create an animated display for important numbers."
 msgstr "Lag en blokk med animerte telletall."
 
 #: assets/blocks/blocks.js:17011 assets/blocks/blocks.js:17483
@@ -3095,7 +3095,7 @@ msgid "video"
 msgstr "video"
 
 #: assets/blocks/blocks.js:14447
-msgid "Powerful block for insert and embed video."
+msgid "Add more options and styles for videos in your Media Library."
 msgstr "Kraftig blokk for å sette inn og bygge inn video."
 
 #: assets/blocks/blocks.js:14018 assets/blocks/blocks.js:14446
@@ -3418,7 +3418,7 @@ msgid "button"
 msgstr "knapp"
 
 #: assets/blocks/blocks.js:8045
-msgid "New button with more styles."
+msgid "Advanced button block with more options and styles."
 msgstr "Ny knapp med flere stiler."
 
 #: assets/blocks/blocks.js:7503 assets/blocks/blocks.js:8044
@@ -3548,7 +3548,7 @@ msgstr "trekkspill"
 
 #: assets/blocks/blocks.js:5739 assets/blocks/blocks.js:6275
 #: assets/blocks/blocks.js:7161
-msgid "Easy to create an accordion for your post/page."
+msgid "Create a sliding accordion display for your content."
 msgstr "Enkelt å lage et trekkspill for din side/innlegg."
 
 #: assets/blocks/blocks.js:5738 assets/blocks/pro-ad.js:116

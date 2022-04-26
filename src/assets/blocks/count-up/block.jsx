@@ -425,7 +425,7 @@
 
     registerBlockType( 'advgb/count-up', {
         title: __( 'Count Up', 'advanced-gutenberg' ),
-        description: __( 'Make a block with animate counting numbers.', 'advanced-gutenberg' ),
+        description: __( 'Create an animated display for important numbers.', 'advanced-gutenberg' ),
         icon: {
             src: countUpBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
