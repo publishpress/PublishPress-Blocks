@@ -270,7 +270,7 @@ msgstr "Acordeón"
 #: assets/blocks/blocks.js:5739 assets/blocks/blocks.js:6275
 #: assets/blocks/blocks.js:7161
 msgid "Create a sliding accordion display for your content."
-msgstr "Crea fácilmente un acordeón para su entrada/página."
+msgstr "Crea un acordeón deslizante para tu contenido."
 
 #: assets/blocks/blocks.js:5745 assets/blocks/blocks.js:6282
 #: assets/blocks/blocks.js:7167 assets/blocks/blocks.js:21338
@@ -536,7 +536,7 @@ msgstr "Espaciado entre el ícono y el texto"
 
 #: assets/blocks/blocks.js:8045
 msgid "Advanced button block with more options and styles."
-msgstr "Nuevo botón con más estilos."
+msgstr "Botón avanzado con más opciones y estilos."
 
 #: assets/blocks/blocks.js:8051
 msgid "button"
@@ -1236,7 +1236,7 @@ msgstr "Pestaña 3"
 
 #: assets/blocks/blocks.js:13085 assets/blocks/blocks.js:27954
 msgid "Create horizontal or vertical tabs to display your content."
-msgstr "Crear tus propias pestañas nunca fue tan fácil."
+msgstr "Crea pestañas horizontales o verticales para mostrar tu contenido."
 
 #: assets/blocks/blocks.js:13091 assets/blocks/blocks.js:27960
 msgid "tabs"
@@ -1361,7 +1361,7 @@ msgstr "Aún no seleccionado."
 
 #: assets/blocks/blocks.js:14447
 msgid "Add more options and styles for videos in your Media Library."
-msgstr "Potente bloque para insertar e incrustar video."
+msgstr "Agrega más opciones y estilos para videos en tu biblioteca de medios."
 
 #: assets/blocks/blocks.js:14453
 msgid "video"
@@ -1670,7 +1670,7 @@ msgstr "Altura máxima del contenido"
 
 #: assets/blocks/blocks.js:15566
 msgid "Create flexible layouts for your content with advanced options and styles."
-msgstr "Diseño de fila con columnas elegido."
+msgstr "Crea layouts flexibles para tu contenido con opciones y estilos avanzados."
 
 #: assets/blocks/blocks.js:15572 assets/blocks/blocks.js:16149
 msgid "columns"
@@ -1933,7 +1933,7 @@ msgstr "Introduce el texto…"
 
 #: assets/blocks/blocks.js:17484
 msgid "Create an animated display for important numbers."
-msgstr "Haz un bloque con números de conteo animados."
+msgstr "Crea una pantalla animada para números importantes."
 
 #: assets/blocks/blocks.js:17490
 msgid "numbers"
@@ -2434,7 +2434,7 @@ msgstr "Agregar clave API de Google"
 
 #: assets/blocks/blocks.js:23007
 msgid "Display a location using Google Maps."
-msgstr "Bloque para insertar mapa de ubicación."
+msgstr "Muestra una ubicación usando Google Maps."
 
 #: assets/blocks/blocks.js:23013
 msgid "google map"
@@ -3119,7 +3119,7 @@ msgstr "Introduce un enlace social…"
 
 #: assets/blocks/blocks.js:26801
 msgid "Create a styling display of links to your social media profiles."
-msgstr "Inserta tu enlace social con ícono."
+msgstr "Crea una pantalla de enlaces con estilo para tus perfiles de redes sociales."
 
 #: assets/blocks/blocks.js:26807
 msgid "social icons"
