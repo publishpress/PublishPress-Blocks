@@ -1895,8 +1895,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Pro
                 if(defined('ADVANCED_GUTENBERG_PRO')) {
                     if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_setting_set_value' ) ) {
-                        // Display branding
                         $save_config['enable_pp_branding'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_pp_branding' );
+                        $save_config['enable_core_blocks_features'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_core_blocks_features' );
                     }
                 }
 
