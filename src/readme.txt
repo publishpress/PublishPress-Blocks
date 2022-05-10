@@ -257,6 +257,9 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
+= 2.13.1 - 10 May 2022 =
+  * Fix: Don't display post info and categories/tags, taxonomies wrappers when empty for Content Display block
+
 = 2.13.0 - 26 Apr 2022 =
   * Add: Target support to author link for Content Display block
   * Fix: Make responsive headings translatable
