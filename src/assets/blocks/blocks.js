@@ -25184,7 +25184,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 )
                                             )
                                         ),
-                                        (showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories || showTags !== 'hide' && post.tax_additional && post.tax_additional.tags || !INBUILT_POST_TYPES.includes(postType) && post.tax_additional) && React.createElement(
+                                        (showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories || showTags !== 'hide' && post.tax_additional && post.tax_additional.tags || !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.getTaxSlugs().length > 0) && React.createElement(
                                             Fragment,
                                             null,
                                             React.createElement(

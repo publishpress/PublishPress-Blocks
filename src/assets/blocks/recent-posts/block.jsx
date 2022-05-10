@@ -1113,7 +1113,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                         { (
                                             (showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories)
                                             || (showTags !== 'hide' && post.tax_additional && post.tax_additional.tags)
-                                            || (!INBUILT_POST_TYPES.includes( postType ) && post.tax_additional)
+                                            || (!INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.getTaxSlugs().length > 0)
                                         ) && (
                                             <Fragment>
                                                 <div className="advgb-post-tax-info">
