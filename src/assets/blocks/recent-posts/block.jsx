@@ -1292,7 +1292,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 this.generateTaxTerms( postType );
             }
 
-            this.props.setAttributes( { postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {} } );
+            this.props.setAttributes( { postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] } );
         }
 
         /**

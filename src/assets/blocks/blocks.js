@@ -25382,7 +25382,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     this.generateTaxTerms(postType);
                 }
 
-                this.props.setAttributes({ postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {} });
+                this.props.setAttributes({ postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
             }
 
             /**
