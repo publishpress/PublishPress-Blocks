@@ -25136,109 +25136,117 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             { className: 'advgb-text-after-title' },
                                             textAfterTitle
                                         ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'advgb-post-info' },
-                                            displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map(function (coauthor, coauthor_indx) {
-                                                return React.createElement(
-                                                    Fragment,
-                                                    null,
-                                                    React.createElement(
-                                                        'a',
-                                                        { href: coauthor.link,
-                                                            target: '_blank',
-                                                            className: 'advgb-post-author'
-                                                        },
-                                                        coauthor.display_name
-                                                    ),
-                                                    coauthor_indx < post.coauthors.length - 1 && React.createElement(
-                                                        'span',
+                                        (displayAuthor && (post.coauthors && post.coauthors.length > 0 || !post.coauthors || post.coauthors.length === 0) || postDate !== 'hide' || postType === 'post' && displayCommentCount) && React.createElement(
+                                            Fragment,
+                                            null,
+                                            React.createElement(
+                                                'div',
+                                                { className: 'advgb-post-info' },
+                                                displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map(function (coauthor, coauthor_indx) {
+                                                    return React.createElement(
+                                                        Fragment,
                                                         null,
-                                                        ', '
-                                                    )
-                                                );
-                                            }),
-                                            displayAuthor && (!post.coauthors || post.coauthors.length === 0) && React.createElement(
-                                                'a',
-                                                { href: post.author_meta.author_link,
-                                                    target: '_blank',
-                                                    className: 'advgb-post-author'
-                                                },
-                                                post.author_meta.display_name
-                                            ),
-                                            postDate !== 'hide' && React.createElement(
-                                                'span',
-                                                { className: 'advgb-post-datetime' },
-                                                _this3.getDateTime(post)
-                                            ),
-                                            postType === 'post' && displayCommentCount && React.createElement(
-                                                'span',
-                                                { className: 'advgb-post-comments' },
-                                                React.createElement('span', { 'class': 'dashicons dashicons-admin-comments' }),
-                                                '(',
-                                                post.comment_count,
-                                                ')'
+                                                        React.createElement(
+                                                            'a',
+                                                            { href: coauthor.link,
+                                                                target: '_blank',
+                                                                className: 'advgb-post-author'
+                                                            },
+                                                            coauthor.display_name
+                                                        ),
+                                                        coauthor_indx < post.coauthors.length - 1 && React.createElement(
+                                                            'span',
+                                                            null,
+                                                            ', '
+                                                        )
+                                                    );
+                                                }),
+                                                displayAuthor && (!post.coauthors || post.coauthors.length === 0) && React.createElement(
+                                                    'a',
+                                                    { href: post.author_meta.author_link,
+                                                        target: '_blank',
+                                                        className: 'advgb-post-author'
+                                                    },
+                                                    post.author_meta.display_name
+                                                ),
+                                                postDate !== 'hide' && React.createElement(
+                                                    'span',
+                                                    { className: 'advgb-post-datetime' },
+                                                    _this3.getDateTime(post)
+                                                ),
+                                                postType === 'post' && displayCommentCount && React.createElement(
+                                                    'span',
+                                                    { className: 'advgb-post-comments' },
+                                                    React.createElement('span', { 'class': 'dashicons dashicons-admin-comments' }),
+                                                    '(',
+                                                    post.comment_count,
+                                                    ')'
+                                                )
                                             )
                                         ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'advgb-post-tax-info' },
-                                            showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories && React.createElement(
+                                        (showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories || showTags !== 'hide' && post.tax_additional && post.tax_additional.tags || !INBUILT_POST_TYPES.includes(postType) && post.tax_additional) && React.createElement(
+                                            Fragment,
+                                            null,
+                                            React.createElement(
                                                 'div',
-                                                { className: 'advgb-post-tax advgb-post-category' },
-                                                showCategories === 'show' && post.tax_additional.categories.unlinked.map(function (cat, index) {
-                                                    return React.createElement(
-                                                        RawHTML,
-                                                        null,
-                                                        cat
-                                                    );
-                                                }),
-                                                showCategories === 'link' && post.tax_additional.categories.linked.map(function (cat, index) {
-                                                    return React.createElement(
-                                                        RawHTML,
-                                                        null,
-                                                        cat
-                                                    );
-                                                })
-                                            ),
-                                            showTags !== 'hide' && post.tax_additional && post.tax_additional.tags && React.createElement(
-                                                'div',
-                                                { className: 'advgb-post-tax advgb-post-tag' },
-                                                showTags === 'show' && post.tax_additional.tags.unlinked.map(function (tag, index) {
-                                                    return React.createElement(
-                                                        RawHTML,
-                                                        null,
-                                                        tag
-                                                    );
-                                                }),
-                                                showTags === 'link' && post.tax_additional.tags.linked.map(function (tag, index) {
-                                                    return React.createElement(
-                                                        RawHTML,
-                                                        null,
-                                                        tag
-                                                    );
-                                                })
-                                            ),
-                                            !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.getTaxSlugs().map(function (taxSlug) {
-                                                return React.createElement(
+                                                { className: 'advgb-post-tax-info' },
+                                                showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories && React.createElement(
                                                     'div',
-                                                    { className: "advgb-post-tax advgb-post-cpt advgb-post-" + taxSlug },
-                                                    !linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].unlinked.map(function (tag, index) {
+                                                    { className: 'advgb-post-tax advgb-post-category' },
+                                                    showCategories === 'show' && post.tax_additional.categories.unlinked.map(function (cat, index) {
+                                                        return React.createElement(
+                                                            RawHTML,
+                                                            null,
+                                                            cat
+                                                        );
+                                                    }),
+                                                    showCategories === 'link' && post.tax_additional.categories.linked.map(function (cat, index) {
+                                                        return React.createElement(
+                                                            RawHTML,
+                                                            null,
+                                                            cat
+                                                        );
+                                                    })
+                                                ),
+                                                showTags !== 'hide' && post.tax_additional && post.tax_additional.tags && React.createElement(
+                                                    'div',
+                                                    { className: 'advgb-post-tax advgb-post-tag' },
+                                                    showTags === 'show' && post.tax_additional.tags.unlinked.map(function (tag, index) {
                                                         return React.createElement(
                                                             RawHTML,
                                                             null,
                                                             tag
                                                         );
                                                     }),
-                                                    linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].linked.map(function (tag, index) {
+                                                    showTags === 'link' && post.tax_additional.tags.linked.map(function (tag, index) {
                                                         return React.createElement(
                                                             RawHTML,
                                                             null,
                                                             tag
                                                         );
                                                     })
-                                                );
-                                            })
+                                                ),
+                                                !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.getTaxSlugs().map(function (taxSlug) {
+                                                    return React.createElement(
+                                                        'div',
+                                                        { className: "advgb-post-tax advgb-post-cpt advgb-post-" + taxSlug },
+                                                        !linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].unlinked.map(function (tag, index) {
+                                                            return React.createElement(
+                                                                RawHTML,
+                                                                null,
+                                                                tag
+                                                            );
+                                                        }),
+                                                        linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].linked.map(function (tag, index) {
+                                                            return React.createElement(
+                                                                RawHTML,
+                                                                null,
+                                                                tag
+                                                            );
+                                                        })
+                                                    );
+                                                })
+                                            )
                                         ),
                                         React.createElement(
                                             'div',
