@@ -4,8 +4,36 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41b81510825eec7872b71f9a5485ab87",
+    "content-hash": "712301689d2ce1b15b2a5ba943569bc5",
     "packages": [
+        {
+            "name": "publishpress/publishpress-instance-protection",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/publishpress/publishpress-instance-protection",
+                "reference": "ddfa4b1e07f77b41b26e46223626584a85800073"
+            },
+            "require": {
+                "php": ">=5.6.20"
+            },
+            "type": "library",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "PublishPress",
+                    "email": "help@publishpress.com"
+                }
+            ],
+            "description": "Library for protecting WordPress plugins to run twice.",
+            "homepage": "http://publishpress.com/",
+            "keywords": [
+                "wordpress plugin"
+            ],
+            "time": "2022-05-03T13:25:31+00:00"
+        },
         {
             "name": "publishpress/wordpress-reviews",
             "version": "v1.1.18",
