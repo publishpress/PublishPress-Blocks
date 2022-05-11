@@ -24116,6 +24116,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var CUSTOM_TAX_PREFIX = 'custom-tax-';
 
     var initSlider = null;
+    var initMasonry = null;
 
     var RecentPostsEdit = function (_Component) {
         _inherits(RecentPostsEdit, _Component);
@@ -24275,6 +24276,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         clearTimeout(initSlider);
                     }
                 }
+
+                if (nextView !== 'masonry' || nextPosts && recentPosts && nextPosts.length !== recentPosts.length) {
+                    $('#block-' + clientId + ' .masonry-view .advgb-recent-posts').isotope('destroy');
+
+                    if (nextView === 'masonry' && nextPosts && recentPosts && nextPosts.length !== recentPosts.length) {
+                        if (!this.state.updating) {
+                            this.setState({ updating: true });
+                        }
+                    }
+
+                    if (initMasonry) {
+                        clearTimeout(initMasonry);
+                    }
+                }
             }
         }, {
             key: 'componentDidMount',
@@ -24329,18 +24344,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 if (postView === 'masonry') {
-                    var $masonry = $('#block-' + clientId + ' .masonry-view .advgb-recent-posts');
-                    $masonry.isotope({
-                        itemSelector: '.advgb-recent-post',
-                        percentPosition: true
-                    });
-                    $(window).resize(function () {
-                        $masonry.isotope();
-                    });
+
+                    initMasonry = setTimeout(function () {
+                        var $masonry = $('#block-' + clientId + ' .masonry-view .advgb-recent-posts');
+                        $masonry.isotope({
+                            itemSelector: '.advgb-recent-post',
+                            percentPosition: true
+                        });
+                        $(window).resize(function () {
+                            $masonry.isotope();
+                        });
+
+                        if (that.state.updating) {
+                            that.setState({ updating: false });
+                        }
+                    }, 100);
                 } else {
-                    var $masonry = $('#block-' + clientId + ' .advgb-recent-posts');
-                    $masonry.isotope();
-                    $masonry.isotope('destroy');
+                    $('#block-' + clientId + ' .masonry-view .advgb-recent-posts').isotope('destroy');
                 }
 
                 // this.state.updatePostSuggestions: corresponds to componentDidMount
