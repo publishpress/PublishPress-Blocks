@@ -19343,7 +19343,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(RangeControl, {
                                     className: "advgb-padding-margin-control",
                                     key: mpIdx,
-                                    label: pos.icon,
                                     beforeIcon: pos.icon,
                                     value: attributes['containerPadding' + pos.label],
                                     min: 0,
@@ -19460,7 +19459,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(RangeControl, {
                                     className: "advgb-padding-margin-control",
                                     key: mpIdx,
-                                    label: pos.icon,
                                     beforeIcon: pos.icon,
                                     value: attributes['iconPadding' + pos.label],
                                     min: 0,
@@ -19504,7 +19502,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(RangeControl, {
                                     className: "advgb-padding-margin-control",
                                     key: mpIdx,
-                                    label: pos.icon,
                                     beforeIcon: pos.icon,
                                     value: attributes['iconMargin' + pos.label],
                                     min: 0,
@@ -19632,7 +19629,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(RangeControl, {
                                     className: "advgb-padding-margin-control",
                                     key: mpIdx,
-                                    label: pos.icon,
                                     beforeIcon: pos.icon,
                                     value: attributes['titlePadding' + pos.label],
                                     min: 0,
@@ -19676,7 +19672,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(RangeControl, {
                                     className: "advgb-padding-margin-control",
                                     key: mpIdx,
-                                    label: pos.icon,
                                     beforeIcon: pos.icon,
                                     value: attributes['titleMargin' + pos.label],
                                     min: 0,
@@ -19796,7 +19791,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(RangeControl, {
                                     className: "advgb-padding-margin-control",
                                     key: mpIdx,
-                                    label: pos.icon,
                                     beforeIcon: pos.icon,
                                     value: attributes['textPadding' + pos.label],
                                     min: 0,
@@ -19840,7 +19834,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(RangeControl, {
                                     className: "advgb-padding-margin-control",
                                     key: mpIdx,
-                                    label: pos.icon,
                                     beforeIcon: pos.icon,
                                     value: attributes['textMargin' + pos.label],
                                     min: 0,
