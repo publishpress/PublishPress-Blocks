@@ -258,6 +258,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 == Changelog ==
 
 = 2.13.1 - 11 May 2022 =
+  * Add: Plugin Instance Protection
   * Fix: Don't display post info and categories/tags, taxonomies wrappers when empty for Content Display block
   * Fix: Reset categories attribute when changing post type
   * Fix: Duplicated padding/margin icons for Info Box block
