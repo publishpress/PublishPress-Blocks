@@ -63,7 +63,7 @@
             if( advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1' ) {
                 setAttributes( {
                     titleTag: 'h4',
-                    titleHide: false,
+                    titleShow: true,
                     textTag: 'p'
                 } );
             }
@@ -190,7 +190,7 @@
                 autoplaySpeed,
                 id,
                 titleTag,
-                titleHide,
+                titleShow,
                 textTag
             } = attributes;
             if (images.length === 0) {
@@ -374,7 +374,7 @@
                                                           opacity: alwaysShowOverlay ? 0.5 : undefined,
                                                       }}
                                                 />)}
-                                            {image.title && !titleHide && (
+                                            {image.title && titleShow && (
                                                 <RichText
                                                     tagName={ titleTag }
                                                     className="advgb-image-slider-title"
@@ -569,9 +569,9 @@
             type: 'string',
             default: 'h4'
         },
-        titleHide: {
+        titleShow: {
             type: 'boolean',
-            default: false,
+            default: true,
         },
         textTag: {
             type: 'string',
@@ -615,7 +615,7 @@
                 vAlign,
                 id,
                 titleTag,
-                titleHide,
+                titleShow,
                 textTag
             } = attributes;
             const blockClassName = [
@@ -653,7 +653,7 @@
                                                opacity: alwaysShowOverlay ? 0.5 : undefined,
                                            }}
                                         />)}
-                                    {image.title && !titleHide && (
+                                    {image.title && titleShow && (
                                         <RichText.Content
                                             tagName={ titleTag }
                                             className="advgb-image-slider-title"
