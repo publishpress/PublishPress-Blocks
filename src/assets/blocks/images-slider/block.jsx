@@ -63,6 +63,7 @@
             if( advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1' ) {
                 setAttributes( {
                     titleTag: 'h4',
+                    titleHide: false,
                     textTag: 'p'
                 } );
             }
@@ -189,6 +190,7 @@
                 autoplaySpeed,
                 id,
                 titleTag,
+                titleHide,
                 textTag
             } = attributes;
             if (images.length === 0) {
@@ -372,7 +374,7 @@
                                                           opacity: alwaysShowOverlay ? 0.5 : undefined,
                                                       }}
                                                 />)}
-                                            {image.title && (
+                                            {image.title && !titleHide && (
                                                 <RichText
                                                     tagName={ titleTag }
                                                     className="advgb-image-slider-title"
@@ -567,6 +569,10 @@
             type: 'string',
             default: 'h4'
         },
+        titleHide: {
+            type: 'boolean',
+            default: false,
+        },
         textTag: {
             type: 'string',
             default: 'p'
@@ -609,6 +615,7 @@
                 vAlign,
                 id,
                 titleTag,
+                titleHide,
                 textTag
             } = attributes;
             const blockClassName = [
@@ -646,7 +653,7 @@
                                                opacity: alwaysShowOverlay ? 0.5 : undefined,
                                            }}
                                         />)}
-                                    {image.title && (
+                                    {image.title && !titleHide && (
                                         <RichText.Content
                                             tagName={ titleTag }
                                             className="advgb-image-slider-title"

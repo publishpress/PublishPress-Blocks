@@ -17979,6 +17979,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1') {
                     setAttributes({
                         titleTag: 'h4',
+                        titleHide: false,
                         textTag: 'p'
                     });
                 }
@@ -18129,6 +18130,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     autoplaySpeed = attributes.autoplaySpeed,
                     id = attributes.id,
                     titleTag = attributes.titleTag,
+                    titleHide = attributes.titleHide,
                     textTag = attributes.textTag;
 
                 if (images.length === 0) {
@@ -18322,7 +18324,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 opacity: alwaysShowOverlay ? 0.5 : undefined
                                             }
                                         }),
-                                        image.title && React.createElement(RichText, {
+                                        image.title && !titleHide && React.createElement(RichText, {
                                             tagName: titleTag,
                                             className: "advgb-image-slider-title",
                                             style: { color: titleColor },
@@ -18552,6 +18554,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string',
             default: 'h4'
         },
+        titleHide: {
+            type: 'boolean',
+            default: false
+        },
         textTag: {
             type: 'string',
             default: 'p'
@@ -18594,6 +18600,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 vAlign = attributes.vAlign,
                 id = attributes.id,
                 titleTag = attributes.titleTag,
+                titleHide = attributes.titleHide,
                 textTag = attributes.textTag;
 
             var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox', id].filter(Boolean).join(' ');
@@ -18633,7 +18640,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         opacity: alwaysShowOverlay ? 0.5 : undefined
                                     }
                                 }),
-                                image.title && React.createElement(RichText.Content, {
+                                image.title && !titleHide && React.createElement(RichText.Content, {
                                     tagName: titleTag,
                                     className: "advgb-image-slider-title",
                                     style: { color: titleColor },
