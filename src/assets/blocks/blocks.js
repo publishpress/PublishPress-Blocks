@@ -24253,12 +24253,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayDate: false
                 });
 
-                if (advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active) && attributes.postType === 'post') {
+                var postType = attributes.postType;
+                if (postType === undefined) {
+                    postType = 'post';
+                }
+
+                if (advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active) && postType === 'post') {
                     // Enable PublishPress Series taxonomy filter
-                    this.generateSeriesTax(attributes.postType);
-                } else if (!INBUILT_POST_TYPES.includes(attributes.postType)) {
+                    this.generateSeriesTax(postType);
+                } else if (!INBUILT_POST_TYPES.includes(postType)) {
                     // Enable CPT taxonomy filters
-                    this.generateTaxTerms(attributes.postType);
+                    this.generateTaxTerms(postType);
                 } else {
                     // Nothing to do here
                 }
