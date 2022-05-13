@@ -221,7 +221,7 @@ import { AuthorSelect } from './query-controls.jsx';
             });
 
             if(
-                advgbBlocks.pp_series_active !== 'undefined' && advgbBlocks.pp_series_active === '1'
+                advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active)
                 && attributes.postType === 'post'
             ) {
                 // Enable PublishPress Series taxonomy filter
@@ -1320,7 +1320,7 @@ import { AuthorSelect } from './query-controls.jsx';
         updatePostType(postType) {
             this.setState( { taxonomyList: null } );
             if(
-                advgbBlocks.pp_series_active !== 'undefined' && advgbBlocks.pp_series_active === '1'
+                advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active)
                 && postType === 'post'
             ) {
                 // Enable PublishPress Series taxonomy filter
