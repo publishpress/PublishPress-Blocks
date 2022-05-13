@@ -670,7 +670,6 @@ import { AuthorSelect } from './query-controls.jsx';
                                 )
                             )
                         }
-                        { console.log(taxonomyList) }
                         { !onlyFromCurrentUser &&
                         <AuthorSelect
                             key="query-controls-author-select"

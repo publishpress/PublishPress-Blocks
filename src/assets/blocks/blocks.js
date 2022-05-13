@@ -24731,7 +24731,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 label: __('Show content with these ', 'advanced-gutenberg') + decodeEntities('' + tax.name)
                             });
                         }),
-                        console.log(taxonomyList),
                         !onlyFromCurrentUser && React.createElement(_queryControls.AuthorSelect, {
                             key: 'query-controls-author-select',
                             authorList: authorList,
