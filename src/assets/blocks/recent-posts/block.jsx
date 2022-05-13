@@ -220,8 +220,17 @@ import { AuthorSelect } from './query-controls.jsx';
                   displayDate: false,
             });
 
-            if( ! INBUILT_POST_TYPES.includes( attributes.postType ) ){
+            if(
+                advgbBlocks.pp_series_active !== 'undefined' && advgbBlocks.pp_series_active === '1'
+                && INBUILT_POST_TYPES.includes( attributes.postType )
+            ) {
+                // Enable PublishPress Series taxonomy filter
+                this.generateSeriesTax( attributes.postType );
+            } else if( ! INBUILT_POST_TYPES.includes( attributes.postType ) ){
+                // Enable CPT taxonomy filters
                 this.generateTaxTerms( attributes.postType );
+            } else {
+                // Nothing to do here
             }
 
         }
@@ -656,6 +665,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                 )
                             )
                         }
+                        { console.log(taxonomyList) }
                         { !onlyFromCurrentUser &&
                         <AuthorSelect
                             key="query-controls-author-select"
@@ -1309,11 +1319,65 @@ import { AuthorSelect } from './query-controls.jsx';
 
         updatePostType(postType) {
             this.setState( { taxonomyList: null } );
-            if(! INBUILT_POST_TYPES.includes( postType )){
+            if(
+                advgbBlocks.pp_series_active !== 'undefined' && advgbBlocks.pp_series_active === '1'
+                && INBUILT_POST_TYPES.includes( postType )
+            ) {
+                // Enable PublishPress Series taxonomy filter
+                this.generateSeriesTax( postType );
+            } else if( ! INBUILT_POST_TYPES.includes( postType ) ){
+                // Enable CPT taxonomy filters
                 this.generateTaxTerms( postType );
+            } else {
+                // Nothing to do here
             }
 
             this.props.setAttributes( { postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] } );
+        }
+
+        /**
+         * Generates PublishPress Series taxonomy list for 'post' and sets it in the state as "taxonomyList".
+         */
+        generateSeriesTax( postType ) {
+            if(! postType){
+                return;
+            }
+
+            // fetch series taxonomy
+            wp.apiFetch( {
+                path: wp.url.addQueryArgs( `wp/v2/types/${postType}`, { context: 'edit' } ),
+            } ).then( ( typeAttributes ) => {
+                let taxonomy = [];
+                let taxId = {};
+                const seriesSlug = typeof advgbBlocks.pp_series_slug !== 'undefined' ? advgbBlocks.pp_series_slug : 'series';
+
+                wp.apiFetch( {
+                    path: wp.url.addQueryArgs( `wp/v2/taxonomies/${seriesSlug}`, { context: 'edit' } ),
+                } ).then( ( taxAttributes ) => {
+                    // fetch all terms
+                    wp.apiFetch( {
+                        path: wp.url.addQueryArgs( `wp/v2/${taxAttributes.rest_base}?per_page=-1&hide_empty=true`, { context: 'edit' } ),
+                    } ).then( ( terms ) => {
+                        let suggestions = [];
+                        let map = [];
+                        terms.forEach(term => {
+                            suggestions.push(decodeEntities(term.name));
+                            map[ decodeEntities(term.name) ] = term.id;
+                        });
+
+                        const preselectedName = this.props.attributes.taxonomies ? this.props.attributes.taxonomies[ seriesSlug ] : [];
+                        if(preselectedName){
+                            let preselectedId = preselectedName.map(name => map[ name ] );
+                            set( taxId, seriesSlug, preselectedId );
+                            this.props.setAttributes( { taxIds: taxId } );
+                        }
+
+                        taxonomy.push({ slug: seriesSlug, name: decodeEntities(taxAttributes.name), suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
+
+                        this.setState( { taxonomyList: taxonomy } );
+                    } );
+                } );
+            } );
         }
 
         /**
