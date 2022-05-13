@@ -222,7 +222,7 @@ import { AuthorSelect } from './query-controls.jsx';
 
             if(
                 advgbBlocks.pp_series_active !== 'undefined' && advgbBlocks.pp_series_active === '1'
-                && INBUILT_POST_TYPES.includes( attributes.postType )
+                && attributes.postType === 'post'
             ) {
                 // Enable PublishPress Series taxonomy filter
                 this.generateSeriesTax( attributes.postType );
@@ -1321,7 +1321,7 @@ import { AuthorSelect } from './query-controls.jsx';
             this.setState( { taxonomyList: null } );
             if(
                 advgbBlocks.pp_series_active !== 'undefined' && advgbBlocks.pp_series_active === '1'
-                && INBUILT_POST_TYPES.includes( postType )
+                && postType === 'post'
             ) {
                 // Enable PublishPress Series taxonomy filter
                 this.generateSeriesTax( postType );

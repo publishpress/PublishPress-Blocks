@@ -24253,7 +24253,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayDate: false
                 });
 
-                if (advgbBlocks.pp_series_active !== 'undefined' && advgbBlocks.pp_series_active === '1' && INBUILT_POST_TYPES.includes(attributes.postType)) {
+                if (advgbBlocks.pp_series_active !== 'undefined' && advgbBlocks.pp_series_active === '1' && attributes.postType === 'post') {
                     // Enable PublishPress Series taxonomy filter
                     this.generateSeriesTax(attributes.postType);
                 } else if (!INBUILT_POST_TYPES.includes(attributes.postType)) {
@@ -25405,7 +25405,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: 'updatePostType',
             value: function updatePostType(postType) {
                 this.setState({ taxonomyList: null });
-                if (advgbBlocks.pp_series_active !== 'undefined' && advgbBlocks.pp_series_active === '1' && INBUILT_POST_TYPES.includes(postType)) {
+                if (advgbBlocks.pp_series_active !== 'undefined' && advgbBlocks.pp_series_active === '1' && postType === 'post') {
                     // Enable PublishPress Series taxonomy filter
                     this.generateSeriesTax(postType);
                 } else if (!INBUILT_POST_TYPES.includes(postType)) {
