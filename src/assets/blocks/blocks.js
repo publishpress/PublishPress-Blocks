@@ -24254,10 +24254,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayDate: false
                 });
 
-                var postType = attributes.postType;
-                if (postType === undefined) {
-                    postType = 'post';
-                }
+                var postType = attributes.postType === undefined ? 'post' : attributes.postType;
                 this.generateTaxFilters(postType);
             }
         }, {
@@ -25468,7 +25465,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                             taxonomy.push({ slug: seriesSlug, name: decodeEntities(taxAttributes.name), suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
 
-                            _this4.setState({ taxonomyList: taxonomy });
+                            _this4.setState({ updating: true });
+                            // length === 1 due we only get the series taxonomy
+                            if (taxonomy.length === 1) {
+                                _this4.setState({ taxonomyList: taxonomy, updating: false });
+                            }
                         });
                     });
                 });

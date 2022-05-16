@@ -221,10 +221,7 @@ import { AuthorSelect } from './query-controls.jsx';
                   displayDate: false,
             });
 
-            let postType = attributes.postType;
-            if( postType === undefined ){
-                postType = 'post';
-            }
+            const postType = attributes.postType === undefined ? 'post' : attributes.postType;
             this.generateTaxFilters( postType );
         }
 
@@ -1372,7 +1369,11 @@ import { AuthorSelect } from './query-controls.jsx';
 
                         taxonomy.push({ slug: seriesSlug, name: decodeEntities(taxAttributes.name), suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
 
-                        this.setState( { taxonomyList: taxonomy } );
+                        this.setState( { updating: true } );
+                        // length === 1 due we only get the series taxonomy
+                        if(taxonomy.length === 1){
+                            this.setState( { taxonomyList: taxonomy, updating: false } );
+                        }
                     } );
                 } );
             } );
