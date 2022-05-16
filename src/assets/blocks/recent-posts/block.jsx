@@ -222,10 +222,13 @@ import { AuthorSelect } from './query-controls.jsx';
             });
 
             let postType = attributes.postType;
-            if(postType === undefined){
+            if( postType === undefined ){
                 postType = 'post';
             }
+            this.generateTaxFilters( postType );
+        }
 
+        generateTaxFilters( postType ) {
             if(
                 typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active)
                 && (postType === 'post' || postType === 'page')
@@ -239,7 +242,6 @@ import { AuthorSelect } from './query-controls.jsx';
             } else {
                 // Nothing to do here
             }
-
         }
 
         componentWillUpdate( nextProps ) {
@@ -1325,21 +1327,9 @@ import { AuthorSelect } from './query-controls.jsx';
 
         updatePostType(postType) {
             this.setState( { taxonomyList: null } );
-            if(
-                typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active)
-                && (postType === 'post' || postType === 'page')
-                && PP_SERIES_POST_TYPES.includes( postType )
-            ) {
-                // Enable PublishPress Series taxonomy filter in post/page when enabled through Series plugin
-                this.generateSeriesTax( postType );
-            } else if( ! INBUILT_POST_TYPES.includes( postType ) ){
-                // Enable CPT taxonomy filters
-                this.generateTaxTerms( postType );
-            } else {
-                // Nothing to do here
-            }
+            this.generateTaxFilters( postType );
 
-            this.props.setAttributes( { postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] } );
+            this.props.setAttributes( { postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] } );        
         }
 
         /**

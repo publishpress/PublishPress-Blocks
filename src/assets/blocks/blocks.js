@@ -24258,7 +24258,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (postType === undefined) {
                     postType = 'post';
                 }
-
+                this.generateTaxFilters(postType);
+            }
+        }, {
+            key: 'generateTaxFilters',
+            value: function generateTaxFilters(postType) {
                 if (typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active) && (postType === 'post' || postType === 'page') && PP_SERIES_POST_TYPES.includes(postType)) {
                     // Enable PublishPress Series taxonomy filter in post/page when enabled through Series plugin
                     this.generateSeriesTax(postType);
@@ -25410,15 +25414,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: 'updatePostType',
             value: function updatePostType(postType) {
                 this.setState({ taxonomyList: null });
-                if (typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active) && (postType === 'post' || postType === 'page') && PP_SERIES_POST_TYPES.includes(postType)) {
-                    // Enable PublishPress Series taxonomy filter in post/page when enabled through Series plugin
-                    this.generateSeriesTax(postType);
-                } else if (!INBUILT_POST_TYPES.includes(postType)) {
-                    // Enable CPT taxonomy filters
-                    this.generateTaxTerms(postType);
-                } else {
-                    // Nothing to do here
-                }
+                this.generateTaxFilters(postType);
 
                 this.props.setAttributes({ postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
             }
