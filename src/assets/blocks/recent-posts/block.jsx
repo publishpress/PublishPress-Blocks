@@ -228,22 +228,6 @@ import { AuthorSelect } from './query-controls.jsx';
             this.generateTaxFilters( postType );
         }
 
-        generateTaxFilters( postType ) {
-            if(
-                typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active)
-                && (postType === 'post' || postType === 'page')
-                && PP_SERIES_POST_TYPES.includes( postType )
-            ) {
-                // Enable PublishPress Series taxonomy filter in post/page when enabled through Series plugin
-                this.generateSeriesTax( postType );
-            } else if( ! INBUILT_POST_TYPES.includes( postType ) ){
-                // Enable CPT taxonomy filters
-                this.generateTaxTerms( postType );
-            } else {
-                // Nothing to do here
-            }
-        }
-
         componentWillUpdate( nextProps ) {
             const { recentPosts: nextPosts } = nextProps;
             const { postView: nextView } = nextProps.attributes;
@@ -1329,7 +1313,24 @@ import { AuthorSelect } from './query-controls.jsx';
             this.setState( { taxonomyList: null } );
             this.generateTaxFilters( postType );
 
-            this.props.setAttributes( { postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] } );        
+            this.props.setAttributes( { postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] } );
+        }
+
+        /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
+        generateTaxFilters( postType ) {
+            if(
+                typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active)
+                && (postType === 'post' || postType === 'page')
+                && PP_SERIES_POST_TYPES.includes( postType )
+            ) {
+                // Enable PublishPress Series taxonomy filter in post/page when enabled through Series plugin
+                this.generateSeriesTax( postType );
+            } else if( ! INBUILT_POST_TYPES.includes( postType ) ){
+                // Enable CPT taxonomy filters
+                this.generateTaxTerms( postType );
+            } else {
+                // Nothing to do here
+            }
         }
 
         /**
