@@ -25,6 +25,7 @@ import { AuthorSelect } from './query-controls.jsx';
     );
 
     const INBUILT_POST_TYPES = [ 'page', 'post' ];
+    const PP_SERIES_POST_TYPES = typeof advgbBlocks.pp_series_post_types !== 'undefined' ? advgbBlocks.pp_series_post_types : [ 'post' ];
 
     const MAX_CATEGORIES_SUGGESTIONS = 20;
 
@@ -220,10 +221,8 @@ import { AuthorSelect } from './query-controls.jsx';
                   displayDate: false,
             });
 
-            if( ! INBUILT_POST_TYPES.includes( attributes.postType ) ){
-                this.generateTaxTerms( attributes.postType );
-            }
-
+            const postType = attributes.postType === undefined ? 'post' : attributes.postType;
+            this.generateTaxFilters( postType );
         }
 
         componentWillUpdate( nextProps ) {
@@ -1309,11 +1308,75 @@ import { AuthorSelect } from './query-controls.jsx';
 
         updatePostType(postType) {
             this.setState( { taxonomyList: null } );
-            if(! INBUILT_POST_TYPES.includes( postType )){
-                this.generateTaxTerms( postType );
-            }
+            this.generateTaxFilters( postType );
 
             this.props.setAttributes( { postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] } );
+        }
+
+        /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
+        generateTaxFilters( postType ) {
+            if(
+                typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active)
+                && (postType === 'post' || postType === 'page')
+                && PP_SERIES_POST_TYPES.includes( postType )
+            ) {
+                // Enable PublishPress Series taxonomy filter in post/page when enabled through Series plugin
+                this.generateSeriesTax( postType );
+            } else if( ! INBUILT_POST_TYPES.includes( postType ) ){
+                // Enable CPT taxonomy filters
+                this.generateTaxTerms( postType );
+            } else {
+                // Nothing to do here
+            }
+        }
+
+        /**
+         * Generates PublishPress Series taxonomy list for 'post' and sets it in the state as "taxonomyList".
+         */
+        generateSeriesTax( postType ) {
+            if(! postType){
+                return;
+            }
+
+            // fetch series taxonomy
+            wp.apiFetch( {
+                path: wp.url.addQueryArgs( `wp/v2/types/${postType}`, { context: 'edit' } ),
+            } ).then( ( typeAttributes ) => {
+                let taxonomy = [];
+                let taxId = {};
+                const seriesSlug = typeof advgbBlocks.pp_series_slug !== 'undefined' ? advgbBlocks.pp_series_slug : 'series';
+
+                wp.apiFetch( {
+                    path: wp.url.addQueryArgs( `wp/v2/taxonomies/${seriesSlug}`, { context: 'edit' } ),
+                } ).then( ( taxAttributes ) => {
+                    // fetch all terms
+                    wp.apiFetch( {
+                        path: wp.url.addQueryArgs( `wp/v2/${taxAttributes.rest_base}?per_page=-1&hide_empty=true`, { context: 'edit' } ),
+                    } ).then( ( terms ) => {
+                        let suggestions = [];
+                        let map = [];
+                        terms.forEach(term => {
+                            suggestions.push(decodeEntities(term.name));
+                            map[ decodeEntities(term.name) ] = term.id;
+                        });
+
+                        const preselectedName = this.props.attributes.taxonomies ? this.props.attributes.taxonomies[ seriesSlug ] : [];
+                        if(preselectedName){
+                            let preselectedId = preselectedName.map(name => map[ name ] );
+                            set( taxId, seriesSlug, preselectedId );
+                            this.props.setAttributes( { taxIds: taxId } );
+                        }
+
+                        taxonomy.push({ slug: seriesSlug, name: decodeEntities(taxAttributes.name), suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
+
+                        this.setState( { updating: true } );
+                        // length === 1 due we only get the series taxonomy
+                        if(taxonomy.length === 1){
+                            this.setState( { taxonomyList: taxonomy, updating: false } );
+                        }
+                    } );
+                } );
+            } );
         }
 
         /**
