@@ -24102,6 +24102,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     );
 
     var INBUILT_POST_TYPES = ['page', 'post'];
+    var PP_SERIES_POST_TYPES = typeof advgbBlocks.pp_series_post_types !== 'undefined' ? advgbBlocks.pp_series_post_types : ['post'];
 
     var MAX_CATEGORIES_SUGGESTIONS = 20;
 
@@ -24258,8 +24259,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     postType = 'post';
                 }
 
-                if (advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active) && postType === 'post') {
-                    // Enable PublishPress Series taxonomy filter
+                if (typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active) && (postType === 'post' || postType === 'page') && PP_SERIES_POST_TYPES.includes(postType)) {
+                    // Enable PublishPress Series taxonomy filter in post/page when enabled through Series plugin
                     this.generateSeriesTax(postType);
                 } else if (!INBUILT_POST_TYPES.includes(postType)) {
                     // Enable CPT taxonomy filters
@@ -25409,8 +25410,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: 'updatePostType',
             value: function updatePostType(postType) {
                 this.setState({ taxonomyList: null });
-                if (advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active) && postType === 'post') {
-                    // Enable PublishPress Series taxonomy filter
+                if (typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active) && (postType === 'post' || postType === 'page') && PP_SERIES_POST_TYPES.includes(postType)) {
+                    // Enable PublishPress Series taxonomy filter in post/page when enabled through Series plugin
                     this.generateSeriesTax(postType);
                 } else if (!INBUILT_POST_TYPES.includes(postType)) {
                     // Enable CPT taxonomy filters

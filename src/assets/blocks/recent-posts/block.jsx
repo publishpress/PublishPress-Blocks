@@ -25,6 +25,7 @@ import { AuthorSelect } from './query-controls.jsx';
     );
 
     const INBUILT_POST_TYPES = [ 'page', 'post' ];
+    const PP_SERIES_POST_TYPES = typeof advgbBlocks.pp_series_post_types !== 'undefined' ? advgbBlocks.pp_series_post_types : [ 'post' ];
 
     const MAX_CATEGORIES_SUGGESTIONS = 20;
 
@@ -226,10 +227,11 @@ import { AuthorSelect } from './query-controls.jsx';
             }
 
             if(
-                advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active)
-                && postType === 'post'
+                typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active)
+                && (postType === 'post' || postType === 'page')
+                && PP_SERIES_POST_TYPES.includes( postType )
             ) {
-                // Enable PublishPress Series taxonomy filter
+                // Enable PublishPress Series taxonomy filter in post/page when enabled through Series plugin
                 this.generateSeriesTax( postType );
             } else if( ! INBUILT_POST_TYPES.includes( postType ) ){
                 // Enable CPT taxonomy filters
@@ -1324,10 +1326,11 @@ import { AuthorSelect } from './query-controls.jsx';
         updatePostType(postType) {
             this.setState( { taxonomyList: null } );
             if(
-                advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active)
-                && postType === 'post'
+                typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active)
+                && (postType === 'post' || postType === 'page')
+                && PP_SERIES_POST_TYPES.includes( postType )
             ) {
-                // Enable PublishPress Series taxonomy filter
+                // Enable PublishPress Series taxonomy filter in post/page when enabled through Series plugin
                 this.generateSeriesTax( postType );
             } else if( ! INBUILT_POST_TYPES.includes( postType ) ){
                 // Enable CPT taxonomy filters

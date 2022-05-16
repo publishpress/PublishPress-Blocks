@@ -583,6 +583,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $pp_series_active       = is_plugin_active('organize-series/orgSeries.php') || is_plugin_active('publishpress-series-pro/publishpress-series-pro.php') ? 1 : 0;
             $pp_series_options      = get_option('org_series_options');
             $pp_series_slug         = isset($pp_series_options['series_taxonomy_slug']) && !empty($pp_series_options['series_taxonomy_slug']) ? $pp_series_options['series_taxonomy_slug'] : 'series';
+            $pp_series_post_types   = isset($pp_series_options['post_types_for_series']) && !empty($pp_series_options['post_types_for_series']) ? $pp_series_options['post_types_for_series'] : ['post'];
 
             global $wp_version;
             $blocks_widget_support = ( $wp_version >= 5.8 ) ? 1 : 0;
@@ -606,7 +607,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'enable_advgb_blocks' => $enable_advgb_blocks,
                 'advgb_pro' => defined('ADVANCED_GUTENBERG_PRO') ? 1 : 0,
                 'pp_series_active' => $pp_series_active,
-                'pp_series_slug' => $pp_series_slug
+                'pp_series_slug' => $pp_series_slug,
+                'pp_series_post_types' => $pp_series_post_types
             ));
 
             // Setup default config data for blocks
