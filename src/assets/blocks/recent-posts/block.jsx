@@ -25,6 +25,7 @@ import { AuthorSelect } from './query-controls.jsx';
     );
 
     const INBUILT_POST_TYPES = [ 'page', 'post' ];
+    const PP_SERIES_POST_TYPES = typeof advgbBlocks.pp_series_post_types !== 'undefined' ? advgbBlocks.pp_series_post_types : [ 'post' ];
 
     const MAX_CATEGORIES_SUGGESTIONS = 20;
 
@@ -101,6 +102,7 @@ import { AuthorSelect } from './query-controls.jsx';
     const CUSTOM_TAX_PREFIX = 'custom-tax-';
 
     let initSlider = null;
+    let initMasonry = null;
 
     class RecentPostsEdit extends Component {
         constructor() {
@@ -219,10 +221,8 @@ import { AuthorSelect } from './query-controls.jsx';
                   displayDate: false,
             });
 
-            if( ! INBUILT_POST_TYPES.includes( attributes.postType ) ){
-                this.generateTaxTerms( attributes.postType );
-            }
-
+            const postType = attributes.postType === undefined ? 'post' : attributes.postType;
+            this.generateTaxFilters( postType );
         }
 
         componentWillUpdate( nextProps ) {
@@ -246,6 +246,20 @@ import { AuthorSelect } from './query-controls.jsx';
 
                 if (initSlider) {
                     clearTimeout(initSlider);
+                }
+            }
+
+            if (nextView !== 'masonry' || (nextPosts && recentPosts && nextPosts.length !== recentPosts.length) ) {
+                $(`#block-${clientId} .masonry-view .advgb-recent-posts`).isotope('destroy');
+
+                if (nextView === 'masonry' && (nextPosts && recentPosts && nextPosts.length !== recentPosts.length)) {
+                    if (!this.state.updating) {
+                        this.setState( { updating: true } );
+                    }
+                }
+
+                if (initMasonry) {
+                    clearTimeout(initMasonry);
                 }
             }
 
@@ -291,18 +305,24 @@ import { AuthorSelect } from './query-controls.jsx';
             }
 
             if (postView === 'masonry') {
-                var $masonry = $(`#block-${clientId} .masonry-view .advgb-recent-posts`);
-                $masonry.isotope({
-                    itemSelector: '.advgb-recent-post',
-                    percentPosition: true
-                });
-                $(window).resize(function(){
-                    $masonry.isotope();
-                });
+
+                initMasonry = setTimeout(function () {
+                    var $masonry = $(`#block-${clientId} .masonry-view .advgb-recent-posts`);
+                    $masonry.isotope({
+                        itemSelector: '.advgb-recent-post',
+                        percentPosition: true
+                    });
+                    $(window).resize(function(){
+                        $masonry.isotope();
+                    });
+
+                    if (that.state.updating) {
+                        that.setState( { updating: false } );
+                    }
+                }, 100 );
+
             } else {
-                var $masonry = $(`#block-${clientId} .advgb-recent-posts`);
-                $masonry.isotope();
-                $masonry.isotope('destroy');
+                $(`#block-${clientId} .masonry-view .advgb-recent-posts`).isotope('destroy');
             }
 
             // this.state.updatePostSuggestions: corresponds to componentDidMount
@@ -1063,74 +1083,93 @@ import { AuthorSelect } from './query-controls.jsx';
                                             <a href={ post.link } target="_blank">{ decodeEntities( post.title.rendered ) }</a>
                                         </h2>
                                         <RawHTML className="advgb-text-after-title">{ textAfterTitle }</RawHTML>
-                                        <div className="advgb-post-info">
-                                            {displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map( ( coauthor, coauthor_indx ) => (
-                                                <Fragment>
-                                                    <a href={ coauthor.link }
-                                                       target="_blank"
-                                                       className="advgb-post-author"
-                                                    >
-                                                        { coauthor.display_name }
-                                                    </a>
-                                                    {coauthor_indx < post.coauthors.length - 1 && (
-                                                        <span>, </span>
-                                                    ) }
-                                                </Fragment>
-                                            ) )
-                                            }
-                                            {displayAuthor && (!post.coauthors || post.coauthors.length === 0) && (
-                                                <a href={ post.author_meta.author_link }
-                                                   target="_blank"
-                                                   className="advgb-post-author"
-                                                >
-                                                    { post.author_meta.display_name }
-                                                </a>
+                                        { (
+                                            (displayAuthor && (
+                                                (post.coauthors && post.coauthors.length > 0)
+                                                || (!post.coauthors || post.coauthors.length === 0))
                                             )
-                                            }
-                                            {postDate !== 'hide' && (
-                                                <span className="advgb-post-datetime" >
-                                                { this.getDateTime(post) }
-                                                </span>
-                                            ) }
-                                            {postType === 'post' && displayCommentCount && (
-                                                <span className="advgb-post-comments" >
-                                                    <span class="dashicons dashicons-admin-comments"></span>
-                                                    ({ post.comment_count })
-                                                </span>
-                                            ) }
-                                        </div>
-                                        <div className="advgb-post-tax-info">
-                                            {showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories && (
-                                                <div className="advgb-post-tax advgb-post-category">
-                                                {showCategories === 'show' && post.tax_additional.categories.unlinked.map( ( cat, index ) => (
-                                                    <RawHTML>{ cat }</RawHTML>
-                                                ) )}
-                                                {showCategories === 'link' && post.tax_additional.categories.linked.map( ( cat, index ) => (
-                                                    <RawHTML>{ cat }</RawHTML>
-                                                ) )}
+                                            || (postDate !== 'hide')
+                                            || (postType === 'post' && displayCommentCount)
+                                        ) && (
+                                            <Fragment>
+                                                <div className="advgb-post-info">
+                                                    {displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map( ( coauthor, coauthor_indx ) => (
+                                                        <Fragment>
+                                                            <a href={ coauthor.link }
+                                                               target="_blank"
+                                                               className="advgb-post-author"
+                                                            >
+                                                                { coauthor.display_name }
+                                                            </a>
+                                                            {coauthor_indx < post.coauthors.length - 1 && (
+                                                                <span>, </span>
+                                                            ) }
+                                                        </Fragment>
+                                                    ) )
+                                                    }
+                                                    {displayAuthor && (!post.coauthors || post.coauthors.length === 0) && (
+                                                        <a href={ post.author_meta.author_link }
+                                                           target="_blank"
+                                                           className="advgb-post-author"
+                                                        >
+                                                            { post.author_meta.display_name }
+                                                        </a>
+                                                    )
+                                                    }
+                                                    {postDate !== 'hide' && (
+                                                        <span className="advgb-post-datetime" >
+                                                        { this.getDateTime(post) }
+                                                        </span>
+                                                    ) }
+                                                    {postType === 'post' && displayCommentCount && (
+                                                        <span className="advgb-post-comments" >
+                                                            <span class="dashicons dashicons-admin-comments"></span>
+                                                            ({ post.comment_count })
+                                                        </span>
+                                                    ) }
                                                 </div>
-                                            ) }
-                                            {showTags !== 'hide' && post.tax_additional && post.tax_additional.tags && (
-                                                <div className="advgb-post-tax advgb-post-tag">
-                                                {showTags === 'show' && post.tax_additional.tags.unlinked.map( ( tag, index ) => (
-                                                    <RawHTML>{ tag }</RawHTML>
-                                                ) )}
-                                                {showTags === 'link' && post.tax_additional.tags.linked.map( ( tag, index ) => (
-                                                    <RawHTML>{ tag }</RawHTML>
-                                                ) )}
+                                            </Fragment>
+                                        ) }
+                                        { (
+                                            (showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories)
+                                            || (showTags !== 'hide' && post.tax_additional && post.tax_additional.tags)
+                                            || (!INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.getTaxSlugs().length > 0)
+                                        ) && (
+                                            <Fragment>
+                                                <div className="advgb-post-tax-info">
+                                                    {showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories && (
+                                                        <div className="advgb-post-tax advgb-post-category">
+                                                        {showCategories === 'show' && post.tax_additional.categories.unlinked.map( ( cat, index ) => (
+                                                            <RawHTML>{ cat }</RawHTML>
+                                                        ) )}
+                                                        {showCategories === 'link' && post.tax_additional.categories.linked.map( ( cat, index ) => (
+                                                            <RawHTML>{ cat }</RawHTML>
+                                                        ) )}
+                                                        </div>
+                                                    ) }
+                                                    {showTags !== 'hide' && post.tax_additional && post.tax_additional.tags && (
+                                                        <div className="advgb-post-tax advgb-post-tag">
+                                                        {showTags === 'show' && post.tax_additional.tags.unlinked.map( ( tag, index ) => (
+                                                            <RawHTML>{ tag }</RawHTML>
+                                                        ) )}
+                                                        {showTags === 'link' && post.tax_additional.tags.linked.map( ( tag, index ) => (
+                                                            <RawHTML>{ tag }</RawHTML>
+                                                        ) )}
+                                                        </div>
+                                                    ) }
+                                                    {! INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.getTaxSlugs().map( (taxSlug) => (
+                                                        <div className={"advgb-post-tax advgb-post-cpt advgb-post-" + taxSlug}>
+                                                        {!linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].unlinked.map( ( tag, index ) => (
+                                                            <RawHTML>{ tag }</RawHTML>
+                                                        ) )}
+                                                        {linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].linked.map( ( tag, index ) => (
+                                                            <RawHTML>{ tag }</RawHTML>
+                                                        ) )}
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                            ) }
-                                            {! INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.getTaxSlugs().map( (taxSlug) => (
-                                                <div className={"advgb-post-tax advgb-post-cpt advgb-post-" + taxSlug}>
-                                                {!linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].unlinked.map( ( tag, index ) => (
-                                                    <RawHTML>{ tag }</RawHTML>
-                                                ) )}
-                                                {linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].linked.map( ( tag, index ) => (
-                                                    <RawHTML>{ tag }</RawHTML>
-                                                ) )}
-                                                </div>
-                                            ))}
-                                        </div>
+                                            </Fragment>
+                                        ) }
                                         <div className="advgb-post-content">
                                             {displayExcerpt && (
                                                 <div className="advgb-post-excerpt"
@@ -1269,11 +1308,75 @@ import { AuthorSelect } from './query-controls.jsx';
 
         updatePostType(postType) {
             this.setState( { taxonomyList: null } );
-            if(! INBUILT_POST_TYPES.includes( postType )){
+            this.generateTaxFilters( postType );
+
+            this.props.setAttributes( { postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] } );
+        }
+
+        /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
+        generateTaxFilters( postType ) {
+            if(
+                typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active)
+                && (postType === 'post' || postType === 'page')
+                && PP_SERIES_POST_TYPES.includes( postType )
+            ) {
+                // Enable PublishPress Series taxonomy filter in post/page when enabled through Series plugin
+                this.generateSeriesTax( postType );
+            } else if( ! INBUILT_POST_TYPES.includes( postType ) ){
+                // Enable CPT taxonomy filters (may include Series taxonomy)
                 this.generateTaxTerms( postType );
+            } else {
+                // Nothing to do here
+            }
+        }
+
+        /**
+         * Generates PublishPress Series taxonomy list for 'post' and sets it in the state as "taxonomyList".
+         */
+        generateSeriesTax( postType ) {
+            if(! postType){
+                return;
             }
 
-            this.props.setAttributes( { postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {} } );
+            // fetch series taxonomy
+            wp.apiFetch( {
+                path: wp.url.addQueryArgs( `wp/v2/types/${postType}`, { context: 'edit' } ),
+            } ).then( ( typeAttributes ) => {
+                let taxonomy = [];
+                let taxId = {};
+                const seriesSlug = typeof advgbBlocks.pp_series_slug !== 'undefined' ? advgbBlocks.pp_series_slug : 'series';
+
+                wp.apiFetch( {
+                    path: wp.url.addQueryArgs( `wp/v2/taxonomies/${seriesSlug}`, { context: 'edit' } ),
+                } ).then( ( taxAttributes ) => {
+                    // fetch all terms
+                    wp.apiFetch( {
+                        path: wp.url.addQueryArgs( `wp/v2/${taxAttributes.rest_base}?per_page=-1&hide_empty=true`, { context: 'edit' } ),
+                    } ).then( ( terms ) => {
+                        let suggestions = [];
+                        let map = [];
+                        terms.forEach(term => {
+                            suggestions.push(decodeEntities(term.name));
+                            map[ decodeEntities(term.name) ] = term.id;
+                        });
+
+                        const preselectedName = this.props.attributes.taxonomies ? this.props.attributes.taxonomies[ seriesSlug ] : [];
+                        if(preselectedName){
+                            let preselectedId = preselectedName.map(name => map[ name ] );
+                            set( taxId, seriesSlug, preselectedId );
+                            this.props.setAttributes( { taxIds: taxId } );
+                        }
+
+                        taxonomy.push({ slug: seriesSlug, name: decodeEntities(taxAttributes.name), suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
+
+                        this.setState( { updating: true } );
+                        // length === 1 due we only get the series taxonomy
+                        if(taxonomy.length === 1){
+                            this.setState( { taxonomyList: taxonomy, updating: false } );
+                        }
+                    } );
+                } );
+            } );
         }
 
         /**

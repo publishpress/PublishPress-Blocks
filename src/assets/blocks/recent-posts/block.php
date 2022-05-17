@@ -154,6 +154,8 @@ function advgbRenderBlockRecentPosts($attributes)
             $displayImageVsOrder = getDisplayImageVsOrder( $attributes, $key );
             $postThumb           = '<img src="' . esc_url($rp_default_thumb['url']) . '" />';
             $postThumbCaption    = '';
+            $postDate            = isset($attributes['displayDate']) && $attributes['displayDate'] ? 'created' : (isset($attributes['postDate']) ? $attributes['postDate'] : 'hide');
+            $postDateDisplay     = null;
 
             if ($postThumbID) {
                 $postThumb = wp_get_attachment_image($postThumbID, 'large');
@@ -214,129 +216,143 @@ function advgbRenderBlockRecentPosts($attributes)
 				$postHtml .= sprintf( '<div class="advgb-text-after-title">%s</div>', wp_kses_post( $attributes['textAfterTitle'] ) );
 			}
 
-            $postHtml .= '<div class="advgb-post-info">';
+            if(
+                ( isset($attributes['displayAuthor']) && $attributes['displayAuthor'] )
+                || ( $postDate !== 'hide' )
+                || ( !empty($postDateDisplay) )
+                || (
+                    $post_type === 'post' && isset($attributes['displayCommentCount'])
+                    && $attributes['displayCommentCount']
+                )
+            ) {
 
-            if (isset($attributes['displayAuthor']) && $attributes['displayAuthor']) {
-				$coauthors          = advgbGetCoauthors( array( 'id' => $post->ID ) );
-				$authorLinkNewTab   = isset($attributes['authorLinkNewTab']) && $attributes['authorLinkNewTab'] ? '_blank' : '_self';
-                if ( ! empty( $coauthors ) ) {
-					$index = 0;
-					foreach ( $coauthors as $coauthor ) {
-						$postHtml .= sprintf(
-							'<a href="%1$s" class="advgb-post-author" target="%3$s">%2$s</a>',
-							$coauthor['link'],
-							$coauthor['display_name'],
-							$authorLinkNewTab
-						);
-						if ( $index++ < count( $coauthors ) - 1 ) {
-							$postHtml .= '<span>, </span>';
-						}
-					}
-				} else {
-					$postHtml .= sprintf(
-						'<a href="%1$s" class="advgb-post-author" target="%3$s">%2$s</a>',
-						get_author_posts_url($post->post_author),
-						get_the_author_meta('display_name', $post->post_author),
-						$authorLinkNewTab
-					);
-				}
-            }
+                $postHtml .= '<div class="advgb-post-info">';
 
-            $postDate = isset($attributes['displayDate']) && $attributes['displayDate'] ? 'created' : (isset($attributes['postDate']) ? $attributes['postDate'] : 'hide');
-            $postDateFormat = isset($attributes['postDateFormat']) ? $attributes['postDateFormat'] : '';
-            $displayTime = isset($attributes['displayTime']) && $attributes['displayTime'];
-			$postDateDisplay = null;
+                if (isset($attributes['displayAuthor']) && $attributes['displayAuthor']) {
+    				$coauthors          = advgbGetCoauthors( array( 'id' => $post->ID ) );
+    				$authorLinkNewTab   = isset($attributes['authorLinkNewTab']) && $attributes['authorLinkNewTab'] ? '_blank' : '_self';
+                    if ( ! empty( $coauthors ) ) {
+    					$index = 0;
+    					foreach ( $coauthors as $coauthor ) {
+    						$postHtml .= sprintf(
+    							'<a href="%1$s" class="advgb-post-author" target="%3$s">%2$s</a>',
+    							$coauthor['link'],
+    							$coauthor['display_name'],
+    							$authorLinkNewTab
+    						);
+    						if ( $index++ < count( $coauthors ) - 1 ) {
+    							$postHtml .= '<span>, </span>';
+    						}
+    					}
+    				} else {
+    					$postHtml .= sprintf(
+    						'<a href="%1$s" class="advgb-post-author" target="%3$s">%2$s</a>',
+    						get_author_posts_url($post->post_author),
+    						get_the_author_meta('display_name', $post->post_author),
+    						$authorLinkNewTab
+    					);
+    				}
+                }
 
-            if ( $postDate !== 'hide' ) {
-                $format = $displayTime ? ( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ) : get_option( 'date_format' );
+                if ( $postDate !== 'hide' ) {
+                    $postDateFormat     = isset($attributes['postDateFormat']) ? $attributes['postDateFormat'] : '';
+                    $displayTime        = isset($attributes['displayTime']) && $attributes['displayTime'];
+                    $format             = $displayTime ? ( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ) : get_option( 'date_format' );
 
-                if ( $postDateFormat === 'absolute' ) {
-                    if ( $postDate === 'created' ) {
-                        $postDateDisplay = esc_html__( 'Posted on', 'advanced-gutenberg') . ' ' . get_the_date( $format, $post->ID);
+                    if ( $postDateFormat === 'absolute' ) {
+                        if ( $postDate === 'created' ) {
+                            $postDateDisplay = esc_html__( 'Posted on', 'advanced-gutenberg') . ' ' . get_the_date( $format, $post->ID);
+                        } else {
+                            $postDateDisplay = esc_html__( 'Updated on', 'advanced-gutenberg') . ' ' . get_the_modified_date( $format, $post->ID);
+                        }
                     } else {
-                        $postDateDisplay = esc_html__( 'Updated on', 'advanced-gutenberg') . ' ' . get_the_modified_date( $format, $post->ID);
-                    }
-                } else {
-                    // Relative date format
-                    if ( $postDate === 'created' ) {
-                        $postDateDisplay = esc_html__( 'Posted', 'advanced-gutenberg') . ' ' . human_time_diff( get_the_date( 'U', $post->ID ) ) . ' ' . esc_html__( 'ago', 'advanced-gutenberg');
-                    } else {
-                        $postDateDisplay = esc_html__( 'Updated', 'advanced-gutenberg') . ' ' .human_time_diff( get_the_modified_date( 'U', $post->ID ) ) . ' ' . esc_html__( 'ago', 'advanced-gutenberg');
+                        // Relative date format
+                        if ( $postDate === 'created' ) {
+                            $postDateDisplay = esc_html__( 'Posted', 'advanced-gutenberg') . ' ' . human_time_diff( get_the_date( 'U', $post->ID ) ) . ' ' . esc_html__( 'ago', 'advanced-gutenberg');
+                        } else {
+                            $postDateDisplay = esc_html__( 'Updated', 'advanced-gutenberg') . ' ' .human_time_diff( get_the_modified_date( 'U', $post->ID ) ) . ' ' . esc_html__( 'ago', 'advanced-gutenberg');
+                        }
                     }
                 }
+
+                if ( ! empty( $postDateDisplay ) ) {
+                    $postHtml .= sprintf(
+                        '<span class="advgb-post-datetime">%1$s</span>',
+                        $postDateDisplay
+                    );
+                }
+
+                if ($post_type === 'post' && isset($attributes['displayCommentCount']) && $attributes['displayCommentCount']) {
+                    $count = get_comments_number( $post );
+                    $postHtml .= sprintf(
+                        '<span class="advgb-post-comments"><span class="dashicons dashicons-admin-comments"></span>(%d)</span>',
+                        $count
+                    );
+                }
+
+                $postHtml .= '</div>'; // end advgb-post-info
             }
 
-            if ( ! empty( $postDateDisplay ) ) {
-                $postHtml .= sprintf(
-                    '<span class="advgb-post-datetime">%1$s</span>',
-                    $postDateDisplay
-                );
+            if(
+                ( isset( $attributes['showCategories'] ) && 'hide' !== $attributes['showCategories'] )
+                || ( isset( $attributes['showTags'] ) && 'hide' !== $attributes['showTags'] )
+                || ( !in_array( $post_type, array( 'post', 'page' ), true ) && isset( $attributes['showCustomTaxList'] ) && !empty( $attributes['showCustomTaxList'] ) )
+            ) {
+                $postHtml .= '<div class="advgb-post-tax-info">';
+
+    			if ( isset( $attributes['showCategories'] ) && 'hide' !== $attributes['showCategories'] ) {
+    				$categories = get_the_category( $post->ID );
+    				if ( ! empty( $categories ) ) {
+    					$postHtml .= '<div class="advgb-post-tax advgb-post-category">';
+    					foreach ( $categories as $category ) {
+    						if ( 'link' === $attributes['showCategories'] ) {
+    							$postHtml .= sprintf( '<div><a class="advgb-post-tax-term" href="%s">%s</a></div>', esc_url( get_category_link( $category ) ), esc_html( $category->name ) );
+    						} else {
+    							$postHtml .= sprintf( '<div><span class="advgb-post-tax-term">%s</span></div>', esc_html( $category->name ) );
+    						}
+    					}
+    					$postHtml .= '</div>';
+    				}
+    			}
+
+    			if ( isset( $attributes['showTags'] ) && 'hide' !== $attributes['showTags'] ) {
+    				$tags = get_the_tags( $post->ID );
+    				if ( ! empty( $tags ) ) {
+    					$postHtml .= '<div class="advgb-post-tax advgb-post-tag">';
+    					foreach ( $tags as $tag ) {
+    						if ( 'link' === $attributes['showTags'] ) {
+    							$postHtml .= sprintf( '<div><a class="advgb-post-tax-term" href="%s">%s</a></div>', esc_url( get_tag_link( $tag ) ), esc_html( $tag->name ) );
+    						} else {
+    							$postHtml .= sprintf( '<div><span class="advgb-post-tax-term">%s</span></div>', esc_html( $tag->name ) );
+    						}
+    					}
+    					$postHtml .= '</div>';
+    				}
+    			}
+
+    			if ( ! in_array( $post_type, array( 'post', 'page' ), true ) && isset( $attributes['showCustomTaxList'] ) && ! empty( $attributes['showCustomTaxList'] ) ) {
+    				$info = advgbGetTaxonomyTerms( $post_type, $post->ID, true, false );
+    				if ( ! empty( $info ) ) {
+    					foreach ( $attributes['showCustomTaxList'] as $name ) {
+    						if ( ! isset( $info[ $name ] ) ) {
+    							// maybe the name changed?
+    							continue;
+    						}
+    						$props = $info[ $name ];
+    						$slug = $props['slug'];
+    						$postHtml .= "<div class='advgb-post-tax advgb-post-cpt advgb-post-${slug}'>";
+    						if ( isset( $attributes['linkCustomTax'] ) && $attributes['linkCustomTax'] ) {
+    							$postHtml .= implode( '', $props['linked'] );
+    						} else {
+    							$postHtml .= implode( '', $props['unlinked'] );
+    						}
+    						$postHtml .= '</div>';
+    					}
+    				}
+    			}
+
+                $postHtml .= '</div>'; // end advgb-post-tax-info
             }
-
-            if ($post_type === 'post' && isset($attributes['displayCommentCount']) && $attributes['displayCommentCount']) {
-                $count = get_comments_number( $post );
-                $postHtml .= sprintf(
-                    '<span class="advgb-post-comments"><span class="dashicons dashicons-admin-comments"></span>(%d)</span>',
-                    $count
-                );
-            }
-
-            $postHtml .= '</div>'; // end advgb-post-info
-
-            $postHtml .= '<div class="advgb-post-tax-info">';
-
-			if ( isset( $attributes['showCategories'] ) && 'hide' !== $attributes['showCategories'] ) {
-				$categories = get_the_category( $post->ID );
-				if ( ! empty( $categories ) ) {
-					$postHtml .= '<div class="advgb-post-tax advgb-post-category">';
-					foreach ( $categories as $category ) {
-						if ( 'link' === $attributes['showCategories'] ) {
-							$postHtml .= sprintf( '<div><a class="advgb-post-tax-term" href="%s">%s</a></div>', esc_url( get_category_link( $category ) ), esc_html( $category->name ) );
-						} else {
-							$postHtml .= sprintf( '<div><span class="advgb-post-tax-term">%s</span></div>', esc_html( $category->name ) );
-						}
-					}
-					$postHtml .= '</div>';
-				}
-			}
-
-			if ( isset( $attributes['showTags'] ) && 'hide' !== $attributes['showTags'] ) {
-				$tags = get_the_tags( $post->ID );
-				if ( ! empty( $tags ) ) {
-					$postHtml .= '<div class="advgb-post-tax advgb-post-tag">';
-					foreach ( $tags as $tag ) {
-						if ( 'link' === $attributes['showTags'] ) {
-							$postHtml .= sprintf( '<div><a class="advgb-post-tax-term" href="%s">%s</a></div>', esc_url( get_tag_link( $tag ) ), esc_html( $tag->name ) );
-						} else {
-							$postHtml .= sprintf( '<div><span class="advgb-post-tax-term">%s</span></div>', esc_html( $tag->name ) );
-						}
-					}
-					$postHtml .= '</div>';
-				}
-			}
-
-			if ( ! in_array( $post_type, array( 'post', 'page' ), true ) && isset( $attributes['showCustomTaxList'] ) && ! empty( $attributes['showCustomTaxList'] ) ) {
-				$info = advgbGetTaxonomyTerms( $post_type, $post->ID, true, false );
-				if ( ! empty( $info ) ) {
-					foreach ( $attributes['showCustomTaxList'] as $name ) {
-						if ( ! isset( $info[ $name ] ) ) {
-							// maybe the name changed?
-							continue;
-						}
-						$props = $info[ $name ];
-						$slug = $props['slug'];
-						$postHtml .= "<div class='advgb-post-tax advgb-post-cpt advgb-post-${slug}'>";
-						if ( isset( $attributes['linkCustomTax'] ) && $attributes['linkCustomTax'] ) {
-							$postHtml .= implode( '', $props['linked'] );
-						} else {
-							$postHtml .= implode( '', $props['unlinked'] );
-						}
-						$postHtml .= '</div>';
-					}
-				}
-			}
-
-            $postHtml .= '</div>'; // end advgb-post-tax-info
 
             $postHtml .= '<div class="advgb-post-content">';
 

@@ -580,6 +580,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $icons['material']      = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
             $icons['material']      = json_decode($icons['material'], true);
             $enable_advgb_blocks    = !isset($saved_settings['enable_advgb_blocks']) || $saved_settings['enable_advgb_blocks'] ? 1 : 0;
+            $pp_series_active       = is_plugin_active('organize-series/orgSeries.php') || is_plugin_active('publishpress-series-pro/publishpress-series-pro.php') ? 1 : 0;
+            $pp_series_options      = get_option('org_series_options');
+            $pp_series_slug         = isset($pp_series_options['series_taxonomy_slug']) && !empty($pp_series_options['series_taxonomy_slug']) ? $pp_series_options['series_taxonomy_slug'] : 'series';
+            $pp_series_post_types   = isset($pp_series_options['post_types_for_series']) && !empty($pp_series_options['post_types_for_series']) ? $pp_series_options['post_types_for_series'] : ['post'];
 
             global $wp_version;
             $blocks_widget_support = ( $wp_version >= 5.8 ) ? 1 : 0;
@@ -601,7 +605,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'registerEnabled' => get_option('users_can_register'),
                 'blocks_widget_support' => $blocks_widget_support,
                 'enable_advgb_blocks' => $enable_advgb_blocks,
-                'advgb_pro' => defined('ADVANCED_GUTENBERG_PRO') ? 1 : 0
+                'advgb_pro' => defined('ADVANCED_GUTENBERG_PRO') ? 1 : 0,
+                'pp_series_active' => $pp_series_active,
+                'pp_series_slug' => $pp_series_slug,
+                'pp_series_post_types' => $pp_series_post_types
             ));
 
             // Setup default config data for blocks
@@ -1895,8 +1902,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Pro
                 if(defined('ADVANCED_GUTENBERG_PRO')) {
                     if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_setting_set_value' ) ) {
-                        // Display branding
                         $save_config['enable_pp_branding'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_pp_branding' );
+                        $save_config['enable_core_blocks_features'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_core_blocks_features' );
                     }
                 }
 

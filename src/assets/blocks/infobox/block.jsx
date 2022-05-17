@@ -278,7 +278,6 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                                         <RangeControl
                                             className="advgb-padding-margin-control"
                                             key={mpIdx}
-                                            label={pos.icon}
                                             beforeIcon={pos.icon}
                                             value={attributes['containerPadding' + pos.label]}
                                             min={0}
@@ -365,7 +364,6 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                                         <RangeControl
                                             className="advgb-padding-margin-control"
                                             key={mpIdx}
-                                            label={pos.icon}
                                             beforeIcon={pos.icon}
                                             value={attributes['iconPadding' + pos.label]}
                                             min={0}
@@ -397,7 +395,6 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                                         <RangeControl
                                             className="advgb-padding-margin-control"
                                             key={mpIdx}
-                                            label={pos.icon}
                                             beforeIcon={pos.icon}
                                             value={attributes['iconMargin' + pos.label]}
                                             min={0}
@@ -494,7 +491,6 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                                         <RangeControl
                                             className="advgb-padding-margin-control"
                                             key={mpIdx}
-                                            label={pos.icon}
                                             beforeIcon={pos.icon}
                                             value={attributes['titlePadding' + pos.label]}
                                             min={0}
@@ -526,7 +522,6 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                                         <RangeControl
                                             className="advgb-padding-margin-control"
                                             key={mpIdx}
-                                            label={pos.icon}
                                             beforeIcon={pos.icon}
                                             value={attributes['titleMargin' + pos.label]}
                                             min={0}
@@ -610,7 +605,6 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                                         <RangeControl
                                             className="advgb-padding-margin-control"
                                             key={mpIdx}
-                                            label={pos.icon}
                                             beforeIcon={pos.icon}
                                             value={attributes['textPadding' + pos.label]}
                                             min={0}
@@ -642,7 +636,6 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                                         <RangeControl
                                             className="advgb-padding-margin-control"
                                             key={mpIdx}
-                                            label={pos.icon}
                                             beforeIcon={pos.icon}
                                             value={attributes['textMargin' + pos.label]}
                                             min={0}

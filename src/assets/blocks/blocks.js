@@ -17979,6 +17979,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1') {
                     setAttributes({
                         titleTag: 'h4',
+                        titleShow: true,
                         textTag: 'p'
                     });
                 }
@@ -18129,6 +18130,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     autoplaySpeed = attributes.autoplaySpeed,
                     id = attributes.id,
                     titleTag = attributes.titleTag,
+                    titleShow = attributes.titleShow,
                     textTag = attributes.textTag;
 
                 if (images.length === 0) {
@@ -18322,7 +18324,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 opacity: alwaysShowOverlay ? 0.5 : undefined
                                             }
                                         }),
-                                        image.title && React.createElement(RichText, {
+                                        image.title && titleShow && React.createElement(RichText, {
                                             tagName: titleTag,
                                             className: "advgb-image-slider-title",
                                             style: { color: titleColor },
@@ -18552,6 +18554,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string',
             default: 'h4'
         },
+        titleShow: {
+            type: 'boolean',
+            default: true
+        },
         textTag: {
             type: 'string',
             default: 'p'
@@ -18594,6 +18600,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 vAlign = attributes.vAlign,
                 id = attributes.id,
                 titleTag = attributes.titleTag,
+                titleShow = attributes.titleShow,
                 textTag = attributes.textTag;
 
             var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox', id].filter(Boolean).join(' ');
@@ -18633,7 +18640,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         opacity: alwaysShowOverlay ? 0.5 : undefined
                                     }
                                 }),
-                                image.title && React.createElement(RichText.Content, {
+                                image.title && titleShow && React.createElement(RichText.Content, {
                                     tagName: titleTag,
                                     className: "advgb-image-slider-title",
                                     style: { color: titleColor },
@@ -19343,7 +19350,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(RangeControl, {
                                     className: "advgb-padding-margin-control",
                                     key: mpIdx,
-                                    label: pos.icon,
                                     beforeIcon: pos.icon,
                                     value: attributes['containerPadding' + pos.label],
                                     min: 0,
@@ -19460,7 +19466,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(RangeControl, {
                                     className: "advgb-padding-margin-control",
                                     key: mpIdx,
-                                    label: pos.icon,
                                     beforeIcon: pos.icon,
                                     value: attributes['iconPadding' + pos.label],
                                     min: 0,
@@ -19504,7 +19509,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(RangeControl, {
                                     className: "advgb-padding-margin-control",
                                     key: mpIdx,
-                                    label: pos.icon,
                                     beforeIcon: pos.icon,
                                     value: attributes['iconMargin' + pos.label],
                                     min: 0,
@@ -19632,7 +19636,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(RangeControl, {
                                     className: "advgb-padding-margin-control",
                                     key: mpIdx,
-                                    label: pos.icon,
                                     beforeIcon: pos.icon,
                                     value: attributes['titlePadding' + pos.label],
                                     min: 0,
@@ -19676,7 +19679,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(RangeControl, {
                                     className: "advgb-padding-margin-control",
                                     key: mpIdx,
-                                    label: pos.icon,
                                     beforeIcon: pos.icon,
                                     value: attributes['titleMargin' + pos.label],
                                     min: 0,
@@ -19796,7 +19798,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(RangeControl, {
                                     className: "advgb-padding-margin-control",
                                     key: mpIdx,
-                                    label: pos.icon,
                                     beforeIcon: pos.icon,
                                     value: attributes['textPadding' + pos.label],
                                     min: 0,
@@ -19840,7 +19841,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(RangeControl, {
                                     className: "advgb-padding-margin-control",
                                     key: mpIdx,
-                                    label: pos.icon,
                                     beforeIcon: pos.icon,
                                     value: attributes['textMargin' + pos.label],
                                     min: 0,
@@ -24102,6 +24102,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     );
 
     var INBUILT_POST_TYPES = ['page', 'post'];
+    var PP_SERIES_POST_TYPES = typeof advgbBlocks.pp_series_post_types !== 'undefined' ? advgbBlocks.pp_series_post_types : ['post'];
 
     var MAX_CATEGORIES_SUGGESTIONS = 20;
 
@@ -24123,6 +24124,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var CUSTOM_TAX_PREFIX = 'custom-tax-';
 
     var initSlider = null;
+    var initMasonry = null;
 
     var RecentPostsEdit = function (_Component) {
         _inherits(RecentPostsEdit, _Component);
@@ -24252,9 +24254,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayDate: false
                 });
 
-                if (!INBUILT_POST_TYPES.includes(attributes.postType)) {
-                    this.generateTaxTerms(attributes.postType);
-                }
+                var postType = attributes.postType === undefined ? 'post' : attributes.postType;
+                this.generateTaxFilters(postType);
             }
         }, {
             key: 'componentWillUpdate',
@@ -24280,6 +24281,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                     if (initSlider) {
                         clearTimeout(initSlider);
+                    }
+                }
+
+                if (nextView !== 'masonry' || nextPosts && recentPosts && nextPosts.length !== recentPosts.length) {
+                    $('#block-' + clientId + ' .masonry-view .advgb-recent-posts').isotope('destroy');
+
+                    if (nextView === 'masonry' && nextPosts && recentPosts && nextPosts.length !== recentPosts.length) {
+                        if (!this.state.updating) {
+                            this.setState({ updating: true });
+                        }
+                    }
+
+                    if (initMasonry) {
+                        clearTimeout(initMasonry);
                     }
                 }
             }
@@ -24336,18 +24351,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 if (postView === 'masonry') {
-                    var $masonry = $('#block-' + clientId + ' .masonry-view .advgb-recent-posts');
-                    $masonry.isotope({
-                        itemSelector: '.advgb-recent-post',
-                        percentPosition: true
-                    });
-                    $(window).resize(function () {
-                        $masonry.isotope();
-                    });
+
+                    initMasonry = setTimeout(function () {
+                        var $masonry = $('#block-' + clientId + ' .masonry-view .advgb-recent-posts');
+                        $masonry.isotope({
+                            itemSelector: '.advgb-recent-post',
+                            percentPosition: true
+                        });
+                        $(window).resize(function () {
+                            $masonry.isotope();
+                        });
+
+                        if (that.state.updating) {
+                            that.setState({ updating: false });
+                        }
+                    }, 100);
                 } else {
-                    var $masonry = $('#block-' + clientId + ' .advgb-recent-posts');
-                    $masonry.isotope();
-                    $masonry.isotope('destroy');
+                    $('#block-' + clientId + ' .masonry-view .advgb-recent-posts').isotope('destroy');
                 }
 
                 // this.state.updatePostSuggestions: corresponds to componentDidMount
@@ -25136,109 +25156,117 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             { className: 'advgb-text-after-title' },
                                             textAfterTitle
                                         ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'advgb-post-info' },
-                                            displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map(function (coauthor, coauthor_indx) {
-                                                return React.createElement(
-                                                    Fragment,
-                                                    null,
-                                                    React.createElement(
-                                                        'a',
-                                                        { href: coauthor.link,
-                                                            target: '_blank',
-                                                            className: 'advgb-post-author'
-                                                        },
-                                                        coauthor.display_name
-                                                    ),
-                                                    coauthor_indx < post.coauthors.length - 1 && React.createElement(
-                                                        'span',
+                                        (displayAuthor && (post.coauthors && post.coauthors.length > 0 || !post.coauthors || post.coauthors.length === 0) || postDate !== 'hide' || postType === 'post' && displayCommentCount) && React.createElement(
+                                            Fragment,
+                                            null,
+                                            React.createElement(
+                                                'div',
+                                                { className: 'advgb-post-info' },
+                                                displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map(function (coauthor, coauthor_indx) {
+                                                    return React.createElement(
+                                                        Fragment,
                                                         null,
-                                                        ', '
-                                                    )
-                                                );
-                                            }),
-                                            displayAuthor && (!post.coauthors || post.coauthors.length === 0) && React.createElement(
-                                                'a',
-                                                { href: post.author_meta.author_link,
-                                                    target: '_blank',
-                                                    className: 'advgb-post-author'
-                                                },
-                                                post.author_meta.display_name
-                                            ),
-                                            postDate !== 'hide' && React.createElement(
-                                                'span',
-                                                { className: 'advgb-post-datetime' },
-                                                _this3.getDateTime(post)
-                                            ),
-                                            postType === 'post' && displayCommentCount && React.createElement(
-                                                'span',
-                                                { className: 'advgb-post-comments' },
-                                                React.createElement('span', { 'class': 'dashicons dashicons-admin-comments' }),
-                                                '(',
-                                                post.comment_count,
-                                                ')'
+                                                        React.createElement(
+                                                            'a',
+                                                            { href: coauthor.link,
+                                                                target: '_blank',
+                                                                className: 'advgb-post-author'
+                                                            },
+                                                            coauthor.display_name
+                                                        ),
+                                                        coauthor_indx < post.coauthors.length - 1 && React.createElement(
+                                                            'span',
+                                                            null,
+                                                            ', '
+                                                        )
+                                                    );
+                                                }),
+                                                displayAuthor && (!post.coauthors || post.coauthors.length === 0) && React.createElement(
+                                                    'a',
+                                                    { href: post.author_meta.author_link,
+                                                        target: '_blank',
+                                                        className: 'advgb-post-author'
+                                                    },
+                                                    post.author_meta.display_name
+                                                ),
+                                                postDate !== 'hide' && React.createElement(
+                                                    'span',
+                                                    { className: 'advgb-post-datetime' },
+                                                    _this3.getDateTime(post)
+                                                ),
+                                                postType === 'post' && displayCommentCount && React.createElement(
+                                                    'span',
+                                                    { className: 'advgb-post-comments' },
+                                                    React.createElement('span', { 'class': 'dashicons dashicons-admin-comments' }),
+                                                    '(',
+                                                    post.comment_count,
+                                                    ')'
+                                                )
                                             )
                                         ),
-                                        React.createElement(
-                                            'div',
-                                            { className: 'advgb-post-tax-info' },
-                                            showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories && React.createElement(
+                                        (showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories || showTags !== 'hide' && post.tax_additional && post.tax_additional.tags || !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.getTaxSlugs().length > 0) && React.createElement(
+                                            Fragment,
+                                            null,
+                                            React.createElement(
                                                 'div',
-                                                { className: 'advgb-post-tax advgb-post-category' },
-                                                showCategories === 'show' && post.tax_additional.categories.unlinked.map(function (cat, index) {
-                                                    return React.createElement(
-                                                        RawHTML,
-                                                        null,
-                                                        cat
-                                                    );
-                                                }),
-                                                showCategories === 'link' && post.tax_additional.categories.linked.map(function (cat, index) {
-                                                    return React.createElement(
-                                                        RawHTML,
-                                                        null,
-                                                        cat
-                                                    );
-                                                })
-                                            ),
-                                            showTags !== 'hide' && post.tax_additional && post.tax_additional.tags && React.createElement(
-                                                'div',
-                                                { className: 'advgb-post-tax advgb-post-tag' },
-                                                showTags === 'show' && post.tax_additional.tags.unlinked.map(function (tag, index) {
-                                                    return React.createElement(
-                                                        RawHTML,
-                                                        null,
-                                                        tag
-                                                    );
-                                                }),
-                                                showTags === 'link' && post.tax_additional.tags.linked.map(function (tag, index) {
-                                                    return React.createElement(
-                                                        RawHTML,
-                                                        null,
-                                                        tag
-                                                    );
-                                                })
-                                            ),
-                                            !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.getTaxSlugs().map(function (taxSlug) {
-                                                return React.createElement(
+                                                { className: 'advgb-post-tax-info' },
+                                                showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories && React.createElement(
                                                     'div',
-                                                    { className: "advgb-post-tax advgb-post-cpt advgb-post-" + taxSlug },
-                                                    !linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].unlinked.map(function (tag, index) {
+                                                    { className: 'advgb-post-tax advgb-post-category' },
+                                                    showCategories === 'show' && post.tax_additional.categories.unlinked.map(function (cat, index) {
+                                                        return React.createElement(
+                                                            RawHTML,
+                                                            null,
+                                                            cat
+                                                        );
+                                                    }),
+                                                    showCategories === 'link' && post.tax_additional.categories.linked.map(function (cat, index) {
+                                                        return React.createElement(
+                                                            RawHTML,
+                                                            null,
+                                                            cat
+                                                        );
+                                                    })
+                                                ),
+                                                showTags !== 'hide' && post.tax_additional && post.tax_additional.tags && React.createElement(
+                                                    'div',
+                                                    { className: 'advgb-post-tax advgb-post-tag' },
+                                                    showTags === 'show' && post.tax_additional.tags.unlinked.map(function (tag, index) {
                                                         return React.createElement(
                                                             RawHTML,
                                                             null,
                                                             tag
                                                         );
                                                     }),
-                                                    linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].linked.map(function (tag, index) {
+                                                    showTags === 'link' && post.tax_additional.tags.linked.map(function (tag, index) {
                                                         return React.createElement(
                                                             RawHTML,
                                                             null,
                                                             tag
                                                         );
                                                     })
-                                                );
-                                            })
+                                                ),
+                                                !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.getTaxSlugs().map(function (taxSlug) {
+                                                    return React.createElement(
+                                                        'div',
+                                                        { className: "advgb-post-tax advgb-post-cpt advgb-post-" + taxSlug },
+                                                        !linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].unlinked.map(function (tag, index) {
+                                                            return React.createElement(
+                                                                RawHTML,
+                                                                null,
+                                                                tag
+                                                            );
+                                                        }),
+                                                        linkCustomTax && post.tax_additional[taxSlug] && post.tax_additional[taxSlug].linked.map(function (tag, index) {
+                                                            return React.createElement(
+                                                                RawHTML,
+                                                                null,
+                                                                tag
+                                                            );
+                                                        })
+                                                    );
+                                                })
+                                            )
                                         ),
                                         React.createElement(
                                             'div',
@@ -25370,11 +25398,81 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: 'updatePostType',
             value: function updatePostType(postType) {
                 this.setState({ taxonomyList: null });
-                if (!INBUILT_POST_TYPES.includes(postType)) {
+                this.generateTaxFilters(postType);
+
+                this.props.setAttributes({ postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
+            }
+
+            /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
+
+        }, {
+            key: 'generateTaxFilters',
+            value: function generateTaxFilters(postType) {
+                if (typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active) && (postType === 'post' || postType === 'page') && PP_SERIES_POST_TYPES.includes(postType)) {
+                    // Enable PublishPress Series taxonomy filter in post/page when enabled through Series plugin
+                    this.generateSeriesTax(postType);
+                } else if (!INBUILT_POST_TYPES.includes(postType)) {
+                    // Enable CPT taxonomy filters (may include Series taxonomy)
                     this.generateTaxTerms(postType);
+                } else {
+                    // Nothing to do here
+                }
+            }
+
+            /**
+             * Generates PublishPress Series taxonomy list for 'post' and sets it in the state as "taxonomyList".
+             */
+
+        }, {
+            key: 'generateSeriesTax',
+            value: function generateSeriesTax(postType) {
+                var _this4 = this;
+
+                if (!postType) {
+                    return;
                 }
 
-                this.props.setAttributes({ postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {} });
+                // fetch series taxonomy
+                wp.apiFetch({
+                    path: wp.url.addQueryArgs('wp/v2/types/' + postType, { context: 'edit' })
+                }).then(function (typeAttributes) {
+                    var taxonomy = [];
+                    var taxId = {};
+                    var seriesSlug = typeof advgbBlocks.pp_series_slug !== 'undefined' ? advgbBlocks.pp_series_slug : 'series';
+
+                    wp.apiFetch({
+                        path: wp.url.addQueryArgs('wp/v2/taxonomies/' + seriesSlug, { context: 'edit' })
+                    }).then(function (taxAttributes) {
+                        // fetch all terms
+                        wp.apiFetch({
+                            path: wp.url.addQueryArgs('wp/v2/' + taxAttributes.rest_base + '?per_page=-1&hide_empty=true', { context: 'edit' })
+                        }).then(function (terms) {
+                            var suggestions = [];
+                            var map = [];
+                            terms.forEach(function (term) {
+                                suggestions.push(decodeEntities(term.name));
+                                map[decodeEntities(term.name)] = term.id;
+                            });
+
+                            var preselectedName = _this4.props.attributes.taxonomies ? _this4.props.attributes.taxonomies[seriesSlug] : [];
+                            if (preselectedName) {
+                                var preselectedId = preselectedName.map(function (name) {
+                                    return map[name];
+                                });
+                                set(taxId, seriesSlug, preselectedId);
+                                _this4.props.setAttributes({ taxIds: taxId });
+                            }
+
+                            taxonomy.push({ slug: seriesSlug, name: decodeEntities(taxAttributes.name), suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
+
+                            _this4.setState({ updating: true });
+                            // length === 1 due we only get the series taxonomy
+                            if (taxonomy.length === 1) {
+                                _this4.setState({ taxonomyList: taxonomy, updating: false });
+                            }
+                        });
+                    });
+                });
             }
 
             /**
@@ -25384,7 +25482,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'generateTaxTerms',
             value: function generateTaxTerms(postType) {
-                var _this4 = this;
+                var _this5 = this;
 
                 if (!postType) {
                     return;
@@ -25412,23 +25510,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     map[decodeEntities(term.name)] = term.id;
                                 });
 
-                                var preselectedNames = _this4.props.attributes.taxonomies ? _this4.props.attributes.taxonomies[tax] : [];
+                                var preselectedNames = _this5.props.attributes.taxonomies ? _this5.props.attributes.taxonomies[tax] : [];
                                 if (preselectedNames) {
                                     var preselectedIds = preselectedNames.map(function (name) {
                                         return map[name];
                                     });
                                     set(taxIds, tax, preselectedIds);
-                                    _this4.props.setAttributes({ taxIds: taxIds });
+                                    _this5.props.setAttributes({ taxIds: taxIds });
                                 }
 
                                 taxonomies.push({ slug: tax, name: decodeEntities(taxAttributes.name), suggestions: suggestions, map: map, hierarchical: taxAttributes.hierarchical });
 
-                                _this4.setState({ updating: true });
+                                _this5.setState({ updating: true });
                                 if (typeAttributes.taxonomies.length === taxonomies.length) {
                                     // set state only when all taxonomies have been fetched
                                     // otherwise the taxonomy boxes will appear one at a time making the page jittery
                                     // we will sort the taxonomies so that the boxes are always in a predictable, consistent order
-                                    _this4.setState({ taxonomyList: sortBy(taxonomies, ['slug']), updating: false });
+                                    _this5.setState({ taxonomyList: sortBy(taxonomies, ['slug']), updating: false });
                                 }
                             });
                         });
