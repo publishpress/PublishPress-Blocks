@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.13.1 - 16 May 2022 =
+= 2.13.1 - 17 May 2022 =
   * Add: Plugin Instance Protection
   * Add: PublishPress Series support to Content Display block
   * Fix: Don't display post info and categories/tags, taxonomies wrappers when empty for Content Display block
