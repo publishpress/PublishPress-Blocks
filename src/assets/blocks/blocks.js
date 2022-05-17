@@ -25412,7 +25412,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     // Enable PublishPress Series taxonomy filter in post/page when enabled through Series plugin
                     this.generateSeriesTax(postType);
                 } else if (!INBUILT_POST_TYPES.includes(postType)) {
-                    // Enable CPT taxonomy filters
+                    // Enable CPT taxonomy filters (may include Series taxonomy)
                     this.generateTaxTerms(postType);
                 } else {
                     // Nothing to do here
