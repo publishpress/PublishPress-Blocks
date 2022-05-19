@@ -18324,20 +18324,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 opacity: alwaysShowOverlay ? 0.5 : undefined
                                             }
                                         }),
-                                        image.title && titleShow && React.createElement(
-                                            Fragment,
-                                            null,
-                                            React.createElement(RichText, {
-                                                tagName: titleTag,
-                                                className: "advgb-image-slider-title",
-                                                style: { color: titleColor },
-                                                value: images[currentSelected] ? images[currentSelected].title || '' : '',
-                                                onChange: function onChange(value) {
-                                                    return _this3.updateImagesData({ title: value || '' });
-                                                },
-                                                allowedFormats: []
-                                            })
-                                        ),
+                                        image.title && titleShow && React.createElement(RichText, {
+                                            tagName: titleTag,
+                                            className: "advgb-image-slider-title",
+                                            style: { color: titleColor },
+                                            value: images[currentSelected] ? images[currentSelected].title || '' : '',
+                                            onChange: function onChange(value) {
+                                                return _this3.updateImagesData({ title: value || '' });
+                                            },
+                                            allowedFormats: []
+                                        }),
                                         image.text && React.createElement(RichText, {
                                             tagName: textTag,
                                             className: "advgb-image-slider-text",

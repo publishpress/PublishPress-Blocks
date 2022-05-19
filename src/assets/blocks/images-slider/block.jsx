@@ -375,16 +375,14 @@
                                                       }}
                                                 />)}
                                             {image.title && titleShow && (
-                                                <Fragment>
-                                                    <RichText
-                                                        tagName={ titleTag }
-                                                        className="advgb-image-slider-title"
-                                                        style={{color: titleColor}}
-                                                        value={images[currentSelected] ? images[currentSelected].title || '' : ''}
-                                                        onChange={(value) => this.updateImagesData({title: value || ''})}
-                                                        allowedFormats={ [] }
-                                                    />
-                                                </Fragment>
+                                                <RichText
+                                                    tagName={ titleTag }
+                                                    className="advgb-image-slider-title"
+                                                    style={{color: titleColor}}
+                                                    value={images[currentSelected] ? images[currentSelected].title || '' : ''}
+                                                    onChange={(value) => this.updateImagesData({title: value || ''})}
+                                                    allowedFormats={ [] }
+                                                />
                                             )}
                                             {image.text && (
                                                 <RichText
