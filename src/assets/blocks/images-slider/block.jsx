@@ -375,19 +375,25 @@
                                                       }}
                                                 />)}
                                             {image.title && titleShow && (
-                                                <RichText
-                                                    tagName={ titleTag }
-                                                    className="advgb-image-slider-title"
-                                                    style={{color: titleColor}}
-                                                    value={ image.title }
-                                                />
+                                                <Fragment>
+                                                    <RichText
+                                                        tagName={ titleTag }
+                                                        className="advgb-image-slider-title"
+                                                        style={{color: titleColor}}
+                                                        value={images[currentSelected] ? images[currentSelected].title || '' : ''}
+                                                        onChange={(value) => this.updateImagesData({title: value || ''})}
+                                                        allowedFormats={ [] }
+                                                    />
+                                                </Fragment>
                                             )}
                                             {image.text && (
                                                 <RichText
                                                     tagName={ textTag }
                                                     className="advgb-image-slider-text"
                                                     style={{color: textColor}}
-                                                    value={ image.text }
+                                                    value={images[currentSelected] ? images[currentSelected].text || '' : ''}
+                                                    onChange={(value) => this.updateImagesData({text: value || ''})}
+                                                    allowedFormats={ [] }
                                                 />
                                             )}
                                         </div>
