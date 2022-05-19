@@ -18328,7 +18328,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             tagName: titleTag,
                                             className: "advgb-image-slider-title",
                                             style: { color: titleColor },
-                                            value: images[currentSelected] ? images[currentSelected].title || '' : '',
+                                            value: image.title,
                                             onChange: function onChange(value) {
                                                 return _this3.updateImagesData({ title: value || '' });
                                             },
@@ -18338,7 +18338,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             tagName: textTag,
                                             className: "advgb-image-slider-text",
                                             style: { color: textColor },
-                                            value: images[currentSelected] ? images[currentSelected].text || '' : '',
+                                            value: image.text,
                                             onChange: function onChange(value) {
                                                 return _this3.updateImagesData({ text: value || '' });
                                             },

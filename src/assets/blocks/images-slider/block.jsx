@@ -379,8 +379,8 @@
                                                     tagName={ titleTag }
                                                     className="advgb-image-slider-title"
                                                     style={{color: titleColor}}
-                                                    value={images[currentSelected] ? images[currentSelected].title || '' : ''}
-                                                    onChange={(value) => this.updateImagesData({title: value || ''})}
+                                                    value={ image.title }
+                                                    onChange={ (value) => this.updateImagesData({title: value || ''}) }
                                                     allowedFormats={ [] }
                                                 />
                                             )}
@@ -389,8 +389,8 @@
                                                     tagName={ textTag }
                                                     className="advgb-image-slider-text"
                                                     style={{color: textColor}}
-                                                    value={images[currentSelected] ? images[currentSelected].text || '' : ''}
-                                                    onChange={(value) => this.updateImagesData({text: value || ''})}
+                                                    value={ image.text }
+                                                    onChange={ (value) => this.updateImagesData({text: value || ''}) }
                                                     allowedFormats={ [] }
                                                 />
                                             )}
