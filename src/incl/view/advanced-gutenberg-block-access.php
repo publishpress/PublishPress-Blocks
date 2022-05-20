@@ -119,9 +119,6 @@ $advgb_block_readonly_  = null;
                     </div>
                 </div>
                 <div class="inline-button-wrapper">
-                    <span id="block-update-notice">
-                        <?php esc_html_e('Blocks list updated.', 'advanced-gutenberg') ?>
-                    </span>
                     <span class="advgb_qtip advgb_qtip_no_after"
                         data-qtip="<?php esc_attr_e(
                             'To save this configuration, enable at least one block',
