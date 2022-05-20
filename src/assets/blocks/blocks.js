@@ -25806,6 +25806,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return !isUndefined(value) && !(isArray(value) && (isNull(value) || value.length === 0));
             });
 
+            console.log(recentPostsQuery);
+
             var filterTaxNames = [];
             if (taxIds) {
                 Object.keys(taxIds).map(function (taxSlug) {
@@ -25931,6 +25933,7 @@ function CategorySelect(_ref2) {
 
 var DEFAULT_MIN_ITEMS = 1;
 var DEFAULT_MAX_ITEMS = 100;
+var PP_SERIES_POST_TYPES = typeof advgbBlocks.pp_series_post_types !== 'undefined' ? advgbBlocks.pp_series_post_types : ['post'];
 
 function AdvQueryControls(_ref3) {
     var categoriesList = _ref3.categoriesList,
@@ -25998,6 +26001,13 @@ function AdvQueryControls(_ref3) {
         }, {
             label: __('Comments, increasing order', 'advanced-gutenberg'),
             value: 'comment_count/asc'
+        }]);
+    }
+
+    if (PP_SERIES_POST_TYPES.includes(postType)) {
+        orderParams = _.union(orderParams, [{
+            label: __('Series order', 'advanced-gutenberg'),
+            value: 'series_order/desc'
         }]);
     }
 
