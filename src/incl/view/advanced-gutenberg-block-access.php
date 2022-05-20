@@ -109,6 +109,15 @@ $advgb_block_readonly_  = null;
                     >
                     <i class="mi mi-search"></i>
                 </div>
+                <div class="advgb-toggle-wrapper">
+                    <?php _e('Toggle all blocks', 'advanced-gutenberg') ?>
+                    <div class="ju-switch-button">
+                        <label class="switch">
+                            <input type="checkbox" name="toggle_all_blocks">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
                 <div class="inline-button-wrapper">
                     <span id="block-update-notice">
                         <?php esc_html_e('Blocks list updated.', 'advanced-gutenberg') ?>
