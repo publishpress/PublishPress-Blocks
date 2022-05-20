@@ -745,6 +745,15 @@ function advgbRegisterCustomFields() {
         )
     );
 
+    register_rest_field( 'post',
+        'series_order',
+        array(
+            'get_callback'  => 'advgbGetSeriesOrder',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
 	// PAGE fields
     register_rest_field( 'page',
         'coauthors',
@@ -803,6 +812,15 @@ function advgbRegisterCustomFields() {
         'featured_img',
         array(
             'get_callback'  => 'advgbGetFeaturedImage',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
+    register_rest_field( 'page',
+        'series_order',
+        array(
+            'get_callback'  => 'advgbGetSeriesOrder',
             'update_callback'   => null,
             'schema'            => null,
         )
@@ -883,6 +901,15 @@ function advgbRegisterCustomFields() {
 				'schema'            => null,
 			)
 		);
+
+        register_rest_field( $cpt,
+            'series_order',
+            array(
+                'get_callback'  => 'advgbGetSeriesOrder',
+                'update_callback'   => null,
+                'schema'            => null,
+            )
+        );
 	}
 
 	// custom routes
@@ -922,6 +949,7 @@ function advgbGetCPTs() {
 function advgbAllowPostQueryVars( $query_params ) {
 	$query_params['orderby']['enum'][] = 'rand';
 	$query_params['orderby']['enum'][] = 'comment_count';
+	$query_params['orderby']['enum'][] = 'series_order';
 	return $query_params;
 }
 add_filter( 'rest_post_collection_params', 'advgbAllowPostQueryVars' );
@@ -934,6 +962,7 @@ add_filter( 'rest_post_collection_params', 'advgbAllowPostQueryVars' );
 function advgbAllowPageQueryVars( $query_params ) {
 	$query_params['orderby']['enum'][] = 'author';
 	$query_params['orderby']['enum'][] = 'rand';
+	$query_params['orderby']['enum'][] = 'series_order';
 	return $query_params;
 }
 add_filter( 'rest_page_collection_params', 'advgbAllowPageQueryVars' );
@@ -945,6 +974,7 @@ add_filter( 'rest_page_collection_params', 'advgbAllowPageQueryVars' );
  */
 function advgbAllowCPTQueryVars( $query_params ) {
 	$query_params['orderby']['enum'][] = 'author';
+	$query_params['orderby']['enum'][] = 'series_order';
 	return $query_params;
 }
 
@@ -993,6 +1023,15 @@ function advgbGetAbsoluteDatesTime( $post ) {
  */
 function advgbGetImageCaption( $post ) {
 	return get_the_post_thumbnail_caption( $post['id'] );
+}
+
+/**
+ * Returns the Series order
+ *
+ * @return int
+ */
+function advgbGetSeriesOrder( $post ) {
+    return get_post_meta( $post['id'], '_series_part', true );
 }
 
 /**
