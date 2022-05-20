@@ -119,12 +119,12 @@ $advgb_block_readonly_  = null;
                     </div>
                 </div>
                 <div class="inline-button-wrapper">
-                    <span class="advgb_qtip advgb_qtip_no_after"
+                    <span class="advgb_qtip advgb_qtip_no_after advgb-enable-one-block-msg"
                         data-qtip="<?php esc_attr_e(
                             'To save this configuration, enable at least one block',
                             'advanced-gutenberg'
                         ) ?>"
-                        id="advgb-enable-one-msg" style="display: none;">
+                        style="display: none;">
                         <span class="dashicons dashicons-warning"></span>
                     </span>
                     <button class="button button-primary pp-primary-button save-profile-button"
@@ -225,12 +225,21 @@ $advgb_block_readonly_  = null;
         </div>
 
         <!--Save button-->
-        <button class="button button-primary pp-primary-button save-profile-button"
-                type="submit"
-                name="advgb_block_access_save"
-                style="margin-top: 20px;"
-        >
-            <span><?php esc_html_e('Save Block Access', 'advanced-gutenberg') ?></span>
-        </button>
+        <div style="margin-top: 20px;">
+            <button class="button button-primary pp-primary-button save-profile-button"
+                    type="submit"
+                    name="advgb_block_access_save"
+            >
+                <span><?php esc_html_e('Save Block Access', 'advanced-gutenberg') ?></span>
+            </button>
+            <span class="advgb_qtip advgb_qtip_no_after advgb-enable-one-block-msg"
+                data-qtip="<?php esc_attr_e(
+                    'To save this configuration, enable at least one block',
+                    'advanced-gutenberg'
+                ) ?>"
+                style="display: none;">
+                <span class="dashicons dashicons-warning"></span>
+            </span>
+        </div>
     </div>
 </form>

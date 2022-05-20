@@ -47,10 +47,10 @@ window.addEventListener('load', function () {
     // Show warning and disable save button if all blocks are disabled
     var saveButtonStatus = function() {
         if( $('.block-item-editable input:checked').length === 0 ) {
-            $('#advgb-enable-one-msg').show();
+            $('.advgb-enable-one-block-msg').show();
             $('.save-profile-button').prop('disabled', true);
         } else {
-            $('#advgb-enable-one-msg').hide();
+            $('.advgb-enable-one-block-msg').hide();
             $('.save-profile-button').prop('disabled', false);
         }
     }
