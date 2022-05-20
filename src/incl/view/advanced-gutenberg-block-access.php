@@ -109,11 +109,24 @@ $advgb_block_readonly_  = null;
                     >
                     <i class="mi mi-search"></i>
                 </div>
+                <div class="advgb-toggle-wrapper">
+                    <?php _e('Disable/Enable all blocks', 'advanced-gutenberg') ?>
+                    <div class="ju-switch-button">
+                        <label class="switch">
+                            <input type="checkbox" name="toggle_all_blocks" id="toggle_all_blocks">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
                 <div class="inline-button-wrapper">
-                    <span id="block-update-notice">
-                        <?php esc_html_e('Blocks list updated.', 'advanced-gutenberg') ?>
+                    <span class="advgb_qtip advgb_qtip_no_after"
+                        data-qtip="<?php esc_attr_e(
+                            'To save this configuration, enable at least one block',
+                            'advanced-gutenberg'
+                        ) ?>"
+                        id="advgb-enable-one-msg" style="display: none;">
+                        <span class="dashicons dashicons-warning"></span>
                     </span>
-
                     <button class="button button-primary pp-primary-button save-profile-button"
                             type="submit"
                             name="advgb_block_access_save"
@@ -156,7 +169,7 @@ $advgb_block_readonly_  = null;
                                         $advgb_block_readonly_  = false;
                                     }
                                     ?>
-                                    <li class="block-item block-access-item ju-settings-option<?php echo ($advgb_block_readonly_) ? ' block-item-readonly' : '' ?>">
+                                    <li class="block-item block-access-item ju-settings-option<?php echo ($advgb_block_readonly_) ? ' block-item-readonly' : ' block-item-editable' ?>">
                                         <label class="ju-setting-label">
                                             <span class="block-icon"<?php echo isset( $block['iconColor'] ) && !empty( $block['iconColor'] ) ? ' style="color:' . esc_attr($block['iconColor']) . ';"' : ''; ?>>
                                                 <?php

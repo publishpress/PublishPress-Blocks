@@ -92,14 +92,37 @@
 
   .advgb-search-wrapper {
     width: 200px;
-    display: inline-block;
-    margin: 0 0 0 15px !important;
     border: 1px solid #e1e1e1 !important;
-    background-color: transparent !important;
 
     .advgb-search-input {
       margin-top: -1px;
     }
+  }
+
+  .advgb-toggle-wrapper {
+    min-width: 200px;
+
+    .ju-switch-button {
+      margin-top: -6px;
+
+      .switch {
+        margin: 0;
+      }
+    }
+  }
+
+  .advgb-toggle-wrapper,
+  .advgb-search-wrapper {
+    display: inline-block;
+    margin: 0 0 0 15px !important;
+    background-color: transparent !important;
+  }
+
+  #advgb-enable-one-msg .dashicons {
+    color: #ff0000;
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
   }
 }
 
