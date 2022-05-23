@@ -100,6 +100,11 @@ function advgbRenderBlockRecentPosts($attributes)
 		advgbMultipleAuthorSort();
 	}
 
+    // if order by series order
+	if ( $orderBy === 'series_order' ) {
+		advgbSeriesOrderSort();
+	}
+
 	$args = array(
 			'post_type' => $post_type,
             'numberposts' => empty($attributes['numberOfPosts'])?8:$attributes['numberOfPosts'],
@@ -1195,6 +1200,21 @@ add_filter( 'rest_post_query', 'advgbGetAuthorFilterREST', 10, 2 );
 add_filter( 'rest_page_query', 'advgbGetAuthorFilterREST', 10, 2 );
 
 /**
+ * Populate the correct arguments in REST for filtering by series order.
+ *
+ * @return array
+ */
+function advgbSetSeriesOrderREST( $args, $request ) {
+    $orderby = sanitize_text_field($request['orderby']);
+    if ( isset( $orderby ) && $orderby === 'series_order' ) {
+        $args['orderby'] = 'meta_value_num';
+        $args['meta_key'] = '_series_part';
+	}
+	return $args;
+}
+add_filter( 'rest_post_query', 'advgbSetSeriesOrderREST', 10, 2 );
+
+/**
  * Sets the author args for the meta_query.
  */
 function advgbSetPPAuthorArgs( $user_id, &$args ) {
@@ -1246,6 +1266,25 @@ function advgbMultipleAuthorSort() {
 		} );
 	}
 }
+
+/**
+ * Populate the correct arguments for filtering by series order.
+ *
+ */
+function advgbSeriesOrderSort() {
+	if ( class_exists('orgSeries') ){
+		add_action('pre_get_posts', function( $query )  {
+			if ( is_admin() ) {
+				return $query;
+			}
+			$query->set('orderby', 'meta_value');
+			$query->set('meta_key', '_series_part');
+
+			return $query;
+		} );
+	}
+}
+
 
 /**
  * Check if Featured image is enable for each post

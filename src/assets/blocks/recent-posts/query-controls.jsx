@@ -171,7 +171,7 @@ function AdvQueryControls({
         orderParams = _.union(orderParams, [
                     {
                         label: __('Series order', 'advanced-gutenberg'),
-                        value: 'series_order/desc',
+                        value: 'series_order/asc',
                     },
         ]);
     }

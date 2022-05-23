@@ -25806,8 +25806,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return !isUndefined(value) && !(isArray(value) && (isNull(value) || value.length === 0));
             });
 
-            console.log(recentPostsQuery);
-
             var filterTaxNames = [];
             if (taxIds) {
                 Object.keys(taxIds).map(function (taxSlug) {
@@ -26007,7 +26005,7 @@ function AdvQueryControls(_ref3) {
     if (PP_SERIES_POST_TYPES.includes(postType)) {
         orderParams = _.union(orderParams, [{
             label: __('Series order', 'advanced-gutenberg'),
-            value: 'series_order/desc'
+            value: 'series_order/asc'
         }]);
     }
 
