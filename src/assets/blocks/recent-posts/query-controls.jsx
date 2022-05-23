@@ -167,7 +167,11 @@ function AdvQueryControls({
         ]);
     }
 
-    if( PP_SERIES_POST_TYPES.includes( postType ) ) {
+    if(
+        typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active)
+        && (postType === 'post' || postType === 'page')
+        && PP_SERIES_POST_TYPES.includes( postType )
+    ) {
         orderParams = _.union(orderParams, [
                     {
                         label: __('Series order', 'advanced-gutenberg'),
