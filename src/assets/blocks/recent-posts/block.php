@@ -100,6 +100,11 @@ function advgbRenderBlockRecentPosts($attributes)
 		advgbMultipleAuthorSort();
 	}
 
+    // if order by series order
+	if ( $orderBy === 'series_order' ) {
+		advgbSeriesOrderSort();
+	}
+
 	$args = array(
 			'post_type' => $post_type,
             'numberposts' => empty($attributes['numberOfPosts'])?8:$attributes['numberOfPosts'],
@@ -745,6 +750,15 @@ function advgbRegisterCustomFields() {
         )
     );
 
+    register_rest_field( 'post',
+        'series_order',
+        array(
+            'get_callback'  => 'advgbGetSeriesOrder',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
 	// PAGE fields
     register_rest_field( 'page',
         'coauthors',
@@ -803,6 +817,15 @@ function advgbRegisterCustomFields() {
         'featured_img',
         array(
             'get_callback'  => 'advgbGetFeaturedImage',
+            'update_callback'   => null,
+            'schema'            => null,
+        )
+    );
+
+    register_rest_field( 'page',
+        'series_order',
+        array(
+            'get_callback'  => 'advgbGetSeriesOrder',
             'update_callback'   => null,
             'schema'            => null,
         )
@@ -883,6 +906,15 @@ function advgbRegisterCustomFields() {
 				'schema'            => null,
 			)
 		);
+
+        register_rest_field( $cpt,
+            'series_order',
+            array(
+                'get_callback'  => 'advgbGetSeriesOrder',
+                'update_callback'   => null,
+                'schema'            => null,
+            )
+        );
 	}
 
 	// custom routes
@@ -922,6 +954,7 @@ function advgbGetCPTs() {
 function advgbAllowPostQueryVars( $query_params ) {
 	$query_params['orderby']['enum'][] = 'rand';
 	$query_params['orderby']['enum'][] = 'comment_count';
+	$query_params['orderby']['enum'][] = 'series_order';
 	return $query_params;
 }
 add_filter( 'rest_post_collection_params', 'advgbAllowPostQueryVars' );
@@ -934,6 +967,7 @@ add_filter( 'rest_post_collection_params', 'advgbAllowPostQueryVars' );
 function advgbAllowPageQueryVars( $query_params ) {
 	$query_params['orderby']['enum'][] = 'author';
 	$query_params['orderby']['enum'][] = 'rand';
+	$query_params['orderby']['enum'][] = 'series_order';
 	return $query_params;
 }
 add_filter( 'rest_page_collection_params', 'advgbAllowPageQueryVars' );
@@ -945,6 +979,7 @@ add_filter( 'rest_page_collection_params', 'advgbAllowPageQueryVars' );
  */
 function advgbAllowCPTQueryVars( $query_params ) {
 	$query_params['orderby']['enum'][] = 'author';
+	$query_params['orderby']['enum'][] = 'series_order';
 	return $query_params;
 }
 
@@ -993,6 +1028,15 @@ function advgbGetAbsoluteDatesTime( $post ) {
  */
 function advgbGetImageCaption( $post ) {
 	return get_the_post_thumbnail_caption( $post['id'] );
+}
+
+/**
+ * Returns the Series order
+ *
+ * @return int
+ */
+function advgbGetSeriesOrder( $post ) {
+    return get_post_meta( $post['id'], '_series_part', true );
 }
 
 /**
@@ -1156,6 +1200,22 @@ add_filter( 'rest_post_query', 'advgbGetAuthorFilterREST', 10, 2 );
 add_filter( 'rest_page_query', 'advgbGetAuthorFilterREST', 10, 2 );
 
 /**
+ * Populate the correct arguments in REST for filtering by series order.
+ *
+ * @return array
+ */
+function advgbSetSeriesOrderREST( $args, $request ) {
+    $orderby = sanitize_text_field($request['orderby']);
+    if ( isset( $orderby ) && $orderby === 'series_order' ) {
+        $args['orderby'] = 'meta_value_num';
+        $args['meta_key'] = '_series_part';
+	}
+	return $args;
+}
+add_filter( 'rest_post_query', 'advgbSetSeriesOrderREST', 10, 2 );
+add_filter( 'rest_page_query', 'advgbSetSeriesOrderREST', 10, 2 );
+
+/**
  * Sets the author args for the meta_query.
  */
 function advgbSetPPAuthorArgs( $user_id, &$args ) {
@@ -1207,6 +1267,25 @@ function advgbMultipleAuthorSort() {
 		} );
 	}
 }
+
+/**
+ * Populate the correct arguments for filtering by series order.
+ *
+ */
+function advgbSeriesOrderSort() {
+	if ( class_exists('orgSeries') ){
+		add_action('pre_get_posts', function( $query )  {
+			if ( is_admin() ) {
+				return $query;
+			}
+			$query->set('orderby', 'meta_value');
+			$query->set('meta_key', '_series_part');
+
+			return $query;
+		} );
+	}
+}
+
 
 /**
  * Check if Featured image is enable for each post
@@ -1364,6 +1443,7 @@ function advgbInitializeHooksForCPTs() {
 		add_filter( "rest_{$cpt}_query", 'advgbGetAuthorFilterREST', 10, 2 );
 		add_filter( "rest_{$cpt}_query", 'advgbMultipleAuthorSortREST', 10, 2 );
 		add_filter( "rest_{$cpt}_collection_params", 'advgbAllowCPTQueryVars' );
+        add_filter( "rest_{$cpt}_query", 'advgbSetSeriesOrderREST', 10, 2 );
 	}
 }
 add_action( 'init', 'advgbInitializeHooksForCPTs' );
