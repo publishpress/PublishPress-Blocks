@@ -1213,6 +1213,7 @@ function advgbSetSeriesOrderREST( $args, $request ) {
 	return $args;
 }
 add_filter( 'rest_post_query', 'advgbSetSeriesOrderREST', 10, 2 );
+add_filter( 'rest_page_query', 'advgbSetSeriesOrderREST', 10, 2 );
 
 /**
  * Sets the author args for the meta_query.
@@ -1442,6 +1443,7 @@ function advgbInitializeHooksForCPTs() {
 		add_filter( "rest_{$cpt}_query", 'advgbGetAuthorFilterREST', 10, 2 );
 		add_filter( "rest_{$cpt}_query", 'advgbMultipleAuthorSortREST', 10, 2 );
 		add_filter( "rest_{$cpt}_collection_params", 'advgbAllowCPTQueryVars' );
+        add_filter( "rest_{$cpt}_query", 'advgbSetSeriesOrderREST', 10, 2 );
 	}
 }
 add_action( 'init', 'advgbInitializeHooksForCPTs' );
