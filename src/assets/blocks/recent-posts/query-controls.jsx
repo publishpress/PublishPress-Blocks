@@ -168,8 +168,8 @@ function AdvQueryControls({
     }
 
     if(
-        typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active)
-        && (postType === 'post' || postType === 'page')
+        typeof advgbBlocks.pp_series_active !== 'undefined'
+        && parseInt(advgbBlocks.pp_series_active)
         && PP_SERIES_POST_TYPES.includes( postType )
     ) {
         orderParams = _.union(orderParams, [

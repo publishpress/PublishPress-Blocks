@@ -26002,7 +26002,7 @@ function AdvQueryControls(_ref3) {
         }]);
     }
 
-    if (typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active) && (postType === 'post' || postType === 'page') && PP_SERIES_POST_TYPES.includes(postType)) {
+    if (typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active) && PP_SERIES_POST_TYPES.includes(postType)) {
         orderParams = _.union(orderParams, [{
             label: __('Series order', 'advanced-gutenberg'),
             value: 'series_order/asc'
