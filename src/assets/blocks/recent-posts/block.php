@@ -70,23 +70,23 @@ function advgbRenderBlockRecentPosts($attributes)
 		$categories = array_column( $categories, 'id' );
 	}
 	if(isset($attributes['category']) && !empty($attributes['category'])){
-		$categories = $attributes['category'];
+		$categories = esc_html( $attributes['category'] );
 	}
 
-	$post_type = isset($attributes['postType']) ? $attributes['postType'] : 'post';
+	$post_type = isset( $attributes['postType'] ) ? esc_html( $attributes['postType'] ) : 'post';
 	$tax_query = [];
 	if ( ! empty( $attributes['tags'] ) && ($post_type === 'post' || $post_type === 'page') ){
-		$tax_query = array(
+        $tax_query = array(
 				array(
 					'taxonomy' => 'post_tag',
 					'field' => 'name',
-					'terms' => $attributes['tags'],
+					'terms' => array_map( 'esc_html', $attributes['tags'] ),
 					'operator' => 'IN',
 				),
 			);
 	}
 
-	$orderBy = empty($attributes['orderBy'])?'date':$attributes['orderBy'];
+	$orderBy = empty($attributes['orderBy']) ? 'date' : esc_html( $attributes['orderBy'] );
 
 	// 'id' in https://developer.wordpress.org/rest-api/reference/posts/#list-posts
 	// BUT
@@ -107,15 +107,16 @@ function advgbRenderBlockRecentPosts($attributes)
 
 	$args = array(
 			'post_type' => $post_type,
-            'numberposts' => empty($attributes['numberOfPosts'])?8:$attributes['numberOfPosts'],
+            'numberposts' => empty( $attributes['numberOfPosts'] ) ? 8 : esc_html( $attributes['numberOfPosts'] ),
             'post_status' => 'publish',
-            'order' => empty($attributes['order'])?'desc':$attributes['order'],
+            'order' => empty( $attributes['order'] ) ? 'desc' : esc_html( $attributes['order'] ),
             'orderby' => $orderBy,
             'suppress_filters' => false,
         );
 
     if( isset( $attributes['exclude'] ) && ! empty( $attributes['exclude'] ) ) {
-        $args['post__not_in'] = advgbGetPostIdsForTitles( $attributes['exclude'], $post_type );
+        $exclude = array_map( 'esc_html', $attributes['exclude'] );
+        $args['post__not_in'] = advgbGetPostIdsForTitles( $exclude, $post_type );
     }
 
     if( isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ) {
@@ -126,9 +127,9 @@ function advgbRenderBlockRecentPosts($attributes)
 		foreach( $attributes['taxonomies'] as $slug => $terms ) {
 			if ( count( $terms ) > 0 ) {
 				$tax_query[] = array(
-						'taxonomy' => $slug,
+						'taxonomy' => esc_html( $slug ),
 						'field' => 'name',
-						'terms' => $terms,
+						'terms' => array_map( 'esc_html', $terms ),
 						'include_children' => false,
 						'operator' => 'IN',
 				);
@@ -159,7 +160,7 @@ function advgbRenderBlockRecentPosts($attributes)
             $displayImageVsOrder = getDisplayImageVsOrder( $attributes, $key );
             $postThumb           = '<img src="' . esc_url($rp_default_thumb['url']) . '" />';
             $postThumbCaption    = '';
-            $postDate            = isset($attributes['displayDate']) && $attributes['displayDate'] ? 'created' : (isset($attributes['postDate']) ? $attributes['postDate'] : 'hide');
+            $postDate            = isset($attributes['displayDate']) && $attributes['displayDate'] ? 'created' : (isset($attributes['postDate']) ? esc_html( $attributes['postDate'] ) : 'hide');
             $postDateDisplay     = null;
 
             if ($postThumbID) {
@@ -180,6 +181,8 @@ function advgbRenderBlockRecentPosts($attributes)
 
             $postHtml .= '<article class="advgb-recent-post' . ( $outputImage ? '' : ' advgb-recent-post--no-image' ) . '">';
 
+            $postView = esc_html( $attributes['postView'] );
+
             if ( $outputImage && $displayImageVsOrder === 'ignore-order' ) {
                 $postHtml .= sprintf(
                     '<div class="advgb-post-thumbnail"><a href="%1$s">%2$s%3$s</a></div>',
@@ -188,8 +191,8 @@ function advgbRenderBlockRecentPosts($attributes)
                     $postThumbCaption
                 );
             } elseif (
-                ($attributes['postView'] === 'frontpage' && $attributes['frontpageStyle'] === 'headline')
-                || ($attributes['postView'] === 'slider' && $attributes['sliderStyle'] === 'headline')
+                ($postView === 'frontpage' && $attributes['frontpageStyle'] === 'headline')
+                || ($postView === 'slider' && $attributes['sliderStyle'] === 'headline')
                  && $displayImageVsOrder === 'ignore-order'
             ) {
                 $postHtml .= sprintf(
@@ -241,8 +244,8 @@ function advgbRenderBlockRecentPosts($attributes)
     					foreach ( $coauthors as $coauthor ) {
     						$postHtml .= sprintf(
     							'<a href="%1$s" class="advgb-post-author" target="%3$s">%2$s</a>',
-    							$coauthor['link'],
-    							$coauthor['display_name'],
+    							esc_url( $coauthor['link'] ),
+    							esc_html( $coauthor['display_name'] ),
     							$authorLinkNewTab
     						);
     						if ( $index++ < count( $coauthors ) - 1 ) {
@@ -406,30 +409,30 @@ function advgbRenderBlockRecentPosts($attributes)
 
     $blockClass = '';
 
-    if ($attributes['postView'] === 'grid') {
+    if ($postView === 'grid') {
         $blockClass = 'grid-view columns-' . esc_html($attributes['columns']);
-    } elseif ($attributes['postView'] === 'list') {
+    } elseif ($postView === 'list') {
         $blockClass = 'list-view';
         if($attributes['imagePosition'] !== 'left'){
             $blockClass .= ' image-' . esc_html($attributes['imagePosition']);
         }
-    } elseif ($attributes['postView'] === 'slider') {
+    } elseif ($postView === 'slider') {
         $blockClass = 'slider-view';
         $blockClass .= ' style-' . esc_html($attributes['sliderStyle']);
 		if ( isset( $attributes['sliderAutoplay'] ) && $attributes['sliderAutoplay'] ) {
 	        $blockClass .= ' slider-autoplay';
 		}
-    } elseif ($attributes['postView'] === 'frontpage') {
+    } elseif ($postView === 'frontpage') {
         $blockClass = 'frontpage-view';
         $blockClass .= ' layout-' . esc_html($attributes['frontpageLayout']);
         $blockClass .= ' gap-' . esc_html($attributes['gap']);
         $blockClass .= ' style-' . esc_html($attributes['frontpageStyle']);
         (isset($attributes['frontpageLayoutT']) && $attributes['frontpageLayoutT']) ? $blockClass .= ' tbl-layout-' . esc_html($attributes['frontpageLayoutT']) : '';
         (isset($attributes['frontpageLayoutM']) && $attributes['frontpageLayoutM']) ? $blockClass .= ' mbl-layout-' . esc_html($attributes['frontpageLayoutM']) : '';
-    } elseif ($attributes['postView'] === 'newspaper') {
+    } elseif ($postView === 'newspaper') {
         $blockClass = 'newspaper-view';
         $blockClass .= ' layout-' . esc_html($attributes['newspaperLayout']);
-    } elseif ($attributes['postView'] === 'masonry') {
+    } elseif ($postView === 'masonry') {
         $blockClass = 'masonry-view columns-' . esc_html($attributes['columns']) . ' tbl-columns-' . esc_html($attributes['columnsT']) . ' mbl-columns-' . esc_html($attributes['columnsM']) . ' gap-' . esc_html($attributes['gap']);
     }
 
@@ -1165,9 +1168,9 @@ function advgbGetAuthorFilter( $args, $attributes, $post_type ) {
         if ( isset( $attributes['author'] ) && ! empty( $attributes['author'] ) ) {
 			// WooCommerce Products don't support multiple authors...
     		if (  $post_type === 'product' || ! function_exists('get_multiple_authors') ){
-    			$args['author'] = $attributes['author'];
+    			$args['author'] = esc_html( $attributes['author'] );
     		} else {
-				advgbSetPPAuthorArgs( $attributes['author'], $args );
+				advgbSetPPAuthorArgs( esc_html( $attributes['author'] ), $args );
 			}
     	}
     }
@@ -1205,7 +1208,7 @@ add_filter( 'rest_page_query', 'advgbGetAuthorFilterREST', 10, 2 );
  * @return array
  */
 function advgbSetSeriesOrderREST( $args, $request ) {
-    $orderby = sanitize_text_field($request['orderby']);
+    $orderby = esc_html( $request['orderby'] );
     if ( isset( $orderby ) && $orderby === 'series_order' ) {
         $args['orderby'] = 'meta_value_num';
         $args['meta_key'] = '_series_part';
@@ -1310,23 +1313,24 @@ function advgbCheckImageStatus( $attributes, $key )  {
  * @return boolean
  */
 function getDisplayImageVsOrder( $attributes, $key )  {
+    $postView = esc_html( $attributes['postView'] );
     if(
         (
             (
                 isset($attributes['orderSections']) && $attributes['orderSections']
-                && (in_array($attributes['orderSections'], array('default', 'image-title-info-text')))
+                && ( in_array( esc_html( $attributes['orderSections'] ), array( 'default', 'image-title-info-text' ) ) )
             ) || (
                 (
-                    $attributes['postView'] === 'frontpage' && $attributes['frontpageStyle'] === 'headline'
+                    $postView === 'frontpage' && esc_html( $attributes['frontpageStyle'] ) === 'headline'
                 ) || (
-                    $attributes['postView'] === 'slider' && $attributes['sliderStyle'] === 'headline'
+                    $postView === 'slider' && esc_html( $attributes['sliderStyle'] ) === 'headline'
                 ) || (
-                    $attributes['postView'] === 'list'
+                    $postView === 'list'
                 ) || (
                     (
-                        $attributes['postView'] === 'newspaper'
+                        $postView === 'newspaper'
                     ) && (
-                        in_array($attributes['newspaperLayout'], array('np-2','np-3-1','np-3-2','np-3-3'))
+                        in_array( esc_html( $attributes['newspaperLayout'] ), array( 'np-2','np-3-1','np-3-2','np-3-3' ) )
                         || $key > 0
                     )
                 )
