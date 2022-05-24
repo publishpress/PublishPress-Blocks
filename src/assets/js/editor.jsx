@@ -156,7 +156,25 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                         'core/post-author',
                         'core/post-navigation-link',
                         'core/post-comments',
-                        'core/term-description'
+                        'core/term-description',
+                        'core/avatar',
+                        'core/query-no-results',
+                        'core/read-more',
+                        'core/comment-author-name',
+                        'core/comment-content',
+                        'core/comment-date',
+                        'core/comment-edit-link',
+                        'core/comment-reply-link',
+                        'core/comment-template',
+                        'core/comments-title',
+                        'core/comments-query-loop',
+                        'core/comments-pagination',
+                        'core/comments-pagination-next',
+                        'core/comments-pagination-numbers',
+                        'core/comments-pagination-previous',
+                        'core/post-comments-form',
+                        'core/home-link',
+                        'core/post-author-biography'
                     ];
 
                     core_blocks.forEach( function( element ) {
