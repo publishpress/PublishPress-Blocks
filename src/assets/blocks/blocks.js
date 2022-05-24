@@ -25388,7 +25388,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
                 var hasNoSuggestion = tokens.some(function (token) {
-                    return typeof token === 'string' && !postTitleVsIdMap[token];
+                    return typeof token === 'string' && (typeof postTitleVsIdMap === 'undefined' || !postTitleVsIdMap[token]);
                 });
 
                 if (hasNoSuggestion) {

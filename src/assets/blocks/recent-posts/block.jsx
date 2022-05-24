@@ -1291,7 +1291,9 @@ import { AuthorSelect } from './query-controls.jsx';
             const { postTitleVsIdMap } = this.state;
 
             var hasNoSuggestion = tokens.some(function (token) {
-                return typeof token === 'string' && !postTitleVsIdMap[token];
+                return typeof token === 'string' && (
+                    typeof postTitleVsIdMap === 'undefined' || !postTitleVsIdMap[token]
+                );
             });
 
             if (hasNoSuggestion) {
