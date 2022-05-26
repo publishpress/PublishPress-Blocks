@@ -114,13 +114,24 @@ function advgbRenderBlockRecentPosts($attributes)
             'suppress_filters' => false,
         );
 
-    if( isset( $attributes['exclude'] ) && ! empty( $attributes['exclude'] ) ) {
-        $exclude = array_map( 'esc_html', $attributes['exclude'] );
-        $args['post__not_in'] = advgbGetPostIdsForTitles( $exclude, $post_type );
-    }
-
     if( isset( $attributes['excludeCurrentPost'] ) && $attributes['excludeCurrentPost'] ) {
         $args['post__not_in'] = isset( $args['post__not_in'] ) ? array_merge( $args['post__not_in'], array( $post->ID ) ) : array( $post->ID );
+    }
+
+    if(
+        defined('ADVANCED_GUTENBERG_PRO')
+        && isset( $attributes['include'] )
+        && ! empty( $attributes['include'] )
+        && is_array( $attributes['include'] )
+    ) {
+        // Pro
+        $include = array_map( 'esc_html', $attributes['include'] );
+        $args['post__in'] = advgbGetPostIdsForTitles( $include, $post_type );
+    } elseif( isset( $attributes['exclude'] ) && ! empty( $attributes['exclude'] ) ) {
+        $exclude = array_map( 'esc_html', $attributes['exclude'] );
+        $args['post__not_in'] = advgbGetPostIdsForTitles( $exclude, $post_type );
+    } else {
+        // Nothing to do here
     }
 
 	if( isset( $attributes['taxonomies'] ) && ! empty( $attributes['taxonomies'] ) ) {
@@ -181,7 +192,7 @@ function advgbRenderBlockRecentPosts($attributes)
 
             $postHtml .= '<article class="advgb-recent-post' . ( $outputImage ? '' : ' advgb-recent-post--no-image' ) . '">';
 
-            $postView = esc_html( $attributes['postView'] );
+            $postView = isset( $attributes['postView'] ) && ! empty( $attributes['postView'] ) ? esc_html( $attributes['postView'] ) : 'grid';
 
             if ( $outputImage && $displayImageVsOrder === 'ignore-order' ) {
                 $postHtml .= sprintf(
@@ -635,6 +646,12 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'string',
             ),
             'exclude' => array(
+                'type' => 'array',
+                'items' => array(
+                    'type' => 'string'
+                )
+            ),
+            'include' => array(
                 'type' => 'array',
                 'items' => array(
                     'type' => 'string'
@@ -1313,7 +1330,7 @@ function advgbCheckImageStatus( $attributes, $key )  {
  * @return boolean
  */
 function getDisplayImageVsOrder( $attributes, $key )  {
-    $postView = esc_html( $attributes['postView'] );
+    $postView = isset( $attributes['postView'] ) && ! empty( $attributes['postView'] ) ? esc_html( $attributes['postView'] ) : 'grid';
     if(
         (
             (
