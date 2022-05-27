@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.13.2 - 24 May 2022 =
+= 2.13.2 - 27 May 2022 =
   * Add: Toggle to check/uncheck all blocks in Block Access screen
   * Add: PublishPress Series order by option
   * Fix: Edit title and text over the image for Images Slider block
