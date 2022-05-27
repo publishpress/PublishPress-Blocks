@@ -24151,7 +24151,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 updating: false,
                 tabSelected: 'desktop',
                 updatePostSuggestions: true,
-                authorList: []
+                authorList: [],
+                includePostSuggestions: []
             };
 
             _this.selectCategories = _this.selectCategories.bind(_this);
@@ -24254,6 +24255,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }).then(function (list) {
                     _this2.setState({ authorList: list });
                 });
+
+                // Get large posts list for include
+                console.log(this.state.includePostSuggestions);
+                console.log(this.state.includeTitleVsIdMap);
+                if (this.isPro() && this.state.includePostSuggestions.length === 0) {
+                    wp.apiFetch({
+                        path: wp.url.addQueryArgs('wp/v2/posts', { context: 'edit', per_page: 100, hide_empty: true })
+                    }).then(function (posts) {
+                        var includeTitles = [];
+                        var includeTitleVsIdMap = [];
+                        posts.forEach(function (post) {
+                            includeTitles.push(post.title.raw);
+                            includeTitleVsIdMap[post.title.raw] = post.id;
+                        });
+                        _this2.setState({ includePostSuggestions: includeTitles, includeTitleVsIdMap: includeTitleVsIdMap });
+                        console.log(_this2.state.includePostSuggestions);
+                        console.log(_this2.state.includeTitleVsIdMap);
+                    });
+                }
 
                 // migrate from displayDate to postDate
                 var postDateDisplay = attributes.displayDate ? 'created' : attributes.postDate;
@@ -24405,6 +24425,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: 'searchPostTitles',
+            value: function searchPostTitles(title) {}
+        }, {
             key: 'translatableText',
             value: function translatableText(text) {
                 switch (text) {
@@ -24441,7 +24464,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     tabSelected = _state.tabSelected,
                     authorList = _state.authorList,
                     postSuggestions = _state.postSuggestions,
-                    taxonomyList = _state.taxonomyList;
+                    taxonomyList = _state.taxonomyList,
+                    includePostSuggestions = _state.includePostSuggestions;
                 var _props5 = this.props,
                     attributes = _props5.attributes,
                     setAttributes = _props5.setAttributes,
@@ -24809,7 +24833,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { title: __('Advanced Filters', 'advanced-gutenberg'), className: 'advgb-pro-icon' },
                             React.createElement(FormTokenField, {
                                 multiple: true,
-                                suggestions: postSuggestions,
+                                suggestions: includePostSuggestions,
                                 value: include,
                                 label: __('Display these posts only', 'advanced-gutenberg'),
                                 placeholder: __('Search by title', 'advanced-gutenberg'),
@@ -25443,11 +25467,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function selectPostByTitle(tokens, type) {
                 var _props$setAttributes;
 
-                var postTitleVsIdMap = this.state.postTitleVsIdMap;
+                // postTitleVsIdMap -> 'exclude'
+                // includeTitleVsIdMap -> 'include'
+                var _state3 = this.state,
+                    postTitleVsIdMap = _state3.postTitleVsIdMap,
+                    includeTitleVsIdMap = _state3.includeTitleVsIdMap;
 
 
                 var hasNoSuggestion = tokens.some(function (token) {
-                    return typeof token === 'string' && (typeof postTitleVsIdMap === 'undefined' || !postTitleVsIdMap[token]);
+                    return typeof token === 'string' && ('exclude' === type ? typeof postTitleVsIdMap === 'undefined' || !postTitleVsIdMap[token] : typeof includeTitleVsIdMap === 'undefined' || !includeTitleVsIdMap[token]);
                 });
 
                 if (hasNoSuggestion) {
@@ -25455,7 +25483,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 var ids = tokens.map(function (token) {
-                    return typeof token === 'string' ? postTitleVsIdMap[token] : token.id;
+                    return typeof token === 'string' ? 'exclude' === type ? postTitleVsIdMap[token] : includeTitleVsIdMap[token] : token.id;
                 });
 
                 var typeForQuery = type + 'Ids';
@@ -25874,7 +25902,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return !isUndefined(value) && !(isArray(value) && (isNull(value) || value.length === 0));
             });
 
-            console.log(recentPostsQuery);
+            //console.log(recentPostsQuery);
 
             var filterTaxNames = [];
             if (taxIds) {

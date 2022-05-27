@@ -118,6 +118,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 tabSelected: 'desktop',
                 updatePostSuggestions: true,
                 authorList: [],
+                includePostSuggestions: [],
             }
 
             this.selectCategories = this.selectCategories.bind(this);
@@ -213,6 +214,25 @@ import { AuthorSelect } from './query-controls.jsx';
             } ).then( ( list ) => {
                 this.setState( { authorList: list } );
             } );
+
+            // Get large posts list for include
+            console.log(this.state.includePostSuggestions);
+            console.log(this.state.includeTitleVsIdMap);
+            if ( this.isPro() && this.state.includePostSuggestions.length === 0 ) {
+                wp.apiFetch( {
+                    path: wp.url.addQueryArgs( 'wp/v2/posts', { context: 'edit', per_page: 100, hide_empty: true } ),
+                } ).then( ( posts ) => {
+                    let includeTitles = [];
+                    let includeTitleVsIdMap = [];
+                    posts.forEach( post => {
+                        includeTitles.push( post.title.raw );
+                        includeTitleVsIdMap[ post.title.raw ] = post.id;
+                    });
+                    this.setState( { includePostSuggestions: includeTitles, includeTitleVsIdMap: includeTitleVsIdMap } );
+                    console.log(this.state.includePostSuggestions);
+                    console.log(this.state.includeTitleVsIdMap);
+                } );
+            }
 
             // migrate from displayDate to postDate
             let postDateDisplay = attributes.displayDate ? 'created' : attributes.postDate;
@@ -350,6 +370,9 @@ import { AuthorSelect } from './query-controls.jsx';
                     }
                 });
             }
+        }
+
+        searchPostTitles( title ) {
 
         }
 
@@ -376,7 +399,7 @@ import { AuthorSelect } from './query-controls.jsx';
         }
 
         render() {
-            const { categoriesList, tagsList, postTypeList, tabSelected, authorList, postSuggestions, taxonomyList } = this.state;
+            const { categoriesList, tagsList, postTypeList, tabSelected, authorList, postSuggestions, taxonomyList, includePostSuggestions } = this.state;
             const { attributes, setAttributes, recentPosts: recentPostsList } = this.props;
             const {
                 id,
@@ -723,12 +746,13 @@ import { AuthorSelect } from './query-controls.jsx';
                             <PanelBody title={ __( 'Advanced Filters', 'advanced-gutenberg' ) } className="advgb-pro-icon">
                                 <FormTokenField
                                     multiple
-                                    suggestions={ postSuggestions }
+                                    suggestions={ includePostSuggestions }
                                     value={ include }
                                     label={ __( 'Display these posts only', 'advanced-gutenberg' ) }
                                     placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
                                     onChange={ ( value ) => this.selectPostByTitle( value, 'include') }
                                 />
+
                             </PanelBody>
                         </Fragment>
                     ) }
@@ -1334,11 +1358,15 @@ import { AuthorSelect } from './query-controls.jsx';
         }
 
         selectPostByTitle(tokens, type) {
-            const { postTitleVsIdMap } = this.state;
+            // postTitleVsIdMap -> 'exclude'
+            // includeTitleVsIdMap -> 'include'
+            const { postTitleVsIdMap, includeTitleVsIdMap  } = this.state;
 
             var hasNoSuggestion = tokens.some(function (token) {
                 return typeof token === 'string' && (
-                    typeof postTitleVsIdMap === 'undefined' || !postTitleVsIdMap[token]
+                    'exclude' === type
+                        ? typeof postTitleVsIdMap === 'undefined' || !postTitleVsIdMap[token]
+                        : typeof includeTitleVsIdMap === 'undefined' || !includeTitleVsIdMap[token]
                 );
             });
 
@@ -1347,7 +1375,9 @@ import { AuthorSelect } from './query-controls.jsx';
             }
 
             var ids = tokens.map(function (token) {
-                return typeof token === 'string' ? postTitleVsIdMap[token] : token.id;
+                return typeof token === 'string'
+                ? 'exclude' === type  ? postTitleVsIdMap[token] : includeTitleVsIdMap[token]
+                : token.id;
             })
 
             const typeForQuery = type + 'Ids';
@@ -1689,7 +1719,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 author: onlyFromCurrentUser ? wp.data.select('core').getCurrentUser().id : author,
             }, ( value ) => !isUndefined( value ) && !(isArray(value) && (isNull(value) || value.length === 0)) );
 
-            console.log(recentPostsQuery);
+            //console.log(recentPostsQuery);
 
             let filterTaxNames = [];
             if(taxIds){
