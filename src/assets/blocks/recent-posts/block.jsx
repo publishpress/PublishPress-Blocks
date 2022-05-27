@@ -372,10 +372,6 @@ import { AuthorSelect } from './query-controls.jsx';
             }
         }
 
-        searchPostTitles( title ) {
-
-        }
-
         translatableText(text) {
             switch(text){
                 case 'desktop':

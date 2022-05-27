@@ -24425,9 +24425,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: 'searchPostTitles',
-            value: function searchPostTitles(title) {}
-        }, {
             key: 'translatableText',
             value: function translatableText(text) {
                 switch (text) {
