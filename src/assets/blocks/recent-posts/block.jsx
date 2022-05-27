@@ -748,7 +748,6 @@ import { AuthorSelect } from './query-controls.jsx';
                                     placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
                                     onChange={ ( value ) => this.selectPostByTitle( value, 'include') }
                                 />
-
                             </PanelBody>
                         </Fragment>
                     ) }
