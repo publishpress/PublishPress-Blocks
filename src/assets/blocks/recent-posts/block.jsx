@@ -216,8 +216,6 @@ import { AuthorSelect } from './query-controls.jsx';
             } );
 
             // Get large posts list for include
-            console.log(this.state.includePostSuggestions);
-            console.log(this.state.includeTitleVsIdMap);
             if ( this.isPro() && this.state.includePostSuggestions.length === 0 ) {
                 wp.apiFetch( {
                     path: wp.url.addQueryArgs( 'wp/v2/posts', { context: 'edit', per_page: 100, hide_empty: true } ),
@@ -229,8 +227,6 @@ import { AuthorSelect } from './query-controls.jsx';
                         includeTitleVsIdMap[ post.title.raw ] = post.id;
                     });
                     this.setState( { includePostSuggestions: includeTitles, includeTitleVsIdMap: includeTitleVsIdMap } );
-                    console.log(this.state.includePostSuggestions);
-                    console.log(this.state.includeTitleVsIdMap);
                 } );
             }
 
@@ -1713,8 +1709,6 @@ import { AuthorSelect } from './query-controls.jsx';
                 include: includeIds,
                 author: onlyFromCurrentUser ? wp.data.select('core').getCurrentUser().id : author,
             }, ( value ) => !isUndefined( value ) && !(isArray(value) && (isNull(value) || value.length === 0)) );
-
-            //console.log(recentPostsQuery);
 
             let filterTaxNames = [];
             if(taxIds){

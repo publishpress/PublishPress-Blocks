@@ -24257,8 +24257,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 // Get large posts list for include
-                console.log(this.state.includePostSuggestions);
-                console.log(this.state.includeTitleVsIdMap);
                 if (this.isPro() && this.state.includePostSuggestions.length === 0) {
                     wp.apiFetch({
                         path: wp.url.addQueryArgs('wp/v2/posts', { context: 'edit', per_page: 100, hide_empty: true })
@@ -24270,8 +24268,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             includeTitleVsIdMap[post.title.raw] = post.id;
                         });
                         _this2.setState({ includePostSuggestions: includeTitles, includeTitleVsIdMap: includeTitleVsIdMap });
-                        console.log(_this2.state.includePostSuggestions);
-                        console.log(_this2.state.includeTitleVsIdMap);
                     });
                 }
 
@@ -25898,8 +25894,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }, function (value) {
                 return !isUndefined(value) && !(isArray(value) && (isNull(value) || value.length === 0));
             });
-
-            //console.log(recentPostsQuery);
 
             var filterTaxNames = [];
             if (taxIds) {
