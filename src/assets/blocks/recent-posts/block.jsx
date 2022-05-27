@@ -1376,7 +1376,7 @@ import { AuthorSelect } from './query-controls.jsx';
             this.props.setAttributes({ [type]: tokens, [typeForQuery]: ids });
 
             // Pro - reset all the filters, except include
-            if( this.isPro() && 'include' === type ) {
+            if( this.isPro() && 'include' === type && this.props.attributes.include.length > 0 ) {
                 this.props.setAttributes( { exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], tagIds: [] } );
             }
         }

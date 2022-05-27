@@ -25484,7 +25484,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.props.setAttributes((_props$setAttributes = {}, _defineProperty(_props$setAttributes, type, tokens), _defineProperty(_props$setAttributes, typeForQuery, ids), _props$setAttributes));
 
                 // Pro - reset all the filters, except include
-                if (this.isPro() && 'include' === type) {
+                if (this.isPro() && 'include' === type && this.props.attributes.include.length > 0) {
                     this.props.setAttributes({ exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], tagIds: [] });
                 }
             }
