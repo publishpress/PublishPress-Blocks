@@ -24396,7 +24396,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     this.props.setAttributes({ updatePostSuggestions: false });
                     this.setState({ postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function () {
                         // Exclude posts, backward compatibility 2.13.1 and lower
-                        if (!attributes.excludeIds && attributes.exclude) {
+                        if (!attributes.excludeIds && attributes.exclude && attributes.exclude.length > 0) {
                             this.selectPostByTitle(attributes.exclude, 'exclude');
                         }
                     });
