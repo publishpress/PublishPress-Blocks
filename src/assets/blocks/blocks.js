@@ -24845,17 +24845,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 label: __('Display these posts only', 'advanced-gutenberg'),
                                 placeholder: __('Search by title', 'advanced-gutenberg'),
                                 onChange: function onChange(includePosts) {
-                                    var includePosts_array = [];
-                                    includePosts.map(function (post_title) {
-                                        var matching_post = postsToSelect.find(function (post) {
-                                            return post.title.raw === post_title;
-                                        });
-                                        if (matching_post !== undefined) {
-                                            includePosts_array.push(matching_post.id);
-                                        }
-                                    });
-
-                                    setAttributes({ includePosts: includePosts_array });
+                                    return _this3.selectIncludePosts(includePosts, postsToSelect);
                                 }
                             })
                         )
@@ -25478,6 +25468,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     id: id,
                     name: catIdVsName[id]
                 };
+            }
+        }, {
+            key: 'selectIncludePosts',
+            value: function selectIncludePosts(includePosts, postsToSelect) {
+                var includePosts_array = [];
+                includePosts.map(function (post_title) {
+                    var matching_post = postsToSelect.find(function (post) {
+                        return post.title.raw === post_title;
+                    });
+                    if (matching_post !== undefined) {
+                        includePosts_array.push(matching_post.id);
+                    }
+                });
+
+                this.props.setAttributes({ includePosts: includePosts_array });
             }
         }, {
             key: 'selectExcludePosts',

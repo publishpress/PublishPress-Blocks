@@ -753,21 +753,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                     value={ include_field_value }
                                     label={ __( 'Display these posts only', 'advanced-gutenberg' ) }
                                     placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
-                                    onChange={ ( includePosts ) => {
-                                		let includePosts_array = [];
-                                		includePosts.map(
-                                			( post_title ) => {
-                                				const matching_post = postsToSelect.find( ( post ) => {
-                                					return post.title.raw === post_title;
-                                				} );
-                                				if ( matching_post !== undefined ) {
-                                					includePosts_array.push( matching_post.id );
-                                				}
-                                			}
-                                		)
-
-                                		setAttributes( { includePosts: includePosts_array } );
-                                	} }
+                                    onChange={ ( includePosts ) => this.selectIncludePosts( includePosts, postsToSelect ) }
                                 />
                             </PanelBody>
                         </Fragment>
@@ -1371,6 +1357,22 @@ import { AuthorSelect } from './query-controls.jsx';
                 id: id,
                 name: catIdVsName[id]
             };
+        }
+
+        selectIncludePosts( includePosts, postsToSelect ) {
+            let includePosts_array = [];
+            includePosts.map(
+                ( post_title ) => {
+                    const matching_post = postsToSelect.find( ( post ) => {
+                        return post.title.raw === post_title;
+                    } );
+                    if ( matching_post !== undefined ) {
+                        includePosts_array.push( matching_post.id );
+                    }
+                }
+            )
+
+            this.props.setAttributes( { includePosts: includePosts_array } );
         }
 
         selectExcludePosts( excludePosts, postsToSelect ) {
