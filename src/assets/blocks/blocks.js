@@ -24159,6 +24159,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             _this.selectTags = _this.selectTags.bind(_this);
             _this.getTagIdsForTags = _this.getTagIdsForTags.bind(_this);
             _this.getCategoryForBkwrdCompat = _this.getCategoryForBkwrdCompat.bind(_this);
+            _this.selectExcludePosts = _this.selectExcludePosts.bind(_this);
             _this.selectPostByTitle = _this.selectPostByTitle.bind(_this);
             _this.updatePostType = _this.updatePostType.bind(_this);
             return _this;
@@ -24824,17 +24825,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Exclude these posts', 'advanced-gutenberg'),
                                     placeholder: __('Search by title', 'advanced-gutenberg'),
                                     onChange: function onChange(excludePosts) {
-                                        var excludePosts_array = [];
-                                        excludePosts.map(function (post_title) {
-                                            var matching_post = postsToSelect.find(function (post) {
-                                                return post.title.raw === post_title;
-                                            });
-                                            if (matching_post !== undefined) {
-                                                excludePosts_array.push(matching_post.id);
-                                            }
-                                        });
-
-                                        setAttributes({ excludePosts: excludePosts_array });
+                                        return _this3.selectExcludePosts(excludePosts, postsToSelect);
                                     }
                                 })
                             )
@@ -25487,6 +25478,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     id: id,
                     name: catIdVsName[id]
                 };
+            }
+        }, {
+            key: 'selectExcludePosts',
+            value: function selectExcludePosts(excludePosts, postsToSelect) {
+                var excludePosts_array = [];
+                excludePosts.map(function (post_title) {
+                    var matching_post = postsToSelect.find(function (post) {
+                        return post.title.raw === post_title;
+                    });
+                    if (matching_post !== undefined) {
+                        excludePosts_array.push(matching_post.id);
+                    }
+                });
+
+                this.props.setAttributes({ excludePosts: excludePosts_array });
             }
         }, {
             key: 'selectPostByTitle',

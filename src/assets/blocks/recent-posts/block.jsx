@@ -125,6 +125,7 @@ import { AuthorSelect } from './query-controls.jsx';
             this.selectTags = this.selectTags.bind(this);
             this.getTagIdsForTags = this.getTagIdsForTags.bind(this);
             this.getCategoryForBkwrdCompat = this.getCategoryForBkwrdCompat.bind(this);
+            this.selectExcludePosts = this.selectExcludePosts.bind(this);
             this.selectPostByTitle = this.selectPostByTitle.bind(this);
             this.updatePostType = this.updatePostType.bind(this);
         }
@@ -737,21 +738,7 @@ import { AuthorSelect } from './query-controls.jsx';
                             value={ exclude_field_value }
                             label={ __( 'Exclude these posts', 'advanced-gutenberg' ) }
                             placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
-                            onChange={ ( excludePosts ) => {
-                                let excludePosts_array = [];
-                                excludePosts.map(
-                                    ( post_title ) => {
-                                        const matching_post = postsToSelect.find( ( post ) => {
-                                            return post.title.raw === post_title;
-                                        } );
-                                        if ( matching_post !== undefined ) {
-                                            excludePosts_array.push( matching_post.id );
-                                        }
-                                    }
-                                )
-
-                                setAttributes( { excludePosts: excludePosts_array } );
-                            } }
+                            onChange={ ( excludePosts ) => this.selectExcludePosts( excludePosts, postsToSelect ) }
                         />
                         </div>
                         </Fragment>
@@ -1384,6 +1371,22 @@ import { AuthorSelect } from './query-controls.jsx';
                 id: id,
                 name: catIdVsName[id]
             };
+        }
+
+        selectExcludePosts( excludePosts, postsToSelect ) {
+            let excludePosts_array = [];
+            excludePosts.map(
+                ( post_title ) => {
+                    const matching_post = postsToSelect.find( ( post ) => {
+                        return post.title.raw === post_title;
+                    } );
+                    if ( matching_post !== undefined ) {
+                        excludePosts_array.push( matching_post.id );
+                    }
+                }
+            )
+
+            this.props.setAttributes( { excludePosts: excludePosts_array } );
         }
 
         selectPostByTitle(tokens, type) {
