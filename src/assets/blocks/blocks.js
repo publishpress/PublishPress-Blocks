@@ -24256,21 +24256,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     _this2.setState({ authorList: list });
                 });
 
-                // Get large posts list for include
-                if (this.isPro() && this.state.includePostSuggestions.length === 0) {
-                    wp.apiFetch({
-                        path: wp.url.addQueryArgs('wp/v2/posts', { context: 'edit', per_page: 100, hide_empty: true })
-                    }).then(function (posts) {
-                        var includeTitles = [];
-                        var includeTitleVsIdMap = [];
-                        posts.forEach(function (post) {
-                            includeTitles.push(post.title.raw);
-                            includeTitleVsIdMap[post.title.raw] = post.id;
-                        });
-                        _this2.setState({ includePostSuggestions: includeTitles, includeTitleVsIdMap: includeTitleVsIdMap });
-                    });
-                }
-
                 // migrate from displayDate to postDate
                 var postDateDisplay = attributes.displayDate ? 'created' : attributes.postDate;
                 setAttributes({
@@ -24334,7 +24319,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // Reset attributes when Pro is not available
                 if (!this.isPro()) {
-                    setAttributes({ include: [] });
+                    setAttributes({ include_posts: [] });
                 }
             }
         }, {
@@ -24414,9 +24399,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         if (!attributes.excludeIds && attributes.exclude) {
                             this.selectPostByTitle(attributes.exclude, 'exclude');
                         }
-                        if (!attributes.includeIds && attributes.include) {
-                            this.selectPostByTitle(attributes.include, 'include');
-                        }
                     });
                 }
             }
@@ -24443,7 +24425,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'checkIncludeEnabled',
             value: function checkIncludeEnabled() {
-                return this.isPro() && typeof this.props.attributes.include !== 'undefined' && this.props.attributes.include.length > 0;
+                return this.isPro() && typeof this.props.attributes.include_posts !== 'undefined' && this.props.attributes.include_posts.length > 0;
             }
         }, {
             key: 'render',
@@ -24462,7 +24444,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props5 = this.props,
                     attributes = _props5.attributes,
                     setAttributes = _props5.setAttributes,
-                    recentPostsList = _props5.recentPosts;
+                    recentPostsList = _props5.recentPosts,
+                    postsToSelect = _props5.postsToSelect;
                 var id = attributes.id,
                     postView = attributes.postView,
                     order = attributes.order,
@@ -24503,7 +24486,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     textAfterTitle = attributes.textAfterTitle,
                     textBeforeReadmore = attributes.textBeforeReadmore,
                     exclude = attributes.exclude,
-                    include = attributes.include,
+                    include_posts = attributes.include_posts,
                     selectedAuthorId = attributes.author,
                     sliderAutoplay = attributes.sliderAutoplay,
                     linkCustomTax = attributes.linkCustomTax,
@@ -24512,6 +24495,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     onlyFromCurrentUser = attributes.onlyFromCurrentUser,
                     orderSections = attributes.orderSections;
 
+                // Include posts setting
+
+                var post_titles = [];
+                var include_field_value = [];
+                if (postsToSelect !== null) {
+                    post_titles = postsToSelect.map(function (post) {
+                        return post.title.raw;
+                    });
+
+                    include_field_value = include_posts.map(function (post_id) {
+                        var find_post = postsToSelect.find(function (post) {
+                            return post.id === post_id;
+                        });
+                        if (find_post === undefined || !find_post) {
+                            return false;
+                        }
+                        return find_post.title.raw;
+                    });
+                }
 
                 var recentPosts = this.props.recentPosts;
 
@@ -24826,12 +24828,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { title: __('Advanced Filters', 'advanced-gutenberg'), className: 'advgb-pro-icon' },
                             React.createElement(FormTokenField, {
                                 multiple: true,
-                                suggestions: includePostSuggestions,
-                                value: include,
+                                suggestions: post_titles,
+                                maxSuggestions: 15,
+                                value: include_field_value,
                                 label: __('Display these posts only', 'advanced-gutenberg'),
                                 placeholder: __('Search by title', 'advanced-gutenberg'),
-                                onChange: function onChange(value) {
-                                    return _this3.selectPostByTitle(value, 'include');
+                                onChange: function onChange(include_posts) {
+                                    var include_posts_array = [];
+                                    include_posts.map(function (post_title) {
+                                        var matching_post = postsToSelect.find(function (post) {
+                                            return post.title.raw === post_title;
+                                        });
+                                        if (matching_post !== undefined) {
+                                            include_posts_array.push(matching_post.id);
+                                        }
+                                    });
+
+                                    setAttributes({ include_posts: include_posts_array });
                                 }
                             })
                         )
@@ -25461,14 +25474,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props$setAttributes;
 
                 // postTitleVsIdMap -> 'exclude'
-                // includeTitleVsIdMap -> 'include'
-                var _state3 = this.state,
-                    postTitleVsIdMap = _state3.postTitleVsIdMap,
-                    includeTitleVsIdMap = _state3.includeTitleVsIdMap;
+                var postTitleVsIdMap = this.state.postTitleVsIdMap;
 
 
                 var hasNoSuggestion = tokens.some(function (token) {
-                    return typeof token === 'string' && ('exclude' === type ? typeof postTitleVsIdMap === 'undefined' || !postTitleVsIdMap[token] : typeof includeTitleVsIdMap === 'undefined' || !includeTitleVsIdMap[token]);
+                    return typeof token === 'string' && (typeof postTitleVsIdMap === 'undefined' || !postTitleVsIdMap[token]);
                 });
 
                 if (hasNoSuggestion) {
@@ -25476,17 +25486,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 var ids = tokens.map(function (token) {
-                    return typeof token === 'string' ? 'exclude' === type ? postTitleVsIdMap[token] : includeTitleVsIdMap[token] : token.id;
+                    return typeof token === 'string' ? postTitleVsIdMap[token] : token.id;
                 });
 
                 var typeForQuery = type + 'Ids';
 
                 this.props.setAttributes((_props$setAttributes = {}, _defineProperty(_props$setAttributes, type, tokens), _defineProperty(_props$setAttributes, typeForQuery, ids), _props$setAttributes));
 
-                // Pro - reset all the filters, except include
-                if (this.isPro() && 'include' === type && this.props.attributes.include.length > 0) {
-                    this.props.setAttributes({ exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], tagIds: [] });
-                }
+                /*/ Pro - reset all the filters, except include_posts
+                if( this.isPro() && 'include_posts' === type && this.props.attributes.include_posts.length > 0 ) {
+                    this.props.setAttributes( { exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], tagIds: [] } );
+                }*/
             }
         }, {
             key: 'updatePostType',
@@ -25494,7 +25504,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({ taxonomyList: null });
                 this.generateTaxFilters(postType);
 
-                this.props.setAttributes({ postType: postType, exclude: [], excludeIds: [], include: [], includeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
+                this.props.setAttributes({ postType: postType, exclude: [], excludeIds: [], include_posts: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
             }
 
             /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
@@ -25867,8 +25877,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 postType = _props$attributes3.postType,
                 excludeCurrentPost = _props$attributes3.excludeCurrentPost,
                 excludeIds = _props$attributes3.excludeIds,
-                include = _props$attributes3.include,
-                includeIds = _props$attributes3.includeIds,
+                include_posts = _props$attributes3.include_posts,
                 author = _props$attributes3.author,
                 taxonomies = _props$attributes3.taxonomies,
                 taxIds = _props$attributes3.taxIds,
@@ -25889,11 +25898,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 per_page: numberOfPosts,
                 token: myToken,
                 exclude: excludeCurrentPost ? excludeIds ? union(excludeIds, [postId]) : postId : excludeIds,
-                include: includeIds,
+                include: include_posts,
                 author: onlyFromCurrentUser ? wp.data.select('core').getCurrentUser().id : author
             }, function (value) {
                 return !isUndefined(value) && !(isArray(value) && (isNull(value) || value.length === 0));
             });
+
+            /*console.log('excludeCurrentPost: ' + excludeCurrentPost);
+            console.log('excludeIds: ' + excludeIds);
+            console.log('postId: ' + postId);*/
 
             var filterTaxNames = [];
             if (taxIds) {
@@ -25904,13 +25917,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
 
             // generate posts without filters for post suggestions
-            var postSuggestionsQuery = omit(recentPostsQuery, union(['exclude', 'include', 'categories', 'tags', 'per_page'], filterTaxNames));
+            var postSuggestionsQuery = omit(recentPostsQuery, union(['exclude', 'include_posts', 'categories', 'tags', 'per_page'], filterTaxNames));
             var updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
 
             return {
                 recentPosts: getEntityRecords('postType', postType ? postType : 'post', recentPostsQuery),
                 postList: updatePostSuggestions ? getEntityRecords('postType', postType ? postType : 'post', postSuggestionsQuery) : null,
-                updatePostSuggestions: updatePostSuggestions
+                updatePostSuggestions: updatePostSuggestions,
+                postsToSelect: getEntityRecords('postType', postType ? postType : 'post', pickBy({ per_page: -1 }, function (value) {
+                    return !isUndefined(value);
+                }))
             };
         })(RecentPostsEdit),
         save: function save() {

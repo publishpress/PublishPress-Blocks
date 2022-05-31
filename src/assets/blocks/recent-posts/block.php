@@ -120,13 +120,12 @@ function advgbRenderBlockRecentPosts($attributes)
 
     if(
         defined('ADVANCED_GUTENBERG_PRO')
-        && isset( $attributes['include'] )
-        && ! empty( $attributes['include'] )
-        && is_array( $attributes['include'] )
+        && isset( $attributes['include_posts'] )
+        && ! empty( $attributes['include_posts'] )
+        && is_array( $attributes['include_posts'] )
     ) {
         // Pro
-        $include = array_map( 'esc_html', $attributes['include'] );
-        $args['post__in'] = advgbGetPostIdsForTitles( $include, $post_type );
+        $args['post__in'] = array_map( 'esc_html', $attributes['include_posts'] );
     } elseif( isset( $attributes['exclude'] ) && ! empty( $attributes['exclude'] ) ) {
         $exclude = array_map( 'esc_html', $attributes['exclude'] );
         $args['post__not_in'] = advgbGetPostIdsForTitles( $exclude, $post_type );
@@ -651,11 +650,9 @@ function advgbRegisterBlockRecentPosts()
                     'type' => 'string'
                 )
             ),
-            'include' => array(
+            'include_posts' => array(
                 'type' => 'array',
-                'items' => array(
-                    'type' => 'string'
-                )
+                'default' => array()
             ),
             'author' => array(
                 'type' => 'string',
