@@ -120,15 +120,24 @@ function advgbRenderBlockRecentPosts($attributes)
 
     if(
         defined('ADVANCED_GUTENBERG_PRO')
-        && isset( $attributes['include_posts'] )
-        && ! empty( $attributes['include_posts'] )
-        && is_array( $attributes['include_posts'] )
+        && isset( $attributes['includePosts'] )
+        && ! empty( $attributes['includePosts'] )
+        && is_array( $attributes['includePosts'] )
     ) {
         // Pro
-        $args['post__in'] = array_map( 'esc_html', $attributes['include_posts'] );
-    } elseif( isset( $attributes['exclude'] ) && ! empty( $attributes['exclude'] ) ) {
-        $exclude = array_map( 'esc_html', $attributes['exclude'] );
-        $args['post__not_in'] = advgbGetPostIdsForTitles( $exclude, $post_type );
+        $args['post__in'] = array_map( 'esc_html', $attributes['includePosts'] );
+    } elseif(
+        ( isset( $attributes['excludePosts'] ) && ! empty( $attributes['excludePosts'] ) )
+        || ( isset( $attributes['exclude'] ) && ! empty( $attributes['exclude'] ) )
+    ) {
+        if( isset( $attributes['exclude'] ) && ! empty( $attributes['exclude'] ) ) {
+            // Exclude posts, backward compatibility 2.13.1 and lower
+            $exclude = array_map( 'esc_html', $attributes['exclude'] );
+            $args['post__not_in'] = advgbGetPostIdsForTitles( $exclude, $post_type );
+        } else {
+            $args['post__not_in'] = array_map( 'esc_html', $attributes['excludePosts'] );
+        }
+
     } else {
         // Nothing to do here
     }
@@ -644,13 +653,11 @@ function advgbRegisterBlockRecentPosts()
             'textBeforeReadmore' => array(
                 'type' => 'string',
             ),
-            'exclude' => array(
+            'excludePosts' => array(
                 'type' => 'array',
-                'items' => array(
-                    'type' => 'string'
-                )
+                'default' => array()
             ),
-            'include_posts' => array(
+            'includePosts' => array(
                 'type' => 'array',
                 'default' => array()
             ),
@@ -683,6 +690,12 @@ function advgbRegisterBlockRecentPosts()
                 'default' => 'image-title-info-text',
             ),
 			// deprecrated attributes...
+            'exclude' => array(
+                'type' => 'array',
+                'items' => array(
+                    'type' => 'string'
+                )
+            ),
             'displayDate' => array(
                 'type' => 'boolean',
                 'default' => false,
@@ -1368,6 +1381,8 @@ function advgbGetCurrentUserId()  {
 
 /**
  * Returns post ids corresponding to post titles.
+ *
+ * Only for backward compatibility 2.13.1 and lower
  *
  * @return array
  */

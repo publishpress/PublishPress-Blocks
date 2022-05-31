@@ -24319,7 +24319,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // Reset attributes when Pro is not available
                 if (!this.isPro()) {
-                    setAttributes({ include_posts: [] });
+                    setAttributes({ includePosts: [] });
                 }
             }
         }, {
@@ -24394,8 +24394,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     });
                     this.props.setAttributes({ updatePostSuggestions: false });
                     this.setState({ postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function () {
-                        // the saved attribute will be called 'include'/'exclude' and contain post titles
-                        // we have to convert them into post Ids when the component is loaded the first time
+                        // Exclude posts, backward compatibility 2.13.1 and lower
                         if (!attributes.excludeIds && attributes.exclude) {
                             this.selectPostByTitle(attributes.exclude, 'exclude');
                         }
@@ -24425,7 +24424,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'checkIncludeEnabled',
             value: function checkIncludeEnabled() {
-                return this.isPro() && typeof this.props.attributes.include_posts !== 'undefined' && this.props.attributes.include_posts.length > 0;
+                return this.isPro() && typeof this.props.attributes.includePosts !== 'undefined' && this.props.attributes.includePosts.length > 0;
             }
         }, {
             key: 'render',
@@ -24485,8 +24484,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayCommentCount = attributes.displayCommentCount,
                     textAfterTitle = attributes.textAfterTitle,
                     textBeforeReadmore = attributes.textBeforeReadmore,
-                    exclude = attributes.exclude,
-                    include_posts = attributes.include_posts,
+                    includePosts = attributes.includePosts,
+                    excludePosts = attributes.excludePosts,
                     selectedAuthorId = attributes.author,
                     sliderAutoplay = attributes.sliderAutoplay,
                     linkCustomTax = attributes.linkCustomTax,
@@ -24495,16 +24494,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     onlyFromCurrentUser = attributes.onlyFromCurrentUser,
                     orderSections = attributes.orderSections;
 
-                // Include posts setting
+                // Include and exclude posts settings
 
                 var post_titles = [];
+                var exclude_field_value = [];
                 var include_field_value = [];
                 if (postsToSelect !== null) {
                     post_titles = postsToSelect.map(function (post) {
                         return post.title.raw;
                     });
 
-                    include_field_value = include_posts.map(function (post_id) {
+                    exclude_field_value = excludePosts.map(function (post_id) {
+                        var find_post = postsToSelect.find(function (post) {
+                            return post.id === post_id;
+                        });
+                        if (find_post === undefined || !find_post) {
+                            return false;
+                        }
+                        return find_post.title.raw;
+                    });
+
+                    include_field_value = includePosts.map(function (post_id) {
                         var find_post = postsToSelect.find(function (post) {
                             return post.id === post_id;
                         });
@@ -24810,11 +24820,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(FormTokenField, {
                                     multiple: true,
                                     suggestions: postSuggestions,
-                                    value: exclude,
+                                    value: exclude_field_value,
                                     label: __('Exclude these posts', 'advanced-gutenberg'),
                                     placeholder: __('Search by title', 'advanced-gutenberg'),
-                                    onChange: function onChange(value) {
-                                        return _this3.selectPostByTitle(value, 'exclude');
+                                    onChange: function onChange(excludePosts) {
+                                        var excludePosts_array = [];
+                                        excludePosts.map(function (post_title) {
+                                            var matching_post = postsToSelect.find(function (post) {
+                                                return post.title.raw === post_title;
+                                            });
+                                            if (matching_post !== undefined) {
+                                                excludePosts_array.push(matching_post.id);
+                                            }
+                                        });
+
+                                        setAttributes({ excludePosts: excludePosts_array });
                                     }
                                 })
                             )
@@ -24833,18 +24853,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 value: include_field_value,
                                 label: __('Display these posts only', 'advanced-gutenberg'),
                                 placeholder: __('Search by title', 'advanced-gutenberg'),
-                                onChange: function onChange(include_posts) {
-                                    var include_posts_array = [];
-                                    include_posts.map(function (post_title) {
+                                onChange: function onChange(includePosts) {
+                                    var includePosts_array = [];
+                                    includePosts.map(function (post_title) {
                                         var matching_post = postsToSelect.find(function (post) {
                                             return post.title.raw === post_title;
                                         });
                                         if (matching_post !== undefined) {
-                                            include_posts_array.push(matching_post.id);
+                                            includePosts_array.push(matching_post.id);
                                         }
                                     });
 
-                                    setAttributes({ include_posts: include_posts_array });
+                                    setAttributes({ includePosts: includePosts_array });
                                 }
                             })
                         )
@@ -25473,7 +25493,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function selectPostByTitle(tokens, type) {
                 var _props$setAttributes;
 
-                // postTitleVsIdMap -> 'exclude'
                 var postTitleVsIdMap = this.state.postTitleVsIdMap;
 
 
@@ -25493,10 +25512,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 this.props.setAttributes((_props$setAttributes = {}, _defineProperty(_props$setAttributes, type, tokens), _defineProperty(_props$setAttributes, typeForQuery, ids), _props$setAttributes));
 
-                /*/ Pro - reset all the filters, except include_posts
-                if( this.isPro() && 'include_posts' === type && this.props.attributes.include_posts.length > 0 ) {
-                    this.props.setAttributes( { exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], tagIds: [] } );
-                }*/
+                // Exclude posts, backward compatibility 2.13.1 and lower
+                this.props.setAttributes({ exclude: [], excludeIds: [], excludePosts: ids });
             }
         }, {
             key: 'updatePostType',
@@ -25504,7 +25521,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({ taxonomyList: null });
                 this.generateTaxFilters(postType);
 
-                this.props.setAttributes({ postType: postType, exclude: [], excludeIds: [], include_posts: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
+                this.props.setAttributes({ postType: postType, includePosts: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
             }
 
             /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
@@ -25877,7 +25894,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 postType = _props$attributes3.postType,
                 excludeCurrentPost = _props$attributes3.excludeCurrentPost,
                 excludeIds = _props$attributes3.excludeIds,
-                include_posts = _props$attributes3.include_posts,
+                excludePosts = _props$attributes3.excludePosts,
+                includePosts = _props$attributes3.includePosts,
                 author = _props$attributes3.author,
                 taxonomies = _props$attributes3.taxonomies,
                 taxIds = _props$attributes3.taxIds,
@@ -25888,6 +25906,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return cat.id;
             }) : [];
 
+            console.log(excludePosts);
+
             // We need to check if we're in post edit or widgets screen
             var postId = wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
             var recentPostsQuery = pickBy({
@@ -25897,16 +25917,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 orderby: orderBy,
                 per_page: numberOfPosts,
                 token: myToken,
-                exclude: excludeCurrentPost ? excludeIds ? union(excludeIds, [postId]) : postId : excludeIds,
-                include: include_posts,
+                exclude: excludeCurrentPost ? excludePosts ? union(excludePosts, [postId]) : postId : excludePosts,
+                include: includePosts,
                 author: onlyFromCurrentUser ? wp.data.select('core').getCurrentUser().id : author
             }, function (value) {
                 return !isUndefined(value) && !(isArray(value) && (isNull(value) || value.length === 0));
             });
-
-            /*console.log('excludeCurrentPost: ' + excludeCurrentPost);
-            console.log('excludeIds: ' + excludeIds);
-            console.log('postId: ' + postId);*/
 
             var filterTaxNames = [];
             if (taxIds) {
@@ -25917,7 +25933,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
 
             // generate posts without filters for post suggestions
-            var postSuggestionsQuery = omit(recentPostsQuery, union(['exclude', 'include_posts', 'categories', 'tags', 'per_page'], filterTaxNames));
+            var postSuggestionsQuery = omit(recentPostsQuery, union(['exclude', 'includePosts', 'categories', 'tags', 'per_page'], filterTaxNames));
             var updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
 
             return {
