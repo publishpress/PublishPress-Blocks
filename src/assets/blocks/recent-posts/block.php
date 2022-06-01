@@ -171,6 +171,7 @@ function advgbRenderBlockRecentPosts($attributes)
     $rp_default_thumb  = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
 
     $postHtml = '';
+    $postView = isset( $attributes['postView'] ) && ! empty( $attributes['postView'] ) ? esc_html( $attributes['postView'] ) : 'grid';
 
     if (!empty($recent_posts)) {
         foreach ($recent_posts as $key=>$post) {
@@ -199,8 +200,6 @@ function advgbRenderBlockRecentPosts($attributes)
             }
 
             $postHtml .= '<article class="advgb-recent-post' . ( $outputImage ? '' : ' advgb-recent-post--no-image' ) . '">';
-
-            $postView = isset( $attributes['postView'] ) && ! empty( $attributes['postView'] ) ? esc_html( $attributes['postView'] ) : 'grid';
 
             if ( $outputImage && $displayImageVsOrder === 'ignore-order' ) {
                 $postHtml .= sprintf(
