@@ -257,12 +257,14 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.13.2 - 27 May 2022 =
+= 2.13.2 - 1 Jul 2022 =
   * Add: Toggle to check/uncheck all blocks in Block Access screen
   * Add: PublishPress Series order by option
+  * Add: select posts by id
   * Fix: Edit title and text over the image for Images Slider block
   * Fix: Undefined postTitleVsIdMap error in Content Display block
   * Fix: Console error already registered WordPress 6.0 new core blocks
+  * Remove: select posts by title
 
 = 2.13.1 - 17 May 2022 =
   * Add: Plugin Instance Protection

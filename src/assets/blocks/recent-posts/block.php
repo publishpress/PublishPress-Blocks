@@ -120,16 +120,24 @@ function advgbRenderBlockRecentPosts($attributes)
 
     if(
         defined('ADVANCED_GUTENBERG_PRO')
-        && isset( $attributes['include'] )
-        && ! empty( $attributes['include'] )
-        && is_array( $attributes['include'] )
+        && isset( $attributes['includePosts'] )
+        && ! empty( $attributes['includePosts'] )
+        && is_array( $attributes['includePosts'] )
     ) {
         // Pro
-        $include = array_map( 'esc_html', $attributes['include'] );
-        $args['post__in'] = advgbGetPostIdsForTitles( $include, $post_type );
-    } elseif( isset( $attributes['exclude'] ) && ! empty( $attributes['exclude'] ) ) {
-        $exclude = array_map( 'esc_html', $attributes['exclude'] );
-        $args['post__not_in'] = advgbGetPostIdsForTitles( $exclude, $post_type );
+        $args['post__in'] = array_map( 'esc_html', $attributes['includePosts'] );
+    } elseif(
+        ( isset( $attributes['excludePosts'] ) && ! empty( $attributes['excludePosts'] ) )
+        || ( isset( $attributes['exclude'] ) && ! empty( $attributes['exclude'] ) )
+    ) {
+        if( isset( $attributes['exclude'] ) && ! empty( $attributes['exclude'] ) ) {
+            // Exclude posts, backward compatibility 2.13.1 and lower
+            $exclude = array_map( 'esc_html', $attributes['exclude'] );
+            $args['post__not_in'] = advgbGetPostIdsForTitles( $exclude, $post_type );
+        } else {
+            $args['post__not_in'] = array_map( 'esc_html', $attributes['excludePosts'] );
+        }
+
     } else {
         // Nothing to do here
     }
@@ -163,6 +171,7 @@ function advgbRenderBlockRecentPosts($attributes)
     $rp_default_thumb  = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
 
     $postHtml = '';
+    $postView = isset( $attributes['postView'] ) && ! empty( $attributes['postView'] ) ? esc_html( $attributes['postView'] ) : 'grid';
 
     if (!empty($recent_posts)) {
         foreach ($recent_posts as $key=>$post) {
@@ -191,8 +200,6 @@ function advgbRenderBlockRecentPosts($attributes)
             }
 
             $postHtml .= '<article class="advgb-recent-post' . ( $outputImage ? '' : ' advgb-recent-post--no-image' ) . '">';
-
-            $postView = isset( $attributes['postView'] ) && ! empty( $attributes['postView'] ) ? esc_html( $attributes['postView'] ) : 'grid';
 
             if ( $outputImage && $displayImageVsOrder === 'ignore-order' ) {
                 $postHtml .= sprintf(
@@ -645,17 +652,13 @@ function advgbRegisterBlockRecentPosts()
             'textBeforeReadmore' => array(
                 'type' => 'string',
             ),
-            'exclude' => array(
+            'excludePosts' => array(
                 'type' => 'array',
-                'items' => array(
-                    'type' => 'string'
-                )
+                'default' => array()
             ),
-            'include' => array(
+            'includePosts' => array(
                 'type' => 'array',
-                'items' => array(
-                    'type' => 'string'
-                )
+                'default' => array()
             ),
             'author' => array(
                 'type' => 'string',
@@ -686,6 +689,12 @@ function advgbRegisterBlockRecentPosts()
                 'default' => 'image-title-info-text',
             ),
 			// deprecrated attributes...
+            'exclude' => array(
+                'type' => 'array',
+                'items' => array(
+                    'type' => 'string'
+                )
+            ),
             'displayDate' => array(
                 'type' => 'boolean',
                 'default' => false,
@@ -1371,6 +1380,8 @@ function advgbGetCurrentUserId()  {
 
 /**
  * Returns post ids corresponding to post titles.
+ *
+ * Only for backward compatibility 2.13.1 and lower
  *
  * @return array
  */

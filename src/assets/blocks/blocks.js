@@ -24151,16 +24151,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 updating: false,
                 tabSelected: 'desktop',
                 updatePostSuggestions: true,
-                authorList: [],
-                includePostSuggestions: []
+                authorList: []
             };
 
             _this.selectCategories = _this.selectCategories.bind(_this);
             _this.selectTags = _this.selectTags.bind(_this);
             _this.getTagIdsForTags = _this.getTagIdsForTags.bind(_this);
             _this.getCategoryForBkwrdCompat = _this.getCategoryForBkwrdCompat.bind(_this);
-            _this.selectPostByTitle = _this.selectPostByTitle.bind(_this);
+            _this.selectPostByTitle = _this.selectPostByTitle.bind(_this); // Backward compatibility 2.13.1 and lower
             _this.updatePostType = _this.updatePostType.bind(_this);
+            _this.getPostIds = _this.getPostIds.bind(_this);
+            _this.getPostTitles = _this.getPostTitles.bind(_this);
             return _this;
         }
 
@@ -24256,21 +24257,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     _this2.setState({ authorList: list });
                 });
 
-                // Get large posts list for include
-                if (this.isPro() && this.state.includePostSuggestions.length === 0) {
-                    wp.apiFetch({
-                        path: wp.url.addQueryArgs('wp/v2/posts', { context: 'edit', per_page: 100, hide_empty: true })
-                    }).then(function (posts) {
-                        var includeTitles = [];
-                        var includeTitleVsIdMap = [];
-                        posts.forEach(function (post) {
-                            includeTitles.push(post.title.raw);
-                            includeTitleVsIdMap[post.title.raw] = post.id;
-                        });
-                        _this2.setState({ includePostSuggestions: includeTitles, includeTitleVsIdMap: includeTitleVsIdMap });
-                    });
-                }
-
                 // migrate from displayDate to postDate
                 var postDateDisplay = attributes.displayDate ? 'created' : attributes.postDate;
                 setAttributes({
@@ -24333,8 +24319,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 setAttributes({ id: 'recent-posts-' + clientId });
 
                 // Reset attributes when Pro is not available
-                if (!this.isPro()) {
-                    setAttributes({ include: [] });
+                if (!this.isPro() && this.checkIncludeEnabled()) {
+                    setAttributes({ includePosts: [] });
                 }
             }
         }, {
@@ -24409,13 +24395,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     });
                     this.props.setAttributes({ updatePostSuggestions: false });
                     this.setState({ postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function () {
-                        // the saved attribute will be called 'include'/'exclude' and contain post titles
-                        // we have to convert them into post Ids when the component is loaded the first time
-                        if (!attributes.excludeIds && attributes.exclude) {
+                        // Exclude posts, backward compatibility 2.13.1 and lower
+                        if (!attributes.excludeIds && attributes.exclude && attributes.exclude.length > 0) {
                             this.selectPostByTitle(attributes.exclude, 'exclude');
-                        }
-                        if (!attributes.includeIds && attributes.include) {
-                            this.selectPostByTitle(attributes.include, 'include');
                         }
                     });
                 }
@@ -24443,7 +24425,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'checkIncludeEnabled',
             value: function checkIncludeEnabled() {
-                return this.isPro() && typeof this.props.attributes.include !== 'undefined' && this.props.attributes.include.length > 0;
+                return typeof this.props.attributes.includePosts !== 'undefined' && this.props.attributes.includePosts.length > 0;
             }
         }, {
             key: 'render',
@@ -24457,12 +24439,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     tabSelected = _state.tabSelected,
                     authorList = _state.authorList,
                     postSuggestions = _state.postSuggestions,
-                    taxonomyList = _state.taxonomyList,
-                    includePostSuggestions = _state.includePostSuggestions;
+                    taxonomyList = _state.taxonomyList;
                 var _props5 = this.props,
                     attributes = _props5.attributes,
                     setAttributes = _props5.setAttributes,
-                    recentPostsList = _props5.recentPosts;
+                    recentPostsList = _props5.recentPosts,
+                    postsToSelect = _props5.postsToSelect;
                 var id = attributes.id,
                     postView = attributes.postView,
                     order = attributes.order,
@@ -24502,8 +24484,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayCommentCount = attributes.displayCommentCount,
                     textAfterTitle = attributes.textAfterTitle,
                     textBeforeReadmore = attributes.textBeforeReadmore,
-                    exclude = attributes.exclude,
-                    include = attributes.include,
+                    includePosts = attributes.includePosts,
+                    excludePosts = attributes.excludePosts,
                     selectedAuthorId = attributes.author,
                     sliderAutoplay = attributes.sliderAutoplay,
                     linkCustomTax = attributes.linkCustomTax,
@@ -24513,6 +24495,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     orderSections = attributes.orderSections;
 
 
+                var post_titles = this.isPro() && postsToSelect !== null ? postsToSelect.map(function (post) {
+                    return post.title.raw;
+                }) : [];
                 var recentPosts = this.props.recentPosts;
 
                 // We need to check if we're in post edit or widgets screen
@@ -24723,7 +24708,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         PanelBody,
                         { title: __('Filters', 'advanced-gutenberg') },
-                        this.checkIncludeEnabled() && React.createElement(
+                        this.isPro() && this.checkIncludeEnabled() && React.createElement(
                             'div',
                             { className: 'advgb-wrapper-disabled-msg notice notice-info' },
                             React.createElement(
@@ -24737,8 +24722,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             null,
                             React.createElement(
                                 'div',
-                                { className: this.checkIncludeEnabled() ? 'advgb-wrapper-disabled' : '' },
-                                this.checkIncludeEnabled() && React.createElement('div', { className: 'advgb-wrapper-disabled-overlay' }),
+                                { className: this.isPro() && this.checkIncludeEnabled() ? 'advgb-wrapper-disabled' : '' },
+                                this.isPro() && this.checkIncludeEnabled() && React.createElement('div', { className: 'advgb-wrapper-disabled-overlay' }),
                                 postType === 'post' && React.createElement(
                                     Fragment,
                                     null,
@@ -24808,11 +24793,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(FormTokenField, {
                                     multiple: true,
                                     suggestions: postSuggestions,
-                                    value: exclude,
+                                    value: this.getPostTitles(excludePosts, postsToSelect),
                                     label: __('Exclude these posts', 'advanced-gutenberg'),
                                     placeholder: __('Search by title', 'advanced-gutenberg'),
-                                    onChange: function onChange(value) {
-                                        return _this3.selectPostByTitle(value, 'exclude');
+                                    onChange: function onChange(excludePosts) {
+                                        return _this3.getPostIds(excludePosts, postsToSelect, 'exclude');
                                     }
                                 })
                             )
@@ -24826,12 +24811,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { title: __('Advanced Filters', 'advanced-gutenberg'), className: 'advgb-pro-icon' },
                             React.createElement(FormTokenField, {
                                 multiple: true,
-                                suggestions: includePostSuggestions,
-                                value: include,
+                                suggestions: post_titles,
+                                maxSuggestions: 15,
+                                value: this.getPostTitles(includePosts, postsToSelect),
                                 label: __('Display these posts only', 'advanced-gutenberg'),
                                 placeholder: __('Search by title', 'advanced-gutenberg'),
-                                onChange: function onChange(value) {
-                                    return _this3.selectPostByTitle(value, 'include');
+                                onChange: function onChange(includePosts) {
+                                    return _this3.getPostIds(includePosts, postsToSelect, 'include');
                                 }
                             })
                         )
@@ -25456,19 +25442,51 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 };
             }
         }, {
+            key: 'getPostTitles',
+            value: function getPostTitles(posts, postsToSelect) {
+                var field_value = [];
+                if (postsToSelect !== null) {
+                    field_value = posts.map(function (post_id) {
+                        var find_post = postsToSelect.find(function (post) {
+                            return post.id === post_id;
+                        });
+                        if (find_post === undefined || !find_post) {
+                            return false;
+                        }
+                        return find_post.title.raw;
+                    });
+                }
+                return field_value;
+            }
+        }, {
+            key: 'getPostIds',
+            value: function getPostIds(posts, postsToSelect, type) {
+                var posts_array = [];
+                posts.map(function (post_title) {
+                    var matching_post = postsToSelect.find(function (post) {
+                        return post.title.raw === post_title;
+                    });
+                    if (matching_post !== undefined) {
+                        posts_array.push(matching_post.id);
+                    }
+                });
+                var selectType = type + 'Posts';
+                this.props.setAttributes(_defineProperty({}, selectType, posts_array));
+
+                if ('include' === type) {
+                    this.props.setAttributes({ excludePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], author: '', onlyFromCurrentUser: false });
+                }
+            }
+        }, {
             key: 'selectPostByTitle',
             value: function selectPostByTitle(tokens, type) {
-                var _props$setAttributes;
+                var _props$setAttributes2;
 
-                // postTitleVsIdMap -> 'exclude'
-                // includeTitleVsIdMap -> 'include'
-                var _state3 = this.state,
-                    postTitleVsIdMap = _state3.postTitleVsIdMap,
-                    includeTitleVsIdMap = _state3.includeTitleVsIdMap;
+                var postTitleVsIdMap = this.state.postTitleVsIdMap;
 
 
                 var hasNoSuggestion = tokens.some(function (token) {
-                    return typeof token === 'string' && ('exclude' === type ? typeof postTitleVsIdMap === 'undefined' || !postTitleVsIdMap[token] : typeof includeTitleVsIdMap === 'undefined' || !includeTitleVsIdMap[token]);
+                    return typeof token === 'string' && (typeof postTitleVsIdMap === 'undefined' || !postTitleVsIdMap[token]);
                 });
 
                 if (hasNoSuggestion) {
@@ -25476,17 +25494,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 var ids = tokens.map(function (token) {
-                    return typeof token === 'string' ? 'exclude' === type ? postTitleVsIdMap[token] : includeTitleVsIdMap[token] : token.id;
+                    return typeof token === 'string' ? postTitleVsIdMap[token] : token.id;
                 });
 
                 var typeForQuery = type + 'Ids';
 
-                this.props.setAttributes((_props$setAttributes = {}, _defineProperty(_props$setAttributes, type, tokens), _defineProperty(_props$setAttributes, typeForQuery, ids), _props$setAttributes));
+                this.props.setAttributes((_props$setAttributes2 = {}, _defineProperty(_props$setAttributes2, type, tokens), _defineProperty(_props$setAttributes2, typeForQuery, ids), _props$setAttributes2));
 
-                // Pro - reset all the filters, except include
-                if (this.isPro() && 'include' === type && this.props.attributes.include.length > 0) {
-                    this.props.setAttributes({ exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], tagIds: [] });
-                }
+                // Exclude posts, backward compatibility 2.13.1 and lower
+                this.props.setAttributes({ exclude: [], excludeIds: [], excludePosts: ids });
             }
         }, {
             key: 'updatePostType',
@@ -25494,7 +25510,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({ taxonomyList: null });
                 this.generateTaxFilters(postType);
 
-                this.props.setAttributes({ postType: postType, exclude: [], excludeIds: [], include: [], includeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
+                this.props.setAttributes({ postType: postType, excludePosts: [], includePosts: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
             }
 
             /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
@@ -25647,7 +25663,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'selectTaxTerms',
             value: function selectTaxTerms(tax, tokens) {
-                var _props$setAttributes2;
+                var _props$setAttributes3;
 
                 var hasNoSuggestion = tokens.some(function (token) {
                     return typeof token === 'string' && !tax.map[token];
@@ -25677,8 +25693,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     set(taxIds, tax.slug, ids);
                 }
 
-                this.props.setAttributes((_props$setAttributes2 = {
-                    taxonomies: taxonomies }, _defineProperty(_props$setAttributes2, tax.slug, suggestions), _defineProperty(_props$setAttributes2, 'taxIds', taxIds), _props$setAttributes2));
+                this.props.setAttributes((_props$setAttributes3 = {
+                    taxonomies: taxonomies }, _defineProperty(_props$setAttributes3, tax.slug, suggestions), _defineProperty(_props$setAttributes3, 'taxIds', taxIds), _props$setAttributes3));
             }
 
             /**
@@ -25866,9 +25882,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 myToken = _props$attributes3.myToken,
                 postType = _props$attributes3.postType,
                 excludeCurrentPost = _props$attributes3.excludeCurrentPost,
-                excludeIds = _props$attributes3.excludeIds,
-                include = _props$attributes3.include,
-                includeIds = _props$attributes3.includeIds,
+                excludePosts = _props$attributes3.excludePosts,
+                includePosts = _props$attributes3.includePosts,
                 author = _props$attributes3.author,
                 taxonomies = _props$attributes3.taxonomies,
                 taxIds = _props$attributes3.taxIds,
@@ -25888,8 +25903,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 orderby: orderBy,
                 per_page: numberOfPosts,
                 token: myToken,
-                exclude: excludeCurrentPost ? excludeIds ? union(excludeIds, [postId]) : postId : excludeIds,
-                include: includeIds,
+                exclude: excludeCurrentPost ? excludePosts ? union(excludePosts, [postId]) : postId : excludePosts,
+                include: includePosts,
                 author: onlyFromCurrentUser ? wp.data.select('core').getCurrentUser().id : author
             }, function (value) {
                 return !isUndefined(value) && !(isArray(value) && (isNull(value) || value.length === 0));
@@ -25910,7 +25925,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             return {
                 recentPosts: getEntityRecords('postType', postType ? postType : 'post', recentPostsQuery),
                 postList: updatePostSuggestions ? getEntityRecords('postType', postType ? postType : 'post', postSuggestionsQuery) : null,
-                updatePostSuggestions: updatePostSuggestions
+                updatePostSuggestions: updatePostSuggestions,
+                postsToSelect: getEntityRecords('postType', postType ? postType : 'post', pickBy({ per_page: -1 }, function (value) {
+                    return !isUndefined(value);
+                }))
             };
         })(RecentPostsEdit),
         save: function save() {
