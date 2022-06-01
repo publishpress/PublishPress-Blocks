@@ -1334,7 +1334,7 @@ import { AuthorSelect } from './query-controls.jsx';
 
         getPostTitles( posts, postsToSelect ) {
             let field_value = [];
-            if ( postsToSelect !== null ) {
+            if ( typeof posts !== 'undefined' && postsToSelect !== null ) {
                 field_value = posts.map( ( post_id ) => {
                     let find_post = postsToSelect.find( ( post ) => {
                         return post.id === post_id;

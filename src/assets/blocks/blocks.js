@@ -25445,7 +25445,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: 'getPostTitles',
             value: function getPostTitles(posts, postsToSelect) {
                 var field_value = [];
-                if (postsToSelect !== null) {
+                if (typeof posts !== 'undefined' && postsToSelect !== null) {
                     field_value = posts.map(function (post_id) {
                         var find_post = postsToSelect.find(function (post) {
                             return post.id === post_id;
