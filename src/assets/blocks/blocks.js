@@ -24160,8 +24160,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             _this.getCategoryForBkwrdCompat = _this.getCategoryForBkwrdCompat.bind(_this);
             _this.selectPostByTitle = _this.selectPostByTitle.bind(_this); // Backward compatibility 2.13.1 and lower
             _this.updatePostType = _this.updatePostType.bind(_this);
-            _this.getPostsById = _this.getPostsById.bind(_this);
-            _this.getPostsbyTitle = _this.getPostsbyTitle.bind(_this);
+            _this.getPostIds = _this.getPostIds.bind(_this);
+            _this.getPostTitles = _this.getPostTitles.bind(_this);
             return _this;
         }
 
@@ -24793,11 +24793,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(FormTokenField, {
                                     multiple: true,
                                     suggestions: postSuggestions,
-                                    value: this.getPostsbyTitle(excludePosts, postsToSelect),
+                                    value: this.getPostTitles(excludePosts, postsToSelect),
                                     label: __('Exclude these posts', 'advanced-gutenberg'),
                                     placeholder: __('Search by title', 'advanced-gutenberg'),
                                     onChange: function onChange(excludePosts) {
-                                        return _this3.getPostsById(excludePosts, postsToSelect, 'exclude');
+                                        return _this3.getPostIds(excludePosts, postsToSelect, 'exclude');
                                     }
                                 })
                             )
@@ -24813,11 +24813,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 multiple: true,
                                 suggestions: post_titles,
                                 maxSuggestions: 15,
-                                value: this.getPostsbyTitle(includePosts, postsToSelect),
+                                value: this.getPostTitles(includePosts, postsToSelect),
                                 label: __('Display these posts only', 'advanced-gutenberg'),
                                 placeholder: __('Search by title', 'advanced-gutenberg'),
                                 onChange: function onChange(includePosts) {
-                                    return _this3.getPostsById(includePosts, postsToSelect, 'include');
+                                    return _this3.getPostIds(includePosts, postsToSelect, 'include');
                                 }
                             })
                         )
@@ -25442,8 +25442,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 };
             }
         }, {
-            key: 'getPostsbyTitle',
-            value: function getPostsbyTitle(posts, postsToSelect) {
+            key: 'getPostTitles',
+            value: function getPostTitles(posts, postsToSelect) {
                 var field_value = [];
                 if (postsToSelect !== null) {
                     field_value = posts.map(function (post_id) {
@@ -25459,8 +25459,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return field_value;
             }
         }, {
-            key: 'getPostsById',
-            value: function getPostsById(posts, postsToSelect, type) {
+            key: 'getPostIds',
+            value: function getPostIds(posts, postsToSelect, type) {
                 var posts_array = [];
                 posts.map(function (post_title) {
                     var matching_post = postsToSelect.find(function (post) {

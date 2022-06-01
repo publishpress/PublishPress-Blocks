@@ -126,8 +126,8 @@ import { AuthorSelect } from './query-controls.jsx';
             this.getCategoryForBkwrdCompat = this.getCategoryForBkwrdCompat.bind(this);
             this.selectPostByTitle = this.selectPostByTitle.bind(this); // Backward compatibility 2.13.1 and lower
             this.updatePostType = this.updatePostType.bind(this);
-            this.getPostsById = this.getPostsById.bind(this);
-            this.getPostsbyTitle = this.getPostsbyTitle.bind(this);
+            this.getPostIds = this.getPostIds.bind(this);
+            this.getPostTitles = this.getPostTitles.bind(this);
         }
 
         componentWillMount() {
@@ -708,10 +708,10 @@ import { AuthorSelect } from './query-controls.jsx';
                         <FormTokenField
                             multiple
                             suggestions={ postSuggestions }
-                            value={ this.getPostsbyTitle( excludePosts, postsToSelect ) }
+                            value={ this.getPostTitles( excludePosts, postsToSelect ) }
                             label={ __( 'Exclude these posts', 'advanced-gutenberg' ) }
                             placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
-                            onChange={ ( excludePosts ) => this.getPostsById( excludePosts, postsToSelect, 'exclude' ) }
+                            onChange={ ( excludePosts ) => this.getPostIds( excludePosts, postsToSelect, 'exclude' ) }
                         />
                         </div>
                         </Fragment>
@@ -723,10 +723,10 @@ import { AuthorSelect } from './query-controls.jsx';
                                     multiple
                                     suggestions={ post_titles }
                                     maxSuggestions={ 15 }
-                                    value={ this.getPostsbyTitle( includePosts, postsToSelect ) }
+                                    value={ this.getPostTitles( includePosts, postsToSelect ) }
                                     label={ __( 'Display these posts only', 'advanced-gutenberg' ) }
                                     placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
-                                    onChange={ ( includePosts ) => this.getPostsById( includePosts, postsToSelect, 'include' ) }
+                                    onChange={ ( includePosts ) => this.getPostIds( includePosts, postsToSelect, 'include' ) }
                                 />
                             </PanelBody>
                         </Fragment>
@@ -1332,7 +1332,7 @@ import { AuthorSelect } from './query-controls.jsx';
             };
         }
 
-        getPostsbyTitle( posts, postsToSelect ) {
+        getPostTitles( posts, postsToSelect ) {
             let field_value = [];
             if ( postsToSelect !== null ) {
                 field_value = posts.map( ( post_id ) => {
@@ -1348,7 +1348,7 @@ import { AuthorSelect } from './query-controls.jsx';
             return field_value;
         }
 
-        getPostsById( posts, postsToSelect, type ) {
+        getPostIds( posts, postsToSelect, type ) {
             let posts_array = [];
             posts.map(
                 ( post_title ) => {
