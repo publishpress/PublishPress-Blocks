@@ -1364,7 +1364,7 @@ import { AuthorSelect } from './query-controls.jsx';
             this.props.setAttributes( { [selectType]: posts_array } );
 
             if( 'include' === type ) {
-                this.props.setAttributes( { excludePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [] } );
+                this.props.setAttributes( { excludePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], author: '', onlyFromCurrentUser: false } );
             }
         }
 

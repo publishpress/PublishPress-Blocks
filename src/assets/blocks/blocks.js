@@ -25474,7 +25474,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.props.setAttributes(_defineProperty({}, selectType, posts_array));
 
                 if ('include' === type) {
-                    this.props.setAttributes({ excludePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [] });
+                    this.props.setAttributes({ excludePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], author: '', onlyFromCurrentUser: false });
                 }
             }
         }, {
