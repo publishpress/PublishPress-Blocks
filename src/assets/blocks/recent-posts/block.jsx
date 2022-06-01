@@ -124,8 +124,10 @@ import { AuthorSelect } from './query-controls.jsx';
             this.selectTags = this.selectTags.bind(this);
             this.getTagIdsForTags = this.getTagIdsForTags.bind(this);
             this.getCategoryForBkwrdCompat = this.getCategoryForBkwrdCompat.bind(this);
-            this.selectPostByTitle = this.selectPostByTitle.bind(this);
+            this.selectPostByTitle = this.selectPostByTitle.bind(this); // Backward compatibility 2.13.1 and lower
             this.updatePostType = this.updatePostType.bind(this);
+            this.getPostsById = this.getPostsById.bind(this);
+            this.getPostsbyTitle = this.getPostsbyTitle.bind(this);
         }
 
         componentWillMount() {
@@ -422,34 +424,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 orderSections,
             } = attributes;
 
-            // Include and exclude posts settings
-            let post_titles = [];
-            let exclude_field_value = [];
-            let include_field_value = [];
-            if ( postsToSelect !== null ) {
-                post_titles = postsToSelect.map( ( post ) => post.title.raw );
-
-                exclude_field_value = excludePosts.map( ( post_id ) => {
-                    let find_post = postsToSelect.find( ( post ) => {
-                        return post.id === post_id;
-                    } );
-                    if ( find_post === undefined || ! find_post ) {
-                        return false;
-                    }
-                    return find_post.title.raw;
-                } );
-
-                include_field_value = includePosts.map( ( post_id ) => {
-                    let find_post = postsToSelect.find( ( post ) => {
-                        return post.id === post_id;
-                    } );
-                    if ( find_post === undefined || ! find_post ) {
-                        return false;
-                    }
-                    return find_post.title.raw;
-                } );
-            }
-
+            let post_titles = this.isPro() && postsToSelect !== null ? postsToSelect.map( ( post ) => post.title.raw ) : [];
             let recentPosts = this.props.recentPosts;
 
             // We need to check if we're in post edit or widgets screen
@@ -733,10 +708,10 @@ import { AuthorSelect } from './query-controls.jsx';
                         <FormTokenField
                             multiple
                             suggestions={ postSuggestions }
-                            value={ exclude_field_value }
+                            value={ this.getPostsbyTitle( excludePosts, postsToSelect ) }
                             label={ __( 'Exclude these posts', 'advanced-gutenberg' ) }
                             placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
-                            onChange={ ( excludePosts ) => this.selectPostsById( excludePosts, postsToSelect, 'exclude' ) }
+                            onChange={ ( excludePosts ) => this.getPostsById( excludePosts, postsToSelect, 'exclude' ) }
                         />
                         </div>
                         </Fragment>
@@ -748,10 +723,10 @@ import { AuthorSelect } from './query-controls.jsx';
                                     multiple
                                     suggestions={ post_titles }
                                     maxSuggestions={ 15 }
-                                    value={ include_field_value }
+                                    value={ this.getPostsbyTitle( includePosts, postsToSelect ) }
                                     label={ __( 'Display these posts only', 'advanced-gutenberg' ) }
                                     placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
-                                    onChange={ ( includePosts ) => this.selectPostsById( includePosts, postsToSelect, 'include' ) }
+                                    onChange={ ( includePosts ) => this.getPostsById( includePosts, postsToSelect, 'include' ) }
                                 />
                             </PanelBody>
                         </Fragment>
@@ -1357,7 +1332,23 @@ import { AuthorSelect } from './query-controls.jsx';
             };
         }
 
-        selectPostsById( posts, postsToSelect, type ) {
+        getPostsbyTitle( posts, postsToSelect ) {
+            let field_value = [];
+            if ( postsToSelect !== null ) {
+                field_value = posts.map( ( post_id ) => {
+                    let find_post = postsToSelect.find( ( post ) => {
+                        return post.id === post_id;
+                    } );
+                    if ( find_post === undefined || ! find_post ) {
+                        return false;
+                    }
+                    return find_post.title.raw;
+                } );
+            }
+            return field_value;
+        }
+
+        getPostsById( posts, postsToSelect, type ) {
             let posts_array = [];
             posts.map(
                 ( post_title ) => {

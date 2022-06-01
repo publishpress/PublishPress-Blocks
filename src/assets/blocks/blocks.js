@@ -24158,8 +24158,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             _this.selectTags = _this.selectTags.bind(_this);
             _this.getTagIdsForTags = _this.getTagIdsForTags.bind(_this);
             _this.getCategoryForBkwrdCompat = _this.getCategoryForBkwrdCompat.bind(_this);
-            _this.selectPostByTitle = _this.selectPostByTitle.bind(_this);
+            _this.selectPostByTitle = _this.selectPostByTitle.bind(_this); // Backward compatibility 2.13.1 and lower
             _this.updatePostType = _this.updatePostType.bind(_this);
+            _this.getPostsById = _this.getPostsById.bind(_this);
+            _this.getPostsbyTitle = _this.getPostsbyTitle.bind(_this);
             return _this;
         }
 
@@ -24492,37 +24494,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     onlyFromCurrentUser = attributes.onlyFromCurrentUser,
                     orderSections = attributes.orderSections;
 
-                // Include and exclude posts settings
 
-                var post_titles = [];
-                var exclude_field_value = [];
-                var include_field_value = [];
-                if (postsToSelect !== null) {
-                    post_titles = postsToSelect.map(function (post) {
-                        return post.title.raw;
-                    });
-
-                    exclude_field_value = excludePosts.map(function (post_id) {
-                        var find_post = postsToSelect.find(function (post) {
-                            return post.id === post_id;
-                        });
-                        if (find_post === undefined || !find_post) {
-                            return false;
-                        }
-                        return find_post.title.raw;
-                    });
-
-                    include_field_value = includePosts.map(function (post_id) {
-                        var find_post = postsToSelect.find(function (post) {
-                            return post.id === post_id;
-                        });
-                        if (find_post === undefined || !find_post) {
-                            return false;
-                        }
-                        return find_post.title.raw;
-                    });
-                }
-
+                var post_titles = this.isPro() && postsToSelect !== null ? postsToSelect.map(function (post) {
+                    return post.title.raw;
+                }) : [];
                 var recentPosts = this.props.recentPosts;
 
                 // We need to check if we're in post edit or widgets screen
@@ -24818,11 +24793,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(FormTokenField, {
                                     multiple: true,
                                     suggestions: postSuggestions,
-                                    value: exclude_field_value,
+                                    value: this.getPostsbyTitle(excludePosts, postsToSelect),
                                     label: __('Exclude these posts', 'advanced-gutenberg'),
                                     placeholder: __('Search by title', 'advanced-gutenberg'),
                                     onChange: function onChange(excludePosts) {
-                                        return _this3.selectPostsById(excludePosts, postsToSelect, 'exclude');
+                                        return _this3.getPostsById(excludePosts, postsToSelect, 'exclude');
                                     }
                                 })
                             )
@@ -24838,11 +24813,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 multiple: true,
                                 suggestions: post_titles,
                                 maxSuggestions: 15,
-                                value: include_field_value,
+                                value: this.getPostsbyTitle(includePosts, postsToSelect),
                                 label: __('Display these posts only', 'advanced-gutenberg'),
                                 placeholder: __('Search by title', 'advanced-gutenberg'),
                                 onChange: function onChange(includePosts) {
-                                    return _this3.selectPostsById(includePosts, postsToSelect, 'include');
+                                    return _this3.getPostsById(includePosts, postsToSelect, 'include');
                                 }
                             })
                         )
@@ -25467,8 +25442,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 };
             }
         }, {
-            key: 'selectPostsById',
-            value: function selectPostsById(posts, postsToSelect, type) {
+            key: 'getPostsbyTitle',
+            value: function getPostsbyTitle(posts, postsToSelect) {
+                var field_value = [];
+                if (postsToSelect !== null) {
+                    field_value = posts.map(function (post_id) {
+                        var find_post = postsToSelect.find(function (post) {
+                            return post.id === post_id;
+                        });
+                        if (find_post === undefined || !find_post) {
+                            return false;
+                        }
+                        return find_post.title.raw;
+                    });
+                }
+                return field_value;
+            }
+        }, {
+            key: 'getPostsById',
+            value: function getPostsById(posts, postsToSelect, type) {
                 var posts_array = [];
                 posts.map(function (post_title) {
                     var matching_post = postsToSelect.find(function (post) {
