@@ -272,7 +272,7 @@ import { AuthorSelect } from './query-controls.jsx';
             setAttributes( { id: 'recent-posts-' + clientId } );
 
             // Reset attributes when Pro is not available
-            if( !this.isPro() ) {
+            if( !this.isPro() && this.checkIncludeEnabled() ) {
                 setAttributes( { includePosts: [] } );
             }
         }
@@ -369,7 +369,7 @@ import { AuthorSelect } from './query-controls.jsx';
         }
 
         checkIncludeEnabled() {
-            return this.isPro() && typeof this.props.attributes.includePosts !== 'undefined' && this.props.attributes.includePosts.length > 0;
+            return typeof this.props.attributes.includePosts !== 'undefined' && this.props.attributes.includePosts.length > 0;
         }
 
         render() {
@@ -627,7 +627,7 @@ import { AuthorSelect } from './query-controls.jsx';
                         />
                     </PanelBody>
                     <PanelBody title={ __( 'Filters', 'advanced-gutenberg' ) }>
-                        { this.checkIncludeEnabled() &&
+                        { this.isPro() && this.checkIncludeEnabled() &&
                             <div className="advgb-wrapper-disabled-msg notice notice-info">
                                 <p>
                                     { __('To enable filters, clear Advanced Filters > Display these posts only', 'advanced-gutenberg') }
@@ -635,8 +635,8 @@ import { AuthorSelect } from './query-controls.jsx';
                             </div>
                         }
                         <Fragment>
-                        <div className={ this.checkIncludeEnabled() ? 'advgb-wrapper-disabled' : '' }>
-                        { this.checkIncludeEnabled() &&
+                        <div className={ this.isPro() && this.checkIncludeEnabled() ? 'advgb-wrapper-disabled' : '' }>
+                        { this.isPro() && this.checkIncludeEnabled() &&
                             <div className="advgb-wrapper-disabled-overlay"></div>
                         }
                         { postType === 'post' &&

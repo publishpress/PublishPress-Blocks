@@ -24319,7 +24319,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 setAttributes({ id: 'recent-posts-' + clientId });
 
                 // Reset attributes when Pro is not available
-                if (!this.isPro()) {
+                if (!this.isPro() && this.checkIncludeEnabled()) {
                     setAttributes({ includePosts: [] });
                 }
             }
@@ -24425,7 +24425,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'checkIncludeEnabled',
             value: function checkIncludeEnabled() {
-                return this.isPro() && typeof this.props.attributes.includePosts !== 'undefined' && this.props.attributes.includePosts.length > 0;
+                return typeof this.props.attributes.includePosts !== 'undefined' && this.props.attributes.includePosts.length > 0;
             }
         }, {
             key: 'render',
@@ -24708,7 +24708,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         PanelBody,
                         { title: __('Filters', 'advanced-gutenberg') },
-                        this.checkIncludeEnabled() && React.createElement(
+                        this.isPro() && this.checkIncludeEnabled() && React.createElement(
                             'div',
                             { className: 'advgb-wrapper-disabled-msg notice notice-info' },
                             React.createElement(
@@ -24722,8 +24722,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             null,
                             React.createElement(
                                 'div',
-                                { className: this.checkIncludeEnabled() ? 'advgb-wrapper-disabled' : '' },
-                                this.checkIncludeEnabled() && React.createElement('div', { className: 'advgb-wrapper-disabled-overlay' }),
+                                { className: this.isPro() && this.checkIncludeEnabled() ? 'advgb-wrapper-disabled' : '' },
+                                this.isPro() && this.checkIncludeEnabled() && React.createElement('div', { className: 'advgb-wrapper-disabled-overlay' }),
                                 postType === 'post' && React.createElement(
                                     Fragment,
                                     null,
