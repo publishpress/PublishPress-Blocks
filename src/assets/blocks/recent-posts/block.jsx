@@ -118,7 +118,6 @@ import { AuthorSelect } from './query-controls.jsx';
                 tabSelected: 'desktop',
                 updatePostSuggestions: true,
                 authorList: [],
-                includePostSuggestions: [],
             }
 
             this.selectCategories = this.selectCategories.bind(this);
@@ -372,7 +371,7 @@ import { AuthorSelect } from './query-controls.jsx';
         }
 
         render() {
-            const { categoriesList, tagsList, postTypeList, tabSelected, authorList, postSuggestions, taxonomyList, includePostSuggestions } = this.state;
+            const { categoriesList, tagsList, postTypeList, tabSelected, authorList, postSuggestions, taxonomyList } = this.state;
             const { attributes, setAttributes, recentPosts: recentPostsList, postsToSelect } = this.props;
             const {
                 id,

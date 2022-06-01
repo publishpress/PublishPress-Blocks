@@ -24151,8 +24151,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 updating: false,
                 tabSelected: 'desktop',
                 updatePostSuggestions: true,
-                authorList: [],
-                includePostSuggestions: []
+                authorList: []
             };
 
             _this.selectCategories = _this.selectCategories.bind(_this);
@@ -24438,8 +24437,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     tabSelected = _state.tabSelected,
                     authorList = _state.authorList,
                     postSuggestions = _state.postSuggestions,
-                    taxonomyList = _state.taxonomyList,
-                    includePostSuggestions = _state.includePostSuggestions;
+                    taxonomyList = _state.taxonomyList;
                 var _props5 = this.props,
                     attributes = _props5.attributes,
                     setAttributes = _props5.setAttributes,
