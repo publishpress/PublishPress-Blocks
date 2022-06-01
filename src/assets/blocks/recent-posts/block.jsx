@@ -1714,7 +1714,7 @@ import { AuthorSelect } from './query-controls.jsx';
         },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, excludeIds, excludePosts, includePosts, author, taxonomies, taxIds, onlyFromCurrentUser } = props.attributes;
+            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, excludePosts, includePosts, author, taxonomies, taxIds, onlyFromCurrentUser } = props.attributes;
 
             const catIds = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
 
@@ -1741,7 +1741,7 @@ import { AuthorSelect } from './query-controls.jsx';
             }
 
             // generate posts without filters for post suggestions
-            const postSuggestionsQuery = omit( recentPostsQuery, union( [ 'exclude', 'includePosts', 'categories', 'tags', 'per_page' ], filterTaxNames ) );
+            const postSuggestionsQuery = omit( recentPostsQuery, union( [ 'exclude', 'include', 'categories', 'tags', 'per_page' ], filterTaxNames ) );
             let updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
 
             return {

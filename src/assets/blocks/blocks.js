@@ -25890,7 +25890,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 myToken = _props$attributes3.myToken,
                 postType = _props$attributes3.postType,
                 excludeCurrentPost = _props$attributes3.excludeCurrentPost,
-                excludeIds = _props$attributes3.excludeIds,
                 excludePosts = _props$attributes3.excludePosts,
                 includePosts = _props$attributes3.includePosts,
                 author = _props$attributes3.author,
@@ -25928,7 +25927,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
 
             // generate posts without filters for post suggestions
-            var postSuggestionsQuery = omit(recentPostsQuery, union(['exclude', 'includePosts', 'categories', 'tags', 'per_page'], filterTaxNames));
+            var postSuggestionsQuery = omit(recentPostsQuery, union(['exclude', 'include', 'categories', 'tags', 'per_page'], filterTaxNames));
             var updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
 
             return {
