@@ -24824,7 +24824,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Exclude these posts', 'advanced-gutenberg'),
                                     placeholder: __('Search by title', 'advanced-gutenberg'),
                                     onChange: function onChange(excludePosts) {
-                                        return _this3.selectExcludePosts(excludePosts, postsToSelect);
+                                        return _this3.selectPostsById(excludePosts, postsToSelect, 'exclude');
                                     }
                                 })
                             )
@@ -24844,7 +24844,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 label: __('Display these posts only', 'advanced-gutenberg'),
                                 placeholder: __('Search by title', 'advanced-gutenberg'),
                                 onChange: function onChange(includePosts) {
-                                    return _this3.selectIncludePosts(includePosts, postsToSelect);
+                                    return _this3.selectPostsById(includePosts, postsToSelect, 'include');
                                 }
                             })
                         )
@@ -25469,39 +25469,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 };
             }
         }, {
-            key: 'selectIncludePosts',
-            value: function selectIncludePosts(includePosts, postsToSelect) {
-                var includePosts_array = [];
-                includePosts.map(function (post_title) {
+            key: 'selectPostsById',
+            value: function selectPostsById(posts, postsToSelect, type) {
+                var posts_array = [];
+                posts.map(function (post_title) {
                     var matching_post = postsToSelect.find(function (post) {
                         return post.title.raw === post_title;
                     });
                     if (matching_post !== undefined) {
-                        includePosts_array.push(matching_post.id);
+                        posts_array.push(matching_post.id);
                     }
                 });
+                var selectType = type + 'Posts';
+                this.props.setAttributes(_defineProperty({}, selectType, posts_array));
 
-                this.props.setAttributes({ includePosts: includePosts_array });
-            }
-        }, {
-            key: 'selectExcludePosts',
-            value: function selectExcludePosts(excludePosts, postsToSelect) {
-                var excludePosts_array = [];
-                excludePosts.map(function (post_title) {
-                    var matching_post = postsToSelect.find(function (post) {
-                        return post.title.raw === post_title;
-                    });
-                    if (matching_post !== undefined) {
-                        excludePosts_array.push(matching_post.id);
-                    }
-                });
-
-                this.props.setAttributes({ excludePosts: excludePosts_array });
+                if ('include' === type) {
+                    this.props.setAttributes({ excludePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [] });
+                }
             }
         }, {
             key: 'selectPostByTitle',
             value: function selectPostByTitle(tokens, type) {
-                var _props$setAttributes;
+                var _props$setAttributes2;
 
                 var postTitleVsIdMap = this.state.postTitleVsIdMap;
 
@@ -25520,7 +25509,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var typeForQuery = type + 'Ids';
 
-                this.props.setAttributes((_props$setAttributes = {}, _defineProperty(_props$setAttributes, type, tokens), _defineProperty(_props$setAttributes, typeForQuery, ids), _props$setAttributes));
+                this.props.setAttributes((_props$setAttributes2 = {}, _defineProperty(_props$setAttributes2, type, tokens), _defineProperty(_props$setAttributes2, typeForQuery, ids), _props$setAttributes2));
 
                 // Exclude posts, backward compatibility 2.13.1 and lower
                 this.props.setAttributes({ exclude: [], excludeIds: [], excludePosts: ids });
@@ -25531,7 +25520,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({ taxonomyList: null });
                 this.generateTaxFilters(postType);
 
-                this.props.setAttributes({ postType: postType, includePosts: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
+                this.props.setAttributes({ postType: postType, excludePosts: [], includePosts: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
             }
 
             /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
@@ -25684,7 +25673,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'selectTaxTerms',
             value: function selectTaxTerms(tax, tokens) {
-                var _props$setAttributes2;
+                var _props$setAttributes3;
 
                 var hasNoSuggestion = tokens.some(function (token) {
                     return typeof token === 'string' && !tax.map[token];
@@ -25714,8 +25703,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     set(taxIds, tax.slug, ids);
                 }
 
-                this.props.setAttributes((_props$setAttributes2 = {
-                    taxonomies: taxonomies }, _defineProperty(_props$setAttributes2, tax.slug, suggestions), _defineProperty(_props$setAttributes2, 'taxIds', taxIds), _props$setAttributes2));
+                this.props.setAttributes((_props$setAttributes3 = {
+                    taxonomies: taxonomies }, _defineProperty(_props$setAttributes3, tax.slug, suggestions), _defineProperty(_props$setAttributes3, 'taxIds', taxIds), _props$setAttributes3));
             }
 
             /**

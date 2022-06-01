@@ -737,7 +737,7 @@ import { AuthorSelect } from './query-controls.jsx';
                             value={ exclude_field_value }
                             label={ __( 'Exclude these posts', 'advanced-gutenberg' ) }
                             placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
-                            onChange={ ( excludePosts ) => this.selectExcludePosts( excludePosts, postsToSelect ) }
+                            onChange={ ( excludePosts ) => this.selectPostsById( excludePosts, postsToSelect, 'exclude' ) }
                         />
                         </div>
                         </Fragment>
@@ -752,7 +752,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                     value={ include_field_value }
                                     label={ __( 'Display these posts only', 'advanced-gutenberg' ) }
                                     placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
-                                    onChange={ ( includePosts ) => this.selectIncludePosts( includePosts, postsToSelect ) }
+                                    onChange={ ( includePosts ) => this.selectPostsById( includePosts, postsToSelect, 'include' ) }
                                 />
                             </PanelBody>
                         </Fragment>
@@ -1358,36 +1358,24 @@ import { AuthorSelect } from './query-controls.jsx';
             };
         }
 
-        selectIncludePosts( includePosts, postsToSelect ) {
-            let includePosts_array = [];
-            includePosts.map(
+        selectPostsById( posts, postsToSelect, type ) {
+            let posts_array = [];
+            posts.map(
                 ( post_title ) => {
                     const matching_post = postsToSelect.find( ( post ) => {
                         return post.title.raw === post_title;
                     } );
                     if ( matching_post !== undefined ) {
-                        includePosts_array.push( matching_post.id );
+                        posts_array.push( matching_post.id );
                     }
                 }
             )
+            const selectType = type + 'Posts';
+            this.props.setAttributes( { [selectType]: posts_array } );
 
-            this.props.setAttributes( { includePosts: includePosts_array } );
-        }
-
-        selectExcludePosts( excludePosts, postsToSelect ) {
-            let excludePosts_array = [];
-            excludePosts.map(
-                ( post_title ) => {
-                    const matching_post = postsToSelect.find( ( post ) => {
-                        return post.title.raw === post_title;
-                    } );
-                    if ( matching_post !== undefined ) {
-                        excludePosts_array.push( matching_post.id );
-                    }
-                }
-            )
-
-            this.props.setAttributes( { excludePosts: excludePosts_array } );
+            if( 'include' === type ) {
+                this.props.setAttributes( { excludePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [] } );
+            }
         }
 
         selectPostByTitle(tokens, type) {
@@ -1420,7 +1408,7 @@ import { AuthorSelect } from './query-controls.jsx';
             this.setState( { taxonomyList: null } );
             this.generateTaxFilters( postType );
 
-            this.props.setAttributes( { postType: postType, includePosts: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] } );
+            this.props.setAttributes( { postType: postType, excludePosts: [], includePosts: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] } );
         }
 
         /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
