@@ -24159,7 +24159,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             _this.selectTags = _this.selectTags.bind(_this);
             _this.getTagIdsForTags = _this.getTagIdsForTags.bind(_this);
             _this.getCategoryForBkwrdCompat = _this.getCategoryForBkwrdCompat.bind(_this);
-            _this.selectExcludePosts = _this.selectExcludePosts.bind(_this);
             _this.selectPostByTitle = _this.selectPostByTitle.bind(_this);
             _this.updatePostType = _this.updatePostType.bind(_this);
             return _this;
@@ -25916,8 +25915,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var catIds = categories && categories.length > 0 ? categories.map(function (cat) {
                 return cat.id;
             }) : [];
-
-            console.log(excludePosts);
 
             // We need to check if we're in post edit or widgets screen
             var postId = wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();

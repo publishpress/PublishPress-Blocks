@@ -125,7 +125,6 @@ import { AuthorSelect } from './query-controls.jsx';
             this.selectTags = this.selectTags.bind(this);
             this.getTagIdsForTags = this.getTagIdsForTags.bind(this);
             this.getCategoryForBkwrdCompat = this.getCategoryForBkwrdCompat.bind(this);
-            this.selectExcludePosts = this.selectExcludePosts.bind(this);
             this.selectPostByTitle = this.selectPostByTitle.bind(this);
             this.updatePostType = this.updatePostType.bind(this);
         }
@@ -1731,8 +1730,6 @@ import { AuthorSelect } from './query-controls.jsx';
             const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, excludeIds, excludePosts, includePosts, author, taxonomies, taxIds, onlyFromCurrentUser } = props.attributes;
 
             const catIds = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
-
-            console.log(excludePosts);
 
             // We need to check if we're in post edit or widgets screen
             const postId = wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
