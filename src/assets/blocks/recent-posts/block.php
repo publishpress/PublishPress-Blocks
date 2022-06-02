@@ -122,7 +122,6 @@ function advgbRenderBlockRecentPosts($attributes)
         defined('ADVANCED_GUTENBERG_PRO')
         && isset( $attributes['includePosts'] )
         && ! empty( $attributes['includePosts'] )
-        && is_array( $attributes['includePosts'] )
     ) {
         // Pro
         $args['post__in'] = array_map( 'esc_html', $attributes['includePosts'] );
@@ -654,11 +653,15 @@ function advgbRegisterBlockRecentPosts()
             ),
             'excludePosts' => array(
                 'type' => 'array',
-                'default' => array()
+                'items' => array(
+                    'type' => 'number'
+                )
             ),
             'includePosts' => array(
                 'type' => 'array',
-                'default' => array()
+                'items' => array(
+                    'type' => 'number'
+                )
             ),
             'author' => array(
                 'type' => 'string',
