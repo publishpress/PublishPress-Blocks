@@ -110,7 +110,7 @@ $advgb_block_readonly_  = null;
                     <i class="mi mi-search"></i>
                 </div>
                 <div class="advgb-toggle-wrapper">
-                    <?php _e('Disable/Enable all blocks', 'advanced-gutenberg') ?>
+                    <?php _e('Enable or disable all blocks', 'advanced-gutenberg') ?>
                     <div class="ju-switch-button">
                         <label class="switch">
                             <input type="checkbox" name="toggle_all_blocks" id="toggle_all_blocks">
