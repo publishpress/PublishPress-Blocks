@@ -380,6 +380,8 @@
                                                     className="advgb-image-slider-title"
                                                     style={{color: titleColor}}
                                                     value={ image.title }
+                                                    onChange={ (value) => this.updateImagesData({title: value || ''}) }
+                                                    allowedFormats={ [] }
                                                 />
                                             )}
                                             {image.text && (
@@ -388,6 +390,8 @@
                                                     className="advgb-image-slider-text"
                                                     style={{color: textColor}}
                                                     value={ image.text }
+                                                    onChange={ (value) => this.updateImagesData({text: value || ''}) }
+                                                    allowedFormats={ [] }
                                                 />
                                             )}
                                         </div>

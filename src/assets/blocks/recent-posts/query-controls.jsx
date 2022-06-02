@@ -82,6 +82,7 @@ function CategorySelect({
 
 const DEFAULT_MIN_ITEMS = 1;
 const DEFAULT_MAX_ITEMS = 100;
+const PP_SERIES_POST_TYPES = typeof advgbBlocks.pp_series_post_types !== 'undefined' ? advgbBlocks.pp_series_post_types : [ 'post' ];
 
 function AdvQueryControls({
                               categoriesList,
@@ -162,6 +163,19 @@ function AdvQueryControls({
                     {
                         label: __('Comments, increasing order', 'advanced-gutenberg'),
                         value: 'comment_count/asc',
+                    },
+        ]);
+    }
+
+    if(
+        typeof advgbBlocks.pp_series_active !== 'undefined'
+        && parseInt(advgbBlocks.pp_series_active)
+        && PP_SERIES_POST_TYPES.includes( postType )
+    ) {
+        orderParams = _.union(orderParams, [
+                    {
+                        label: __('Series order', 'advanced-gutenberg'),
+                        value: 'series_order/asc',
                     },
         ]);
     }

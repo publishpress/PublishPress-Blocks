@@ -18328,13 +18328,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             tagName: titleTag,
                                             className: "advgb-image-slider-title",
                                             style: { color: titleColor },
-                                            value: image.title
+                                            value: image.title,
+                                            onChange: function onChange(value) {
+                                                return _this3.updateImagesData({ title: value || '' });
+                                            },
+                                            allowedFormats: []
                                         }),
                                         image.text && React.createElement(RichText, {
                                             tagName: textTag,
                                             className: "advgb-image-slider-text",
                                             style: { color: textColor },
-                                            value: image.text
+                                            value: image.text,
+                                            onChange: function onChange(value) {
+                                                return _this3.updateImagesData({ text: value || '' });
+                                            },
+                                            allowedFormats: []
                                         })
                                     )
                                 );
@@ -24150,8 +24158,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             _this.selectTags = _this.selectTags.bind(_this);
             _this.getTagIdsForTags = _this.getTagIdsForTags.bind(_this);
             _this.getCategoryForBkwrdCompat = _this.getCategoryForBkwrdCompat.bind(_this);
-            _this.selectPostByTitle = _this.selectPostByTitle.bind(_this);
+            _this.selectPostByTitle = _this.selectPostByTitle.bind(_this); // Backward compatibility 2.13.1 and lower
             _this.updatePostType = _this.updatePostType.bind(_this);
+            _this.getPostIds = _this.getPostIds.bind(_this);
+            _this.getPostTitles = _this.getPostTitles.bind(_this);
             return _this;
         }
 
@@ -24307,6 +24317,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     clientId = _props3.clientId;
 
                 setAttributes({ id: 'recent-posts-' + clientId });
+
+                // Reset attributes when Pro is not available
+                if (!this.isPro() && this.checkIncludeEnabled()) {
+                    setAttributes({ includePosts: [] });
+                }
             }
         }, {
             key: 'componentDidUpdate',
@@ -24380,9 +24395,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     });
                     this.props.setAttributes({ updatePostSuggestions: false });
                     this.setState({ postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function () {
-                        // the saved attribute will be called 'include'/'exclude' and contain post titles
-                        // we have to convert them into post Ids when the component is loaded the first time
-                        if (!attributes.excludeIds && attributes.exclude) {
+                        // Exclude posts, backward compatibility 2.13.1 and lower
+                        if (!attributes.excludeIds && attributes.exclude && attributes.exclude.length > 0) {
                             this.selectPostByTitle(attributes.exclude, 'exclude');
                         }
                     });
@@ -24404,6 +24418,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: 'isPro',
+            value: function isPro() {
+                return advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1';
+            }
+        }, {
+            key: 'checkIncludeEnabled',
+            value: function checkIncludeEnabled() {
+                return typeof this.props.attributes.includePosts !== 'undefined' && this.props.attributes.includePosts.length > 0;
+            }
+        }, {
             key: 'render',
             value: function render() {
                 var _this3 = this;
@@ -24419,7 +24443,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props5 = this.props,
                     attributes = _props5.attributes,
                     setAttributes = _props5.setAttributes,
-                    recentPostsList = _props5.recentPosts;
+                    recentPostsList = _props5.recentPosts,
+                    postsToSelect = _props5.postsToSelect;
                 var id = attributes.id,
                     postView = attributes.postView,
                     order = attributes.order,
@@ -24459,7 +24484,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayCommentCount = attributes.displayCommentCount,
                     textAfterTitle = attributes.textAfterTitle,
                     textBeforeReadmore = attributes.textBeforeReadmore,
-                    exclude = attributes.exclude,
+                    includePosts = attributes.includePosts,
+                    excludePosts = attributes.excludePosts,
                     selectedAuthorId = attributes.author,
                     sliderAutoplay = attributes.sliderAutoplay,
                     linkCustomTax = attributes.linkCustomTax,
@@ -24469,6 +24495,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     orderSections = attributes.orderSections;
 
 
+                var post_titles = this.isPro() && postsToSelect !== null ? postsToSelect.map(function (post) {
+                    return post.title.raw;
+                }) : [];
                 var recentPosts = this.props.recentPosts;
 
                 // We need to check if we're in post edit or widgets screen
@@ -24679,82 +24708,119 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         PanelBody,
                         { title: __('Filters', 'advanced-gutenberg') },
-                        postType === 'post' && React.createElement(
+                        this.isPro() && this.checkIncludeEnabled() && React.createElement(
+                            'div',
+                            { className: 'advgb-wrapper-disabled-msg notice notice-info' },
+                            React.createElement(
+                                'p',
+                                null,
+                                __('To enable filters, clear Advanced Filters > Display these posts only', 'advanced-gutenberg')
+                            )
+                        ),
+                        React.createElement(
                             Fragment,
                             null,
-                            React.createElement(FormTokenField, {
-                                key: 'query-controls-categories-select',
-                                label: __('Show content with these Categories', 'advanced-gutenberg'),
-                                value: categories && categories.map(function (item) {
-                                    return {
-                                        id: item.id,
-                                        value: item.name || item.value
-                                    };
+                            React.createElement(
+                                'div',
+                                { className: this.isPro() && this.checkIncludeEnabled() ? 'advgb-wrapper-disabled' : '' },
+                                this.isPro() && this.checkIncludeEnabled() && React.createElement('div', { className: 'advgb-wrapper-disabled-overlay' }),
+                                postType === 'post' && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(FormTokenField, {
+                                        key: 'query-controls-categories-select',
+                                        label: __('Show content with these Categories', 'advanced-gutenberg'),
+                                        value: categories && categories.map(function (item) {
+                                            return {
+                                                id: item.id,
+                                                value: item.name || item.value
+                                            };
+                                        }),
+                                        suggestions: Object.keys(categoriesList),
+                                        onChange: function onChange(value) {
+                                            _this3.selectCategories(value);
+                                        },
+                                        maxSuggestions: MAX_CATEGORIES_SUGGESTIONS
+                                    }),
+                                    React.createElement(FormTokenField, {
+                                        multiple: true,
+                                        suggestions: tagsList,
+                                        value: tags,
+                                        label: __('Show content with these Tags', 'advanced-gutenberg'),
+                                        placeholder: __('Type a tag', 'advanced-gutenberg'),
+                                        onChange: function onChange(value) {
+                                            _this3.selectTags(value);
+                                        }
+                                    })
+                                ),
+                                taxonomyList && taxonomyList.length > 0 && taxonomyList.map(function (tax) {
+                                    return React.createElement(FormTokenField, {
+                                        multiple: true,
+                                        suggestions: tax.suggestions,
+                                        value: _this3.populateTaxTerms(tax),
+                                        onChange: function onChange(value) {
+                                            return _this3.selectTaxTerms(tax, value);
+                                        },
+                                        key: 'query-controls-`${tax.slug}`-select',
+                                        label: __('Show content with these ', 'advanced-gutenberg') + decodeEntities('' + tax.name)
+                                    });
                                 }),
-                                suggestions: Object.keys(categoriesList),
-                                onChange: function onChange(value) {
-                                    _this3.selectCategories(value);
-                                },
-                                maxSuggestions: MAX_CATEGORIES_SUGGESTIONS
-                            }),
+                                !onlyFromCurrentUser && React.createElement(_queryControls.AuthorSelect, {
+                                    key: 'query-controls-author-select',
+                                    authorList: authorList,
+                                    label: __('Author', 'advanced-gutenberg'),
+                                    noOptionLabel: __('All', 'advanced-gutenberg'),
+                                    selectedAuthorId: selectedAuthorId,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ author: value });
+                                    }
+                                }),
+                                React.createElement(ToggleControl, {
+                                    label: __('Only shows posts written by the user viewing the block', 'advanced-gutenberg'),
+                                    checked: onlyFromCurrentUser,
+                                    onChange: function onChange() {
+                                        return setAttributes({ onlyFromCurrentUser: !onlyFromCurrentUser });
+                                    }
+                                }),
+                                isInPost && postType === 'post' && React.createElement(ToggleControl, {
+                                    label: __('Exclude current post', 'advanced-gutenberg'),
+                                    help: __('If this post is listed in the block, you can exclude it.', 'advanced-gutenberg'),
+                                    checked: excludeCurrentPost,
+                                    onChange: function onChange() {
+                                        return setAttributes({ excludeCurrentPost: !excludeCurrentPost });
+                                    }
+                                }),
+                                React.createElement(FormTokenField, {
+                                    multiple: true,
+                                    suggestions: postSuggestions,
+                                    value: this.getPostTitles(excludePosts, postsToSelect),
+                                    label: __('Exclude these posts', 'advanced-gutenberg'),
+                                    placeholder: __('Search by title', 'advanced-gutenberg'),
+                                    onChange: function onChange(excludePosts) {
+                                        return _this3.getPostIds(excludePosts, postsToSelect, 'exclude');
+                                    }
+                                })
+                            )
+                        )
+                    ),
+                    this.isPro() && React.createElement(
+                        Fragment,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Advanced Filters', 'advanced-gutenberg'), className: 'advgb-pro-icon' },
                             React.createElement(FormTokenField, {
                                 multiple: true,
-                                suggestions: tagsList,
-                                value: tags,
-                                label: __('Show content with these Tags', 'advanced-gutenberg'),
-                                placeholder: __('Type a tag', 'advanced-gutenberg'),
-                                onChange: function onChange(value) {
-                                    _this3.selectTags(value);
+                                suggestions: post_titles,
+                                maxSuggestions: 15,
+                                value: this.getPostTitles(includePosts, postsToSelect),
+                                label: __('Display these posts only', 'advanced-gutenberg'),
+                                placeholder: __('Search by title', 'advanced-gutenberg'),
+                                onChange: function onChange(includePosts) {
+                                    return _this3.getPostIds(includePosts, postsToSelect, 'include');
                                 }
                             })
-                        ),
-                        taxonomyList && taxonomyList.length > 0 && taxonomyList.map(function (tax) {
-                            return React.createElement(FormTokenField, {
-                                multiple: true,
-                                suggestions: tax.suggestions,
-                                value: _this3.populateTaxTerms(tax),
-                                onChange: function onChange(value) {
-                                    return _this3.selectTaxTerms(tax, value);
-                                },
-                                key: 'query-controls-`${tax.slug}`-select',
-                                label: __('Show content with these ', 'advanced-gutenberg') + decodeEntities('' + tax.name)
-                            });
-                        }),
-                        !onlyFromCurrentUser && React.createElement(_queryControls.AuthorSelect, {
-                            key: 'query-controls-author-select',
-                            authorList: authorList,
-                            label: __('Author', 'advanced-gutenberg'),
-                            noOptionLabel: __('All', 'advanced-gutenberg'),
-                            selectedAuthorId: selectedAuthorId,
-                            onChange: function onChange(value) {
-                                return setAttributes({ author: value });
-                            }
-                        }),
-                        React.createElement(ToggleControl, {
-                            label: __('Only shows posts written by the user viewing the block', 'advanced-gutenberg'),
-                            checked: onlyFromCurrentUser,
-                            onChange: function onChange() {
-                                return setAttributes({ onlyFromCurrentUser: !onlyFromCurrentUser });
-                            }
-                        }),
-                        isInPost && postType === 'post' && React.createElement(ToggleControl, {
-                            label: __('Exclude current post', 'advanced-gutenberg'),
-                            help: __('If this post is listed in the block, you can exclude it.', 'advanced-gutenberg'),
-                            checked: excludeCurrentPost,
-                            onChange: function onChange() {
-                                return setAttributes({ excludeCurrentPost: !excludeCurrentPost });
-                            }
-                        }),
-                        React.createElement(FormTokenField, {
-                            multiple: true,
-                            suggestions: postSuggestions,
-                            value: exclude,
-                            label: __('Exclude these posts', 'advanced-gutenberg'),
-                            placeholder: __('Search by title', 'advanced-gutenberg'),
-                            onChange: function onChange(value) {
-                                return _this3.selectPostByTitle(value, 'exclude');
-                            }
-                        })
+                        )
                     ),
                     React.createElement(
                         PanelBody,
@@ -24981,18 +25047,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }
                         })
                     ),
-                    advgbBlocks.advgb_pro === '1' && React.createElement(
-                        PanelBody,
-                        { title: __('Reorder Sections', 'advanced-gutenberg'), className: 'advgb-pro-icon' },
-                        React.createElement(SelectControl, {
-                            label: __('Sections order', 'advanced-gutenberg'),
-                            help: __('When the image in desktop floats next to the content, or is displayed as background, the image order is ignored. Also the image order in mobile can be ignored for some views.', 'advanced-gutenberg'),
-                            value: orderSections,
-                            options: ORDER_SECTIONS,
-                            onChange: function onChange(value) {
-                                return setAttributes({ orderSections: value });
-                            }
-                        })
+                    this.isPro() && React.createElement(
+                        Fragment,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Reorder Sections', 'advanced-gutenberg'), initialOpen: false, className: 'advgb-pro-icon' },
+                            React.createElement(SelectControl, {
+                                label: __('Sections order', 'advanced-gutenberg'),
+                                help: __('When the image in desktop floats next to the content, or is displayed as background, the image order is ignored. Also the image order in mobile can be ignored for some views.', 'advanced-gutenberg'),
+                                value: orderSections,
+                                options: ORDER_SECTIONS,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ orderSections: value });
+                                }
+                            })
+                        )
                     )
                 );
 
@@ -25372,15 +25442,51 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 };
             }
         }, {
+            key: 'getPostTitles',
+            value: function getPostTitles(posts, postsToSelect) {
+                var field_value = [];
+                if (typeof posts !== 'undefined' && postsToSelect !== null) {
+                    field_value = posts.map(function (post_id) {
+                        var find_post = postsToSelect.find(function (post) {
+                            return post.id === post_id;
+                        });
+                        if (find_post === undefined || !find_post) {
+                            return false;
+                        }
+                        return find_post.title.raw;
+                    });
+                }
+                return field_value;
+            }
+        }, {
+            key: 'getPostIds',
+            value: function getPostIds(posts, postsToSelect, type) {
+                var posts_array = [];
+                posts.map(function (post_title) {
+                    var matching_post = postsToSelect.find(function (post) {
+                        return post.title.raw === post_title;
+                    });
+                    if (matching_post !== undefined) {
+                        posts_array.push(matching_post.id);
+                    }
+                });
+                var selectType = type + 'Posts';
+                this.props.setAttributes(_defineProperty({}, selectType, posts_array));
+
+                if ('include' === type) {
+                    this.props.setAttributes({ excludePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], author: '', onlyFromCurrentUser: false });
+                }
+            }
+        }, {
             key: 'selectPostByTitle',
             value: function selectPostByTitle(tokens, type) {
-                var _props$setAttributes;
+                var _props$setAttributes2;
 
                 var postTitleVsIdMap = this.state.postTitleVsIdMap;
 
 
                 var hasNoSuggestion = tokens.some(function (token) {
-                    return typeof token === 'string' && !postTitleVsIdMap[token];
+                    return typeof token === 'string' && (typeof postTitleVsIdMap === 'undefined' || !postTitleVsIdMap[token]);
                 });
 
                 if (hasNoSuggestion) {
@@ -25392,7 +25498,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 var typeForQuery = type + 'Ids';
-                this.props.setAttributes((_props$setAttributes = {}, _defineProperty(_props$setAttributes, type, tokens), _defineProperty(_props$setAttributes, typeForQuery, ids), _props$setAttributes));
+
+                this.props.setAttributes((_props$setAttributes2 = {}, _defineProperty(_props$setAttributes2, type, tokens), _defineProperty(_props$setAttributes2, typeForQuery, ids), _props$setAttributes2));
+
+                // Exclude posts, backward compatibility 2.13.1 and lower
+                this.props.setAttributes({ exclude: [], excludeIds: [], excludePosts: ids });
             }
         }, {
             key: 'updatePostType',
@@ -25400,7 +25510,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({ taxonomyList: null });
                 this.generateTaxFilters(postType);
 
-                this.props.setAttributes({ postType: postType, exclude: [], excludeIds: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
+                this.props.setAttributes({ postType: postType, excludePosts: [], includePosts: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
             }
 
             /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
@@ -25553,7 +25663,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'selectTaxTerms',
             value: function selectTaxTerms(tax, tokens) {
-                var _props$setAttributes2;
+                var _props$setAttributes3;
 
                 var hasNoSuggestion = tokens.some(function (token) {
                     return typeof token === 'string' && !tax.map[token];
@@ -25583,8 +25693,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     set(taxIds, tax.slug, ids);
                 }
 
-                this.props.setAttributes((_props$setAttributes2 = {
-                    taxonomies: taxonomies }, _defineProperty(_props$setAttributes2, tax.slug, suggestions), _defineProperty(_props$setAttributes2, 'taxIds', taxIds), _props$setAttributes2));
+                this.props.setAttributes((_props$setAttributes3 = {
+                    taxonomies: taxonomies }, _defineProperty(_props$setAttributes3, tax.slug, suggestions), _defineProperty(_props$setAttributes3, 'taxIds', taxIds), _props$setAttributes3));
             }
 
             /**
@@ -25772,7 +25882,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 myToken = _props$attributes3.myToken,
                 postType = _props$attributes3.postType,
                 excludeCurrentPost = _props$attributes3.excludeCurrentPost,
-                excludeIds = _props$attributes3.excludeIds,
+                excludePosts = _props$attributes3.excludePosts,
+                includePosts = _props$attributes3.includePosts,
                 author = _props$attributes3.author,
                 taxonomies = _props$attributes3.taxonomies,
                 taxIds = _props$attributes3.taxIds,
@@ -25792,7 +25903,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 orderby: orderBy,
                 per_page: numberOfPosts,
                 token: myToken,
-                exclude: excludeCurrentPost ? excludeIds ? union(excludeIds, [postId]) : postId : excludeIds,
+                exclude: excludeCurrentPost ? excludePosts ? union(excludePosts, [postId]) : postId : excludePosts,
+                include: includePosts,
                 author: onlyFromCurrentUser ? wp.data.select('core').getCurrentUser().id : author
             }, function (value) {
                 return !isUndefined(value) && !(isArray(value) && (isNull(value) || value.length === 0));
@@ -25807,13 +25919,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
 
             // generate posts without filters for post suggestions
-            var postSuggestionsQuery = omit(recentPostsQuery, union(['exclude', 'categories', 'tags', 'per_page'], filterTaxNames));
+            var postSuggestionsQuery = omit(recentPostsQuery, union(['exclude', 'include', 'categories', 'tags', 'per_page'], filterTaxNames));
             var updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
 
             return {
                 recentPosts: getEntityRecords('postType', postType ? postType : 'post', recentPostsQuery),
                 postList: updatePostSuggestions ? getEntityRecords('postType', postType ? postType : 'post', postSuggestionsQuery) : null,
-                updatePostSuggestions: updatePostSuggestions
+                updatePostSuggestions: updatePostSuggestions,
+                postsToSelect: getEntityRecords('postType', postType ? postType : 'post', pickBy({ per_page: -1 }, function (value) {
+                    return !isUndefined(value);
+                }))
             };
         })(RecentPostsEdit),
         save: function save() {
@@ -25923,6 +26038,7 @@ function CategorySelect(_ref2) {
 
 var DEFAULT_MIN_ITEMS = 1;
 var DEFAULT_MAX_ITEMS = 100;
+var PP_SERIES_POST_TYPES = typeof advgbBlocks.pp_series_post_types !== 'undefined' ? advgbBlocks.pp_series_post_types : ['post'];
 
 function AdvQueryControls(_ref3) {
     var categoriesList = _ref3.categoriesList,
@@ -25990,6 +26106,13 @@ function AdvQueryControls(_ref3) {
         }, {
             label: __('Comments, increasing order', 'advanced-gutenberg'),
             value: 'comment_count/asc'
+        }]);
+    }
+
+    if (typeof advgbBlocks.pp_series_active !== 'undefined' && parseInt(advgbBlocks.pp_series_active) && PP_SERIES_POST_TYPES.includes(postType)) {
+        orderParams = _.union(orderParams, [{
+            label: __('Series order', 'advanced-gutenberg'),
+            value: 'series_order/asc'
         }]);
     }
 
