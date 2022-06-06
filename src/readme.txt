@@ -259,7 +259,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 = 2.13.3 - 6 Jun 2022 =
   * Add: Blue color from WordPress core to unit elements (px, %) for Content Display block
-  * Fix: Center featured image when using default slider layout for Content Display block
+  * Fix: Center featured image when using default slider view for Content Display block
 
 = 2.13.2 - 2 Jun 2022 =
   * Add: Toggle to check/uncheck all blocks in Block Access screen
