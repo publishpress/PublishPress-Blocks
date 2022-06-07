@@ -99,6 +99,15 @@ import { AuthorSelect } from './query-controls.jsx';
         { label: 'Title, Text, Image, Info', value: 'title-text-image-info' },
     ];
 
+    const DISPLAY_FOR = [
+        { label: __( 'For all posts', 'advanced-gutenberg' ), value: 'all' },
+        { label: __( 'For the first post', 'advanced-gutenberg' ), value: 1 },
+        { label: __( 'For the first 2 posts', 'advanced-gutenberg' ), value: 2 },
+        { label: __( 'For the first 3 posts', 'advanced-gutenberg' ), value: 3 },
+        { label: __( 'For the first 4 posts', 'advanced-gutenberg' ), value: 4 },
+        { label: __( 'For the first 5 posts', 'advanced-gutenberg' ), value: 5 },
+    ];
+
     const CUSTOM_TAX_PREFIX = 'custom-tax-';
 
     let initSlider = null;
@@ -389,6 +398,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 displayFeaturedImageCaption,
                 enablePlaceholderImage,
                 displayAuthor,
+                displayAuthorFor,
                 authorLinkNewTab,
                 displayDate,
                 postDate,
@@ -768,14 +778,7 @@ import { AuthorSelect } from './query-controls.jsx';
                         <Fragment>
                             <SelectControl
                                 value={ displayFeaturedImageFor }
-                                options={ [
-                                    { label: __( 'For all posts', 'advanced-gutenberg' ), value: 'all' },
-                                    { label: __( 'For the first post', 'advanced-gutenberg' ), value: 1 },
-                                    { label: __( 'For the first 2 posts', 'advanced-gutenberg' ), value: 2 },
-                                    { label: __( 'For the first 3 posts', 'advanced-gutenberg' ), value: 3 },
-                                    { label: __( 'For the first 4 posts', 'advanced-gutenberg' ), value: 4 },
-                                    { label: __( 'For the first 5 posts', 'advanced-gutenberg' ), value: 5 },
-                                ] }
+                                options={ DISPLAY_FOR }
                                 onChange={ ( value ) => { setAttributes( { displayFeaturedImageFor: value } ) } }
                                 className="advgb-child-select"
                             />
@@ -812,12 +815,20 @@ import { AuthorSelect } from './query-controls.jsx';
                             onChange={ () => setAttributes( { displayAuthor: !displayAuthor } ) }
                         />
                         { displayAuthor &&
-                            <ToggleControl
-                                label={ __( 'Open link in new tab', 'advanced-gutenberg' ) }
-                                checked={ !!authorLinkNewTab }
-                                onChange={ () => setAttributes( { authorLinkNewTab: !authorLinkNewTab } ) }
-                                className="advgb-child-toggle"
-                            />
+                            <Fragment>
+                                <SelectControl
+                                    value={ displayAuthorFor }
+                                    options={ DISPLAY_FOR }
+                                    onChange={ ( value ) => { setAttributes( { displayAuthorFor: value } ) } }
+                                    className="advgb-child-select"
+                                />
+                                <ToggleControl
+                                    label={ __( 'Open link in new tab', 'advanced-gutenberg' ) }
+                                    checked={ !!authorLinkNewTab }
+                                    onChange={ () => setAttributes( { authorLinkNewTab: !authorLinkNewTab } ) }
+                                    className="advgb-child-toggle"
+                                />
+                            </Fragment>
                         }
                         <SelectControl
                             label={ __( 'Display Post Date', 'advanced-gutenberg' ) }
@@ -1131,7 +1142,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                             <RawHTML className="advgb-text-after-title">{ textAfterTitle }</RawHTML>
                                         }
                                         { (
-                                            (displayAuthor && (
+                                            ( this.getDisplayFeatureStatus( 'author', index ) && (
                                                 (post.coauthors && post.coauthors.length > 0)
                                                 || (!post.coauthors || post.coauthors.length === 0))
                                             )
@@ -1140,7 +1151,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                         ) && (
                                             <Fragment>
                                                 <div className="advgb-post-info">
-                                                    {displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map( ( coauthor, coauthor_indx ) => (
+                                                    { this.getDisplayFeatureStatus( 'author', index ) && post.coauthors && post.coauthors.length > 0 && post.coauthors.map( ( coauthor, coauthor_indx ) => (
                                                         <Fragment>
                                                             <a href={ coauthor.link }
                                                                target="_blank"
@@ -1154,7 +1165,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                                         </Fragment>
                                                     ) )
                                                     }
-                                                    {displayAuthor && (!post.coauthors || post.coauthors.length === 0) && (
+                                                    { this.getDisplayFeatureStatus( 'author', index ) && (!post.coauthors || post.coauthors.length === 0) && (
                                                         <a href={ post.author_meta.author_link }
                                                            target="_blank"
                                                            className="advgb-post-author"
@@ -1622,6 +1633,24 @@ import { AuthorSelect } from './query-controls.jsx';
                 }
             });
             return slugs;
+        }
+
+        getDisplayFeatureStatus( feature, index ) {
+            const {
+                displayAuthor,
+                displayAuthorFor
+            } = this.props.attributes;
+
+            switch( feature ) {
+                case 'author':
+                    return(
+                        displayAuthor && ( displayAuthorFor === 'all' || index < displayAuthorFor )
+                    );
+                    break;
+                default:
+                    // Nothing to do here
+                    break;
+            }
         }
 
         getDisplayImageStatus(attributes, index) {

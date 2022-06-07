@@ -242,7 +242,7 @@ function advgbRenderBlockRecentPosts($attributes)
 			}
 
             if(
-                ( isset($attributes['displayAuthor']) && $attributes['displayAuthor'] )
+                advgbCheckFeatureStatus( $attributes['displayAuthor'], $attributes['displayAuthorFor'], $key )
                 || ( $postDate !== 'hide' )
                 || ( !empty($postDateDisplay) )
                 || (
@@ -253,7 +253,7 @@ function advgbRenderBlockRecentPosts($attributes)
 
                 $postHtml .= '<div class="advgb-post-info">';
 
-                if (isset($attributes['displayAuthor']) && $attributes['displayAuthor']) {
+                if ( advgbCheckFeatureStatus( $attributes['displayAuthor'], $attributes['displayAuthorFor'], $key ) ) {
     				$coauthors          = advgbGetCoauthors( array( 'id' => $post->ID ) );
     				$authorLinkNewTab   = isset($attributes['authorLinkNewTab']) && $attributes['authorLinkNewTab'] ? '_blank' : '_self';
                     if ( ! empty( $coauthors ) ) {
@@ -549,6 +549,10 @@ function advgbRegisterBlockRecentPosts()
             'displayAuthor' => array(
                 'type' => 'boolean',
                 'default' => false,
+            ),
+            'displayAuthorFor' => array(
+                'type' => 'string',
+                'default' => 'all',
             ),
             'authorLinkNewTab' => array(
                 'type' => 'boolean',
@@ -1318,6 +1322,25 @@ function advgbSeriesOrderSort() {
 	}
 }
 
+/**
+ * Check if a feature is enable for each post
+ *
+ * @param string $feature   Element to display
+ * @param boolean $display  Display or not the element?
+ * @param int $key          Index of the element
+ *
+ * @return boolean
+ */
+function advgbCheckFeatureStatus( $feature, $display, $key )  {
+    if(
+        isset( $feature ) && $feature
+        && ( $display === 'all' || $key < $display )
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 /**
  * Check if Featured image is enable for each post
