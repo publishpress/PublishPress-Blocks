@@ -25833,6 +25833,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     styles[k].parentNode.removeChild(styles[k]);
                 }
 
+                // Remove PublishPress Series box
+                var seriesbox = span.getElementsByClassName('seriesmeta');
+                if (seriesbox.length === 1) {
+                    seriesbox[0].parentNode.removeChild(seriesbox[0]);
+                }
+
                 var children = span.querySelectorAll('*');
                 for (var i = 0; i < children.length; i++) {
                     if (children[i].textContent) children[i].textContent += ' ';else children[i].innerText += ' ';
