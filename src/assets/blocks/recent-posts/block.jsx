@@ -1256,6 +1256,12 @@ import { AuthorSelect } from './query-controls.jsx';
                 styles[k].parentNode.removeChild(styles[k]);
             }
 
+            // Remove PublishPress Series box
+            const seriesbox = span.getElementsByClassName('seriesmeta');
+            if(seriesbox.length === 1) {
+                seriesbox[0].parentNode.removeChild(seriesbox[0]);
+            }
+
             const children= span.querySelectorAll('*');
             for(let i = 0 ; i < children.length ; i++) {
                 if(children[i].textContent)
