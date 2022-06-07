@@ -25221,7 +25221,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 decodeEntities(post.title.rendered)
                                             )
                                         ),
-                                        React.createElement(
+                                        textAfterTitle && React.createElement(
                                             RawHTML,
                                             { className: 'advgb-text-after-title' },
                                             textAfterTitle
@@ -25345,7 +25345,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 dangerouslySetInnerHTML: {
                                                     __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt ? post.excerpt.raw : ''
                                                 } }),
-                                            React.createElement(
+                                            textBeforeReadmore && React.createElement(
                                                 'div',
                                                 { className: 'advgb-text-before-readmore' },
                                                 React.createElement(

@@ -1127,7 +1127,9 @@ import { AuthorSelect } from './query-controls.jsx';
                                         <h2 className="advgb-post-title">
                                             <a href={ post.link } target="_blank">{ decodeEntities( post.title.rendered ) }</a>
                                         </h2>
-                                        <RawHTML className="advgb-text-after-title">{ textAfterTitle }</RawHTML>
+                                        { textAfterTitle &&
+                                            <RawHTML className="advgb-text-after-title">{ textAfterTitle }</RawHTML>
+                                        }
                                         { (
                                             (displayAuthor && (
                                                 (post.coauthors && post.coauthors.length > 0)
@@ -1222,7 +1224,9 @@ import { AuthorSelect } from './query-controls.jsx';
                                                          __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : (post.excerpt ? post.excerpt.raw : '')
                                                      } } />
                                             ) }
-                                            <div className="advgb-text-before-readmore"><RawHTML>{ textBeforeReadmore }</RawHTML></div>
+                                            { textBeforeReadmore &&
+                                                <div className="advgb-text-before-readmore"><RawHTML>{ textBeforeReadmore }</RawHTML></div>
+                                            }
                                             {displayReadMore && (
                                                 <div className="advgb-post-readmore">
                                                     <a href={ post.link } target="_blank">{ readMoreLbl ? readMoreLbl : __( 'Read More', 'advanced-gutenberg' ) }</a>
