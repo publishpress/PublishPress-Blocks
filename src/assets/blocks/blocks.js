@@ -25840,6 +25840,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
                 return slugs;
             }
+
+            /**
+             * Check if elementFor is within the index range.
+             */
+
+        }, {
+            key: 'checkElementForDisplay',
+            value: function checkElementForDisplay(elementFor, index) {
+                return elementFor === 'all' || index < elementFor;
+            }
+
+            /**
+             * Check if an element is enabled for each post.
+             */
+
         }, {
             key: 'checkElementDisplay',
             value: function checkElementDisplay(element, index) {
@@ -25862,25 +25877,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 switch (element) {
                     case 'author':
-                        return displayAuthor && (displayAuthorFor === 'all' || index < displayAuthorFor);
+                        return displayAuthor && this.checkElementForDisplay(displayAuthorFor, index);
                         break;
                     case 'readmore':
-                        return displayReadMore && (displayReadMoreFor === 'all' || index < displayReadMoreFor);
+                        return displayReadMore && this.checkElementForDisplay(displayReadMoreFor, index);
                         break;
                     case 'excerpt':
-                        return displayExcerpt && (displayExcerptFor === 'all' || index < displayExcerptFor);
+                        return displayExcerpt && this.checkElementForDisplay(displayExcerptFor, index);
                         break;
                     case 'comments':
-                        return displayCommentCount && (displayCommentCountFor === 'all' || index < displayCommentCountFor);
+                        return displayCommentCount && this.checkElementForDisplay(displayCommentCountFor, index);
                         break;
                     case 'date':
-                        return postDate !== 'hide' && (postDateFor === 'all' || index < postDateFor);
+                        return postDate !== 'hide' && this.checkElementForDisplay(postDateFor, index);
                         break;
                     case 'categories':
-                        return showCategories !== 'hide' && (showCategoriesFor === 'all' || index < showCategoriesFor);
+                        return showCategories !== 'hide' && this.checkElementForDisplay(showCategoriesFor, index);
                         break;
                     case 'tags':
-                        return showTags !== 'hide' && (showTagsFor === 'all' || index < showTagsFor);
+                        return showTags !== 'hide' && this.checkElementForDisplay(showTagsFor, index);
                         break;
                     default:
                         return false;

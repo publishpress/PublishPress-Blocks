@@ -1694,6 +1694,18 @@ import { AuthorSelect } from './query-controls.jsx';
             return slugs;
         }
 
+        /**
+         * Check if elementFor is within the index range.
+         */
+        checkElementForDisplay( elementFor, index ) {
+            return(
+                elementFor === 'all' || index < elementFor
+            );
+        }
+
+        /**
+         * Check if an element is enabled for each post.
+         */
         checkElementDisplay( element, index ) {
             const {
                 displayAuthor,
@@ -1715,37 +1727,37 @@ import { AuthorSelect } from './query-controls.jsx';
             switch( element ) {
                 case 'author':
                     return(
-                        displayAuthor && ( displayAuthorFor === 'all' || index < displayAuthorFor )
+                        displayAuthor && this.checkElementForDisplay( displayAuthorFor, index )
                     );
                     break;
                 case 'readmore':
                     return(
-                        displayReadMore && ( displayReadMoreFor === 'all' || index < displayReadMoreFor )
+                        displayReadMore && this.checkElementForDisplay( displayReadMoreFor, index )
                     );
                     break;
                 case 'excerpt':
                     return(
-                        displayExcerpt && ( displayExcerptFor === 'all' || index < displayExcerptFor )
+                        displayExcerpt && this.checkElementForDisplay( displayExcerptFor, index )
                     );
                     break;
                 case 'comments':
                     return(
-                        displayCommentCount && ( displayCommentCountFor === 'all' || index < displayCommentCountFor )
+                        displayCommentCount && this.checkElementForDisplay( displayCommentCountFor, index )
                     );
                     break;
                 case 'date':
                     return(
-                        postDate !== 'hide' && ( postDateFor === 'all' || index < postDateFor )
+                        postDate !== 'hide' && this.checkElementForDisplay( postDateFor, index )
                     );
                     break;
                 case 'categories':
                     return(
-                        showCategories !== 'hide' && ( showCategoriesFor === 'all' || index < showCategoriesFor )
+                        showCategories !== 'hide' && this.checkElementForDisplay( showCategoriesFor, index )
                     );
                     break;
                 case 'tags':
                     return(
-                        showTags !== 'hide' && ( showTagsFor === 'all' || index < showTagsFor )
+                        showTags !== 'hide' && this.checkElementForDisplay( showTagsFor, index )
                     );
                     break;
                 default:
