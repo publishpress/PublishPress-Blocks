@@ -175,7 +175,7 @@ function advgbRenderBlockRecentPosts($attributes)
     if (!empty($recent_posts)) {
         foreach ($recent_posts as $key=>$post) {
             $postThumbID         = get_post_thumbnail_id($post->ID);
-            $outputImage         = advgbCheckImageStatus( $attributes, $key ) && ( $postThumbID || $attributes['enablePlaceholderImage'] );
+            $outputImage         = advgbCheckElementDisplay( $attributes['displayFeaturedImage'], $attributes['displayFeaturedImageFor'], $key ) && ( $postThumbID || $attributes['enablePlaceholderImage'] );
             $displayImageVsOrder = getDisplayImageVsOrder( $attributes, $key );
             $postThumb           = '<img src="' . esc_url($rp_default_thumb['url']) . '" />';
             $postThumbCaption    = '';
@@ -1414,6 +1414,8 @@ function advgbCheckElementDisplayArr( $element, $display, $key )  {
 
 /**
  * Check if Featured image is enable for each post
+ *
+ * Deprecated since 2.13.3
  *
  * @return boolean
  */

@@ -1146,12 +1146,12 @@ import { AuthorSelect } from './query-controls.jsx';
                         <div className="advgb-recent-posts">
                             {recentPosts.map( ( post, index ) => (
                                 <article key={ index }
-                                className={`advgb-recent-post ${ this.getDisplayImageStatus( attributes, index ) && ( post.featured_img || enablePlaceholderImage ) ? "" : "advgb-recent-post--no-image"}` }
+                                className={`advgb-recent-post ${ this.checkElementDisplay( 'image', index ) && ( post.featured_img || enablePlaceholderImage ) ? "" : "advgb-recent-post--no-image"}` }
                                 >
                                     { /* Output image's HTML inside .advgb-recent-post; orderSections is not allowed for images */ }
                                     {(() => {
                                         if(
-                                            this.getDisplayImageStatus( attributes, index )
+                                            this.checkElementDisplay( 'image', index )
                                             && ( post.featured_img || enablePlaceholderImage )
                                             && this.getDisplayImageVsOrder( attributes, index ) === 'ignore-order'
                                         ) {
@@ -1187,7 +1187,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                         { /* Output image's HTML inside .advgb-post-wrapper to allow orderSections for images */ }
                                         {(() => {
                                             if(
-                                                this.getDisplayImageStatus( attributes, index )
+                                                this.checkElementDisplay( 'image', index )
                                                 && ( post.featured_img || enablePlaceholderImage )
                                                 && this.getDisplayImageVsOrder( attributes, index ) === 'apply-order'
                                             ) {
@@ -1720,6 +1720,8 @@ import { AuthorSelect } from './query-controls.jsx';
          */
         checkElementDisplay( element, index ) {
             const {
+                displayFeaturedImage,
+                displayFeaturedImageFor,
                 displayAuthor,
                 displayAuthorFor,
                 displayReadMore,
@@ -1739,6 +1741,10 @@ import { AuthorSelect } from './query-controls.jsx';
             } = this.props.attributes;
 
             switch( element ) {
+                case 'image':
+                    return(
+                        displayFeaturedImage && this.checkElementForDisplay( displayFeaturedImageFor, index )
+                    );
                 case 'author':
                     return(
                         displayAuthor && this.checkElementForDisplay( displayAuthorFor, index )
@@ -1783,12 +1789,6 @@ import { AuthorSelect } from './query-controls.jsx';
                     return false;
                     break;
             }
-        }
-
-        getDisplayImageStatus(attributes, index) {
-            return(
-                attributes.displayFeaturedImage && ( attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor)
-            )
         }
 
         // Skip images floating on left or right, and with headline style

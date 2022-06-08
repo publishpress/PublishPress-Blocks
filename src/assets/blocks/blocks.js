@@ -25263,10 +25263,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     'article',
                                     { key: index,
-                                        className: 'advgb-recent-post ' + (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage) ? "" : "advgb-recent-post--no-image")
+                                        className: 'advgb-recent-post ' + (_this3.checkElementDisplay('image', index) && (post.featured_img || enablePlaceholderImage) ? "" : "advgb-recent-post--no-image")
                                     },
                                     function () {
-                                        if (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage) && _this3.getDisplayImageVsOrder(attributes, index) === 'ignore-order') {
+                                        if (_this3.checkElementDisplay('image', index) && (post.featured_img || enablePlaceholderImage) && _this3.getDisplayImageVsOrder(attributes, index) === 'ignore-order') {
                                             return React.createElement(
                                                 'div',
                                                 { className: 'advgb-post-thumbnail' },
@@ -25295,7 +25295,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         'div',
                                         { className: 'advgb-post-wrapper' },
                                         function () {
-                                            if (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage) && _this3.getDisplayImageVsOrder(attributes, index) === 'apply-order') {
+                                            if (_this3.checkElementDisplay('image', index) && (post.featured_img || enablePlaceholderImage) && _this3.getDisplayImageVsOrder(attributes, index) === 'apply-order') {
                                                 return React.createElement(
                                                     'div',
                                                     { className: 'advgb-post-thumbnail' },
@@ -25873,6 +25873,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: 'checkElementDisplay',
             value: function checkElementDisplay(element, index) {
                 var _props$attributes = this.props.attributes,
+                    displayFeaturedImage = _props$attributes.displayFeaturedImage,
+                    displayFeaturedImageFor = _props$attributes.displayFeaturedImageFor,
                     displayAuthor = _props$attributes.displayAuthor,
                     displayAuthorFor = _props$attributes.displayAuthorFor,
                     displayReadMore = _props$attributes.displayReadMore,
@@ -25892,6 +25894,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
                 switch (element) {
+                    case 'image':
+                        return displayFeaturedImage && this.checkElementForDisplay(displayFeaturedImageFor, index);
                     case 'author':
                         return displayAuthor && this.checkElementForDisplay(displayAuthorFor, index);
                         break;
@@ -25920,11 +25924,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         return false;
                         break;
                 }
-            }
-        }, {
-            key: 'getDisplayImageStatus',
-            value: function getDisplayImageStatus(attributes, index) {
-                return attributes.displayFeaturedImage && (attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor);
             }
 
             // Skip images floating on left or right, and with headline style
