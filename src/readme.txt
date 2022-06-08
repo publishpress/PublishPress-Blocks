@@ -259,7 +259,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 = 2.13.3 - 8 Jun 2022 =
   * Add: Blue color from WordPress core to unit elements (px, %) for Content Display block
-  * Add: Choose to display author, date, excerpt, read more, category, tags, comments count and custom taxonomies for up to 5 first posts in Content Display block
+  * Add: Choose to display author, date, excerpt, read more, category, tags, comment counts and custom taxonomies for up to 5 first posts in Content Display block
   * Fix: Center featured image when using default slider view for Content Display block
   * Fix: Don't output text after title and text before read more when empty in editor for Content Display block
   * Remove: PublishPress Series box from editor preview in Content Display block
