@@ -1349,7 +1349,7 @@ function advgbSeriesOrderSort() {
 }
 
 /**
- * Check if a feature is enable for each post when $display is a boolean
+ * Check if an element is enabled for each post when $display is a boolean
  *
  * @param string $element   Element to display
  * @param boolean $display  Display or not the element?
@@ -1369,7 +1369,7 @@ function advgbCheckElementDisplay( $element, $display, $key )  {
 }
 
 /**
- * Check if a feature is enable for each post when $display is a string
+ * Check if an element is enabled for each post when $display is a string
  *
  * @param string $element   Element to display
  * @param boolean $display  Display or not the element?
