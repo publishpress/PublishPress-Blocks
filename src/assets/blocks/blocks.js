@@ -24322,7 +24322,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // Reset attributes when Pro is not available
                 if (!this.isPro() && this.checkIncludeEnabled()) {
-                    setAttributes({ includePosts: [] });
+                    setAttributes({ includePosts: [], offset: 0 });
                 }
             }
         }, {
@@ -24495,6 +24495,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     textBeforeReadmore = attributes.textBeforeReadmore,
                     includePosts = attributes.includePosts,
                     excludePosts = attributes.excludePosts,
+                    offset = attributes.offset,
                     selectedAuthorId = attributes.author,
                     sliderAutoplay = attributes.sliderAutoplay,
                     linkCustomTax = attributes.linkCustomTax,
@@ -24829,7 +24830,35 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onChange: function onChange(includePosts) {
                                     return _this3.getPostIds(includePosts, postsToSelect, 'include');
                                 }
-                            })
+                            }),
+                            this.isPro() && this.checkIncludeEnabled() && React.createElement(
+                                'div',
+                                { className: 'advgb-wrapper-disabled-msg notice notice-info' },
+                                React.createElement(
+                                    'p',
+                                    null,
+                                    __('To enable Offset posts, clear  Display these posts only', 'advanced-gutenberg')
+                                )
+                            ),
+                            React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(
+                                    'div',
+                                    { className: this.isPro() && this.checkIncludeEnabled() ? 'advgb-wrapper-disabled' : '' },
+                                    this.isPro() && this.checkIncludeEnabled() && React.createElement('div', { className: 'advgb-wrapper-disabled-overlay' }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Offset posts', 'advanced-gutenberg'),
+                                        help: __('Omit the first posts.', 'advanced-gutenberg'),
+                                        value: offset,
+                                        min: 0,
+                                        max: Array.isArray(recentPosts) && recentPosts.length > 0 ? recentPosts.length + offset - 1 : 5,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ offset: value });
+                                        }
+                                    })
+                                )
+                            )
                         )
                     ),
                     React.createElement(
@@ -25574,7 +25603,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.props.setAttributes(_defineProperty({}, selectType, posts_array));
 
                 if ('include' === type) {
-                    this.props.setAttributes({ excludePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], author: '', onlyFromCurrentUser: false });
+                    this.props.setAttributes({ excludePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], author: '', onlyFromCurrentUser: false, offset: 0 });
                 }
             }
         }, {
@@ -25610,7 +25639,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({ taxonomyList: null });
                 this.generateTaxFilters(postType);
 
-                this.props.setAttributes({ postType: postType, excludePosts: [], includePosts: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
+                this.props.setAttributes({ postType: postType, excludePosts: [], includePosts: [], offset: 0, updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
             }
 
             /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
@@ -26056,6 +26085,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 excludeCurrentPost = _props$attributes4.excludeCurrentPost,
                 excludePosts = _props$attributes4.excludePosts,
                 includePosts = _props$attributes4.includePosts,
+                offset = _props$attributes4.offset,
                 author = _props$attributes4.author,
                 taxonomies = _props$attributes4.taxonomies,
                 taxIds = _props$attributes4.taxIds,
@@ -26077,6 +26107,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 token: myToken,
                 exclude: excludeCurrentPost ? excludePosts ? union(excludePosts, [postId]) : postId : excludePosts,
                 include: includePosts,
+                offset: offset,
                 author: onlyFromCurrentUser ? wp.data.select('core').getCurrentUser().id : author
             }, function (value) {
                 return !isUndefined(value) && !(isArray(value) && (isNull(value) || value.length === 0));

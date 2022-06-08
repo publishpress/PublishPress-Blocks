@@ -118,6 +118,10 @@ function advgbRenderBlockRecentPosts($attributes)
         $args['post__not_in'] = isset( $args['post__not_in'] ) ? array_merge( $args['post__not_in'], array( $post->ID ) ) : array( $post->ID );
     }
 
+    if( isset( $attributes['offset'] ) && $attributes['offset'] ) {
+        $args['offset'] = esc_html( $attributes['offset'] );
+    }
+
     if(
         defined('ADVANCED_GUTENBERG_PRO')
         && isset( $attributes['includePosts'] )
@@ -692,6 +696,10 @@ function advgbRegisterBlockRecentPosts()
                 'items' => array(
                     'type' => 'number'
                 )
+            ),
+            'offset' => array(
+                'type' => 'number',
+                'default' => 0,
             ),
             'author' => array(
                 'type' => 'string',
