@@ -24129,6 +24129,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var ORDER_SECTIONS = [{ label: 'Default', value: 'default' }, { label: 'Title, Image, Info, Text', value: 'title-image-info-text' }, { label: 'Image, Title, Text, Info', value: 'image-title-text-info' }, { label: 'Title, Image, Text, Info', value: 'title-image-text-info' }, { label: 'Title, Info, Text, Image', value: 'title-info-text-image' }, { label: 'Title, Text, Info, Image', value: 'title-text-info-image' }, { label: 'Title, Text, Image, Info', value: 'title-text-image-info' }];
 
+    var DISPLAY_FOR = [{ label: __('For all posts', 'advanced-gutenberg'), value: 'all' }, { label: __('For the first post', 'advanced-gutenberg'), value: 1 }, { label: __('For the first 2 posts', 'advanced-gutenberg'), value: 2 }, { label: __('For the first 3 posts', 'advanced-gutenberg'), value: 3 }, { label: __('For the first 4 posts', 'advanced-gutenberg'), value: 4 }, { label: __('For the first 5 posts', 'advanced-gutenberg'), value: 5 }];
+
     var CUSTOM_TAX_PREFIX = 'custom-tax-';
 
     var initSlider = null;
@@ -24458,15 +24460,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayFeaturedImageCaption = attributes.displayFeaturedImageCaption,
                     enablePlaceholderImage = attributes.enablePlaceholderImage,
                     displayAuthor = attributes.displayAuthor,
+                    displayAuthorFor = attributes.displayAuthorFor,
                     authorLinkNewTab = attributes.authorLinkNewTab,
                     displayDate = attributes.displayDate,
                     postDate = attributes.postDate,
+                    postDateFor = attributes.postDateFor,
                     postDateFormat = attributes.postDateFormat,
                     displayTime = attributes.displayTime,
                     displayExcerpt = attributes.displayExcerpt,
+                    displayExcerptFor = attributes.displayExcerptFor,
                     postTextAsExcerpt = attributes.postTextAsExcerpt,
                     postTextExcerptLength = attributes.postTextExcerptLength,
                     displayReadMore = attributes.displayReadMore,
+                    displayReadMoreFor = attributes.displayReadMoreFor,
                     readMoreLbl = attributes.readMoreLbl,
                     isPreview = attributes.isPreview,
                     categories = attributes.categories,
@@ -24480,8 +24486,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     newspaperLayout = attributes.newspaperLayout,
                     excludeCurrentPost = attributes.excludeCurrentPost,
                     showCategories = attributes.showCategories,
+                    showCategoriesFor = attributes.showCategoriesFor,
                     showTags = attributes.showTags,
+                    showTagsFor = attributes.showTagsFor,
                     displayCommentCount = attributes.displayCommentCount,
+                    displayCommentCountFor = attributes.displayCommentCountFor,
                     textAfterTitle = attributes.textAfterTitle,
                     textBeforeReadmore = attributes.textBeforeReadmore,
                     includePosts = attributes.includePosts,
@@ -24490,6 +24499,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     sliderAutoplay = attributes.sliderAutoplay,
                     linkCustomTax = attributes.linkCustomTax,
                     showCustomTaxList = attributes.showCustomTaxList,
+                    showCustomTaxListFor = attributes.showCustomTaxListFor,
                     imagePosition = attributes.imagePosition,
                     onlyFromCurrentUser = attributes.onlyFromCurrentUser,
                     orderSections = attributes.orderSections;
@@ -24868,7 +24878,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             null,
                             React.createElement(SelectControl, {
                                 value: displayFeaturedImageFor,
-                                options: [{ label: __('For all posts', 'advanced-gutenberg'), value: 'all' }, { label: __('For the first post', 'advanced-gutenberg'), value: 1 }, { label: __('For the first 2 posts', 'advanced-gutenberg'), value: 2 }, { label: __('For the first 3 posts', 'advanced-gutenberg'), value: 3 }, { label: __('For the first 4 posts', 'advanced-gutenberg'), value: 4 }, { label: __('For the first 5 posts', 'advanced-gutenberg'), value: 5 }],
+                                options: DISPLAY_FOR,
                                 onChange: function onChange(value) {
                                     setAttributes({ displayFeaturedImageFor: value });
                                 },
@@ -24908,14 +24918,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayAuthor: !displayAuthor });
                             }
                         }),
-                        displayAuthor && React.createElement(ToggleControl, {
-                            label: __('Open link in new tab', 'advanced-gutenberg'),
-                            checked: !!authorLinkNewTab,
-                            onChange: function onChange() {
-                                return setAttributes({ authorLinkNewTab: !authorLinkNewTab });
-                            },
-                            className: 'advgb-child-toggle'
-                        }),
+                        displayAuthor && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(SelectControl, {
+                                value: displayAuthorFor,
+                                options: DISPLAY_FOR,
+                                onChange: function onChange(value) {
+                                    setAttributes({ displayAuthorFor: value });
+                                },
+                                className: 'advgb-child-select'
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Open link in new tab', 'advanced-gutenberg'),
+                                checked: !!authorLinkNewTab,
+                                onChange: function onChange() {
+                                    return setAttributes({ authorLinkNewTab: !authorLinkNewTab });
+                                },
+                                className: 'advgb-child-toggle'
+                            })
+                        ),
                         React.createElement(SelectControl, {
                             label: __('Display Post Date', 'advanced-gutenberg'),
                             value: postDate,
@@ -24928,28 +24950,50 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             Fragment,
                             null,
                             React.createElement(SelectControl, {
+                                value: postDateFor,
+                                options: DISPLAY_FOR,
+                                onChange: function onChange(value) {
+                                    setAttributes({ postDateFor: value });
+                                },
+                                className: 'advgb-child-select'
+                            }),
+                            React.createElement(SelectControl, {
                                 label: __('Post Date Format', 'advanced-gutenberg'),
                                 value: postDateFormat,
                                 options: [{ label: __('Absolute', 'advanced-gutenberg'), value: 'absolute' }, { label: __('Relative', 'advanced-gutenberg'), value: 'relative' }],
                                 onChange: function onChange(value) {
                                     setAttributes({ postDateFormat: value });
-                                }
+                                },
+                                className: 'advgb-child-select'
                             }),
                             postDateFormat === 'absolute' && React.createElement(ToggleControl, {
                                 label: __('Display Post Time', 'advanced-gutenberg'),
                                 checked: displayTime,
                                 onChange: function onChange() {
                                     return setAttributes({ displayTime: !displayTime });
-                                }
+                                },
+                                className: 'advgb-child-toggle'
                             })
                         ),
-                        postType === 'post' && React.createElement(ToggleControl, {
-                            label: __('Display Comment Counts', 'advanced-gutenberg'),
-                            checked: displayCommentCount,
-                            onChange: function onChange() {
-                                return setAttributes({ displayCommentCount: !displayCommentCount });
-                            }
-                        }),
+                        postType === 'post' && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(ToggleControl, {
+                                label: __('Display Comment Counts', 'advanced-gutenberg'),
+                                checked: displayCommentCount,
+                                onChange: function onChange() {
+                                    return setAttributes({ displayCommentCount: !displayCommentCount });
+                                }
+                            }),
+                            displayCommentCount && React.createElement(SelectControl, {
+                                value: displayCommentCountFor,
+                                options: DISPLAY_FOR,
+                                onChange: function onChange(value) {
+                                    setAttributes({ displayCommentCountFor: value });
+                                },
+                                className: 'advgb-child-select'
+                            })
+                        ),
                         postType === 'post' && React.createElement(
                             Fragment,
                             null,
@@ -24961,6 +25005,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     setAttributes({ showCategories: value });
                                 }
                             }),
+                            showCategories !== 'hide' && React.createElement(SelectControl, {
+                                value: showCategoriesFor,
+                                options: DISPLAY_FOR,
+                                onChange: function onChange(value) {
+                                    setAttributes({ showCategoriesFor: value });
+                                },
+                                className: 'advgb-child-select'
+                            }),
                             React.createElement(SelectControl, {
                                 label: __('Display Tags', 'advanced-gutenberg'),
                                 value: showTags,
@@ -24968,6 +25020,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onChange: function onChange(value) {
                                     setAttributes({ showTags: value });
                                 }
+                            }),
+                            showTags !== 'hide' && React.createElement(SelectControl, {
+                                value: showTagsFor,
+                                options: DISPLAY_FOR,
+                                onChange: function onChange(value) {
+                                    setAttributes({ showTagsFor: value });
+                                },
+                                className: 'advgb-child-select'
                             })
                         ),
                         !INBUILT_POST_TYPES.includes(postType) && taxonomyList && taxonomyList.length > 0 && React.createElement(
@@ -24984,13 +25044,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     _this3.selectTaxonomies(value);
                                 }
                             }),
-                            React.createElement(ToggleControl, {
-                                label: __('Link above taxonomies', 'advanced-gutenberg'),
-                                checked: linkCustomTax,
-                                onChange: function onChange() {
-                                    return setAttributes({ linkCustomTax: !linkCustomTax });
-                                }
-                            })
+                            showCustomTaxList.length > 0 && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(SelectControl, {
+                                    value: showCustomTaxListFor,
+                                    options: DISPLAY_FOR,
+                                    onChange: function onChange(value) {
+                                        setAttributes({ showCustomTaxListFor: value });
+                                    },
+                                    className: 'advgb-child-select'
+                                }),
+                                React.createElement(ToggleControl, {
+                                    label: __('Link above taxonomies', 'advanced-gutenberg'),
+                                    checked: linkCustomTax,
+                                    onChange: function onChange() {
+                                        return setAttributes({ linkCustomTax: !linkCustomTax });
+                                    },
+                                    className: 'advgb-child-toggle'
+                                })
+                            )
                         ),
                         React.createElement(ToggleControl, {
                             label: __('Display Read More Link', 'advanced-gutenberg'),
@@ -24999,13 +25072,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayReadMore: !displayReadMore });
                             }
                         }),
-                        displayReadMore && React.createElement(TextControl, {
-                            label: __('Read more text', 'advanced-gutenberg'),
-                            value: readMoreLbl,
-                            onChange: function onChange(value) {
-                                return setAttributes({ readMoreLbl: value });
-                            }
-                        }),
+                        displayReadMore && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(SelectControl, {
+                                value: displayReadMoreFor,
+                                options: DISPLAY_FOR,
+                                onChange: function onChange(value) {
+                                    setAttributes({ displayReadMoreFor: value });
+                                },
+                                className: 'advgb-child-select'
+                            }),
+                            React.createElement(TextControl, {
+                                label: __('Read more text', 'advanced-gutenberg'),
+                                value: readMoreLbl,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ readMoreLbl: value });
+                                },
+                                className: 'advgb-child-select'
+                            })
+                        ),
                         React.createElement(ToggleControl, {
                             label: __('Display Post Excerpt', 'advanced-gutenberg'),
                             checked: displayExcerpt,
@@ -25013,23 +25099,37 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ displayExcerpt: !displayExcerpt });
                             }
                         }),
-                        displayExcerpt && React.createElement(ToggleControl, {
-                            label: __('First Post text as Excerpt', 'advanced-gutenberg'),
-                            help: __('Display some part of first text found in post as excerpt.', 'advanced-gutenberg'),
-                            checked: postTextAsExcerpt,
-                            onChange: function onChange() {
-                                return setAttributes({ postTextAsExcerpt: !postTextAsExcerpt });
-                            }
-                        }),
-                        displayExcerpt && postTextAsExcerpt && React.createElement(RangeControl, {
-                            label: __('Post Text Excerpt length', 'advanced-gutenberg'),
-                            min: 50,
-                            max: 300,
-                            value: postTextExcerptLength,
-                            onChange: function onChange(value) {
-                                return setAttributes({ postTextExcerptLength: value });
-                            }
-                        }),
+                        displayExcerpt && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(SelectControl, {
+                                value: displayExcerptFor,
+                                options: DISPLAY_FOR,
+                                onChange: function onChange(value) {
+                                    setAttributes({ displayExcerptFor: value });
+                                },
+                                className: 'advgb-child-select'
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('First Post text as Excerpt', 'advanced-gutenberg'),
+                                help: __('Display some part of first text found in post as excerpt.', 'advanced-gutenberg'),
+                                checked: postTextAsExcerpt,
+                                onChange: function onChange() {
+                                    return setAttributes({ postTextAsExcerpt: !postTextAsExcerpt });
+                                },
+                                className: 'advgb-child-toggle'
+                            }),
+                            postTextAsExcerpt && React.createElement(RangeControl, {
+                                label: __('Post Text Excerpt length', 'advanced-gutenberg'),
+                                min: 50,
+                                max: 300,
+                                value: postTextExcerptLength,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ postTextExcerptLength: value });
+                                },
+                                className: 'advgb-child-range'
+                            })
+                        ),
                         React.createElement(TextareaControl, {
                             label: __('Text after title', 'advanced-gutenberg'),
                             help: __('Include text/HTML after title', 'advanced-gutenberg'),
@@ -25163,10 +25263,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     'article',
                                     { key: index,
-                                        className: 'advgb-recent-post ' + (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage) ? "" : "advgb-recent-post--no-image")
+                                        className: 'advgb-recent-post ' + (_this3.checkElementDisplay('image', index) && (post.featured_img || enablePlaceholderImage) ? "" : "advgb-recent-post--no-image")
                                     },
                                     function () {
-                                        if (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage) && _this3.getDisplayImageVsOrder(attributes, index) === 'ignore-order') {
+                                        if (_this3.checkElementDisplay('image', index) && (post.featured_img || enablePlaceholderImage) && _this3.getDisplayImageVsOrder(attributes, index) === 'ignore-order') {
                                             return React.createElement(
                                                 'div',
                                                 { className: 'advgb-post-thumbnail' },
@@ -25195,7 +25295,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         'div',
                                         { className: 'advgb-post-wrapper' },
                                         function () {
-                                            if (_this3.getDisplayImageStatus(attributes, index) && (post.featured_img || enablePlaceholderImage) && _this3.getDisplayImageVsOrder(attributes, index) === 'apply-order') {
+                                            if (_this3.checkElementDisplay('image', index) && (post.featured_img || enablePlaceholderImage) && _this3.getDisplayImageVsOrder(attributes, index) === 'apply-order') {
                                                 return React.createElement(
                                                     'div',
                                                     { className: 'advgb-post-thumbnail' },
@@ -25226,13 +25326,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             { className: 'advgb-text-after-title' },
                                             textAfterTitle
                                         ),
-                                        (displayAuthor && (post.coauthors && post.coauthors.length > 0 || !post.coauthors || post.coauthors.length === 0) || postDate !== 'hide' || postType === 'post' && displayCommentCount) && React.createElement(
+                                        (_this3.checkElementDisplay('author', index) && (post.coauthors && post.coauthors.length > 0 || !post.coauthors || post.coauthors.length === 0) || _this3.checkElementDisplay('date', index) || postType === 'post' && _this3.checkElementDisplay('comments', index)) && React.createElement(
                                             Fragment,
                                             null,
                                             React.createElement(
                                                 'div',
                                                 { className: 'advgb-post-info' },
-                                                displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map(function (coauthor, coauthor_indx) {
+                                                _this3.checkElementDisplay('author', index) && post.coauthors && post.coauthors.length > 0 && post.coauthors.map(function (coauthor, coauthor_indx) {
                                                     return React.createElement(
                                                         Fragment,
                                                         null,
@@ -25251,7 +25351,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         )
                                                     );
                                                 }),
-                                                displayAuthor && (!post.coauthors || post.coauthors.length === 0) && React.createElement(
+                                                _this3.checkElementDisplay('author', index) && (!post.coauthors || post.coauthors.length === 0) && React.createElement(
                                                     'a',
                                                     { href: post.author_meta.author_link,
                                                         target: '_blank',
@@ -25259,12 +25359,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     },
                                                     post.author_meta.display_name
                                                 ),
-                                                postDate !== 'hide' && React.createElement(
+                                                _this3.checkElementDisplay('date', index) && React.createElement(
                                                     'span',
                                                     { className: 'advgb-post-datetime' },
                                                     _this3.getDateTime(post)
                                                 ),
-                                                postType === 'post' && displayCommentCount && React.createElement(
+                                                postType === 'post' && _this3.checkElementDisplay('comments', index) && React.createElement(
                                                     'span',
                                                     { className: 'advgb-post-comments' },
                                                     React.createElement('span', { 'class': 'dashicons dashicons-admin-comments' }),
@@ -25274,13 +25374,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 )
                                             )
                                         ),
-                                        (showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories || showTags !== 'hide' && post.tax_additional && post.tax_additional.tags || !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.getTaxSlugs().length > 0) && React.createElement(
+                                        (_this3.checkElementDisplay('categories', index) && post.tax_additional && post.tax_additional.categories || _this3.checkElementDisplay('tags', index) && post.tax_additional && post.tax_additional.tags || !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.checkElementDisplay('customtax', index)) && React.createElement(
                                             Fragment,
                                             null,
                                             React.createElement(
                                                 'div',
                                                 { className: 'advgb-post-tax-info' },
-                                                showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories && React.createElement(
+                                                _this3.checkElementDisplay('categories', index) && post.tax_additional && post.tax_additional.categories && React.createElement(
                                                     'div',
                                                     { className: 'advgb-post-tax advgb-post-category' },
                                                     showCategories === 'show' && post.tax_additional.categories.unlinked.map(function (cat, index) {
@@ -25298,7 +25398,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         );
                                                     })
                                                 ),
-                                                showTags !== 'hide' && post.tax_additional && post.tax_additional.tags && React.createElement(
+                                                _this3.checkElementDisplay('tags', index) && post.tax_additional && post.tax_additional.tags && React.createElement(
                                                     'div',
                                                     { className: 'advgb-post-tax advgb-post-tag' },
                                                     showTags === 'show' && post.tax_additional.tags.unlinked.map(function (tag, index) {
@@ -25341,7 +25441,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             'div',
                                             { className: 'advgb-post-content' },
-                                            displayExcerpt && React.createElement('div', { className: 'advgb-post-excerpt',
+                                            _this3.checkElementDisplay('excerpt', index) && React.createElement('div', { className: 'advgb-post-excerpt',
                                                 dangerouslySetInnerHTML: {
                                                     __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt ? post.excerpt.raw : ''
                                                 } }),
@@ -25354,7 +25454,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     textBeforeReadmore
                                                 )
                                             ),
-                                            displayReadMore && React.createElement(
+                                            _this3.checkElementDisplay('readmore', index) && React.createElement(
                                                 'div',
                                                 { className: 'advgb-post-readmore' },
                                                 React.createElement(
@@ -25754,10 +25854,76 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
                 return slugs;
             }
+
+            /**
+             * Check if elementFor is within the index range.
+             */
+
         }, {
-            key: 'getDisplayImageStatus',
-            value: function getDisplayImageStatus(attributes, index) {
-                return attributes.displayFeaturedImage && (attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor);
+            key: 'checkElementForDisplay',
+            value: function checkElementForDisplay(elementFor, index) {
+                return elementFor === 'all' || index < elementFor;
+            }
+
+            /**
+             * Check if an element is enabled for each post.
+             */
+
+        }, {
+            key: 'checkElementDisplay',
+            value: function checkElementDisplay(element, index) {
+                var _props$attributes = this.props.attributes,
+                    displayFeaturedImage = _props$attributes.displayFeaturedImage,
+                    displayFeaturedImageFor = _props$attributes.displayFeaturedImageFor,
+                    displayAuthor = _props$attributes.displayAuthor,
+                    displayAuthorFor = _props$attributes.displayAuthorFor,
+                    displayReadMore = _props$attributes.displayReadMore,
+                    displayReadMoreFor = _props$attributes.displayReadMoreFor,
+                    displayExcerpt = _props$attributes.displayExcerpt,
+                    displayExcerptFor = _props$attributes.displayExcerptFor,
+                    displayCommentCount = _props$attributes.displayCommentCount,
+                    displayCommentCountFor = _props$attributes.displayCommentCountFor,
+                    postDate = _props$attributes.postDate,
+                    postDateFor = _props$attributes.postDateFor,
+                    showCategories = _props$attributes.showCategories,
+                    showCategoriesFor = _props$attributes.showCategoriesFor,
+                    showTags = _props$attributes.showTags,
+                    showTagsFor = _props$attributes.showTagsFor,
+                    showCustomTaxList = _props$attributes.showCustomTaxList,
+                    showCustomTaxListFor = _props$attributes.showCustomTaxListFor;
+
+
+                switch (element) {
+                    case 'image':
+                        return displayFeaturedImage && this.checkElementForDisplay(displayFeaturedImageFor, index);
+                    case 'author':
+                        return displayAuthor && this.checkElementForDisplay(displayAuthorFor, index);
+                        break;
+                    case 'readmore':
+                        return displayReadMore && this.checkElementForDisplay(displayReadMoreFor, index);
+                        break;
+                    case 'excerpt':
+                        return displayExcerpt && this.checkElementForDisplay(displayExcerptFor, index);
+                        break;
+                    case 'comments':
+                        return displayCommentCount && this.checkElementForDisplay(displayCommentCountFor, index);
+                        break;
+                    case 'date':
+                        return postDate !== 'hide' && this.checkElementForDisplay(postDateFor, index);
+                        break;
+                    case 'categories':
+                        return showCategories !== 'hide' && this.checkElementForDisplay(showCategoriesFor, index);
+                        break;
+                    case 'tags':
+                        return showTags !== 'hide' && this.checkElementForDisplay(showTagsFor, index);
+                        break;
+                    case 'customtax':
+                        return this.getTaxSlugs().length > 0 && this.checkElementForDisplay(showCustomTaxListFor, index);
+                        break;
+                    default:
+                        return false;
+                        break;
+                }
             }
 
             // Skip images floating on left or right, and with headline style
@@ -25774,9 +25940,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'refreshOnChangeItems',
             value: function refreshOnChangeItems(numberOfPosts) {
-                var _props$attributes = this.props.attributes,
-                    postView = _props$attributes.postView,
-                    myToken = _props$attributes.myToken;
+                var _props$attributes2 = this.props.attributes,
+                    postView = _props$attributes2.postView,
+                    myToken = _props$attributes2.myToken;
 
                 this.props.setAttributes({ numberOfPosts: numberOfPosts });
 
@@ -25797,10 +25963,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'getDateTime',
             value: function getDateTime(post) {
-                var _props$attributes2 = this.props.attributes,
-                    postDate = _props$attributes2.postDate,
-                    postDateFormat = _props$attributes2.postDateFormat,
-                    displayTime = _props$attributes2.displayTime;
+                var _props$attributes3 = this.props.attributes,
+                    postDate = _props$attributes3.postDate,
+                    postDateFormat = _props$attributes3.postDateFormat,
+                    displayTime = _props$attributes3.displayTime;
 
 
                 if (postDateFormat === 'absolute') {
@@ -25877,23 +26043,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _select = select('core'),
                 getEntityRecords = _select.getEntityRecords;
 
-            var _props$attributes3 = props.attributes,
-                categories = _props$attributes3.categories,
-                tagIds = _props$attributes3.tagIds,
-                tags = _props$attributes3.tags,
-                category = _props$attributes3.category,
-                order = _props$attributes3.order,
-                orderBy = _props$attributes3.orderBy,
-                numberOfPosts = _props$attributes3.numberOfPosts,
-                myToken = _props$attributes3.myToken,
-                postType = _props$attributes3.postType,
-                excludeCurrentPost = _props$attributes3.excludeCurrentPost,
-                excludePosts = _props$attributes3.excludePosts,
-                includePosts = _props$attributes3.includePosts,
-                author = _props$attributes3.author,
-                taxonomies = _props$attributes3.taxonomies,
-                taxIds = _props$attributes3.taxIds,
-                onlyFromCurrentUser = _props$attributes3.onlyFromCurrentUser;
+            var _props$attributes4 = props.attributes,
+                categories = _props$attributes4.categories,
+                tagIds = _props$attributes4.tagIds,
+                tags = _props$attributes4.tags,
+                category = _props$attributes4.category,
+                order = _props$attributes4.order,
+                orderBy = _props$attributes4.orderBy,
+                numberOfPosts = _props$attributes4.numberOfPosts,
+                myToken = _props$attributes4.myToken,
+                postType = _props$attributes4.postType,
+                excludeCurrentPost = _props$attributes4.excludeCurrentPost,
+                excludePosts = _props$attributes4.excludePosts,
+                includePosts = _props$attributes4.includePosts,
+                author = _props$attributes4.author,
+                taxonomies = _props$attributes4.taxonomies,
+                taxIds = _props$attributes4.taxIds,
+                onlyFromCurrentUser = _props$attributes4.onlyFromCurrentUser;
 
 
             var catIds = categories && categories.length > 0 ? categories.map(function (cat) {

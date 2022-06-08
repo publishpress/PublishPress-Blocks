@@ -99,6 +99,15 @@ import { AuthorSelect } from './query-controls.jsx';
         { label: 'Title, Text, Image, Info', value: 'title-text-image-info' },
     ];
 
+    const DISPLAY_FOR = [
+        { label: __( 'For all posts', 'advanced-gutenberg' ), value: 'all' },
+        { label: __( 'For the first post', 'advanced-gutenberg' ), value: 1 },
+        { label: __( 'For the first 2 posts', 'advanced-gutenberg' ), value: 2 },
+        { label: __( 'For the first 3 posts', 'advanced-gutenberg' ), value: 3 },
+        { label: __( 'For the first 4 posts', 'advanced-gutenberg' ), value: 4 },
+        { label: __( 'For the first 5 posts', 'advanced-gutenberg' ), value: 5 },
+    ];
+
     const CUSTOM_TAX_PREFIX = 'custom-tax-';
 
     let initSlider = null;
@@ -389,15 +398,19 @@ import { AuthorSelect } from './query-controls.jsx';
                 displayFeaturedImageCaption,
                 enablePlaceholderImage,
                 displayAuthor,
+                displayAuthorFor,
                 authorLinkNewTab,
                 displayDate,
                 postDate,
+                postDateFor,
                 postDateFormat,
                 displayTime,
                 displayExcerpt,
+                displayExcerptFor,
                 postTextAsExcerpt,
                 postTextExcerptLength,
                 displayReadMore,
+                displayReadMoreFor,
                 readMoreLbl,
                 isPreview,
                 categories,
@@ -409,8 +422,11 @@ import { AuthorSelect } from './query-controls.jsx';
                 newspaperLayout,
                 excludeCurrentPost,
                 showCategories,
+                showCategoriesFor,
                 showTags,
+                showTagsFor,
                 displayCommentCount,
+                displayCommentCountFor,
                 textAfterTitle,
                 textBeforeReadmore,
                 includePosts,
@@ -419,6 +435,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 sliderAutoplay,
                 linkCustomTax,
                 showCustomTaxList,
+                showCustomTaxListFor,
                 imagePosition,
                 onlyFromCurrentUser,
                 orderSections,
@@ -768,14 +785,7 @@ import { AuthorSelect } from './query-controls.jsx';
                         <Fragment>
                             <SelectControl
                                 value={ displayFeaturedImageFor }
-                                options={ [
-                                    { label: __( 'For all posts', 'advanced-gutenberg' ), value: 'all' },
-                                    { label: __( 'For the first post', 'advanced-gutenberg' ), value: 1 },
-                                    { label: __( 'For the first 2 posts', 'advanced-gutenberg' ), value: 2 },
-                                    { label: __( 'For the first 3 posts', 'advanced-gutenberg' ), value: 3 },
-                                    { label: __( 'For the first 4 posts', 'advanced-gutenberg' ), value: 4 },
-                                    { label: __( 'For the first 5 posts', 'advanced-gutenberg' ), value: 5 },
-                                ] }
+                                options={ DISPLAY_FOR }
                                 onChange={ ( value ) => { setAttributes( { displayFeaturedImageFor: value } ) } }
                                 className="advgb-child-select"
                             />
@@ -812,12 +822,20 @@ import { AuthorSelect } from './query-controls.jsx';
                             onChange={ () => setAttributes( { displayAuthor: !displayAuthor } ) }
                         />
                         { displayAuthor &&
-                            <ToggleControl
-                                label={ __( 'Open link in new tab', 'advanced-gutenberg' ) }
-                                checked={ !!authorLinkNewTab }
-                                onChange={ () => setAttributes( { authorLinkNewTab: !authorLinkNewTab } ) }
-                                className="advgb-child-toggle"
-                            />
+                            <Fragment>
+                                <SelectControl
+                                    value={ displayAuthorFor }
+                                    options={ DISPLAY_FOR }
+                                    onChange={ ( value ) => { setAttributes( { displayAuthorFor: value } ) } }
+                                    className="advgb-child-select"
+                                />
+                                <ToggleControl
+                                    label={ __( 'Open link in new tab', 'advanced-gutenberg' ) }
+                                    checked={ !!authorLinkNewTab }
+                                    onChange={ () => setAttributes( { authorLinkNewTab: !authorLinkNewTab } ) }
+                                    className="advgb-child-toggle"
+                                />
+                            </Fragment>
                         }
                         <SelectControl
                             label={ __( 'Display Post Date', 'advanced-gutenberg' ) }
@@ -832,6 +850,12 @@ import { AuthorSelect } from './query-controls.jsx';
                         { postDate !== 'hide' &&
                             <Fragment>
                                 <SelectControl
+                                    value={ postDateFor }
+                                    options={ DISPLAY_FOR }
+                                    onChange={ ( value ) => { setAttributes( { postDateFor: value } ) } }
+                                    className="advgb-child-select"
+                                />
+                                <SelectControl
                                     label={ __( 'Post Date Format', 'advanced-gutenberg' ) }
                                     value={ postDateFormat }
                                     options={ [
@@ -839,22 +863,34 @@ import { AuthorSelect } from './query-controls.jsx';
                                         { label: __( 'Relative', 'advanced-gutenberg' ), value: 'relative' },
                                     ] }
                                     onChange={ ( value ) => { setAttributes( { postDateFormat: value } ) } }
+                                    className="advgb-child-select"
                                 />
-                            {postDateFormat === 'absolute' &&
+                            { postDateFormat === 'absolute' &&
                                 <ToggleControl
                                     label={ __( 'Display Post Time', 'advanced-gutenberg' ) }
                                     checked={ displayTime }
                                     onChange={ () => setAttributes( { displayTime: !displayTime } ) }
+                                    className="advgb-child-toggle"
                                 />
                             }
                             </Fragment>
                         }
-                        {postType === 'post' &&
-                        <ToggleControl
-                            label={ __( 'Display Comment Counts', 'advanced-gutenberg' ) }
-                            checked={ displayCommentCount }
-                            onChange={ () => setAttributes( { displayCommentCount: !displayCommentCount } ) }
-                        />
+                        { postType === 'post' &&
+                            <Fragment>
+                                <ToggleControl
+                                    label={ __( 'Display Comment Counts', 'advanced-gutenberg' ) }
+                                    checked={ displayCommentCount }
+                                    onChange={ () => setAttributes( { displayCommentCount: !displayCommentCount } ) }
+                                />
+                                { displayCommentCount &&
+                                    <SelectControl
+                                        value={ displayCommentCountFor }
+                                        options={ DISPLAY_FOR }
+                                        onChange={ ( value ) => { setAttributes( { displayCommentCountFor: value } ) } }
+                                        className="advgb-child-select"
+                                    />
+                                }
+                            </Fragment>
                         }
                         { postType === 'post' &&
                             <Fragment>
@@ -868,6 +904,14 @@ import { AuthorSelect } from './query-controls.jsx';
                                     ] }
                                     onChange={ ( value ) => { setAttributes( { showCategories: value } ) } }
                                 />
+                                { showCategories !== 'hide' &&
+                                    <SelectControl
+                                        value={ showCategoriesFor }
+                                        options={ DISPLAY_FOR }
+                                        onChange={ ( value ) => { setAttributes( { showCategoriesFor: value } ) } }
+                                        className="advgb-child-select"
+                                    />
+                                }
                                 <SelectControl
                                     label={ __( 'Display Tags', 'advanced-gutenberg' ) }
                                     value={ showTags }
@@ -878,6 +922,14 @@ import { AuthorSelect } from './query-controls.jsx';
                                     ] }
                                     onChange={ ( value ) => { setAttributes( { showTags: value } ) } }
                                 />
+                                { showTags !== 'hide' &&
+                                    <SelectControl
+                                        value={ showTagsFor }
+                                        options={ DISPLAY_FOR }
+                                        onChange={ ( value ) => { setAttributes( { showTagsFor: value } ) } }
+                                        className="advgb-child-select"
+                                    />
+                                }
                             </Fragment>
                         }
                         { ! INBUILT_POST_TYPES.includes(postType) && taxonomyList && taxonomyList.length > 0 &&
@@ -889,11 +941,22 @@ import { AuthorSelect } from './query-controls.jsx';
                                     label={ __( 'Display these taxonomies', 'advanced-gutenberg' ) }
                                     onChange={ ( value ) => { this.selectTaxonomies(value); } }
                                 />
-                                <ToggleControl
-                                    label={ __( 'Link above taxonomies', 'advanced-gutenberg' ) }
-                                    checked={ linkCustomTax }
-                                    onChange={ () => setAttributes( { linkCustomTax: !linkCustomTax } ) }
-                                />
+                                { showCustomTaxList.length > 0 &&
+                                    <Fragment>
+                                        <SelectControl
+                                            value={ showCustomTaxListFor }
+                                            options={ DISPLAY_FOR }
+                                            onChange={ ( value ) => { setAttributes( { showCustomTaxListFor: value } ) } }
+                                            className="advgb-child-select"
+                                        />
+                                        <ToggleControl
+                                            label={ __( 'Link above taxonomies', 'advanced-gutenberg' ) }
+                                            checked={ linkCustomTax }
+                                            onChange={ () => setAttributes( { linkCustomTax: !linkCustomTax } ) }
+                                            className="advgb-child-toggle"
+                                        />
+                                    </Fragment>
+                                }
                             </Fragment>
 
                         }
@@ -902,34 +965,53 @@ import { AuthorSelect } from './query-controls.jsx';
                             checked={ displayReadMore }
                             onChange={ () => setAttributes( { displayReadMore: !displayReadMore } ) }
                         />
-                        {displayReadMore &&
-                        <TextControl
-                            label={ __('Read more text', 'advanced-gutenberg') }
-                            value={ readMoreLbl }
-                            onChange={ (value) => setAttributes( { readMoreLbl: value } ) }
-                        />
+                        { displayReadMore &&
+                            <Fragment>
+                                <SelectControl
+                                    value={ displayReadMoreFor }
+                                    options={ DISPLAY_FOR }
+                                    onChange={ ( value ) => { setAttributes( { displayReadMoreFor: value } ) } }
+                                    className="advgb-child-select"
+                                />
+                                <TextControl
+                                    label={ __('Read more text', 'advanced-gutenberg') }
+                                    value={ readMoreLbl }
+                                    onChange={ (value) => setAttributes( { readMoreLbl: value } ) }
+                                    className="advgb-child-select"
+                                />
+                            </Fragment>
                         }
                         <ToggleControl
                             label={ __( 'Display Post Excerpt', 'advanced-gutenberg' ) }
                             checked={ displayExcerpt }
                             onChange={ () => setAttributes( { displayExcerpt: !displayExcerpt } ) }
                         />
-                        {displayExcerpt &&
-                        <ToggleControl
-                            label={ __( 'First Post text as Excerpt', 'advanced-gutenberg' ) }
-                            help={ __( 'Display some part of first text found in post as excerpt.', 'advanced-gutenberg' ) }
-                            checked={ postTextAsExcerpt }
-                            onChange={ () => setAttributes( { postTextAsExcerpt: !postTextAsExcerpt } ) }
-                        />
-                        }
-                        {displayExcerpt && postTextAsExcerpt &&
-                        <RangeControl
-                            label={ __( 'Post Text Excerpt length', 'advanced-gutenberg' ) }
-                            min={ 50 }
-                            max={ 300 }
-                            value={ postTextExcerptLength }
-                            onChange={ ( value ) => setAttributes( { postTextExcerptLength: value } ) }
-                        />
+                        { displayExcerpt &&
+                            <Fragment>
+                                <SelectControl
+                                    value={ displayExcerptFor }
+                                    options={ DISPLAY_FOR }
+                                    onChange={ ( value ) => { setAttributes( { displayExcerptFor: value } ) } }
+                                    className="advgb-child-select"
+                                />
+                                <ToggleControl
+                                    label={ __( 'First Post text as Excerpt', 'advanced-gutenberg' ) }
+                                    help={ __( 'Display some part of first text found in post as excerpt.', 'advanced-gutenberg' ) }
+                                    checked={ postTextAsExcerpt }
+                                    onChange={ () => setAttributes( { postTextAsExcerpt: !postTextAsExcerpt } ) }
+                                    className="advgb-child-toggle"
+                                />
+                                { postTextAsExcerpt &&
+                                    <RangeControl
+                                        label={ __( 'Post Text Excerpt length', 'advanced-gutenberg' ) }
+                                        min={ 50 }
+                                        max={ 300 }
+                                        value={ postTextExcerptLength }
+                                        onChange={ ( value ) => setAttributes( { postTextExcerptLength: value } ) }
+                                        className="advgb-child-range"
+                                    />
+                                }
+                            </Fragment>
                         }
                         <TextareaControl
                             label={ __( 'Text after title', 'advanced-gutenberg' ) }
@@ -1064,12 +1146,12 @@ import { AuthorSelect } from './query-controls.jsx';
                         <div className="advgb-recent-posts">
                             {recentPosts.map( ( post, index ) => (
                                 <article key={ index }
-                                className={`advgb-recent-post ${ this.getDisplayImageStatus( attributes, index ) && ( post.featured_img || enablePlaceholderImage ) ? "" : "advgb-recent-post--no-image"}` }
+                                className={`advgb-recent-post ${ this.checkElementDisplay( 'image', index ) && ( post.featured_img || enablePlaceholderImage ) ? "" : "advgb-recent-post--no-image"}` }
                                 >
                                     { /* Output image's HTML inside .advgb-recent-post; orderSections is not allowed for images */ }
                                     {(() => {
                                         if(
-                                            this.getDisplayImageStatus( attributes, index )
+                                            this.checkElementDisplay( 'image', index )
                                             && ( post.featured_img || enablePlaceholderImage )
                                             && this.getDisplayImageVsOrder( attributes, index ) === 'ignore-order'
                                         ) {
@@ -1105,7 +1187,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                         { /* Output image's HTML inside .advgb-post-wrapper to allow orderSections for images */ }
                                         {(() => {
                                             if(
-                                                this.getDisplayImageStatus( attributes, index )
+                                                this.checkElementDisplay( 'image', index )
                                                 && ( post.featured_img || enablePlaceholderImage )
                                                 && this.getDisplayImageVsOrder( attributes, index ) === 'apply-order'
                                             ) {
@@ -1131,16 +1213,16 @@ import { AuthorSelect } from './query-controls.jsx';
                                             <RawHTML className="advgb-text-after-title">{ textAfterTitle }</RawHTML>
                                         }
                                         { (
-                                            (displayAuthor && (
+                                            ( this.checkElementDisplay( 'author', index ) && (
                                                 (post.coauthors && post.coauthors.length > 0)
                                                 || (!post.coauthors || post.coauthors.length === 0))
                                             )
-                                            || (postDate !== 'hide')
-                                            || (postType === 'post' && displayCommentCount)
+                                            || this.checkElementDisplay( 'date', index )
+                                            || ( postType === 'post' && this.checkElementDisplay( 'comments', index ) )
                                         ) && (
                                             <Fragment>
                                                 <div className="advgb-post-info">
-                                                    {displayAuthor && post.coauthors && post.coauthors.length > 0 && post.coauthors.map( ( coauthor, coauthor_indx ) => (
+                                                    { this.checkElementDisplay( 'author', index ) && post.coauthors && post.coauthors.length > 0 && post.coauthors.map( ( coauthor, coauthor_indx ) => (
                                                         <Fragment>
                                                             <a href={ coauthor.link }
                                                                target="_blank"
@@ -1154,7 +1236,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                                         </Fragment>
                                                     ) )
                                                     }
-                                                    {displayAuthor && (!post.coauthors || post.coauthors.length === 0) && (
+                                                    { this.checkElementDisplay( 'author', index ) && (!post.coauthors || post.coauthors.length === 0) && (
                                                         <a href={ post.author_meta.author_link }
                                                            target="_blank"
                                                            className="advgb-post-author"
@@ -1163,12 +1245,12 @@ import { AuthorSelect } from './query-controls.jsx';
                                                         </a>
                                                     )
                                                     }
-                                                    {postDate !== 'hide' && (
+                                                    { this.checkElementDisplay( 'date', index ) && (
                                                         <span className="advgb-post-datetime" >
                                                         { this.getDateTime(post) }
                                                         </span>
                                                     ) }
-                                                    {postType === 'post' && displayCommentCount && (
+                                                    { postType === 'post' && this.checkElementDisplay( 'comments', index ) && (
                                                         <span className="advgb-post-comments" >
                                                             <span class="dashicons dashicons-admin-comments"></span>
                                                             ({ post.comment_count })
@@ -1178,13 +1260,13 @@ import { AuthorSelect } from './query-controls.jsx';
                                             </Fragment>
                                         ) }
                                         { (
-                                            (showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories)
-                                            || (showTags !== 'hide' && post.tax_additional && post.tax_additional.tags)
-                                            || (!INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.getTaxSlugs().length > 0)
+                                            ( this.checkElementDisplay( 'categories', index ) && post.tax_additional && post.tax_additional.categories)
+                                            || ( this.checkElementDisplay( 'tags', index ) && post.tax_additional && post.tax_additional.tags)
+                                            || ( !INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.checkElementDisplay( 'customtax', index ) )
                                         ) && (
                                             <Fragment>
                                                 <div className="advgb-post-tax-info">
-                                                    {showCategories !== 'hide' && post.tax_additional && post.tax_additional.categories && (
+                                                    { this.checkElementDisplay( 'categories', index ) && post.tax_additional && post.tax_additional.categories && (
                                                         <div className="advgb-post-tax advgb-post-category">
                                                         {showCategories === 'show' && post.tax_additional.categories.unlinked.map( ( cat, index ) => (
                                                             <RawHTML>{ cat }</RawHTML>
@@ -1194,7 +1276,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                                         ) )}
                                                         </div>
                                                     ) }
-                                                    {showTags !== 'hide' && post.tax_additional && post.tax_additional.tags && (
+                                                    { this.checkElementDisplay( 'tags', index ) && post.tax_additional && post.tax_additional.tags && (
                                                         <div className="advgb-post-tax advgb-post-tag">
                                                         {showTags === 'show' && post.tax_additional.tags.unlinked.map( ( tag, index ) => (
                                                             <RawHTML>{ tag }</RawHTML>
@@ -1218,7 +1300,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                             </Fragment>
                                         ) }
                                         <div className="advgb-post-content">
-                                            {displayExcerpt && (
+                                            { this.checkElementDisplay( 'excerpt', index ) && (
                                                 <div className="advgb-post-excerpt"
                                                      dangerouslySetInnerHTML={ {
                                                          __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : (post.excerpt ? post.excerpt.raw : '')
@@ -1227,7 +1309,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                             { textBeforeReadmore &&
                                                 <div className="advgb-text-before-readmore"><RawHTML>{ textBeforeReadmore }</RawHTML></div>
                                             }
-                                            {displayReadMore && (
+                                            { this.checkElementDisplay( 'readmore', index ) && (
                                                 <div className="advgb-post-readmore">
                                                     <a href={ post.link } target="_blank">{ readMoreLbl ? readMoreLbl : __( 'Read More', 'advanced-gutenberg' ) }</a>
                                                 </div>
@@ -1624,10 +1706,89 @@ import { AuthorSelect } from './query-controls.jsx';
             return slugs;
         }
 
-        getDisplayImageStatus(attributes, index) {
+        /**
+         * Check if elementFor is within the index range.
+         */
+        checkElementForDisplay( elementFor, index ) {
             return(
-                attributes.displayFeaturedImage && ( attributes.displayFeaturedImageFor === 'all' || index < attributes.displayFeaturedImageFor)
-            )
+                elementFor === 'all' || index < elementFor
+            );
+        }
+
+        /**
+         * Check if an element is enabled for each post.
+         */
+        checkElementDisplay( element, index ) {
+            const {
+                displayFeaturedImage,
+                displayFeaturedImageFor,
+                displayAuthor,
+                displayAuthorFor,
+                displayReadMore,
+                displayReadMoreFor,
+                displayExcerpt,
+                displayExcerptFor,
+                displayCommentCount,
+                displayCommentCountFor,
+                postDate,
+                postDateFor,
+                showCategories,
+                showCategoriesFor,
+                showTags,
+                showTagsFor,
+                showCustomTaxList,
+                showCustomTaxListFor
+            } = this.props.attributes;
+
+            switch( element ) {
+                case 'image':
+                    return(
+                        displayFeaturedImage && this.checkElementForDisplay( displayFeaturedImageFor, index )
+                    );
+                case 'author':
+                    return(
+                        displayAuthor && this.checkElementForDisplay( displayAuthorFor, index )
+                    );
+                    break;
+                case 'readmore':
+                    return(
+                        displayReadMore && this.checkElementForDisplay( displayReadMoreFor, index )
+                    );
+                    break;
+                case 'excerpt':
+                    return(
+                        displayExcerpt && this.checkElementForDisplay( displayExcerptFor, index )
+                    );
+                    break;
+                case 'comments':
+                    return(
+                        displayCommentCount && this.checkElementForDisplay( displayCommentCountFor, index )
+                    );
+                    break;
+                case 'date':
+                    return(
+                        postDate !== 'hide' && this.checkElementForDisplay( postDateFor, index )
+                    );
+                    break;
+                case 'categories':
+                    return(
+                        showCategories !== 'hide' && this.checkElementForDisplay( showCategoriesFor, index )
+                    );
+                    break;
+                case 'tags':
+                    return(
+                        showTags !== 'hide' && this.checkElementForDisplay( showTagsFor, index )
+                    );
+                    break;
+                case 'customtax':
+                    return(
+                        this.getTaxSlugs().length > 0 && this.checkElementForDisplay( showCustomTaxListFor, index )
+                    );
+                    break;
+                default:
+                    return false;
+                    break;
+            }
         }
 
         // Skip images floating on left or right, and with headline style

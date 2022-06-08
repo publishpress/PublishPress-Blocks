@@ -175,7 +175,7 @@ function advgbRenderBlockRecentPosts($attributes)
     if (!empty($recent_posts)) {
         foreach ($recent_posts as $key=>$post) {
             $postThumbID         = get_post_thumbnail_id($post->ID);
-            $outputImage         = advgbCheckImageStatus( $attributes, $key ) && ( $postThumbID || $attributes['enablePlaceholderImage'] );
+            $outputImage         = advgbCheckElementDisplay( $attributes['displayFeaturedImage'], $attributes['displayFeaturedImageFor'], $key ) && ( $postThumbID || $attributes['enablePlaceholderImage'] );
             $displayImageVsOrder = getDisplayImageVsOrder( $attributes, $key );
             $postThumb           = '<img src="' . esc_url($rp_default_thumb['url']) . '" />';
             $postThumbCaption    = '';
@@ -242,18 +242,18 @@ function advgbRenderBlockRecentPosts($attributes)
 			}
 
             if(
-                ( isset($attributes['displayAuthor']) && $attributes['displayAuthor'] )
-                || ( $postDate !== 'hide' )
+                advgbCheckElementDisplay( $attributes['displayAuthor'], $attributes['displayAuthorFor'], $key )
+                || advgbCheckElementDisplayStr( $postDate, $attributes['postDateFor'], $key )
                 || ( !empty($postDateDisplay) )
                 || (
-                    $post_type === 'post' && isset($attributes['displayCommentCount'])
-                    && $attributes['displayCommentCount']
+                    $post_type === 'post'
+                    && advgbCheckElementDisplay( $attributes['displayCommentCount'], $attributes['displayCommentCountFor'], $key )
                 )
             ) {
 
                 $postHtml .= '<div class="advgb-post-info">';
 
-                if (isset($attributes['displayAuthor']) && $attributes['displayAuthor']) {
+                if ( advgbCheckElementDisplay( $attributes['displayAuthor'], $attributes['displayAuthorFor'], $key ) ) {
     				$coauthors          = advgbGetCoauthors( array( 'id' => $post->ID ) );
     				$authorLinkNewTab   = isset($attributes['authorLinkNewTab']) && $attributes['authorLinkNewTab'] ? '_blank' : '_self';
                     if ( ! empty( $coauthors ) ) {
@@ -279,7 +279,7 @@ function advgbRenderBlockRecentPosts($attributes)
     				}
                 }
 
-                if ( $postDate !== 'hide' ) {
+                if ( advgbCheckElementDisplayStr( $postDate, $attributes['postDateFor'], $key ) ) {
                     $postDateFormat     = isset($attributes['postDateFormat']) ? $attributes['postDateFormat'] : '';
                     $displayTime        = isset($attributes['displayTime']) && $attributes['displayTime'];
                     $format             = $displayTime ? ( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ) : get_option( 'date_format' );
@@ -307,7 +307,9 @@ function advgbRenderBlockRecentPosts($attributes)
                     );
                 }
 
-                if ($post_type === 'post' && isset($attributes['displayCommentCount']) && $attributes['displayCommentCount']) {
+                if ( $post_type === 'post'
+                    && advgbCheckElementDisplay( $attributes['displayCommentCount'], $attributes['displayCommentCountFor'], $key )
+                ) {
                     $count = get_comments_number( $post );
                     $postHtml .= sprintf(
                         '<span class="advgb-post-comments"><span class="dashicons dashicons-admin-comments"></span>(%d)</span>',
@@ -319,13 +321,13 @@ function advgbRenderBlockRecentPosts($attributes)
             }
 
             if(
-                ( isset( $attributes['showCategories'] ) && 'hide' !== $attributes['showCategories'] )
-                || ( isset( $attributes['showTags'] ) && 'hide' !== $attributes['showTags'] )
-                || ( !in_array( $post_type, array( 'post', 'page' ), true ) && isset( $attributes['showCustomTaxList'] ) && !empty( $attributes['showCustomTaxList'] ) )
+                advgbCheckElementDisplayStr( $attributes['showCategories'], $attributes['showCategoriesFor'], $key )
+                || advgbCheckElementDisplayStr( $attributes['showTags'], $attributes['showTagsFor'], $key )
+                || ( !in_array( $post_type, array( 'post', 'page' ), true ) && advgbCheckElementDisplayArr( $attributes['showCustomTaxList'], $attributes['showCustomTaxListFor'], $key ) )
             ) {
                 $postHtml .= '<div class="advgb-post-tax-info">';
 
-    			if ( isset( $attributes['showCategories'] ) && 'hide' !== $attributes['showCategories'] ) {
+    			if ( advgbCheckElementDisplayStr( $attributes['showCategories'], $attributes['showCategoriesFor'], $key ) ) {
     				$categories = get_the_category( $post->ID );
     				if ( ! empty( $categories ) ) {
     					$postHtml .= '<div class="advgb-post-tax advgb-post-category">';
@@ -340,7 +342,7 @@ function advgbRenderBlockRecentPosts($attributes)
     				}
     			}
 
-    			if ( isset( $attributes['showTags'] ) && 'hide' !== $attributes['showTags'] ) {
+    			if ( advgbCheckElementDisplayStr( $attributes['showTags'], $attributes['showTagsFor'], $key ) ) {
     				$tags = get_the_tags( $post->ID );
     				if ( ! empty( $tags ) ) {
     					$postHtml .= '<div class="advgb-post-tax advgb-post-tag">';
@@ -355,7 +357,7 @@ function advgbRenderBlockRecentPosts($attributes)
     				}
     			}
 
-    			if ( ! in_array( $post_type, array( 'post', 'page' ), true ) && isset( $attributes['showCustomTaxList'] ) && ! empty( $attributes['showCustomTaxList'] ) ) {
+    			if ( ! in_array( $post_type, array( 'post', 'page' ), true ) && advgbCheckElementDisplayArr( $attributes['showCustomTaxList'], $attributes['showCustomTaxListFor'], $key ) ) {
     				$info = advgbGetTaxonomyTerms( $post_type, $post->ID, true, false );
     				if ( ! empty( $info ) ) {
     					foreach ( $attributes['showCustomTaxList'] as $name ) {
@@ -381,7 +383,7 @@ function advgbRenderBlockRecentPosts($attributes)
 
             $postHtml .= '<div class="advgb-post-content">';
 
-            if (isset($attributes['displayExcerpt']) && $attributes['displayExcerpt']) {
+            if ( advgbCheckElementDisplay( $attributes['displayExcerpt'], $attributes['displayExcerptFor'], $key ) ) {
                 $introText = $post->post_excerpt;
 
                 if (isset($attributes['displayExcerpt']) && $attributes['postTextAsExcerpt']) {
@@ -403,7 +405,7 @@ function advgbRenderBlockRecentPosts($attributes)
 				$postHtml .= sprintf( '<div class="advgb-text-before-readmore">%s</div>', wp_kses_post( $attributes['textBeforeReadmore'] ) );
 			}
 
-            if (isset($attributes['displayReadMore']) && $attributes['displayReadMore']) {
+            if ( advgbCheckElementDisplay( $attributes['displayReadMore'], $attributes['displayReadMoreFor'], $key ) ) {
                 $readMoreText = esc_html__('Read More', 'advanced-gutenberg');
                 if (isset($attributes['readMoreLbl']) && $attributes['readMoreLbl']) {
                     $readMoreText = esc_html($attributes['readMoreLbl']);
@@ -550,6 +552,10 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'boolean',
                 'default' => false,
             ),
+            'displayAuthorFor' => array(
+                'type' => 'string',
+                'default' => 'all',
+            ),
             'authorLinkNewTab' => array(
                 'type' => 'boolean',
                 'default' => true,
@@ -557,6 +563,10 @@ function advgbRegisterBlockRecentPosts()
             'postDate' => array(
                 'type' => 'string',
                 'default' => 'hide',
+            ),
+            'postDateFor' => array(
+                'type' => 'string',
+                'default' => 'all',
             ),
             'postDateFormat' => array(
                 'type' => 'string',
@@ -570,6 +580,10 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'boolean',
                 'default' => true,
             ),
+            'displayExcerptFor' => array(
+                'type' => 'string',
+                'default' => 'all',
+            ),
             'postTextAsExcerpt' => array(
                 'type' => 'boolean',
                 'default' => false,
@@ -581,6 +595,10 @@ function advgbRegisterBlockRecentPosts()
             'displayReadMore' => array(
                 'type' => 'boolean',
                 'default' => true,
+            ),
+            'displayReadMoreFor' => array(
+                'type' => 'string',
+                'default' => 'all',
             ),
             'myToken' => array(
                 'type' => 'number',
@@ -637,13 +655,25 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'string',
                 'default' => 'hide',
             ),
+            'showCategoriesFor' => array(
+                'type' => 'string',
+                'default' => 'all',
+            ),
             'showTags' => array(
                 'type' => 'string',
                 'default' => 'hide',
             ),
+            'showTagsFor' => array(
+                'type' => 'string',
+                'default' => 'all',
+            ),
             'displayCommentCount' => array(
                 'type' => 'boolean',
                 'default' => false,
+            ),
+            'displayCommentCountFor' => array(
+                'type' => 'string',
+                'default' => 'all',
             ),
             'textAfterTitle' => array(
                 'type' => 'string',
@@ -674,6 +704,10 @@ function advgbRegisterBlockRecentPosts()
                 'items' => array(
                     'type' => 'string'
                 )
+            ),
+            'showCustomTaxListFor' => array(
+                'type' => 'string',
+                'default' => 'all',
             ),
             'linkCustomTax' => array(
                 'type' => 'boolean',
@@ -1318,9 +1352,70 @@ function advgbSeriesOrderSort() {
 	}
 }
 
+/**
+ * Check if an element is enabled for each post when $display is a boolean
+ *
+ * @param string $element   Element to display
+ * @param boolean $display  Display or not the element?
+ * @param int $key          Index of the element
+ *
+ * @return boolean
+ */
+function advgbCheckElementDisplay( $element, $display, $key )  {
+    if(
+        isset( $element ) && $element
+        && ( $display === 'all' || $key < $display )
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Check if an element is enabled for each post when $display is a string
+ *
+ * @param string $element   Element to display
+ * @param boolean $display  Display or not the element?
+ * @param int $key          Index of the element
+ *
+ * @return boolean
+ */
+function advgbCheckElementDisplayStr( $element, $display, $key )  {
+    if(
+        isset( $element ) && $element !== 'hide'
+        && ( $display === 'all' || $key < $display )
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Check if an element is enabled for each post when $element is an array
+ *
+ * @param array $element    Element(s) to display
+ * @param boolean $display  Display or not the element?
+ * @param int $key          Index of the element
+ *
+ * @return boolean
+ */
+function advgbCheckElementDisplayArr( $element, $display, $key )  {
+    if(
+        isset( $element ) && ! empty( $element )
+        && ( $display === 'all' || $key < $display )
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 /**
  * Check if Featured image is enable for each post
+ *
+ * Deprecated since 2.13.3
  *
  * @return boolean
  */
