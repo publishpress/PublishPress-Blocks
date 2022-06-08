@@ -323,7 +323,7 @@ function advgbRenderBlockRecentPosts($attributes)
             if(
                 advgbCheckElementDisplayStr( $attributes['showCategories'], $attributes['showCategoriesFor'], $key )
                 || advgbCheckElementDisplayStr( $attributes['showTags'], $attributes['showTagsFor'], $key )
-                || ( !in_array( $post_type, array( 'post', 'page' ), true ) && isset( $attributes['showCustomTaxList'] ) && !empty( $attributes['showCustomTaxList'] ) )
+                || ( !in_array( $post_type, array( 'post', 'page' ), true ) && advgbCheckElementDisplayArr( $attributes['showCustomTaxList'], $attributes['showCustomTaxListFor'], $key ) )
             ) {
                 $postHtml .= '<div class="advgb-post-tax-info">';
 
@@ -357,7 +357,7 @@ function advgbRenderBlockRecentPosts($attributes)
     				}
     			}
 
-    			if ( ! in_array( $post_type, array( 'post', 'page' ), true ) && isset( $attributes['showCustomTaxList'] ) && ! empty( $attributes['showCustomTaxList'] ) ) {
+    			if ( ! in_array( $post_type, array( 'post', 'page' ), true ) && advgbCheckElementDisplayArr( $attributes['showCustomTaxList'], $attributes['showCustomTaxListFor'], $key ) ) {
     				$info = advgbGetTaxonomyTerms( $post_type, $post->ID, true, false );
     				if ( ! empty( $info ) ) {
     					foreach ( $attributes['showCustomTaxList'] as $name ) {
@@ -704,6 +704,10 @@ function advgbRegisterBlockRecentPosts()
                 'items' => array(
                     'type' => 'string'
                 )
+            ),
+            'showCustomTaxListFor' => array(
+                'type' => 'string',
+                'default' => 'all',
             ),
             'linkCustomTax' => array(
                 'type' => 'boolean',
@@ -1380,6 +1384,26 @@ function advgbCheckElementDisplay( $element, $display, $key )  {
 function advgbCheckElementDisplayStr( $element, $display, $key )  {
     if(
         isset( $element ) && $element !== 'hide'
+        && ( $display === 'all' || $key < $display )
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Check if an element is enabled for each post when $element is an array
+ *
+ * @param array $element    Element(s) to display
+ * @param boolean $display  Display or not the element?
+ * @param int $key          Index of the element
+ *
+ * @return boolean
+ */
+function advgbCheckElementDisplayArr( $element, $display, $key )  {
+    if(
+        isset( $element ) && ! empty( $element )
         && ( $display === 'all' || $key < $display )
     ) {
         return true;

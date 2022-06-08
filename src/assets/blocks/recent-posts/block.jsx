@@ -435,6 +435,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 sliderAutoplay,
                 linkCustomTax,
                 showCustomTaxList,
+                showCustomTaxListFor,
                 imagePosition,
                 onlyFromCurrentUser,
                 orderSections,
@@ -940,11 +941,22 @@ import { AuthorSelect } from './query-controls.jsx';
                                     label={ __( 'Display these taxonomies', 'advanced-gutenberg' ) }
                                     onChange={ ( value ) => { this.selectTaxonomies(value); } }
                                 />
-                                <ToggleControl
-                                    label={ __( 'Link above taxonomies', 'advanced-gutenberg' ) }
-                                    checked={ linkCustomTax }
-                                    onChange={ () => setAttributes( { linkCustomTax: !linkCustomTax } ) }
-                                />
+                                { showCustomTaxList.length > 0 &&
+                                    <Fragment>
+                                        <SelectControl
+                                            value={ showCustomTaxListFor }
+                                            options={ DISPLAY_FOR }
+                                            onChange={ ( value ) => { setAttributes( { showCustomTaxListFor: value } ) } }
+                                            className="advgb-child-select"
+                                        />
+                                        <ToggleControl
+                                            label={ __( 'Link above taxonomies', 'advanced-gutenberg' ) }
+                                            checked={ linkCustomTax }
+                                            onChange={ () => setAttributes( { linkCustomTax: !linkCustomTax } ) }
+                                            className="advgb-child-toggle"
+                                        />
+                                    </Fragment>
+                                }
                             </Fragment>
 
                         }
@@ -1250,7 +1262,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                         { (
                                             ( this.checkElementDisplay( 'categories', index ) && post.tax_additional && post.tax_additional.categories)
                                             || ( this.checkElementDisplay( 'tags', index ) && post.tax_additional && post.tax_additional.tags)
-                                            || (!INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.getTaxSlugs().length > 0)
+                                            || ( !INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.checkElementDisplay( 'customtax', index ) )
                                         ) && (
                                             <Fragment>
                                                 <div className="advgb-post-tax-info">
@@ -1721,7 +1733,9 @@ import { AuthorSelect } from './query-controls.jsx';
                 showCategories,
                 showCategoriesFor,
                 showTags,
-                showTagsFor
+                showTagsFor,
+                showCustomTaxList,
+                showCustomTaxListFor
             } = this.props.attributes;
 
             switch( element ) {
@@ -1758,6 +1772,11 @@ import { AuthorSelect } from './query-controls.jsx';
                 case 'tags':
                     return(
                         showTags !== 'hide' && this.checkElementForDisplay( showTagsFor, index )
+                    );
+                    break;
+                case 'customtax':
+                    return(
+                        this.getTaxSlugs().length > 0 && this.checkElementForDisplay( showCustomTaxListFor, index )
                     );
                     break;
                 default:

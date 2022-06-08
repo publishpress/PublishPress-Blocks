@@ -24499,6 +24499,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     sliderAutoplay = attributes.sliderAutoplay,
                     linkCustomTax = attributes.linkCustomTax,
                     showCustomTaxList = attributes.showCustomTaxList,
+                    showCustomTaxListFor = attributes.showCustomTaxListFor,
                     imagePosition = attributes.imagePosition,
                     onlyFromCurrentUser = attributes.onlyFromCurrentUser,
                     orderSections = attributes.orderSections;
@@ -25043,13 +25044,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     _this3.selectTaxonomies(value);
                                 }
                             }),
-                            React.createElement(ToggleControl, {
-                                label: __('Link above taxonomies', 'advanced-gutenberg'),
-                                checked: linkCustomTax,
-                                onChange: function onChange() {
-                                    return setAttributes({ linkCustomTax: !linkCustomTax });
-                                }
-                            })
+                            showCustomTaxList.length > 0 && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(SelectControl, {
+                                    value: showCustomTaxListFor,
+                                    options: DISPLAY_FOR,
+                                    onChange: function onChange(value) {
+                                        setAttributes({ showCustomTaxListFor: value });
+                                    },
+                                    className: 'advgb-child-select'
+                                }),
+                                React.createElement(ToggleControl, {
+                                    label: __('Link above taxonomies', 'advanced-gutenberg'),
+                                    checked: linkCustomTax,
+                                    onChange: function onChange() {
+                                        return setAttributes({ linkCustomTax: !linkCustomTax });
+                                    },
+                                    className: 'advgb-child-toggle'
+                                })
+                            )
                         ),
                         React.createElement(ToggleControl, {
                             label: __('Display Read More Link', 'advanced-gutenberg'),
@@ -25360,7 +25374,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 )
                                             )
                                         ),
-                                        (_this3.checkElementDisplay('categories', index) && post.tax_additional && post.tax_additional.categories || _this3.checkElementDisplay('tags', index) && post.tax_additional && post.tax_additional.tags || !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.getTaxSlugs().length > 0) && React.createElement(
+                                        (_this3.checkElementDisplay('categories', index) && post.tax_additional && post.tax_additional.categories || _this3.checkElementDisplay('tags', index) && post.tax_additional && post.tax_additional.tags || !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.checkElementDisplay('customtax', index)) && React.createElement(
                                             Fragment,
                                             null,
                                             React.createElement(
@@ -25872,7 +25886,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     showCategories = _props$attributes.showCategories,
                     showCategoriesFor = _props$attributes.showCategoriesFor,
                     showTags = _props$attributes.showTags,
-                    showTagsFor = _props$attributes.showTagsFor;
+                    showTagsFor = _props$attributes.showTagsFor,
+                    showCustomTaxList = _props$attributes.showCustomTaxList,
+                    showCustomTaxListFor = _props$attributes.showCustomTaxListFor;
 
 
                 switch (element) {
@@ -25896,6 +25912,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         break;
                     case 'tags':
                         return showTags !== 'hide' && this.checkElementForDisplay(showTagsFor, index);
+                        break;
+                    case 'customtax':
+                        return this.getTaxSlugs().length > 0 && this.checkElementForDisplay(showCustomTaxListFor, index);
                         break;
                     default:
                         return false;
