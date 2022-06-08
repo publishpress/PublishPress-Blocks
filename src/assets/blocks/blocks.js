@@ -25312,13 +25312,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             { className: 'advgb-text-after-title' },
                                             textAfterTitle
                                         ),
-                                        (_this3.getDisplayFeatureStatus('author', index) && (post.coauthors && post.coauthors.length > 0 || !post.coauthors || post.coauthors.length === 0) || _this3.getDisplayFeatureStatus('date', index) || postType === 'post' && _this3.getDisplayFeatureStatus('comments', index)) && React.createElement(
+                                        (_this3.checkElementDisplay('author', index) && (post.coauthors && post.coauthors.length > 0 || !post.coauthors || post.coauthors.length === 0) || _this3.checkElementDisplay('date', index) || postType === 'post' && _this3.checkElementDisplay('comments', index)) && React.createElement(
                                             Fragment,
                                             null,
                                             React.createElement(
                                                 'div',
                                                 { className: 'advgb-post-info' },
-                                                _this3.getDisplayFeatureStatus('author', index) && post.coauthors && post.coauthors.length > 0 && post.coauthors.map(function (coauthor, coauthor_indx) {
+                                                _this3.checkElementDisplay('author', index) && post.coauthors && post.coauthors.length > 0 && post.coauthors.map(function (coauthor, coauthor_indx) {
                                                     return React.createElement(
                                                         Fragment,
                                                         null,
@@ -25337,7 +25337,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         )
                                                     );
                                                 }),
-                                                _this3.getDisplayFeatureStatus('author', index) && (!post.coauthors || post.coauthors.length === 0) && React.createElement(
+                                                _this3.checkElementDisplay('author', index) && (!post.coauthors || post.coauthors.length === 0) && React.createElement(
                                                     'a',
                                                     { href: post.author_meta.author_link,
                                                         target: '_blank',
@@ -25345,12 +25345,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     },
                                                     post.author_meta.display_name
                                                 ),
-                                                _this3.getDisplayFeatureStatus('date', index) && React.createElement(
+                                                _this3.checkElementDisplay('date', index) && React.createElement(
                                                     'span',
                                                     { className: 'advgb-post-datetime' },
                                                     _this3.getDateTime(post)
                                                 ),
-                                                postType === 'post' && _this3.getDisplayFeatureStatus('comments', index) && React.createElement(
+                                                postType === 'post' && _this3.checkElementDisplay('comments', index) && React.createElement(
                                                     'span',
                                                     { className: 'advgb-post-comments' },
                                                     React.createElement('span', { 'class': 'dashicons dashicons-admin-comments' }),
@@ -25360,13 +25360,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 )
                                             )
                                         ),
-                                        (_this3.getDisplayFeatureStatus('categories', index) && post.tax_additional && post.tax_additional.categories || _this3.getDisplayFeatureStatus('tags', index) && post.tax_additional && post.tax_additional.tags || !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.getTaxSlugs().length > 0) && React.createElement(
+                                        (_this3.checkElementDisplay('categories', index) && post.tax_additional && post.tax_additional.categories || _this3.checkElementDisplay('tags', index) && post.tax_additional && post.tax_additional.tags || !INBUILT_POST_TYPES.includes(postType) && post.tax_additional && _this3.getTaxSlugs().length > 0) && React.createElement(
                                             Fragment,
                                             null,
                                             React.createElement(
                                                 'div',
                                                 { className: 'advgb-post-tax-info' },
-                                                _this3.getDisplayFeatureStatus('categories', index) && post.tax_additional && post.tax_additional.categories && React.createElement(
+                                                _this3.checkElementDisplay('categories', index) && post.tax_additional && post.tax_additional.categories && React.createElement(
                                                     'div',
                                                     { className: 'advgb-post-tax advgb-post-category' },
                                                     showCategories === 'show' && post.tax_additional.categories.unlinked.map(function (cat, index) {
@@ -25384,7 +25384,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         );
                                                     })
                                                 ),
-                                                _this3.getDisplayFeatureStatus('tags', index) && post.tax_additional && post.tax_additional.tags && React.createElement(
+                                                _this3.checkElementDisplay('tags', index) && post.tax_additional && post.tax_additional.tags && React.createElement(
                                                     'div',
                                                     { className: 'advgb-post-tax advgb-post-tag' },
                                                     showTags === 'show' && post.tax_additional.tags.unlinked.map(function (tag, index) {
@@ -25427,7 +25427,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             'div',
                                             { className: 'advgb-post-content' },
-                                            _this3.getDisplayFeatureStatus('excerpt', index) && React.createElement('div', { className: 'advgb-post-excerpt',
+                                            _this3.checkElementDisplay('excerpt', index) && React.createElement('div', { className: 'advgb-post-excerpt',
                                                 dangerouslySetInnerHTML: {
                                                     __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt ? post.excerpt.raw : ''
                                                 } }),
@@ -25440,7 +25440,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     textBeforeReadmore
                                                 )
                                             ),
-                                            _this3.getDisplayFeatureStatus('readmore', index) && React.createElement(
+                                            _this3.checkElementDisplay('readmore', index) && React.createElement(
                                                 'div',
                                                 { className: 'advgb-post-readmore' },
                                                 React.createElement(
@@ -25841,8 +25841,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return slugs;
             }
         }, {
-            key: 'getDisplayFeatureStatus',
-            value: function getDisplayFeatureStatus(feature, index) {
+            key: 'checkElementDisplay',
+            value: function checkElementDisplay(element, index) {
                 var _props$attributes = this.props.attributes,
                     displayAuthor = _props$attributes.displayAuthor,
                     displayAuthorFor = _props$attributes.displayAuthorFor,
@@ -25860,7 +25860,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     showTagsFor = _props$attributes.showTagsFor;
 
 
-                switch (feature) {
+                switch (element) {
                     case 'author':
                         return displayAuthor && (displayAuthorFor === 'all' || index < displayAuthorFor);
                         break;

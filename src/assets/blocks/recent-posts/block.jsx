@@ -1201,16 +1201,16 @@ import { AuthorSelect } from './query-controls.jsx';
                                             <RawHTML className="advgb-text-after-title">{ textAfterTitle }</RawHTML>
                                         }
                                         { (
-                                            ( this.getDisplayFeatureStatus( 'author', index ) && (
+                                            ( this.checkElementDisplay( 'author', index ) && (
                                                 (post.coauthors && post.coauthors.length > 0)
                                                 || (!post.coauthors || post.coauthors.length === 0))
                                             )
-                                            || this.getDisplayFeatureStatus( 'date', index )
-                                            || ( postType === 'post' && this.getDisplayFeatureStatus( 'comments', index ) )
+                                            || this.checkElementDisplay( 'date', index )
+                                            || ( postType === 'post' && this.checkElementDisplay( 'comments', index ) )
                                         ) && (
                                             <Fragment>
                                                 <div className="advgb-post-info">
-                                                    { this.getDisplayFeatureStatus( 'author', index ) && post.coauthors && post.coauthors.length > 0 && post.coauthors.map( ( coauthor, coauthor_indx ) => (
+                                                    { this.checkElementDisplay( 'author', index ) && post.coauthors && post.coauthors.length > 0 && post.coauthors.map( ( coauthor, coauthor_indx ) => (
                                                         <Fragment>
                                                             <a href={ coauthor.link }
                                                                target="_blank"
@@ -1224,7 +1224,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                                         </Fragment>
                                                     ) )
                                                     }
-                                                    { this.getDisplayFeatureStatus( 'author', index ) && (!post.coauthors || post.coauthors.length === 0) && (
+                                                    { this.checkElementDisplay( 'author', index ) && (!post.coauthors || post.coauthors.length === 0) && (
                                                         <a href={ post.author_meta.author_link }
                                                            target="_blank"
                                                            className="advgb-post-author"
@@ -1233,12 +1233,12 @@ import { AuthorSelect } from './query-controls.jsx';
                                                         </a>
                                                     )
                                                     }
-                                                    { this.getDisplayFeatureStatus( 'date', index ) && (
+                                                    { this.checkElementDisplay( 'date', index ) && (
                                                         <span className="advgb-post-datetime" >
                                                         { this.getDateTime(post) }
                                                         </span>
                                                     ) }
-                                                    { postType === 'post' && this.getDisplayFeatureStatus( 'comments', index ) && (
+                                                    { postType === 'post' && this.checkElementDisplay( 'comments', index ) && (
                                                         <span className="advgb-post-comments" >
                                                             <span class="dashicons dashicons-admin-comments"></span>
                                                             ({ post.comment_count })
@@ -1248,13 +1248,13 @@ import { AuthorSelect } from './query-controls.jsx';
                                             </Fragment>
                                         ) }
                                         { (
-                                            ( this.getDisplayFeatureStatus( 'categories', index ) && post.tax_additional && post.tax_additional.categories)
-                                            || ( this.getDisplayFeatureStatus( 'tags', index ) && post.tax_additional && post.tax_additional.tags)
+                                            ( this.checkElementDisplay( 'categories', index ) && post.tax_additional && post.tax_additional.categories)
+                                            || ( this.checkElementDisplay( 'tags', index ) && post.tax_additional && post.tax_additional.tags)
                                             || (!INBUILT_POST_TYPES.includes( postType ) && post.tax_additional && this.getTaxSlugs().length > 0)
                                         ) && (
                                             <Fragment>
                                                 <div className="advgb-post-tax-info">
-                                                    { this.getDisplayFeatureStatus( 'categories', index ) && post.tax_additional && post.tax_additional.categories && (
+                                                    { this.checkElementDisplay( 'categories', index ) && post.tax_additional && post.tax_additional.categories && (
                                                         <div className="advgb-post-tax advgb-post-category">
                                                         {showCategories === 'show' && post.tax_additional.categories.unlinked.map( ( cat, index ) => (
                                                             <RawHTML>{ cat }</RawHTML>
@@ -1264,7 +1264,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                                         ) )}
                                                         </div>
                                                     ) }
-                                                    { this.getDisplayFeatureStatus( 'tags', index ) && post.tax_additional && post.tax_additional.tags && (
+                                                    { this.checkElementDisplay( 'tags', index ) && post.tax_additional && post.tax_additional.tags && (
                                                         <div className="advgb-post-tax advgb-post-tag">
                                                         {showTags === 'show' && post.tax_additional.tags.unlinked.map( ( tag, index ) => (
                                                             <RawHTML>{ tag }</RawHTML>
@@ -1288,7 +1288,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                             </Fragment>
                                         ) }
                                         <div className="advgb-post-content">
-                                            { this.getDisplayFeatureStatus( 'excerpt', index ) && (
+                                            { this.checkElementDisplay( 'excerpt', index ) && (
                                                 <div className="advgb-post-excerpt"
                                                      dangerouslySetInnerHTML={ {
                                                          __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : (post.excerpt ? post.excerpt.raw : '')
@@ -1297,7 +1297,7 @@ import { AuthorSelect } from './query-controls.jsx';
                                             { textBeforeReadmore &&
                                                 <div className="advgb-text-before-readmore"><RawHTML>{ textBeforeReadmore }</RawHTML></div>
                                             }
-                                            { this.getDisplayFeatureStatus( 'readmore', index ) && (
+                                            { this.checkElementDisplay( 'readmore', index ) && (
                                                 <div className="advgb-post-readmore">
                                                     <a href={ post.link } target="_blank">{ readMoreLbl ? readMoreLbl : __( 'Read More', 'advanced-gutenberg' ) }</a>
                                                 </div>
@@ -1694,7 +1694,7 @@ import { AuthorSelect } from './query-controls.jsx';
             return slugs;
         }
 
-        getDisplayFeatureStatus( feature, index ) {
+        checkElementDisplay( element, index ) {
             const {
                 displayAuthor,
                 displayAuthorFor,
@@ -1712,7 +1712,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 showTagsFor
             } = this.props.attributes;
 
-            switch( feature ) {
+            switch( element ) {
                 case 'author':
                     return(
                         displayAuthor && ( displayAuthorFor === 'all' || index < displayAuthorFor )
