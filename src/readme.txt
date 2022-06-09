@@ -263,6 +263,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Add: Offset posts filter to Content Display block
   * Fix: Center featured image when using default slider view for Content Display block
   * Fix: Don't output text after title and text before read more when empty in editor for Content Display block
+  * Fix: Lost password link broken in Login/Register Form block
   * Remove: PublishPress Series box from editor preview in Content Display block
 
 = 2.13.2 - 2 Jun 2022 =

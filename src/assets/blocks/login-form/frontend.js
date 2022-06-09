@@ -4,7 +4,7 @@ jQuery(document).ready(function ($) {
     var registerForm = $('.advgb-form-register');
     loginForm.attr('action', advgbLoresForm.login_url);
     registerForm.attr('action', advgbLoresForm.register_url);
-    $('.advgb-lost-password .advgb-lost-password-link').attr('href', advgbLoresForm.lostpwd_url);
+    $('.advgb-lost-password > a').attr('href', advgbLoresForm.lostpwd_url);
 
     // Add value to redirect input
     var redirectInput = $('.advgb-lores-form .redirect_to');
