@@ -282,7 +282,7 @@ import { AuthorSelect } from './query-controls.jsx';
 
             // Reset attributes when Pro is not available
             if( !this.isPro() && this.checkIncludeEnabled() ) {
-                setAttributes( { includePosts: [], offset: 0 } );
+                setAttributes( { includePosts: [] } );
             }
         }
 
@@ -731,6 +731,13 @@ import { AuthorSelect } from './query-controls.jsx';
                             placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
                             onChange={ ( excludePosts ) => this.getPostIds( excludePosts, postsToSelect, 'exclude' ) }
                         />
+                        <RangeControl
+                            label={ __( 'Offset the first posts', 'advanced-gutenberg' ) }
+                            value={ offset }
+                            min={ 0 }
+                            max={ 10 }
+                            onChange={ ( value ) => setAttributes( { offset: value } ) }
+                        />
                         </div>
                         </Fragment>
                     </PanelBody>
@@ -746,28 +753,6 @@ import { AuthorSelect } from './query-controls.jsx';
                                     placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
                                     onChange={ ( includePosts ) => this.getPostIds( includePosts, postsToSelect, 'include' ) }
                                 />
-                                { this.isPro() && this.checkIncludeEnabled() &&
-                                    <div className="advgb-wrapper-disabled-msg notice notice-info">
-                                        <p>
-                                            { __('To enable Offset posts, clear  Display these posts only', 'advanced-gutenberg') }
-                                        </p>
-                                    </div>
-                                }
-                                <Fragment>
-                                    <div className={ this.isPro() && this.checkIncludeEnabled() ? 'advgb-wrapper-disabled' : '' }>
-                                        { this.isPro() && this.checkIncludeEnabled() &&
-                                            <div className="advgb-wrapper-disabled-overlay"></div>
-                                        }
-                                        <RangeControl
-                                            label={ __( 'Offset posts', 'advanced-gutenberg' ) }
-                                            help={ __( 'Omit the first posts.', 'advanced-gutenberg' ) }
-                                            value={ offset }
-                                            min={ 0 }
-                                            max={ Array.isArray( recentPosts ) && recentPosts.length > 0 ? recentPosts.length + offset - 1 : 5 }
-                                            onChange={ (value) => setAttributes( { offset: value } ) }
-                                        />
-                                    </div>
-                                </Fragment>
                             </PanelBody>
                         </Fragment>
                     ) }
