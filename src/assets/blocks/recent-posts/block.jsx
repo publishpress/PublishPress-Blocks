@@ -431,6 +431,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 textBeforeReadmore,
                 includePosts,
                 excludePosts,
+                offset,
                 author: selectedAuthorId,
                 sliderAutoplay,
                 linkCustomTax,
@@ -729,6 +730,13 @@ import { AuthorSelect } from './query-controls.jsx';
                             label={ __( 'Exclude these posts', 'advanced-gutenberg' ) }
                             placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
                             onChange={ ( excludePosts ) => this.getPostIds( excludePosts, postsToSelect, 'exclude' ) }
+                        />
+                        <RangeControl
+                            label={ __( 'Offset the first posts', 'advanced-gutenberg' ) }
+                            value={ offset }
+                            min={ 0 }
+                            max={ 10 }
+                            onChange={ ( value ) => setAttributes( { offset: value } ) }
                         />
                         </div>
                         </Fragment>
@@ -1456,7 +1464,7 @@ import { AuthorSelect } from './query-controls.jsx';
             this.props.setAttributes( { [selectType]: posts_array } );
 
             if( 'include' === type ) {
-                this.props.setAttributes( { excludePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], author: '', onlyFromCurrentUser: false } );
+                this.props.setAttributes( { excludePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], author: '', onlyFromCurrentUser: false, offset: 0 } );
             }
         }
 
@@ -1490,7 +1498,7 @@ import { AuthorSelect } from './query-controls.jsx';
             this.setState( { taxonomyList: null } );
             this.generateTaxFilters( postType );
 
-            this.props.setAttributes( { postType: postType, excludePosts: [], includePosts: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] } );
+            this.props.setAttributes( { postType: postType, excludePosts: [], includePosts: [], offset: 0, updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] } );
         }
 
         /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
@@ -1876,7 +1884,7 @@ import { AuthorSelect } from './query-controls.jsx';
         },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, excludePosts, includePosts, author, taxonomies, taxIds, onlyFromCurrentUser } = props.attributes;
+            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, excludePosts, includePosts, offset, author, taxonomies, taxIds, onlyFromCurrentUser } = props.attributes;
 
             const catIds = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
 
@@ -1891,6 +1899,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 token: myToken,
                 exclude: excludeCurrentPost ? (excludePosts ? union( excludePosts, [ postId ] ) : postId ) : excludePosts,
                 include: includePosts,
+                offset,
                 author: onlyFromCurrentUser ? wp.data.select('core').getCurrentUser().id : author,
             }, ( value ) => !isUndefined( value ) && !(isArray(value) && (isNull(value) || value.length === 0)) );
 
