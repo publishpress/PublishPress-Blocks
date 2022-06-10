@@ -24197,6 +24197,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     setAttributes({ changed: true });
                 }
 
+                if (!attributes.searchString) {
+                    setAttributes({ searchString: '' });
+                }
+
                 wp.apiFetch({
                     path: wp.url.addQueryArgs('advgb/v1/exclude_post_types')
                 }).then(function (excludePostTypes) {
@@ -24812,6 +24816,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(FormTokenField, {
                                 multiple: true,
                                 suggestions: post_titles,
+                                onInputChange: function onInputChange(value) {
+                                    setAttributes({ searchString: value });
+                                },
                                 maxSuggestions: 15,
                                 value: this.getPostTitles(includePosts, postsToSelect),
                                 label: __('Display these posts only', 'advanced-gutenberg'),
@@ -25451,10 +25458,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             return post.id === post_id;
                         });
                         if (find_post === undefined || !find_post) {
-                            return false;
+                            return post_id; // Display id instead if title
                         }
                         return find_post.title.raw;
                     });
+                } else if (typeof posts !== 'undefined' && posts.length > 0) {
+                    field_value = posts.map(function (post_id) {
+                        return post_id; // Display id instead if title
+                    });
+                } else {
+                    // Nothing to do here
                 }
                 return field_value;
             }
@@ -25887,7 +25900,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 author = _props$attributes3.author,
                 taxonomies = _props$attributes3.taxonomies,
                 taxIds = _props$attributes3.taxIds,
-                onlyFromCurrentUser = _props$attributes3.onlyFromCurrentUser;
+                onlyFromCurrentUser = _props$attributes3.onlyFromCurrentUser,
+                searchString = _props$attributes3.searchString;
 
 
             var catIds = categories && categories.length > 0 ? categories.map(function (cat) {
@@ -25926,9 +25940,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 recentPosts: getEntityRecords('postType', postType ? postType : 'post', recentPostsQuery),
                 postList: updatePostSuggestions ? getEntityRecords('postType', postType ? postType : 'post', postSuggestionsQuery) : null,
                 updatePostSuggestions: updatePostSuggestions,
-                postsToSelect: getEntityRecords('postType', postType ? postType : 'post', pickBy({ per_page: -1 }, function (value) {
+                postsToSelect: advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1' ? getEntityRecords('postType', postType ? postType : 'post', pickBy({ per_page: 15, search: props.attributes.searchString }, function (value) {
                     return !isUndefined(value);
-                }))
+                })) : null
             };
         })(RecentPostsEdit),
         save: function save() {

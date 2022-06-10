@@ -155,6 +155,10 @@ import { AuthorSelect } from './query-controls.jsx';
                 setAttributes( { changed: true } );
             }
 
+            if ( !attributes.searchString ) {
+                setAttributes( { searchString: '' } );
+            }
+
             wp.apiFetch( {
                 path: wp.url.addQueryArgs( 'advgb/v1/exclude_post_types' ),
             } ).then( ( excludePostTypes ) => {
@@ -722,6 +726,9 @@ import { AuthorSelect } from './query-controls.jsx';
                                 <FormTokenField
                                     multiple
                                     suggestions={ post_titles }
+                                    onInputChange={ ( value ) => {
+                                        setAttributes( { searchString: value } )
+                                    } }
                                     maxSuggestions={ 15 }
                                     value={ this.getPostTitles( includePosts, postsToSelect ) }
                                     label={ __( 'Display these posts only', 'advanced-gutenberg' ) }
@@ -1340,10 +1347,16 @@ import { AuthorSelect } from './query-controls.jsx';
                         return post.id === post_id;
                     } );
                     if ( find_post === undefined || ! find_post ) {
-                        return false;
+                        return post_id; // Display id instead if title
                     }
                     return find_post.title.raw;
                 } );
+            } else if ( typeof posts !== 'undefined' && posts.length > 0 ) {
+                field_value = posts.map( (post_id) => {
+                    return post_id; // Display id instead if title
+                } );
+            } else {
+                // Nothing to do here
             }
             return field_value;
         }
@@ -1705,7 +1718,7 @@ import { AuthorSelect } from './query-controls.jsx';
         },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, excludePosts, includePosts, author, taxonomies, taxIds, onlyFromCurrentUser } = props.attributes;
+            const { categories, tagIds, tags, category, order, orderBy, numberOfPosts, myToken, postType, excludeCurrentPost, excludePosts, includePosts, author, taxonomies, taxIds, onlyFromCurrentUser, searchString } = props.attributes;
 
             const catIds = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
 
@@ -1739,10 +1752,11 @@ import { AuthorSelect } from './query-controls.jsx';
                 recentPosts: getEntityRecords( 'postType', postType ? postType : 'post', recentPostsQuery ),
                 postList: updatePostSuggestions ? getEntityRecords( 'postType', postType ? postType : 'post', postSuggestionsQuery ) : null,
                 updatePostSuggestions: updatePostSuggestions,
-                postsToSelect: getEntityRecords(
-                    'postType', postType ? postType : 'post',
-                    pickBy( { per_page: -1 }, ( value ) => ! isUndefined( value ) )
-                ),
+                postsToSelect: advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1'
+                    ? getEntityRecords(
+                        'postType', postType ? postType : 'post',
+                        pickBy( { per_page: 15, search: props.attributes.searchString }, ( value ) => ! isUndefined( value ) )
+                    ) : null,
             }
         } )( RecentPostsEdit ),
         save: function () { // Render in PHP
