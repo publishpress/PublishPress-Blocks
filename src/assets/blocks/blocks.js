@@ -25458,16 +25458,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             return post.id === post_id;
                         });
                         if (find_post === undefined || !find_post) {
-                            return post_id; // Display id instead if title
+                            return false;
                         }
                         return find_post.title.raw;
                     });
-                } else if (typeof posts !== 'undefined' && posts.length > 0) {
-                    field_value = posts.map(function (post_id) {
-                        return post_id; // Display id instead if title
-                    });
-                } else {
-                    // Nothing to do here
                 }
                 return field_value;
             }

@@ -1347,16 +1347,10 @@ import { AuthorSelect } from './query-controls.jsx';
                         return post.id === post_id;
                     } );
                     if ( find_post === undefined || ! find_post ) {
-                        return post_id; // Display id instead if title
+                        return false;
                     }
                     return find_post.title.raw;
                 } );
-            } else if ( typeof posts !== 'undefined' && posts.length > 0 ) {
-                field_value = posts.map( (post_id) => {
-                    return post_id; // Display id instead if title
-                } );
-            } else {
-                // Nothing to do here
             }
             return field_value;
         }
