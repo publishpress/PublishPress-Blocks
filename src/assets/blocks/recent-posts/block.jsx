@@ -1755,7 +1755,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 postsToSelect: advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1'
                     ? getEntityRecords(
                         'postType', postType ? postType : 'post',
-                        pickBy( { per_page: 15, search: props.attributes.searchString }, ( value ) => ! isUndefined( value ) )
+                        pickBy( { per_page: 15, search: searchString }, ( value ) => ! isUndefined( value ) )
                     ) : null,
             }
         } )( RecentPostsEdit ),

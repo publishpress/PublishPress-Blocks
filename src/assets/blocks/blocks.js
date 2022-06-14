@@ -25940,7 +25940,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 recentPosts: getEntityRecords('postType', postType ? postType : 'post', recentPostsQuery),
                 postList: updatePostSuggestions ? getEntityRecords('postType', postType ? postType : 'post', postSuggestionsQuery) : null,
                 updatePostSuggestions: updatePostSuggestions,
-                postsToSelect: advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1' ? getEntityRecords('postType', postType ? postType : 'post', pickBy({ per_page: 15, search: props.attributes.searchString }, function (value) {
+                postsToSelect: advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1' ? getEntityRecords('postType', postType ? postType : 'post', pickBy({ per_page: 15, search: searchString }, function (value) {
                     return !isUndefined(value);
                 })) : null
             };
