@@ -24503,34 +24503,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     onlyFromCurrentUser = attributes.onlyFromCurrentUser,
                     orderSections = attributes.orderSections;
 
-                /*console.log('postsToSearch');
-                console.log(postsToSearchResolved);
-                console.log(postsToSearch);
-                console.log('postsToInclude');
-                console.log(postsToIncludeResolved);
-                console.log(postsToInclude);
-                console.log('postsToExclude');
-                console.log(postsToExcludeResolved);
-                console.log(postsToExclude);*/
-
-                // Get posts suggestions for Include and Exclude
+                // Get posts suggestions for Include
 
                 var mergedPosts = null;
                 if (postsToSearchResolved) {
                     mergedPosts = postsToSearch;
-                    //console.log(mergedPosts);
                 }
 
                 // Merge posts suggestions and includePosts
                 if (postsToSearchResolved && postsToIncludeResolved) {
                     mergedPosts = postsToSearch.concat(postsToInclude);
-                    //console.log(mergedPosts);
                 }
 
                 // Merge posts suggestions and excludePosts
                 if (postsToSearchResolved && postsToExcludeResolved) {
                     mergedPosts = mergedPosts.concat(postsToExclude);
-                    //console.log(mergedPosts);
                 }
 
                 var post_titles = mergedPosts !== null && (postsToSearchResolved || postsToIncludeResolved || postsToExcludeResolved) ? mergedPosts.map(function (post) {
