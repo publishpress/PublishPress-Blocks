@@ -444,7 +444,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 mergedPosts = mergedPosts.concat(postsToExclude);
             }
 
-            let post_titles = mergedPosts !== null && ( postsToSearchResolved || postsToIncludeResolved || postsToExcludeResolved ) ? mergedPosts.map( ( post ) => post.title.raw ) : [];
+            let postSuggestionsInclude = mergedPosts !== null && ( postsToSearchResolved || postsToIncludeResolved ) ? mergedPosts.map( ( post ) => post.title.raw ) : [];
             let recentPosts = this.props.recentPosts;
 
             // We need to check if we're in post edit or widgets screen
@@ -741,7 +741,7 @@ import { AuthorSelect } from './query-controls.jsx';
                             <PanelBody title={ __( 'Advanced Filters', 'advanced-gutenberg' ) } className="advgb-pro-icon">
                                 <FormTokenField
                                     multiple
-                                    suggestions={ post_titles }
+                                    suggestions={ postSuggestionsInclude }
                                     onInputChange={ ( value ) => {
                                         setAttributes( { searchString: value } )
                                     } }

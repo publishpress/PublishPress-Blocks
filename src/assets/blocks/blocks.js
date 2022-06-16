@@ -24520,7 +24520,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     mergedPosts = mergedPosts.concat(postsToExclude);
                 }
 
-                var post_titles = mergedPosts !== null && (postsToSearchResolved || postsToIncludeResolved || postsToExcludeResolved) ? mergedPosts.map(function (post) {
+                var postSuggestionsInclude = mergedPosts !== null && (postsToSearchResolved || postsToIncludeResolved) ? mergedPosts.map(function (post) {
                     return post.title.raw;
                 }) : [];
                 var recentPosts = this.props.recentPosts;
@@ -24836,7 +24836,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { title: __('Advanced Filters', 'advanced-gutenberg'), className: 'advgb-pro-icon' },
                             React.createElement(FormTokenField, {
                                 multiple: true,
-                                suggestions: post_titles,
+                                suggestions: postSuggestionsInclude,
                                 onInputChange: function onInputChange(value) {
                                     setAttributes({ searchString: value });
                                 },
