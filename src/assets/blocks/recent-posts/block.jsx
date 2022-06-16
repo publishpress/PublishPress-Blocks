@@ -1363,7 +1363,7 @@ import { AuthorSelect } from './query-controls.jsx';
                         return post.id === post_id;
                     } );
                     if ( find_post === undefined || ! find_post ) {
-                        return false;
+                        return post_id; // It should return false but creates empty selections
                     }
                     return find_post.title.raw;
                 } );
