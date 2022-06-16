@@ -1754,8 +1754,10 @@ import { AuthorSelect } from './query-controls.jsx';
                 });
             }
 
+            const queryFields = [ 'id', 'title' ];
+
             // Search posts
-            const postsToSearchQuery = pickBy( { per_page: 15, search: searchString }, ( value ) => ! isUndefined( value ) );
+            const postsToSearchQuery = pickBy( { _fields: queryFields, per_page: 10, search: searchString }, ( value ) => ! isUndefined( value ) );
             const postsToSearch = typeof searchString !== 'undefined'
                 ? getEntityRecords(
                     'postType',
@@ -1769,7 +1771,7 @@ import { AuthorSelect } from './query-controls.jsx';
     		] );
 
             // Include posts
-            const postsToIncludeQuery = pickBy( { per_page: -1, include: includePosts }, ( value ) => ! isUndefined( value ) );
+            const postsToIncludeQuery = pickBy( { _fields: queryFields, per_page: -1, include: includePosts }, ( value ) => ! isUndefined( value ) );
             const postsToInclude = advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1' && typeof includePosts !== 'undefined' && includePosts.length > 0
                 ? getEntityRecords(
                     'postType',
@@ -1783,7 +1785,7 @@ import { AuthorSelect } from './query-controls.jsx';
     		] );
 
             // Exclude posts
-            const postsToExcludeQuery = pickBy( { per_page: -1, include: excludePosts }, ( value ) => ! isUndefined( value ) );
+            const postsToExcludeQuery = pickBy( { _fields: queryFields, per_page: -1, include: excludePosts }, ( value ) => ! isUndefined( value ) );
             const postsToExclude = typeof excludePosts !== 'undefined' && excludePosts.length > 0
                 ? getEntityRecords(
                     'postType',

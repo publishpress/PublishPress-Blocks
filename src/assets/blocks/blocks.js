@@ -25948,22 +25948,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
 
+            var queryFields = ['id', 'title'];
+
             // Search posts
-            var postsToSearchQuery = pickBy({ per_page: 15, search: searchString }, function (value) {
+            var postsToSearchQuery = pickBy({ _fields: queryFields, per_page: 10, search: searchString }, function (value) {
                 return !isUndefined(value);
             });
             var postsToSearch = typeof searchString !== 'undefined' ? getEntityRecords('postType', postType ? postType : 'post', postsToSearchQuery) : null;
             var postsToSearchResolved = hasFinishedResolution('getEntityRecords', ['postType', postType ? postType : 'post', postsToSearchQuery]);
 
             // Include posts
-            var postsToIncludeQuery = pickBy({ per_page: -1, include: includePosts }, function (value) {
+            var postsToIncludeQuery = pickBy({ _fields: queryFields, per_page: -1, include: includePosts }, function (value) {
                 return !isUndefined(value);
             });
             var postsToInclude = advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1' && typeof includePosts !== 'undefined' && includePosts.length > 0 ? getEntityRecords('postType', postType ? postType : 'post', postsToIncludeQuery) : null;
             var postsToIncludeResolved = hasFinishedResolution('getEntityRecords', ['postType', postType ? postType : 'post', postsToIncludeQuery]);
 
             // Exclude posts
-            var postsToExcludeQuery = pickBy({ per_page: -1, include: excludePosts }, function (value) {
+            var postsToExcludeQuery = pickBy({ _fields: queryFields, per_page: -1, include: excludePosts }, function (value) {
                 return !isUndefined(value);
             });
             var postsToExclude = typeof excludePosts !== 'undefined' && excludePosts.length > 0 ? getEntityRecords('postType', postType ? postType : 'post', postsToExcludeQuery) : null;
