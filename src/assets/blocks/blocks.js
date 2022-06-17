@@ -24801,6 +24801,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(FormTokenField, {
                                     multiple: true,
                                     suggestions: postSuggestions,
+                                    onInputChange: function onInputChange(value) {
+                                        setAttributes({ searchString: value });
+                                    },
                                     value: this.getPostTitles(excludePosts, mergedPosts),
                                     label: __('Exclude these posts', 'advanced-gutenberg'),
                                     placeholder: __('Search by title', 'advanced-gutenberg'),

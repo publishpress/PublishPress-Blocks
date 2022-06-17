@@ -713,6 +713,9 @@ import { AuthorSelect } from './query-controls.jsx';
                         <FormTokenField
                             multiple
                             suggestions={ postSuggestions }
+                            onInputChange={ ( value ) => {
+                                setAttributes( { searchString: value } )
+                            } }
                             value={ this.getPostTitles( excludePosts, mergedPosts ) }
                             label={ __( 'Exclude these posts', 'advanced-gutenberg' ) }
                             placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
