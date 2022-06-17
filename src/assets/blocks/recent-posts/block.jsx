@@ -1260,20 +1260,23 @@ import { AuthorSelect } from './query-controls.jsx';
             } = this.props;
 
             let mergedPosts = null;
-
-            // Get only searched posts
-            if( postsToSearchResolved ) {
+            if( postsToSearchResolved && !postsToIncludeResolved && !postsToExcludeResolved ) {
+                // Get only searchString
                 mergedPosts = postsToSearch;
-            }
-
-            // Merge posts suggestions and includePosts
-            if( postsToSearchResolved && postsToIncludeResolved ) {
+            } else if ( postsToSearchResolved && postsToIncludeResolved && !postsToExcludeResolved ) {
+                // Get searchString and includePosts
                 mergedPosts = postsToSearch.concat(postsToInclude);
-            }
-
-            // Merge posts suggestions and excludePosts
-            if( postsToSearchResolved && postsToExcludeResolved ) {
-                mergedPosts = mergedPosts.concat(postsToExclude);
+            } else if ( postsToSearchResolved && !postsToIncludeResolved && postsToExcludeResolved ) {
+                // Get searchString and excludePosts
+                mergedPosts = postsToSearch.concat(postsToExclude);
+            } else if( !postsToSearchResolved && postsToIncludeResolved && !postsToExcludeResolved ) {
+                // Get only includePosts
+                mergedPosts = postsToInclude;
+            } else if( !postsToSearchResolved && !postsToIncludeResolved && postsToExcludeResolved ) {
+                // Get only excludePosts
+                mergedPosts = postsToExclude;
+            } else {
+                // Nothing to do here. mergedPosts is null
             }
             return mergedPosts;
         }
@@ -1787,7 +1790,7 @@ import { AuthorSelect } from './query-controls.jsx';
 
             // Search posts
             const postsToSearchQuery = pickBy( { _fields: queryFields, per_page: 10, search: `"${searchString}"` }, ( value ) => ! isUndefined( value ) );
-            const postsToSearch = typeof searchString !== 'undefined'
+            const postsToSearch = advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1' && typeof searchString !== 'undefined' && searchString.length > 0
                 ? getEntityRecords(
                     'postType',
                     postType ? postType : 'post',
