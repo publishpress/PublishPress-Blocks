@@ -24503,26 +24503,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     onlyFromCurrentUser = attributes.onlyFromCurrentUser,
                     orderSections = attributes.orderSections;
 
-                // Get posts suggestions for Include
 
-                var mergedPosts = null;
-                if (postsToSearchResolved) {
-                    mergedPosts = postsToSearch;
-                }
-
-                // Merge posts suggestions and includePosts
-                if (postsToSearchResolved && postsToIncludeResolved) {
-                    mergedPosts = postsToSearch.concat(postsToInclude);
-                }
-
-                // Merge posts suggestions and excludePosts
-                if (postsToSearchResolved && postsToExcludeResolved) {
-                    mergedPosts = mergedPosts.concat(postsToExclude);
-                }
-
-                var postSuggestionsInclude = mergedPosts !== null && (postsToSearchResolved || postsToIncludeResolved) ? mergedPosts.map(function (post) {
-                    return post.title.raw;
-                }) : [];
+                var mergedPosts = this.getMergedPosts();
+                var postSuggestionsInclude = this.getPostsSuggestionsInclude(mergedPosts);
                 var recentPosts = this.props.recentPosts;
 
                 // We need to check if we're in post edit or widgets screen
@@ -25399,6 +25382,58 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     )
                 );
             }
+
+            /**
+             * Get current include/exclude posts merged with the ones from search
+             */
+
+        }, {
+            key: 'getMergedPosts',
+            value: function getMergedPosts() {
+                var _props6 = this.props,
+                    postsToSearch = _props6.postsToSearch,
+                    postsToSearchResolved = _props6.postsToSearchResolved,
+                    postsToInclude = _props6.postsToInclude,
+                    postsToIncludeResolved = _props6.postsToIncludeResolved,
+                    postsToExclude = _props6.postsToExclude,
+                    postsToExcludeResolved = _props6.postsToExcludeResolved;
+
+
+                var mergedPosts = null;
+
+                // Get only searched posts
+                if (postsToSearchResolved) {
+                    mergedPosts = postsToSearch;
+                }
+
+                // Merge posts suggestions and includePosts
+                if (postsToSearchResolved && postsToIncludeResolved) {
+                    mergedPosts = postsToSearch.concat(postsToInclude);
+                }
+
+                // Merge posts suggestions and excludePosts
+                if (postsToSearchResolved && postsToExcludeResolved) {
+                    mergedPosts = mergedPosts.concat(postsToExclude);
+                }
+                return mergedPosts;
+            }
+
+            /**
+             * Get post titles for include
+             */
+
+        }, {
+            key: 'getPostsSuggestionsInclude',
+            value: function getPostsSuggestionsInclude(mergedPosts) {
+                var _props7 = this.props,
+                    postsToSearchResolved = _props7.postsToSearchResolved,
+                    postsToIncludeResolved = _props7.postsToIncludeResolved;
+
+
+                return mergedPosts !== null && (postsToSearchResolved || postsToIncludeResolved) ? mergedPosts.map(function (post) {
+                    return post.title.rendered;
+                }) : [];
+            }
         }, {
             key: 'selectCategories',
             value: function selectCategories(tokens) {
@@ -25951,7 +25986,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var queryFields = ['id', 'title'];
 
             // Search posts
-            var postsToSearchQuery = pickBy({ _fields: queryFields, per_page: 10, search: searchString }, function (value) {
+            var postsToSearchQuery = pickBy({ _fields: queryFields, per_page: 10, search: '"' + searchString + '"' }, function (value) {
                 return !isUndefined(value);
             });
             var postsToSearch = typeof searchString !== 'undefined' ? getEntityRecords('postType', postType ? postType : 'post', postsToSearchQuery) : null;

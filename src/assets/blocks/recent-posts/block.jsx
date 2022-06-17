@@ -428,23 +428,8 @@ import { AuthorSelect } from './query-controls.jsx';
                 orderSections,
             } = attributes;
 
-            // Get posts suggestions for Include
-            let mergedPosts = null;
-            if( postsToSearchResolved ) {
-                mergedPosts = postsToSearch;
-            }
-
-            // Merge posts suggestions and includePosts
-            if( postsToSearchResolved && postsToIncludeResolved ) {
-                mergedPosts = postsToSearch.concat(postsToInclude);
-            }
-
-            // Merge posts suggestions and excludePosts
-            if( postsToSearchResolved && postsToExcludeResolved ) {
-                mergedPosts = mergedPosts.concat(postsToExclude);
-            }
-
-            let postSuggestionsInclude = mergedPosts !== null && ( postsToSearchResolved || postsToIncludeResolved ) ? mergedPosts.map( ( post ) => post.title.raw ) : [];
+            let mergedPosts = this.getMergedPosts();
+            let postSuggestionsInclude = this.getPostsSuggestionsInclude( mergedPosts );
             let recentPosts = this.props.recentPosts;
 
             // We need to check if we're in post edit or widgets screen
@@ -1261,6 +1246,50 @@ import { AuthorSelect } from './query-controls.jsx';
             )
         }
 
+        /**
+         * Get current include/exclude posts merged with the ones from search
+         */
+        getMergedPosts() {
+            const {
+                postsToSearch,
+                postsToSearchResolved,
+                postsToInclude,
+                postsToIncludeResolved,
+                postsToExclude,
+                postsToExcludeResolved
+            } = this.props;
+
+            let mergedPosts = null;
+
+            // Get only searched posts
+            if( postsToSearchResolved ) {
+                mergedPosts = postsToSearch;
+            }
+
+            // Merge posts suggestions and includePosts
+            if( postsToSearchResolved && postsToIncludeResolved ) {
+                mergedPosts = postsToSearch.concat(postsToInclude);
+            }
+
+            // Merge posts suggestions and excludePosts
+            if( postsToSearchResolved && postsToExcludeResolved ) {
+                mergedPosts = mergedPosts.concat(postsToExclude);
+            }
+            return mergedPosts;
+        }
+
+        /**
+         * Get post titles for include
+         */
+        getPostsSuggestionsInclude( mergedPosts ) {
+            const {
+                postsToSearchResolved,
+                postsToIncludeResolved
+            } = this.props;
+
+            return mergedPosts !== null && ( postsToSearchResolved || postsToIncludeResolved ) ? mergedPosts.map( ( post ) => post.title.rendered ) : [];
+        }
+
         static extractContent(html, length) {
             const span= document.createElement('span');
             span.innerHTML= html;
@@ -1757,7 +1786,7 @@ import { AuthorSelect } from './query-controls.jsx';
             const queryFields = [ 'id', 'title' ];
 
             // Search posts
-            const postsToSearchQuery = pickBy( { _fields: queryFields, per_page: 10, search: searchString }, ( value ) => ! isUndefined( value ) );
+            const postsToSearchQuery = pickBy( { _fields: queryFields, per_page: 10, search: `"${searchString}"` }, ( value ) => ! isUndefined( value ) );
             const postsToSearch = typeof searchString !== 'undefined'
                 ? getEntityRecords(
                     'postType',
