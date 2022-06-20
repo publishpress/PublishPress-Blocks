@@ -24150,7 +24150,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 postTypeList: [],
                 updating: false,
                 tabSelected: 'desktop',
-                updatePostSuggestions: true,
+                updatePostSuggestions: true, // Backward compatibility 2.13.2 and lower
                 authorList: []
             };
 
@@ -24336,7 +24336,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     clientId = _props4.clientId,
                     postList = _props4.postList;
                 var postView = attributes.postView,
-                    updatePostSuggestions = attributes.updatePostSuggestions,
                     sliderAutoplay = attributes.sliderAutoplay,
                     sliderAutoplaySpeed = attributes.sliderAutoplaySpeed;
 
@@ -24389,18 +24388,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     $('#block-' + clientId + ' .masonry-view .advgb-recent-posts').isotope('destroy');
                 }
 
-                // this.state.updatePostSuggestions: corresponds to componentDidMount
-                if (postList && (updatePostSuggestions || this.state.updatePostSuggestions)) {
+                // Backward compatibility 2.13.1 and lower
+                if (this.state.updatePostSuggestions && attributes.exclude && attributes.exclude.length > 0 && postList) {
                     var postSuggestions = [];
                     var postTitleVsIdMap = [];
                     postList.forEach(function (post) {
                         postSuggestions.push(post.title.raw);
                         postTitleVsIdMap[post.title.raw] = post.id;
                     });
-                    this.props.setAttributes({ updatePostSuggestions: false });
-                    this.setState({ postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function () {
-                        // Exclude posts, backward compatibility 2.13.1 and lower
-                        if (!attributes.excludeIds && attributes.exclude && attributes.exclude.length > 0) {
+                    this.setState({ postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function () {
+                        if (!attributes.excludeIds) {
                             this.selectPostByTitle(attributes.exclude, 'exclude');
                         }
                     });
@@ -24453,7 +24450,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     postsToInclude = _props5.postsToInclude,
                     postsToIncludeResolved = _props5.postsToIncludeResolved,
                     postsToExclude = _props5.postsToExclude,
-                    postsToExcludeResolved = _props5.postsToExcludeResolved;
+                    postsToExcludeResolved = _props5.postsToExcludeResolved,
+                    postList = _props5.postList;
                 var id = attributes.id,
                     postView = attributes.postView,
                     order = attributes.order,
@@ -24504,9 +24502,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     orderSections = attributes.orderSections;
 
 
-                var mergedPosts = this.getMergedPosts();
-                var postSuggestionsInclude = this.getPostsSuggestionsInclude(mergedPosts);
                 var recentPosts = this.props.recentPosts;
+                var mergedPosts = this.getMergedPosts();
+                var postSuggestionsExclude = this.getPostSuggestions(postList, 'exclude');
+                var postSuggestionsInclude = this.getPostSuggestions(mergedPosts, 'include');
 
                 // We need to check if we're in post edit or widgets screen
                 var isInPost = wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostType() === 'post';
@@ -24800,15 +24799,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }),
                                 React.createElement(FormTokenField, {
                                     multiple: true,
-                                    suggestions: postSuggestions,
-                                    onInputChange: function onInputChange(value) {
-                                        setAttributes({ searchString: value });
-                                    },
-                                    value: this.getPostTitles(excludePosts, mergedPosts),
+                                    suggestions: postSuggestionsExclude,
+                                    value: this.getPostTitles(excludePosts, postList),
                                     label: __('Exclude these posts', 'advanced-gutenberg'),
                                     placeholder: __('Search by title', 'advanced-gutenberg'),
                                     onChange: function onChange(excludePosts) {
-                                        return _this3.getPostIds(excludePosts, mergedPosts, 'exclude');
+                                        return _this3.getPostIds(excludePosts, postList, 'exclude');
                                     }
                                 })
                             )
@@ -25425,20 +25421,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
 
             /**
-             * Get post titles for include
+             * Get post titles for include and exclude
              */
 
         }, {
-            key: 'getPostsSuggestionsInclude',
-            value: function getPostsSuggestionsInclude(mergedPosts) {
+            key: 'getPostSuggestions',
+            value: function getPostSuggestions(posts, type) {
                 var _props7 = this.props,
                     postsToSearchResolved = _props7.postsToSearchResolved,
-                    postsToIncludeResolved = _props7.postsToIncludeResolved;
+                    postsToIncludeResolved = _props7.postsToIncludeResolved,
+                    postsToExcludeResolved = _props7.postsToExcludeResolved;
 
 
-                return mergedPosts !== null && (postsToSearchResolved || postsToIncludeResolved) ? mergedPosts.map(function (post) {
-                    return post.title.rendered;
-                }) : [];
+                if ('exclude' === type) {
+                    return posts !== null ? posts.map(function (post) {
+                        return post.title.raw;
+                    }) : [];
+                } else if ('include' === type && this.isPro()) {
+                    return posts !== null && (postsToSearchResolved || postsToIncludeResolved) ? posts.map(function (post) {
+                        return post.title.raw;
+                    }) : [];
+                } else {
+                    return null;
+                }
             }
         }, {
             key: 'selectCategories',
@@ -25521,6 +25526,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         });
                         if (find_post === undefined || !find_post) {
                             return post_id; // It should return false but creates empty selections
+                            /*wp.apiFetch( {
+                                path: wp.url.addQueryArgs( `wp/v2/posts/${post_id}`, { context: 'edit' } ),
+                            } ).then( ( post ) => {
+                                return post_id === post.id;
+                            } );*/
                         }
                         return find_post.title.raw;
                     });
@@ -25579,7 +25589,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({ taxonomyList: null });
                 this.generateTaxFilters(postType);
 
-                this.props.setAttributes({ postType: postType, excludePosts: [], includePosts: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
+                this.props.setAttributes({ postType: postType, excludePosts: [], includePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [] });
             }
 
             /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
@@ -26012,14 +26022,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var postsToExclude = typeof excludePosts !== 'undefined' && excludePosts.length > 0 ? getEntityRecords('postType', postType ? postType : 'post', postsToExcludeQuery) : null;
             var postsToExcludeResolved = hasFinishedResolution('getEntityRecords', ['postType', postType ? postType : 'post', postsToExcludeQuery]);
 
-            // generate posts without filters for post suggestions
-            var postSuggestionsQuery = omit(recentPostsQuery, union(['exclude', 'include', 'categories', 'tags', 'per_page'], filterTaxNames));
-            var updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
+            // Modifying filters from main query for Exclude post suggestions
+            var postSuggestionsQuery = omit(recentPostsQuery, ['exclude']);
+            postSuggestionsQuery.per_page = typeof excludePosts !== 'undefined' && excludePosts.length > 0 ? numberOfPosts + excludePosts.length : numberOfPosts;
+            postSuggestionsQuery._fields = queryFields;
 
             return {
                 recentPosts: getEntityRecords('postType', postType ? postType : 'post', recentPostsQuery),
-                postList: updatePostSuggestions ? getEntityRecords('postType', postType ? postType : 'post', postSuggestionsQuery) : null,
-                updatePostSuggestions: updatePostSuggestions,
+                postList: getEntityRecords('postType', postType ? postType : 'post', postSuggestionsQuery),
                 postsToSearch: postsToSearch,
                 postsToSearchResolved: postsToSearchResolved,
                 postsToInclude: postsToInclude,

@@ -116,7 +116,7 @@ import { AuthorSelect } from './query-controls.jsx';
                 postTypeList: [],
                 updating: false,
                 tabSelected: 'desktop',
-                updatePostSuggestions: true,
+                updatePostSuggestions: true, // Backward compatibility 2.13.2 and lower
                 authorList: [],
             }
 
@@ -284,7 +284,7 @@ import { AuthorSelect } from './query-controls.jsx';
         componentDidUpdate( prevProps ) {
             const that = this;
             const { attributes, clientId, postList } = this.props;
-            const { postView, updatePostSuggestions, sliderAutoplay, sliderAutoplaySpeed } = attributes;
+            const { postView, sliderAutoplay, sliderAutoplaySpeed } = attributes;
             const $ = jQuery;
 
             if (postView === 'slider') {
@@ -336,18 +336,16 @@ import { AuthorSelect } from './query-controls.jsx';
                 $(`#block-${clientId} .masonry-view .advgb-recent-posts`).isotope('destroy');
             }
 
-            // this.state.updatePostSuggestions: corresponds to componentDidMount
-            if(postList && (updatePostSuggestions || this.state.updatePostSuggestions)){
+            // Backward compatibility 2.13.1 and lower
+            if( this.state.updatePostSuggestions && attributes.exclude && attributes.exclude.length > 0 && postList ) {
                 let postSuggestions = [];
                 let postTitleVsIdMap = [];
                 postList.forEach( post => {
                     postSuggestions.push(post.title.raw);
                     postTitleVsIdMap[ post.title.raw ] = post.id;
                 });
-                this.props.setAttributes( { updatePostSuggestions: false } );
-                this.setState( { postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function(){
-                    // Exclude posts, backward compatibility 2.13.1 and lower
-                    if( !attributes.excludeIds && attributes.exclude && attributes.exclude.length > 0 ){
+                this.setState( { postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function(){
+                    if( !attributes.excludeIds ){
                         this.selectPostByTitle( attributes.exclude, 'exclude' );
                     }
                 });
@@ -378,7 +376,7 @@ import { AuthorSelect } from './query-controls.jsx';
 
         render() {
             const { categoriesList, tagsList, postTypeList, tabSelected, authorList, postSuggestions, taxonomyList } = this.state;
-            const { attributes, setAttributes, recentPosts: recentPostsList, postsToSearch, postsToSearchResolved, postsToInclude, postsToIncludeResolved, postsToExclude, postsToExcludeResolved } = this.props;
+            const { attributes, setAttributes, recentPosts: recentPostsList, postsToSearch, postsToSearchResolved, postsToInclude, postsToIncludeResolved, postsToExclude, postsToExcludeResolved, postList } = this.props;
             const {
                 id,
                 postView,
@@ -428,9 +426,10 @@ import { AuthorSelect } from './query-controls.jsx';
                 orderSections,
             } = attributes;
 
-            let mergedPosts = this.getMergedPosts();
-            let postSuggestionsInclude = this.getPostsSuggestionsInclude( mergedPosts );
             let recentPosts = this.props.recentPosts;
+            let mergedPosts = this.getMergedPosts();
+            let postSuggestionsExclude = this.getPostSuggestions( postList, 'exclude' );
+            let postSuggestionsInclude = this.getPostSuggestions( mergedPosts, 'include' );
 
             // We need to check if we're in post edit or widgets screen
             const isInPost = wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostType() === 'post';
@@ -712,14 +711,11 @@ import { AuthorSelect } from './query-controls.jsx';
                         }
                         <FormTokenField
                             multiple
-                            suggestions={ postSuggestions }
-                            onInputChange={ ( value ) => {
-                                setAttributes( { searchString: value } )
-                            } }
-                            value={ this.getPostTitles( excludePosts, mergedPosts ) }
+                            suggestions={ postSuggestionsExclude }
+                            value={ this.getPostTitles( excludePosts, postList ) }
                             label={ __( 'Exclude these posts', 'advanced-gutenberg' ) }
                             placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
-                            onChange={ ( excludePosts ) => this.getPostIds( excludePosts, mergedPosts, 'exclude' ) }
+                            onChange={ ( excludePosts ) => this.getPostIds( excludePosts, postList, 'exclude' ) }
                         />
                         </div>
                         </Fragment>
@@ -1285,15 +1281,18 @@ import { AuthorSelect } from './query-controls.jsx';
         }
 
         /**
-         * Get post titles for include
+         * Get post titles for include and exclude
          */
-        getPostsSuggestionsInclude( mergedPosts ) {
-            const {
-                postsToSearchResolved,
-                postsToIncludeResolved
-            } = this.props;
+        getPostSuggestions( posts, type ) {
+            const { postsToSearchResolved, postsToIncludeResolved, postsToExcludeResolved } = this.props;
 
-            return mergedPosts !== null && ( postsToSearchResolved || postsToIncludeResolved ) ? mergedPosts.map( ( post ) => post.title.rendered ) : [];
+            if ( 'exclude' === type ) {
+                return posts !== null ? posts.map( ( post ) => post.title.raw ) : [];
+            } else if( 'include' === type && this.isPro() ) {
+                return posts !== null && ( postsToSearchResolved || postsToIncludeResolved ) ? posts.map( ( post ) => post.title.raw ) : [];
+            } else {
+                return null;
+            }
         }
 
         static extractContent(html, length) {
@@ -1399,6 +1398,11 @@ import { AuthorSelect } from './query-controls.jsx';
                     } );
                     if ( find_post === undefined || ! find_post ) {
                         return post_id; // It should return false but creates empty selections
+                        /*wp.apiFetch( {
+                            path: wp.url.addQueryArgs( `wp/v2/posts/${post_id}`, { context: 'edit' } ),
+                        } ).then( ( post ) => {
+                            return post_id === post.id;
+                        } );*/
                     }
                     return find_post.title.raw;
                 } );
@@ -1427,7 +1431,6 @@ import { AuthorSelect } from './query-controls.jsx';
         }
 
         selectPostByTitle(tokens, type) {
-
             const { postTitleVsIdMap  } = this.state;
 
             var hasNoSuggestion = tokens.some(function (token) {
@@ -1456,7 +1459,7 @@ import { AuthorSelect } from './query-controls.jsx';
             this.setState( { taxonomyList: null } );
             this.generateTaxFilters( postType );
 
-            this.props.setAttributes( { postType: postType, excludePosts: [], includePosts: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] } );
+            this.props.setAttributes( { postType: postType, excludePosts: [], includePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [] } );
         }
 
         /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
@@ -1833,14 +1836,14 @@ import { AuthorSelect } from './query-controls.jsx';
     			postsToExcludeQuery
     		] );
 
-            // generate posts without filters for post suggestions
-            const postSuggestionsQuery = omit( recentPostsQuery, union( [ 'exclude', 'include', 'categories', 'tags', 'per_page' ], filterTaxNames ) );
-            let updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
+            // Modifying filters from main query for Exclude post suggestions
+            let postSuggestionsQuery = omit( recentPostsQuery, [ 'exclude' ] );
+            postSuggestionsQuery.per_page = typeof excludePosts !== 'undefined' && excludePosts.length > 0 ? numberOfPosts + excludePosts.length : numberOfPosts;
+            postSuggestionsQuery._fields = queryFields;
 
             return {
                 recentPosts: getEntityRecords( 'postType', postType ? postType : 'post', recentPostsQuery ),
-                postList: updatePostSuggestions ? getEntityRecords( 'postType', postType ? postType : 'post', postSuggestionsQuery ) : null,
-                updatePostSuggestions: updatePostSuggestions,
+                postList: getEntityRecords( 'postType', postType ? postType : 'post', postSuggestionsQuery ),
                 postsToSearch,
                 postsToSearchResolved,
                 postsToInclude,
