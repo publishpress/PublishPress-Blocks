@@ -24150,7 +24150,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 postTypeList: [],
                 updating: false,
                 tabSelected: 'desktop',
-                updatePostSuggestions: true,
+                updatePostSuggestions: true, // Backward compatibility 2.13.2 and lower
                 authorList: []
             };
 
@@ -24195,6 +24195,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                     // Finally set changed attribute to true, so we don't modify anything again
                     setAttributes({ changed: true });
+                }
+
+                if (!attributes.searchString) {
+                    setAttributes({ searchString: '' });
                 }
 
                 wp.apiFetch({
@@ -24332,7 +24336,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     clientId = _props4.clientId,
                     postList = _props4.postList;
                 var postView = attributes.postView,
-                    updatePostSuggestions = attributes.updatePostSuggestions,
                     sliderAutoplay = attributes.sliderAutoplay,
                     sliderAutoplaySpeed = attributes.sliderAutoplaySpeed;
 
@@ -24385,18 +24388,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     $('#block-' + clientId + ' .masonry-view .advgb-recent-posts').isotope('destroy');
                 }
 
-                // this.state.updatePostSuggestions: corresponds to componentDidMount
-                if (postList && (updatePostSuggestions || this.state.updatePostSuggestions)) {
+                // Backward compatibility 2.13.1 and lower
+                if (this.state.updatePostSuggestions && attributes.exclude && attributes.exclude.length > 0 && postList) {
                     var postSuggestions = [];
                     var postTitleVsIdMap = [];
                     postList.forEach(function (post) {
                         postSuggestions.push(post.title.raw);
                         postTitleVsIdMap[post.title.raw] = post.id;
                     });
-                    this.props.setAttributes({ updatePostSuggestions: false });
-                    this.setState({ postSuggestions: postSuggestions, postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function () {
-                        // Exclude posts, backward compatibility 2.13.1 and lower
-                        if (!attributes.excludeIds && attributes.exclude && attributes.exclude.length > 0) {
+                    this.setState({ postTitleVsIdMap: postTitleVsIdMap, updatePostSuggestions: false }, function () {
+                        if (!attributes.excludeIds) {
                             this.selectPostByTitle(attributes.exclude, 'exclude');
                         }
                     });
@@ -24444,7 +24445,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes = _props5.attributes,
                     setAttributes = _props5.setAttributes,
                     recentPostsList = _props5.recentPosts,
-                    postsToSelect = _props5.postsToSelect;
+                    postsToSearch = _props5.postsToSearch,
+                    postsToSearchResolved = _props5.postsToSearchResolved,
+                    postsToInclude = _props5.postsToInclude,
+                    postsToIncludeResolved = _props5.postsToIncludeResolved,
+                    postsToExclude = _props5.postsToExclude,
+                    postsToExcludeResolved = _props5.postsToExcludeResolved,
+                    postList = _props5.postList;
                 var id = attributes.id,
                     postView = attributes.postView,
                     order = attributes.order,
@@ -24495,10 +24502,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     orderSections = attributes.orderSections;
 
 
-                var post_titles = this.isPro() && postsToSelect !== null ? postsToSelect.map(function (post) {
-                    return post.title.raw;
-                }) : [];
                 var recentPosts = this.props.recentPosts;
+                var mergedPosts = this.getMergedPosts();
+                var postSuggestionsExclude = this.getPostSuggestions(postList, 'exclude');
+                var postSuggestionsInclude = this.getPostSuggestions(mergedPosts, 'include');
 
                 // We need to check if we're in post edit or widgets screen
                 var isInPost = wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostType() === 'post';
@@ -24792,12 +24799,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }),
                                 React.createElement(FormTokenField, {
                                     multiple: true,
-                                    suggestions: postSuggestions,
-                                    value: this.getPostTitles(excludePosts, postsToSelect),
+                                    suggestions: postSuggestionsExclude,
+                                    value: this.getPostTitles(excludePosts, postList),
                                     label: __('Exclude these posts', 'advanced-gutenberg'),
                                     placeholder: __('Search by title', 'advanced-gutenberg'),
                                     onChange: function onChange(excludePosts) {
-                                        return _this3.getPostIds(excludePosts, postsToSelect, 'exclude');
+                                        return _this3.getPostIds(excludePosts, postList, 'exclude');
                                     }
                                 })
                             )
@@ -24811,13 +24818,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { title: __('Advanced Filters', 'advanced-gutenberg'), className: 'advgb-pro-icon' },
                             React.createElement(FormTokenField, {
                                 multiple: true,
-                                suggestions: post_titles,
-                                maxSuggestions: 15,
-                                value: this.getPostTitles(includePosts, postsToSelect),
+                                suggestions: postSuggestionsInclude,
+                                onInputChange: function onInputChange(value) {
+                                    setAttributes({ searchString: value });
+                                },
+                                maxSuggestions: 10,
+                                value: this.getPostTitles(includePosts, mergedPosts),
                                 label: __('Display these posts only', 'advanced-gutenberg'),
                                 placeholder: __('Search by title', 'advanced-gutenberg'),
                                 onChange: function onChange(includePosts) {
-                                    return _this3.getPostIds(includePosts, postsToSelect, 'include');
+                                    return _this3.getPostIds(includePosts, mergedPosts, 'include');
                                 }
                             })
                         )
@@ -25371,6 +25381,70 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     )
                 );
             }
+
+            /**
+             * Get current include/exclude posts merged with the ones from search
+             */
+
+        }, {
+            key: 'getMergedPosts',
+            value: function getMergedPosts() {
+                var _props6 = this.props,
+                    postsToSearch = _props6.postsToSearch,
+                    postsToSearchResolved = _props6.postsToSearchResolved,
+                    postsToInclude = _props6.postsToInclude,
+                    postsToIncludeResolved = _props6.postsToIncludeResolved,
+                    postsToExclude = _props6.postsToExclude,
+                    postsToExcludeResolved = _props6.postsToExcludeResolved;
+
+
+                var mergedPosts = null;
+                if (postsToSearchResolved && !postsToIncludeResolved && !postsToExcludeResolved) {
+                    // Get only searchString
+                    mergedPosts = postsToSearch;
+                } else if (postsToSearchResolved && postsToIncludeResolved && !postsToExcludeResolved) {
+                    // Get searchString and includePosts
+                    mergedPosts = postsToSearch.concat(postsToInclude);
+                } else if (postsToSearchResolved && !postsToIncludeResolved && postsToExcludeResolved) {
+                    // Get searchString and excludePosts
+                    mergedPosts = postsToSearch.concat(postsToExclude);
+                } else if (!postsToSearchResolved && postsToIncludeResolved && !postsToExcludeResolved) {
+                    // Get only includePosts
+                    mergedPosts = postsToInclude;
+                } else if (!postsToSearchResolved && !postsToIncludeResolved && postsToExcludeResolved) {
+                    // Get only excludePosts
+                    mergedPosts = postsToExclude;
+                } else {
+                    // Nothing to do here. mergedPosts is null
+                }
+                return mergedPosts;
+            }
+
+            /**
+             * Get post titles for include and exclude
+             */
+
+        }, {
+            key: 'getPostSuggestions',
+            value: function getPostSuggestions(posts, type) {
+                var _props7 = this.props,
+                    postsToSearchResolved = _props7.postsToSearchResolved,
+                    postsToIncludeResolved = _props7.postsToIncludeResolved,
+                    postsToExcludeResolved = _props7.postsToExcludeResolved;
+
+
+                if ('exclude' === type) {
+                    return posts !== null ? posts.map(function (post) {
+                        return post.title.raw;
+                    }) : [];
+                } else if ('include' === type && this.isPro()) {
+                    return posts !== null && (postsToSearchResolved || postsToIncludeResolved) ? posts.map(function (post) {
+                        return post.title.raw;
+                    }) : [];
+                } else {
+                    return null;
+                }
+            }
         }, {
             key: 'selectCategories',
             value: function selectCategories(tokens) {
@@ -25451,7 +25525,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             return post.id === post_id;
                         });
                         if (find_post === undefined || !find_post) {
-                            return false;
+                            return post_id; // It should return false but creates empty selections
                         }
                         return find_post.title.raw;
                     });
@@ -25510,7 +25584,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({ taxonomyList: null });
                 this.generateTaxFilters(postType);
 
-                this.props.setAttributes({ postType: postType, excludePosts: [], includePosts: [], updatePostSuggestions: true, showCustomTaxList: [], taxonomies: {}, categories: [] });
+                this.props.setAttributes({ postType: postType, excludePosts: [], includePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [] });
             }
 
             /* Check if PP Series plugin is active and enabled for current postType or if is a CPT to call sidebar filters  */
@@ -25869,7 +25943,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         edit: withSelect(function (select, props) {
             var _select = select('core'),
-                getEntityRecords = _select.getEntityRecords;
+                getEntityRecords = _select.getEntityRecords,
+                hasFinishedResolution = _select.hasFinishedResolution;
 
             var _props$attributes3 = props.attributes,
                 categories = _props$attributes3.categories,
@@ -25887,7 +25962,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 author = _props$attributes3.author,
                 taxonomies = _props$attributes3.taxonomies,
                 taxIds = _props$attributes3.taxIds,
-                onlyFromCurrentUser = _props$attributes3.onlyFromCurrentUser;
+                onlyFromCurrentUser = _props$attributes3.onlyFromCurrentUser,
+                searchString = _props$attributes3.searchString;
 
 
             var catIds = categories && categories.length > 0 ? categories.map(function (cat) {
@@ -25918,17 +25994,43 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
 
-            // generate posts without filters for post suggestions
-            var postSuggestionsQuery = omit(recentPostsQuery, union(['exclude', 'include', 'categories', 'tags', 'per_page'], filterTaxNames));
-            var updatePostSuggestions = props.attributes.updatePostSuggestions !== undefined ? props.attributes.updatePostSuggestions : true;
+            var queryFields = ['id', 'title'];
+
+            // Search posts
+            var postsToSearchQuery = pickBy({ _fields: queryFields, per_page: 10, search: '"' + searchString + '"', orderby: 'title', order: 'desc' }, function (value) {
+                return !isUndefined(value);
+            });
+            var postsToSearch = advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1' && typeof searchString !== 'undefined' && searchString.length > 0 ? getEntityRecords('postType', postType ? postType : 'post', postsToSearchQuery) : null;
+            var postsToSearchResolved = hasFinishedResolution('getEntityRecords', ['postType', postType ? postType : 'post', postsToSearchQuery]);
+
+            // Include posts
+            var postsToIncludeQuery = pickBy({ _fields: queryFields, per_page: -1, include: includePosts }, function (value) {
+                return !isUndefined(value);
+            });
+            var postsToInclude = advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1' && typeof includePosts !== 'undefined' && includePosts.length > 0 ? getEntityRecords('postType', postType ? postType : 'post', postsToIncludeQuery) : null;
+            var postsToIncludeResolved = hasFinishedResolution('getEntityRecords', ['postType', postType ? postType : 'post', postsToIncludeQuery]);
+
+            // Exclude posts
+            var postsToExcludeQuery = pickBy({ _fields: queryFields, per_page: -1, include: excludePosts }, function (value) {
+                return !isUndefined(value);
+            });
+            var postsToExclude = typeof excludePosts !== 'undefined' && excludePosts.length > 0 ? getEntityRecords('postType', postType ? postType : 'post', postsToExcludeQuery) : null;
+            var postsToExcludeResolved = hasFinishedResolution('getEntityRecords', ['postType', postType ? postType : 'post', postsToExcludeQuery]);
+
+            // Modifying filters from main query for Exclude post suggestions
+            var postSuggestionsQuery = omit(recentPostsQuery, ['exclude']);
+            postSuggestionsQuery.per_page = typeof excludePosts !== 'undefined' && excludePosts.length > 0 ? numberOfPosts + excludePosts.length : numberOfPosts;
+            postSuggestionsQuery._fields = queryFields;
 
             return {
                 recentPosts: getEntityRecords('postType', postType ? postType : 'post', recentPostsQuery),
-                postList: updatePostSuggestions ? getEntityRecords('postType', postType ? postType : 'post', postSuggestionsQuery) : null,
-                updatePostSuggestions: updatePostSuggestions,
-                postsToSelect: getEntityRecords('postType', postType ? postType : 'post', pickBy({ per_page: -1 }, function (value) {
-                    return !isUndefined(value);
-                }))
+                postList: getEntityRecords('postType', postType ? postType : 'post', postSuggestionsQuery),
+                postsToSearch: postsToSearch,
+                postsToSearchResolved: postsToSearchResolved,
+                postsToInclude: postsToInclude,
+                postsToIncludeResolved: postsToIncludeResolved,
+                postsToExclude: postsToExclude,
+                postsToExcludeResolved: postsToExcludeResolved
             };
         })(RecentPostsEdit),
         save: function save() {
