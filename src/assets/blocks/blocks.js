@@ -25526,11 +25526,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         });
                         if (find_post === undefined || !find_post) {
                             return post_id; // It should return false but creates empty selections
-                            /*wp.apiFetch( {
-                                path: wp.url.addQueryArgs( `wp/v2/posts/${post_id}`, { context: 'edit' } ),
-                            } ).then( ( post ) => {
-                                return post_id === post.id;
-                            } );*/
                         }
                         return find_post.title.raw;
                     });
