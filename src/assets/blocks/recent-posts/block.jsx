@@ -1795,7 +1795,7 @@ import { AuthorSelect } from './query-controls.jsx';
             const queryFields = [ 'id', 'title' ];
 
             // Search posts
-            const postsToSearchQuery = pickBy( { _fields: queryFields, per_page: 10, search: `"${searchString}"` }, ( value ) => ! isUndefined( value ) );
+            const postsToSearchQuery = pickBy( { _fields: queryFields, per_page: 10, search: `"${searchString}"`, orderby: 'title', order: 'desc' }, ( value ) => ! isUndefined( value ) );
             const postsToSearch = advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1' && typeof searchString !== 'undefined' && searchString.length > 0
                 ? getEntityRecords(
                     'postType',

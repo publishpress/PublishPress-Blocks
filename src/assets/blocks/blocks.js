@@ -26002,7 +26002,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var queryFields = ['id', 'title'];
 
             // Search posts
-            var postsToSearchQuery = pickBy({ _fields: queryFields, per_page: 10, search: '"' + searchString + '"' }, function (value) {
+            var postsToSearchQuery = pickBy({ _fields: queryFields, per_page: 10, search: '"' + searchString + '"', orderby: 'title', order: 'desc' }, function (value) {
                 return !isUndefined(value);
             });
             var postsToSearch = advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro === '1' && typeof searchString !== 'undefined' && searchString.length > 0 ? getEntityRecords('postType', postType ? postType : 'post', postsToSearchQuery) : null;
