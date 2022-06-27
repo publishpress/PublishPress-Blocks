@@ -5600,7 +5600,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $post_view              = isset( $blockAttrs['postView'] ) && ! empty( $blockAttrs['postView'] ) ? esc_html( $blockAttrs['postView'] ) : 'grid';
             $frontpage_style        = isset( $blockAttrs['frontpageStyle'] ) && ! empty( $blockAttrs['frontpageStyle'] ) ? esc_html( $blockAttrs['frontpageStyle'] ) : 'default';
             $slider_style           = isset( $blockAttrs['sliderStyle'] ) && ! empty( $blockAttrs['sliderStyle'] ) ? esc_html( $blockAttrs['sliderStyle'] ) : 'default';
-            $image_overlay_color    = isset( $blockAttrs['imageOverlayColor'] ) ? esc_html( $blockAttrs['imageOverlayColor'] ) : '';
+            $image_overlay_color    = isset( $blockAttrs['imageOverlayColor'] ) ? esc_html( $blockAttrs['imageOverlayColor'] ) : '#000';
             $image_opacity          = isset( $blockAttrs['imageOpacity'] ) ? esc_html( $blockAttrs['imageOpacity'] ) : 1;
 
             $style_html = '';
