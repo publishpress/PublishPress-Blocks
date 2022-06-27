@@ -4581,8 +4581,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
              * as the rest of blocks as first level block (not as a child),
              * so we add the inline CSS in head */
             if(
-                defined('ADVANCED_GUTENBERG_PRO')
-                && $block['blockName'] === 'advgb/recent-posts'
+                $block['blockName'] === 'advgb/recent-posts'
                 && !empty($style)
             ) {
                 wp_add_inline_style(
