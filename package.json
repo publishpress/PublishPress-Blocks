@@ -39,5 +39,8 @@
     "waypoints": "^4.0.1",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "npm": "^7.7.6"
   }
 }
