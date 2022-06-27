@@ -21,6 +21,7 @@
     "compile-sass": "^1.1.1",
     "counterup2": "^1.0.4",
     "elliptic": "^6.5.4",
+    "glob-parent": "^5.1.2",
     "gulp": "^4.0.2",
     "gulp-zip": "^5.1.0",
     "html-react-parser": "^0.10.5",
