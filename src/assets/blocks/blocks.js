@@ -24049,6 +24049,8 @@ var _queryControls = __webpack_require__(/*! ./query-controls.jsx */ "./src/asse
 
 var _queryControls2 = _interopRequireDefault(_queryControls);
 
+var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ "./src/assets/blocks/0-adv-components/components.jsx");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -24466,6 +24468,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayFeaturedImageFor = attributes.displayFeaturedImageFor,
                     displayFeaturedImageCaption = attributes.displayFeaturedImageCaption,
                     enablePlaceholderImage = attributes.enablePlaceholderImage,
+                    imageOpacity = attributes.imageOpacity,
+                    imageOverlayColor = attributes.imageOverlayColor,
                     displayAuthor = attributes.displayAuthor,
                     displayAuthorFor = attributes.displayAuthorFor,
                     authorLinkNewTab = attributes.authorLinkNewTab,
@@ -24922,6 +24926,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 },
                                 className: 'advgb-child-select'
                             }),
+                            (postView === 'frontpage' && frontpageStyle === 'headline' || postView === 'slider' && sliderStyle === 'headline') && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(RangeControl, {
+                                    label: __('Image opacity', 'advanced-gutenberg'),
+                                    value: imageOpacity,
+                                    min: 0,
+                                    max: 1,
+                                    step: 0.1,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ imageOpacity: value });
+                                    },
+                                    className: 'advgb-child-range'
+                                }),
+                                React.createElement(
+                                    'div',
+                                    { className: 'advgb-child-advcolor' },
+                                    React.createElement(_components.AdvColorControl, {
+                                        label: __('Overlay Color', 'advanced-gutenberg'),
+                                        value: imageOverlayColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ imageOverlayColor: value });
+                                        }
+                                    })
+                                )
+                            ),
                             React.createElement(ToggleControl, {
                                 label: __('Display Caption', 'advanced-gutenberg'),
                                 checked: displayFeaturedImageCaption,
@@ -25487,6 +25517,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     )
                                 );
                             })
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        null,
+                        React.createElement(
+                            'style',
+                            null,
+                            '.' + id + '.advgb-recent-posts-block.style-headline .advgb-recent-posts .advgb-recent-post .advgb-post-thumbnail {\n                                background: ' + imageOverlayColor + ';\n                            }\n                            .' + id + '.advgb-recent-posts-block.style-headline .advgb-recent-posts .advgb-recent-post .advgb-post-thumbnail a img {\n                                opacity: ' + imageOpacity + ';\n                            }'
                         )
                     )
                 );

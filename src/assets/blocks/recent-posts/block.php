@@ -552,6 +552,14 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'boolean',
                 'default' => true,
             ),
+            'imageOverlayColor' => array(
+                'type' => 'string',
+                'default' => '#000',
+            ),
+            'imageOpacity' => array(
+                'type' => 'number',
+                'default' => 1,
+            ),
             'displayAuthor' => array(
                 'type' => 'boolean',
                 'default' => false,
