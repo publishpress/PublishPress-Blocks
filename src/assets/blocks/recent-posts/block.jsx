@@ -1,5 +1,6 @@
 import AdvQueryControls from './query-controls.jsx';
 import { AuthorSelect } from './query-controls.jsx';
+import { AdvColorControl } from "../0-adv-components/components.jsx";
 
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
@@ -399,6 +400,8 @@ import { AuthorSelect } from './query-controls.jsx';
                 displayFeaturedImageFor,
                 displayFeaturedImageCaption,
                 enablePlaceholderImage,
+                imageOpacity,
+                imageOverlayColor,
                 displayAuthor,
                 displayAuthorFor,
                 authorLinkNewTab,
@@ -822,6 +825,27 @@ import { AuthorSelect } from './query-controls.jsx';
                                 onChange={ ( value ) => setAttributes( { imagePosition: value } ) }
                                 className="advgb-child-select"
                             />
+                            }
+                            { ( ( postView === 'frontpage' && frontpageStyle === 'headline' )
+                            || ( postView === 'slider' && sliderStyle === 'headline' ) ) &&
+                                <Fragment>
+                                    <RangeControl
+                                        label={ __( 'Image opacity', 'advanced-gutenberg' ) }
+                                        value={ imageOpacity }
+                                        min={ 0 }
+                                        max={ 1 }
+                                        step={ 0.1 }
+                                        onChange={ ( value ) => setAttributes( { imageOpacity: value } ) }
+                                        className="advgb-child-range"
+                                    />
+                                    <div className="advgb-child-advcolor">
+                                        <AdvColorControl
+                                            label={ __('Overlay Color', 'advanced-gutenberg') }
+                                            value={ imageOverlayColor }
+                                            onChange={ ( value ) => setAttributes( { imageOverlayColor: value } ) }
+                                        />
+                                    </div>
+                                </Fragment>
                             }
                             <ToggleControl
                                 label={ __( 'Display Caption', 'advanced-gutenberg' ) }
@@ -1334,6 +1358,16 @@ import { AuthorSelect } from './query-controls.jsx';
                                 </article>
                             ) ) }
                         </div>
+                    </div>
+                    <div>
+                        <style>
+                            {`.${id}.advgb-recent-posts-block.style-headline .advgb-recent-posts .advgb-recent-post .advgb-post-thumbnail {
+                                background: ${imageOverlayColor};
+                            }
+                            .${id}.advgb-recent-posts-block.style-headline .advgb-recent-posts .advgb-recent-post .advgb-post-thumbnail a img {
+                                opacity: ${imageOpacity};
+                            }`}
+                        </style>
                     </div>
                 </Fragment>
             )
