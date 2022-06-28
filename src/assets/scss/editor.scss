@@ -107,3 +107,8 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
   box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
   outline: 3px solid transparent;
 }
+
+/* Recent posts */
+.advgb-recent-posts-block.slider-view.style-headline .advgb-recent-posts .advgb-recent-post .advgb-post-wrapper {
+  box-sizing: border-box;
+}
