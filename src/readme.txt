@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.13.3 - 28 Jun 2022 =
+= 2.13.3 - 30 Jun 2022 =
   * Add: Blue color from WordPress core to unit elements (px, %) for Content Display block
   * Add: Choose to display author, date, excerpt, read more, category, tags, comment counts and custom taxonomies for up to 5 first posts in Content Display block
   * Add: Offset posts filter to Content Display block
@@ -267,6 +267,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Lost password link broken in Login/Register Form block
   * Fix: Slideshow view text in editor preview is cropped for Content Display block
   * Fix: Vertical alignment for content in newspaper view for Content Display block
+  * Fix: Make email and password fields required for Login/Register Form block
   * Remove: PublishPress Series box from editor preview in Content Display block
 
 = 2.13.2.1 - 21 Jun 2022 =
