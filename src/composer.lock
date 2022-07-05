@@ -8,11 +8,11 @@
     "packages": [
         {
             "name": "publishpress/publishpress-instance-protection",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/publishpress-instance-protection",
-                "reference": "ddfa4b1e07f77b41b26e46223626584a85800073"
+                "reference": "ef1a631a41b723ce2e856f534ff4befbe914e964"
             },
             "require": {
                 "php": ">=5.6.20"
@@ -32,20 +32,20 @@
             "keywords": [
                 "wordpress plugin"
             ],
-            "time": "2022-05-03T13:25:31+00:00"
+            "time": "2022-06-03T17:41:36+00:00"
         },
         {
             "name": "publishpress/wordpress-reviews",
-            "version": "v1.1.18",
+            "version": "v1.1.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/wordpress-reviews.git",
-                "reference": "0020705b8f6a7177fc393c6c42c82171bf9e2fbd"
+                "reference": "028e573eb7c5da2455a7a823cabbbe5e3f89ca9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/wordpress-reviews/zipball/0020705b8f6a7177fc393c6c42c82171bf9e2fbd",
-                "reference": "0020705b8f6a7177fc393c6c42c82171bf9e2fbd",
+                "url": "https://api.github.com/repos/publishpress/wordpress-reviews/zipball/028e573eb7c5da2455a7a823cabbbe5e3f89ca9c",
+                "reference": "028e573eb7c5da2455a7a823cabbbe5e3f89ca9c",
                 "shasum": ""
             },
             "require": {
@@ -98,9 +98,9 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/wordpress-reviews/issues",
-                "source": "https://github.com/publishpress/wordpress-reviews/tree/v1.1.18"
+                "source": "https://github.com/publishpress/wordpress-reviews/tree/v1.1.19"
             },
-            "time": "2021-12-15T00:03:53+00:00"
+            "time": "2022-06-03T13:38:53+00:00"
         }
     ],
     "packages-dev": [],
