@@ -267,7 +267,6 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Don't output text after title and text before read more when empty in editor for Content Display block
   * Fix: Lost password link broken in Login/Register Form block
   * Fix: Slideshow view text in editor preview is cropped for Content Display block
-  * Fix: Vertical alignment for content in newspaper view for Content Display block
   * Fix: Make email and password fields required for Login/Register Form block
   * Remove: PublishPress Series box from editor preview in Content Display block
 
