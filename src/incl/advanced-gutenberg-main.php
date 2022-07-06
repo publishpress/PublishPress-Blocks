@@ -4581,8 +4581,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
              * as the rest of blocks as first level block (not as a child),
              * so we add the inline CSS in head */
             if(
-                defined('ADVANCED_GUTENBERG_PRO')
-                && $block['blockName'] === 'advgb/recent-posts'
+                $block['blockName'] === 'advgb/recent-posts'
                 && !empty($style)
             ) {
                 wp_add_inline_style(
@@ -5231,6 +5230,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     break;
 
                 case 'advgb/recent-posts':
+                    $html_style = $this->advgb_AdvancedRecentPostsStyles($blockAttrs);
                     $this->advgb_AdvancedRecentPostsAssets($blockAttrs);
                     break;
 
@@ -5580,6 +5580,43 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $style_html .= 'background-color:'.$active_tab_bg_color.' !important;';
             $style_html .= 'color:'.$active_tab_text_color.' !important;';
             $style_html .= '}';
+
+            return $style_html;
+        }
+
+        /**
+         * Styles for Recent Posts Block
+         *
+         * @since   2.13.3
+         * @param   $blockAttrs The block attributes
+         * @return  void
+         */
+        public function advgb_AdvancedRecentPostsStyles($blockAttrs) {
+            if( ! isset( $blockAttrs['id'] ) ) {
+                return;
+            }
+
+            $block_class            = esc_html( $blockAttrs['id'] );
+            $post_view              = isset( $blockAttrs['postView'] ) && ! empty( $blockAttrs['postView'] ) ? esc_html( $blockAttrs['postView'] ) : 'grid';
+            $frontpage_style        = isset( $blockAttrs['frontpageStyle'] ) && ! empty( $blockAttrs['frontpageStyle'] ) ? esc_html( $blockAttrs['frontpageStyle'] ) : 'default';
+            $slider_style           = isset( $blockAttrs['sliderStyle'] ) && ! empty( $blockAttrs['sliderStyle'] ) ? esc_html( $blockAttrs['sliderStyle'] ) : 'default';
+            $image_overlay_color    = isset( $blockAttrs['imageOverlayColor'] ) ? esc_html( $blockAttrs['imageOverlayColor'] ) : '#000';
+            $image_opacity          = isset( $blockAttrs['imageOpacity'] ) ? esc_html( $blockAttrs['imageOpacity'] ) : 1;
+
+            $style_html = '';
+
+            // Only for headline style, slider and frontpage view
+            if(
+                ( $post_view === 'frontpage' && $frontpage_style === 'headline' )
+                || ( $post_view === 'slider' && $slider_style === 'headline' )
+            ) {
+                $style_html  .= '.'.$block_class.'.advgb-recent-posts-block.style-headline .advgb-recent-posts .advgb-recent-post .advgb-post-thumbnail {';
+                    $style_html  .= 'background:' . $image_overlay_color . ';';
+                $style_html  .= '}';
+                $style_html  .= '.'.$block_class.'.advgb-recent-posts-block.style-headline .advgb-recent-posts .advgb-recent-post .advgb-post-thumbnail a img {';
+                    $style_html  .= 'opacity:' . $image_opacity . ';';
+                $style_html  .= '}';
+            }
 
             return $style_html;
         }

@@ -1,0 +1,18 @@
+# 1. Duplicate this file
+# 2. Change filename to: json_translations.sh
+# 3. Add permissions to the file: chmod +x ./json_translations.sh
+
+# JSON files
+npx po2json ./src/languages/advanced-gutenberg-es_MX.po ./src/languages/advanced-gutenberg-es_MX-editor.json -f jed1.x
+npx po2json ./src/languages/advanced-gutenberg-es_ES.po ./src/languages/advanced-gutenberg-es_ES-editor.json -f jed1.x
+npx po2json ./src/languages/advanced-gutenberg-it_IT.po ./src/languages/advanced-gutenberg-it_IT-editor.json -f jed1.x
+npx po2json ./src/languages/advanced-gutenberg-fr_FR.po ./src/languages/advanced-gutenberg-fr_FR-editor.json -f jed1.x
+npx po2json ./src/languages/advanced-gutenberg-nb_NO.po ./src/languages/advanced-gutenberg-nb_NO-editor.json -f jed1.x
+npx po2json ./src/languages/advanced-gutenberg-da_DK.po ./src/languages/advanced-gutenberg-da_DK-editor.json -f jed1.x
+
+# These JSON files have almost none or zero translations both Free and Pro
+npx po2json ./src/languages/advanced-gutenberg-de_DE.po ./src/languages/advanced-gutenberg-de_DE-editor.json -f jed1.x
+npx po2json ./src/languages/advanced-gutenberg-ja.po ./src/languages/advanced-gutenberg-ja-editor.json -f jed1.x
+npx po2json ./src/languages/advanced-gutenberg-pl_PL.po ./src/languages/advanced-gutenberg-pl_PL-editor.json -f jed1.x
+npx po2json ./src/languages/advanced-gutenberg-ro_RO.po ./src/languages/advanced-gutenberg-ro_RO-editor.json -f jed1.x
+npx po2json ./src/languages/advanced-gutenberg-zh_CN.po ./src/languages/advanced-gutenberg-zh_CN-editor.json -f jed1.x

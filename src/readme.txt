@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 2.13.2.1
+Stable tag: 2.13.3
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -256,6 +256,19 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 16. Custom Styles for Blocks: You create custom CSS styles and make them available to end users.
 
 == Changelog ==
+
+= 2.13.3 - 6 Jul 2022 =
+  * Add: Blue color from WordPress core to unit elements (px, %) for Content Display block
+  * Add: Choose to display author, date, excerpt, read more, category, tags, comment counts and custom taxonomies for up to 5 first posts in Content Display block
+  * Add: Offset posts filter to Content Display block
+  * Add: Featured image color overlay and opacity for headline style to Content Display block
+  * Add: JSON translations for French, Danish and Norwegian
+  * Fix: Center featured image when using default slider view for Content Display block
+  * Fix: Don't output text after title and text before read more when empty in editor for Content Display block
+  * Fix: Lost password link broken in Login/Register Form block
+  * Fix: Slideshow view text in editor preview is cropped for Content Display block
+  * Fix: Make email and password fields required for Login/Register Form block
+  * Remove: PublishPress Series box from editor preview in Content Display block
 
 = 2.13.2.1 - 21 Jun 2022 =
   * Add: Exclude posts shared method for Content Display block
