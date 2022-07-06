@@ -1,7 +1,6 @@
 # 1. Duplicate this file
-# 2. Replace /path/to/PublishPress-Blocks/ with your local free repository path
-# 3. Change filename to: json_translations.sh
-# 4. Add permissions to the file: chmod +x ./json_translations.sh
+# 2. Change filename to: json_translations.sh
+# 3. Add permissions to the file: chmod +x ./json_translations.sh
 
 # JSON files
 npx po2json ./src/languages/advanced-gutenberg-es_MX.po ./src/languages/advanced-gutenberg-es_MX-editor.json -f jed1.x
