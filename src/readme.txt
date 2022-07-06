@@ -191,7 +191,7 @@ No. The impact is minimal because our plugin relies heavily on tools provided by
 
 Many of our blocks are built on top of the default Gutenberg blocks, so little extra code is necessary. And if you decide to stop using PublishPress Blocks, any Gutenberg block will safely turn back to regular HTML. This means that PublishPress Blocks is a safe option to use, because your content is not locked into our plugin forever.
 
-[Read more about disabling PubishPress Blocks](https://publishpress.com/knowledge-base/disable-advanced-gutenberg/).
+[Read more about disabling PublishPress Blocks](https://publishpress.com/knowledge-base/disable-advanced-gutenberg/).
 
 = Can I add a lightbox display to the WordPress gallery block? =
 
