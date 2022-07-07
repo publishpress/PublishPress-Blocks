@@ -59,7 +59,7 @@ PublishPress Blocks has everything you need to build professional websites with 
 - **[Newsletter block](https://publishpress.com/knowledge-base/newsletter-block/)**: The Newsletter block can save your future customers email for your marketing operations. You can create a sign-up block that's customized with your own styling and text.
 - **[Search bar block](https://publishpress.com/knowledge-base/search-bar-block/)**: The Search Bar block allows you to add a very customizable search form into Gutenberg. You can change the colors, icons, width and text of your search bar.
 - **[Social Links block](https://publishpress.com/knowledge-base/social-links-block/)**: You can share your social media profiles very easily by using the Social Links block. This block allows you to add links to your company / organization / personal profile on all the major social networks.
-- **[Summary block](https://publishpress.com/knowledge-base/summary-block/)**: The Summary block allows you to show a Table of Contents for your posts created with Gutenberg. WordPress automatically creates this Table of Contents using the headings in your post. This block enables you to place that Table of Contents so your visitors can see it.
+- **[Table of Contents block](https://publishpress.com/knowledge-base/summary-block/)**: The Table of Contents block allows you to show a Table of Contents for your posts created with Gutenberg. WordPress automatically creates this Table of Contents using the headings in your post. This block enables you to place that Table of Contents so your visitors can see it.
 - **[Table block](https://publishpress.com/knowledge-base/advanced-table-block/)**: The Advanced Table block is based on the default Table block in Gutenberg. This improved version of the block has tons of extra table features including advanced styling such as margin, padding, alignment, colors and more.
 - **[Tabs block](https://publishpress.com/knowledge-base/advanced-tabs-block/)**: You can create an Advanced Tabs block when you need to display a lot of content in a small area. The tabs are mobile-friendly, can be horizontal or vertical, and can be customized with your colors and design.
 - **[Testimonial block](https://publishpress.com/knowledge-base/testimonial-block/)**: The Testimonial Block allows you to add clients testimonials to Gutenberg. You can add testimonials using columns or a slider. You can show the avatar, name, job position and description for each testimonial.
@@ -111,7 +111,7 @@ Together, these plugins are a suite of powerful publishing tools for WordPress. 
 
 =  Bug Reports =
 
-Bug reports for PublishPress Permissions are welcome in our [repository on GitHub](https://github.com/publishpress/publishpress-permissions). Please note that GitHub is not a support forum, and that issues that aren't properly qualified as bugs will be closed.
+Bug reports for PublishPress Blocks are welcome in our [repository on GitHub](https://github.com/publishpress/publishpress-blocks). Please note that GitHub is not a support forum, and that issues that aren't properly qualified as bugs will be closed.
 
 = Follow the PublishPress team =
 
