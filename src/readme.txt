@@ -156,7 +156,7 @@ The Advanced Icon block allows you to add icons to WordPress content. This block
 
 The Advanced List block is based on the default List block in Gutenberg. This improved version of the block has tons of extra features including advanced styling such as custom icons, text size, margin, padding and more. You can create an Advanced List block by clicking its button in the PublishPress Blocks category. After creating the Advanced List block, you can adjust the settings from the right sidebar. You can change the icon and it's settings which include List icon, Icon size, Line height, Margin, Padding, and more.
 
-[Click here for more on Gutenberg list blocks](https://publishpress.com/knowledge-base/advanced-icon-block/).
+[Click here for more on Gutenberg list blocks](https://publishpress.com/knowledge-base/advanced-list-block/).
 
 = How do I add table blocks in Gutenberg? =
 
