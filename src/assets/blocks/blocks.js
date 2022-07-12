@@ -14853,7 +14853,6 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
         InspectorControls = _wpBlockEditor.InspectorControls;
     var DateTimePicker = wpComponents.DateTimePicker,
         ToggleControl = wpComponents.ToggleControl,
-        SelectControl = wpComponents.SelectControl,
         PanelBody = wpComponents.PanelBody,
         PanelRow = wpComponents.PanelRow,
         Button = wpComponents.Button,
@@ -14884,8 +14883,8 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                     type: 'string'
                 },
                 bvRecur: {
-                    type: 'string',
-                    default: 'once'
+                    type: 'boolean',
+                    default: false
                 }
             });
         }
@@ -14910,7 +14909,7 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                     PanelBody,
                     { title: __('Block Visibility', 'advanced-gutenberg'), icon: 'visibility', initialOpen: false },
                     React.createElement(ToggleControl, {
-                        label: __('Enable block scheduling', 'advanced-gutenberg'),
+                        label: __('Enable block schedule', 'advanced-gutenberg'),
                         checked: bvEnabled,
                         onChange: function onChange() {
                             if (bvEnabled) {
@@ -14922,14 +14921,6 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                     bvEnabled && React.createElement(
                         Fragment,
                         null,
-                        React.createElement(SelectControl, {
-                            label: __('Recurrence', 'advanced-gutenberg'),
-                            value: bvRecur,
-                            options: [{ label: __('Once', 'advanced-gutenberg'), value: 'once' }, { label: __('Monthly', 'advanced-gutenberg'), value: 'monthly' }, { label: __('Annually', 'advanced-gutenberg'), value: 'yearly' }],
-                            onChange: function onChange(value) {
-                                return props.setAttributes({ bvRecur: value });
-                            }
-                        }),
                         React.createElement(_components.AdvDateTimeControl, {
                             buttonLabel: __('Now', 'advanced-gutenberg'),
                             dateLabel: __('Start showing', 'advanced-gutenberg'),
@@ -14970,9 +14961,16 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                                 status: 'warning',
                                 isDismissible: false
                             },
-                            __('Stop showing date should be after Start showing date!', 'advanced-gutenberg')
+                            __('Stop showing should be after Start showing!', 'advanced-gutenberg')
                         ),
-                        console.log(bvDateFrom > bvDateTo)
+                        bvDateFrom && bvDateTo && React.createElement(ToggleControl, {
+                            label: __('Recurring', 'advanced-gutenberg'),
+                            checked: bvRecur,
+                            onChange: function onChange() {
+                                return props.setAttributes({ bvRecur: !bvRecur });
+                            },
+                            help: __('Show the block within the date interval every year', 'advanced-gutenberg')
+                        })
                     )
                 )
             )];

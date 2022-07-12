@@ -6,7 +6,7 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
     const { __ } = wpI18n;
     const { hasBlockSupport } = wpBlocks;
     const { InspectorControls } = wpBlockEditor;
-    const { DateTimePicker, ToggleControl, SelectControl, PanelBody, PanelRow, Button, Notice } = wpComponents;
+    const { DateTimePicker, ToggleControl, PanelBody, PanelRow, Button, Notice } = wpComponents;
     const { createHigherOrderComponent } = wpCompose;
     const { Fragment } = wp.element;
 
@@ -32,8 +32,8 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                     type: 'string'
                 },
                 bvRecur: {
-                    type: 'string',
-                    default: 'once'
+                    type: 'boolean',
+                    default: false
                 },
             } );
         }
@@ -57,7 +57,7 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                 <InspectorControls key="advgb-bv-controls">
                         <PanelBody title={ __( 'Block Visibility', 'advanced-gutenberg' ) } icon="visibility" initialOpen={ false }>
                             <ToggleControl
-                                label={ __( 'Enable block scheduling', 'advanced-gutenberg' ) }
+                                label={ __( 'Enable block schedule', 'advanced-gutenberg' ) }
                                 checked={ bvEnabled }
                                 onChange={ () => {
                                     if(bvEnabled){
@@ -68,16 +68,6 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                             />
                             { bvEnabled && (
                                 <Fragment>
-                                    <SelectControl
-                                        label={ __( 'Recurrence',  'advanced-gutenberg' ) }
-                                        value={ bvRecur }
-                                        options={ [
-                                            { label: __( 'Once', 'advanced-gutenberg' ), value: 'once' },
-                                            { label: __( 'Monthly', 'advanced-gutenberg' ), value: 'monthly' },
-                                            { label: __( 'Annually', 'advanced-gutenberg' ), value: 'yearly' },
-                                        ] }
-                                        onChange={ ( value ) => props.setAttributes( { bvRecur: value } ) }
-                                    />
                                     <AdvDateTimeControl
                                         buttonLabel={ __( 'Now', 'advanced-gutenberg' ) }
                                         dateLabel={ __( 'Start showing', 'advanced-gutenberg' ) }
@@ -109,10 +99,17 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                                             status="warning"
                                             isDismissible={ false }
                                         >
-                                            { __( 'Stop showing date should be after Start showing date!', 'advanced-gutenberg' ) }
+                                            { __( 'Stop showing should be after Start showing!', 'advanced-gutenberg' ) }
                                         </Notice>
                                     }
-                                    { console.log(bvDateFrom > bvDateTo) }
+                                    { bvDateFrom && bvDateTo &&
+                                        <ToggleControl
+                                            label={ __( 'Recurring', 'advanced-gutenberg' ) }
+                                            checked={ bvRecur }
+                                            onChange={ () => props.setAttributes( { bvRecur: !bvRecur } ) }
+                                            help={ __( 'Show the block within the date interval every year', 'advanced-gutenberg' ) }
+                                        />
+                                    }
                                 </Fragment>
                             ) }
                         </PanelBody>

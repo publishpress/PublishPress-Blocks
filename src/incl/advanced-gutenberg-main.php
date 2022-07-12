@@ -4591,7 +4591,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             // Block visibility
             if ( $this->settingIsEnabled( 'block_visibility' ) && isset($block['attrs']['bvEnabled']) && intval($block['attrs']['bvEnabled']) === 1 ) {
-                $dateFrom = $dateTo = $recurrence = null;
+                $dateFrom = $dateTo = $recurring = null;
                 if ( ! empty( $block['attrs']['bvDateFrom'] ) ) {
                     $dateFrom	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bvDateFrom'] );
                     // Reset seconds and microseconds to zero to enable proper comparison
@@ -4603,8 +4603,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0, 0 );
 
                     if ( $dateFrom ) {
-                        // Recurrence is only relevant when both dateFrom and dateTo are defined
-                        $recurrence = isset( $block['attrs']['bvRecur'] ) ? $block['attrs']['bvRecur'] : 'once';
+                        // Recurring is only relevant when both dateFrom and dateTo are defined
+                        $recurring = isset( $block['attrs']['bvRecur'] ) ? $block['attrs']['bvRecur'] : false;
                     }
                 }
 
@@ -4619,17 +4619,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $nowFrom = clone $now;
                     $nowFrom->setTime( $now->format('H'), $now->format('i'), 0, 0 );
 
-                    switch ( $recurrence ) {
-                        case 'monthly':
-                            // Make the year and month same as today's
-                            $dateFrom->setDate( $nowFrom->format('Y'), $nowFrom->format('m'), $dateFrom->format('j') );
-                            $dateTo->setDate( $nowFrom->format('Y'), $nowFrom->format('m'), $dateTo->format('j') );
-                            break;
-                        case 'yearly':
-                            // Make the year same as today's
-                            $dateFrom->setDate( $nowFrom->format('Y'), $dateFrom->format('m'), $dateFrom->format('j') );
-                            $dateTo->setDate( $nowFrom->format('Y'), $dateTo->format('m'), $dateTo->format('j') );
-                            break;
+                    if( $recurring ) {
+                        // Make the year same as today's
+                        $dateFrom->setDate( $nowFrom->format('Y'), $dateFrom->format('m'), $dateFrom->format('j') );
+                        $dateTo->setDate( $nowFrom->format('Y'), $dateTo->format('m'), $dateTo->format('j') );
                     }
 
                     if ( ! ( ( ! $dateFrom || $dateFrom->getTimestamp() <= $nowFrom->getTimestamp() ) && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) ) ) {
