@@ -49,6 +49,11 @@ $enable_advgb_blocks = isset($saved_settings['enable_advgb_blocks']) && $saved_s
 if (!isset($saved_settings['enable_advgb_blocks'])) {
     $enable_advgb_blocks  = 'checked';
 }
+
+$block_visibility = isset($saved_settings['block_visibility']) && $saved_settings['block_visibility'] ? 'checked' : '';
+if (!isset($saved_settings['block_visibility'])) {
+    $block_visibility = 'checked';
+}
 ?>
 
 <div id="advgb-settings-container">
@@ -394,6 +399,29 @@ if (!isset($saved_settings['enable_advgb_blocks'])) {
                                        id="enable_columns_visual_guide"
                                        value="1"
                                     <?php echo esc_attr($enable_columns_visual_guide) ?>
+                                />
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper clearfix">
+                        <label for="block_visibility"
+                               class="advgb_qtip ju-setting-label"
+                               data-qtip="<?php esc_attr_e(
+                                   'Enable to add Block Visibility panel to schedule blocks to be displayed',
+                                   'advanced-gutenberg'
+                               ) ?>"
+                        >
+                            <?php esc_html_e('Enable block visibility schedule', 'advanced-gutenberg') ?>
+                        </label>
+                        <div class="ju-switch-button">
+                            <label class="switch">
+                                <input type="checkbox" name="block_visibility"
+                                       id="block_visibility"
+                                       value="1"
+                                    <?php echo esc_attr($block_visibility) ?>
                                 />
                                 <span class="slider"></span>
                             </label>

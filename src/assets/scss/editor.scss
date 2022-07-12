@@ -112,3 +112,41 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
 .advgb-recent-posts-block.slider-view.style-headline .advgb-recent-posts .advgb-recent-post .advgb-post-wrapper {
   box-sizing: border-box;
 }
+
+/* AdvCalendarControl */
+.advgb-advcalendar-control {
+
+  label {
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  > div {
+    border: 1px solid #888;
+    border-radius: 3px;
+    margin-bottom: 10px;
+
+    button.is-link {
+      text-decoration: none;
+
+      &:hover,
+      &:focus,
+      &:active {
+        text-decoration: none;
+      }
+
+      &:focus {
+        box-shadow: none;
+        outline: none;
+      }
+    }
+  }
+}
+
+.advgb-advcalendar-popover {
+
+  &-label {
+    padding: 16px 16px 0;
+    font-weight: bold;
+  }
+}
