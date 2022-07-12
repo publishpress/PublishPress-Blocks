@@ -162,6 +162,20 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
     padding: 16px 16px 0;
     font-weight: bold;
   }
+
+  button {
+
+    &:focus {
+      box-shadow: none !important;
+      outline: none !important;
+    }
+
+    &.advgb-advcalendar-remove-icon {
+      float: right;
+      padding: 0;
+      height: 32px;
+    }
+  }
 }
 
 /* Blocks visibility */
@@ -181,7 +195,11 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
     font-size: 20px;
     position: absolute;
     left: unset;
-    right: 5px;
-    top: 5px;
+    right: 3px;
+    top: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    height: 22px;
+    width: 24px;
+    text-align: center;
   }
 }

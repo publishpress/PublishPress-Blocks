@@ -123,8 +123,7 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                     bvRecur,
                 } = props.attributes;
 
-                const advgbBvClass = bvEnabled
-                    && ( bvDateFrom || bvDateTo )
+                const advgbBvClass = props.isSelected === false && bvEnabled && ( bvDateFrom || bvDateTo )
                     ? 'advgb-bv-editor-preview' : '';
 
                 return <BlockListBlock { ...props } className={ advgbBvClass } bvDateFrom={ `${ bvDateFrom }` } bvDateTo={ `${ bvDateTo }` } bvEnabled={ `${ bvEnabled }` } bvRecur={ `${ bvRecur }` } />;

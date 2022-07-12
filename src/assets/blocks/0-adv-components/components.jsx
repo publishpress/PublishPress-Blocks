@@ -76,6 +76,11 @@ export function AdvDateTimeControl(props) {
                 >
                     <label className="advgb-advcalendar-popover-label">
                         { dateLabel }
+                        <Button
+        					icon="no-alt"
+                            className="advgb-advcalendar-remove-icon"
+        					onClick={ () => setPopupState( togglePopup ) }
+        				/>
                     </label>
                     <DateTimePicker
                         currentDate={ date }

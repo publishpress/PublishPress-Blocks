@@ -5157,7 +5157,14 @@ function AdvDateTimeControl(props) {
             React.createElement(
                 "label",
                 { className: "advgb-advcalendar-popover-label" },
-                dateLabel
+                dateLabel,
+                React.createElement(Button, {
+                    icon: "no-alt",
+                    className: "advgb-advcalendar-remove-icon",
+                    onClick: function onClick() {
+                        return setPopupState(togglePopup);
+                    }
+                })
             ),
             React.createElement(DateTimePicker, {
                 currentDate: date,
@@ -14984,7 +14991,7 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                     bvRecur = _props$attributes2.bvRecur;
 
 
-                var advgbBvClass = bvEnabled && (bvDateFrom || bvDateTo) ? 'advgb-bv-editor-preview' : '';
+                var advgbBvClass = props.isSelected === false && bvEnabled && (bvDateFrom || bvDateTo) ? 'advgb-bv-editor-preview' : '';
 
                 return React.createElement(BlockListBlock, _extends({}, props, { className: advgbBvClass, bvDateFrom: '' + bvDateFrom, bvDateTo: '' + bvDateTo, bvEnabled: '' + bvEnabled, bvRecur: '' + bvRecur }));
             }
