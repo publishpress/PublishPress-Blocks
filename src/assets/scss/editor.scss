@@ -36,6 +36,10 @@
     }
   }
 
+  .advgb-notice-sidebar {
+    margin: 0;
+  }
+
   // Hide inserter for Adv Tab item to avoid inserting tabs inside tabs
   .advgb-tab-body-wrapper .block-editor-inner-blocks .block-list-appender {
     display: none !important;

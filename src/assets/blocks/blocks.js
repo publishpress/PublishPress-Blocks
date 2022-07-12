@@ -14856,7 +14856,8 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
         SelectControl = wpComponents.SelectControl,
         PanelBody = wpComponents.PanelBody,
         PanelRow = wpComponents.PanelRow,
-        Button = wpComponents.Button;
+        Button = wpComponents.Button,
+        Notice = wpComponents.Notice;
     var createHigherOrderComponent = wpCompose.createHigherOrderComponent;
     var Fragment = wp.element.Fragment;
 
@@ -14961,7 +14962,17 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                                     return thisDate.getTime() < fromDate.getTime();
                                 }
                             }
-                        })
+                        }),
+                        bvDateFrom > bvDateTo && React.createElement(
+                            Notice,
+                            {
+                                className: 'advgb-notice-sidebar',
+                                status: 'warning',
+                                isDismissible: false
+                            },
+                            __('Stop showing date should be after Start showing date!', 'advanced-gutenberg')
+                        ),
+                        console.log(bvDateFrom > bvDateTo)
                     )
                 )
             )];

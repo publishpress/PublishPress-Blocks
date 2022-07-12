@@ -6,7 +6,7 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
     const { __ } = wpI18n;
     const { hasBlockSupport } = wpBlocks;
     const { InspectorControls } = wpBlockEditor;
-    const { DateTimePicker, ToggleControl, SelectControl, PanelBody, PanelRow, Button } = wpComponents;
+    const { DateTimePicker, ToggleControl, SelectControl, PanelBody, PanelRow, Button, Notice } = wpComponents;
     const { createHigherOrderComponent } = wpCompose;
     const { Fragment } = wp.element;
 
@@ -103,6 +103,16 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                                             }
                                         } }
                                     />
+                                    { ( bvDateFrom > bvDateTo ) &&
+                                        <Notice
+                                            className="advgb-notice-sidebar"
+                                            status="warning"
+                                            isDismissible={ false }
+                                        >
+                                            { __( 'Stop showing date should be after Start showing date!', 'advanced-gutenberg' ) }
+                                        </Notice>
+                                    }
+                                    { console.log(bvDateFrom > bvDateTo) }
                                 </Fragment>
                             ) }
                         </PanelBody>
