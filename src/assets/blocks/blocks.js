@@ -14912,10 +14912,7 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                         label: __('Enable block schedule', 'advanced-gutenberg'),
                         checked: bvEnabled,
                         onChange: function onChange() {
-                            if (bvEnabled) {
-                                props.setAttributes({ bvDateFrom: null, bvDateto: null });
-                            }
-                            props.setAttributes({ bvEnabled: !bvEnabled });
+                            return props.setAttributes({ bvEnabled: !bvEnabled });
                         }
                     }),
                     bvEnabled && React.createElement(
@@ -14987,7 +14984,9 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                     bvRecur = _props$attributes2.bvRecur;
 
 
-                return React.createElement(BlockListBlock, _extends({}, props, { bvDateFrom: '' + bvDateFrom, bvDateTo: '' + bvDateTo, bvEnabled: '' + bvEnabled, bvRecur: '' + bvRecur }));
+                var advgbBvClass = bvEnabled && (bvDateFrom || bvDateTo) ? 'advgb-bv-editor-preview' : '';
+
+                return React.createElement(BlockListBlock, _extends({}, props, { className: advgbBvClass, bvDateFrom: '' + bvDateFrom, bvDateTo: '' + bvDateTo, bvEnabled: '' + bvEnabled, bvRecur: '' + bvRecur }));
             }
 
             return React.createElement(BlockListBlock, props);

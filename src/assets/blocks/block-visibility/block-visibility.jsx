@@ -59,12 +59,7 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                             <ToggleControl
                                 label={ __( 'Enable block schedule', 'advanced-gutenberg' ) }
                                 checked={ bvEnabled }
-                                onChange={ () => {
-                                    if(bvEnabled){
-                                        props.setAttributes( { bvDateFrom: null, bvDateto: null } );
-                                    }
-                                    props.setAttributes( { bvEnabled: !bvEnabled } );
-                                } }
+                                onChange={ () => props.setAttributes( { bvEnabled: !bvEnabled } ) }
                             />
                             { bvEnabled && (
                                 <Fragment>
@@ -128,7 +123,11 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                     bvRecur,
                 } = props.attributes;
 
-                return <BlockListBlock { ...props } bvDateFrom={ `${ bvDateFrom }` } bvDateTo={ `${ bvDateTo }` } bvEnabled={ `${ bvEnabled }` } bvRecur={ `${ bvRecur }` } />;
+                const advgbBvClass = bvEnabled
+                    && ( bvDateFrom || bvDateTo )
+                    ? 'advgb-bv-editor-preview' : '';
+
+                return <BlockListBlock { ...props } className={ advgbBvClass } bvDateFrom={ `${ bvDateFrom }` } bvDateTo={ `${ bvDateTo }` } bvEnabled={ `${ bvEnabled }` } bvRecur={ `${ bvRecur }` } />;
             }
 
             return <BlockListBlock { ...props } />;
