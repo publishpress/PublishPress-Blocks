@@ -24,7 +24,7 @@ export function AdvColorControl(props) {
 }
 
 export function AdvDateTimeControl(props) {
-    const { Button, DateTimePicker,  Popover } = wp.components;
+    const { Button, DateTimePicker,  Popover, Tooltip } = wp.components;
     const { Fragment, useState } = wp.element;
     const { __ } = wp.i18n;
 
@@ -35,16 +35,18 @@ export function AdvDateTimeControl(props) {
 
     const {
         buttonLabel,
-        dateTimeLabel,
+        dateLabel,
         date,
-        onChangeDate
+        onChangeDate,
+        onDateClear,
+        onInvalidDate
     } = props;
 
     return (
         <Fragment>
             <div className="advgb-advcalendar-control">
                 <label>
-                    { dateTimeLabel }
+                    { dateLabel }
                 </label>
                 <div>
                     <Button
@@ -52,8 +54,19 @@ export function AdvDateTimeControl(props) {
                         icon="calendar"
                         onClick={ () => setPopupState( togglePopup ) }
                     >
-                        { date ? moment( date ).format( "MMMM DD YYYY, h:mm a" ) : buttonLabel }
+                        <Tooltip text={ __( 'Change date', 'advanced-gutenberg' ) }>
+                            <span>
+                                { date ? moment( date ).format( "MMMM DD YYYY, h:mm a" ) : buttonLabel }
+                            </span>
+                        </Tooltip>
                     </Button>
+                    { date &&
+        				<Button
+        					icon="no-alt"
+                            className="advgb-advcalendar-remove-icon"
+        					onClick={ () => onDateClear() }
+        				/>
+        			}
                 </div>
             </div>
             { popupState &&
@@ -62,12 +75,13 @@ export function AdvDateTimeControl(props) {
                     onClose={ setPopupState.bind( null, false ) }
                 >
                     <label className="advgb-advcalendar-popover-label">
-                        { dateTimeLabel }
+                        { dateLabel }
                     </label>
                     <DateTimePicker
                         currentDate={ date }
                         onChange={ onChangeDate }
                         is12Hour={ true }
+                        isInvalidDate={ onInvalidDate }
                     />
                 </Popover>
             }

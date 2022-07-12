@@ -55,21 +55,14 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                 <BlockEdit key="block-edit-advgb-dates" {...props} />,
                 props.isSelected && (!SUPPORTED_BLOCKS || SUPPORTED_BLOCKS.includes( props.name )) &&
                 <InspectorControls key="advgb-bv-controls">
-                        <PanelBody title={ __( 'Block Visibility', 'advanced-gutenberg' ) } initialOpen={ false }>
+                        <PanelBody title={ __( 'Block Visibility', 'advanced-gutenberg' ) } icon="visibility" initialOpen={ false }>
                             <ToggleControl
-                                label={ __( 'Schedule', 'advanced-gutenberg' ) }
+                                label={ __( 'Enable block scheduling', 'advanced-gutenberg' ) }
                                 checked={ bvEnabled }
                                 onChange={ () => {
-                                    /*/ set today as default when enabled if bvDateFrom is undefined
-                                    if(!bvDateFrom && !bvEnabled){
-                                        props.setAttributes( { bvDateFrom: moment().format('Y-MM-DD\THH:mm:ss') } );
-                                    }*/
-
-                                    // if disable visibility, remove attributes.
                                     if(bvEnabled){
                                         props.setAttributes( { bvDateFrom: null, bvDateto: null } );
                                     }
-
                                     props.setAttributes( { bvEnabled: !bvEnabled } );
                                 } }
                             />
@@ -85,39 +78,30 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                                         ] }
                                         onChange={ ( value ) => props.setAttributes( { bvRecur: value } ) }
                                     />
-                                    {/*<PanelRow>{ __( 'Start Showing', 'advanced-gutenberg' ) }</PanelRow>
-                                    <DateTimePicker
-                                        currentDate={ bvDateFrom }
-                                        onChange={ ( newDate ) => { props.setAttributes( { bvDateFrom: newDate } ); } }
-                                        is12Hour={ true }
-                                        label={ __( 'Start Showing', 'advanced-gutenberg' ) }
-                                    />*/}
                                     <AdvDateTimeControl
                                         buttonLabel={ __( 'Now', 'advanced-gutenberg' ) }
-                                        dateTimeLabel={ __( 'Start showing', 'advanced-gutenberg' ) }
+                                        dateLabel={ __( 'Start showing', 'advanced-gutenberg' ) }
                                         date={ bvDateFrom }
                                         onChangeDate={ ( newDate ) => { props.setAttributes( { bvDateFrom: newDate } ); } }
+                                        onDateClear={ () => props.setAttributes( { bvDateFrom: null } ) }
+                                        onInvalidDate={ false }
                                     />
-                                    {/*<PanelRow>{ __( 'Stop Showing', 'advanced-gutenberg' ) }</PanelRow>
-                                    <DateTimePicker
-                                        currentDate={ !!bvDateTo ? bvDateTo : null }
-                                        onChange={ ( newDate ) => { props.setAttributes( { bvDateTo: newDate } ); } }
-                                        is12Hour={ true }
-                                        label={ __( 'Stop Showing', 'advanced-gutenberg' ) }
-                                        isInvalidDate={ (date) => {
-                                            // disable all dates before the bvDateFrom
-                                            let thisDate = new Date(date.getTime());
-                                            thisDate.setHours(0, 0, 0, 0);
-                                            let fromDate = new Date(bvDateFrom);
-                                            fromDate.setHours(0, 0, 0, 0);
-                                            return thisDate.getTime() < fromDate.getTime();
-                                        } }
-                                    />*/}
                                     <AdvDateTimeControl
                                         buttonLabel={ __( 'Never', 'advanced-gutenberg' ) }
-                                        dateTimeLabel={ __( 'Stop showing', 'advanced-gutenberg' ) }
+                                        dateLabel={ __( 'Stop showing', 'advanced-gutenberg' ) }
                                         date={ !!bvDateTo ? bvDateTo : null }
                                         onChangeDate={ ( newDate ) => { props.setAttributes( { bvDateTo: newDate } ); } }
+                                        onDateClear={ () => props.setAttributes( { bvDateTo: null } ) }
+                                        onInvalidDate={ ( date ) => {
+                                            // Disable all dates before bvDateFrom
+                                            if( bvDateFrom ) {
+                                                let thisDate = new Date(date.getTime());
+                                                thisDate.setHours(0, 0, 0, 0);
+                                                let fromDate = new Date(bvDateFrom);
+                                                fromDate.setHours(0, 0, 0, 0);
+                                                return thisDate.getTime() < fromDate.getTime();
+                                            }
+                                        } }
                                     />
                                 </Fragment>
                             ) }

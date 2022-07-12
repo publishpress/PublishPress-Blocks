@@ -5080,7 +5080,8 @@ function AdvDateTimeControl(props) {
     var _wp$components2 = wp.components,
         Button = _wp$components2.Button,
         DateTimePicker = _wp$components2.DateTimePicker,
-        Popover = _wp$components2.Popover;
+        Popover = _wp$components2.Popover,
+        Tooltip = _wp$components2.Tooltip;
     var _wp$element = wp.element,
         Fragment = _wp$element.Fragment,
         useState = _wp$element.useState;
@@ -5098,9 +5099,11 @@ function AdvDateTimeControl(props) {
     };
 
     var buttonLabel = props.buttonLabel,
-        dateTimeLabel = props.dateTimeLabel,
+        dateLabel = props.dateLabel,
         date = props.date,
-        onChangeDate = props.onChangeDate;
+        onChangeDate = props.onChangeDate,
+        onDateClear = props.onDateClear,
+        onInvalidDate = props.onInvalidDate;
 
 
     return React.createElement(
@@ -5112,7 +5115,7 @@ function AdvDateTimeControl(props) {
             React.createElement(
                 "label",
                 null,
-                dateTimeLabel
+                dateLabel
             ),
             React.createElement(
                 "div",
@@ -5126,8 +5129,23 @@ function AdvDateTimeControl(props) {
                             return setPopupState(togglePopup);
                         }
                     },
-                    date ? moment(date).format("MMMM DD YYYY, h:mm a") : buttonLabel
-                )
+                    React.createElement(
+                        Tooltip,
+                        { text: __('Change date', 'advanced-gutenberg') },
+                        React.createElement(
+                            "span",
+                            null,
+                            date ? moment(date).format("MMMM DD YYYY, h:mm a") : buttonLabel
+                        )
+                    )
+                ),
+                date && React.createElement(Button, {
+                    icon: "no-alt",
+                    className: "advgb-advcalendar-remove-icon",
+                    onClick: function onClick() {
+                        return onDateClear();
+                    }
+                })
             )
         ),
         popupState && React.createElement(
@@ -5139,12 +5157,13 @@ function AdvDateTimeControl(props) {
             React.createElement(
                 "label",
                 { className: "advgb-advcalendar-popover-label" },
-                dateTimeLabel
+                dateLabel
             ),
             React.createElement(DateTimePicker, {
                 currentDate: date,
                 onChange: onChangeDate,
-                is12Hour: true
+                is12Hour: true,
+                isInvalidDate: onInvalidDate
             })
         )
     );
@@ -14888,21 +14907,14 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                 { key: 'advgb-bv-controls' },
                 React.createElement(
                     PanelBody,
-                    { title: __('Block Visibility', 'advanced-gutenberg'), initialOpen: false },
+                    { title: __('Block Visibility', 'advanced-gutenberg'), icon: 'visibility', initialOpen: false },
                     React.createElement(ToggleControl, {
-                        label: __('Schedule', 'advanced-gutenberg'),
+                        label: __('Enable block scheduling', 'advanced-gutenberg'),
                         checked: bvEnabled,
                         onChange: function onChange() {
-                            /*/ set today as default when enabled if bvDateFrom is undefined
-                            if(!bvDateFrom && !bvEnabled){
-                                props.setAttributes( { bvDateFrom: moment().format('Y-MM-DD\THH:mm:ss') } );
-                            }*/
-
-                            // if disable visibility, remove attributes.
                             if (bvEnabled) {
                                 props.setAttributes({ bvDateFrom: null, bvDateto: null });
                             }
-
                             props.setAttributes({ bvEnabled: !bvEnabled });
                         }
                     }),
@@ -14919,18 +14931,35 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                         }),
                         React.createElement(_components.AdvDateTimeControl, {
                             buttonLabel: __('Now', 'advanced-gutenberg'),
-                            dateTimeLabel: __('Start showing', 'advanced-gutenberg'),
+                            dateLabel: __('Start showing', 'advanced-gutenberg'),
                             date: bvDateFrom,
                             onChangeDate: function onChangeDate(newDate) {
                                 props.setAttributes({ bvDateFrom: newDate });
-                            }
+                            },
+                            onDateClear: function onDateClear() {
+                                return props.setAttributes({ bvDateFrom: null });
+                            },
+                            onInvalidDate: false
                         }),
                         React.createElement(_components.AdvDateTimeControl, {
                             buttonLabel: __('Never', 'advanced-gutenberg'),
-                            dateTimeLabel: __('Stop showing', 'advanced-gutenberg'),
+                            dateLabel: __('Stop showing', 'advanced-gutenberg'),
                             date: !!bvDateTo ? bvDateTo : null,
                             onChangeDate: function onChangeDate(newDate) {
                                 props.setAttributes({ bvDateTo: newDate });
+                            },
+                            onDateClear: function onDateClear() {
+                                return props.setAttributes({ bvDateTo: null });
+                            },
+                            onInvalidDate: function onInvalidDate(date) {
+                                // Disable all dates before bvDateFrom
+                                if (bvDateFrom) {
+                                    var thisDate = new Date(date.getTime());
+                                    thisDate.setHours(0, 0, 0, 0);
+                                    var fromDate = new Date(bvDateFrom);
+                                    fromDate.setHours(0, 0, 0, 0);
+                                    return thisDate.getTime() < fromDate.getTime();
+                                }
                             }
                         })
                     )

@@ -126,18 +126,27 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
     border-radius: 3px;
     margin-bottom: 10px;
 
-    button.is-link {
-      text-decoration: none;
-
-      &:hover,
-      &:focus,
-      &:active {
-        text-decoration: none;
-      }
+    button {
 
       &:focus {
-        box-shadow: none;
-        outline: none;
+        box-shadow: none !important;
+        outline: none !important;
+      }
+
+      &.is-link {
+        text-decoration: none;
+
+        &:hover,
+        &:focus,
+        &:active {
+          text-decoration: none;
+        }
+      }
+
+      &.advgb-advcalendar-remove-icon {
+        float: right;
+        padding: 0;
+        height: 32px;
       }
     }
   }
