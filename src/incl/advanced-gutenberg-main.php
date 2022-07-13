@@ -448,6 +448,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $wp_editor_dep = 'wp-editor';
                 }
 
+                if( $this->settingIsEnabled( 'block_visibility' ) ) {
+                    wp_enqueue_script(
+                        'advgb_block_visibility',
+                        plugins_url('assets/blocks/block-visibility.js', dirname(__FILE__)),
+                        array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', $wp_editor_dep, 'wp-plugins', 'wp-compose' ),
+                        ADVANCED_GUTENBERG_VERSION,
+                        true
+                    );
+                }
+
                 if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
 
                     wp_enqueue_script(
@@ -474,17 +484,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             ADVANCED_GUTENBERG_VERSION
                         );
                     }
-                }
-
-                // Don't load block-visibility.js
-                if( $this->settingIsEnabled( 'block_visibility' ) ) {
-                    wp_enqueue_script(
-                        'advgb_block_visibility',
-                        plugins_url('assets/blocks/block-visibility.js', dirname(__FILE__)),
-                        array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', $wp_editor_dep, 'wp-plugins', 'wp-compose' ),
-                        ADVANCED_GUTENBERG_VERSION,
-                        true
-                    );
                 }
 
                 if( $this->settingIsEnabled( 'enable_block_access' ) ) {

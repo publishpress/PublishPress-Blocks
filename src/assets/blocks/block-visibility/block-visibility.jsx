@@ -52,7 +52,6 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                 } = props.attributes;
 
             return ( [
-                <BlockEdit key="block-edit-advgb-dates" {...props} />,
                 props.isSelected && (!SUPPORTED_BLOCKS || SUPPORTED_BLOCKS.includes( props.name )) &&
                 <InspectorControls key="advgb-bv-controls">
                         <PanelBody
@@ -113,7 +112,8 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                                 </Fragment>
                             ) }
                         </PanelBody>
-                </InspectorControls>
+                </InspectorControls>,
+                <BlockEdit key="block-edit-advgb-dates" {...props} />,
             ] )
         }
     } );

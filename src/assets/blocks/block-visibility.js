@@ -311,7 +311,7 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                 bvRecur = _props$attributes.bvRecur;
 
 
-            return [React.createElement(BlockEdit, _extends({ key: 'block-edit-advgb-dates' }, props)), props.isSelected && (!SUPPORTED_BLOCKS || SUPPORTED_BLOCKS.includes(props.name)) && React.createElement(
+            return [props.isSelected && (!SUPPORTED_BLOCKS || SUPPORTED_BLOCKS.includes(props.name)) && React.createElement(
                 InspectorControls,
                 { key: 'advgb-bv-controls' },
                 React.createElement(
@@ -384,7 +384,7 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                         })
                     )
                 )
-            )];
+            ), React.createElement(BlockEdit, _extends({ key: 'block-edit-advgb-dates' }, props))];
         };
     });
 
