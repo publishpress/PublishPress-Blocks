@@ -434,6 +434,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if(
                 $this->settingIsEnabled('enable_advgb_blocks')
                 || $this->settingIsEnabled('enable_block_access')
+                || $this->settingIsEnabled('block_visibility')
             ) {
                 // Define the dependency for the editor based on current screen
                 if( $currentScreen->id === 'customize' ) {
@@ -473,6 +474,17 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             ADVANCED_GUTENBERG_VERSION
                         );
                     }
+                }
+
+                // Don't load block-visibility.js
+                if( $this->settingIsEnabled( 'block_visibility' ) ) {
+                    wp_enqueue_script(
+                        'advgb_block_visibility',
+                        plugins_url('assets/blocks/block-visibility.js', dirname(__FILE__)),
+                        array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', $wp_editor_dep, 'wp-plugins', 'wp-compose' ),
+                        ADVANCED_GUTENBERG_VERSION,
+                        true
+                    );
                 }
 
                 if( $this->settingIsEnabled( 'enable_block_access' ) ) {
