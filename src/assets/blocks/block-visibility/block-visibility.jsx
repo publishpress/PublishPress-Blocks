@@ -55,7 +55,12 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                 <BlockEdit key="block-edit-advgb-dates" {...props} />,
                 props.isSelected && (!SUPPORTED_BLOCKS || SUPPORTED_BLOCKS.includes( props.name )) &&
                 <InspectorControls key="advgb-bv-controls">
-                        <PanelBody title={ __( 'Block Visibility', 'advanced-gutenberg' ) } icon="visibility" initialOpen={ false }>
+                        <PanelBody
+                            title={ __( 'Block Visibility', 'advanced-gutenberg' ) }
+                            icon="visibility"
+                            initialOpen={ false }
+                            className={ bvEnabled && ( bvDateFrom || bvDateTo ) ? 'advgb-bv-panel-icon' : '' }
+                        >
                             <ToggleControl
                                 label={ __( 'Enable block schedule', 'advanced-gutenberg' ) }
                                 checked={ bvEnabled }

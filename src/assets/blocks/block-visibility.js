@@ -316,7 +316,12 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                 { key: 'advgb-bv-controls' },
                 React.createElement(
                     PanelBody,
-                    { title: __('Block Visibility', 'advanced-gutenberg'), icon: 'visibility', initialOpen: false },
+                    {
+                        title: __('Block Visibility', 'advanced-gutenberg'),
+                        icon: 'visibility',
+                        initialOpen: false,
+                        className: bvEnabled && (bvDateFrom || bvDateTo) ? 'advgb-bv-panel-icon' : ''
+                    },
                     React.createElement(ToggleControl, {
                         label: __('Enable block schedule', 'advanced-gutenberg'),
                         checked: bvEnabled,
