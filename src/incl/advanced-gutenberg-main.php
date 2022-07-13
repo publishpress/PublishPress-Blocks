@@ -198,6 +198,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Front-end
                 add_filter('render_block_data', array($this, 'contentPreRender'));
                 add_filter('render_block', array($this, 'addNonceToFormBlocks'));
+                add_filter('render_block', array($this, 'blockVisibility'), 10, 2);
                 add_filter('the_content', array($this, 'addFrontendContentAssets'), 9);
 
                 if($wp_version >= 5.8) {
@@ -4581,16 +4582,20 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Function to load assets for post/page on front-end before gutenberg rendering
+         * Check visibility for each block
          *
-         * @param array $block Block data
+         * @param string    $block_content  Block HTML output
+         * @param array     $block          Block attributes
          *
-         * @return array       New block data
+         * @return string                   $block_content or an empty string when block is hidden
          */
-        public function contentPreRender($block)
-        {
-            // Block visibility
-            if ( $this->settingIsEnabled( 'block_visibility' ) && isset($block['attrs']['bvEnabled']) && intval($block['attrs']['bvEnabled']) === 1 ) {
+        public function blockVisibility( $block_content, $block ) {
+            if (
+                $this->settingIsEnabled( 'block_visibility' )
+                && $block['blockName']
+                && isset($block['attrs']['bvEnabled'])
+                && intval($block['attrs']['bvEnabled']) === 1
+            ) {
                 $dateFrom = $dateTo = $recurring = null;
                 if ( ! empty( $block['attrs']['bvDateFrom'] ) ) {
                     $dateFrom	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bvDateFrom'] );
@@ -4626,17 +4631,24 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     }
 
                     if ( ! ( ( ! $dateFrom || $dateFrom->getTimestamp() <= $nowFrom->getTimestamp() ) && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) ) ) {
-                        // Empty block (when hide)
-                        return [
-                            'blockName' => 'core/paragraph',
-                            'attrs' => [],
-                            'innerBlocks' => [],
-                            'innerHTML' => '',
-                            'innerContent' => []
-                        ];
+                        // Empty $block_content (no visible)
+                        return '';
                     }
                 }
             }
+
+            return $block_content;
+        }
+
+        /**
+         * Function to load assets for post/page on front-end before gutenberg rendering
+         *
+         * @param array $block Block data
+         *
+         * @return array       New block data
+         */
+        public function contentPreRender($block)
+        {
 
             // Search for needed blocks then add styles to it
             $style = $this->addBlocksStyles($block);
