@@ -183,9 +183,9 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
   border: 1px dashed var(--wp--preset--color--vivid-cyan-blue);
 
   &:after {
-    content: "\f177";
-    color: var(--wp--preset--color--vivid-cyan-blue);
-    font-family: dashicons;
+    content: "\f177" !important;
+    color: var(--wp--preset--color--vivid-cyan-blue) !important;
+    font-family: dashicons !important;
     line-height: 1;
     font-weight: 400;
     font-style: normal;
@@ -194,10 +194,10 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
     -moz-osx-font-smoothing: grayscale;
     font-size: 20px;
     position: absolute;
-    left: unset;
-    right: 3px;
-    top: 3px;
-    background: rgba(255, 255, 255, 0.3);
+    left: unset !important;
+    right: 3px !important;
+    top: 3px !important;
+    background: rgba(255, 255, 255, 0.3) !important;
     height: 22px;
     width: 24px;
     text-align: center;
