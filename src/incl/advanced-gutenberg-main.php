@@ -1453,10 +1453,22 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array('jquery'),
                     ADVANCED_GUTENBERG_VERSION
                 );
+                // @TODO - Check if we really need all the dependencies from 'advgb_block_access_js'
                 wp_register_script(
                     'advgb_block_access_js',
                     plugins_url('assets/js/block-access.js', dirname(__FILE__)),
-                    array(),
+                    array(
+                        'wp-block-editor',
+                        'wp-blocks',
+                        'wp-element',
+                        'wp-data',
+                        'wp-components',
+                        'wp-core-data',
+                        'wp-block-library',
+                        'wp-editor',
+                        'wp-edit-post',
+                        'wp-plugins'
+                    ),
                     ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_script(

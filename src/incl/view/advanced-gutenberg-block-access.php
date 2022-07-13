@@ -7,19 +7,12 @@ if ( !current_user_can('administrator') ) {
 }
 
 wp_enqueue_style('advgb_profile_style');
-wp_enqueue_script('advgb_update_list');
 wp_enqueue_script('advgb_block_access_js');
-wp_enqueue_script('wp-blocks');
-wp_enqueue_script('wp-element');
-wp_enqueue_script('wp-data');
-wp_enqueue_script('wp-components');
-wp_enqueue_script('wp-block-library');
-wp_enqueue_script('wp-editor');
-wp_enqueue_script('wp-edit-post');
-wp_enqueue_script('wp-plugins');
+wp_enqueue_script('advgb_update_list');
 do_action('enqueue_block_editor_assets');
 
-// Block Categories
+
+// Block categories
 $blockCategories = array();
 if (function_exists('get_block_categories')) {
     $blockCategories = get_block_categories(get_post());
@@ -32,6 +25,14 @@ wp_add_inline_script(
     sprintf('wp.blocks.setCategories( %s );', wp_json_encode($blockCategories)),
     'after'
 );
+
+// Block types
+$block_type_registry = \WP_Block_Type_Registry::get_instance();
+foreach ( $block_type_registry->get_all_registered() as $block_name => $block_type ) {
+    if ( ! empty( $block_type->editor_script ) ) {
+        wp_enqueue_script( $block_type->editor_script );
+	}
+}
 
 // Current role
 if( isset( $_REQUEST['user_role'] ) && !empty( $_REQUEST['user_role'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- advgb_nonce in place
