@@ -198,6 +198,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Front-end
                 add_filter('render_block_data', array($this, 'contentPreRender'));
                 add_filter('render_block', array($this, 'addNonceToFormBlocks'));
+                add_filter('render_block', array($this, 'blockControls'), 10, 2);
                 add_filter('the_content', array($this, 'addFrontendContentAssets'), 9);
 
                 if($wp_version >= 5.8) {
@@ -433,6 +434,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if(
                 $this->settingIsEnabled('enable_advgb_blocks')
                 || $this->settingIsEnabled('enable_block_access')
+                || $this->settingIsEnabled('block_controls')
             ) {
                 // Define the dependency for the editor based on current screen
                 if( $currentScreen->id === 'customize' ) {
@@ -444,6 +446,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 } else {
                     // Post edit and Site Editor
                     $wp_editor_dep = 'wp-editor';
+                }
+
+                if( $this->settingIsEnabled( 'block_controls' ) ) {
+                    wp_enqueue_script(
+                        'advgb_block_controls',
+                        plugins_url('assets/blocks/block-controls.js', dirname(__FILE__)),
+                        array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', $wp_editor_dep, 'wp-plugins', 'wp-compose' ),
+                        ADVANCED_GUTENBERG_VERSION,
+                        true
+                    );
                 }
 
                 if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
@@ -584,7 +596,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $pp_series_options      = get_option('org_series_options');
             $pp_series_slug         = isset($pp_series_options['series_taxonomy_slug']) && !empty($pp_series_options['series_taxonomy_slug']) ? $pp_series_options['series_taxonomy_slug'] : 'series';
             $pp_series_post_types   = isset($pp_series_options['post_types_for_series']) && !empty($pp_series_options['post_types_for_series']) ? $pp_series_options['post_types_for_series'] : ['post'];
-
+            $block_controls         = $this->settingIsEnabled( 'block_controls' ) ? 1 : 0;
             global $wp_version;
             $blocks_widget_support = ( $wp_version >= 5.8 ) ? 1 : 0;
 
@@ -608,7 +620,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'advgb_pro' => defined('ADVANCED_GUTENBERG_PRO') ? 1 : 0,
                 'pp_series_active' => $pp_series_active,
                 'pp_series_slug' => $pp_series_slug,
-                'pp_series_post_types' => $pp_series_post_types
+                'pp_series_post_types' => $pp_series_post_types,
+                'block_controls' => $block_controls
             ));
 
             // Setup default config data for blocks
@@ -1879,6 +1892,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['enable_columns_visual_guide'] = 1;
                 } else {
                     $save_config['enable_columns_visual_guide'] = 0;
+                }
+
+                if (isset($_POST['block_controls'])) {
+                    $save_config['block_controls'] = 1;
+                } else {
+                    $save_config['block_controls'] = 0;
                 }
 
                 if (isset($_POST['enable_block_access'])) {
@@ -4563,6 +4582,65 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function loadView($view)
         {
             include_once(plugin_dir_path(__FILE__) . 'view/advanced-gutenberg-' . $view . '.php');
+        }
+
+        /**
+         * Check block controls for each block and display or hide it
+         *
+         * @param string    $block_content  Block HTML output
+         * @param array     $block          Block attributes
+         *
+         * @return string                   $block_content or an empty string when block is hidden
+         */
+        public function blockControls( $block_content, $block ) {
+            if (
+                $this->settingIsEnabled( 'block_controls' )
+                && $block['blockName']
+                && isset($block['attrs']['bControlsEnabled'])
+                && intval($block['attrs']['bControlsEnabled']) === 1
+            ) {
+                $dateFrom = $dateTo = $recurring = null;
+                if ( ! empty( $block['attrs']['bControlsDateFrom'] ) ) {
+                    $dateFrom	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bControlsDateFrom'] );
+                    // Reset seconds and microseconds to zero to enable proper comparison
+                    $dateFrom->setTime( $dateFrom->format('H'), $dateFrom->format('i'), 0, 0 );
+                }
+                if ( ! empty( $block['attrs']['bControlsDateTo'] ) ) {
+                    $dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bControlsDateTo'] );
+                    // Reset seconds and microseconds to zero to enable proper comparison
+                    $dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0, 0 );
+
+                    if ( $dateFrom ) {
+                        // Recurring is only relevant when both dateFrom and dateTo are defined
+                        $recurring = isset( $block['attrs']['bControlsDateRecur'] ) ? $block['attrs']['bControlsDateRecur'] : false;
+                    }
+                }
+
+                if ( $dateFrom || $dateTo ) {
+                    // Fetch current time keeping in mind the timezone
+                    $now = DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
+
+                    // Reset seconds and microseconds to zero to enable proper comparison
+                    // as the from and to dates have those as 0
+                    // but do this only for the from comparison
+                    // as we need the block to stop showing at the right time and not 1 minute extra
+                    $nowFrom = clone $now;
+                    $nowFrom->setTime( $now->format('H'), $now->format('i'), 0, 0 );
+
+                    if( $recurring ) {
+                        // Make the year same as today's
+                        $dateFrom->setDate( $nowFrom->format('Y'), $dateFrom->format('m'), $dateFrom->format('j') );
+                        $dateTo->setDate( $nowFrom->format('Y'), $dateTo->format('m'), $dateTo->format('j') );
+                    }
+
+                    if ( ! ( ( ! $dateFrom || $dateFrom->getTimestamp() <= $nowFrom->getTimestamp() ) && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) ) ) {
+                        // Empty $block_content (no visible)
+                        return '';
+                    }
+                }
+            }
+
+            return $block_content;
         }
 
         /**
