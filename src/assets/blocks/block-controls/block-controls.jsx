@@ -55,7 +55,7 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
             const controlSettings = (
                 <Fragment>
                     <ToggleControl
-                        label={ __( 'Enable block controls', 'advanced-gutenberg' ) }
+                        label={ __( 'Enable block schedule', 'advanced-gutenberg' ) }
                         checked={ bControlsEnabled }
                         onChange={ () => props.setAttributes( { bControlsEnabled: !bControlsEnabled } ) }
                     />

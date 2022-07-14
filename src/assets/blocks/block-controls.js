@@ -318,7 +318,7 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                 Fragment,
                 null,
                 React.createElement(ToggleControl, {
-                    label: __('Enable block controls', 'advanced-gutenberg'),
+                    label: __('Enable block schedule', 'advanced-gutenberg'),
                     checked: bControlsEnabled,
                     onChange: function onChange() {
                         return props.setAttributes({ bControlsEnabled: !bControlsEnabled });
