@@ -36,6 +36,10 @@
     }
   }
 
+  .advgb-notice-sidebar {
+    margin: 0 0 8px;
+  }
+
   // Hide inserter for Adv Tab item to avoid inserting tabs inside tabs
   .advgb-tab-body-wrapper .block-editor-inner-blocks .block-list-appender {
     display: none !important;
@@ -111,4 +115,120 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
 /* Recent posts */
 .advgb-recent-posts-block.slider-view.style-headline .advgb-recent-posts .advgb-recent-post .advgb-post-wrapper {
   box-sizing: border-box;
+}
+
+/* AdvCalendarControl */
+.advgb-advcalendar-control {
+
+  label {
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  > div {
+    border: 1px solid #888;
+    border-radius: 3px;
+    margin-bottom: 10px;
+
+    button {
+
+      &:focus {
+        box-shadow: none !important;
+        outline: none !important;
+      }
+
+      &.is-link {
+        text-decoration: none;
+
+        &:hover,
+        &:focus,
+        &:active {
+          text-decoration: none;
+        }
+      }
+
+      &.advgb-advcalendar-remove-icon {
+        float: right;
+        padding: 0;
+        height: 32px;
+      }
+    }
+  }
+}
+
+.advgb-advcalendar-popover {
+
+  &-label {
+    padding: 16px 16px 0;
+    font-weight: bold;
+  }
+
+  button {
+
+    &:focus {
+      box-shadow: none !important;
+      outline: none !important;
+    }
+
+    &.advgb-advcalendar-remove-icon {
+      float: right;
+      padding: 0;
+      height: 32px;
+    }
+  }
+}
+
+/* Custom toolbar */
+.advgb-toolbar-btn {
+  border: none;
+  cursor: pointer;
+  background: none;
+  padding-left: 7px;
+  padding-right: 7px;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border: none;
+    color: var(--wp--preset--color--vivid-cyan-blue);
+  }
+
+  button {
+    font-size: 22px;
+  }
+}
+
+.advgb-toolbar-popup {
+  padding: 10px 10px 0;
+  min-width: 280px;
+}
+
+.advgb-feature-icon-active span.dashicons {
+  color: var(--wp--preset--color--vivid-cyan-blue);
+}
+
+/* Blocks controls */
+.block-editor-block-list__layout .block-editor-block-list__block.advgb-bc-editor-preview {
+  border: 1px dashed var(--wp--preset--color--vivid-cyan-blue);
+
+  &:after {
+    content: "\f177" !important;
+    color: var(--wp--preset--color--vivid-cyan-blue) !important;
+    font-family: dashicons !important;
+    line-height: 1;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: none;
+    text-rendering: auto;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 20px;
+    position: absolute;
+    left: unset !important;
+    right: 3px !important;
+    top: 3px !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+    height: 22px;
+    width: 24px;
+    text-align: center;
+  }
 }
