@@ -15,23 +15,23 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
     const SUPPORTED_BLOCKS = null;
 
     // do not show this feature if disabled.
-    if( !parseInt(advgbBlocks.block_visibility) ) return;
+    if( !parseInt(advgbBlocks.block_controls) ) return;
 
-    // Register block visibility to blocks attributes
-    addFilter( 'blocks.registerBlockType', 'advgb/blockVisibility', function ( settings ) {
+    // Register block controls to blocks attributes
+    addFilter( 'blocks.registerBlockType', 'advgb/blockControls', function ( settings ) {
         if (!SUPPORTED_BLOCKS || SUPPORTED_BLOCKS.includes( settings.name )) {
             settings.attributes = Object.assign( settings.attributes, {
-                bvEnabled: {
+                bControlsEnabled: {
                     type: 'boolean',
                     default: false
                 },
-                bvDateFrom: {
+                bControlsDateFrom: {
                     type: 'string'
                 },
-                bvDateTo: {
+                bControlsDateTo: {
                     type: 'string'
                 },
-                bvRecur: {
+                bControlsDateRecur: {
                     type: 'boolean',
                     default: false
                 },
@@ -42,70 +42,70 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
     } );
 
     // Add option to add dates for supported blocks
-    addFilter( 'editor.BlockEdit', 'advgb/addBlockVisibility', function ( BlockEdit ) {
+    addFilter( 'editor.BlockEdit', 'advgb/addBlockControls', function ( BlockEdit ) {
         return ( props ) => {
                 const {
-                    bvEnabled,
-                    bvDateFrom,
-                    bvDateTo,
-                    bvRecur,
+                    bControlsEnabled,
+                    bControlsDateFrom,
+                    bControlsDateTo,
+                    bControlsDateRecur,
                 } = props.attributes;
 
             return ( [
                 props.isSelected && (!SUPPORTED_BLOCKS || SUPPORTED_BLOCKS.includes( props.name )) &&
                 <InspectorControls key="advgb-bv-controls">
                         <PanelBody
-                            title={ __( 'Block Visibility', 'advanced-gutenberg' ) }
+                            title={ __( 'Block Controls', 'advanced-gutenberg' ) }
                             icon="visibility"
                             initialOpen={ false }
-                            className={ bvEnabled && ( bvDateFrom || bvDateTo ) ? 'advgb-bv-panel-icon' : '' }
+                            className={ bControlsEnabled && ( bControlsDateFrom || bControlsDateTo ) ? 'advgb-bv-panel-icon' : '' }
                         >
                             <ToggleControl
                                 label={ __( 'Enable block schedule', 'advanced-gutenberg' ) }
-                                checked={ bvEnabled }
-                                onChange={ () => props.setAttributes( { bvEnabled: !bvEnabled } ) }
+                                checked={ bControlsEnabled }
+                                onChange={ () => props.setAttributes( { bControlsEnabled: !bControlsEnabled } ) }
                             />
-                            { bvEnabled && (
+                            { bControlsEnabled && (
                                 <Fragment>
                                     <AdvDateTimeControl
                                         buttonLabel={ __( 'Now', 'advanced-gutenberg' ) }
                                         dateLabel={ __( 'Start showing', 'advanced-gutenberg' ) }
-                                        date={ bvDateFrom }
-                                        onChangeDate={ ( newDate ) => { props.setAttributes( { bvDateFrom: newDate } ); } }
-                                        onDateClear={ () => props.setAttributes( { bvDateFrom: null } ) }
+                                        date={ bControlsDateFrom }
+                                        onChangeDate={ ( newDate ) => { props.setAttributes( { bControlsDateFrom: newDate } ); } }
+                                        onDateClear={ () => props.setAttributes( { bControlsDateFrom: null } ) }
                                         onInvalidDate={ false }
                                     />
                                     <AdvDateTimeControl
                                         buttonLabel={ __( 'Never', 'advanced-gutenberg' ) }
                                         dateLabel={ __( 'Stop showing', 'advanced-gutenberg' ) }
-                                        date={ !!bvDateTo ? bvDateTo : null }
-                                        onChangeDate={ ( newDate ) => { props.setAttributes( { bvDateTo: newDate } ); } }
-                                        onDateClear={ () => props.setAttributes( { bvDateTo: null } ) }
+                                        date={ !!bControlsDateTo ? bControlsDateTo : null }
+                                        onChangeDate={ ( newDate ) => { props.setAttributes( { bControlsDateTo: newDate } ); } }
+                                        onDateClear={ () => props.setAttributes( { bControlsDateTo: null } ) }
                                         onInvalidDate={ ( date ) => {
-                                            // Disable all dates before bvDateFrom
-                                            if( bvDateFrom ) {
+                                            // Disable all dates before bControlsDateFrom
+                                            if( bControlsDateFrom ) {
                                                 let thisDate = new Date(date.getTime());
                                                 thisDate.setHours(0, 0, 0, 0);
-                                                let fromDate = new Date(bvDateFrom);
+                                                let fromDate = new Date(bControlsDateFrom);
                                                 fromDate.setHours(0, 0, 0, 0);
                                                 return thisDate.getTime() < fromDate.getTime();
                                             }
                                         } }
                                     />
-                                    { ( bvDateFrom > bvDateTo ) &&
+                                    { ( bControlsDateFrom > bControlsDateTo ) &&
                                         <Notice
                                             className="advgb-notice-sidebar"
                                             status="warning"
                                             isDismissible={ false }
                                         >
-                                            { __( 'Stop showing should be after Start showing!', 'advanced-gutenberg' ) }
+                                            { __( 'Stop showing this block date should be after Start showing this block date!', 'advanced-gutenberg' ) }
                                         </Notice>
                                     }
-                                    { bvDateFrom && bvDateTo &&
+                                    { bControlsDateFrom && bControlsDateTo &&
                                         <ToggleControl
                                             label={ __( 'Recurring', 'advanced-gutenberg' ) }
-                                            checked={ bvRecur }
-                                            onChange={ () => props.setAttributes( { bvRecur: !bvRecur } ) }
+                                            checked={ bControlsDateRecur }
+                                            onChange={ () => props.setAttributes( { bControlsDateRecur: !bControlsDateRecur } ) }
                                             help={ __( 'Show the block within the date interval every year', 'advanced-gutenberg' ) }
                                         />
                                     }
@@ -120,18 +120,18 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
 
     const withAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
         return ( props ) => {
-            if ( ( ! SUPPORTED_BLOCKS || SUPPORTED_BLOCKS.includes( props.name ) ) && hasBlockSupport( props.name, 'advgb/blockVisibility', true ) ) {
+            if ( ( ! SUPPORTED_BLOCKS || SUPPORTED_BLOCKS.includes( props.name ) ) && hasBlockSupport( props.name, 'advgb/blockControls', true ) ) {
                 const {
-                    bvEnabled,
-                    bvDateFrom,
-                    bvDateTo,
-                    bvRecur,
+                    bControlsEnabled,
+                    bControlsDateFrom,
+                    bControlsDateTo,
+                    bControlsDateRecur,
                 } = props.attributes;
 
-                const advgbBvClass = props.isSelected === false && bvEnabled && ( bvDateFrom || bvDateTo )
+                const advgbBvClass = props.isSelected === false && bControlsEnabled && ( bControlsDateFrom || bControlsDateTo )
                     ? 'advgb-bv-editor-preview' : '';
 
-                return <BlockListBlock { ...props } className={ advgbBvClass } bvDateFrom={ `${ bvDateFrom }` } bvDateTo={ `${ bvDateTo }` } bvEnabled={ `${ bvEnabled }` } bvRecur={ `${ bvRecur }` } />;
+                return <BlockListBlock { ...props } className={ advgbBvClass } bControlsDateFrom={ `${ bControlsDateFrom }` } bControlsDateTo={ `${ bControlsDateTo }` } bControlsEnabled={ `${ bControlsEnabled }` } bControlsDateRecur={ `${ bControlsDateRecur }` } />;
             }
 
             return <BlockListBlock { ...props } />;
@@ -139,6 +139,6 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
     }, 'withAttributes' );
 
     // Apply custom styles on back-end
-    wp.hooks.addFilter( 'editor.BlockListBlock', 'advgb/loadBackendBlockVisibility', withAttributes );
+    wp.hooks.addFilter( 'editor.BlockListBlock', 'advgb/loadBackendBlockControls', withAttributes );
 
 })( wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components, wp.compose );

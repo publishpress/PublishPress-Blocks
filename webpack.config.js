@@ -7,7 +7,7 @@ module.exports = [
             "./src/assets/**/*.jsx",
             {ignore: [
                 "./src/assets/blocks/customstyles/*.jsx",
-                "./src/assets/blocks/block-visibility/*.jsx",
+                "./src/assets/blocks/block-controls/*.jsx",
                 "./src/assets/blocks/pro-ad/*.jsx",
                 "./src/assets/blocks/editor-sidebar/*.jsx",
                 "./src/assets/blocks/**/*.frontend.jsx",
@@ -100,12 +100,12 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./src/assets/blocks/block-visibility/block-visibility.jsx",
+            "./src/assets/blocks/block-controls/block-controls.jsx",
             ),
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "block-visibility.js"
+            filename: "block-controls.js"
         },
 
         module: {

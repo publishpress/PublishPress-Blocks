@@ -434,7 +434,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if(
                 $this->settingIsEnabled('enable_advgb_blocks')
                 || $this->settingIsEnabled('enable_block_access')
-                || $this->settingIsEnabled('block_visibility')
+                || $this->settingIsEnabled('block_controls')
             ) {
                 // Define the dependency for the editor based on current screen
                 if( $currentScreen->id === 'customize' ) {
@@ -448,10 +448,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $wp_editor_dep = 'wp-editor';
                 }
 
-                if( $this->settingIsEnabled( 'block_visibility' ) ) {
+                if( $this->settingIsEnabled( 'block_controls' ) ) {
                     wp_enqueue_script(
-                        'advgb_block_visibility',
-                        plugins_url('assets/blocks/block-visibility.js', dirname(__FILE__)),
+                        'advgb_block_controls',
+                        plugins_url('assets/blocks/block-controls.js', dirname(__FILE__)),
                         array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', $wp_editor_dep, 'wp-plugins', 'wp-compose' ),
                         ADVANCED_GUTENBERG_VERSION,
                         true
@@ -596,7 +596,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $pp_series_options      = get_option('org_series_options');
             $pp_series_slug         = isset($pp_series_options['series_taxonomy_slug']) && !empty($pp_series_options['series_taxonomy_slug']) ? $pp_series_options['series_taxonomy_slug'] : 'series';
             $pp_series_post_types   = isset($pp_series_options['post_types_for_series']) && !empty($pp_series_options['post_types_for_series']) ? $pp_series_options['post_types_for_series'] : ['post'];
-            $block_visibility       = $this->settingIsEnabled( 'block_visibility' ) ? 1 : 0;
+            $block_controls         = $this->settingIsEnabled( 'block_controls' ) ? 1 : 0;
             global $wp_version;
             $blocks_widget_support = ( $wp_version >= 5.8 ) ? 1 : 0;
 
@@ -621,7 +621,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'pp_series_active' => $pp_series_active,
                 'pp_series_slug' => $pp_series_slug,
                 'pp_series_post_types' => $pp_series_post_types,
-                'block_visibility' => $block_visibility
+                'block_controls' => $block_controls
             ));
 
             // Setup default config data for blocks
@@ -1894,10 +1894,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['enable_columns_visual_guide'] = 0;
                 }
 
-                if (isset($_POST['block_visibility'])) {
-                    $save_config['block_visibility'] = 1;
+                if (isset($_POST['block_controls'])) {
+                    $save_config['block_controls'] = 1;
                 } else {
-                    $save_config['block_visibility'] = 0;
+                    $save_config['block_controls'] = 0;
                 }
 
                 if (isset($_POST['enable_block_access'])) {
@@ -4594,25 +4594,25 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function blockVisibility( $block_content, $block ) {
             if (
-                $this->settingIsEnabled( 'block_visibility' )
+                $this->settingIsEnabled( 'block_controls' )
                 && $block['blockName']
-                && isset($block['attrs']['bvEnabled'])
-                && intval($block['attrs']['bvEnabled']) === 1
+                && isset($block['attrs']['bControlsEnabled'])
+                && intval($block['attrs']['bControlsEnabled']) === 1
             ) {
                 $dateFrom = $dateTo = $recurring = null;
-                if ( ! empty( $block['attrs']['bvDateFrom'] ) ) {
-                    $dateFrom	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bvDateFrom'] );
+                if ( ! empty( $block['attrs']['bControlsDateFrom'] ) ) {
+                    $dateFrom	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bControlsDateFrom'] );
                     // Reset seconds and microseconds to zero to enable proper comparison
                     $dateFrom->setTime( $dateFrom->format('H'), $dateFrom->format('i'), 0, 0 );
                 }
-                if ( ! empty( $block['attrs']['bvDateTo'] ) ) {
-                    $dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bvDateTo'] );
+                if ( ! empty( $block['attrs']['bControlsDateTo'] ) ) {
+                    $dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bControlsDateTo'] );
                     // Reset seconds and microseconds to zero to enable proper comparison
                     $dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0, 0 );
 
                     if ( $dateFrom ) {
                         // Recurring is only relevant when both dateFrom and dateTo are defined
-                        $recurring = isset( $block['attrs']['bvRecur'] ) ? $block['attrs']['bvRecur'] : false;
+                        $recurring = isset( $block['attrs']['bControlsDateRecur'] ) ? $block['attrs']['bControlsDateRecur'] : false;
                     }
                 }
 
