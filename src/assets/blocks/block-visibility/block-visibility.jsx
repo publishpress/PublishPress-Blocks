@@ -15,7 +15,7 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
     const SUPPORTED_BLOCKS = null;
 
     // do not show this feature if disabled.
-    if( !parseInt(advg_settings.block_visibility) ) return;
+    if( !parseInt(advgbBlocks.block_visibility) ) return;
 
     // Register block visibility to blocks attributes
     addFilter( 'blocks.registerBlockType', 'advgb/blockVisibility', function ( settings ) {

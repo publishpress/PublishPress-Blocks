@@ -275,7 +275,7 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
     var SUPPORTED_BLOCKS = null;
 
     // do not show this feature if disabled.
-    if (!parseInt(advg_settings.block_visibility)) return;
+    if (!parseInt(advgbBlocks.block_visibility)) return;
 
     // Register block visibility to blocks attributes
     addFilter('blocks.registerBlockType', 'advgb/blockVisibility', function (settings) {
