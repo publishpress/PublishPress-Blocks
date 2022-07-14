@@ -198,7 +198,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Front-end
                 add_filter('render_block_data', array($this, 'contentPreRender'));
                 add_filter('render_block', array($this, 'addNonceToFormBlocks'));
-                add_filter('render_block', array($this, 'blockVisibility'), 10, 2);
+                add_filter('render_block', array($this, 'blockControls'), 10, 2);
                 add_filter('the_content', array($this, 'addFrontendContentAssets'), 9);
 
                 if($wp_version >= 5.8) {
@@ -4585,14 +4585,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Check visibility for each block
+         * Check block controls for each block and display or hide it
          *
          * @param string    $block_content  Block HTML output
          * @param array     $block          Block attributes
          *
          * @return string                   $block_content or an empty string when block is hidden
          */
-        public function blockVisibility( $block_content, $block ) {
+        public function blockControls( $block_content, $block ) {
             if (
                 $this->settingIsEnabled( 'block_controls' )
                 && $block['blockName']
