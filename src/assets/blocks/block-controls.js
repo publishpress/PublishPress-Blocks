@@ -313,14 +313,14 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
 
             return [props.isSelected && (!SUPPORTED_BLOCKS || SUPPORTED_BLOCKS.includes(props.name)) && React.createElement(
                 InspectorControls,
-                { key: 'advgb-bv-controls' },
+                { key: 'advgb-bc-controls' },
                 React.createElement(
                     PanelBody,
                     {
                         title: __('Block Controls', 'advanced-gutenberg'),
                         icon: 'visibility',
                         initialOpen: false,
-                        className: bControlsEnabled && (bControlsDateFrom || bControlsDateTo) ? 'advgb-bv-panel-icon' : ''
+                        className: bControlsEnabled && (bControlsDateFrom || bControlsDateTo) ? 'advgb-bc-panel-icon' : ''
                     },
                     React.createElement(ToggleControl, {
                         label: __('Enable block schedule', 'advanced-gutenberg'),
@@ -398,9 +398,9 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                     bControlsDateRecur = _props$attributes2.bControlsDateRecur;
 
 
-                var advgbBvClass = props.isSelected === false && bControlsEnabled && (bControlsDateFrom || bControlsDateTo) ? 'advgb-bc-editor-preview' : '';
+                var advgbBcClass = props.isSelected === false && bControlsEnabled && (bControlsDateFrom || bControlsDateTo) ? 'advgb-bc-editor-preview' : '';
 
-                return React.createElement(BlockListBlock, _extends({}, props, { className: advgbBvClass, bControlsDateFrom: '' + bControlsDateFrom, bControlsDateTo: '' + bControlsDateTo, bControlsEnabled: '' + bControlsEnabled, bControlsDateRecur: '' + bControlsDateRecur }));
+                return React.createElement(BlockListBlock, _extends({}, props, { className: advgbBcClass, bControlsDateFrom: '' + bControlsDateFrom, bControlsDateTo: '' + bControlsDateTo, bControlsEnabled: '' + bControlsEnabled, bControlsDateRecur: '' + bControlsDateRecur }));
             }
 
             return React.createElement(BlockListBlock, props);

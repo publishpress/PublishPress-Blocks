@@ -53,12 +53,12 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
 
             return ( [
                 props.isSelected && (!SUPPORTED_BLOCKS || SUPPORTED_BLOCKS.includes( props.name )) &&
-                <InspectorControls key="advgb-bv-controls">
+                <InspectorControls key="advgb-bc-controls">
                         <PanelBody
                             title={ __( 'Block Controls', 'advanced-gutenberg' ) }
                             icon="visibility"
                             initialOpen={ false }
-                            className={ bControlsEnabled && ( bControlsDateFrom || bControlsDateTo ) ? 'advgb-bv-panel-icon' : '' }
+                            className={ bControlsEnabled && ( bControlsDateFrom || bControlsDateTo ) ? 'advgb-bc-panel-icon' : '' }
                         >
                             <ToggleControl
                                 label={ __( 'Enable block schedule', 'advanced-gutenberg' ) }
@@ -128,10 +128,10 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                     bControlsDateRecur,
                 } = props.attributes;
 
-                const advgbBvClass = props.isSelected === false && bControlsEnabled && ( bControlsDateFrom || bControlsDateTo )
+                const advgbBcClass = props.isSelected === false && bControlsEnabled && ( bControlsDateFrom || bControlsDateTo )
                     ? 'advgb-bc-editor-preview' : '';
 
-                return <BlockListBlock { ...props } className={ advgbBvClass } bControlsDateFrom={ `${ bControlsDateFrom }` } bControlsDateTo={ `${ bControlsDateTo }` } bControlsEnabled={ `${ bControlsEnabled }` } bControlsDateRecur={ `${ bControlsDateRecur }` } />;
+                return <BlockListBlock { ...props } className={ advgbBcClass } bControlsDateFrom={ `${ bControlsDateFrom }` } bControlsDateTo={ `${ bControlsDateTo }` } bControlsEnabled={ `${ bControlsEnabled }` } bControlsDateRecur={ `${ bControlsDateRecur }` } />;
             }
 
             return <BlockListBlock { ...props } />;
