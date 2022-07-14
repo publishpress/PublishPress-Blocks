@@ -8,7 +8,6 @@ if ( !current_user_can('administrator') ) {
 
 wp_enqueue_style('advgb_profile_style');
 wp_enqueue_script('advgb_block_access_js');
-wp_enqueue_script('advgb_update_list');
 do_action('enqueue_block_editor_assets');
 
 
@@ -19,7 +18,6 @@ if (function_exists('get_block_categories')) {
 } elseif (function_exists('gutenberg_get_block_categories')) {
     $blockCategories = gutenberg_get_block_categories(get_post());
 }
-
 wp_add_inline_script(
     'wp-blocks',
     sprintf('wp.blocks.setCategories( %s );', wp_json_encode($blockCategories)),
@@ -39,6 +37,38 @@ if( isset( $_REQUEST['user_role'] ) && !empty( $_REQUEST['user_role'] ) ) { // p
     $current_user_role = sanitize_text_field($_REQUEST['user_role']); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- advgb_nonce in place
 } else {
     $current_user_role = 'administrator';
+}
+
+// Active and inactive blocks for current user role
+$block_access_by_role = get_option( 'advgb_blocks_user_roles');
+if(
+    ! empty( $block_access_by_role[$current_user_role] )
+    && is_array( $block_access_by_role[$current_user_role] )
+) {
+    wp_localize_script(
+        'wp-blocks',
+        'advgbCUserRole',
+        [
+            'user_role' => $current_user_role,
+            'access' => [
+                'active_blocks' => $block_access_by_role[$current_user_role]['active_blocks'],
+                'inactive_blocks' => $block_access_by_role[$current_user_role]['inactive_blocks']
+            ]
+        ]
+    );
+} else {
+    // Nothing saved in database for current user role. Set empty (access to all blocks)
+    wp_localize_script(
+        'wp-blocks',
+        'advgbCuUserRole',
+        [
+            'user_role' => $current_user_role,
+            'access' => [
+                'active_blocks' => [],
+                'inactive_blocks' => []
+            ]
+        ]
+    );
 }
 
 // Get disabled blocks by user roles option
@@ -138,94 +168,14 @@ $advgb_block_readonly_  = null;
             </div>
         </div>
 
-        <!--Blocks list -->
+        <!-- Blocks list -->
         <div id="blocks-list-tab" class="tab-content">
-            <div>
-                <?php
-                foreach( $blockCategories as $blockCategory ) {
-                    ?>
-                    <div class="category-block clearfix">
-                        <h3 class="category-name">
-                            <span>
-                                <?php echo esc_html($blockCategory['title']); ?>
-                            </span><i class="mi"></i>
-                        </h3>
-                        <ul class="blocks-list">
-                            <?php
-                            foreach ($advgb_blocks_list as $block) {
-                                if( isset($block['category']) && $blockCategory['slug'] === $block['category'] ) {
-                                    // Convert object to array
-                                    $block = (array)$block;
-
-                                    if( in_array($block['name'], $advgb_blocks_deactivate_force) ) {
-                                        // Disable some blocks such as Container and can't be edited
-                                        $advgb_block_status_    = false;
-                                        $advgb_block_readonly_  = true;
-                                    } elseif( in_array($block['name'], $advgb_blocks_activate_force) ) {
-                                        // Enable some blocks such as Legacy Widget and can't be edited
-                                        $advgb_block_status_    = true;
-                                        $advgb_block_readonly_  = true;
-                                    } else {
-                                        $advgb_block_status_    = empty( $advgb_blocks_user_roles['active_blocks'] ) || ( in_array($block['name'], $advgb_blocks_user_roles['active_blocks']) || !in_array($block['name'], $advgb_blocks_user_roles['inactive_blocks']) );
-                                        $advgb_block_readonly_  = false;
-                                    }
-                                    ?>
-                                    <li class="block-item block-access-item ju-settings-option<?php echo ($advgb_block_readonly_) ? ' block-item-readonly' : ' block-item-editable' ?>">
-                                        <label class="ju-setting-label">
-                                            <span class="block-icon"<?php echo isset( $block['iconColor'] ) && !empty( $block['iconColor'] ) ? ' style="color:' . esc_attr($block['iconColor']) . ';"' : ''; ?>>
-                                                <?php
-                                                echo wp_specialchars_decode( $block['icon'], ENT_QUOTES ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                                                ?>
-                                            </span>
-                                            <span class="block-title">
-                                                <?php echo esc_html($block['title']); ?>
-                                            </span>
-                                        </label>
-                                        <div class="ju-switch-button">
-                                            <label class="switch">
-                                                <input
-                                                    type="checkbox"
-                                                    name="blocks[]"
-                                                    value="<?php echo esc_attr( $block['name'] ); ?>"<?php echo ( $advgb_block_status_ ) ? ' checked="checked"' : '' ?>
-                                                    <?php echo ($advgb_block_readonly_) ? ' onclick="return false;"' : '' ?>>
-                                                <span class="slider"></span>
-                                            </label>
-                                        </div>
-                                    </li>
-                                <?php
-                                }
-                            }
-                            ?>
-                        </ul>
-                    </div>
-                    <?php
-                }
-
-                // Extract the slug from the listed categories
-                $blockCategoriesSlug = [];
-                foreach( $blockCategories as $blockCategory ) {
-                    $blockCategoriesSlug[] = $blockCategory['slug'];
-                }
-
-                // Generate hidden fields with all the saved blocks (except the ones not listed in this page to avoid saving them as inactive)
-                foreach ($advgb_blocks_list as $block) {
-                    if( $block['name'] && isset($block['category']) && in_array( $block['category'], $blockCategoriesSlug ) ) {
-                    ?>
-                        <input type="hidden" name="blocks_list[]" value="<?php echo esc_attr( $block['name'] ); ?>">
-                    <?php
-                    } elseif ( $block['name'] && isset($block['category']) && !in_array( $block['category'], $blockCategoriesSlug ) ) {
-                        ?>
-                        <input type="hidden" name="blocks_list_undetected[]" value="<?php echo esc_attr( $block['name'] ); ?>">
-                        <?php
-                    } else {
-                        // Nothing to do here
-                    }
-                }
-                ?>
+            <div class="blocks-section">
+                <input type="hidden" name="blocks_list" id="blocks_list" />
             </div>
         </div>
 
-        <!--Save button-->
+        <!-- Save button-->
         <div style="margin-top: 20px;">
             <button class="button button-primary pp-primary-button save-profile-button"
                     type="submit"

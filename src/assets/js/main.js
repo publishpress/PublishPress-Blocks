@@ -219,3 +219,23 @@ function advgbGetCookie(cname) {
     }
     return "";
 }
+
+// Choose a feature from advgbCuUserRole var
+// that stores block permissions for current user role from select
+// and pass the block from the loop,
+// to know if the block is checked (active) or not (inactive)
+function advgbGetCUserRoleFeature( feature, block ) {
+    switch( feature ) {
+        case 'access': // advgbCUserRole.access
+            if (
+                typeof advgbCUserRole.access.inactive_blocks === 'object'
+                && advgbCUserRole.access.inactive_blocks !== null
+            ) {
+                return advgbCUserRole.access.inactive_blocks.indexOf(block.name) === -1
+                    ? 'checked="checked"' : '';
+            } else {
+                return 'checked="checked"';
+            }
+            break;
+    }
+}

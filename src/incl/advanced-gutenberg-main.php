@@ -1466,11 +1466,19 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array('jquery'),
                     ADVANCED_GUTENBERG_VERSION
                 );
+                wp_register_script(
+                    'advgb_get_blocks_js',
+                    plugins_url('assets/js/get-blocks.js', dirname(__FILE__)),
+                    array('jquery', 'advgb_main_js'),
+                    ADVANCED_GUTENBERG_VERSION
+                );
                 // @TODO - Check if we really need all the dependencies from 'advgb_block_access_js'
                 wp_register_script(
                     'advgb_block_access_js',
                     plugins_url('assets/js/block-access.js', dirname(__FILE__)),
                     array(
+                        'jquery',
+                        'advgb_get_blocks_js',
                         'wp-block-editor',
                         'wp-blocks',
                         'wp-element',
@@ -2066,61 +2074,36 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            /* Get blocks array.
-             * If 'blocks' doesn't exist (because advgb_blocks_list option is still not saved),
-             * redirect to error page and skip saving.
-             */
-            if( isset($_POST['blocks']) && is_array($_POST['blocks']) ) {
-                $blocks = array_map('sanitize_text_field', $_POST['blocks']);
-            } else {
-                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=error' ) );
-                exit;
-            }
-
-            $user_role         = sanitize_text_field($_POST['user_role']);
-            $active_blocks     = array();
-            $inactive_blocks   = array();
-
-            if ( isset( $blocks ) && !empty( $blocks ) && isset( $user_role ) && !empty( $user_role ) ) {
-
-                /* Blocks saved in advgb_blocks_list but not listed in Block Access page
-                 * due their categories are not detected
-                 */
-                $blocks_list_undetected = (
-                    isset($_POST['blocks_list_undetected']) && is_array($_POST['blocks_list_undetected']) ? array_map('sanitize_text_field', $_POST['blocks_list_undetected']) : ''
+            // Get list of active blocks
+            if (
+                isset( $_POST['blocks_list'] )
+                && isset( $_POST['active_blocks'] )
+                && is_array( $_POST['active_blocks'] )
+                && isset( $_POST['user_role'] )
+                && ! empty( $_POST['user_role'] )
+            ) {
+                $user_role          = sanitize_text_field( $_POST['user_role'] );
+                $blocks_list        = array_map(
+                    'sanitize_text_field',
+                    json_decode( stripslashes( $_POST['blocks_list'] ) )
                 );
+                $active_blocks      = array_map( 'sanitize_text_field', $_POST['active_blocks'] );
+                $inactive_blocks    = array_values( array_diff( $blocks_list, $active_blocks ) );
 
-                /* Get all the blocks we can manage (which category is detected).
-                 * If 'blocks_list' doesn't exist (because advgb_blocks_list option is still not saved),
-                 * redirect to error page and skip saving.
-                 */
-                if( isset($_POST['blocks_list']) && is_array($_POST['blocks_list']) ) {
-                    $blocks_list = array_map('sanitize_text_field', $_POST['blocks_list']);
-                } else {
-                    wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=error' ) );
-                    exit;
-                }
-
-                if( $blocks_list_undetected && is_array( $blocks_list_undetected ) ) {
-                    // Merge active blocks with the ones we can't manage
-                    $active_blocks = array_merge( $blocks, $blocks_list_undetected );
-                } else {
-                    $active_blocks = $blocks;
-                }
-
-                // Inactive blocks
-                $inactive_blocks = array_unique( array_values( array_diff( $blocks_list, $active_blocks ) ) );
-
-                // Define active and inactive blocks
+                // Save by access role
                 $block_access_by_role                                  = get_option( 'advgb_blocks_user_roles');
                 $block_access_by_role[$user_role]['active_blocks']     = isset( $active_blocks ) ? $active_blocks : '';
                 $block_access_by_role[$user_role]['inactive_blocks']   = isset( $inactive_blocks ) ? $inactive_blocks : '';
 
                 update_option( 'advgb_blocks_user_roles', $block_access_by_role );
 
+                // Redirect with success message
                 wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=success' ) );
             } else {
-                wp_safe_redirect( admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=error' ) );
+                wp_safe_redirect(
+                    // Redirect with error message / Nothing was saved
+                    admin_url( 'admin.php?page=advgb_main&view=block-access&user_role=' . $user_role . '&save_access=error' )
+                );
             }
         }
 
