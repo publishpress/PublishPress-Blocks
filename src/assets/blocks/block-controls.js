@@ -375,7 +375,7 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                         onChange: function onChange() {
                             return props.setAttributes({ bControlsDateRecur: !bControlsDateRecur });
                         },
-                        help: __('Show the block within the date interval every year', 'advanced-gutenberg')
+                        help: __('If Recurring is enabled, the block will be visible every year within the date interval', 'advanced-gutenberg')
                     })
                 )
             );
