@@ -60,7 +60,7 @@ if(
     // Nothing saved in database for current user role. Set empty (access to all blocks)
     wp_localize_script(
         'wp-blocks',
-        'advgbCuUserRole',
+        'advgbCUserRole',
         [
             'user_role' => $current_user_role,
             'access' => [
