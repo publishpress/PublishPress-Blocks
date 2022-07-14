@@ -178,7 +178,36 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
   }
 }
 
-/* Blocks visibility */
+/* Custom toolbar */
+.advgb-toolbar-btn {
+  border: none;
+  cursor: pointer;
+  background: none;
+  padding-left: 7px;
+  padding-right: 7px;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border: none;
+    color: var(--wp--preset--color--vivid-cyan-blue);
+  }
+
+  button {
+    font-size: 22px;
+  }
+}
+
+.advgb-toolbar-popup {
+  padding: 10px 10px 0;
+  min-width: 280px;
+}
+
+.advgb-feature-icon-active span.dashicons {
+  color: var(--wp--preset--color--vivid-cyan-blue);
+}
+
+/* Blocks controls */
 .block-editor-block-list__layout .block-editor-block-list__block.advgb-bc-editor-preview {
   border: 1px dashed var(--wp--preset--color--vivid-cyan-blue);
 
@@ -202,8 +231,4 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
     width: 24px;
     text-align: center;
   }
-}
-
-.advgb-bc-panel-icon span.dashicons {
-  color: var(--wp--preset--color--vivid-cyan-blue);
 }

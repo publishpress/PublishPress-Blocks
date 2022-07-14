@@ -259,13 +259,15 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
     var __ = wpI18n.__;
     var hasBlockSupport = wpBlocks.hasBlockSupport;
     var _wpBlockEditor = wpBlockEditor,
-        InspectorControls = _wpBlockEditor.InspectorControls;
+        InspectorControls = _wpBlockEditor.InspectorControls,
+        BlockControls = _wpBlockEditor.BlockControls;
     var DateTimePicker = wpComponents.DateTimePicker,
         ToggleControl = wpComponents.ToggleControl,
         PanelBody = wpComponents.PanelBody,
-        PanelRow = wpComponents.PanelRow,
-        Button = wpComponents.Button,
-        Notice = wpComponents.Notice;
+        Notice = wpComponents.Notice,
+        Toolbar = wpComponents.Toolbar,
+        Dropdown = wpComponents.Dropdown,
+        Tooltip = wpComponents.Tooltip;
     var createHigherOrderComponent = wpCompose.createHigherOrderComponent;
     var Fragment = wp.element.Fragment;
 
@@ -311,7 +313,108 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                 bControlsDateRecur = _props$attributes.bControlsDateRecur;
 
 
+            var iconActiveClass = bControlsEnabled && (bControlsDateFrom || bControlsDateTo) ? 'advgb-feature-icon-active' : '';
+            var controlSettings = React.createElement(
+                Fragment,
+                null,
+                React.createElement(ToggleControl, {
+                    label: __('Enable block controls', 'advanced-gutenberg'),
+                    checked: bControlsEnabled,
+                    onChange: function onChange() {
+                        return props.setAttributes({ bControlsEnabled: !bControlsEnabled });
+                    }
+                }),
+                bControlsEnabled && React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(_components.AdvDateTimeControl, {
+                        buttonLabel: __('Now', 'advanced-gutenberg'),
+                        dateLabel: __('Start showing', 'advanced-gutenberg'),
+                        date: bControlsDateFrom,
+                        onChangeDate: function onChangeDate(newDate) {
+                            props.setAttributes({ bControlsDateFrom: newDate });
+                        },
+                        onDateClear: function onDateClear() {
+                            return props.setAttributes({ bControlsDateFrom: null });
+                        },
+                        onInvalidDate: false
+                    }),
+                    React.createElement(_components.AdvDateTimeControl, {
+                        buttonLabel: __('Never', 'advanced-gutenberg'),
+                        dateLabel: __('Stop showing', 'advanced-gutenberg'),
+                        date: !!bControlsDateTo ? bControlsDateTo : null,
+                        onChangeDate: function onChangeDate(newDate) {
+                            props.setAttributes({ bControlsDateTo: newDate });
+                        },
+                        onDateClear: function onDateClear() {
+                            return props.setAttributes({ bControlsDateTo: null });
+                        },
+                        onInvalidDate: function onInvalidDate(date) {
+                            // Disable all dates before bControlsDateFrom
+                            if (bControlsDateFrom) {
+                                var thisDate = new Date(date.getTime());
+                                thisDate.setHours(0, 0, 0, 0);
+                                var fromDate = new Date(bControlsDateFrom);
+                                fromDate.setHours(0, 0, 0, 0);
+                                return thisDate.getTime() < fromDate.getTime();
+                            }
+                        }
+                    }),
+                    bControlsDateFrom > bControlsDateTo && React.createElement(
+                        Notice,
+                        {
+                            className: 'advgb-notice-sidebar',
+                            status: 'warning',
+                            isDismissible: false
+                        },
+                        __('"Stop showing" date should be after "Start showing" date!', 'advanced-gutenberg')
+                    ),
+                    bControlsDateFrom && bControlsDateTo && React.createElement(ToggleControl, {
+                        label: __('Recurring', 'advanced-gutenberg'),
+                        checked: bControlsDateRecur,
+                        onChange: function onChange() {
+                            return props.setAttributes({ bControlsDateRecur: !bControlsDateRecur });
+                        },
+                        help: __('Show the block within the date interval every year', 'advanced-gutenberg')
+                    })
+                )
+            );
+
             return [props.isSelected && (!SUPPORTED_BLOCKS || SUPPORTED_BLOCKS.includes(props.name)) && React.createElement(
+                BlockControls,
+                null,
+                React.createElement(
+                    Toolbar,
+                    null,
+                    React.createElement(Dropdown, {
+                        className: 'advgb-toolbar-component',
+                        renderToggle: function renderToggle(_ref) {
+                            var isOpen = _ref.isOpen,
+                                onToggle = _ref.onToggle;
+                            return React.createElement(
+                                Tooltip,
+                                { text: __('Block Controls', 'advanced-gutenberg') },
+                                React.createElement(
+                                    'button',
+                                    {
+                                        onClick: onToggle,
+                                        'aria-expanded': isOpen,
+                                        className: 'advgb-toolbar-btn ' + iconActiveClass
+                                    },
+                                    React.createElement('span', { 'class': 'dashicon dashicons dashicons-visibility' })
+                                )
+                            );
+                        },
+                        renderContent: function renderContent() {
+                            return React.createElement(
+                                'div',
+                                { className: 'advgb-toolbar-popup' },
+                                controlSettings
+                            );
+                        }
+                    })
+                )
+            ), React.createElement(
                 InspectorControls,
                 { key: 'advgb-bc-controls' },
                 React.createElement(
@@ -320,69 +423,9 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                         title: __('Block Controls', 'advanced-gutenberg'),
                         icon: 'visibility',
                         initialOpen: false,
-                        className: bControlsEnabled && (bControlsDateFrom || bControlsDateTo) ? 'advgb-bc-panel-icon' : ''
+                        className: iconActiveClass
                     },
-                    React.createElement(ToggleControl, {
-                        label: __('Enable block schedule', 'advanced-gutenberg'),
-                        checked: bControlsEnabled,
-                        onChange: function onChange() {
-                            return props.setAttributes({ bControlsEnabled: !bControlsEnabled });
-                        }
-                    }),
-                    bControlsEnabled && React.createElement(
-                        Fragment,
-                        null,
-                        React.createElement(_components.AdvDateTimeControl, {
-                            buttonLabel: __('Now', 'advanced-gutenberg'),
-                            dateLabel: __('Start showing', 'advanced-gutenberg'),
-                            date: bControlsDateFrom,
-                            onChangeDate: function onChangeDate(newDate) {
-                                props.setAttributes({ bControlsDateFrom: newDate });
-                            },
-                            onDateClear: function onDateClear() {
-                                return props.setAttributes({ bControlsDateFrom: null });
-                            },
-                            onInvalidDate: false
-                        }),
-                        React.createElement(_components.AdvDateTimeControl, {
-                            buttonLabel: __('Never', 'advanced-gutenberg'),
-                            dateLabel: __('Stop showing', 'advanced-gutenberg'),
-                            date: !!bControlsDateTo ? bControlsDateTo : null,
-                            onChangeDate: function onChangeDate(newDate) {
-                                props.setAttributes({ bControlsDateTo: newDate });
-                            },
-                            onDateClear: function onDateClear() {
-                                return props.setAttributes({ bControlsDateTo: null });
-                            },
-                            onInvalidDate: function onInvalidDate(date) {
-                                // Disable all dates before bControlsDateFrom
-                                if (bControlsDateFrom) {
-                                    var thisDate = new Date(date.getTime());
-                                    thisDate.setHours(0, 0, 0, 0);
-                                    var fromDate = new Date(bControlsDateFrom);
-                                    fromDate.setHours(0, 0, 0, 0);
-                                    return thisDate.getTime() < fromDate.getTime();
-                                }
-                            }
-                        }),
-                        bControlsDateFrom > bControlsDateTo && React.createElement(
-                            Notice,
-                            {
-                                className: 'advgb-notice-sidebar',
-                                status: 'warning',
-                                isDismissible: false
-                            },
-                            __('"Stop showing" date should be after "Start showing" date!', 'advanced-gutenberg')
-                        ),
-                        bControlsDateFrom && bControlsDateTo && React.createElement(ToggleControl, {
-                            label: __('Recurring', 'advanced-gutenberg'),
-                            checked: bControlsDateRecur,
-                            onChange: function onChange() {
-                                return props.setAttributes({ bControlsDateRecur: !bControlsDateRecur });
-                            },
-                            help: __('Show the block within the date interval every year', 'advanced-gutenberg')
-                        })
-                    )
+                    controlSettings
                 )
             ), React.createElement(BlockEdit, _extends({ key: 'block-edit-advgb-dates' }, props))];
         };
