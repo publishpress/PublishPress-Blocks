@@ -257,6 +257,9 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
+= 2.13.4 - 14 Jul 2022 =
+  * Add: Block controls to schedule blocks visibility
+
 = 2.13.3 - 6 Jul 2022 =
   * Add: Blue color from WordPress core to unit elements (px, %) for Content Display block
   * Add: Choose to display author, date, excerpt, read more, category, tags, comment counts and custom taxonomies for up to 5 first posts in Content Display block
