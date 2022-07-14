@@ -4652,7 +4652,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function contentPreRender($block)
         {
-
             // Search for needed blocks then add styles to it
             $style = $this->addBlocksStyles($block);
 
