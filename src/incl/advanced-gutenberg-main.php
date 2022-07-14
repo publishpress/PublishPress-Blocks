@@ -524,15 +524,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 );
             }
 
-            // Block visibility
-            wp_localize_script(
-                'wp-blocks',
-                'advg_settings',
-                [
-                    'block_visibility' => $this->settingIsEnabled( 'block_visibility' ) ? 1 : 0
-                ]
-            );
-
             // Pro
             if( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                 if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_scripts_editor' ) ) {
@@ -1827,6 +1818,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     [
                         'editor_width_global'                   => $editorWidthGlobal,
                         'enable_columns_visual_guide_global'    => $editorColsVGGlobal,
+                        'block_visibility'                      => $this->settingIsEnabled( 'block_visibility' ) ? 1 : 0
                     ]
                 );
 
