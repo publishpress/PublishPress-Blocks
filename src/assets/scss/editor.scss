@@ -179,7 +179,7 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
 }
 
 /* Blocks visibility */
-.block-editor-block-list__layout .block-editor-block-list__block.advgb-bv-editor-preview {
+.block-editor-block-list__layout .block-editor-block-list__block.advgb-bc-editor-preview {
   border: 1px dashed var(--wp--preset--color--vivid-cyan-blue);
 
   &:after {

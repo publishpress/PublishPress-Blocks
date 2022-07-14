@@ -398,7 +398,7 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                     bControlsDateRecur = _props$attributes2.bControlsDateRecur;
 
 
-                var advgbBvClass = props.isSelected === false && bControlsEnabled && (bControlsDateFrom || bControlsDateTo) ? 'advgb-bv-editor-preview' : '';
+                var advgbBvClass = props.isSelected === false && bControlsEnabled && (bControlsDateFrom || bControlsDateTo) ? 'advgb-bc-editor-preview' : '';
 
                 return React.createElement(BlockListBlock, _extends({}, props, { className: advgbBvClass, bControlsDateFrom: '' + bControlsDateFrom, bControlsDateTo: '' + bControlsDateTo, bControlsEnabled: '' + bControlsEnabled, bControlsDateRecur: '' + bControlsDateRecur }));
             }
