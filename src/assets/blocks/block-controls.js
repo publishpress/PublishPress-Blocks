@@ -372,7 +372,7 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                                 status: 'warning',
                                 isDismissible: false
                             },
-                            __('Stop showing this block date should be after Start showing this block date!', 'advanced-gutenberg')
+                            __('"Stop showing" date should be after "Start showing" date!', 'advanced-gutenberg')
                         ),
                         bControlsDateFrom && bControlsDateTo && React.createElement(ToggleControl, {
                             label: __('Recurring', 'advanced-gutenberg'),
