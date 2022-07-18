@@ -163,6 +163,11 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
     font-weight: bold;
   }
 
+  &-timezone {
+    padding: 6px 16px 0;
+    color: #777;
+  }
+
   button {
 
     &:focus {

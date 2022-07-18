@@ -227,6 +227,11 @@ function AdvDateTimeControl(props) {
                     }
                 })
             ),
+            React.createElement(
+                "div",
+                { className: "advgb-advcalendar-popover-timezone" },
+                typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length ? advgbBlocks.timezone.replace(/_/g, ' ') + " " + __('time', 'advanced-gutenberg') : __('WordPress settings timezone', 'advanced-gutenberg')
+            ),
             React.createElement(DateTimePicker, {
                 currentDate: date,
                 onChange: onChangeDate,

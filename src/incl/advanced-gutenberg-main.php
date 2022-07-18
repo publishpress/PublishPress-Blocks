@@ -597,6 +597,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $pp_series_slug         = isset($pp_series_options['series_taxonomy_slug']) && !empty($pp_series_options['series_taxonomy_slug']) ? $pp_series_options['series_taxonomy_slug'] : 'series';
             $pp_series_post_types   = isset($pp_series_options['post_types_for_series']) && !empty($pp_series_options['post_types_for_series']) ? $pp_series_options['post_types_for_series'] : ['post'];
             $block_controls         = $this->settingIsEnabled( 'block_controls' ) ? 1 : 0;
+            $timezone               = function_exists( 'wp_timezone_string' ) ? wp_timezone_string() : '';
             global $wp_version;
             $blocks_widget_support = ( $wp_version >= 5.8 ) ? 1 : 0;
 
@@ -621,7 +622,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'pp_series_active' => $pp_series_active,
                 'pp_series_slug' => $pp_series_slug,
                 'pp_series_post_types' => $pp_series_post_types,
-                'block_controls' => $block_controls
+                'block_controls' => $block_controls,
+                'timezone' => $timezone
             ));
 
             // Setup default config data for blocks
