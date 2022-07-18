@@ -56,6 +56,11 @@ import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
                 <Fragment>
                     <ToggleControl
                         label={ __( 'Enable block schedule', 'advanced-gutenberg' ) }
+                        help={
+                            !bControlsEnabled
+                                ? __( 'Setup when to start showing and/or stop showing this block', 'advanced-gutenberg' )
+                                : ''
+                        }
                         checked={ bControlsEnabled }
                         onChange={ () => props.setAttributes( { bControlsEnabled: !bControlsEnabled } ) }
                     />

@@ -324,6 +324,7 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                 null,
                 React.createElement(ToggleControl, {
                     label: __('Enable block schedule', 'advanced-gutenberg'),
+                    help: !bControlsEnabled ? __('Setup when to start showing and/or stop showing this block', 'advanced-gutenberg') : '',
                     checked: bControlsEnabled,
                     onChange: function onChange() {
                         return props.setAttributes({ bControlsEnabled: !bControlsEnabled });
