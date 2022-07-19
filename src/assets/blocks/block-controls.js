@@ -86,10 +86,10 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/assets/blocks/0-adv-components/components.jsx":
-/*!***********************************************************!*\
-  !*** ./src/assets/blocks/0-adv-components/components.jsx ***!
-  \***********************************************************/
+/***/ "./src/assets/blocks/0-adv-components/datetime.jsx":
+/*!*********************************************************!*\
+  !*** ./src/assets/blocks/0-adv-components/datetime.jsx ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -102,47 +102,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-exports.AdvColorControl = AdvColorControl;
 exports.AdvDateTimeControl = AdvDateTimeControl;
-function AdvColorControl(props) {
-    var _wp$components = wp.components,
-        ColorIndicator = _wp$components.ColorIndicator,
-        BaseControl = _wp$components.BaseControl;
-
-    var _ref = wp.blockEditor || wp.editor,
-        ColorPalette = _ref.ColorPalette;
-
-    var BaseLabel = BaseControl.VisualLabel ? BaseControl.VisualLabel : "span";
-
-    var label = props.label,
-        value = props.value,
-        onChange = props.onChange;
-
-    return React.createElement(
-        BaseControl,
-        {
-            className: "editor-color-palette-control block-editor-color-palette-control"
-        },
-        React.createElement(
-            BaseLabel,
-            { className: "components-base-control__label" },
-            label,
-            value && React.createElement(ColorIndicator, { colorValue: value })
-        ),
-        React.createElement(ColorPalette, {
-            className: "editor-color-palette-control__color-palette block-editor-color-palette-control__color-palette",
-            value: value,
-            onChange: onChange
-        })
-    );
-}
-
 function AdvDateTimeControl(props) {
-    var _wp$components2 = wp.components,
-        Button = _wp$components2.Button,
-        DateTimePicker = _wp$components2.DateTimePicker,
-        Popover = _wp$components2.Popover,
-        Tooltip = _wp$components2.Tooltip;
+    var _wp$components = wp.components,
+        Button = _wp$components.Button,
+        DateTimePicker = _wp$components.DateTimePicker,
+        Popover = _wp$components.Popover,
+        Tooltip = _wp$components.Tooltip;
     var _wp$element = wp.element,
         Fragment = _wp$element.Fragment,
         useState = _wp$element.useState;
@@ -256,7 +222,7 @@ function AdvDateTimeControl(props) {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ "./src/assets/blocks/0-adv-components/components.jsx");
+var _datetime = __webpack_require__(/*! ../0-adv-components/datetime.jsx */ "./src/assets/blocks/0-adv-components/datetime.jsx");
 
 (function (wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose) {
     wpBlockEditor = wp.blockEditor || wp.editor;
@@ -333,7 +299,7 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                 bControlsEnabled && React.createElement(
                     Fragment,
                     null,
-                    React.createElement(_components.AdvDateTimeControl, {
+                    React.createElement(_datetime.AdvDateTimeControl, {
                         buttonLabel: __('Now', 'advanced-gutenberg'),
                         dateLabel: __('Start showing', 'advanced-gutenberg'),
                         date: bControlsDateFrom,
@@ -345,7 +311,7 @@ var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ 
                         },
                         onInvalidDate: false
                     }),
-                    React.createElement(_components.AdvDateTimeControl, {
+                    React.createElement(_datetime.AdvDateTimeControl, {
                         buttonLabel: __('Never', 'advanced-gutenberg'),
                         dateLabel: __('Stop showing', 'advanced-gutenberg'),
                         date: !!bControlsDateTo ? bControlsDateTo : null,
