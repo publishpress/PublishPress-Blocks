@@ -1,4 +1,4 @@
-import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
+import { AdvDateTimeControl } from "../0-adv-components/components.jsx";
 
 (function ( wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
