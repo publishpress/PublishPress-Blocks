@@ -144,6 +144,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             add_action('init', array($this, 'registerPostMeta'));
             add_action('admin_init', array($this, 'registerStylesScripts'));
+            add_action('wp_loaded', array($this, 'blockControlsAddAttributes'), 999);
+            add_filter('rest_pre_dispatch', array( $this, 'blockControlsRemoveAttributes' ), 10, 3);
             add_action('wp_enqueue_scripts', array($this, 'registerStylesScriptsFrontend'));
             add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
             add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
@@ -828,6 +830,73 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $controller->register_routes();
             }
         }
+
+        /**
+    	 * Add attributes to ServerSideRender blocks to fix "Invalid parameter(s): attributes" error.
+         * As example: 'core/latest-comments'
+    	 * Related Gutenberg issue: https://github.com/WordPress/gutenberg/issues/16850
+         *
+    	 * @since 2.14.0
+    	 */
+        public function blockControlsAddAttributes() {
+            $registered_blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
+    		foreach ( $registered_blocks as $block ) {
+                $block->attributes['bControlsEnabled'] = array(
+                    'type'    => 'boolean',
+                    'default' => false,
+                );
+                $block->attributes['bControlsDateFrom'] = array(
+                    'type'    => 'string',
+                    'default' => '',
+                );
+                $block->attributes['bControlsDateTo'] = array(
+                    'type'    => 'string',
+                    'default' => '',
+                );
+                $block->attributes['bControlsDateRecur'] = array(
+                    'type'    => 'boolean',
+                    'default' => false,
+                );
+    		}
+        }
+
+        /**
+    	 * Make sure ServerSideRender blocks are rendererd correctly in editor.
+         * As example: 'core/latest-comments'
+    	 * https://github.com/brainstormforce/ultimate-addons-for-gutenberg/blob/master/classes/class-uagb-loader.php#L136-L194
+         *
+    	 * @since 2.14.0
+    	 */
+        public function blockControlsRemoveAttributes( $result, $server, $request ) {
+    		if ( strpos( $request->get_route(), '/wp/v2/block-renderer' ) !== false ) {
+    			if (
+                    isset( $request['attributes'] )
+                    && (
+                        isset( $request['attributes']['bControlsEnabled'] )
+                        || isset( $request['attributes']['bControlsDateFrom'] )
+                        || isset( $request['attributes']['bControlsDateTo'] )
+                        || isset( $request['attributes']['bControlsDateRecur'] )
+                    )
+                ) {
+    				$attributes = $request['attributes'];
+                    if( $attributes['bControlsEnabled'] ) {
+                        unset( $attributes['bControlsEnabled'] );
+                    }
+                    if( $attributes['bControlsDateFrom'] ) {
+                        unset( $attributes['bControlsDateFrom'] );
+                    }
+                    if( $attributes['bControlsDateTo'] ) {
+                        unset( $attributes['bControlsDateTo'] );
+                    }
+                    if( $attributes['bControlsDateRecur'] ) {
+                        unset( $attributes['bControlsDateRecur'] );
+                    }
+    				$request['attributes'] = $attributes;
+    			}
+    		}
+
+    		return $result;
+    	}
 
         /**
          * Get post author info for REST API
@@ -4587,8 +4656,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Check block controls for each block and display or hide it
+         * Register Block controls attributes in REST API
          *
+         * @since 2.14.0
          * @param string    $block_content  Block HTML output
          * @param array     $block          Block attributes
          *
