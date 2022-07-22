@@ -838,24 +838,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
          *
     	 * @since 2.14.0
     	 */
-        public function blockControlsAddAttributes() {
+        public function blockControlsAddAttributes()
+        {
             $registered_blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
     		foreach ( $registered_blocks as $block ) {
-                $block->attributes['bControlsEnabled'] = array(
-                    'type'    => 'boolean',
-                    'default' => false,
-                );
-                $block->attributes['bControlsDateFrom'] = array(
-                    'type'    => 'string',
-                    'default' => '',
-                );
-                $block->attributes['bControlsDateTo'] = array(
-                    'type'    => 'string',
-                    'default' => '',
-                );
-                $block->attributes['bControlsDateRecur'] = array(
-                    'type'    => 'boolean',
-                    'default' => false,
+                $block->attributes['advgbBlockControls'] = array(
+                    'type'    => 'array',
+                    'default' => [],
                 );
     		}
         }
@@ -867,31 +856,17 @@ if(!class_exists('AdvancedGutenbergMain')) {
          *
     	 * @since 2.14.0
     	 */
-        public function blockControlsRemoveAttributes( $result, $server, $request ) {
+        public function blockControlsRemoveAttributes( $result, $server, $request )
+        {
     		if ( strpos( $request->get_route(), '/wp/v2/block-renderer' ) !== false ) {
-    			if (
-                    isset( $request['attributes'] )
-                    && (
-                        isset( $request['attributes']['bControlsEnabled'] )
-                        || isset( $request['attributes']['bControlsDateFrom'] )
-                        || isset( $request['attributes']['bControlsDateTo'] )
-                        || isset( $request['attributes']['bControlsDateRecur'] )
-                    )
+    			if ( isset( $request['attributes'] )
+                    && isset( $request['attributes']['advgbBlockControls'] )
                 ) {
-    				$attributes = $request['attributes'];
-                    if( $attributes['bControlsEnabled'] ) {
-                        unset( $attributes['bControlsEnabled'] );
+                    $attributes = $request['attributes'];
+                    if( $attributes['advgbBlockControls'] ) {
+                        unset( $attributes['advgbBlockControls'] );
                     }
-                    if( $attributes['bControlsDateFrom'] ) {
-                        unset( $attributes['bControlsDateFrom'] );
-                    }
-                    if( $attributes['bControlsDateTo'] ) {
-                        unset( $attributes['bControlsDateTo'] );
-                    }
-                    if( $attributes['bControlsDateRecur'] ) {
-                        unset( $attributes['bControlsDateRecur'] );
-                    }
-    				$request['attributes'] = $attributes;
+                    $request['attributes'] = $attributes;
     			}
     		}
 
@@ -4668,23 +4643,24 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if (
                 $this->settingIsEnabled( 'block_controls' )
                 && $block['blockName']
-                && isset($block['attrs']['bControlsEnabled'])
-                && intval($block['attrs']['bControlsEnabled']) === 1
+                && isset($block['attrs']['advgbBlockControls'][0]['enabled'])
+                && (bool) $block['attrs']['advgbBlockControls'][0]['enabled'] === true
             ) {
+                $bControl = $block['attrs']['advgbBlockControls'][0]; // [0] is for schedule control
                 $dateFrom = $dateTo = $recurring = null;
-                if ( ! empty( $block['attrs']['bControlsDateFrom'] ) ) {
-                    $dateFrom	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bControlsDateFrom'] );
+                if ( ! empty( $bControl['dateFrom'] ) ) {
+                    $dateFrom = DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateFrom'] );
                     // Reset seconds and microseconds to zero to enable proper comparison
                     $dateFrom->setTime( $dateFrom->format('H'), $dateFrom->format('i'), 0, 0 );
                 }
-                if ( ! empty( $block['attrs']['bControlsDateTo'] ) ) {
-                    $dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $block['attrs']['bControlsDateTo'] );
+                if ( ! empty( $bControl['dateTo'] ) ) {
+                    $dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateTo'] );
                     // Reset seconds and microseconds to zero to enable proper comparison
                     $dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0, 0 );
 
                     if ( $dateFrom ) {
                         // Recurring is only relevant when both dateFrom and dateTo are defined
-                        $recurring = isset( $block['attrs']['bControlsDateRecur'] ) ? $block['attrs']['bControlsDateRecur'] : false;
+                        $recurring = isset( $bControl['recurring'] ) ? $bControl['recurring'] : false;
                     }
                 }
 

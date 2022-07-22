@@ -224,6 +224,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _datetime = __webpack_require__(/*! ../0-adv-components/datetime.jsx */ "./src/assets/blocks/0-adv-components/datetime.jsx");
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 (function (wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var addFilter = wpHooks.addFilter;
@@ -239,30 +243,33 @@ var _datetime = __webpack_require__(/*! ../0-adv-components/datetime.jsx */ "./s
     var createHigherOrderComponent = wpCompose.createHigherOrderComponent;
     var Fragment = wp.element.Fragment;
 
-    // Blocks that are not supported
-
-    var NON_SUPPORTED_BLOCKS = ['core/freeform', 'core/legacy-widget', 'core/widget-area'];
-
     // do not show this feature if disabled.
+
     if (!parseInt(advgbBlocks.block_controls)) return;
+
+    // Blocks that are not supported
+    var NON_SUPPORTED_BLOCKS = ['core/freeform', 'core/legacy-widget', 'core/widget-area'];
 
     // Register block controls to blocks attributes
     addFilter('blocks.registerBlockType', 'advgb/blockControls', function (settings) {
         if (!NON_SUPPORTED_BLOCKS.includes(settings.name)) {
             settings.attributes = _extends(settings.attributes, {
-                bControlsEnabled: {
-                    type: 'boolean',
-                    default: false
-                },
-                bControlsDateFrom: {
-                    type: 'string'
-                },
-                bControlsDateTo: {
-                    type: 'string'
-                },
-                bControlsDateRecur: {
-                    type: 'boolean',
-                    default: false
+                advgbBlockControls: {
+                    type: 'array',
+                    items: {
+                        type: 'object'
+                    },
+                    default: [{
+                        control: 'schedule',
+                        enabled: false,
+                        dateFrom: null,
+                        dateTo: null,
+                        recurring: false
+                    }, {
+                        control: 'browser',
+                        enabled: false,
+                        test: null
+                    }]
                 }
             });
         }
@@ -273,12 +280,53 @@ var _datetime = __webpack_require__(/*! ../0-adv-components/datetime.jsx */ "./s
     // Add option to add dates for supported blocks
     addFilter('editor.BlockEdit', 'advgb/addBlockControls', function (BlockEdit) {
         return function (props) {
-            var _props$attributes = props.attributes,
-                bControlsEnabled = _props$attributes.bControlsEnabled,
-                bControlsDateFrom = _props$attributes.bControlsDateFrom,
-                bControlsDateTo = _props$attributes.bControlsDateTo,
-                bControlsDateRecur = _props$attributes.bControlsDateRecur;
+            var advgbBlockControls = props.attributes.advgbBlockControls;
 
+            /**
+             * Return current advgbBlockControls array attribute value
+             *
+             * @since 2.14.0
+             * @param {string} control  The use case block control. e.g. 'schedule'
+             * @param {string} key      The control key to modify. e.g. 'enabled'
+             *
+             * @return {mixed}
+             */
+
+            var currentControlKey = function currentControlKey(control, key) {
+                var itemIndex = advgbBlockControls.findIndex(function (element) {
+                    return element.control === control;
+                });
+                var newArray = [].concat(_toConsumableArray(advgbBlockControls));
+                var obj = newArray[itemIndex];
+
+                return obj[key];
+            };
+
+            /**
+             * Update advgbBlockControls attribute when a key value changes
+             *
+             * @since 2.14.0
+             * @param {string} control  The use case block control. e.g. 'schedule'
+             * @param {string} key      The control key to modify. e.g. 'enabled'
+             * @param {string} key      The control key value (not required for boolean keys)
+             *
+             * @return {void}
+             */
+            var changeControlKey = function changeControlKey(control, key) {
+                var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
+                var itemIndex = advgbBlockControls.findIndex(function (element) {
+                    return element.control === control;
+                });
+                var newArray = [].concat(_toConsumableArray(advgbBlockControls));
+                var obj = newArray[itemIndex];
+
+                newArray[itemIndex] = typeof obj[key] === 'boolean' ? _extends({}, newArray[itemIndex], _defineProperty({}, key, !obj[key])) : _extends({}, newArray[itemIndex], _defineProperty({}, key, value));
+
+                props.setAttributes({
+                    advgbBlockControls: newArray
+                });
+            };
 
             return [props.isSelected && !NON_SUPPORTED_BLOCKS.includes(props.name) && React.createElement(
                 InspectorControls,
@@ -289,56 +337,56 @@ var _datetime = __webpack_require__(/*! ../0-adv-components/datetime.jsx */ "./s
                         title: __('Block Controls', 'advanced-gutenberg'),
                         icon: 'visibility',
                         initialOpen: false,
-                        className: bControlsEnabled && (bControlsDateFrom || bControlsDateTo) ? 'advgb-feature-icon-active' : ''
+                        className: currentControlKey('schedule', 'enabled') && (currentControlKey('schedule', 'dateFrom') || currentControlKey('schedule', 'dateTo')) ? 'advgb-feature-icon-active' : ''
                     },
                     React.createElement(
                         Fragment,
                         null,
                         React.createElement(ToggleControl, {
                             label: __('Enable block schedule', 'advanced-gutenberg'),
-                            help: !bControlsEnabled ? __('Setup when to start showing and/or stop showing this block', 'advanced-gutenberg') : '',
-                            checked: bControlsEnabled,
+                            help: !currentControlKey('schedule', 'enabled') ? __('Setup when to start showing and/or stop showing this block', 'advanced-gutenberg') : '',
+                            checked: currentControlKey('schedule', 'enabled'),
                             onChange: function onChange() {
-                                return props.setAttributes({ bControlsEnabled: !bControlsEnabled });
+                                return changeControlKey('schedule', 'enabled');
                             }
                         }),
-                        bControlsEnabled && React.createElement(
+                        currentControlKey('schedule', 'enabled') && React.createElement(
                             Fragment,
                             null,
                             React.createElement(_datetime.AdvDateTimeControl, {
                                 buttonLabel: __('Now', 'advanced-gutenberg'),
                                 dateLabel: __('Start showing', 'advanced-gutenberg'),
-                                date: bControlsDateFrom,
+                                date: currentControlKey('schedule', 'dateFrom'),
                                 onChangeDate: function onChangeDate(newDate) {
-                                    props.setAttributes({ bControlsDateFrom: newDate });
+                                    return changeControlKey('schedule', 'dateFrom', newDate);
                                 },
                                 onDateClear: function onDateClear() {
-                                    return props.setAttributes({ bControlsDateFrom: null });
+                                    return changeControlKey('schedule', 'dateFrom', null);
                                 },
                                 onInvalidDate: false
                             }),
                             React.createElement(_datetime.AdvDateTimeControl, {
                                 buttonLabel: __('Never', 'advanced-gutenberg'),
                                 dateLabel: __('Stop showing', 'advanced-gutenberg'),
-                                date: !!bControlsDateTo ? bControlsDateTo : null,
+                                date: !!currentControlKey('schedule', 'dateTo') ? currentControlKey('schedule', 'dateTo') : null,
                                 onChangeDate: function onChangeDate(newDate) {
-                                    props.setAttributes({ bControlsDateTo: newDate });
+                                    return changeControlKey('schedule', 'dateTo', newDate);
                                 },
                                 onDateClear: function onDateClear() {
-                                    return props.setAttributes({ bControlsDateTo: null });
+                                    return changeControlKey('schedule', 'dateTo', null);
                                 },
                                 onInvalidDate: function onInvalidDate(date) {
-                                    // Disable all dates before bControlsDateFrom
-                                    if (bControlsDateFrom) {
+                                    // Disable all dates before dateFrom
+                                    if (currentControlKey('schedule', 'dateFrom')) {
                                         var thisDate = new Date(date.getTime());
                                         thisDate.setHours(0, 0, 0, 0);
-                                        var fromDate = new Date(bControlsDateFrom);
+                                        var fromDate = new Date(currentControlKey('schedule', 'dateFrom'));
                                         fromDate.setHours(0, 0, 0, 0);
                                         return thisDate.getTime() < fromDate.getTime();
                                     }
                                 }
                             }),
-                            bControlsDateFrom > bControlsDateTo && React.createElement(
+                            currentControlKey('schedule', 'dateFrom') > currentControlKey('schedule', 'dateTo') && React.createElement(
                                 Notice,
                                 {
                                     className: 'advgb-notice-sidebar',
@@ -347,11 +395,11 @@ var _datetime = __webpack_require__(/*! ../0-adv-components/datetime.jsx */ "./s
                                 },
                                 __('"Stop showing" date should be after "Start showing" date!', 'advanced-gutenberg')
                             ),
-                            bControlsDateFrom && bControlsDateTo && React.createElement(ToggleControl, {
+                            currentControlKey('schedule', 'dateFrom') && currentControlKey('schedule', 'dateTo') && React.createElement(ToggleControl, {
                                 label: __('Recurring', 'advanced-gutenberg'),
-                                checked: bControlsDateRecur,
+                                checked: currentControlKey('schedule', 'recurring'),
                                 onChange: function onChange() {
-                                    return props.setAttributes({ bControlsDateRecur: !bControlsDateRecur });
+                                    return changeControlKey('schedule', 'recurring');
                                 },
                                 help: __('If Recurring is enabled, the block will be displayed in frontend every year within the date interval', 'advanced-gutenberg')
                             })
@@ -365,16 +413,20 @@ var _datetime = __webpack_require__(/*! ../0-adv-components/datetime.jsx */ "./s
     var withAttributes = createHigherOrderComponent(function (BlockListBlock) {
         return function (props) {
             if (!NON_SUPPORTED_BLOCKS.includes(props.name) && hasBlockSupport(props.name, 'advgb/blockControls', true)) {
-                var _props$attributes2 = props.attributes,
-                    bControlsEnabled = _props$attributes2.bControlsEnabled,
-                    bControlsDateFrom = _props$attributes2.bControlsDateFrom,
-                    bControlsDateTo = _props$attributes2.bControlsDateTo,
-                    bControlsDateRecur = _props$attributes2.bControlsDateRecur;
+                var advgbBlockControls = props.attributes.advgbBlockControls;
+                // @TODO - Avoid having currentControlKey() duplicated. See 'blocks.registerBlockType' hook
 
+                var currentControlKey = function currentControlKey(control, key) {
+                    var itemIndex = advgbBlockControls.findIndex(function (element) {
+                        return element.control === control;
+                    });
+                    var newArray = [].concat(_toConsumableArray(advgbBlockControls));
+                    var obj = newArray[itemIndex];
+                    return obj[key];
+                };
+                var advgbBcClass = props.isSelected === false && currentControlKey('schedule', 'enabled') && (currentControlKey('schedule', 'dateFrom') || currentControlKey('schedule', 'dateTo')) ? 'advgb-bc-editor-preview' : '';
 
-                var advgbBcClass = props.isSelected === false && bControlsEnabled && (bControlsDateFrom || bControlsDateTo) ? 'advgb-bc-editor-preview' : '';
-
-                return React.createElement(BlockListBlock, _extends({}, props, { className: advgbBcClass, bControlsDateFrom: '' + bControlsDateFrom, bControlsDateTo: '' + bControlsDateTo, bControlsEnabled: '' + bControlsEnabled, bControlsDateRecur: '' + bControlsDateRecur }));
+                return React.createElement(BlockListBlock, _extends({}, props, { className: advgbBcClass, advgbBlockControls: '' + advgbBlockControls }));
             }
 
             return React.createElement(BlockListBlock, props);
