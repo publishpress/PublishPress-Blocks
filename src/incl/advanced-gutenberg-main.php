@@ -832,12 +832,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-    	 * Add attributes to ServerSideRender blocks to fix "Invalid parameter(s): attributes" error.
+         * Add attributes to ServerSideRender blocks to fix "Invalid parameter(s): attributes" error.
          * As example: 'core/latest-comments'
-    	 * Related Gutenberg issue: https://github.com/WordPress/gutenberg/issues/16850
+         * Related Gutenberg issue: https://github.com/WordPress/gutenberg/issues/16850
          *
-    	 * @since 2.14.0
-    	 */
+         * @since 2.14.0
+         */
         public function blockControlsAddAttributes()
         {
             $registered_blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
@@ -850,12 +850,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-    	 * Make sure ServerSideRender blocks are rendererd correctly in editor.
+         * Make sure ServerSideRender blocks are rendererd correctly in editor.
          * As example: 'core/latest-comments'
-    	 * https://github.com/brainstormforce/ultimate-addons-for-gutenberg/blob/master/classes/class-uagb-loader.php#L136-L194
+         * https://github.com/brainstormforce/ultimate-addons-for-gutenberg/blob/master/classes/class-uagb-loader.php#L136-L194
          *
-    	 * @since 2.14.0
-    	 */
+         * @since 2.14.0
+         */
         public function blockControlsRemoveAttributes( $result, $server, $request )
         {
     		if ( strpos( $request->get_route(), '/wp/v2/block-renderer' ) !== false ) {
