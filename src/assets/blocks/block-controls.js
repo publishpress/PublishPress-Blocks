@@ -397,7 +397,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 onChange: function onChange() {
                                     return changeControlKey('schedule', 'recurring');
                                 },
-                                help: __('If Recurring is enabled, the block will be displayed in frontend every year within the date interval', 'advanced-gutenberg')
+                                help: __('If Recurring is enabled, this block will be displayed every year between the selected dates.', 'advanced-gutenberg')
                             })
                         )
                     )

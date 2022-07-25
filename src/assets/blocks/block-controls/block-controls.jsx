@@ -157,7 +157,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                                             label={ __( 'Recurring', 'advanced-gutenberg' ) }
                                             checked={ currentControlKey( 'schedule', 'recurring' ) }
                                             onChange={ () => changeControlKey( 'schedule', 'recurring' ) }
-                                            help={ __( 'If Recurring is enabled, the block will be displayed in frontend every year within the date interval', 'advanced-gutenberg' ) }
+                                            help={ __( 'If Recurring is enabled, this block will be displayed every year between the selected dates.', 'advanced-gutenberg' ) }
                                         />
                                     }
                                 </Fragment>
