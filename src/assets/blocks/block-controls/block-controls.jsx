@@ -36,11 +36,6 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                             dateFrom: null,
                             dateTo: null,
                             recurring: false
-                        },
-                        {
-                            control: 'browser',
-                            enabled: false,
-                            test: null
                         }
                     ]
                 }

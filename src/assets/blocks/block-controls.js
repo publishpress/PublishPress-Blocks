@@ -265,10 +265,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         dateFrom: null,
                         dateTo: null,
                         recurring: false
-                    }, {
-                        control: 'browser',
-                        enabled: false,
-                        test: null
                     }]
                 }
             });
