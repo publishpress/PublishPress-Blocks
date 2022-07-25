@@ -4651,12 +4651,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 if ( ! empty( $bControl['dateFrom'] ) ) {
                     $dateFrom = DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateFrom'] );
                     // Reset seconds and microseconds to zero to enable proper comparison
-                    $dateFrom->setTime( $dateFrom->format('H'), $dateFrom->format('i'), 0, 0 );
+                    $dateFrom->setTime( $dateFrom->format('H'), $dateFrom->format('i'), 0 );
                 }
                 if ( ! empty( $bControl['dateTo'] ) ) {
                     $dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateTo'] );
                     // Reset seconds and microseconds to zero to enable proper comparison
-                    $dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0, 0 );
+                    $dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0 );
 
                     if ( $dateFrom ) {
                         // Recurring is only relevant when both dateFrom and dateTo are defined
@@ -4673,7 +4673,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     // but do this only for the from comparison
                     // as we need the block to stop showing at the right time and not 1 minute extra
                     $nowFrom = clone $now;
-                    $nowFrom->setTime( $now->format('H'), $now->format('i'), 0, 0 );
+                    $nowFrom->setTime( $now->format('H'), $now->format('i'), 0 );
 
                     if( $recurring ) {
                         // Make the year same as today's
