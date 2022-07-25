@@ -4650,12 +4650,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $dateFrom = $dateTo = $recurring = null;
                 if ( ! empty( $bControl['dateFrom'] ) ) {
                     $dateFrom = DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateFrom'] );
-                    // Reset seconds and microseconds to zero to enable proper comparison
+                    // Reset seconds to zero to enable proper comparison
                     $dateFrom->setTime( $dateFrom->format('H'), $dateFrom->format('i'), 0 );
                 }
                 if ( ! empty( $bControl['dateTo'] ) ) {
                     $dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateTo'] );
-                    // Reset seconds and microseconds to zero to enable proper comparison
+                    // Reset seconds to zero to enable proper comparison
                     $dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0 );
 
                     if ( $dateFrom ) {
@@ -4668,7 +4668,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     // Fetch current time keeping in mind the timezone
                     $now = DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
 
-                    // Reset seconds and microseconds to zero to enable proper comparison
+                    // Reset seconds to zero to enable proper comparison
                     // as the from and to dates have those as 0
                     // but do this only for the from comparison
                     // as we need the block to stop showing at the right time and not 1 minute extra
