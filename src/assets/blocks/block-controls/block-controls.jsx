@@ -17,7 +17,11 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
     const NON_SUPPORTED_BLOCKS = [
         'core/freeform',
         'core/legacy-widget',
-        'core/widget-area'
+        'core/widget-area',
+        'core/column',
+        'advgb/tab',
+        'advgb/accordion-item',
+        'advgb/column'
     ];
 
     // Register block controls to blocks attributes
