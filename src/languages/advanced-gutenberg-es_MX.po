@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Gutenberg Blocks &#8211; PublishPress Blocks "
 "Gutenberg Editor Plugin - Stable (latest release)\n"
-"POT-Creation-Date: 2022-07-25 15:24-0500\n"
-"PO-Revision-Date: 2022-07-25 15:27-0500\n"
+"POT-Creation-Date: 2022-07-25 15:42-0500\n"
+"PO-Revision-Date: 2022-07-25 15:44-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_MX\n"
@@ -4827,11 +4827,11 @@ msgstr "Habilitar la guía visual de columnas"
 
 #: incl/view/advanced-gutenberg-settings.php:413
 msgid "Enable block controls panel to schedule blocks"
-msgstr ""
+msgstr "Habilitar el panel de control de bloques para programar bloques"
 
 #: incl/view/advanced-gutenberg-settings.php:417
 msgid "Enable block controls"
-msgstr ""
+msgstr "Habilitar controles de bloque"
 
 #: install.php:20
 msgid "Gutenberg is not detected! Activate it or"
@@ -4854,6 +4854,8 @@ msgid ""
 "This plugin is outdated. You already have a more recent version installed. "
 "Please remove this version."
 msgstr ""
+"Este plugin está desactualizado. Ya tienes instalada una versión más "
+"reciente. Por favor elimina esta versión."
 
 #: vendor/publishpress/publishpress-instance-protection/core/InstanceChecker.php:243
 #, php-format
@@ -4861,6 +4863,8 @@ msgid ""
 "This plugin is not installed in the standard folder. The current path is %s "
 "but it is expected to be %s."
 msgstr ""
+"Este plugin no está instalado en la carpeta estándar. La ubicación actual es "
+"%s pero se espera que sea %s."
 
 #: vendor/publishpress/publishpress-instance-protection/core/InstanceChecker.php:269
 #, php-format
@@ -4868,11 +4872,13 @@ msgid ""
 "You have activated multiple instances of %s. Please keep only one activated "
 "and remove the others."
 msgstr ""
+"Has activado varias instancias de %s. Por favor, manten solo una activada y "
+"elimine las demás."
 
 #: vendor/publishpress/publishpress-instance-protection/core/InstanceChecker.php:289
 #, php-format
 msgid "Please deactivate %s when %s is activated."
-msgstr ""
+msgstr "Desactive %s cuando se active %s."
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:332
 #, php-format
@@ -4881,31 +4887,35 @@ msgid ""
 "been useful. Please could you quickly leave a 5-star rating on WordPress."
 "org? It really does help to keep %1$s growing."
 msgstr ""
+"Oye, has estado usando %1$s durante %2$s en tu sitio. Esperamos que el "
+"plugin sea útil. Por favor, ¿podrías tomarte un minuto para darnos una "
+"calificación de 5 estrellas en WordPress.org? Nos ayudarías a continuar "
+"creciendo %1$s."
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:342
 msgid "1 week"
-msgstr ""
+msgstr "1 semana"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:350
 msgid "1 month"
-msgstr ""
+msgstr "1 mes"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:361
 msgid "3 months"
-msgstr ""
+msgstr "3 meses"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:615
 #, php-format
 msgid "Click here to add your rating for %s"
-msgstr ""
+msgstr "Click aquí para agregar tu calificación para %s"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:621
 msgid "Maybe later"
-msgstr ""
+msgstr "Tal vez luego"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:626
 msgid "I already did"
-msgstr ""
+msgstr "Ya lo hice"
 
 #. Plugin URI of the plugin/theme
 msgid "https://publishpress.com/blocks/"
