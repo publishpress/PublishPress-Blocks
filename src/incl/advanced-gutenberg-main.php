@@ -2118,7 +2118,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Save block [feature] by user role - e.g. access feature means enable/disable blocks in editor
          *
-         * @since 2.13.4
+         * @since 2.14.1
          * @param string $nonce_field       Nonce field - e.g. $_POST['advgb_access_nonce_field']
          * @param string $blocks_list       Blocks list with all the available blocks - e.g. $_POST['blocks_list_access']
          * @param string $view              View to redirect after saving - e.g. 'block-access'
@@ -2178,7 +2178,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Return current select user role
          *
-         * @since 2.13.4
+         * @since 2.14.1
          *
          * @return string
          */
@@ -2194,7 +2194,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Access all the blocks and build javascript user role object
          *
-         * @since 2.13.4
+         * @since 2.14.1
          * @param string $feature   The object name to store the active/inactive blocks - e.g. 'access' => advgbCUserRole.access
          * @param string $script    Registered script to enqueue
          * @param string $option    Database option to check current user role's active/inactive blocks - e.g. 'advgb_blocks_user_roles'
@@ -2267,7 +2267,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Get the blocks feature form - e.g. Block Access
          *
-         * @since 2.13.4
+         * @since 2.14.1
          * @param string $label                 Name of the feature with text-domain - e.g. __('Block Access', 'advanced-gutenberg')
          * @param string $nonce_name            Nonce field name - e.g. 'advgb_access_nonce_field'
          * @param string $save_fieldname        Save button field name - e.g. 'advgb_block_access_save'
