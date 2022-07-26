@@ -989,16 +989,18 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $advgb_blocks_user_roles            = get_option( 'advgb_blocks_user_roles');
             $advgb_blocks_user_roles_updated    = array();
 
-            foreach ( $advgb_blocks_user_roles as $role => $blocks ) {
-                if (is_array($blocks) && is_array($blocks['active_blocks']) && is_array($blocks['inactive_blocks'])) {
-                    $allAccessBlocks = array_merge($blocks['active_blocks'], $blocks['inactive_blocks']);
+            if( $advgb_blocks_user_roles ) {
+                foreach ( $advgb_blocks_user_roles as $role => $blocks ) {
+                    if (is_array($blocks) && is_array($blocks['active_blocks']) && is_array($blocks['inactive_blocks'])) {
+                        $allAccessBlocks = array_merge($blocks['active_blocks'], $blocks['inactive_blocks']);
 
-                    $newAllowedBlocks = array_diff($blocksListName, $allAccessBlocks);
-                    $newAllowedBlocks = array_unique($newAllowedBlocks);
+                        $newAllowedBlocks = array_diff($blocksListName, $allAccessBlocks);
+                        $newAllowedBlocks = array_unique($newAllowedBlocks);
 
-                    if ($newAllowedBlocks) {
-                        $advgb_blocks_user_roles_updated[$role]['active_blocks'] = array_merge($blocks['active_blocks'], $newAllowedBlocks);
-                        $advgb_blocks_user_roles_updated[$role]['inactive_blocks'] = $blocks['inactive_blocks'];
+                        if ($newAllowedBlocks) {
+                            $advgb_blocks_user_roles_updated[$role]['active_blocks'] = array_merge($blocks['active_blocks'], $newAllowedBlocks);
+                            $advgb_blocks_user_roles_updated[$role]['inactive_blocks'] = $blocks['inactive_blocks'];
+                        }
                     }
                 }
             }
