@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 6.0.1
-Stable tag: 2.14.0
+Stable tag: 2.14.1b1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -256,6 +256,8 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 16. Custom Styles for Blocks: You create custom CSS styles and make them available to end users.
 
 == Changelog ==
+
+= 2.14.1 - 26 Jul 2022 =
 
 = 2.14.0 - 25 Jul 2022 =
   * Add: Block controls to schedule blocks visibility
