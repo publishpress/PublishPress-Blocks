@@ -240,7 +240,26 @@ function advgbGetBlocks( inactive_blocks, nonce_field_id, blocks_list_id ) {
         var allCategories = wp.blocks.getCategories();
         var listBlocks = [];
         var nonce = '';
+
+        // Array of block names already available through wp.blocks.getBlockTypes()
         var force_deactivate_blocks = ['advgb/container'];
+
+        // Array of objects not available through wp.blocks.getBlockTypes()
+        // As example: the ones that loads only in Appearance > Widget
+        var force_activate_blocks = [
+            {
+              'name': 'core/legacy-widget',
+              'icon': 'block-default',
+              'title': 'Legacy Widget',
+              'category': 'widgets'
+            }
+        ];
+
+        // Include force_activate_blocks in the blocks list
+        force_activate_blocks.forEach(function (block) {
+            allBlocks.push(block);
+        });
+
 
         allBlocks.forEach(function (block) {
             var blockItemIcon = '';
@@ -310,7 +329,7 @@ function advgbGetBlocks( inactive_blocks, nonce_field_id, blocks_list_id ) {
             list_blocks_names.push(block.name);
 
             var blockHTML = '';
-            blockHTML += '<li class="block-item block-access-item ju-settings-option ' + ( force_deactivate_blocks.indexOf(block.name) > -1 ? 'block-item-readonly' : 'block-item-editable' ) + '" data-type="'+ block.name +'">';
+            blockHTML += '<li class="block-item block-access-item ju-settings-option ' + (force_deactivate_blocks.indexOf(block.name) > -1 || force_activate_blocks.find(item => item.name === block.name) ? 'block-item-readonly' : 'block-item-editable' ) + '" data-type="'+ block.name +'">';
             blockHTML +=    '<label for="'+ block.name +'" class="ju-setting-label">';
             blockHTML +=        '<span class="block-icon"';
             if (block.iconColor) {
@@ -325,7 +344,10 @@ function advgbGetBlocks( inactive_blocks, nonce_field_id, blocks_list_id ) {
                 && inactive_blocks !== null
             ) {
                 checked = inactive_blocks.indexOf(block.name) === -1
-                && force_deactivate_blocks.indexOf(block.name) === -1
+                && (
+                    force_deactivate_blocks.indexOf(block.name) === -1
+                    || force_activate_blocks.find(item => item.name === block.name)
+                )
                     ? 'checked="checked"' : '';
             } else {
                 checked = 'checked="checked"';
@@ -336,7 +358,7 @@ function advgbGetBlocks( inactive_blocks, nonce_field_id, blocks_list_id ) {
             blockHTML +=    '</label>';
             blockHTML +=    '<div class="ju-switch-button">';
             blockHTML +=        '<label class="switch">';
-            blockHTML +=            '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'" '+checked+' ' + ( force_deactivate_blocks.indexOf(block.name) > -1 ? 'onclick="return false;"' : '' ) + '/>';
+            blockHTML +=            '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'" '+checked+' ' + ( force_deactivate_blocks.indexOf(block.name) > -1 || force_activate_blocks.find(item => item.name === block.name) ? 'onclick="return false;"' : '' ) + '/>';
             blockHTML +=            '<span class="slider"></span>';
             blockHTML +=        '</label>';
             blockHTML +=    '</div>';
