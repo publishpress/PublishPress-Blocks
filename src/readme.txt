@@ -257,7 +257,8 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.14.1 - 26 Jul 2022 =
+= 2.14.1 - 27 Jul 2022 =
+  * Fix: Block Access support for third party plugins blocks
 
 = 2.14.0 - 25 Jul 2022 =
   * Add: Block controls to schedule blocks visibility
