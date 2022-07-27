@@ -2567,10 +2567,15 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function getUserBlocksForGutenberg()
         {
-            // Get user info
-            $current_user      = wp_get_current_user();
-            //$current_user_id   = $current_user->ID;
-            $current_user_role = $current_user->roles[0];
+            // Get user role
+            if ( is_multisite() && is_super_admin() ) {
+                /* Since a super admin in a child site from a multiste network doesn't have roles
+                 * so we set 'administrator' as role */
+                $current_user_role = 'administrator';
+            } else {
+                $current_user      = wp_get_current_user();
+                $current_user_role = $current_user->roles[0];
+            }
 
             // All saved blocks (even the ones not detected by Block Access)
             // @TODO - Non essentially required since 2.14.1; remove involved code with 'advgb_blocks_list' option in future
