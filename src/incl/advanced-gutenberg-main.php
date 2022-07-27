@@ -164,7 +164,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             add_action('wp_ajax_nopriv_advgb_lores_validate', array($this, 'validateLoresForm'));
 
             if (is_admin()) {
-                add_action('admin_footer', array($this, 'initBlocksList'));  // @TODO - Non essentially required; remove this in future
+                add_action('admin_footer', array($this, 'initBlocksList'));  // @TODO - Non essentially required since 2.14.1; remove this in future
                 add_action('admin_menu', array($this, 'registerMainMenu'));
                 add_action('admin_menu', array($this, 'registerBlockConfigPage'));
                 add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
@@ -193,7 +193,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
 
                 // Ajax
-                add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList')); // @TODO - Non essentially required; remove this in future
+                add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList')); // @TODO - Non essentially required since 2.14.1; remove this in future
                 add_action('wp_ajax_advgb_custom_styles_ajax', array($this, 'customStylesAjax'));
                 add_action('wp_ajax_advgb_block_config_save', array($this, 'saveBlockConfig'));
             } else {
@@ -726,7 +726,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * @TODO - Non essentially required; remove this in future
+         * @TODO - Non essentially required since 2.14.1; remove this in future
          *
          * Update the blocks list for first time install
          *
@@ -915,7 +915,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * @TODO - Non essentially required; remove this in future
+         * @TODO - Non essentially required since 2.14.1; remove this in future
          *
          * Ajax to update blocks list
          *
@@ -1512,7 +1512,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array(),
                     ADVANCED_GUTENBERG_VERSION
                 );
-                // @TODO - Non essentially required; remove this in future
+                // @TODO - Non essentially required since 2.14.1; remove this in future
                 wp_register_script(
                     'advgb_update_list',
                     plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
@@ -2573,7 +2573,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $current_user_role = $current_user->roles[0];
 
             // All saved blocks (even the ones not detected by Block Access)
-            // @TODO - Non essentially required; remove involved code with 'advgb_blocks_list' option in future
+            // @TODO - Non essentially required since 2.14.1; remove involved code with 'advgb_blocks_list' option in future
             $all_blocks = get_option( 'advgb_blocks_list' );
 
             // Get the array from advgb_blocks_user_roles option that match current user role
