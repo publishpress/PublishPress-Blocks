@@ -211,6 +211,8 @@
                                     const imgInsert = image.map((img) => ({
                                         url: img.url,
                                         id: img.id,
+                                        title: img.title || img.alt,
+                                        text: img.caption || img.description,
                                     }));
 
                                     setAttributes({
@@ -479,9 +481,21 @@
                                                 allowedTypes={['image']}
                                                 value={currentSelected}
                                                 multiple
-                                                onSelect={(imgs) => setAttributes({
-                                                    images: [...images, ...imgs.map((img) => lodash.pick(img, 'id', 'url'))],
-                                                })}
+                                                onSelect={
+                                                    (imgs) => {
+                                                        setAttributes({
+                                                            images: [
+                                                                ...images,
+                                                                ...imgs.map((img) => ({
+                                                                    url: img.url,
+                                                                    id: img.id,
+                                                                    title: img.title || img.alt,
+                                                                    text: img.caption || img.description,
+                                                                }))
+                                                            ],
+                                                        });
+                                                    }
+                                                }
                                                 render={({open}) => (
                                                     <Button
                                                         label={__('Add image', 'advanced-gutenberg')}
