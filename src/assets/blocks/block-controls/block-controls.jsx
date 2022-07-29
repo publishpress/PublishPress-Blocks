@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
 
 (function ( wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose ) {
@@ -192,7 +193,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                         || currentControlKey( 'schedule', 'dateTo' )
                     ) ? 'advgb-bc-editor-preview' : '';
 
-                return <BlockListBlock { ...props } className={ advgbBcClass } advgbBlockControls={ `${ advgbBlockControls }` } />;
+                return <BlockListBlock { ...props } className={ classnames( props.className, advgbBcClass ) } advgbBlockControls={ `${ advgbBlockControls }` } />;
             }
 
             return <BlockListBlock { ...props } />;
