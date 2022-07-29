@@ -261,6 +261,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Add: Pre-populate title and text with image properties from media library (title, alt, caption and description) for Images Slider block
   * Fix: Block Access support for third party plugins blocks
   * Fix: Block access for super admin in multisite child site
+  * Fix: Custom styles conflict with Block controls class in editor preview
 
 = 2.14.0 - 25 Jul 2022 =
   * Add: Block controls to schedule blocks visibility
