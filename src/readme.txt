@@ -262,6 +262,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Block Access support for third party plugins blocks
   * Fix: Block access for super admin in multisite child site
   * Fix: Custom styles conflict with Block controls class in editor preview
+  * Fix: Images slider refresh inside Advanced Tabs
 
 = 2.14.0 - 25 Jul 2022 =
   * Add: Block controls to schedule blocks visibility
