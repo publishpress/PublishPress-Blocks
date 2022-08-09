@@ -252,7 +252,6 @@ function advgbGetBlocks( inactive_blocks, nonce_field_id, blocks_list_id ) {
             let diff_blocks = advgb_blocks_list.filter(
                 blocksA => !allBlocks.some( blocksB => blocksA.name === blocksB.name )
             );
-            console.log(diff_blocks);
             if( diff_blocks.length > 0 ) {
                 diff_blocks.forEach(function (block) {
                     allBlocks.push(block);
