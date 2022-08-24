@@ -260,7 +260,7 @@ function advgbGetBlocks( inactive_blocks, nonce_field_id, blocks_list_id ) {
         }
 
         // Array of block names already available through wp.blocks.getBlockTypes()
-        var force_deactivate_blocks = ['advgb/container'];
+        var force_deactivate_blocks = []; // 'advgb/container'
 
         // Array of objects not available through wp.blocks.getBlockTypes()
         // As example: the ones that loads only in Appearance > Widget

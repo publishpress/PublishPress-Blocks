@@ -257,9 +257,10 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 2.14.2 - 8 Aug 2022 =
+= 2.14.2 - 24 Aug 2022 =
   * Add: Extend supported blocks setting to support blocks not listed in Block access
   * Fix: Authors and Series order by from Content Display make some legacy widgets to disappear in frontend
+  * Fix: Allow to enable Container block through Block access
 
 = 2.14.1 - 3 Aug 2022 =
   * Add: Pre-populate title and text with image properties from media library (title, alt, caption and description) for Images Slider block
