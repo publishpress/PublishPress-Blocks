@@ -164,7 +164,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             add_action('wp_ajax_nopriv_advgb_lores_validate', array($this, 'validateLoresForm'));
 
             if (is_admin()) {
-                add_action('admin_footer', array($this, 'initBlocksList'));  // @TODO - Non essentially required since 2.14.1; remove this in future
+                add_action('admin_footer', array($this, 'initBlocksList'));
                 add_action('admin_menu', array($this, 'registerMainMenu'));
                 add_action('admin_menu', array($this, 'registerBlockConfigPage'));
                 add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
@@ -193,7 +193,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
 
                 // Ajax
-                add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList')); // @TODO - Non essentially required since 2.14.1; remove this in future
+                add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
                 add_action('wp_ajax_advgb_custom_styles_ajax', array($this, 'customStylesAjax'));
                 add_action('wp_ajax_advgb_block_config_save', array($this, 'saveBlockConfig'));
             } else {
@@ -599,6 +599,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $pp_series_slug         = isset($pp_series_options['series_taxonomy_slug']) && !empty($pp_series_options['series_taxonomy_slug']) ? $pp_series_options['series_taxonomy_slug'] : 'series';
             $pp_series_post_types   = isset($pp_series_options['post_types_for_series']) && !empty($pp_series_options['post_types_for_series']) ? $pp_series_options['post_types_for_series'] : ['post'];
             $block_controls         = $this->settingIsEnabled( 'block_controls' ) ? 1 : 0;
+            $block_extend           = $this->settingIsEnabled( 'block_extend' ) ? 1 : 0;
             $timezone               = function_exists( 'wp_timezone_string' ) ? wp_timezone_string() : '';
             global $wp_version;
             $blocks_widget_support = ( $wp_version >= 5.8 ) ? 1 : 0;
@@ -625,6 +626,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'pp_series_slug' => $pp_series_slug,
                 'pp_series_post_types' => $pp_series_post_types,
                 'block_controls' => $block_controls,
+                'block_extend' => $block_extend,
                 'timezone' => $timezone
             ));
 
@@ -726,8 +728,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * @TODO - Non essentially required since 2.14.1; remove this in future
-         *
          * Update the blocks list for first time install
          *
          * @return void
@@ -915,8 +915,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * @TODO - Non essentially required since 2.14.1; remove this in future
-         *
          * Ajax to update blocks list
          *
          * @return mixed
@@ -1512,7 +1510,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array(),
                     ADVANCED_GUTENBERG_VERSION
                 );
-                // @TODO - Non essentially required since 2.14.1; remove this in future
                 wp_register_script(
                     'advgb_update_list',
                     plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
@@ -1989,6 +1986,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $save_config['enable_block_access'] = 0;
                 }
 
+                if (isset($_POST['block_extend'])) {
+                    $save_config['block_extend'] = 1;
+                } else {
+                    $save_config['block_extend'] = 0;
+                }
+
                 if (isset($_POST['enable_custom_styles'])) {
                     $save_config['enable_custom_styles'] = 1;
                 } else {
@@ -2228,6 +2231,24 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 if ( ! empty( $block_type->editor_script ) ) {
                     wp_enqueue_script( $block_type->editor_script );
                 }
+            }
+
+            /* Get blocks saved in advgb_blocks_list option to include the ones that are missing
+             * as result of javascript method wp.blocks.getBlockTypes()
+             * e.g. blocks registered only via PHP
+             */
+            if( $this->settingIsEnabled( 'block_extend' ) ) {
+                $advgb_blocks_list = get_option( 'advgb_blocks_list' );
+                if( $advgb_blocks_list && is_array( $advgb_blocks_list ) ) {
+                    $saved_blocks = $advgb_blocks_list;
+                } else {
+                    $saved_blocks = [];
+                }
+                wp_localize_script(
+                    'advgb_main_js',
+                    'advgb_blocks_list',
+                    $saved_blocks
+                );
             }
 
             // Current role
@@ -2578,7 +2599,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             // All saved blocks (even the ones not detected by Block Access)
-            // @TODO - Non essentially required since 2.14.1; remove involved code with 'advgb_blocks_list' option in future
             $all_blocks = get_option( 'advgb_blocks_list' );
 
             // Get the array from advgb_blocks_user_roles option that match current user role

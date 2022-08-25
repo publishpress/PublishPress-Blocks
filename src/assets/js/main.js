@@ -241,8 +241,26 @@ function advgbGetBlocks( inactive_blocks, nonce_field_id, blocks_list_id ) {
         var listBlocks = [];
         var nonce = '';
 
+        // Get blocks saved in advgb_blocks_list option to include the ones that are missing in allBlocks.
+        // e.g. blocks registered only via PHP
+        if(
+            typeof advgbBlocks.block_extend !== 'undefined'
+            && parseInt(advgbBlocks.block_extend)
+            && typeof advgb_blocks_list !== 'undefined'
+            && advgb_blocks_list.length > 0
+        ) {
+            let diff_blocks = advgb_blocks_list.filter(
+                blocksA => !allBlocks.some( blocksB => blocksA.name === blocksB.name )
+            );
+            if( diff_blocks.length > 0 ) {
+                diff_blocks.forEach(function (block) {
+                    allBlocks.push(block);
+                });
+            }
+        }
+
         // Array of block names already available through wp.blocks.getBlockTypes()
-        var force_deactivate_blocks = ['advgb/container'];
+        var force_deactivate_blocks = []; // 'advgb/container'
 
         // Array of objects not available through wp.blocks.getBlockTypes()
         // As example: the ones that loads only in Appearance > Widget
@@ -265,7 +283,7 @@ function advgbGetBlocks( inactive_blocks, nonce_field_id, blocks_list_id ) {
             var blockItemIcon = '';
             var blockItem = {
                 name: block.name,
-                icon: block.icon.src,
+                icon: block.icon.src || block.icon,
                 title: block.title,
                 category: block.category,
                 parent: block.parent
@@ -288,9 +306,15 @@ function advgbGetBlocks( inactive_blocks, nonce_field_id, blocks_list_id ) {
                 blockItem.icon = wp.element.renderToString(savedIcon);
                 blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
                 blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
-            } else if (typeof savedIcon === 'string') {
+            } else if (
+                typeof savedIcon === 'string'
+                && !savedIcon.includes('<span') // Merged blocks icons from 'advgb_blocks_list' are stored as html
+                && !savedIcon.includes('<svg') // Merged blocks icons from 'advgb_blocks_list' are stored as html
+            ) {
                 blockItemIcon = wp.element.createElement(wp.components.Dashicon, {icon: savedIcon});
                 blockItem.icon = wp.element.renderToString(blockItemIcon);
+            } else {
+                blockItem.icon = savedIcon; // Pure html for merged blocks icons from 'advgb_blocks_list'
             }
 
             listBlocks.push(blockItem);

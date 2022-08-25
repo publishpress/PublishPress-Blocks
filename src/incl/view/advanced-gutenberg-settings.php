@@ -27,6 +27,7 @@ $blocks_icon_color          = isset($saved_settings['blocks_icon_color']) ? $sav
 $editor_width               = isset($saved_settings['editor_width']) ? $saved_settings['editor_width'] : '0';
 $default_thumb              = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
 $rp_default_thumb           = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
+$block_extend               = isset($saved_settings['block_extend']) && $saved_settings['block_extend'] ? 'checked' : '';
 
 $gallery_lightbox_checked = isset($saved_settings['gallery_lightbox']) && $saved_settings['gallery_lightbox'] ? 'checked' : '';
 if (!isset($saved_settings['gallery_lightbox'])) {
@@ -425,6 +426,29 @@ if (!isset($saved_settings['block_controls'])) {
                                        id="block_controls"
                                        value="1"
                                     <?php echo esc_attr($block_controls) ?>
+                                />
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper clearfix">
+                        <label for="block_extend"
+                               class="advgb_qtip ju-setting-label"
+                               data-qtip="<?php esc_attr_e(
+                                   'If some blocks are not listed in Block access, try enabling Extend supported blocks',
+                                   'advanced-gutenberg'
+                               ) ?>"
+                        >
+                            <?php esc_html_e('Extend supported blocks (beta)', 'advanced-gutenberg') ?>
+                        </label>
+                        <div class="ju-switch-button">
+                            <label class="switch">
+                                <input type="checkbox" name="block_extend"
+                                       id="block_extend"
+                                       value="1"
+                                    <?php echo esc_attr($block_extend) ?>
                                 />
                                 <span class="slider"></span>
                             </label>
