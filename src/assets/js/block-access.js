@@ -33,7 +33,7 @@ window.addEventListener('load', function () {
 
     // On change user role dropdown
     $('#user_role').on( 'change', function(){
-        window.location = 'admin.php?page=advgb_main&user_role=' + $(this).val();
+        window.location = 'admin.php?page=advgb_block_access&user_role=' + $(this).val();
     });
 
     // Check/Uncheck all
