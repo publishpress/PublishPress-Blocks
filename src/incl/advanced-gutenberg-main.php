@@ -168,6 +168,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_action('admin_menu', array($this, 'registerMainMenu'));
                 add_action('admin_menu', array($this, 'registerBlockConfigPage'));
                 add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
+                add_action( 'load-blocks_page_advgb_settings', [$this, 'saveSettingsPage'] );
                 add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
                 add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
                 add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
@@ -1730,7 +1731,89 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Register main menu
+         * Get list of submenu pages
+         *
+         * @since 3.0.0
+         * @return array
+         */
+        public function subAdminPages()
+        {
+
+            $submenu_pages = [];
+            $submenu_pages = [
+                [
+                    'slug' => 'advgb_settings',
+                    'title' => esc_html__( 'Settings', 'advanced-gutenberg' ),
+                    'callback' => 'loadSettingsPage',
+                    'order' => 3
+                ]
+            ];
+
+            // Block access
+            if( $this->settingIsEnabled( 'enable_block_access' ) ) {
+                array_push(
+                    $submenu_pages,
+                    [
+                        'slug' => 'advgb_block_access',
+                        'title' => esc_html__( 'Block Access', 'advanced-gutenberg' ),
+                        'callback' => 'loadBlockAccessPage',
+                        'order' => 1
+                    ]
+                );
+            }
+
+            // PublishPress Blocks and Email & form
+            if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                array_push(
+                    $submenu_pages,
+                    [
+                        'slug' => 'advgb_block_settings',
+                        'title' => esc_html__( 'Block Settings', 'advanced-gutenberg' ),
+                        'callback' => 'loadBlockSettingsPage',
+                        'order' => 4
+                    ],
+                    [
+                        'slug' => 'advgb_email_form',
+                        'title' => esc_html__( 'Email & Form', 'advanced-gutenberg' ),
+                        'callback' => 'loadEmailFormPage',
+                        'order' => 5
+                    ]
+                );
+            }
+
+            // Custom styles
+            if( $this->settingIsEnabled( 'enable_custom_styles' ) ) {
+                array_push(
+                    $submenu_pages,
+                    [
+                        'slug' => 'advgb_custom_styles',
+                        'title' => esc_html__( 'Custom Styles', 'advanced-gutenberg' ),
+                        'callback' => 'loadCustomStylesPage',
+                        'order' => 6
+                    ]
+                );
+            }
+
+            // Upgrade to pro
+            if( ! defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+                array_push(
+                    $submenu_pages,
+                    [
+                        'slug' => 'advgb_upgrade_pro',
+                        'title' => esc_html__( 'Upgrade to Pro', 'advanced-gutenberg' ),
+                        'callback' => 'loadUpgradeProPage',
+                        'order' => 7
+                    ]
+                );
+            }
+
+            // @TODO - Allow to add possible Pro pages
+
+            return $submenu_pages;
+        }
+
+        /**
+         * Register admin menu pages
          *
          * @return void
          */
@@ -1745,6 +1828,21 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array($this, 'advgbMainView'),
                     'dashicons-layout'
                 );
+
+                $submenu_pages = $this->subAdminPages();
+                foreach( $submenu_pages as $page ) {
+                    add_submenu_page(
+                        'advgb_main',
+                        $page['title'],
+                        $page['title'],
+                        'manage_options',
+                        $page['slug'],
+                        [
+                            $this, $page['callback']
+                        ],
+                        $page['order']
+                    );
+                }
             }
         }
 
@@ -1778,6 +1876,117 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             $this->loadView('main-view');
+        }
+
+        /**
+         * Load common JS and CSSfor admin pages
+         *
+         * @since 3.0.0
+         * @return void
+         */
+        public function commonAdminPagesAssets()
+        {
+            wp_enqueue_style('roboto_font', 'https://fonts.googleapis.com/css?family=Roboto');
+            wp_enqueue_style('material_icon_font');
+            wp_enqueue_style('material_icon_font_custom');
+            wp_enqueue_style('advgb_quirk');
+            wp_enqueue_style('waves_styles');
+            wp_enqueue_style('ju_framework_styles');
+            wp_enqueue_style('advgb_main_style');
+
+            wp_enqueue_script('waves_js');
+            wp_enqueue_script('velocity_js');
+            wp_enqueue_script('tabs_js');
+            wp_enqueue_script('advgb_main_js');
+        }
+
+        /**
+         * Settings page
+         *
+         * @since 3.0.0
+         * @return void
+         */
+        public function loadSettingsPage()
+        {
+            $this->commonAdminPagesAssets();
+
+            wp_enqueue_style('minicolors_css');
+            wp_enqueue_style('advgb_qtip_style');
+            wp_enqueue_style('codemirror_css');
+            wp_enqueue_style('codemirror_hint_style');
+            wp_enqueue_style('advgb_settings_style');
+
+            wp_enqueue_media();
+            wp_enqueue_script('qtip_js');
+            wp_enqueue_script('less_js');
+            wp_enqueue_script('minicolors_js');
+            wp_enqueue_script('advgb_codemirror_js');
+            wp_enqueue_script('codemirror_hint');
+            wp_enqueue_script('codemirror_mode_css');
+            wp_enqueue_script('codemirror_hint_css');
+            wp_enqueue_script('advgb_settings_js');
+
+            $this->loadPage( 'settings' );
+        }
+
+        /**
+         * Block access page
+         *
+         * @since 3.0.0
+         * @return void
+         */
+        public function loadBlockAccessPage()
+        {
+            $this->commonAdminPagesAssets();
+            $this->loadPage( 'block-access' );
+        }
+
+        /**
+         * Block settings page
+         *
+         * @since 3.0.0
+         * @return void
+         */
+        public function loadBlockSettingsPage()
+        {
+            $this->commonAdminPagesAssets();
+            $this->loadPage( 'block-settings' );
+        }
+
+        /**
+         * Email & form page
+         *
+         * @since 3.0.0
+         * @return void
+         */
+        public function loadEmailFormPage()
+        {
+            $this->commonAdminPagesAssets();
+            $this->loadPage( 'email-form' );
+        }
+
+        /**
+         * Custom styles page
+         *
+         * @since 3.0.0
+         * @return void
+         */
+        public function loadCustomStylesPage()
+        {
+            $this->commonAdminPagesAssets();
+            $this->loadPage( 'custom-styles' );
+        }
+
+        /**
+         * Upgrade pro page
+         *
+         * @since 3.0.0
+         * @return void
+         */
+        public function loadUpgradeProPage()
+        {
+            $this->commonAdminPagesAssets();
+            $this->loadPage( 'upgrade-pro' );
         }
 
         /**
@@ -1905,6 +2114,112 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
+         * Save settings page data
+         *
+         * @return boolean true on success, false on failure
+         */
+        public function saveSettingsPage()
+        {
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                return false;
+            }
+
+            if ( isset( $_POST['save_settings'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                if (
+                    ! wp_verify_nonce(
+                        sanitize_key( $_POST['advgb_settings_nonce_field'] ), 'advgb_settings_nonce'
+                    )
+                ) {
+                    return false;
+                }
+
+                $save_config = [];
+                if ( isset( $_POST['gallery_lightbox'] ) ) {
+                    $save_config['gallery_lightbox'] = 1;
+                } else {
+                    $save_config['gallery_lightbox'] = 0;
+                }
+
+                if ( isset( $_POST['enable_blocks_spacing'] ) ) {
+                    $save_config['enable_blocks_spacing'] = 1;
+                } else {
+                    $save_config['enable_blocks_spacing'] = 0;
+                }
+
+                if ( isset( $_POST['disable_wpautop'] ) ) {
+                    $save_config['disable_wpautop'] = 1;
+                } else {
+                    $save_config['disable_wpautop'] = 0;
+                }
+
+                if ( isset( $_POST['enable_columns_visual_guide'] ) ) {
+                    $save_config['enable_columns_visual_guide'] = 1;
+                } else {
+                    $save_config['enable_columns_visual_guide'] = 0;
+                }
+
+                if ( isset( $_POST['block_controls'] ) ) {
+                    $save_config['block_controls'] = 1;
+                } else {
+                    $save_config['block_controls'] = 0;
+                }
+
+                if ( isset( $_POST['enable_block_access'] ) ) {
+                    $save_config['enable_block_access'] = 1;
+                } else {
+                    $save_config['enable_block_access'] = 0;
+                }
+
+                if ( isset( $_POST['block_extend'] ) ) {
+                    $save_config['block_extend'] = 1;
+                } else {
+                    $save_config['block_extend'] = 0;
+                }
+
+                if ( isset( $_POST['enable_custom_styles'] ) ) {
+                    $save_config['enable_custom_styles'] = 1;
+                } else {
+                    $save_config['enable_custom_styles'] = 0;
+                }
+
+                if ( isset( $_POST['enable_advgb_blocks'] ) ) {
+                    $save_config['enable_advgb_blocks'] = 1;
+                } else {
+                    $save_config['enable_advgb_blocks'] = 0;
+                }
+
+                // Pro
+                if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_setting_set_value' ) ) {
+                        $save_config['enable_pp_branding']          = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_pp_branding' );
+                        $save_config['enable_core_blocks_features'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_core_blocks_features' );
+                    }
+                }
+
+                $save_config['gallery_lightbox_caption']    = (int) $_POST['gallery_lightbox_caption'];
+                $save_config['google_api_key']              = sanitize_text_field( $_POST['google_api_key'] );
+                $save_config['blocks_spacing']              = (int) $_POST['blocks_spacing'];
+                $save_config['blocks_icon_color']           = sanitize_hex_color( $_POST['blocks_icon_color'] );
+                $save_config['editor_width']                = sanitize_text_field( $_POST['editor_width'] );
+                $save_config['rp_default_thumb']            = [
+                                                                'url' => esc_url_raw( $_POST['post_default_thumb'] ),
+                                                                'id'  => (int) $_POST['post_default_thumb_id']
+                                                            ];
+
+                update_option( 'advgb_settings', $save_config );
+
+                if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
+                    wp_safe_redirect( admin_url( 'admin.php?page=advgb_settings&save_settings=success' ) );
+                    exit; // @TODO - Do we really need this?
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /**
          * Save data function
          *
          * @return boolean True on success, False on failure
@@ -1924,13 +2239,21 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'advgb_blocks_user_roles', // Database option to update
                     'save_access' // Status param name for URL redirection
                 );
+                echo 'advgb_block_access_save';
+                exit;
             }  elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
                 $this->saveSettings();
             } elseif (isset($_POST['save_email_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                echo 'save_email_config';
+                exit;
                 $this->saveEmailSettings();
             } elseif (isset($_POST['save_recaptcha_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                echo 'save_recaptcha_config';
+                exit;
                 $this->saveCaptchaSettings();
             } elseif (isset($_POST['block_data_export'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                echo 'block_data_export';
+                exit;
                 $this->downloadBlockFormData();
             }
 
@@ -1944,92 +2267,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function saveSettings()
         {
-            if (isset($_POST['save_settings'])) {
-                if (!wp_verify_nonce(sanitize_text_field($_POST['advgb_settings_nonce_field']), 'advgb_settings_nonce')) {
-                    return false;
-                }
-
-                $save_config = array();
-                if (isset($_POST['gallery_lightbox'])) {
-                    $save_config['gallery_lightbox'] = 1;
-                } else {
-                    $save_config['gallery_lightbox'] = 0;
-                }
-
-                if (isset($_POST['enable_blocks_spacing'])) {
-                    $save_config['enable_blocks_spacing'] = 1;
-                } else {
-                    $save_config['enable_blocks_spacing'] = 0;
-                }
-
-                if (isset($_POST['disable_wpautop'])) {
-                    $save_config['disable_wpautop'] = 1;
-                } else {
-                    $save_config['disable_wpautop'] = 0;
-                }
-
-                if (isset($_POST['enable_columns_visual_guide'])) {
-                    $save_config['enable_columns_visual_guide'] = 1;
-                } else {
-                    $save_config['enable_columns_visual_guide'] = 0;
-                }
-
-                if (isset($_POST['block_controls'])) {
-                    $save_config['block_controls'] = 1;
-                } else {
-                    $save_config['block_controls'] = 0;
-                }
-
-                if (isset($_POST['enable_block_access'])) {
-                    $save_config['enable_block_access'] = 1;
-                } else {
-                    $save_config['enable_block_access'] = 0;
-                }
-
-                if (isset($_POST['block_extend'])) {
-                    $save_config['block_extend'] = 1;
-                } else {
-                    $save_config['block_extend'] = 0;
-                }
-
-                if (isset($_POST['enable_custom_styles'])) {
-                    $save_config['enable_custom_styles'] = 1;
-                } else {
-                    $save_config['enable_custom_styles'] = 0;
-                }
-
-                if (isset($_POST['enable_advgb_blocks'])) {
-                    $save_config['enable_advgb_blocks'] = 1;
-                } else {
-                    $save_config['enable_advgb_blocks'] = 0;
-                }
-
-                // Pro
-                if(defined('ADVANCED_GUTENBERG_PRO')) {
-                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_setting_set_value' ) ) {
-                        $save_config['enable_pp_branding'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_pp_branding' );
-                        $save_config['enable_core_blocks_features'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_core_blocks_features' );
-                    }
-                }
-
-                $save_config['gallery_lightbox_caption'] = (int) $_POST['gallery_lightbox_caption'];
-                $save_config['google_api_key'] = sanitize_text_field($_POST['google_api_key']);
-                $save_config['blocks_spacing'] = (int) $_POST['blocks_spacing'];
-                $save_config['blocks_icon_color'] = sanitize_hex_color($_POST['blocks_icon_color']);
-                $save_config['editor_width'] = sanitize_text_field($_POST['editor_width']);
-                $save_config['rp_default_thumb'] = array(
-                    'url' => esc_url_raw($_POST['post_default_thumb']),
-                    'id'  => (int) $_POST['post_default_thumb_id']
-                );
-
-                update_option('advgb_settings', $save_config);
-
-                if (isset($_REQUEST['_wp_http_referer'])) {
-                    wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_settings=success'));
-                    exit;
-                }
-            }
-
             if (isset($_POST['save_custom_styles'])) {
                 if (!wp_verify_nonce(sanitize_text_field($_POST['advgb_cstyles_nonce_field']), 'advgb_cstyles_nonce')) {
                     return false;
@@ -4894,6 +5131,19 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function loadView($view)
         {
             include_once(plugin_dir_path(__FILE__) . 'view/advanced-gutenberg-' . $view . '.php');
+        }
+
+        /**
+         * Function to get and load the page
+         *
+         * @since 3.0.0
+         * @param string $page Page to load
+         *
+         * @return void
+         */
+        public function loadPage( $page )
+        {
+            include_once( plugin_dir_path( __FILE__ ) . 'pages/' . $page . '.php' );
         }
 
         /**
