@@ -168,8 +168,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_action('admin_menu', array($this, 'registerMainMenu'));
                 add_action('admin_menu', array($this, 'registerBlockConfigPage'));
                 //add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
-                add_action( 'load-blocks_page_advgb_settings', [$this, 'saveSettingsPage'] );
-                add_action( 'load-blocks_page_advgb_block_access', [$this, 'saveBlockAccessPage'] );
                 add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
                 add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
                 add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
@@ -1820,7 +1818,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function registerMainMenu()
         {
-            if (empty($GLOBALS['admin_page_hooks']['advgb_main'])) {
+            if ( empty( $GLOBALS['admin_page_hooks']['advgb_main'] ) ) {
                 add_menu_page(
                     __('Blocks', 'advanced-gutenberg'),
                     __('Blocks', 'advanced-gutenberg'),
@@ -1832,17 +1830,29 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 $submenu_pages = $this->subAdminPages();
                 foreach( $submenu_pages as $page ) {
-                    add_submenu_page(
+                    $hook = add_submenu_page(
                         'advgb_main',
                         $page['title'],
                         $page['title'],
                         'manage_options',
-                        $page['slug'],
+                        $page['slug'], // slug should use underscores, not hyphen due we generate automatic function names based on it
                         [
                             $this, $page['callback']
                         ],
                         $page['order']
                     );
+
+                    /* Hooks to call functions to save data for each page.
+                     * e.g. advgb_settings_save_page */
+                    $function_name = $page['slug'] . '_save_page';
+                    if(
+                        ! empty( $hook )
+                        && method_exists( $this, $function_name )
+                    ) {
+                        /* e.g. 'load-blocks_page_advgb_settings' if site is in English
+                         * or 'load-bloques_page_advgb_settings' if site is in Spanish */
+                        add_action( 'load-' . $hook, [$this, $function_name] );
+                    }
                 }
             }
         }
@@ -1949,7 +1959,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             }
 
-            echo get_plugin_page_hook( 'advgb_block_access', 'advgb_main' );
             $this->commonAdminPagesAssets();
 
             wp_enqueue_style( 'roboto_font', 'https://fonts.googleapis.com/css?family=Roboto' );
@@ -2159,10 +2168,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
         /**
          * Save settings page data
+         * Name is build in registerMainMenu() > $function_name
          *
+         * @since 3.0.0
          * @return boolean true on success, false on failure
          */
-        public function saveSettingsPage()
+        public function advgb_settings_save_page()
         {
             if ( ! current_user_can( 'activate_plugins' ) ) {
                 return false;
@@ -2265,10 +2276,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
         /**
          * Save block access page data
+         * Name is build in registerMainMenu() > $function_name
          *
+         * @since 3.0.0
          * @return boolean true on success, false on failure
          */
-        public function saveBlockAccessPage()
+        public function advgb_block_access_save_page()
         {
             if ( ! current_user_can( 'activate_plugins' ) ) {
                 return false;
