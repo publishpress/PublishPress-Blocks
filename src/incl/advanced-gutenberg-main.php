@@ -1793,8 +1793,21 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 );
             }
 
-            // Upgrade to pro
-            if( ! defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+            if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+
+                // Pro pages
+                array_push(
+                    $submenu_pages,
+                    [
+                        'slug' => 'advgb_license',
+                        'title' => __( 'License', 'advanced-gutenberg' ),
+                        'callback' => 'loadLicensePage',
+                        'order' => 7,
+                    ]
+                );
+            } else {
+
+                // Upgrade to pro
                 array_push(
                     $submenu_pages,
                     [
@@ -1805,8 +1818,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ]
                 );
             }
-
-            // @TODO - Allow to add possible Pro pages
 
             return $submenu_pages;
         }
@@ -2044,6 +2055,22 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             $this->commonAdminPagesAssets();
             $this->loadPage( 'upgrade-pro' );
+        }
+
+        /**
+         * License page
+         *
+         * @since 3.0.0
+         * @return void
+         */
+        public function loadLicensePage()
+        {
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                return false;
+            }
+
+            $this->commonAdminPagesAssets();
+            $this->loadPage( 'license' );
         }
 
         /**
