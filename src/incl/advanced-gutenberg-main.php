@@ -1919,6 +1919,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function loadSettingsPage()
         {
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                return false;
+            }
+
             $this->commonAdminPagesAssets();
 
             wp_enqueue_style( 'minicolors_css' );
@@ -1985,6 +1989,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function loadBlockSettingsPage()
         {
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                return false;
+            }
+
             $this->commonAdminPagesAssets();
 
             wp_enqueue_style( 'minicolors_css' );
@@ -2002,7 +2010,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_script( 'codemirror_mode_css' );
             wp_enqueue_script( 'codemirror_hint_css' );
             wp_enqueue_script( 'advgb_settings_js' );
-            
+
             $this->loadPage( 'block-settings' );
         }
 
@@ -2014,7 +2022,28 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function loadEmailFormPage()
         {
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                return false;
+            }
+
             $this->commonAdminPagesAssets();
+
+            wp_enqueue_style( 'minicolors_css' );
+            wp_enqueue_style( 'advgb_qtip_style' );
+            wp_enqueue_style( 'codemirror_css' );
+            wp_enqueue_style( 'codemirror_hint_style' );
+            wp_enqueue_style( 'advgb_settings_style' );
+
+            wp_enqueue_media();
+            wp_enqueue_script( 'qtip_js' );
+            wp_enqueue_script( 'less_js' );
+            wp_enqueue_script( 'minicolors_js' );
+            wp_enqueue_script( 'advgb_codemirror_js' );
+            wp_enqueue_script( 'codemirror_hint' );
+            wp_enqueue_script( 'codemirror_mode_css' );
+            wp_enqueue_script( 'codemirror_hint_css' );
+            wp_enqueue_script( 'advgb_settings_js' );
+
             $this->loadPage( 'email-form' );
         }
 
@@ -2026,6 +2055,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function loadCustomStylesPage()
         {
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                return false;
+            }
+
             $this->commonAdminPagesAssets();
             $this->loadPage( 'custom-styles' );
         }
@@ -2038,6 +2071,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function loadUpgradeProPage()
         {
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                return false;
+            }
+
             $this->commonAdminPagesAssets();
             $this->loadPage( 'upgrade-pro' );
         }
@@ -2301,6 +2338,179 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             return false;
+        }
+
+        /**
+         * Save Email & form page data
+         * Name is build in registerMainMenu() > $function_name
+         *
+         * @since 3.0.0
+         * @return boolean true on success, false on failure
+         */
+        public function advgb_email_form_save_page()
+        {
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                return false;
+            }
+
+            if ( isset( $_POST['save_email_config'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            {
+                if ( ! isset( $_POST['advgb_email_config_nonce_field'] ) ) {
+                    return false;
+                }
+
+                if (
+                    ! wp_verify_nonce(
+                        sanitize_key( $_POST['advgb_email_config_nonce_field'] ), 'advgb_email_config_nonce'
+                    )
+                ) {
+                    return false;
+                }
+
+                $save_config = [];
+                $save_config['contact_form_sender_name']    = sanitize_text_field( $_POST['contact_form_sender_name'] );
+                $save_config['contact_form_sender_email']   = sanitize_email( $_POST['contact_form_sender_email'] );
+                $save_config['contact_form_email_title']    = sanitize_text_field( $_POST['contact_form_email_title'] );
+                $save_config['contact_form_email_receiver'] = sanitize_email( $_POST['contact_form_email_receiver'] );
+
+                update_option( 'advgb_email_sender', $save_config );
+
+                if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
+                    wp_safe_redirect(
+                        admin_url( 'admin.php?page=advgb_email_form&save_settings=success' )
+                    );
+                    exit; // @TODO - Do we really need this?
+                }
+            } elseif ( isset( $_POST['save_recaptcha_config'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            {
+                if ( ! isset( $_POST['advgb_captcha_nonce_field'] ) )
+                {
+                    return false;
+                }
+
+                if (
+                    ! wp_verify_nonce(
+                        sanitize_key( $_POST['advgb_captcha_nonce_field'] ), 'advgb_captcha_nonce'
+                    )
+                ) {
+                    return false;
+                }
+
+                $save_config = [];
+                if ( isset( $_POST['recaptcha_enable'] ) ) {
+                    $save_config['recaptcha_enable'] = 1;
+                } else {
+                    $save_config['recaptcha_enable'] = 0;
+                }
+                $save_config['recaptcha_site_key']      = sanitize_text_field( $_POST['recaptcha_site_key'] );
+                $save_config['recaptcha_secret_key']    = sanitize_text_field( $_POST['recaptcha_secret_key'] );
+                $save_config['recaptcha_language']      = sanitize_text_field( $_POST['recaptcha_language'] );
+                $save_config['recaptcha_theme']         = sanitize_text_field( $_POST['recaptcha_theme'] );
+
+                update_option( 'advgb_recaptcha_config', $save_config );
+
+                if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
+                    wp_safe_redirect(
+                        admin_url( 'admin.php?page=advgb_email_form&save_settings=success' )
+                    );
+                    exit; // @TODO - Do we really need this?
+                }
+            } elseif ( isset( $_POST['block_data_export'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            {
+                if (
+                    ! wp_verify_nonce(
+                        sanitize_key( $_POST['advgb_export_data_nonce_field'] ), 'advgb_export_data_nonce'
+                    )
+                ) {
+                    return false;
+                }
+
+                $postValue  = sanitize_text_field( $_POST['block_data_export'] );
+                $postValue  = explode( '.', $postValue );
+                $dataExport = $postValue[0];
+                $dataType   = $postValue[1];
+                $data       = '';
+
+                if ( $dataExport === 'contact_form' ) {
+                    $dataSaved = get_option( 'advgb_contacts_saved' );
+                    if ( !$dataSaved ) {
+                        return false;
+                    }
+
+                    switch ( $dataType ) {
+                        case 'csv':
+                            $data .= '"#","Date","Name","Email","Message"' . PHP_EOL;
+                            $tab = ',';
+                            $int = 1;
+                            foreach ( $dataSaved as $dataVal ) {
+                                $data .= '"'.$int.'"'.$tab;
+                                $data .= '"'.$dataVal['date'].'"'.$tab;
+                                $data .= '"'.$dataVal['name'].'"'.$tab;
+                                $data .= '"'.$dataVal['email'].'"'.$tab;
+                                $data .= '"'.$dataVal['msg'].'"';
+                                $data .= PHP_EOL;
+                                $int++;
+                            }
+                            $data = trim( $data );
+
+                            header( 'Content-Type: text/csv; charset=utf-8' );
+                            header( 'Content-Disposition: attachment; filename=advgb_contact_form-'.date( 'm-d-Y' ).'.csv' );
+                            header( 'Pragma: no-cache' );
+                            header( 'Expires: 0' );
+
+                            echo $data; // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped
+                            exit;
+                        case 'json':
+                            header( 'Content-Type: application/json; charset=utf-8' );
+                            header( 'Content-Disposition: attachment; filename=advgb_contact_form-'.date( 'm-d-Y' ).'.json' );
+                            header( 'Pragma: no-cache' );
+                            header( 'Expires: 0' );
+
+                            echo json_encode( $dataSaved );
+                            exit;
+                    }
+                } elseif ( $dataExport === 'newsletter' ) {
+                    $dataSaved = get_option( 'advgb_newsletter_saved' );
+                    if ( ! $dataSaved ) {
+                        return false;
+                    }
+
+                    switch ( $dataType ) {
+                        case 'csv':
+                            $data .= '"#","Date","First Name","Last Name","Email",' . PHP_EOL;
+                            $tab = ',';
+                            $int = 1;
+                            foreach ( $dataSaved as $dataVal ) {
+                                $data .= '"'.$int.'"'.$tab;
+                                $data .= '"'.$dataVal['date'].'"'.$tab;
+                                $data .= '"'.$dataVal['fname'].'"'.$tab;
+                                $data .= '"'.$dataVal['lname'].'"'.$tab;
+                                $data .= '"'.$dataVal['email'].'"';
+                                $data .= PHP_EOL;
+                                $int++;
+                            }
+                            $data = trim( $data );
+
+                            header( 'Content-Type: text/csv; charset=utf-8' );
+                            header( 'Content-Disposition: attachment; filename=advgb_newsletter-'.date( 'm-d-Y' ).'.csv' );
+                            header( 'Pragma: no-cache');
+                            header( 'Expires: 0' );
+
+                            echo $data; // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped
+                            exit;
+                        case 'json':
+                            header( 'Content-Type: application/json; charset=utf-8' );
+                            header( 'Content-Disposition: attachment; filename=advgb_newsletter-'.date( 'm-d-Y' ).'.json' );
+                            header( 'Pragma: no-cache' );
+                            header( 'Expires: 0' );
+
+                            echo json_encode( $dataSaved );
+                            exit;
+                    }
+                }
+
+                return false;
+            }
         }
 
         /**
