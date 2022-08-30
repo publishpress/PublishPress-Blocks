@@ -1909,22 +1909,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_script( 'velocity_js' );
             wp_enqueue_script( 'tabs_js' );
             wp_enqueue_script( 'advgb_main_js' );
-        }
 
-        /**
-         * Settings page
-         *
-         * @since 3.0.0
-         * @return void
-         */
-        public function loadSettingsPage()
-        {
-            if ( ! current_user_can( 'activate_plugins' ) ) {
-                return false;
-            }
-
-            $this->commonAdminPagesAssets();
-
+            // @TODO - Check which are required in each page
             wp_enqueue_style( 'minicolors_css' );
             wp_enqueue_style( 'advgb_qtip_style' );
             wp_enqueue_style( 'codemirror_css' );
@@ -1940,7 +1926,21 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_script( 'codemirror_mode_css' );
             wp_enqueue_script( 'codemirror_hint_css' );
             wp_enqueue_script( 'advgb_settings_js' );
+        }
 
+        /**
+         * Settings page
+         *
+         * @since 3.0.0
+         * @return void
+         */
+        public function loadSettingsPage()
+        {
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                return false;
+            }
+
+            $this->commonAdminPagesAssets();
             $this->loadPage( 'settings' );
         }
 
@@ -1994,23 +1994,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             $this->commonAdminPagesAssets();
-
-            wp_enqueue_style( 'minicolors_css' );
-            wp_enqueue_style( 'advgb_qtip_style' );
-            wp_enqueue_style( 'codemirror_css' );
-            wp_enqueue_style( 'codemirror_hint_style' );
-            wp_enqueue_style( 'advgb_settings_style' );
-
-            wp_enqueue_media();
-            wp_enqueue_script( 'qtip_js' );
-            wp_enqueue_script( 'less_js' );
-            wp_enqueue_script( 'minicolors_js' );
-            wp_enqueue_script( 'advgb_codemirror_js' );
-            wp_enqueue_script( 'codemirror_hint' );
-            wp_enqueue_script( 'codemirror_mode_css' );
-            wp_enqueue_script( 'codemirror_hint_css' );
-            wp_enqueue_script( 'advgb_settings_js' );
-
             $this->loadPage( 'block-settings' );
         }
 
@@ -2027,23 +2010,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             $this->commonAdminPagesAssets();
-
-            wp_enqueue_style( 'minicolors_css' );
-            wp_enqueue_style( 'advgb_qtip_style' );
-            wp_enqueue_style( 'codemirror_css' );
-            wp_enqueue_style( 'codemirror_hint_style' );
-            wp_enqueue_style( 'advgb_settings_style' );
-
-            wp_enqueue_media();
-            wp_enqueue_script( 'qtip_js' );
-            wp_enqueue_script( 'less_js' );
-            wp_enqueue_script( 'minicolors_js' );
-            wp_enqueue_script( 'advgb_codemirror_js' );
-            wp_enqueue_script( 'codemirror_hint' );
-            wp_enqueue_script( 'codemirror_mode_css' );
-            wp_enqueue_script( 'codemirror_hint_css' );
-            wp_enqueue_script( 'advgb_settings_js' );
-
             $this->loadPage( 'email-form' );
         }
 
@@ -2059,6 +2025,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
+            wp_enqueue_script('advgb_custom_styles_js');
             $this->commonAdminPagesAssets();
             $this->loadPage( 'custom-styles' );
         }
@@ -2511,6 +2478,40 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 return false;
             }
+        }
+
+        /**
+         * Redirect after saving custom styles page data
+         * Name is build in registerMainMenu() > $function_name
+         *
+         * @since 3.0.0
+         * @return boolean true on success, false on failure
+         */
+        public function advgb_custom_styles_save_page()
+        {
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                return false;
+            }
+
+            if ( isset( $_POST['save_custom_styles'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            {
+                if (
+                    ! wp_verify_nonce(
+                        sanitize_key( $_POST['advgb_cstyles_nonce_field'] ), 'advgb_cstyles_nonce'
+                    )
+                ) {
+                    return false;
+                }
+
+                if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
+                    wp_safe_redirect(
+                        admin_url( 'admin.php?page=advgb_custom_styles&save_styles=success' )
+                    );
+                    exit;
+                }
+            }
+
+            return true;
         }
 
         /**
