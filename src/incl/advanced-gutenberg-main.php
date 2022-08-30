@@ -1897,18 +1897,18 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function commonAdminPagesAssets()
         {
-            wp_enqueue_style('roboto_font', 'https://fonts.googleapis.com/css?family=Roboto');
-            wp_enqueue_style('material_icon_font');
-            wp_enqueue_style('material_icon_font_custom');
-            wp_enqueue_style('advgb_quirk');
-            wp_enqueue_style('waves_styles');
-            wp_enqueue_style('ju_framework_styles');
-            wp_enqueue_style('advgb_main_style');
+            wp_enqueue_style( 'roboto_font', 'https://fonts.googleapis.com/css?family=Roboto' ); // @TODO - Move to local
+            wp_enqueue_style( 'material_icon_font' );
+            wp_enqueue_style( 'material_icon_font_custom' );
+            wp_enqueue_style( 'advgb_quirk' );
+            wp_enqueue_style( 'waves_styles' );
+            wp_enqueue_style( 'ju_framework_styles' );
+            wp_enqueue_style( 'advgb_main_style' );
 
-            wp_enqueue_script('waves_js');
-            wp_enqueue_script('velocity_js');
-            wp_enqueue_script('tabs_js');
-            wp_enqueue_script('advgb_main_js');
+            wp_enqueue_script( 'waves_js' );
+            wp_enqueue_script( 'velocity_js' );
+            wp_enqueue_script( 'tabs_js' );
+            wp_enqueue_script( 'advgb_main_js' );
         }
 
         /**
@@ -1955,24 +1955,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 );
             }
 
-            if( ! $this->settingIsEnabled( 'enable_block_access' ) ) {
-
-            }
-
             $this->commonAdminPagesAssets();
-
-            wp_enqueue_style( 'roboto_font', 'https://fonts.googleapis.com/css?family=Roboto' );
-            wp_enqueue_style( 'material_icon_font' );
-            wp_enqueue_style( 'material_icon_font_custom' );
-            wp_enqueue_style( 'advgb_quirk' );
-            wp_enqueue_style( 'waves_styles' );
-            wp_enqueue_style( 'ju_framework_styles' );
-            wp_enqueue_style( 'advgb_main_style' );
-
-            wp_enqueue_script( 'waves_js' );
-            wp_enqueue_script( 'velocity_js' );
-            wp_enqueue_script( 'tabs_js' );
-            wp_enqueue_script( 'advgb_main_js' );
 
             /* Access current user blocks and saved blocks to build 2 javascript objects.
              * 'advgbCUserRole' object for current user role from form dropdown
@@ -2003,6 +1986,23 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function loadBlockSettingsPage()
         {
             $this->commonAdminPagesAssets();
+
+            wp_enqueue_style( 'minicolors_css' );
+            wp_enqueue_style( 'advgb_qtip_style' );
+            wp_enqueue_style( 'codemirror_css' );
+            wp_enqueue_style( 'codemirror_hint_style' );
+            wp_enqueue_style( 'advgb_settings_style' );
+
+            wp_enqueue_media();
+            wp_enqueue_script( 'qtip_js' );
+            wp_enqueue_script( 'less_js' );
+            wp_enqueue_script( 'minicolors_js' );
+            wp_enqueue_script( 'advgb_codemirror_js' );
+            wp_enqueue_script( 'codemirror_hint' );
+            wp_enqueue_script( 'codemirror_mode_css' );
+            wp_enqueue_script( 'codemirror_hint_css' );
+            wp_enqueue_script( 'advgb_settings_js' );
+            
             $this->loadPage( 'block-settings' );
         }
 
