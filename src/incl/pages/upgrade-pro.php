@@ -1,4 +1,4 @@
 <?php
-defined('ABSPATH') || die;
+defined( 'ABSPATH' ) || die;
 
 echo 'upgrade-pro';

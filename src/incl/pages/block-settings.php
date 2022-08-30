@@ -1,5 +1,5 @@
 <?php
-defined('ABSPATH') || die;
+defined( 'ABSPATH' ) || die;
 
 // ThickBox JS and CSS
 add_thickbox();

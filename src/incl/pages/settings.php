@@ -1,5 +1,5 @@
 <?php
-defined('ABSPATH') || die;
+defined( 'ABSPATH' ) || die;
 
 $saved_settings             = get_option( 'advgb_settings' );
 $gallery_lightbox_caption   = isset( $saved_settings['gallery_lightbox_caption'] ) ? $saved_settings['gallery_lightbox_caption'] : '1';
