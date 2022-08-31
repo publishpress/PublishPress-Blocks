@@ -7,6 +7,7 @@
     ],
     "require": {
         "publishpress/wordpress-reviews": "^1.1",
-        "publishpress/publishpress-instance-protection": "^1.0"
+        "publishpress/publishpress-instance-protection": "^1.0",
+        "publishpress/wordpress-version-notices": "^1.1"
     }
 }

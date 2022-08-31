@@ -167,6 +167,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_action('admin_footer', array($this, 'initBlocksList'));
                 add_action('admin_menu', array($this, 'registerMainMenu'));
                 add_action('admin_menu', array($this, 'registerBlockConfigPage'));
+                add_action( 'plugins_loaded', [$this, 'upgradeProNotices'] );
                 //add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
                 add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
                 add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
@@ -794,6 +795,33 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             // Block Content Display
             require_once(plugin_dir_path(dirname(__FILE__)) . 'assets/blocks/recent-posts/block.php');
+        }
+
+        /**
+         * Add "Upgrade to Pro" notices
+         *
+         * @return void
+         */
+        public function upgradeProNotices()
+        {
+            if (
+                current_user_can( 'install_plugins' )
+                && ! defined( 'ADVANCED_GUTENBERG_PRO' )
+            ) {
+                // Menu link
+                add_filter(
+                    \PPVersionNotices\Module\MenuLink\Module::SETTINGS_FILTER,
+                    function ( $settings ) {
+                        $settings['advanced-gutenberg'] = [
+                            'parent' => 'advgb_main',
+                            'label'  => 'Upgrade to Pro',
+                            'link'   => 'https://publishpress.com/links/blocks-menu',
+                        ];
+
+                        return $settings;
+                    }
+                );
+            }
         }
 
         /**
@@ -1489,12 +1517,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                       [],
                       ADVANCED_GUTENBERG_VERSION
                   );
-                  wp_enqueue_style(
-                      'advgb_pro_admin_popup',
-                      plugins_url('assets/css/pro-popup.css', dirname(__FILE__)),
-                      array(),
-                      ADVANCED_GUTENBERG_VERSION
-                  );
                 }
 
                 // Register JS
@@ -1799,18 +1821,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         'order' => 6,
                     ]
                 );
-            } else {
-
-                // Upgrade to pro
-                array_push(
-                    $submenu_pages,
-                    [
-                        'slug' => 'advgb_upgrade_pro',
-                        'title' => esc_html__( 'Upgrade to Pro', 'advanced-gutenberg' ),
-                        'callback' => 'loadUpgradeProPage',
-                        'order' => 6
-                    ]
-                );
             }
 
             return $submenu_pages;
@@ -1968,7 +1978,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         _e(
                             'You\'re using PublishPress Blocks Free. The Pro version has more features and support.',
                             'advanced-gutenberg'
-                        ) 
+                        )
                         ?>
                     </div>
                     <div class="pp-version-notice-bold-purple-button">
