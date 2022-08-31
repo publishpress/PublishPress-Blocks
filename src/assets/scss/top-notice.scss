@@ -1,17 +1,14 @@
 .pp-version-notice-bold-purple {
   background: #655897;
   height: auto;
-  width: 100%;
+  width: auto;
   box-sizing: border-box;
   padding: 18px 7px 20px 7px;
   text-align: center;
-  position: fixed;
-  overflow: hidden;
   line-height: 20px;
   margin-left: -20px;
   font-size: 16px;
   color: #fff;
-  z-index: 16;
 
   .pp-version-notice-bold-purple-button a {
     background: #FCB223;
@@ -32,11 +29,6 @@
         color: #000 !important;
       }
   }
-}
-
-.ju-main-wrapper .ju-left-panel-toggle {
-  z-index: 17 !important;
-  top: inherit !important;
 }
 
 @media only screen and (min-width: 1075px) {
@@ -68,7 +60,5 @@
 @media only screen and (max-width: 600px) {
   .pp-version-notice-bold-purple {
     padding-top: 60px;
-    position: relative;
-    width: auto;
   }
 }

@@ -1482,22 +1482,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 );
 
                 // Free
-                if(!defined('ADVANCED_GUTENBERG_PRO')) {
+                if( ! defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
                   wp_enqueue_style(
                       'advgb_top_notice',
-                      plugins_url('assets/css/top-notice.css', dirname(__FILE__)),
-                      array(),
+                      plugins_url( 'assets/css/top-notice.css', dirname( __FILE__ ) ),
+                      [],
                       ADVANCED_GUTENBERG_VERSION
                   );
                   wp_enqueue_style(
                       'advgb_pro_admin_popup',
                       plugins_url('assets/css/pro-popup.css', dirname(__FILE__)),
-                      array(),
-                      ADVANCED_GUTENBERG_VERSION
-                  );
-                  wp_enqueue_script(
-                      'advgb_top_notice_js',
-                      plugins_url('assets/js/top-notice.js', dirname(__FILE__)),
                       array(),
                       ADVANCED_GUTENBERG_VERSION
                   );
@@ -1744,7 +1738,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'slug' => 'advgb_settings',
                     'title' => esc_html__( 'Settings', 'advanced-gutenberg' ),
                     'callback' => 'loadSettingsPage',
-                    'order' => 3
+                    'order' => 1
                 ]
             ];
 
@@ -1756,7 +1750,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         'slug' => 'advgb_block_access',
                         'title' => esc_html__( 'Block Access', 'advanced-gutenberg' ),
                         'callback' => 'loadBlockAccessPage',
-                        'order' => 1
+                        'order' => 2
                     ]
                 );
             }
@@ -1769,13 +1763,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         'slug' => 'advgb_block_settings',
                         'title' => esc_html__( 'Block Settings', 'advanced-gutenberg' ),
                         'callback' => 'loadBlockSettingsPage',
-                        'order' => 4
+                        'order' => 3
                     ],
                     [
                         'slug' => 'advgb_email_form',
                         'title' => esc_html__( 'Email & Form', 'advanced-gutenberg' ),
                         'callback' => 'loadEmailFormPage',
-                        'order' => 5
+                        'order' => 4
                     ]
                 );
             }
@@ -1788,7 +1782,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         'slug' => 'advgb_custom_styles',
                         'title' => esc_html__( 'Custom Styles', 'advanced-gutenberg' ),
                         'callback' => 'loadCustomStylesPage',
-                        'order' => 6
+                        'order' => 5
                     ]
                 );
             }
@@ -1802,7 +1796,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         'slug' => 'advgb_license',
                         'title' => __( 'License', 'advanced-gutenberg' ),
                         'callback' => 'loadLicensePage',
-                        'order' => 7,
+                        'order' => 6,
                     ]
                 );
             } else {
@@ -1814,7 +1808,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         'slug' => 'advgb_upgrade_pro',
                         'title' => esc_html__( 'Upgrade to Pro', 'advanced-gutenberg' ),
                         'callback' => 'loadUpgradeProPage',
-                        'order' => 7
+                        'order' => 6
                     ]
                 );
             }
@@ -1865,6 +1859,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         add_action( 'load-' . $hook, [$this, $function_name] );
                     }
                 }
+
+                // Remove dulicated "Blocks" menu
+                //remove_submenu_page( 'advgb_main', 'advgb_main' );
             }
         }
 
@@ -1956,6 +1953,35 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
+         * Upgrade to pro top banner
+         *
+         * @since 3.0.0
+         * @return void
+         */
+        public function upgradeProTopBanner()
+        {
+            if( ! defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+            ?>
+                <div class="pp-version-notice-bold-purple">
+                    <div class="pp-version-notice-bold-purple-message">
+                        <?php
+                        _e(
+                            'You\'re using PublishPress Blocks Free. The Pro version has more features and support.',
+                            'advanced-gutenberg'
+                        ) 
+                        ?>
+                    </div>
+                    <div class="pp-version-notice-bold-purple-button">
+                        <a href="https://publishpress.com/links/blocks" target="_blank">
+                            <?php _e( 'Upgrade to Pro', 'advanced-gutenberg' ) ?>
+                        </a>
+                    </div>
+                </div>
+            <?php
+            }
+        }
+
+        /**
          * Block access page
          *
          * @since 3.0.0
@@ -1971,6 +1997,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             $this->commonAdminPagesAssets();
+            $this->upgradeProTopBanner();
 
             /* Access current user blocks and saved blocks to build 2 javascript objects.
              * 'advgbCUserRole' object for current user role from form dropdown
@@ -5465,7 +5492,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function loadPage( $page )
         {
-            include_once( plugin_dir_path( __FILE__ ) . 'pages/' . $page . '.php' );
+            if( $page !== 'upgrade-pro' ) {
+                $this->upgradeProTopBanner();
+            }
+            if( file_exists( plugin_dir_path( __FILE__ ) . 'pages/' . $page . '.php' ) ) {
+                include_once( plugin_dir_path( __FILE__ ) . 'pages/' . $page . '.php' );
+            }
         }
 
         /**
