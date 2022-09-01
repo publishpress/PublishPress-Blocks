@@ -44,95 +44,129 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
 }
 ?>
 
-<div id="advgb-settings-container">
+<div class="publishpress-admin wrap">
 
-    <?php if ( isset( $_GET['save_settings'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display message, no action ?>
-        <div class="ju-notice-msg ju-notice-success">
-            <?php esc_html_e('Settings saved successfully', 'advanced-gutenberg'); ?>
-            <i class="dashicons dashicons-dismiss ju-notice-close"></i>
+    <?php if ( isset( $_GET['save'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display message, no action ?>
+        <div id="message" class="updated fade">
+            <p>
+                <?php esc_html_e('Settings saved successfully', 'advanced-gutenberg'); ?>
+            </p>
         </div>
     <?php endif; ?>
 
-    <div class="advgb-header" style="padding-top: 40px">
-        <h1 class="header-title">
+    <header>
+        <h1 class="wp-heading-inline">
             <?php esc_html_e( 'Settings', 'advanced-gutenberg' ) ?>
         </h1>
-    </div>
-    <div class="clearfix">
+    </header>
+
+    <div class="wrap">
         <form method="post">
             <?php wp_nonce_field( 'advgb_settings_nonce', 'advgb_settings_nonce_field' ) ?>
-            <ul class="settings-list clearfix">
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="enable_block_access"
-                               class="advgb_qtip ju-setting-label"
-                               data-qtip="<?php esc_attr_e(
-                                   'Enable block access to deactivate blocks by user role',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e( 'Enable block access', 'advanced-gutenberg' ) ?>
+            <table class="form-table">
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Enable block access', 'advanced-gutenberg' ) ?>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="enable_block_access"
+                                   id="enable_block_access"
+                                   value="1"
+                                <?php esc_attr_e($enable_block_access) ?>
+                            />
+                            <?php
+                            _e(
+                                'Manage block permissions by user role',
+                                'advanced-gutenberg'
+                            )
+                            ?>
                         </label>
-                        <div class="ju-switch-button">
-                            <label class="switch">
-                                <input type="checkbox" name="enable_block_access"
-                                       id="enable_block_access"
-                                       value="1"
-                                    <?php echo esc_attr($enable_block_access) ?>
-                                />
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="enable_custom_styles"
-                               class="advgb_qtip ju-setting-label"
-                               data-qtip="<?php esc_attr_e(
-                                   'Enable custom CSS classes to easily manage and apply to your blocks',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e( 'Enable custom styles', 'advanced-gutenberg' ) ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Enable custom styles', 'advanced-gutenberg' ) ?>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="enable_custom_styles"
+                                   id="enable_custom_styles"
+                                   value="1"
+                                <?php esc_attr_e( $enable_custom_styles ) ?>
+                            />
+                            <?php
+                            _e(
+                                'Manage and apply custom CSS classes to some blocks ',
+                                'advanced-gutenberg'
+                            )
+                            ?>
                         </label>
-                        <div class="ju-switch-button">
-                            <label class="switch">
-                                <input type="checkbox" name="enable_custom_styles"
-                                       id="enable_custom_styles"
-                                       value="1"
-                                    <?php echo esc_attr( $enable_custom_styles ) ?>
-                                />
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="enable_advgb_blocks"
-                               class="advgb_qtip ju-setting-label"
-                               data-qtip="<?php esc_attr_e(
-                                   'Enable PublishPress Blocks. If disabled, no PublishPress Blocks will be available',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e( 'Enable PublishPress Blocks', 'advanced-gutenberg' ) ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Enable PublishPress Blocks', 'advanced-gutenberg' ) ?>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="enable_advgb_blocks"
+                                   id="enable_advgb_blocks"
+                                   value="1"
+                                <?php esc_attr_e( $enable_advgb_blocks ) ?>
+                            />
+                            <?php
+                            _e(
+                                'If disabled, blocks from PublishPress Blocks plugin won\'t be available',
+                                'advanced-gutenberg'
+                            )
+                            ?>
                         </label>
-                        <div class="ju-switch-button">
-                            <label class="switch">
-                                <input type="checkbox" name="enable_advgb_blocks"
-                                       id="enable_advgb_blocks"
-                                       value="1"
-                                    <?php echo esc_attr( $enable_advgb_blocks ) ?>
-                                />
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </li>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Enable block controls', 'advanced-gutenberg' ) ?>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="block_controls"
+                                   id="block_controls"
+                                   value="1"
+                                <?php echo esc_attr( $block_controls ) ?>
+                            />
+                            <?php
+                            _e(
+                                'Block controls panel to schedule blocks',
+                                'advanced-gutenberg'
+                            )
+                            ?>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Extend supported blocks (beta)', 'advanced-gutenberg' ) ?>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="block_extend"
+                                   id="block_extend"
+                                   value="1"
+                                <?php echo esc_attr( $block_extend ) ?>
+                            />
+                            <?php
+                            _e(
+                                'If some blocks are not listed in Block access, try enabling this beta feature',
+                                'advanced-gutenberg'
+                            )
+                            ?>
+                        </label>
+                    </td>
+                </tr>
+
                 <?php
-                // Pro
+                // Pro settings
                 if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
                     if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_setting' ) ) {
                         echo PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting(
@@ -148,191 +182,173 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                     }
                 }
                 ?>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="gallery_lightbox"
-                               class="ju-setting-label advgb_qtip"
-                               data-qtip="<?php esc_attr_e(
-                                   'Open gallery images as a lightbox style popup',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e( 'Open galleries in lightbox', 'advanced-gutenberg' ) ?>
+
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Open galleries in lightbox', 'advanced-gutenberg' ) ?>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="gallery_lightbox"
+                                   id="gallery_lightbox"
+                                   value="1"
+                                <?php esc_attr_e( $gallery_lightbox_checked ) ?>
+                            />
+                            <?php
+                            _e(
+                                'Open gallery images as a lightbox style popup',
+                                'advanced-gutenberg'
+                            )
+                            ?>
                         </label>
-                        <div class="ju-switch-button">
-                            <label class="switch">
-                                <input type="checkbox" name="gallery_lightbox"
-                                       id="gallery_lightbox"
-                                       value="1"
-                                    <?php echo esc_attr( $gallery_lightbox_checked ) ?>
-                                />
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix" id="gallery_lightbox_caption_wrapper">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="gallery_lightbox_caption"
-                               class="ju-setting-label advgb_qtip"
-                               data-qtip="<?php esc_attr_e(
-                                   'Display caption text on images loaded as lightbox in galleries',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e('Image caption', 'advanced-gutenberg') ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Image caption', 'advanced-gutenberg' ) ?>
+                    </th>
+                    <td>
+                        <label>
+                            <select name="gallery_lightbox_caption" id="gallery_lightbox_caption">
+                                <option value="0"<?php echo ( $gallery_lightbox_caption === '0' or $gallery_lightbox_caption === 0 ) ? ' selected' : '' ?>>
+                                    <?php esc_html_e( 'Disabled', 'advanced-gutenberg' ); ?>
+                                </option>
+                                <option value="1"<?php echo ( $gallery_lightbox_caption === '1' or $gallery_lightbox_caption === 1 ) ? ' selected' : '' ?>>
+                                    <?php esc_html_e('Bottom', 'advanced-gutenberg'); ?>
+                                </option>
+                                <option value="2"<?php echo $gallery_lightbox_caption === '2' ? ' selected' : '' ?>>
+                                    <?php esc_html_e( 'Overlay', 'advanced-gutenberg' ); ?>
+                                </option>
+                            </select>
+                            <p class="description">
+                                <?php
+                                _e(
+                                    'Display caption text on images loaded as lightbox in galleries.',
+                                    'advanced-gutenberg'
+                                )
+                                ?>
+                            </p>
                         </label>
-                        <select class="ju-select" name="gallery_lightbox_caption" id="gallery_lightbox_caption">
-                            <option value="0"<?php echo ( $gallery_lightbox_caption === '0' or $gallery_lightbox_caption === 0 ) ? ' selected' : '' ?>>
-                                <?php esc_html_e( 'Disabled', 'advanced-gutenberg' ); ?>
-                            </option>
-                            <option value="1"<?php echo ( $gallery_lightbox_caption === '1' or $gallery_lightbox_caption === 1 ) ? ' selected' : '' ?>>
-                                <?php esc_html_e('Bottom', 'advanced-gutenberg'); ?>
-                            </option>
-                            <option value="2"<?php echo $gallery_lightbox_caption === '2' ? ' selected' : '' ?>>
-                                <?php esc_html_e( 'Overlay', 'advanced-gutenberg' ); ?>
-                            </option>
-                        </select>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="ag_disable_wpautop"
-                               class="ju-setting-label advgb_qtip"
-                               data-qtip="<?php esc_attr_e(
-                                   'Remove the WordPress function autop, used to prevent unwanted paragraph to be added in some blocks',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e( 'Remove Autop', 'advanced-gutenberg' ) ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Remove autop', 'advanced-gutenberg' ) ?>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="disable_wpautop"
+                                   id="ag_disable_wpautop"
+                                   value="1"
+                                <?php echo esc_attr( $disable_wpautop_checked ) ?>
+                            />
+                            <?php
+                            _e(
+                                'Autop WordPress function is used to prevent unwanted paragraphs to be added',
+                                'advanced-gutenberg'
+                            )
+                            ?>
                         </label>
-                        <div class="ju-switch-button">
-                            <label class="switch">
-                                <input type="checkbox" name="disable_wpautop"
-                                       id="ag_disable_wpautop"
-                                       value="1"
-                                    <?php echo esc_attr( $disable_wpautop_checked ) ?>
-                                />
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option full-width clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="google_api_key"
-                               class="ju-setting-label advgb_qtip"
-                               style="float: none; margin-bottom: 10px;"
-                               data-qtip="<?php esc_attr_e(
-                                   'A Google API key is required to use the Map block without any warning.',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e('Google API Key', 'advanced-gutenberg') ?>
-                        </label>
-                        <span style="display: block; float: none;">
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Google API key', 'advanced-gutenberg' ) ?>
+                    </th>
+                    <td>
+                        <label>
                             <input type="text"
                                    name="google_api_key"
                                    id="google_api_key"
-                                   class="ju-input"
-                                   style="margin-left: 10px; width: 370px; display: block; max-width: 100%"
+                                   style="width: 370px; display: block; height: 80px;"
                                    value="<?php echo esc_attr( $google_api_key_saved ) ?>"
-                            >
-                            <a target="_blank"
-                               href="https://developers.google.com/maps/documentation/javascript/get-api-key"
-                               style="display: inline-block; margin: 15px; margin-left: 10px; color: #655997; line-height: 1;">
-                                <?php esc_html_e( 'How to create a Google API Key', 'advanced-gutenberg' ) ?>
-                            </a>
-                        </span>
-                    </div>
-                </li>
-
-                <li class="ju-settings-option settings-separator">
-                    <h2 class="settings-separator-title">
-                        <?php esc_html_e( 'Blocks Settings', 'advanced-gutenberg' ) ?>
-                    </h2>
-                </li>
-
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="enable_blocks_spacing"
-                               class="advgb_qtip ju-setting-label"
-                               data-qtip="<?php esc_attr_e(
-                                   'Enable block spacing settings',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e( 'Enable blocks spacing', 'advanced-gutenberg' ) ?>
+                            />
+                            <p class="description">
+                                <a target="_blank"
+                                   href="https://developers.google.com/maps/documentation/javascript/get-api-key">
+                                    <?php
+                                    esc_html_e(
+                                        'How to create a Google API Key',
+                                        'advanced-gutenberg'
+                                    )
+                                    ?>
+                                </a><br/>
+                                <?php
+                                _e(
+                                    'A Google API key is required to use the Map block without any warning.',
+                                    'advanced-gutenberg'
+                                );
+                                ?>
+                            </p>
                         </label>
-                        <div class="ju-switch-button">
-                            <label class="switch">
-                                <input type="checkbox" name="enable_blocks_spacing"
-                                       id="enable_blocks_spacing"
-                                       value="1"
-                                    <?php echo esc_attr( $enable_blocks_spacing ) ?>
-                                />
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix" id="blocks_spacing_wrapper">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="blocks_spacing"
-                               class="ju-setting-label advgb_qtip"
-                               data-qtip="<?php esc_attr_e(
-                                   'Apply a minimal vertical block spacing automatically. Default is None. Values in pixels',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e( 'Blocks spacing', 'advanced-gutenberg' ) ?>
-                            <span> (px)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Enable blocks spacing', 'advanced-gutenberg' ) ?>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="enable_blocks_spacing"
+                                   id="enable_blocks_spacing"
+                                   value="1"
+                                <?php echo esc_attr( $enable_blocks_spacing ) ?>
+                            />
+                            <?php
+                            _e(
+                                'Vertical spacing between blocks',
+                                'advanced-gutenberg'
+                            )
+                            ?>
                         </label>
-                        <span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Blocks spacing', 'advanced-gutenberg' ) ?>
+                        <span> (px)</span>
+                    </th>
+                    <td>
+                        <label>
                             <input type="number"
                                    min="0"
                                    name="blocks_spacing"
                                    id="blocks_spacing"
-                                   class="ju-input"
-                                   style="margin-left: 10px; width: 80px"
                                    value="<?php echo esc_attr( $blocks_spacing ) ?>"
-                            >
-                        </span>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="blocks_icon_color"
-                               class="ju-setting-label advgb_qtip"
-                               data-qtip="<?php esc_attr_e(
-                                   'Set color for blocks icons on admin, only apply to PublishPress Blocks',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e( 'Blocks icon color', 'advanced-gutenberg' ) ?>
+                            />
                         </label>
-                        <span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Blocks icon color', 'advanced-gutenberg' ) ?>
+                    </th>
+                    <td>
+                        <label>
                             <input type="text"
                                    name="blocks_icon_color"
                                    id="blocks_icon_color"
-                                   class="ju-input minicolors minicolors-input"
-                                   value="<?php echo esc_attr( $blocks_icon_color ) ?>"/>
-                        </span>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="editor_width"
-                               class="ju-setting-label advgb_qtip"
-                               data-qtip="<?php esc_attr_e(
-                                   'Define the admin Gutenberg editor width size',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e('Editor width', 'advanced-gutenberg') ?>
+                                   class="minicolors minicolors-input"
+                                   value="<?php echo esc_attr( $blocks_icon_color ) ?>"
+                            />
+                            <p class="description">
+                                <?php
+                                _e(
+                                    'Set color for blocks icons on admin. Only apply to PublishPress Blocks',
+                                    'advanced-gutenberg'
+                                )
+                                ?>
+                            </p>
                         </label>
-                        <div>
-                            <select class="ju-select" name="editor_width" id="editor_width">
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Gutenberg editor width', 'advanced-gutenberg' ) ?>
+                    </th>
+                    <td>
+                        <label>
+                            <select name="editor_width" id="editor_width">
                                 <option value="" <?php echo $editor_width === '' ? 'selected' : '' ?>>
                                     <?php esc_html_e( 'Original', 'advanced-gutenberg' ); ?>
                                 </option>
@@ -343,115 +359,70 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                                     <?php esc_html_e( 'Full width', 'advanced-gutenberg' ); ?>
                                 </option>
                             </select>
-                        </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="editor_width"
-                               class="ju-setting-label advgb_qtip"
-                               data-qtip="<?php esc_attr_e(
-                                   'Set the default post thumbnail to use in Content Display blocks.',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e('Default thumbnail', 'advanced-gutenberg') ?>
                         </label>
-                        <div class="setting-actions-wrapper">
-                            <input type="hidden" id="post_default_thumb" name="post_default_thumb" value="<?php echo esc_attr($rp_default_thumb['url']); ?>" />
-                            <input type="hidden" id="post_default_thumb_id" name="post_default_thumb_id" value="<?php echo esc_attr($rp_default_thumb['id']); ?>" />
-                            <div class="setting-actions" id="post_default_thumb_actions">
-                                <img class="thumb-selected"
-                                     src="<?php echo esc_url( $rp_default_thumb['url'] ); ?>"
-                                     alt="thumb"
-                                     data-default="<?php echo esc_url( $default_thumb ); ?>"
-                                />
-                                <i class="dashicons dashicons-edit ju-button" id="thumb_edit" title="<?php esc_attr_e( 'Edit', 'advanced-gutenberg' ); ?>"></i>
-                                <i class="dashicons dashicons-no ju-button orange-button" id="thumb_remove" title="<?php esc_attr_e( 'Reset to default', 'advanced-gutenberg' ); ?>"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Default thumbnail', 'advanced-gutenberg' ) ?>
+                    </th>
+                    <td>
+                        <label>
+                            <div class="setting-actions-wrapper">
+                                <input type="hidden" id="post_default_thumb" name="post_default_thumb" value="<?php echo esc_attr($rp_default_thumb['url']); ?>" />
+                                <input type="hidden" id="post_default_thumb_id" name="post_default_thumb_id" value="<?php echo esc_attr($rp_default_thumb['id']); ?>" />
+                                <div class="setting-actions" id="post_default_thumb_actions">
+                                    <img class="thumb-selected"
+                                         src="<?php echo esc_url( $rp_default_thumb['url'] ); ?>"
+                                         alt="thumb"
+                                         data-default="<?php echo esc_url( $default_thumb ); ?>"
+                                    />
+                                    <i class="dashicons dashicons-edit ju-button" id="thumb_edit" title="<?php esc_attr_e( 'Edit', 'advanced-gutenberg' ); ?>"></i>
+                                    <i class="dashicons dashicons-no ju-button orange-button" id="thumb_remove" title="<?php esc_attr_e( 'Reset to default', 'advanced-gutenberg' ); ?>"></i>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="enable_columns_visual_guide"
-                               class="advgb_qtip ju-setting-label"
-                               data-qtip="<?php esc_attr_e(
-                                   'Enable border to materialize PublishPress Blocks Column block',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e( 'Enable columns visual guide', 'advanced-gutenberg' ) ?>
+                            <p class="description">
+                                <?php
+                                _e(
+                                    'Set the default post thumbnail to use in Content Display blocks for posts without featured image.',
+                                    'advanced-gutenberg'
+                                )
+                                ?>
+                            </p>
                         </label>
-                        <div class="ju-switch-button">
-                            <label class="switch">
-                                <input type="checkbox" name="enable_columns_visual_guide"
-                                       id="enable_columns_visual_guide"
-                                       value="1"
-                                    <?php echo esc_attr( $enable_columns_visual_guide ) ?>
-                                />
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="block_controls"
-                               class="advgb_qtip ju-setting-label"
-                               data-qtip="<?php esc_attr_e(
-                                   'Enable block controls panel to schedule blocks',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e('Enable block controls', 'advanced-gutenberg') ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <?php _e( 'Enable columns visual guide', 'advanced-gutenberg' ) ?>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="enable_columns_visual_guide"
+                                   id="enable_columns_visual_guide"
+                                   value="1"
+                                <?php echo esc_attr( $enable_columns_visual_guide ) ?>
+                            />
+                            <?php
+                            _e(
+                                'Visual guide for PublishPress Blocks Columns block',
+                                'advanced-gutenberg'
+                            )
+                            ?>
                         </label>
-                        <div class="ju-switch-button">
-                            <label class="switch">
-                                <input type="checkbox" name="block_controls"
-                                       id="block_controls"
-                                       value="1"
-                                    <?php echo esc_attr( $block_controls ) ?>
-                                />
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="block_extend"
-                               class="advgb_qtip ju-setting-label"
-                               data-qtip="<?php esc_attr_e(
-                                   'If some blocks are not listed in Block access, try enabling Extend supported blocks',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e( 'Extend supported blocks (beta)', 'advanced-gutenberg' ) ?>
-                        </label>
-                        <div class="ju-switch-button">
-                            <label class="switch">
-                                <input type="checkbox" name="block_extend"
-                                       id="block_extend"
-                                       value="1"
-                                    <?php echo esc_attr( $block_extend ) ?>
-                                />
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+                    </td>
+                </tr>
+            </table>
 
-            <div class="save-settings-block">
+            <p>
                 <button type="submit"
                         class="button button-primary pp-primary-button"
                         id="save-settings"
                         name="save_settings"
                 >
-                    <span><?php esc_html_e( 'Save', 'advanced-gutenberg' ) ?></span>
+                    <?php esc_html_e( 'Save Settings', 'advanced-gutenberg' ) ?>
                 </button>
-            </div>
+            </p>
         </form>
     </div>
 </div>

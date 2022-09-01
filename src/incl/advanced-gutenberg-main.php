@@ -2307,7 +2307,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 update_option( 'advgb_settings', $save_config );
 
                 if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
-                    wp_safe_redirect( admin_url( 'admin.php?page=advgb_settings&save_settings=success' ) );
+                    wp_safe_redirect( admin_url( 'admin.php?page=advgb_settings&save=success' ) );
                     exit; // @TODO - Do we really need this?
                 }
 
