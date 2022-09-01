@@ -812,21 +812,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_filter(
                     \PPVersionNotices\Module\TopNotice\Module::SETTINGS_FILTER,
                     function ($settings) {
-                        // Current menu label in lowercase in case site uses a different language
-                        $current_label = ! empty( esc_html__( 'Blocks', 'advanced-gutenberg' ) )
-                            ? esc_html__( 'Blocks', 'advanced-gutenberg' ) : 'Blocks';
-                        $current_label = strtolower( trim( $current_label ) );
-
                         $settings['advanced-gutenberg'] = [
                             'message' => 'You\'re using PublishPress Blocks Free. The Pro version has more features and support. %sUpgrade to Pro%s',
                             'link'    => 'https://publishpress.com/links/blocks-banner',
                             'screens' => [
                                 ['base' => 'toplevel_page_advgb_main'],
-                                ['base' => $current_label . '_page_advgb_settings'],
-                                ['base' => $current_label . '_page_advgb_block_access'],
-                                ['base' => $current_label . '_page_advgb_block_settings'],
-                                ['base' => $current_label . '_page_advgb_email_form'],
-                                ['base' => $current_label . '_page_advgb_custom_styles'],
+                                ['base' => 'blocks_page_advgb_settings'],
+                                ['base' => 'blocks_page_advgb_block_access'],
+                                ['base' => 'blocks_page_advgb_block_settings'],
+                                ['base' => 'blocks_page_advgb_email_form'],
+                                ['base' => 'blocks_page_advgb_custom_styles'],
                             ]
                         ];
 
@@ -1861,11 +1856,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             if ( empty( $GLOBALS['admin_page_hooks']['advgb_main'] ) ) {
                 add_menu_page(
-                    __('Blocks', 'advanced-gutenberg'),
-                    __('Blocks', 'advanced-gutenberg'),
+                    'Blocks',
+                    'Blocks',
                     'manage_options',
                     'advgb_main',
-                    array($this, 'advgbMainView'),
+                    [$this, 'advgbMainView'],
                     'dashicons-layout'
                 );
 
