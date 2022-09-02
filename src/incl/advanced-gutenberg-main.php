@@ -173,6 +173,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
                 add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
                 add_filter('admin_body_class', array($this, 'setAdvgEditorBodyClassses'));
+                add_filter( 'admin_footer_text', [$this, 'adminFooter'] );
 
                 if($wp_version >= 5.8) {
                     add_action('admin_enqueue_scripts', array($this, 'addEditorAssetsWidgets'), 9999);
@@ -1878,15 +1879,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         $page['order']
                     );
 
-                    /* Hooks to call functions to save data for each page.
+                    /* Hooks to generate function names for each page and call them to save data.
                      * e.g. advgb_settings_save_page */
                     $function_name = $page['slug'] . '_save_page';
                     if(
                         ! empty( $hook )
                         && method_exists( $this, $function_name )
                     ) {
-                        /* e.g. 'load-blocks_page_advgb_settings' if site is in English
-                         * or 'load-bloques_page_advgb_settings' if site is in Spanish */
+                        // e.g. 'load-blocks_page_advgb_settings'
                         add_action( 'load-' . $hook, [$this, $function_name] );
                     }
                 }
@@ -2083,6 +2083,130 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             $this->commonAdminPagesAssets();
             $this->loadPage( 'license' );
+        }
+
+        /**
+         * PublishPress admin footer
+         *
+         * @since 3.0.0
+         * @return void
+         */
+        public function adminFooter( $footer )
+        {
+            global $current_screen;
+
+            // When free and pro are active, avoid displaying our footer twice
+            if ( defined( 'ADVANCED_GUTENBERG_FOOTER_DISPLAYED' ) ) {
+                return $footer;
+            }
+
+            // Only display in PublishPress Blocks admin pages
+            $pages = [
+                'toplevel_page_advgb_main',
+                'blocks_page_advgb_settings',
+                'blocks_page_advgb_block_access',
+                'blocks_page_advgb_block_settings',
+                'blocks_page_advgb_email_form',
+                'blocks_page_advgb_custom_styles',
+                'blocks_page_advgb_license'
+            ];
+            if( ! in_array( $current_screen->base, $pages ) ) {
+                return $footer;
+            }
+
+            $html = '';
+            if( ! defined( 'ADVANCED_GUTENBERG_PRO' ) || $this->settingIsEnabled( 'enable_pp_branding' ) ) {
+                $html .= '<div class="advgb-footer">
+                    <footer>
+                        <div class="advgb-rating">
+                            <a href="https://wordpress.org/support/plugin/advanced-gutenberg/reviews/#new-post"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="ag-footer-link"
+                            >' .
+                                sprintf(
+                                    __(
+                                        'If you like %sPublishPress Blocks%s please leave us a %s rating. Thank you!',
+                                        'advanced-gutenberg'
+                                    ),
+                                    '<strong>',
+                                    '</strong>',
+                                    str_repeat( '<span class="dashicons dashicons-star-filled"></span>', 5 )
+                                )
+                            . '</a>
+                        </div>
+                        <hr>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="https://publishpress.com"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        title="' . esc_attr__( 'About PublishPress Blocks', 'advanced-gutenberg' ) . '"
+                                        class="ag-footer-link"
+                                    >' .
+                                         __( 'About', 'advanced-gutenberg' )
+                                    . '</a>
+                                </li>
+                                <li>
+                                    <a href="https://publishpress.com/knowledge-base/installation/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        title="' . esc_attr__( 'Documentation', 'advanced-gutenberg' ) . '"
+                                        class="ag-footer-link"
+                                    >' .
+                                         __( 'Documentation', 'advanced-gutenberg' )
+                                    . '
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://publishpress.com/contact"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        title="' . esc_attr__( 'Contact the PublishPress team', 'advanced-gutenberg' ) . '"
+                                        class="ag-footer-link"
+                                    >' .
+                                        __( 'Contact', 'advanced-gutenberg' )
+                                    . '</a>
+                                </li>
+                                <li>
+                                    <a href="https://twitter.com/publishpresscom"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="ag-footer-link"
+                                    >
+                                        <span class="dashicons dashicons-twitter"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://facebook.com/publishpress"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="ag-footer-link"
+                                    >
+                                        <span class="dashicons dashicons-facebook"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="advgb-pressshack-logo">
+                            <a href="https://publishpress.com" target="_blank" rel="noopener noreferrer">
+                                <img src="' . esc_url( plugins_url( 'assets/images/publishpress-logo.png', dirname( __FILE__ ) )  ) . '"
+                                 alt="' . esc_attr__( 'PublishPress Blocks logo', 'advanced-gutenberg' ) . '">
+                            </a>
+                        </div>
+                    </footer>
+                </div>';
+            }
+
+            // $footer is the "Thank you for creating with WordPress" text
+            $footer = $html . $footer;
+
+            if ( ! defined( 'ADVANCED_GUTENBERG_FOOTER_DISPLAYED' ) ) {
+                define( 'ADVANCED_GUTENBERG_FOOTER_DISPLAYED', true );
+            }
+
+            return $footer;
         }
 
         /**

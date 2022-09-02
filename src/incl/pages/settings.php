@@ -177,7 +177,7 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                         echo PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting(
                             'enable_pp_branding',
                             __( 'Display PublishPress branding', 'advanced-gutenberg' ),
-                            __( 'Display PublishPress logo and links in the footer of the admin pages', 'advanced-gutenberg' )
+                            __( 'PublishPress logo and links in the footer of the admin pages', 'advanced-gutenberg' )
                         );
                     }
                 }
@@ -260,7 +260,7 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                             <input type="text"
                                    name="google_api_key"
                                    id="google_api_key"
-                                   style="width: 370px; display: block; height: 80px;"
+                                   style="width: 400px;"
                                    value="<?php echo esc_attr( $google_api_key_saved ) ?>"
                             />
                             <p class="description">
@@ -414,7 +414,7 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                 </tr>
             </table>
 
-            <p>
+            <div class="advgb-form-buttons-bottom">
                 <button type="submit"
                         class="button button-primary pp-primary-button"
                         id="save-settings"
@@ -422,7 +422,7 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                 >
                     <?php esc_html_e( 'Save Settings', 'advanced-gutenberg' ) ?>
                 </button>
-            </p>
+            </div>
         </form>
     </div>
 </div>
