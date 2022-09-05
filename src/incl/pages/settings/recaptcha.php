@@ -13,7 +13,7 @@ $recaptcha_theme        = isset( $recaptcha_config['recaptcha_theme'] ) ? $recap
     <?php wp_nonce_field( 'advgb_captcha_nonce', 'advgb_captcha_nonce_field' ) ?>
     <p>
         <?php
-        echo sprintf(
+        printf(
             __(
                 'Use the Google reCAPTCHA to avoid spam in PublishPress Blocks forms. Get credentials for your domain by registering %shere%s.',
                 'advanced-gutenberg'
