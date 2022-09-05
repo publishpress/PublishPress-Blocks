@@ -9,9 +9,13 @@ body[class*="_page_advgb_"] #wpcontent {
   margin-top: 30px;
 }
 
-// Tabs
 .publishpress-admin {
 
+  header h1 {
+    margin-bottom: 15px;
+  }
+
+  // Tabs
   .nav-tab-wrapper {
 
     .nav-tab {
