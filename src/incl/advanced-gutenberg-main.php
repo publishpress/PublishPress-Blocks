@@ -1808,12 +1808,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         'title' => esc_html__( 'Block Settings', 'advanced-gutenberg' ),
                         'callback' => 'loadBlockSettingsPage',
                         'order' => 3
-                    ],
-                    [
-                        'slug' => 'advgb_email_form',
-                        'title' => esc_html__( 'Email & Form', 'advanced-gutenberg' ),
-                        'callback' => 'loadEmailFormPage',
-                        'order' => 4
                     ]
                 );
             }
@@ -2436,54 +2430,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
 
                 return true;
-            }
-
-            return false;
-        }
-
-        /**
-         * Save block access page data
-         * Name is build in registerMainMenu() > $function_name
-         *
-         * @since 3.0.0
-         * @return boolean true on success, false on failure
-         */
-        public function advgb_block_access_save_page()
-        {
-            if ( ! current_user_can( 'activate_plugins' ) ) {
-                return false;
-            }
-
-            if( isset( $_POST['advgb_block_access_save'] ) ) {
-                // Save Block Access
-                $this->advgbBlocksFeatureSave(
-                    $_POST['advgb_access_nonce_field'], // Nonce field
-                    $_POST['blocks_list_access'], // Blocks list with all the available blocks
-                    'advgb_block_access', // Page to redirect after saving
-                    'advgb_blocks_user_roles', // Database option to update
-                    'save_access' // Status param name for URL redirection
-                );
-
-                return true;
-            }
-
-            return false;
-        }
-
-        /**
-         * Save Email & form page data
-         * Name is build in registerMainMenu() > $function_name
-         *
-         * @since 3.0.0
-         * @return boolean true on success, false on failure
-         */
-        public function advgb_email_form_save_page()
-        {
-            if ( ! current_user_can( 'activate_plugins' ) ) {
-                return false;
-            }
-
-            if ( isset( $_POST['save_email_config'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            } elseif ( isset( $_POST['save_email_config'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
             {
                 if ( ! isset( $_POST['advgb_email_config_nonce_field'] ) ) {
                     return false;
@@ -2507,7 +2454,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
                     wp_safe_redirect(
-                        admin_url( 'admin.php?page=advgb_email_form&save_settings=success' )
+                        admin_url( 'admin.php?page=advgb_settings&tab=forms&save=success' )
                     );
                     exit; // @TODO - Do we really need this?
                 }
@@ -2541,7 +2488,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
                     wp_safe_redirect(
-                        admin_url( 'admin.php?page=advgb_email_form&save_settings=success' )
+                        admin_url( 'admin.php?page=advgb_settings&tab=recaptcha&save=success' )
                     );
                     exit; // @TODO - Do we really need this?
                 }
@@ -2641,6 +2588,37 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 return false;
             }
+
+            return false;
+        }
+
+        /**
+         * Save block access page data
+         * Name is build in registerMainMenu() > $function_name
+         *
+         * @since 3.0.0
+         * @return boolean true on success, false on failure
+         */
+        public function advgb_block_access_save_page()
+        {
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                return false;
+            }
+
+            if( isset( $_POST['advgb_block_access_save'] ) ) {
+                // Save Block Access
+                $this->advgbBlocksFeatureSave(
+                    $_POST['advgb_access_nonce_field'], // Nonce field
+                    $_POST['blocks_list_access'], // Blocks list with all the available blocks
+                    'advgb_block_access', // Page to redirect after saving
+                    'advgb_blocks_user_roles', // Database option to update
+                    'save_access' // Status param name for URL redirection
+                );
+
+                return true;
+            }
+
+            return false;
         }
 
         /**
@@ -5604,6 +5582,55 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if( file_exists( plugin_dir_path( __FILE__ ) . 'pages/' . $page . '.php' ) ) {
                 include_once( plugin_dir_path( __FILE__ ) . 'pages/' . $page . '.php' );
             }
+        }
+
+        /**
+         * Function to get and load a tab inside a page
+         *
+         * @since 3.0.0
+         * @param string $page      Page folder where tab files are stored
+         * @param string $tab       Tab to load
+         *
+         * @return void
+         */
+        public function loadPageTab( $page, $tab, $default = 'general' )
+        {
+            if( file_exists( plugin_dir_path( __FILE__ ) . 'pages/' . $page . '/' . $tab . '.php' ) ) {
+                include_once( plugin_dir_path( __FILE__ ) . 'pages/' . $page . '/' . $tab . '.php' );
+            } else {
+                // Redirect to default page
+                wp_safe_redirect( admin_url( 'admin.php?page=advgb_settings' ) );
+                exit;
+            }
+        }
+
+        /**
+         * Function to build tabs menu
+         *
+         * @since 3.0.0
+         * @param string $page      Page slug. e.g. 'advgb_settings'
+         * @param string $active    Active tab slug. e.g. 'recaptcha'
+         * @param array $tabs       Tabs list
+         *
+         * @return string
+         */
+        public function buildTabs( $page, $active, $tabs ) {
+
+            if( ! is_array( $tabs ) || empty( $tabs ) ) {
+                return '';
+            }
+
+            $html = '<ul class="nav-tab-wrapper">';
+            foreach( $tabs as $tab ) {
+                $html .= '<li class="nav-tab' . ( $tab['slug'] === $active ? ' nav-tab-active' : '' ) . '">
+                    <a href="' . admin_url( 'admin.php?page=' . $page . '&tab=' . $tab['slug'] ) . '">
+                        ' . $tab['title'] . '
+                    </a>
+                </li>';
+            }
+            $html .= '</ul>';
+
+            return $html;
         }
 
         /**
