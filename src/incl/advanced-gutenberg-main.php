@@ -1346,7 +1346,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_mail($email_receiver, $email_title, $msg, $email_header);
                 wp_send_json($contact_data, 200);
             } else {
-                wp_send_json(__('Error while sending form. Try again!', 'advanced-gutenberg'), 500);
+                wp_send_json(__('Error while sending the form. Please try again.', 'advanced-gutenberg'), 500);
             }
             // phpcs:enable
         }

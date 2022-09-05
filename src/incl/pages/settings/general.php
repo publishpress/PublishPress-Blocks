@@ -202,15 +202,15 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                             <?php esc_html_e( 'Overlay', 'advanced-gutenberg' ); ?>
                         </option>
                     </select>
-                    <p class="description">
-                        <?php
-                        _e(
-                            'Display caption text on images loaded as lightbox in galleries.',
-                            'advanced-gutenberg'
-                        )
-                        ?>
-                    </p>
                 </label>
+                <p class="description">
+                    <?php
+                    _e(
+                        'Display caption text on images loaded as lightbox in galleries.',
+                        'advanced-gutenberg'
+                    )
+                    ?>
+                </p>
             </td>
         </tr>
         <tr>
@@ -245,24 +245,24 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                            class="regular-text"
                            value="<?php echo esc_attr( $google_api_key_saved ) ?>"
                     />
-                    <p class="description">
-                        <a target="_blank"
-                           href="https://developers.google.com/maps/documentation/javascript/get-api-key">
-                            <?php
-                            esc_html_e(
-                                'How to create a Google API Key',
-                                'advanced-gutenberg'
-                            )
-                            ?>
-                        </a><br/>
-                        <?php
-                        _e(
-                            'A Google API key is required to use the Map block without any warning.',
-                            'advanced-gutenberg'
-                        );
-                        ?>
-                    </p>
                 </label>
+                <p class="description">
+                    <a target="_blank"
+                       href="https://developers.google.com/maps/documentation/javascript/get-api-key">
+                        <?php
+                        esc_html_e(
+                            'How to create a Google API Key',
+                            'advanced-gutenberg'
+                        )
+                        ?>
+                    </a><br/>
+                    <?php
+                    _e(
+                        'A Google API key is required to use the Map block without any warning.',
+                        'advanced-gutenberg'
+                    );
+                    ?>
+                </p>
             </td>
         </tr>
         <tr>
@@ -296,7 +296,7 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                            min="0"
                            name="blocks_spacing"
                            id="blocks_spacing"
-                           style="width: 70px;"
+                           style="width: 50px;"
                            value="<?php echo esc_attr( $blocks_spacing ) ?>"
                     />
                 </label>
@@ -314,15 +314,15 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                            class="minicolors minicolors-input"
                            value="<?php echo esc_attr( $blocks_icon_color ) ?>"
                     />
-                    <p class="description">
-                        <?php
-                        _e(
-                            'Set color for blocks icons on admin. Only apply to PublishPress Blocks',
-                            'advanced-gutenberg'
-                        )
-                        ?>
-                    </p>
                 </label>
+                <p class="description">
+                    <?php
+                    _e(
+                        'Set color for blocks icons on admin. Only apply to PublishPress Blocks.',
+                        'advanced-gutenberg'
+                    )
+                    ?>
+                </p>
             </td>
         </tr>
         <tr>
@@ -333,7 +333,7 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                 <label>
                     <select name="editor_width" id="editor_width">
                         <option value="" <?php echo $editor_width === '' ? 'selected' : '' ?>>
-                            <?php esc_html_e( 'Original', 'advanced-gutenberg' ); ?>
+                            <?php esc_html_e( 'Default', 'advanced-gutenberg' ); ?>
                         </option>
                         <option value="75" <?php echo $editor_width === '75' ? 'selected' : '' ?>>
                             <?php esc_html_e( 'Large', 'advanced-gutenberg' ); ?>
@@ -350,29 +350,27 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                 <?php _e( 'Default thumbnail', 'advanced-gutenberg' ) ?>
             </th>
             <td>
-                <label>
-                    <div class="setting-actions-wrapper">
-                        <input type="hidden" id="post_default_thumb" name="post_default_thumb" value="<?php echo esc_attr($rp_default_thumb['url']); ?>" />
-                        <input type="hidden" id="post_default_thumb_id" name="post_default_thumb_id" value="<?php echo esc_attr($rp_default_thumb['id']); ?>" />
-                        <div class="setting-actions" id="post_default_thumb_actions">
-                            <img class="thumb-selected"
-                                 src="<?php echo esc_url( $rp_default_thumb['url'] ); ?>"
-                                 alt="thumb"
-                                 data-default="<?php echo esc_url( $default_thumb ); ?>"
-                            />
-                            <i class="dashicons dashicons-edit ju-button" id="thumb_edit" title="<?php esc_attr_e( 'Edit', 'advanced-gutenberg' ); ?>"></i>
-                            <i class="dashicons dashicons-no ju-button orange-button" id="thumb_remove" title="<?php esc_attr_e( 'Reset to default', 'advanced-gutenberg' ); ?>"></i>
-                        </div>
+                <div class="setting-actions-wrapper">
+                    <input type="hidden" id="post_default_thumb" name="post_default_thumb" value="<?php echo esc_attr($rp_default_thumb['url']); ?>" />
+                    <input type="hidden" id="post_default_thumb_id" name="post_default_thumb_id" value="<?php echo esc_attr($rp_default_thumb['id']); ?>" />
+                    <div class="setting-actions" id="post_default_thumb_actions">
+                        <img class="thumb-selected"
+                             src="<?php echo esc_url( $rp_default_thumb['url'] ); ?>"
+                             alt="thumb"
+                             data-default="<?php echo esc_url( $default_thumb ); ?>"
+                        />
+                        <i class="dashicons dashicons-edit ju-button" id="thumb_edit" title="<?php esc_attr_e( 'Edit', 'advanced-gutenberg' ); ?>"></i>
+                        <i class="dashicons dashicons-no ju-button orange-button" id="thumb_remove" title="<?php esc_attr_e( 'Reset to default', 'advanced-gutenberg' ); ?>"></i>
                     </div>
-                    <p class="description">
-                        <?php
-                        _e(
-                            'Set the default post thumbnail to use in Content Display blocks for posts without featured image.',
-                            'advanced-gutenberg'
-                        )
-                        ?>
-                    </p>
-                </label>
+                </div>
+                <p class="description">
+                    <?php
+                    _e(
+                        'Set the default post thumbnail to use in Content Display blocks for posts without featured image.',
+                        'advanced-gutenberg'
+                    )
+                    ?>
+                </p>
             </td>
         </tr>
         <tr>

@@ -11,13 +11,26 @@ body[class*="_page_advgb_"] #wpcontent {
 
 .publishpress-admin {
 
+  .description {
+    font-weight: normal;
+  }
+
+  .advgb-export-download .dashicons {
+    line-height: 28px;
+
+    @media (max-width: 782px) {
+      line-height: 38px;
+    }
+  }
+
   header h1 {
     margin-bottom: 15px;
   }
 
   // Tabs
   .nav-tab-wrapper {
-
+    margin-bottom: 20px;
+    
     .nav-tab {
       margin-bottom: -1px;
 

@@ -11,8 +11,13 @@ $newsletter_count  = $newsletter_saved ? count( $newsletter_saved ) : 0;
     <table class="form-table">
         <tr>
             <th scope="row" style="width: 300px;">
-                <?php _e( 'Download Contacts Form data', 'advanced-gutenberg' ) ?>
-                (<?php echo esc_html( $contacts_count ) ?>)
+                <label>
+                    <?php _e( 'Download Contacts Form data', 'advanced-gutenberg' ) ?>
+                    (<?php echo esc_html( $contacts_count ) ?>)
+                </label>
+                <p class="description">
+                    <?php _e( 'Data stored through Contact form blocks.', 'advanced-gutenberg' ) ?>
+                </p>
             </th>
             <td>
                 <label>
@@ -21,6 +26,7 @@ $newsletter_count  = $newsletter_saved ? count( $newsletter_saved ) : 0;
                             name="block_data_export"
                             value="contact_form.csv"
                     >
+                        <span class="dashicons dashicons-download"></span>
                         <?php esc_html_e( 'CSV', 'advanced-gutenberg' ); ?>
                     </button>
                     <button type="submit"
@@ -28,6 +34,7 @@ $newsletter_count  = $newsletter_saved ? count( $newsletter_saved ) : 0;
                             name="block_data_export"
                             value="contact_form.json"
                     >
+                        <span class="dashicons dashicons-download"></span>
                         <?php esc_html_e( 'JSON', 'advanced-gutenberg' ); ?>
                     </button>
                 </label>
@@ -35,8 +42,13 @@ $newsletter_count  = $newsletter_saved ? count( $newsletter_saved ) : 0;
         </tr>
         <tr>
             <th scope="row" style="width: 300px;">
-                <?php _e( 'Download Newsletter Form data', 'advanced-gutenberg' ) ?>
-                (<?php echo esc_html( $newsletter_count ) ?>)
+                <label>
+                    <?php _e( 'Download Newsletter Form data', 'advanced-gutenberg' ) ?>
+                    (<?php echo esc_html( $newsletter_count ) ?>)
+                </label>
+                <p class="description">
+                    <?php _e( 'Data stored through Newsletter form blocks.', 'advanced-gutenberg' ) ?>
+                </p>
             </th>
             <td>
                 <label>
@@ -45,6 +57,7 @@ $newsletter_count  = $newsletter_saved ? count( $newsletter_saved ) : 0;
                             name="block_data_export"
                             value="newsletter.csv"
                     >
+                        <span class="dashicons dashicons-download"></span>
                         <?php esc_html_e( 'CSV', 'advanced-gutenberg' ); ?>
                     </button>
                     <button type="submit"
@@ -52,6 +65,7 @@ $newsletter_count  = $newsletter_saved ? count( $newsletter_saved ) : 0;
                             name="block_data_export"
                             value="newsletter.json"
                     >
+                        <span class="dashicons dashicons-download"></span>
                         <?php esc_html_e( 'JSON', 'advanced-gutenberg' ); ?>
                     </button>
                 </label>

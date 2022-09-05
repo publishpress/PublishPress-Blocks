@@ -16,6 +16,9 @@ $recaptcha_theme                = isset( $recaptcha_config['recaptcha_theme'] ) 
 ?>
 <form method="post">
     <?php wp_nonce_field( 'advgb_email_config_nonce', 'advgb_email_config_nonce_field' ) ?>
+    <p>
+        <?php _e( 'These email settings apply to messages sent through PublishPress Contact form block.', 'advanced-gutenberg' ) ?>
+    </p>
     <table class="form-table">
         <tr>
             <th scope="row">

@@ -11,6 +11,18 @@ $recaptcha_theme        = isset( $recaptcha_config['recaptcha_theme'] ) ? $recap
 
 <form method="POST">
     <?php wp_nonce_field( 'advgb_captcha_nonce', 'advgb_captcha_nonce_field' ) ?>
+    <p>
+        <?php
+        echo sprintf(
+            __(
+                'Use the Google reCAPTCHA to avoid spam in PublishPress Blocks forms. Get credentials for your domain by registering %shere%s.',
+                'advanced-gutenberg'
+            ),
+            '<a href="https://www.google.com/recaptcha/about/" target="_blank">',
+            '</a>'
+        );
+        ?>
+    </p>
     <table class="form-table">
         <tr>
             <th scope="row">
@@ -25,16 +37,6 @@ $recaptcha_theme        = isset( $recaptcha_config['recaptcha_theme'] ) ? $recap
                         <?php echo esc_attr( $recaptcha_enabled ) ?>
                     />
                 </label>
-                <p class="description">
-                    <?php
-                    _e(
-                        'Use the Google reCAPTCHA to avoid spam in PublishPress Blocks forms. Get credentials for your domain by registering',
-                        'advanced-gutenberg'
-                    )
-                    ?> <a href="https://www.google.com/recaptcha/about/" target="_blank">
-                        <?php esc_html_e( 'here', 'advanced-gutenberg' ) ?>.
-                    </a>
-                </p>
             </td>
         </tr>
         <tr>
@@ -80,12 +82,14 @@ $recaptcha_theme        = isset( $recaptcha_config['recaptcha_theme'] ) ? $recap
                            id="recaptcha_language"
                            placeholder="<?php esc_attr_e( 'Auto detect', 'advanced-gutenberg' ); ?>"
                            value="<?php echo esc_attr( $recaptcha_language ) ?>"
-                           style="width: 70px;"
+                           style="width: 50px;"
                     />
-                    <a target="_blank" href="https://developers.google.com/recaptcha/docs/language">
-                        <?php _e( 'List', 'advanced-gutenberg' ) ?>
-                    </a>
                 </label>
+                <p class="description">
+                    <a target="_blank" href="https://developers.google.com/recaptcha/docs/language">
+                        <?php _e( 'Language codes list', 'advanced-gutenberg' ) ?>
+                    </a>
+                </p>
             </td>
         </tr>
         <tr>
