@@ -192,13 +192,13 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
             <td>
                 <label>
                     <select name="gallery_lightbox_caption" id="gallery_lightbox_caption">
-                        <option value="0"<?php echo ( $gallery_lightbox_caption === '0' or $gallery_lightbox_caption === 0 ) ? ' selected' : '' ?>>
+                        <option value="0"<?php echo ( $gallery_lightbox_caption === '0' || $gallery_lightbox_caption === 0 ) ? ' selected' : '' ?>>
                             <?php esc_html_e( 'Disabled', 'advanced-gutenberg' ); ?>
                         </option>
-                        <option value="1"<?php echo ( $gallery_lightbox_caption === '1' or $gallery_lightbox_caption === 1 ) ? ' selected' : '' ?>>
+                        <option value="1"<?php echo ( $gallery_lightbox_caption === '1' || $gallery_lightbox_caption === 1 ) ? ' selected' : '' ?>>
                             <?php esc_html_e('Bottom', 'advanced-gutenberg'); ?>
                         </option>
-                        <option value="2"<?php echo $gallery_lightbox_caption === '2' ? ' selected' : '' ?>>
+                        <option value="2"<?php echo ( $gallery_lightbox_caption === '2' || $gallery_lightbox_caption === 2 ) ? ' selected' : '' ?>>
                             <?php esc_html_e( 'Overlay', 'advanced-gutenberg' ); ?>
                         </option>
                     </select>
