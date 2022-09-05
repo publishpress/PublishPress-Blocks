@@ -9,6 +9,42 @@ body[class*="_page_advgb_"] #wpcontent {
   margin-top: 30px;
 }
 
+// Tabs
+.publishpress-admin {
+
+  .nav-tab-wrapper {
+
+    .nav-tab {
+      margin-bottom: -1px;
+
+      @media (max-width: 600px) {
+        margin-bottom: 8px;
+        border-bottom: 1px solid #c3c4c7;
+      }
+
+      &.nav-tab-active,
+      &:hover,
+      &:active,
+      &:focus {
+        border-top-color: $purple;
+      }
+
+      a {
+        color: $purple;
+        text-decoration: none;
+
+        &:hover,
+        &:focus,
+        &:active {
+          color: $purple-hover;
+          box-shadow: none;
+          outline: none;
+        }
+      }
+    }
+  }
+}
+
 // PublishPress Footer
 .advgb-footer {
     text-align: center;
