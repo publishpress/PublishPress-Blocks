@@ -1777,6 +1777,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             $submenu_pages = [];
 
+            // Duplicate this parent menu as submenu to generate a different submenu title
+            $submenu_pages = [
+                [
+                    'slug' => 'advgb_settings',
+                    'title' => esc_html__( 'Settings', 'advanced-gutenberg' ),
+                    'callback' => 'loadSettingsPage',
+                    'order' => 1
+                ]
+            ];
+
             // Block access
             if( $this->settingIsEnabled( 'enable_block_access' ) ) {
                 array_push(
