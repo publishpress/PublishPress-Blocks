@@ -168,7 +168,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_action('admin_menu', array($this, 'registerMainMenu'));
                 add_action('admin_menu', array($this, 'registerBlockConfigPage'));
                 add_action( 'plugins_loaded', [$this, 'upgradeProNotices'] );
-                //add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
+                add_action('load-toplevel_page_advgb_settings', [$this, 'advgb_settings_save_page']);
                 add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
                 add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
                 add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
@@ -817,8 +817,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             'message' => 'You\'re using PublishPress Blocks Free. The Pro version has more features and support. %sUpgrade to Pro%s',
                             'link'    => 'https://publishpress.com/links/blocks-banner',
                             'screens' => [
-                                ['base' => 'toplevel_page_advgb_main'],
-                                ['base' => 'blocks_page_advgb_settings'],
+                                ['base' => 'toplevel_page_advgb_settings'],
                                 ['base' => 'blocks_page_advgb_block_access'],
                                 ['base' => 'blocks_page_advgb_block_settings'],
                                 ['base' => 'blocks_page_advgb_email_form'],
@@ -835,7 +834,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     \PPVersionNotices\Module\MenuLink\Module::SETTINGS_FILTER,
                     function ( $settings ) {
                         $settings['advanced-gutenberg'] = [
-                            'parent' => 'advgb_main',
+                            'parent' => 'advgb_settings',
                             'label'  => 'Upgrade to Pro',
                             'link'   => 'https://publishpress.com/links/blocks-menu',
                         ];
@@ -1777,14 +1776,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
 
             $submenu_pages = [];
-            $submenu_pages = [
-                [
-                    'slug' => 'advgb_settings',
-                    'title' => esc_html__( 'Settings', 'advanced-gutenberg' ),
-                    'callback' => 'loadSettingsPage',
-                    'order' => 1
-                ]
-            ];
 
             // Block access
             if( $this->settingIsEnabled( 'enable_block_access' ) ) {
@@ -1849,20 +1840,31 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function registerMainMenu()
         {
-            if ( empty( $GLOBALS['admin_page_hooks']['advgb_main'] ) ) {
+            // Old main page to redirect to new main page through advgbMainView()
+            // @TODO - Remove in future
+            add_submenu_page(
+                'admin.php?',
+                'PublishPress Blocks',
+                'PublishPress Blocks',
+                'manage_options',
+                'advgb_main',
+                [$this, 'advgbMainView']
+            );
+
+            if ( empty( $GLOBALS['admin_page_hooks']['advgb_settings'] ) ) {
                 add_menu_page(
                     'Blocks',
                     'Blocks',
                     'manage_options',
-                    'advgb_main',
-                    [$this, 'advgbMainView'],
+                    'advgb_settings',
+                    [$this, 'loadSettingsPage'],
                     'dashicons-layout'
                 );
 
                 $submenu_pages = $this->subAdminPages();
                 foreach( $submenu_pages as $page ) {
                     $hook = add_submenu_page(
-                        'advgb_main',
+                        'advgb_settings',
                         $page['title'],
                         $page['title'],
                         'manage_options',
@@ -1874,13 +1876,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     );
 
                     /* Hooks to generate function names for each page and call them to save data.
-                     * e.g. advgb_settings_save_page */
+                     * e.g. advgb_block_access_save_page */
                     $function_name = $page['slug'] . '_save_page';
                     if(
                         ! empty( $hook )
                         && method_exists( $this, $function_name )
                     ) {
-                        // e.g. 'load-blocks_page_advgb_settings'
+                        // e.g. 'load-blocks_page_advgb_block_access'
                         add_action( 'load-' . $hook, [$this, $function_name] );
                     }
                 }
@@ -1891,35 +1893,15 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Load main view
+         * Load old main view
          *
+         * @deprecated since 3.0.0 - Remove in future
          * @return void
          */
         public function advgbMainView()
         {
-            wp_enqueue_style('roboto_font', 'https://fonts.googleapis.com/css?family=Roboto');
-            wp_enqueue_style('material_icon_font');
-            wp_enqueue_style('material_icon_font_custom');
-            wp_enqueue_style('advgb_quirk');
-            wp_enqueue_style('waves_styles');
-            wp_enqueue_style('ju_framework_styles');
-            wp_enqueue_style('advgb_main_style');
-
-            wp_enqueue_script('waves_js');
-            wp_enqueue_script('velocity_js');
-            wp_enqueue_script('tabs_js');
-            wp_enqueue_script('advgb_main_js');
-
-            // Block access tab
-            if( $this->settingIsEnabled( 'enable_block_access' ) ) {
-                $this->advgbBlocksFeatureData(
-                    'access', // The object name to store the active/inactive blocks
-                    'advgb_block_access_js', // Registered script to enqueue
-                    'advgb_blocks_user_roles' // Database option to check current user role's active/inactive blocks
-                );
-            }
-
-            $this->loadView('main-view');
+            wp_safe_redirect( admin_url( 'admin.php?page=advgb_settings' ) );
+            exit;
         }
 
         /**
@@ -2329,7 +2311,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
         /**
          * Save settings page data
-         * Name is build in registerMainMenu() > $function_name
          *
          * @since 3.0.0
          * @return boolean true on success, false on failure
@@ -2653,39 +2634,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             return true;
-        }
-
-        /**
-         * Save data function
-         *
-         * @return boolean True on success, False on failure
-         */
-        public function saveAdvgbData()
-        {
-            if (!current_user_can('activate_plugins')) {
-                return false;
-            }
-
-            if( isset( $_POST['advgb_block_access_save'] ) ) {
-                // Save Block Access
-                $this->advgbBlocksFeatureSave(
-                    $_POST['advgb_access_nonce_field'], // Nonce field
-                    $_POST['blocks_list_access'], // Blocks list with all the available blocks
-                    'block-access', // View to redirect after saving
-                    'advgb_blocks_user_roles', // Database option to update
-                    'save_access' // Status param name for URL redirection
-                );
-            }  elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
-                $this->saveSettings();
-            } elseif (isset($_POST['save_email_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
-                $this->saveEmailSettings();
-            } elseif (isset($_POST['save_recaptcha_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
-                $this->saveCaptchaSettings();
-            } elseif (isset($_POST['block_data_export'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
-                $this->downloadBlockFormData();
-            }
-
-            return false;
         }
 
         /**
