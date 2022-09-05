@@ -296,6 +296,7 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                            min="0"
                            name="blocks_spacing"
                            id="blocks_spacing"
+                           style="width: 70px;"
                            value="<?php echo esc_attr( $blocks_spacing ) ?>"
                     />
                 </label>

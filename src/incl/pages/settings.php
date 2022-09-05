@@ -77,7 +77,7 @@ $current_tab = isset( $_GET['tab'] ) && ! empty( $_GET['tab'] )
         array_push(
             $tabs,
             [
-                'title' => esc_html__( 'Forms', 'advanced-gutenberg' ),
+                'title' => esc_html__( 'Email & Forms', 'advanced-gutenberg' ),
                 'slug' => 'forms'
             ],
             [
