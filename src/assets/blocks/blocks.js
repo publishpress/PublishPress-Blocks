@@ -6407,7 +6407,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         attributes: {
             header: {
                 type: 'string',
-                default: 'Header text'
+                default: __('Header text', 'advanced-gutenberg')
             },
             headerBgColor: {
                 type: 'string',

@@ -291,7 +291,7 @@
         attributes: {
             header: {
                 type: 'string',
-                default: 'Header text',
+                default: __( 'Header text', 'advanced-gutenberg' ),
             },
             headerBgColor: {
                 type: 'string',
