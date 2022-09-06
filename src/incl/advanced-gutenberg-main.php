@@ -820,7 +820,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                 ['base' => 'toplevel_page_advgb_settings'],
                                 ['base' => 'blocks_page_advgb_block_access'],
                                 ['base' => 'blocks_page_advgb_block_settings'],
-                                ['base' => 'blocks_page_advgb_email_form'],
                                 ['base' => 'blocks_page_advgb_custom_styles'],
                             ]
                         ];
@@ -2088,11 +2087,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             // Only display in PublishPress Blocks admin pages
             $pages = [
-                'toplevel_page_advgb_main',
-                'blocks_page_advgb_settings',
+                'toplevel_page_advgb_settings',
                 'blocks_page_advgb_block_access',
                 'blocks_page_advgb_block_settings',
-                'blocks_page_advgb_email_form',
                 'blocks_page_advgb_custom_styles',
                 'blocks_page_advgb_license'
             ];
