@@ -12747,7 +12747,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 insertBlock(tabItemBlock, attributes.tabHeaders.length, clientId);
                 setAttributes({
-                    tabHeaders: [].concat(_toConsumableArray(attributes.tabHeaders), ['Tab header']),
+                    tabHeaders: [].concat(_toConsumableArray(attributes.tabHeaders), [__('Tab Header', 'advanced-gutenberg')]),
                     tabAnchors: [].concat(_toConsumableArray(attributes.tabAnchors), [''])
                 });
                 this.props.resetOrder();
