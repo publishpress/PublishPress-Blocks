@@ -23,10 +23,9 @@ function advgbGetCookie(cname) {
  *
  * @param {array}   inactive_blocks The inactive blocks - e.g. advgbCUserRole.access.inactive_blocks
  * @param {string}  nonce_field_id  The nonce field id - e.g. '#advgb_access_nonce_field'
- * @param {string}  blocks_list_id  The block list id field - e.g. '#blocks_list_access'
  * @param {string}  page            The feature page - e.g. 'advgb_block_access' from admin.php?page=advgb_block_access
  */
-function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, blocks_list_id, page ) {
+function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page ) {
     if (typeof wp.blocks !== 'undefined') {
         if (wp.blockLibrary && typeof wp.blockLibrary.registerCoreBlocks === 'function') {
             wp.blockLibrary.registerCoreBlocks();
@@ -190,7 +189,7 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, blocks_list_id,
 
         });
 
-        $(blocks_list_id).val(JSON.stringify(list_blocks_names));
+        $('#blocks_list').val(JSON.stringify(list_blocks_names));
 
         // Toggle blocks list in category when click category title
         $('.category-block .category-name').unbind('click').click(function () {
