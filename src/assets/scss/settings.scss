@@ -16,12 +16,12 @@
     padding-left: 40px;
 }
 
-.ju-settings-option.settings-separator > * {
+.advgb-settings-option.settings-separator > * {
     margin: 0;
     padding: 5px;
 }
 
-.ju-settings-option .ju-setting-label + * {
+.advgb-settings-option .advgb-setting-label + * {
     float: right;
     margin-right: 30px;
     line-height: 49px;
@@ -265,7 +265,7 @@ li.block-config-item .block-config-button {
 }
 
 /*Export data tab*/
-.ju-settings-option .settings-option-wrapper.no-child-float .ju-setting-label {
+.advgb-settings-option .settings-option-wrapper.no-child-float .advgb-setting-label {
     font-weight: bold;
 }
 
@@ -284,7 +284,7 @@ span.advgb-field-required {
 }
 
 /*Support RTL*/
-.rtl .ju-settings-option .ju-setting-label + * {
+.rtl .advgb-settings-option .advgb-setting-label + * {
     float: left;
     margin-right: 0;
     margin-left: 30px;
@@ -304,8 +304,8 @@ span.advgb-field-required {
 }
 
 @media screen and (max-width: 782px) {
-    .rtl .ju-settings-option .ju-setting-label + *,
-    .ju-settings-option .ju-setting-label + * {
+    .rtl .advgb-settings-option .advgb-setting-label + *,
+    .advgb-settings-option .advgb-setting-label + * {
         margin-left: 5px;
         margin-right: 5px;
     }

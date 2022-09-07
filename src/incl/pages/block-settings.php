@@ -57,20 +57,18 @@ if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
     }
 }
 ?>
-
-<div id="advgb-block-settings-container">
-    <div class="advgb-header" style="padding-top: 40px">
-        <h1 class="header-title">
+<div class="publishpress-admin wrap">
+    <header>
+        <h1 class="wp-heading-inline">
             <?php esc_html_e( 'Block Settings', 'advanced-gutenberg' ) ?>
         </h1>
-    </div>
-    <div class="clearfix">
-        <div class="advgb-search-wrapper">
+    </header>
+    <div class="wrap">
+        <div class="advgb-search-wrapper" style="padding-bottom: 20px;">
             <input type="text"
                    class="advgb-search-input blocks-config-search"
                    placeholder="<?php esc_attr_e( 'Search blocks', 'advanced-gutenberg' ) ?>"
             >
-            <i class="mi mi-search"></i>
         </div>
         <ul class="blocks-config-list clearfix">
             <?php foreach ( $advgb_blocks as $block ) : ?>
@@ -81,7 +79,7 @@ if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
                 if ( isset( $block['iconColor'] ) ) :
                     $iconColor = 'style="color:' . esc_attr( $block['iconColor'] ) . '"';
                 endif; ?>
-            <li class="block-config-item ju-settings-option" title="<?php echo esc_attr( __( $block['title'], 'advanced-gutenberg' ) ); ?>">
+            <li class="block-config-item advgb-settings-option" title="<?php echo esc_attr( __( $block['title'], 'advanced-gutenberg' ) ); ?>">
                 <span class="block-icon" <?php echo $iconColor ?>>
                     <?php echo html_entity_decode( html_entity_decode( stripslashes( $block['icon'] ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
                 </span>

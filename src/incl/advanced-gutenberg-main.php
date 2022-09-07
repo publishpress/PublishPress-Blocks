@@ -1867,7 +1867,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'manage_options',
                     'advgb_settings',
                     [$this, 'loadSettingsPage'],
-                    'dashicons-layout'
+                    'dashicons-layout',
+                    20
                 );
 
                 $submenu_pages = $this->subAdminPages();
@@ -2927,6 +2928,31 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $current_user_role = $this->advgbBlocksFeatureCUserRole();
             ?>
             <div class="publishpress-admin wrap">
+                <?php
+                if ( isset($_GET[$status_param]) && $_GET[$status_param] === 'success' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display message, no action ?>
+                    <div id="message" class="updated fade">
+                        <p>
+                            <?php printf( __( '%s saved successfully!', 'advanced-gutenberg' ), $label ); ?>
+                        </p>
+                    </div>
+                <?php
+                } elseif ( isset($_GET[$status_param]) && $_GET[$status_param] === 'error' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- advgb_nonce in place
+                    ?>
+                    <div class="error">
+                        <p>
+                            <?php
+                            printf(
+                                __( '%s can\'t be saved. Please try again.', 'advanced-gutenberg' ),
+                                $label
+                            );
+                            ?>
+                        </p>
+                    </div>
+                    <?php
+                } else {
+                    // Nothing to do here
+                }
+                ?>
                 <header>
                     <h1 class="wp-heading-inline">
                         <?php echo $label; ?>
@@ -2934,88 +2960,67 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 </header>
                 <div class="wrap">
                     <form method="post">
-                        <?php
-                        wp_nonce_field( 'advgb_nonce', $nonce_name );
-
-                        if ( isset($_GET[$status_param]) && $_GET[$status_param] === 'success' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display message, no action ?>
-                            <div id="message" class="updated fade">
-                                <p>
-                                    <?php printf( __( '%s saved successfully!', 'advanced-gutenberg' ), $label ); ?>
-                                </p>
-                            </div>
-                        <?php
-                        } elseif ( isset($_GET[$status_param]) && $_GET[$status_param] === 'error' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- advgb_nonce in place
-                            ?>
-                            <div class="ju-notice-msg ju-notice-error">
-                                <?php
-                                printf(
-                                    __( '%s can\'t be saved. Please try again.', 'advanced-gutenberg' ),
-                                    $label
-                                );
-                                ?>
-                                <i class="dashicons dashicons-dismiss ju-notice-close"></i>
-                            </div>
+                        <?php wp_nonce_field( 'advgb_nonce', $nonce_name ); ?>
+                        <div class="advgb-roles-wrapper">
                             <?php
-                        } else {
-                            // Nothing to do here
-                        }
-                        ?>
-
-                        <div class="profile-title" style="padding-bottom: 20px;">
-                            <div class="advgb-roles-wrapper">
+                            // Get current page slug
+                            if ( isset( $_GET['page'] ) && $_GET['page'] ) {
+                                ?>
+                                <input type="hidden" name="advgb_page_slug" id="advgb_page_slug" value="<?php esc_attr_e( $_GET['page'] ) ?>" />
+                            <?php } ?>
+                            <div>
+                            <select name="user_role" id="user_role">
                                 <?php
-                                // Get current page slug
-                                if ( isset( $_GET['page'] ) && $_GET['page'] ) {
+                                global $wp_roles;
+                                $roles_list = $wp_roles->get_names();
+                                foreach ( $roles_list as $roles => $role_name ) :
+                                    $role_name = translate_user_role( $role_name );
                                     ?>
-                                    <input type="hidden" name="advgb_page_slug" id="advgb_page_slug" value="<?php esc_attr_e( $_GET['page'] ) ?>" />
-                                <?php } ?>
-                                <select name="user_role" id="user_role">
-                                    <?php
-                                    global $wp_roles;
-                                    $roles_list = $wp_roles->get_names();
-                                    foreach ( $roles_list as $roles => $role_name ) :
-                                        $role_name = translate_user_role( $role_name );
-                                        ?>
-                                        <option value="<?php echo esc_attr( $roles ); ?>" <?php selected( $current_user_role, $roles ); ?>>
-                                            <?php echo esc_html( $role_name ); ?>
-                                        </option>
-                                    <?php
-                                    endforeach;
-                                    ?>
-                                </select>
-                                <div class="advgb-search-wrapper">
-                                    <input type="text" class="blocks-search-input advgb-search-input"
-                                           placeholder="<?php esc_attr_e('Search blocks', 'advanced-gutenberg') ?>"
-                                    >
-                                    <i class="mi mi-search"></i>
+                                    <option value="<?php echo esc_attr( $roles ); ?>" <?php selected( $current_user_role, $roles ); ?>>
+                                        <?php echo esc_html( $role_name ); ?>
+                                    </option>
+                                <?php
+                                endforeach;
+                                ?>
+                            </select>
+                            </div>
+                            <div class="advgb-search-wrapper">
+                                <input type="text"
+                                       class="blocks-search-input advgb-search-input"
+                                       placeholder="<?php esc_attr_e( 'Search blocks', 'advanced-gutenberg' ) ?>"
+                                >
+                            </div>
+                            <div class="advgb-toggle-wrapper">
+                                <?php _e('Enable or disable all blocks', 'advanced-gutenberg') ?>
+                                <div class="advgb-switch-button">
+                                    <label class="switch">
+                                        <input type="checkbox" name="toggle_all_blocks" id="toggle_all_blocks">
+                                        <span class="slider"></span>
+                                    </label>
                                 </div>
-                                <div class="advgb-toggle-wrapper">
-                                    <?php _e('Enable or disable all blocks', 'advanced-gutenberg') ?>
-                                    <div class="ju-switch-button">
-                                        <label class="switch">
-                                            <input type="checkbox" name="toggle_all_blocks" id="toggle_all_blocks">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="inline-button-wrapper">
-                                    <span class="advgb_qtip advgb_qtip_no_after advgb-enable-one-block-msg"
-                                        data-qtip="<?php esc_attr_e(
-                                            'To save this configuration, enable at least one block',
-                                            'advanced-gutenberg'
-                                        ) ?>"
-                                        style="display: none;">
+                            </div>
+                            <div class="inline-button-wrapper">
+                                <span class="advgb-enable-one-block-msg" style="display: none;">
+                                    <span>
+                                        <span>
+                                            <?php
+                                            esc_attr_e(
+                                                'To save this configuration, enable at least one block.',
+                                                'advanced-gutenberg'
+                                            )
+                                            ?>
+                                        </span>
                                         <span class="dashicons dashicons-warning"></span>
                                     </span>
-                                    <button class="button button-primary pp-primary-button save-profile-button"
-                                            type="submit"
-                                            name="<?php echo $save_fieldname ?>"
-                                    >
-                                        <span>
-                                            <?php printf( __( 'Save %s', 'advanced-gutenberg' ), $label ); ?>
-                                        </span>
-                                    </button>
-                                </div>
+                                </span>
+                                <button class="button button-primary pp-primary-button save-profile-button"
+                                        type="submit"
+                                        name="<?php echo $save_fieldname ?>"
+                                >
+                                    <span>
+                                        <?php printf( __( 'Save %s', 'advanced-gutenberg' ), $label ); ?>
+                                    </span>
+                                </button>
                             </div>
                         </div>
 
@@ -3027,7 +3032,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         </div>
 
                         <!-- Save button -->
-                        <div style="margin-top: 20px;">
+                        <div class="advgb-form-buttons-bottom">
                             <button class="button button-primary pp-primary-button save-profile-button"
                                     type="submit"
                                     name="<?php echo $save_fieldname ?>"
@@ -3036,13 +3041,18 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                     <?php printf( __( 'Save %s', 'advanced-gutenberg' ), $label ); ?>
                                 </span>
                             </button>
-                            <span class="advgb_qtip advgb_qtip_no_after advgb-enable-one-block-msg"
-                                data-qtip="<?php esc_attr_e(
-                                    'To save this configuration, enable at least one block',
-                                    'advanced-gutenberg'
-                                ) ?>"
-                                style="display: none;">
-                                <span class="dashicons dashicons-warning"></span>
+                            <span class="advgb-enable-one-block-msg" style="display: none;">
+                                <span>
+                                    <span class="dashicons dashicons-warning"></span>
+                                    <span>
+                                        <?php
+                                        esc_attr_e(
+                                            'To save this configuration, enable at least one block.',
+                                            'advanced-gutenberg'
+                                        )
+                                        ?>
+                                    </span>
+                                </span>
                             </span>
                         </div>
                     </form>
@@ -6000,8 +6010,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         continue;
                     }
 
-                    $html .= '<li class="ju-settings-option full-width block-config-option clearfix">';
-                    $html .= '<label for="setting-'. esc_attr($setting['name']) .'" class="ju-setting-label">' . esc_html($setting['title']) . '</label>';
+                    $html .= '<li class="advgb-settings-option full-width block-config-option clearfix">';
+                    $html .= '<label for="setting-'. esc_attr($setting['name']) .'" class="advgb-setting-label">' . esc_html($setting['title']) . '</label>';
                     $html .= '<div class="block-config-input-wrapper">';
 
                     switch ($setting['type']) {
@@ -6029,7 +6039,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             break;
                         case 'checkbox':
                             $checked = (int)$settingValue === 1 ? 'checked' : '';
-                            $html .= '<div class="ju-switch-button">';
+                            $html .= '<div class="advgb-switch-button">';
                             $html .= '<label class="switch">';
                             $html .=    '<input type="checkbox" value="1" class="block-config-input" id="setting-'. esc_attr($setting['name']) .'" name="' . esc_attr($setting['name']) . '" ' . $checked . '/>';
                             $html .=    '<span class="slider"></span>';
