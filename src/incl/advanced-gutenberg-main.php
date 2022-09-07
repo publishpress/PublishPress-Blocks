@@ -3356,14 +3356,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $block = sanitize_text_field($_GET['page']); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- view only
             }
 
-            wp_enqueue_style('roboto_font', 'https://fonts.googleapis.com/css?family=Roboto');
+            $core_styles = [ 'common', 'buttons', 'forms', 'edit' ];
+            foreach( $core_styles as $style ) {
+                wp_enqueue_style( $style );
+            }
+
             wp_enqueue_style(
                 'minicolors_css',
                 plugins_url('assets/css/jquery.minicolors.css', ADVANCED_GUTENBERG_PLUGIN)
-            );
-            wp_enqueue_style(
-                'ju_framework_styles',
-                plugins_url('assets/css/style.css', ADVANCED_GUTENBERG_PLUGIN)
             );
             wp_enqueue_style(
                 'block_config_css',
@@ -6007,7 +6007,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             foreach ($fieldset as $category) {
                 $html .= '<div class="block-config-category">';
                 $html .= '<h3 class="block-config-category-title">' . esc_html($category['label']) . '</h3>';
-                $html .= '<ul class="block-config-settings clearfix">';
+                $html .= '<table class="form-table">';
 
                 foreach ($category['settings'] as $setting) {
                     $settingValue = $this->setConfigValue($data, $setting['name']);
@@ -6017,24 +6017,26 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         continue;
                     }
 
-                    $html .= '<li class="advgb-settings-option full-width block-config-option clearfix">';
+                    $html .= '<tr>';
+                    $html .= '<th scope="row">';
                     $html .= '<label for="setting-'. esc_attr($setting['name']) .'" class="advgb-setting-label">' . esc_html($setting['title']) . '</label>';
-                    $html .= '<div class="block-config-input-wrapper">';
+                    $html .= '</th>';
+                    $html .= '<td>';
 
                     switch ($setting['type']) {
                         case 'text':
                         case 'number':
-                            $html .= '<input type="' . esc_attr($setting['type']) . '" class="ju-input block-config-input" id="setting-'. esc_attr($setting['name']) .'" name="' . esc_attr($setting['name']) . '" ';
+                            $html .= '<input type="' . esc_attr($setting['type']) . '" class="block-config-input" id="setting-'. esc_attr($setting['name']) .'" name="' . esc_attr($setting['name']) . '" ';
                             if ($setting['type'] === 'number' && (isset($setting['min']) || isset($setting['max']))) {
                                 $html .= ' min="' . esc_attr($setting['min']) . '" max="' . esc_attr($setting['max']) . '" ';
                             }
                             $html .= ' value="'. esc_attr($settingValue) .'" />';
                             break;
                         case 'color':
-                            $html .= '<input type="text" class="minicolors minicolors-input ju-input block-config-input" id="setting-'. esc_attr($setting['name']) .'" name="' . esc_attr($setting['name']) . '" value="'. esc_attr($settingValue) .'" />';
+                            $html .= '<input type="text" class="minicolors minicolors-input block-config-input" id="setting-'. esc_attr($setting['name']) .'" name="' . esc_attr($setting['name']) . '" value="'. esc_attr($settingValue) .'" />';
                             break;
                         case 'select':
-                            $html .= '<select class="block-config-input ju-select" id="setting-'. esc_attr($setting['name']) .'" name="' . esc_attr($setting['name']) . '">';
+                            $html .= '<select class="block-config-input" id="setting-'. esc_attr($setting['name']) .'" name="' . esc_attr($setting['name']) . '">';
                             $html .= '<option value="">'. __('Default', 'advanced-gutenberg') .'</option>';
 
                             foreach ($setting['options'] as $option) {
@@ -6046,23 +6048,18 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             break;
                         case 'checkbox':
                             $checked = (int)$settingValue === 1 ? 'checked' : '';
-                            $html .= '<div class="advgb-switch-button">';
-                            $html .= '<label class="switch">';
-                            $html .=    '<input type="checkbox" value="1" class="block-config-input" id="setting-'. esc_attr($setting['name']) .'" name="' . esc_attr($setting['name']) . '" ' . $checked . '/>';
-                            $html .=    '<span class="slider"></span>';
-                            $html .= '</label>';
-                            $html .= '</div>';
+                            $html .= '<input type="checkbox" value="1" class="block-config-input" id="setting-'. esc_attr($setting['name']) .'" name="' . esc_attr($setting['name']) . '" ' . $checked . '/>';
                             break;
                         default:
                             $html .= '<div>' . __('Type field not defined', 'advanced-gutenberg') . '</div>';
                             break;
                     }
 
-                    $html .= '</div>';
-                    $html .= '</li>';
+                    $html .= '</td>';
+                    $html .= '</tr>';
                 }
 
-                $html .= '</ul>';
+                $html .= '</table>';
                 $html .= '</div>';
             }
 
