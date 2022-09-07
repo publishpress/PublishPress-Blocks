@@ -207,7 +207,7 @@
             setAttributes( {
                 tabHeaders: [
                     ...attributes.tabHeaders,
-                    'Tab header'
+                    __( 'Tab Header', 'advanced-gutenberg' )
                 ],
                 tabAnchors: [
                     ...attributes.tabAnchors,
