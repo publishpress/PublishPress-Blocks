@@ -244,5 +244,7 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page ) {
                 $('.save-profile-button').prop('disabled', false);
             }
         }
+
+        $('.advgb-block-feature-loading-msg').hide();
     }
 }

@@ -16,6 +16,16 @@ body[class*="_page_advgb_"] #wpcontent {
     margin-bottom: 15px;
   }
 
+  // Loading
+  .advgb-block-feature-loading-msg {
+    background: #f0f0f1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 300px calc(50% - 50px);
+  }
+
   // Settings
   .advgb-export-download .dashicons {
     line-height: 28px;

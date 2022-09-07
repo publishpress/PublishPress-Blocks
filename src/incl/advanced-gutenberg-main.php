@@ -3030,6 +3030,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                         <!-- Blocks list -->
                         <div class="tab-content block-list-tab">
+                            <div class="advgb-block-feature-loading-msg" style="display: block;">
+                                <?php _e( 'Loading...', 'advanced-gutenberg' ) ?>
+                            </div>
                             <div class="blocks-section">
                                 <input type="hidden" name="blocks_list" id="blocks_list" />
                             </div>
