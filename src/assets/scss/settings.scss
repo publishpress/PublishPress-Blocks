@@ -82,12 +82,6 @@ img.thumb-selected {
     padding: 20px 0;
 }
 
-#advgb-customstyles-list a {
-    text-decoration: none;
-    color: #000;
-    cursor: pointer;
-}
-
 .advgb-customstyles-list {
     margin-bottom: 20px;
 }
@@ -108,7 +102,7 @@ img.thumb-selected {
     background-color: #fff;
 }
 
-#advgb-customstyles-list li:hover a, #advgb-customstyles-list li:hover ul {
+#advgb-customstyles-list li:hover ul {
     color: #08C;
 }
 
@@ -124,6 +118,17 @@ img.thumb-selected {
 
 #advgb-customstyles-list .advgb-customstyles-items-title {
     font-weight: bold;
+
+    &.editable {
+      padding: 5px;
+      border: 1px solid #999;
+      background: #fff;
+      border-radius: 3px;
+      display: inline-block;
+      width: 60%;
+      cursor: text;
+      font-weight: normal;
+    }
 }
 
 #advgb-customstyles-list i {
@@ -144,6 +149,7 @@ img.thumb-selected {
 .advgb-customstyles-items a.edit {
     display: none;
     float: right;
+    margin-left: 6px;
 }
 
 .advgb-customstyles-items a.copy:hover,
@@ -158,21 +164,29 @@ img.thumb-selected {
     display: inline;
 }
 
-.advgb-customstyles-new {
-    font-weight: bold;
-}
-
 .ju-right-panel .button .dashicons {
     margin-top: 5px;
 }
 
+.advgb-customstyles-new {
+
+  .dashicons {
+    line-height: 30px;
+  }
+}
+
 #savedInfo {
-    color: blue;
+    margin: 0 20px;
+
+    .updated {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
 }
 
 #advgb-customstyles-info {
     background-color: #fff;
-    padding: 20px;
+    padding: 30px;
     position: relative;
 }
 
@@ -193,7 +207,7 @@ img.thumb-selected {
 
 #advgb-customstyles-info .control-group label {
     margin-bottom: 15px;
-    color: #5c8599;
+    font-weight: bold;
 }
 
 #advgb-customstyles-css {
@@ -308,5 +322,11 @@ span.advgb-field-required {
     .advgb-settings-option .advgb-setting-label + * {
         margin-left: 5px;
         margin-right: 5px;
+    }
+    .advgb-customstyles-new {
+
+      .dashicons {
+        line-height: 40px;
+      }
     }
 }

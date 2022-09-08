@@ -5,7 +5,7 @@ $custom_styles_saved = get_option( 'advgb_custom_styles', $this::$default_custom
 ?>
 <div class="publishpress-admin wrap">
     <?php
-    if ( isset( $_GET['save_styles'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display message, no action
+    if ( isset( $_GET['save'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display message, no action
         ?>
         <div id="message" class="updated fade">
             <p>
@@ -36,23 +36,25 @@ $custom_styles_saved = get_option( 'advgb_custom_styles', $this::$default_custom
                             $content .= '<ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">(' . esc_html( $customStyles['name'] ) . ')</li></ul>';
                             $content .= '</li>';
                         }
-                        $content .= '<li style="text-align: center; margin-top: 20px"><a class="advgb-customstyles-new button pp-default-button"><span class="dashicons dashicons-plus"></span>' . esc_html__( 'Add new class', 'advanced-gutenberg' ) . '</a></li>';
+                        $content .= '<li style="text-align: center; margin-top: 40px"><a class="advgb-customstyles-new button button-secondary"><span class="dashicons dashicons-plus"></span>' . esc_html__( 'Add new style', 'advanced-gutenberg' ) . '</a></li>';
 
                         echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped
                         ?>
                     </ul>
-                    <span id="savedInfo" style="display:none;">
-                        <?php esc_html_e( 'All modifications were saved!', 'advanced-gutenberg' ) ?>
-                    </span>
+                    <div id="savedInfo" style="display:none;">
+                        <div class="updated inline">
+                            <?php esc_html_e( 'All modifications were saved!', 'advanced-gutenberg' ) ?>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="col-sm-9" id="advgb-customstyles-info">
                 <div class="control-group col-sm-6">
                     <label for="advgb-customstyles-classname">
-                        <?php esc_html_e( 'Style class', 'advanced-gutenberg' ) ?>
+                        <?php esc_html_e( 'Class name', 'advanced-gutenberg' ) ?>
                     </label>
-                    <input type="text" class="ju-input" name="customstyles-classname" id="advgb-customstyles-classname"
+                    <input type="text" class="regular-text" name="customstyles-classname" id="advgb-customstyles-classname"
                            value=""/>
                 </div>
                 <div id="identify-colors" class="control-group clearfix col-sm-6">
@@ -72,7 +74,7 @@ $custom_styles_saved = get_option( 'advgb_custom_styles', $this::$default_custom
                         <input type="text"
                                name="customstyles-identify-color"
                                id="advgb-customstyles-identify-color"
-                               class="minicolors minicolors-input ju-input"
+                               class="minicolors minicolors-input"
                                value="#000000"/>
                     </div>
                 </div>

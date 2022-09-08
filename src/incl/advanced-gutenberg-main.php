@@ -1100,8 +1100,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $new_style_id = $new_style_id['id'] + 1;
                 $new_style_array = array(
                     'id' => $new_style_id,
-                    'title' => __('New class', 'advanced-gutenberg'),
-                    'name' => __('new-class', 'advanced-gutenberg'),
+                    'title' => __( 'Style title', 'advanced-gutenberg' ) . ' ' . $new_style_id,
+                    'name' => 'new-class-' . rand( 0, 99 ) . $new_style_id . rand( 0, 99 ),
                     'css' => '',
                     'identifyColor' => '#000000'
                 );
@@ -1134,10 +1134,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     if ($data['id'] === $style_id) {
                         $copied_styles = array(
                             'id' => $new_id['id'] + 1,
-                            'title' => sanitize_text_field($data['title']),
-                            'name' => sanitize_text_field($data['name']),
-                            'css' => wp_strip_all_tags($data['css']),
-                            'identifyColor' => sanitize_hex_color($data['identifyColor']),
+                            'title' => sanitize_text_field( $data['title'] ) . ' ' . __( 'copy', 'advanced-gutenberg' ),
+                            'name' => sanitize_text_field( $data['name'] ) . '-' . rand( 0, 999 ),
+                            'css' => wp_strip_all_tags( $data['css'] ),
+                            'identifyColor' => sanitize_hex_color( $data['identifyColor'] ),
                         );
 
                         array_push($new_style_copied_array, $copied_styles);
@@ -1169,7 +1169,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $new_css = wp_strip_all_tags($_POST['mycss']);
                 // Validate new name
                 if (!preg_match($regex, $new_classname)) {
-                    wp_send_json('Invalid characters, please enter another!', 403);
+                    wp_send_json('Please use valid characters for a CSS classname! As example: hyphen or underscore instead of empty spaces.', 403);
                     return false;
                 }
                 $data_saved = get_option('advgb_custom_styles');
@@ -1187,7 +1187,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $new_title = sanitize_text_field($_POST['title']);
                 $style_id = (int)$_POST['id'];
                 if (!preg_match($regexWithSpaces, $new_title)) {
-                    wp_send_json('Invalid characters, please enter another!', 403);
+                    wp_send_json('Please use valid characters for a CSS classname! As example: hyphen or underscore instead of empty spaces.', 403);
                     return false;
                 }
                 $data_saved = get_option('advgb_custom_styles');
@@ -2620,7 +2620,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
                     wp_safe_redirect(
-                        admin_url( 'admin.php?page=advgb_custom_styles&save_styles=success' )
+                        admin_url( 'admin.php?page=advgb_custom_styles&save=success' )
                     );
                     exit;
                 }
@@ -2642,7 +2642,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
 
                 if (isset($_REQUEST['_wp_http_referer'])) {
-                    wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_styles=success'));
+                    wp_safe_redirect(
+                        admin_url( 'admin.php?page=advgb_custom_styles&save=success&lorem=test' )
+                    );
                     exit;
                 }
             }
