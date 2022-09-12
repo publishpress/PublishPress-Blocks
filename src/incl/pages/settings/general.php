@@ -1,6 +1,8 @@
 <?php
 defined( 'ABSPATH' ) || die;
 
+wp_enqueue_media(); // We require this for "Default thumbnail" setting
+
 $saved_settings             = get_option( 'advgb_settings' );
 $gallery_lightbox_caption   = isset( $saved_settings['gallery_lightbox_caption'] ) ? $saved_settings['gallery_lightbox_caption'] : '1';
 $disable_wpautop_checked    = ! empty( $saved_settings['disable_wpautop'] ) ? 'checked' : '';
@@ -139,7 +141,7 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                     />
                     <?php
                     _e(
-                        'If some blocks are not listed in Block access, try enabling this beta feature',
+                        'If some blocks are not listed in Block access, try enabling this feature and be sure all the blocks are saved', // @TODO - Link to a doc where we suggest to open a post edit page to save to advgb_blocks_list
                         'advanced-gutenberg'
                     )
                     ?>

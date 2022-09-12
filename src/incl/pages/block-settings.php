@@ -84,7 +84,7 @@ if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
                     <?php echo html_entity_decode( html_entity_decode( stripslashes( $block['icon'] ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
                 </span>
                 <span class="block-title"><?php echo esc_html( __( $block['title'], 'advanced-gutenberg' ) ); ?></span>
-                <i class="mi mi-settings block-config-button"
+                <i class="dashicons dashicons-admin-generic block-config-button"
                    title="<?php esc_attr_e( 'Edit', 'advanced-gutenberg' ) ?>"
                    data-block="<?php echo esc_attr( $block['name'] ); ?>"
                 ></i>

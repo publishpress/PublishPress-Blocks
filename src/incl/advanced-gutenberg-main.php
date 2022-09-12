@@ -1458,20 +1458,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     plugins_url('assets/css/style.css', dirname(__FILE__))
                 );
                 wp_register_style(
-                    'advgb_profile_style',
-                    plugins_url('assets/css/profile.css', dirname(__FILE__))
-                );
-                wp_register_style(
-                    'advgb_settings_style',
-                    plugins_url('assets/css/settings.css', dirname(__FILE__))
-                );
-                wp_register_style(
                     'advgb_qtip_style',
                     plugins_url('assets/css/jquery.qtip.css', dirname(__FILE__))
-                );
-                wp_register_style(
-                    'advgb_quirk',
-                    plugins_url('assets/css/quirk.css', dirname(__FILE__))
                 );
                 wp_register_style(
                     'codemirror_css',
@@ -1860,28 +1848,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function commonAdminPagesAssets()
         {
-            wp_enqueue_style( 'material_icon_font' );
-            wp_enqueue_style( 'material_icon_font_custom' );
-            wp_enqueue_style( 'advgb_quirk' );
-            wp_enqueue_style( 'advgb_admin_styles' );
             wp_enqueue_script( 'advgb_main_js' );
-
-            // @TODO - Check which are required in each page
-            wp_enqueue_style( 'minicolors_css' );
-            wp_enqueue_style( 'advgb_qtip_style' );
-            wp_enqueue_style( 'codemirror_css' );
-            wp_enqueue_style( 'codemirror_hint_style' );
-            wp_enqueue_style( 'advgb_settings_style' );
-
-            wp_enqueue_media();
-            wp_enqueue_script( 'qtip_js' );
-            wp_enqueue_script( 'less_js' );
-            wp_enqueue_script( 'minicolors_js' );
-            wp_enqueue_script( 'advgb_codemirror_js' );
-            wp_enqueue_script( 'codemirror_hint' );
-            wp_enqueue_script( 'codemirror_mode_css' );
-            wp_enqueue_script( 'codemirror_hint_css' );
             wp_enqueue_script( 'advgb_settings_js' );
+            wp_enqueue_script( 'minicolors_js' );
+            wp_enqueue_script( 'qtip_js' );
+
+            wp_enqueue_style( 'advgb_admin_styles' );
+            wp_enqueue_style( 'advgb_qtip_style' );
+            wp_enqueue_style( 'minicolors_css' );
         }
 
         /**
@@ -1977,7 +1951,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            wp_enqueue_script('advgb_custom_styles_js');
+            wp_enqueue_script( 'less_js' );
+            wp_enqueue_script( 'advgb_codemirror_js' );
+            wp_enqueue_script( 'codemirror_hint' );
+            wp_enqueue_script( 'codemirror_mode_css' );
+            wp_enqueue_script( 'codemirror_hint_css' );
+            wp_enqueue_script( 'advgb_custom_styles_js' );
+
+            wp_enqueue_style( 'codemirror_css' );
+            wp_enqueue_style( 'codemirror_hint_style' );
+
             $this->commonAdminPagesAssets();
             $this->loadPage( 'custom-styles' );
         }
@@ -2569,29 +2552,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Save config settings
-         *
-         * @return boolean True on success, False on failure
-         */
-        public function saveSettings()
-        {
-            if (isset($_POST['save_custom_styles'])) {
-                if (!wp_verify_nonce(sanitize_text_field($_POST['advgb_cstyles_nonce_field']), 'advgb_cstyles_nonce')) {
-                    return false;
-                }
-
-                if (isset($_REQUEST['_wp_http_referer'])) {
-                    wp_safe_redirect(
-                        admin_url( 'admin.php?page=advgb_custom_styles&save=success&lorem=test' )
-                    );
-                    exit;
-                }
-            }
-
-            return true;
-        }
-
-        /**
          * Load Custom Styles in <head> in frontend
          *
          * @return void
@@ -2768,8 +2728,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function blocksFeatureData( $feature, $option )
         {
-            wp_enqueue_style( 'advgb_profile_style' );
-
             // Build blocks form and add filters functions
             wp_add_inline_script(
                 'advgb_main_js',
@@ -5475,18 +5433,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Function to get and load the view
-         *
-         * @param string $view View to load
-         *
-         * @return void
-         */
-        public function loadView($view)
-        {
-            include_once(plugin_dir_path(__FILE__) . 'view/advanced-gutenberg-' . $view . '.php');
-        }
-
-        /**
          * Function to get and load the page
          *
          * @since 3.0.0
@@ -5758,7 +5704,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function setFrontendAssets($content)
         {
-            wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js');
+            wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'); // @TODO - Load locally
 
             // Preview in Customizer > Widgets
             if( isset($_GET['customize_theme']) ) {

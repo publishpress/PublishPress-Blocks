@@ -21,8 +21,8 @@ $custom_styles_saved = get_option( 'advgb_custom_styles', $this::$default_custom
     </header>
 
     <div class="wrap">
-        <div id="customstyles-tab" class="tab-content clearfix">
-            <div class="col-sm-3" id="advgb-customstyles-list">
+        <div id="customstyles-tab" class="tab-content">
+            <div id="advgb-customstyles-list">
                 <div id="mybootstrap">
                     <ul class="advgb-customstyles-list">
                         <?php
@@ -30,9 +30,9 @@ $custom_styles_saved = get_option( 'advgb_custom_styles', $this::$default_custom
                         foreach ( $custom_styles_saved as $customStyles ) {
                             $content .= '<li class="advgb-customstyles-items" data-id-customstyle="' . esc_attr( (int) $customStyles['id'] ) . '">';
                             $content .= '<a><i class="title-icon" style="background-color: ' . esc_attr( $customStyles['identifyColor'] ) . '"></i><span class="advgb-customstyles-items-title">' . esc_html( $customStyles['title'] ) . '</span></a>';
-                            $content .= '<a class="copy" title="' . esc_attr__( 'Copy', 'advanced-gutenberg' ) . '"><i class="mi mi-content-copy"></i></a>';
-                            $content .= '<a class="trash" title="' . esc_attr__( 'Delete', 'advanced-gutenberg' ) . '"><i class="mi mi-delete"></i></a>';
-                            $content .= '<a class="edit" title="' . esc_attr__( 'Edit', 'advanced-gutenberg' ) . '"><i class="mi mi-edit"></i></a>';
+                            $content .= '<a class="copy" title="' . esc_attr__( 'Copy', 'advanced-gutenberg' ) . '"><span class="dashicons dashicons-admin-page"></span></a>';
+                            $content .= '<a class="trash" title="' . esc_attr__( 'Delete', 'advanced-gutenberg' ) . '"><span class="dashicons dashicons-no"></span></a>';
+                            $content .= '<a class="edit" title="' . esc_attr__( 'Edit', 'advanced-gutenberg' ) . '"><span class="dashicons dashicons-edit"></span></a>';
                             $content .= '<ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">(' . esc_html( $customStyles['name'] ) . ')</li></ul>';
                             $content .= '</li>';
                         }
@@ -49,42 +49,44 @@ $custom_styles_saved = get_option( 'advgb_custom_styles', $this::$default_custom
                 </div>
             </div>
 
-            <div class="col-sm-9" id="advgb-customstyles-info">
-                <div class="control-group col-sm-6">
-                    <label for="advgb-customstyles-classname">
-                        <?php esc_html_e( 'Class name', 'advanced-gutenberg' ) ?>
-                    </label>
-                    <input type="text" class="regular-text" name="customstyles-classname" id="advgb-customstyles-classname"
-                           value=""/>
-                </div>
-                <div id="identify-colors" class="control-group clearfix col-sm-6">
-                    <div class="control-label">
-                        <label for="advgb-customstyles-identify-color"
-                               class="advgb_qtip"
-                               data-qtip="<?php esc_attr_e(
-                                   'This option help you identify specific custom styles in the list
-                                        (usually set this same as the custom style\'s background color)',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e( 'Identification color', 'advanced-gutenberg' ) ?>
+            <div id="advgb-customstyles-info">
+                <div class="advgb-customstyles-two-columns">
+                    <div>
+                        <label for="advgb-customstyles-classname">
+                            <?php esc_html_e( 'Class name', 'advanced-gutenberg' ) ?>
                         </label>
+                        <input type="text" class="regular-text" name="customstyles-classname" id="advgb-customstyles-classname"
+                               value=""/>
                     </div>
-                    <div class="controls">
-                        <input type="text"
-                               name="customstyles-identify-color"
-                               id="advgb-customstyles-identify-color"
-                               class="minicolors minicolors-input"
-                               value="#000000"/>
+                    <div id="identify-colors">
+                        <div class="control-label">
+                            <label for="advgb-customstyles-identify-color"
+                                   class="advgb_qtip"
+                                   data-qtip="<?php esc_attr_e(
+                                       'This option help you identify specific custom styles in the list
+                                            (usually set this same as the custom style\'s background color)',
+                                       'advanced-gutenberg'
+                                   ) ?>"
+                            >
+                                <?php esc_html_e( 'Identification color', 'advanced-gutenberg' ) ?>
+                            </label>
+                        </div>
+                        <div class="controls">
+                            <input type="text"
+                                   name="customstyles-identify-color"
+                                   id="advgb-customstyles-identify-color"
+                                   class="minicolors minicolors-input"
+                                   value="#000000"/>
+                        </div>
                     </div>
                 </div>
-                <div class="control-group advgb-customstyles-css col-sm-12">
+                <div class="advgb-customstyles-css">
                     <label for="advgb-customstyles-css">
                         <?php esc_html_e( 'Custom CSS', 'advanced-gutenberg' ) ?>
                     </label>
                     <textarea name="customstyles-css" id="advgb-customstyles-css"></textarea>
                 </div>
-                <div class="col-sm-12" id="css-tips" style="border-top: 1px solid #ccc; margin-top: -25px;">
+                <div id="css-tips" style="border-top: 1px solid #ccc; margin-top: -25px;">
                     <small>
                         <?php esc_html_e( 'Hint: Use "Ctrl + Space" for auto completion', 'advanced-gutenberg' ) ?>
                     </small>
