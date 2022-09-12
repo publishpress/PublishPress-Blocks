@@ -463,7 +463,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
 
                 if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
-
                     wp_enqueue_script(
                         'advgb_blocks',
                         plugins_url('assets/blocks/blocks.js', dirname(__FILE__)),
@@ -471,23 +470,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         ADVANCED_GUTENBERG_VERSION,
                         true
                     );
-
-                    // Pro Ads in some blocks for free version
-                    if( !defined('ADVANCED_GUTENBERG_PRO') ){
-                        wp_enqueue_script(
-                            'advgb_pro_ad_js',
-                            plugins_url('assets/blocks/pro-ad.js', dirname(__FILE__)),
-                            array( 'advgb_blocks' ),
-                            ADVANCED_GUTENBERG_VERSION,
-                            true
-                        );
-                        wp_enqueue_style(
-                            'advgb_pro_ad_css',
-                            plugins_url('assets/css/pro-ad.css', dirname(__FILE__)),
-                            array(),
-                            ADVANCED_GUTENBERG_VERSION
-                        );
-                    }
                 }
 
                 if( $this->settingIsEnabled( 'enable_block_access' ) ) {
@@ -1472,12 +1454,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if (!wp_doing_ajax()) {
                 // Register CSS
                 wp_register_style(
-                    'ju_framework_styles',
+                    'advgb_admin_styles',
                     plugins_url('assets/css/style.css', dirname(__FILE__))
-                );
-                wp_register_style(
-                    'advgb_main_style',
-                    plugins_url('assets/css/main.css', dirname(__FILE__))
                 );
                 wp_register_style(
                     'advgb_profile_style',
@@ -1508,10 +1486,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     plugins_url('assets/css/jquery.minicolors.css', dirname(__FILE__))
                 );
                 wp_register_style(
-                    'waves_styles',
-                    plugins_url('assets/css/waves.min.css', dirname(__FILE__))
-                );
-                wp_register_style(
                     'material_icon_font',
                     plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))
                 );
@@ -1527,16 +1501,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'slick_theme_style',
                     plugins_url('assets/css/slick-theme.css', dirname(__FILE__))
                 );
-
-                // Free
-                if( ! defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
-                  wp_enqueue_style(
-                      'advgb_top_notice',
-                      plugins_url( 'assets/css/top-notice.css', dirname( __FILE__ ) ),
-                      [],
-                      ADVANCED_GUTENBERG_VERSION
-                  );
-                }
 
                 // Register JS
                 // @TODO - Check if we really need all the dependencies from 'advgb_main_js'
@@ -1573,24 +1537,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_register_script(
                     'advgb_custom_styles_js',
                     plugins_url('assets/js/custom-styles.js', dirname(__FILE__)),
-                    array(),
-                    ADVANCED_GUTENBERG_VERSION
-                );
-                wp_register_script(
-                    'velocity_js',
-                    plugins_url('assets/js/velocity.min.js', dirname(__FILE__)),
-                    array(),
-                    ADVANCED_GUTENBERG_VERSION
-                );
-                wp_register_script(
-                    'waves_js',
-                    plugins_url('assets/js/waves.min.js', dirname(__FILE__)),
-                    array(),
-                    ADVANCED_GUTENBERG_VERSION
-                );
-                wp_register_script(
-                    'tabs_js',
-                    plugins_url('assets/js/tabs.js', dirname(__FILE__)),
                     array(),
                     ADVANCED_GUTENBERG_VERSION
                 );
@@ -1907,24 +1853,17 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Load common JS and CSSfor admin pages
+         * Load common JS and CSS for admin pages
          *
          * @since 3.0.0
          * @return void
          */
         public function commonAdminPagesAssets()
         {
-            wp_enqueue_style( 'roboto_font', 'https://fonts.googleapis.com/css?family=Roboto' ); // @TODO - Move to local
             wp_enqueue_style( 'material_icon_font' );
             wp_enqueue_style( 'material_icon_font_custom' );
             wp_enqueue_style( 'advgb_quirk' );
-            wp_enqueue_style( 'waves_styles' );
-            wp_enqueue_style( 'ju_framework_styles' );
-            wp_enqueue_style( 'advgb_main_style' );
-
-            wp_enqueue_script( 'waves_js' );
-            wp_enqueue_script( 'velocity_js' );
-            wp_enqueue_script( 'tabs_js' );
+            wp_enqueue_style( 'advgb_admin_styles' );
             wp_enqueue_script( 'advgb_main_js' );
 
             // @TODO - Check which are required in each page
@@ -3019,7 +2958,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                         <span class="dashicons dashicons-warning"></span>
                                     </span>
                                 </span>
-                                <button class="button button-primary pp-primary-button save-profile-button"
+                                <button class="button button-primary save-profile-button"
                                         type="submit"
                                         name="advgb_block_<?php echo $feature ?>_save"
                                 >
@@ -3042,7 +2981,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                         <!-- Save button -->
                         <div class="advgb-form-buttons-bottom">
-                            <button class="button button-primary pp-primary-button save-profile-button"
+                            <button class="button button-primary save-profile-button"
                                     type="submit"
                                     name="advgb_block_<?php echo $feature ?>_save"
                             >
@@ -5532,7 +5471,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
             }
 
-            require_once(plugin_dir_path(__FILE__) . 'view/advanced-gutenberg-block-config.php');
+            require_once( plugin_dir_path( __FILE__ ) . 'pages/block-settings/block-config.php' );
         }
 
         /**

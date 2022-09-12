@@ -124,7 +124,7 @@ $recaptcha_theme        = isset( $recaptcha_config['recaptcha_theme'] ) ? $recap
 
     <div class="advgb-form-buttons-bottom">
         <button type="submit"
-                class="button button-primary pp-primary-button"
+                class="button button-primary"
                 id="save_recaptcha_config"
                 name="save_recaptcha_config"
         >

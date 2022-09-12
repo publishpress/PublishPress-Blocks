@@ -93,7 +93,7 @@ $custom_styles_saved = get_option( 'advgb_custom_styles', $this::$default_custom
                     <form method="POST">
                         <?php wp_nonce_field( 'advgb_cstyles_nonce', 'advgb_cstyles_nonce_field' ); ?>
                         <input type="hidden" name="save_custom_styles" value="1" />
-                        <button class="button button-primary pp-primary-button"
+                        <button class="button button-primary"
                                 style="margin: 10px auto"
                                 type="button"
                                 id="save_custom_styles"

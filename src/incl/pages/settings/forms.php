@@ -84,7 +84,7 @@ $recaptcha_theme                = isset( $recaptcha_config['recaptcha_theme'] ) 
 
     <div class="advgb-form-buttons-bottom">
         <button type="submit"
-                class="button button-primary pp-primary-button"
+                class="button button-primary"
                 id="save_email_config"
                 name="save_email_config"
         >

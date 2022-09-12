@@ -22,7 +22,7 @@ $newsletter_count  = $newsletter_saved ? count( $newsletter_saved ) : 0;
             <td>
                 <label>
                     <button type="submit"
-                            class="button pp-default-button advgb-export-download"
+                            class="button advgb-export-download"
                             name="block_data_export"
                             value="contact_form.csv"
                     >
@@ -30,7 +30,7 @@ $newsletter_count  = $newsletter_saved ? count( $newsletter_saved ) : 0;
                         <?php esc_html_e( 'CSV', 'advanced-gutenberg' ); ?>
                     </button>
                     <button type="submit"
-                            class="button pp-default-button advgb-export-download"
+                            class="button advgb-export-download"
                             name="block_data_export"
                             value="contact_form.json"
                     >
@@ -53,7 +53,7 @@ $newsletter_count  = $newsletter_saved ? count( $newsletter_saved ) : 0;
             <td>
                 <label>
                     <button type="submit"
-                            class="button pp-default-button advgb-export-download"
+                            class="button advgb-export-download"
                             name="block_data_export"
                             value="newsletter.csv"
                     >
@@ -61,7 +61,7 @@ $newsletter_count  = $newsletter_saved ? count( $newsletter_saved ) : 0;
                         <?php esc_html_e( 'CSV', 'advanced-gutenberg' ); ?>
                     </button>
                     <button type="submit"
-                            class="button pp-default-button advgb-export-download"
+                            class="button advgb-export-download"
                             name="block_data_export"
                             value="newsletter.json"
                     >

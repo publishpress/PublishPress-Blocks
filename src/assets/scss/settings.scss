@@ -1,53 +1,14 @@
 @import "variables";
 @import "mixins";
 
-.advgb-export-actions {
-
-    .advgb-export-download {
-        margin-top: 10px;
-    }
-}
-
 .advgb-settings-header {
     margin: 40px auto;
-}
-
-.settings-list ul {
-    padding-left: 40px;
-}
-
-.advgb-settings-option.settings-separator > * {
-    margin: 0;
-    padding: 5px;
 }
 
 .advgb-settings-option .advgb-setting-label + * {
     float: right;
     margin-right: 30px;
     line-height: 49px;
-}
-
-.settings-option-wrapper {
-    padding: 5px 10px;
-}
-
-.settings-option-wrapper.no-child-float > * {
-    float: none !important;
-}
-
-.ju-input.full-width {
-    display: inline-block;
-    width: 100%;
-}
-
-#gallery_lightbox_caption_wrapper .slider {
-    transition: none;
-    -moz-transition: none;
-    -webkit-transition: none;
-}
-
-.settings-option-wrapper .minicolors-theme-default {
-    margin-left: 10px;
 }
 
 .setting-actions i {
@@ -61,15 +22,6 @@ img.thumb-selected {
     width: auto;
     height: 50px;
     margin-right: 10px;
-}
-
-#recaptcha_theme {
-    width: 100%;
-}
-
-/*Save setting button*/
-.save-settings-block {
-    margin-top: 20px;
 }
 
 /*Style for CustomStyle tab*/
@@ -162,10 +114,6 @@ img.thumb-selected {
 .advgb-customstyles-items:hover a.copy,
 .advgb-customstyles-items:hover a.edit {
     display: inline;
-}
-
-.ju-right-panel .button .dashicons {
-    margin-top: 5px;
 }
 
 .advgb-customstyles-new {
@@ -278,18 +226,8 @@ li.block-config-item .block-config-button {
     color: #888;
 }
 
-/*Export data tab*/
-.advgb-settings-option .settings-option-wrapper.no-child-float .advgb-setting-label {
-    font-weight: bold;
-}
-
-.ju-right-panel a:not(.button):not(.ag-footer-link),
 span.advgb-field-required {
     color: $purple;
-}
-
-.advgb-export-actions button {
-    margin: auto 2px;
 }
 
 .advgb-captcha-intro {

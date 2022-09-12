@@ -296,7 +296,7 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                            min="0"
                            name="blocks_spacing"
                            id="blocks_spacing"
-                           style="width: 50px;"
+                           style="width: 70px;"
                            value="<?php echo esc_attr( $blocks_spacing ) ?>"
                     />
                 </label>
@@ -318,7 +318,7 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                 <p class="description">
                     <?php
                     _e(
-                        'Set color for blocks icons on admin. Only apply to PublishPress Blocks.',
+                        'Apply in admin to blocks from PublishPress Blocks plugin.',
                         'advanced-gutenberg'
                     )
                     ?>
@@ -359,8 +359,8 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
                              alt="thumb"
                              data-default="<?php echo esc_url( $default_thumb ); ?>"
                         />
-                        <i class="dashicons dashicons-edit ju-button" id="thumb_edit" title="<?php esc_attr_e( 'Edit', 'advanced-gutenberg' ); ?>"></i>
-                        <i class="dashicons dashicons-no ju-button orange-button" id="thumb_remove" title="<?php esc_attr_e( 'Reset to default', 'advanced-gutenberg' ); ?>"></i>
+                        <i class="dashicons dashicons-edit" id="thumb_edit" title="<?php esc_attr_e( 'Edit', 'advanced-gutenberg' ); ?>"></i>
+                        <i class="dashicons dashicons-no" id="thumb_remove" title="<?php esc_attr_e( 'Reset to default', 'advanced-gutenberg' ); ?>"></i>
                     </div>
                 </div>
                 <p class="description">
@@ -397,7 +397,7 @@ if ( ! isset($saved_settings['block_controls'] ) ) {
 
     <div class="advgb-form-buttons-bottom">
         <button type="submit"
-                class="button button-primary pp-primary-button"
+                class="button button-primary"
                 id="save-settings"
                 name="save_settings"
         >
