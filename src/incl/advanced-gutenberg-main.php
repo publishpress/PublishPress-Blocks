@@ -168,7 +168,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_action('admin_menu', array($this, 'registerMainMenu'));
                 add_action('admin_menu', array($this, 'registerBlockConfigPage'));
                 add_action( 'plugins_loaded', [$this, 'upgradeProNotices'] );
-                add_action('load-toplevel_page_advgb_settings', [$this, 'advgb_settings_save_page']);
+                add_action( 'blocks_page_advgb_settings', [$this, 'advgb_settings_save_page'] );
                 add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
                 add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
                 add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
@@ -799,10 +799,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             'message' => 'You\'re using PublishPress Blocks Free. The Pro version has more features and support. %sUpgrade to Pro%s',
                             'link'    => 'https://publishpress.com/links/blocks-banner',
                             'screens' => [
-                                ['base' => 'toplevel_page_advgb_settings'],
+                                ['base' => 'toplevel_page_advgb_main'],
                                 ['base' => 'blocks_page_advgb_block_access'],
                                 ['base' => 'blocks_page_advgb_block_settings'],
                                 ['base' => 'blocks_page_advgb_custom_styles'],
+                                ['base' => 'blocks_page_advgb_settings'],
                             ]
                         ];
 
@@ -815,7 +816,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     \PPVersionNotices\Module\MenuLink\Module::SETTINGS_FILTER,
                     function ( $settings ) {
                         $settings['advanced-gutenberg'] = [
-                            'parent' => 'advgb_settings',
+                            'parent' => 'advgb_main',
                             'label'  => 'Upgrade to Pro',
                             'link'   => 'https://publishpress.com/links/blocks-menu',
                         ];
@@ -1701,17 +1702,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
 
             $submenu_pages = [];
-
-            // Duplicate this parent menu as submenu to generate a different submenu title
-            $submenu_pages = [
-                [
-                    'slug' => 'advgb_settings',
-                    'title' => esc_html__( 'Settings', 'advanced-gutenberg' ),
-                    'callback' => 'loadSettingsPage',
-                    'order' => 1
-                ]
-            ];
-
             // Block access
             if( $this->settingIsEnabled( 'enable_block_access' ) ) {
                 array_push(
@@ -1751,6 +1741,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 );
             }
 
+            array_push(
+                $submenu_pages,
+                [
+                    'slug' => 'advgb_settings',
+                    'title' => esc_html__( 'Settings', 'advanced-gutenberg' ),
+                    'callback' => 'loadSettingsPage',
+                    'order' => 6
+                ]
+            );
+
             return $submenu_pages;
         }
 
@@ -1761,24 +1761,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function registerMainMenu()
         {
-            // Old main page to redirect to new main page through advgbMainView()
-            // @TODO - Remove in future
-            add_submenu_page(
-                'admin.php?',
-                'PublishPress Blocks',
-                'PublishPress Blocks',
-                'manage_options',
-                'advgb_main',
-                [$this, 'advgbMainView']
-            );
-
-            if ( empty( $GLOBALS['admin_page_hooks']['advgb_settings'] ) ) {
+            if ( empty( $GLOBALS['admin_page_hooks']['advgb_main'] ) ) {
                 add_menu_page(
                     'Blocks',
                     'Blocks',
                     'manage_options',
-                    'advgb_settings',
-                    [$this, 'loadSettingsPage'],
+                    'advgb_main',
+                    [$this, 'loadMainPage'],
                     'dashicons-layout',
                     20
                 );
@@ -1786,7 +1775,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $submenu_pages = $this->subAdminPages();
                 foreach( $submenu_pages as $page ) {
                     $hook = add_submenu_page(
-                        'advgb_settings',
+                        'advgb_main',
                         $page['title'],
                         $page['title'],
                         'manage_options',
@@ -1815,18 +1804,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Load old main view
-         *
-         * @deprecated since 3.0.0 - Remove in future
-         * @return void
-         */
-        public function advgbMainView()
-        {
-            wp_safe_redirect( admin_url( 'admin.php?page=advgb_settings' ) );
-            exit;
-        }
-
-        /**
          * Load common JS and CSS for admin pages
          *
          * @since 3.0.0
@@ -1842,6 +1819,22 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_style( 'advgb_admin_styles' );
             wp_enqueue_style( 'advgb_qtip_style' );
             wp_enqueue_style( 'minicolors_css' );
+        }
+
+        /**
+         * Main page
+         *
+         * @since 3.0.0
+         * @return void
+         */
+        public function loadMainPage()
+        {
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                return false;
+            }
+
+            $this->commonAdminPagesAssets();
+            $this->loadPage( 'main' );
         }
 
         /**
@@ -1968,10 +1961,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             // Only display in PublishPress Blocks admin pages
             $pages = [
-                'toplevel_page_advgb_settings',
+                'toplevel_page_advgb_main',
                 'blocks_page_advgb_block_access',
                 'blocks_page_advgb_block_settings',
-                'blocks_page_advgb_custom_styles'
+                'blocks_page_advgb_custom_styles',
+                'blocks_page_advgb_settings',
             ];
             if( ! in_array( $current_screen->base, $pages ) ) {
                 return $footer;
