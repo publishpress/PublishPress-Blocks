@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.0.0 - 29 Aug 2022 =
+= 3.0.0 - 13 Sep 2022 =
 
 = 2.14.2 - 25 Aug 2022 =
   * Add: Extend supported blocks setting to support blocks not listed in Block access
