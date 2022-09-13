@@ -49,6 +49,16 @@ $current_tab = isset( $_GET['tab'] ) && ! empty( $_GET['tab'] )
         );
     }
 
+    if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+        array_push(
+            $tabs,
+            [
+                'title' => esc_html__( 'License', 'advanced-gutenberg' ),
+                'slug' => 'license'
+            ]
+        );
+    }
+
     // Output tabs menu
     echo $this->buildTabs(
         'advgb_settings',

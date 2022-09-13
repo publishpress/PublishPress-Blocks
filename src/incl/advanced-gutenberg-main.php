@@ -1751,20 +1751,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 );
             }
 
-            if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
-
-                // Pro pages
-                array_push(
-                    $submenu_pages,
-                    [
-                        'slug' => 'advgb_license',
-                        'title' => __( 'License', 'advanced-gutenberg' ),
-                        'callback' => 'loadLicensePage',
-                        'order' => 6,
-                    ]
-                );
-            }
-
             return $submenu_pages;
         }
 
@@ -1966,22 +1952,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * License page
-         *
-         * @since 3.0.0
-         * @return void
-         */
-        public function loadLicensePage()
-        {
-            if ( ! current_user_can( 'activate_plugins' ) ) {
-                return false;
-            }
-
-            $this->commonAdminPagesAssets();
-            $this->loadPage( 'license' );
-        }
-
-        /**
          * PublishPress admin footer
          *
          * @since 3.0.0
@@ -2001,8 +1971,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'toplevel_page_advgb_settings',
                 'blocks_page_advgb_block_access',
                 'blocks_page_advgb_block_settings',
-                'blocks_page_advgb_custom_styles',
-                'blocks_page_advgb_license'
+                'blocks_page_advgb_custom_styles'
             ];
             if( ! in_array( $current_screen->base, $pages ) ) {
                 return $footer;
