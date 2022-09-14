@@ -25,6 +25,7 @@ $newsletter_count  = $newsletter_saved ? count( $newsletter_saved ) : 0;
                             class="button advgb-export-download"
                             name="block_data_export"
                             value="contact_form.csv"
+                            <?php echo ( esc_html( (int) $contacts_count ) == 0 ) ? ' disabled' : '' ?>
                     >
                         <span class="dashicons dashicons-download"></span>
                         <?php esc_html_e( 'CSV', 'advanced-gutenberg' ); ?>
@@ -33,6 +34,7 @@ $newsletter_count  = $newsletter_saved ? count( $newsletter_saved ) : 0;
                             class="button advgb-export-download"
                             name="block_data_export"
                             value="contact_form.json"
+                            <?php echo ( esc_html( (int) $contacts_count ) == 0 ) ? ' disabled' : '' ?>
                     >
                         <span class="dashicons dashicons-download"></span>
                         <?php esc_html_e( 'JSON', 'advanced-gutenberg' ); ?>
@@ -56,6 +58,7 @@ $newsletter_count  = $newsletter_saved ? count( $newsletter_saved ) : 0;
                             class="button advgb-export-download"
                             name="block_data_export"
                             value="newsletter.csv"
+                            <?php echo ( esc_html( (int) $newsletter_count ) == 0 ) ? ' disabled' : '' ?>
                     >
                         <span class="dashicons dashicons-download"></span>
                         <?php esc_html_e( 'CSV', 'advanced-gutenberg' ); ?>
@@ -64,6 +67,7 @@ $newsletter_count  = $newsletter_saved ? count( $newsletter_saved ) : 0;
                             class="button advgb-export-download"
                             name="block_data_export"
                             value="newsletter.json"
+                            <?php echo ( esc_html( (int) $newsletter_count ) == 0 ) ? ' disabled' : '' ?>
                     >
                         <span class="dashicons dashicons-download"></span>
                         <?php esc_html_e( 'JSON', 'advanced-gutenberg' ); ?>
