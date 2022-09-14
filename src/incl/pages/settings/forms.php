@@ -1,23 +1,32 @@
 <?php
 defined( 'ABSPATH' ) || die;
 
-$email_settings                 = get_option( 'advgb_email_sender' );
+$settings                       = get_option( 'advgb_email_sender' );
 $website_title                  = get_option( 'blogname' );
 $admin_email                    = get_option( 'admin_email' );
-$contact_form_sender_name       = isset( $email_settings['contact_form_sender_name'] ) && $email_settings['contact_form_sender_name'] ? $email_settings['contact_form_sender_name'] : $website_title;
-$contact_form_sender_email      = isset( $email_settings['contact_form_sender_email'] ) && $email_settings['contact_form_sender_email'] ? $email_settings['contact_form_sender_email'] : $admin_email;
-$contact_form_email_title       = isset( $email_settings['contact_form_email_title'] ) && $email_settings['contact_form_email_title'] ? $email_settings['contact_form_email_title'] : __( 'Website Contact', 'advanced-gutenberg' );
-$contact_form_email_receiver    = isset( $email_settings['contact_form_email_receiver'] ) && $email_settings['contact_form_email_receiver'] ? $email_settings['contact_form_email_receiver'] : $admin_email;
-$recaptcha_enabled              = isset( $recaptcha_config['recaptcha_enable'] ) && $recaptcha_config['recaptcha_enable'] ? 'checked' : '';
-$recaptcha_site_key             = isset( $recaptcha_config['recaptcha_site_key'] ) ? $recaptcha_config['recaptcha_site_key'] : '';
-$recaptcha_secret_key           = isset( $recaptcha_config['recaptcha_secret_key'] ) ? $recaptcha_config['recaptcha_secret_key'] : '';
-$recaptcha_language             = isset( $recaptcha_config['recaptcha_language'] ) ? $recaptcha_config['recaptcha_language'] : '';
-$recaptcha_theme                = isset( $recaptcha_config['recaptcha_theme'] ) ? $recaptcha_config['recaptcha_theme'] : '';
+
+$contact_form_sender_name       = $this->getOptionSetting( $settings['contact_form_sender_name'], 'text', $website_title );
+$contact_form_sender_email      = $this->getOptionSetting( $settings['contact_form_sender_email'], 'text', $admin_email );
+$contact_form_email_title       = $this->getOptionSetting(
+                                    $settings['contact_form_email_title'],
+                                    'text',
+                                    __( 'Website Contact', 'advanced-gutenberg' )
+                                );
+$contact_form_email_receiver    = $this->getOptionSetting(
+                                    $settings['contact_form_email_receiver'],
+                                    'text',
+                                    $admin_email
+                                );
 ?>
 <form method="post">
     <?php wp_nonce_field( 'advgb_email_config_nonce', 'advgb_email_config_nonce_field' ) ?>
     <p>
-        <?php _e( 'These email settings apply to messages sent through PublishPress Contact form block.', 'advanced-gutenberg' ) ?>
+        <?php
+        _e(
+            'These email settings apply to messages sent through PublishPress Contact form block.',
+            'advanced-gutenberg'
+        )
+        ?>
     </p>
     <table class="form-table">
         <tr>

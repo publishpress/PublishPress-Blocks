@@ -2095,6 +2095,33 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
+         * Get a setting from a database option and return a working value
+         * to output in an HTML form
+         *
+         * @since 3.0.0
+         * @param string $setting   Setting - e.g. $advgb_settings['lorem'] from advgb_settings option
+         * @param string $type      $setting field type
+         * @param mixed $default    Default value when $setting doesn't exist in $option
+         *
+         * @return mixed
+         */
+        public function getOptionSetting( $setting, $type, $default ) {
+            switch( $type ) {
+                case 'checkbox':
+                    $result = isset( $setting ) && $setting ? 'checked' : '';
+                    if ( ! isset( $setting ) && $default === 1 ) {
+                        $result = 'checked';
+                    }
+                break;
+                case 'text': // For input types: text, number and textarea
+                    $result = isset( $setting ) && ! empty( $setting ) ? $setting : $default;
+                break;
+            }
+
+            return $result;
+        }
+
+        /**
          * Convert Editor Width value into a string
          *
          * @param int $value Editor width number
@@ -2194,7 +2221,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          * Save settings page data
          *
          * @since 3.0.0
-         * @return boolean true on success, false on failure
+         * @return mixed
          */
         public function advgb_settings_save_page()
         {
@@ -2202,97 +2229,106 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            if ( isset( $_POST['save_settings'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            // General settings
+            if ( isset( $_POST['save_settings_general'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            {
                 if (
                     ! wp_verify_nonce(
-                        sanitize_key( $_POST['advgb_settings_nonce_field'] ), 'advgb_settings_nonce'
+                        sanitize_key( $_POST['advgb_settings_general_nonce_field'] ),
+                        'advgb_settings_general_nonce'
                     )
                 ) {
                     return false;
                 }
 
-                $save_config = [];
-                if ( isset( $_POST['gallery_lightbox'] ) ) {
-                    $save_config['gallery_lightbox'] = 1;
-                } else {
-                    $save_config['gallery_lightbox'] = 0;
-                }
+                $advgb_settings                                 = get_option( 'advgb_settings' );
 
-                if ( isset( $_POST['enable_blocks_spacing'] ) ) {
-                    $save_config['enable_blocks_spacing'] = 1;
-                } else {
-                    $save_config['enable_blocks_spacing'] = 0;
-                }
-
-                if ( isset( $_POST['disable_wpautop'] ) ) {
-                    $save_config['disable_wpautop'] = 1;
-                } else {
-                    $save_config['disable_wpautop'] = 0;
-                }
-
-                if ( isset( $_POST['enable_columns_visual_guide'] ) ) {
-                    $save_config['enable_columns_visual_guide'] = 1;
-                } else {
-                    $save_config['enable_columns_visual_guide'] = 0;
-                }
-
-                if ( isset( $_POST['block_controls'] ) ) {
-                    $save_config['block_controls'] = 1;
-                } else {
-                    $save_config['block_controls'] = 0;
-                }
-
-                if ( isset( $_POST['enable_block_access'] ) ) {
-                    $save_config['enable_block_access'] = 1;
-                } else {
-                    $save_config['enable_block_access'] = 0;
-                }
-
-                if ( isset( $_POST['block_extend'] ) ) {
-                    $save_config['block_extend'] = 1;
-                } else {
-                    $save_config['block_extend'] = 0;
-                }
-
-                if ( isset( $_POST['enable_custom_styles'] ) ) {
-                    $save_config['enable_custom_styles'] = 1;
-                } else {
-                    $save_config['enable_custom_styles'] = 0;
-                }
-
-                if ( isset( $_POST['enable_advgb_blocks'] ) ) {
-                    $save_config['enable_advgb_blocks'] = 1;
-                } else {
-                    $save_config['enable_advgb_blocks'] = 0;
-                }
+                $advgb_settings['enable_blocks_spacing']        = isset( $_POST['enable_blocks_spacing'] ) ? 1 : 0;
+                $advgb_settings['disable_wpautop']              = isset( $_POST['disable_wpautop'] ) ? 1 : 0;
+                $advgb_settings['enable_columns_visual_guide']  = isset( $_POST['enable_columns_visual_guide'] ) ? 1 : 0;
+                $advgb_settings['google_api_key']               = sanitize_text_field( $_POST['google_api_key'] );
+                $advgb_settings['blocks_spacing']               = (int) $_POST['blocks_spacing'];
+                $advgb_settings['blocks_icon_color']            = sanitize_hex_color( $_POST['blocks_icon_color'] );
+                $advgb_settings['editor_width']                 = sanitize_text_field( $_POST['editor_width'] );
 
                 // Pro
                 if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
                     if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_setting_set_value' ) ) {
-                        $save_config['enable_pp_branding']          = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_pp_branding' );
-                        $save_config['enable_core_blocks_features'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_core_blocks_features' );
+                        $advgb_settings['enable_pp_branding'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_pp_branding' );
                     }
                 }
 
-                $save_config['gallery_lightbox_caption']    = (int) $_POST['gallery_lightbox_caption'];
-                $save_config['google_api_key']              = sanitize_text_field( $_POST['google_api_key'] );
-                $save_config['blocks_spacing']              = (int) $_POST['blocks_spacing'];
-                $save_config['blocks_icon_color']           = sanitize_hex_color( $_POST['blocks_icon_color'] );
-                $save_config['editor_width']                = sanitize_text_field( $_POST['editor_width'] );
-                $save_config['rp_default_thumb']            = [
-                                                                'url' => esc_url_raw( $_POST['post_default_thumb'] ),
-                                                                'id'  => (int) $_POST['post_default_thumb_id']
-                                                            ];
-
-                update_option( 'advgb_settings', $save_config );
+                update_option( 'advgb_settings', $advgb_settings );
 
                 if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
-                    wp_safe_redirect( admin_url( 'admin.php?page=advgb_settings&save=success' ) );
-                    exit; // @TODO - Do we really need this?
+                    wp_safe_redirect( admin_url( 'admin.php?page=advgb_settings&tab=general&save=success' ) );
+                    exit;
+                }
+            }
+            // Images settings
+            elseif ( isset( $_POST['save_settings_images'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            {
+                if (
+                    ! wp_verify_nonce(
+                        sanitize_key( $_POST['advgb_settings_images_nonce_field'] ),
+                        'advgb_settings_images_nonce'
+                    )
+                ) {
+                    return false;
                 }
 
-                return true;
-            } elseif ( isset( $_POST['save_email_config'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+                $advgb_settings                             = get_option( 'advgb_settings' );
+
+                $advgb_settings['gallery_lightbox']         = isset( $_POST['gallery_lightbox'] ) ? 1 : 0;
+                $advgb_settings['gallery_lightbox_caption'] = (int) $_POST['gallery_lightbox_caption'];
+                $advgb_settings['rp_default_thumb']         = [
+                    'url' => esc_url_raw( $_POST['post_default_thumb'] ),
+                    'id'  => (int) $_POST['post_default_thumb_id']
+                ];
+
+                update_option( 'advgb_settings', $advgb_settings );
+
+                if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
+                    wp_safe_redirect( admin_url( 'admin.php?page=advgb_settings&tab=images&save=success' ) );
+                    exit;
+                }
+            }
+            // Images settings
+            elseif ( isset( $_POST['save_settings_features'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            {
+                if (
+                    ! wp_verify_nonce(
+                        sanitize_key( $_POST['advgb_settings_features_nonce_field'] ),
+                        'advgb_settings_features_nonce'
+                    )
+                ) {
+                    return false;
+                }
+
+                $advgb_settings                         = get_option( 'advgb_settings' );
+
+                $advgb_settings['block_controls']       = isset( $_POST['block_controls'] ) ? 1 : 0;
+                $advgb_settings['enable_block_access']  = isset( $_POST['enable_block_access'] ) ? 1 : 0;
+                $advgb_settings['block_extend']         = isset( $_POST['block_extend'] ) ? 1 : 0;
+                $advgb_settings['enable_custom_styles'] = isset( $_POST['enable_custom_styles'] ) ? 1 : 0;
+                $advgb_settings['enable_advgb_blocks']  = isset( $_POST['enable_advgb_blocks'] ) ? 1 : 0;
+
+                // Pro
+                if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_setting_set_value' ) ) {
+                        $advgb_settings['enable_core_blocks_features'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_core_blocks_features' );
+                    }
+                }
+
+                update_option( 'advgb_settings', $advgb_settings );
+
+                if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
+                    wp_safe_redirect( admin_url( 'admin.php?page=advgb_settings&tab=features&save=success' ) );
+                    exit;
+                }
+            }
+            // Email & forms settings
+            elseif ( isset( $_POST['save_email_config'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
             {
                 if ( ! isset( $_POST['advgb_email_config_nonce_field'] ) ) {
                     return false;
@@ -2320,7 +2356,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     );
                     exit; // @TODO - Do we really need this?
                 }
-            } elseif ( isset( $_POST['save_recaptcha_config'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            }
+            // reCAPTCHA settings
+            elseif ( isset( $_POST['save_recaptcha_config'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
             {
                 if ( ! isset( $_POST['advgb_captcha_nonce_field'] ) )
                 {
@@ -2352,9 +2390,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     wp_safe_redirect(
                         admin_url( 'admin.php?page=advgb_settings&tab=recaptcha&save=success' )
                     );
-                    exit; // @TODO - Do we really need this?
+                    exit;
                 }
-            } elseif ( isset( $_POST['block_data_export'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            }
+            // Data export
+            elseif ( isset( $_POST['block_data_export'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
             {
                 if (
                     ! wp_verify_nonce(
@@ -3027,69 +3067,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             return false;
-        }
-
-        /**
-         * Save forms and email settings
-         *
-         * @return mixed
-         */
-        private function saveEmailSettings()
-        {
-            if (!isset($_POST['advgb_email_config_nonce_field'])) {
-                return false;
-            }
-
-            if (!wp_verify_nonce(sanitize_text_field($_POST['advgb_email_config_nonce_field']), 'advgb_email_config_nonce')) {
-                return false;
-            }
-
-            $save_config = array();
-            $save_config['contact_form_sender_name'] = sanitize_text_field($_POST['contact_form_sender_name']);
-            $save_config['contact_form_sender_email'] = sanitize_email($_POST['contact_form_sender_email']);
-            $save_config['contact_form_email_title'] = sanitize_text_field($_POST['contact_form_email_title']);
-            $save_config['contact_form_email_receiver'] = sanitize_email($_POST['contact_form_email_receiver']);
-
-            update_option('advgb_email_sender', $save_config);
-
-            if (isset($_REQUEST['_wp_http_referer'])) {
-                wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_settings=success'));
-                exit;
-            }
-        }
-
-        /**
-         * Save captcha settings
-         *
-         * @return mixed
-         */
-        private function saveCaptchaSettings()
-        {
-            if (!isset($_POST['advgb_captcha_nonce_field'])) {
-                return false;
-            }
-
-            if (!wp_verify_nonce(sanitize_text_field($_POST['advgb_captcha_nonce_field']), 'advgb_captcha_nonce')) {
-                return false;
-            }
-
-            $save_config = array();
-            if (isset($_POST['recaptcha_enable'])) {
-                $save_config['recaptcha_enable'] = 1;
-            } else {
-                $save_config['recaptcha_enable'] = 0;
-            }
-            $save_config['recaptcha_site_key'] = sanitize_text_field($_POST['recaptcha_site_key']);
-            $save_config['recaptcha_secret_key'] = sanitize_text_field($_POST['recaptcha_secret_key']);
-            $save_config['recaptcha_language'] = sanitize_text_field($_POST['recaptcha_language']);
-            $save_config['recaptcha_theme'] = sanitize_text_field($_POST['recaptcha_theme']);
-
-            update_option('advgb_recaptcha_config', $save_config);
-
-            if (isset($_REQUEST['_wp_http_referer'])) {
-                wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_settings=success'));
-                exit;
-            }
         }
 
         /**

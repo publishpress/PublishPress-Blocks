@@ -1,14 +1,14 @@
 <?php
 defined( 'ABSPATH' ) || die;
 
-$recaptcha_config       = get_option( 'advgb_recaptcha_config' );
-$recaptcha_enabled      = isset( $recaptcha_config['recaptcha_enable'] ) && $recaptcha_config['recaptcha_enable'] ? 'checked' : '';
-$recaptcha_site_key     = isset( $recaptcha_config['recaptcha_site_key'] ) ? $recaptcha_config['recaptcha_site_key'] : '';
-$recaptcha_secret_key   = isset( $recaptcha_config['recaptcha_secret_key'] ) ? $recaptcha_config['recaptcha_secret_key'] : '';
-$recaptcha_language     = isset( $recaptcha_config['recaptcha_language'] ) ? $recaptcha_config['recaptcha_language'] : '';
-$recaptcha_theme        = isset( $recaptcha_config['recaptcha_theme'] ) ? $recaptcha_config['recaptcha_theme'] : '';
-?>
+$settings               = get_option( 'advgb_recaptcha_config' );
 
+$recaptcha_enabled      = $this->getOptionSetting( $settings['recaptcha_enable'], 'checkbox', 0 );
+$recaptcha_site_key     = $this->getOptionSetting( $settings['recaptcha_site_key'], 'text', '' );
+$recaptcha_secret_key   = $this->getOptionSetting( $settings['recaptcha_secret_key'], 'text', '' );
+$recaptcha_language     = $this->getOptionSetting( $settings['recaptcha_language'], 'text', '' );
+$recaptcha_theme        = $this->getOptionSetting( $settings['recaptcha_theme'], 'text', '' );
+?>
 <form method="POST">
     <?php wp_nonce_field( 'advgb_captcha_nonce', 'advgb_captcha_nonce_field' ) ?>
     <p>
