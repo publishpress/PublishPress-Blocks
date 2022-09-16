@@ -1,9 +1,118 @@
 (function ( $ ) {
+    var { __, _x, _n, _nx } = wp.i18n;
+
     $.expr[":"].contains = $.expr.createPseudo(function (arg) {
         return function ( elem ) {
             return $(elem).text().toLowerCase().indexOf(arg.toLowerCase()) >= 0;
         };
     });
+
+    $('.advgb-feature-box--disabled').bind( 'click', function(e) {
+        e.preventDefault();
+        window.open( 'https://publishpress.com/blocks/' );
+    });
+
+    // Toggle to save a single feature at the time
+    $('.advgb-feature-setting .slider').bind( 'click', function(e) {
+        try {
+            e.preventDefault();
+            var checkbox    = $(this).parent().find('input');
+            var isChecked   = checkbox.is(':checked') ? 1 : 0;
+            var newState    = isChecked == 1 ? 0 : 1; // Since is a toggle, we revert the state
+            var feature     = checkbox.data('feature');
+            var slider      = checkbox.parent().find('.slider');
+            var statusMsg   = $(this).parents('.advgb-feature-setting').find('.advgb-switch-status');
+            $.ajax({
+                url: advgb_main_dashboard.ajaxurl,
+                method: 'POST',
+                data: {
+                    action: 'advgb_feature_save',
+                    feature: feature,
+                    new_state: newState,
+                    nonce: advgb_main_dashboard.nonce
+                },
+                beforeSend: function(){
+                  slider.css('opacity', 0.5);
+                },
+                success: function(){
+                    newState == 1 ? checkbox.prop('checked', true) : checkbox.prop('checked', false);
+                    slider.css('opacity', 1);
+
+                    if (typeof statusMsgNotification !== 'undefined') {
+                        clearTimeout(statusMsgNotification);
+                    }
+
+                    // Dynamic submenu display/hide
+                    var pMenu = $('#toplevel_page_advgb_main');
+
+                    switch(feature) {
+                        case 'enable_block_access':
+                            advgbDynamicSubmenu(
+                                __( 'Block Access', 'advanced-gutenberg' ),
+                                'advgb_block_access',
+                                newState,
+                                1
+                            );
+                        break;
+                        case 'enable_advgb_blocks':
+                            advgbDynamicSubmenu(
+                                __( 'Block Settings', 'advanced-gutenberg' ),
+                                'advgb_block_settings',
+                                newState,
+                                3
+                            );
+                        break;
+                        case 'enable_custom_styles':
+                            advgbDynamicSubmenu(
+                                __( 'Custom Styles', 'advanced-gutenberg' ),
+                                'advgb_custom_styles',
+                                newState,
+                                4
+                            );
+                        break;
+                    }
+
+                    statusMsgNotification = setTimeout( function() {
+                        statusMsg.find('.advgb-switch-status--success').fadeIn(200).delay(2000).fadeOut(1000)
+                    }, 500);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.error(jqXHR.responseText);
+
+                    if (typeof statusMsgNotification !== 'undefined') {
+                        clearTimeout(statusMsgNotification);
+                    }
+
+                    statusMsgNotification = setTimeout( function() {
+                        statusMsg.find('.advgb-switch-status--error').fadeIn(200).delay(15000).fadeOut(1000)
+                    }, 500);
+                }
+            });
+        } catch(e) {
+            console.error(e);
+        }
+    });
+
+    /**
+     * Dynamically show/hide admin submenu
+     *
+     * @param {string}  label       Menu label
+     * @param {string}  slug        Page slug
+     * @param {string}  newState    New feature state
+     * @param {int}  position       Append submenu after position
+     */
+    function advgbDynamicSubmenu( label, slug, newState, position ) {
+        var pMenu       = $('#toplevel_page_advgb_main');
+        var cSubmenu    = $(pMenu).find('li.' + slug + '-menu-item');
+
+        // Check if submenu exists and show/hide
+        if(cSubmenu.length) {
+            newState == 1 ? cSubmenu.show() : cSubmenu.hide();
+        } else {
+            // Appen the submenu
+            $(pMenu).find('li:eq(' + position + ')').after('<li class="' + slug + '-menu-item" style=""><a href="admin.php?page=' + slug + '" class="' + slug + '-menu-item">' + label + '</a></li>');
+        }
+    }
 })(jQuery);
 
 // Get cookie - custom styles

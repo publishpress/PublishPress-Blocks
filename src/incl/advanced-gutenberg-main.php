@@ -168,7 +168,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_action('admin_menu', array($this, 'registerMainMenu'));
                 add_action('admin_menu', array($this, 'registerBlockConfigPage'));
                 add_action( 'plugins_loaded', [$this, 'upgradeProNotices'] );
-                add_action( 'blocks_page_advgb_settings', [$this, 'advgb_settings_save_page'] );
                 add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
                 add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
                 add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
@@ -198,6 +197,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
                 add_action('wp_ajax_advgb_custom_styles_ajax', array($this, 'customStylesAjax'));
                 add_action('wp_ajax_advgb_block_config_save', array($this, 'saveBlockConfig'));
+                add_action( 'wp_ajax_advgb_feature_save', [$this, 'saveFeature'] );
             } else {
                 // Front-end
                 add_filter('render_block_data', array($this, 'contentPreRender'));
@@ -1189,6 +1189,61 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
+         * Ajax for saving a feature from main page
+         *
+         * @return boolean,void     Return false if failure, echo json on success
+         */
+        public function saveFeature()
+        {
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                wp_send_json( __('No permission!', 'advanced-gutenberg'), 403 );
+                return false;
+            }
+
+            if (
+                ! wp_verify_nonce(
+                    sanitize_key( $_POST['nonce'] ),
+                    'advgb_main_features_nonce'
+                )
+            ) {
+                wp_send_json( __('Invalid nonce token!', 'advanced-gutenberg'), 400 );
+            }
+
+            if( empty( $_POST['feature'] ) || ! $_POST['feature'] ) {
+                wp_send_json( __('Error: wrong data', 'advanced-gutenberg'), 400 );
+                return false;
+            }
+
+            $feature = sanitize_text_field( $_POST['feature'] );
+            $all_features = [
+                'block_controls',
+                'enable_block_access',
+                'block_extend',
+                'enable_custom_styles',
+                'enable_advgb_blocks'
+            ];
+
+            // Pro features
+            if( defined( 'ADVANCED_GUTENBERG_PRO') ) {
+                array_push(
+                    $all_features,
+                    'enable_core_blocks_features'
+                );
+            }
+
+            if( in_array( $feature, $all_features ) ) {
+                $advgb_settings             = get_option( 'advgb_settings' );
+                $advgb_settings[$feature]   = $_POST['new_state'] ? 1 : 0;
+
+                update_option( 'advgb_settings', $advgb_settings );
+                wp_send_json( true, 200 );
+            } else {
+                wp_send_json( __('Error: can\'t edit this feature', 'advanced-gutenberg'), 400 );
+                return false;
+            }
+        }
+
+        /**
          * Ajax for saving block default config
          *
          * @return boolean,void     Return false if failure, echo json on success
@@ -1761,6 +1816,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function registerMainMenu()
         {
+            global $submenu;
+
             if ( empty( $GLOBALS['admin_page_hooks']['advgb_main'] ) ) {
                 add_menu_page(
                     'Blocks',
@@ -1772,6 +1829,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     20
                 );
 
+                $submenu_slugs = [];
                 $submenu_pages = $this->subAdminPages();
                 foreach( $submenu_pages as $page ) {
                     $hook = add_submenu_page(
@@ -1798,9 +1856,85 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     }
                 }
 
-                // Remove dulicated "Blocks" menu
-                //remove_submenu_page( 'advgb_main', 'advgb_main' );
+
+                /* Add CSS classes to these submenus to dynamically show/hide them
+                 * through main page enable/disable features
+                 * e.g. <li class="advgb_custom_styles-menu-item"><a href="admin.php?page=advgb_custom_styles" class="advgb_custom_styles-menu-item">Custom Styles</a></li>
+                 */
+                $submenu_slugs = [
+                    'advgb_main',
+                    'advgb_block_access',
+                    'advgb_block_settings',
+                    'advgb_custom_styles',
+                    'advgb_settings'
+                ];
+
+                foreach( $submenu['advgb_main'] as $key => $value ) {
+                    if( in_array( $submenu['advgb_main'][$key][2], $submenu_slugs ) )
+                    $submenu['advgb_main'][$key][4] = $submenu['advgb_main'][$key][2] . '-menu-item';
+                }
             }
+        }
+
+        /**
+         * Output feature boxes in main admin page
+         *
+         * @since 3.0.0
+         * @param array $features List of features
+         *
+         * @return void
+         */
+        public function featuresBoxes( $features )
+        {
+            $settings = get_option( 'advgb_settings' );
+            ?>
+            <div class="advgb-features-boxes advgb-features-boxes--<?php echo ( defined( 'ADVANCED_GUTENBERG_PRO' ) ? 'ispro': 'isfree' ) ?>">
+            <?php foreach( $features as $feature ) : ?>
+                <div class="advgb-feature-box<?php echo ( ! $feature['access'] ? ' advgb-feature-box--disabled' : '' ); ?>">
+                    <h3>
+                        <?php
+                        echo $feature['title'];
+                        echo ! $feature['access'] ? ' <span>Pro</span>' : '';
+                        ?>
+                    </h3>
+                    <div class="advgb-feature-description">
+                        <?php echo $feature['description'] ?>
+                    </div>
+                    <div class="advgb-feature-setting">
+                        <div class="advgb-switch-button">
+                            <label class="switch">
+                                <input type="checkbox"
+                                       name=""
+                                       value="1"
+                                       <?php
+                                       if( $feature['access'] ) {
+                                           echo $this->getOptionSetting(
+                                               $settings[$feature['name']],
+                                               'checkbox',
+                                               $feature['default']
+                                           ) . ' data-feature="' . $feature['name'];
+                                       } else {
+                                           echo ' disabled';
+                                       }
+                                       ?>">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="advgb-switch-status">
+                            <?php if( $feature['access'] ) : ?>
+                                <span class="advgb-switch-status--success" style="display:none;">
+                                    <?php _e( 'Changes saved!', 'advanced-gutenberg' ) ?>
+                                </span>
+                                <span class="advgb-switch-status--error" style="display:none;">
+                                    <?php _e( 'Error: changes can\'t be saved.', 'advanced-gutenberg' ) ?>
+                                </span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+            </div>
+            <?php
         }
 
         /**
@@ -1834,6 +1968,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             $this->commonAdminPagesAssets();
+
+            wp_localize_script(
+                'advgb_main_js',
+                'advgb_main_dashboard',
+                [
+                    'ajaxurl' => admin_url( 'admin-ajax.php' ),
+                    'nonce' => wp_create_nonce( 'advgb_main_features_nonce' )
+                ]
+            );
+
             $this->loadPage( 'main' );
         }
 

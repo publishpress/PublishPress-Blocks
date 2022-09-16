@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cf94f6a77ed12c1d265563614f1f0281",
+    "content-hash": "9fe0ce431fd3932133592d5756012e4c",
     "packages": [
         {
             "name": "pimple/pimple",
@@ -140,6 +140,47 @@
                 "wordpress plugin"
             ],
             "time": "2022-06-03T17:41:36+00:00"
+        },
+        {
+            "name": "publishpress/wordpress-banners",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/publishpress/wordpress-banners.git",
+                "reference": "bcb5f9f00973d53e2db027f9a05c059f18743fae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/publishpress/wordpress-banners/zipball/bcb5f9f00973d53e2db027f9a05c059f18743fae",
+                "reference": "bcb5f9f00973d53e2db027f9a05c059f18743fae",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.20"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "BannersMain.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "PublishPress",
+                    "email": "help@publishpress.com"
+                }
+            ],
+            "description": "Display banners in admin pages of PublishPress Plugins.",
+            "homepage": "http://publishpress.com/",
+            "support": {
+                "issues": "https://github.com/publishpress/wordpress-banners/issues",
+                "source": "https://github.com/publishpress/wordpress-banners/tree/v1.3.1"
+            },
+            "time": "2022-08-15T18:07:23+00:00"
         },
         {
             "name": "publishpress/wordpress-reviews",

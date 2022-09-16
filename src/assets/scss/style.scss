@@ -71,6 +71,129 @@ body[class*="_page_advgb_"] #wpcontent {
     margin-bottom: 15px;
   }
 
+  // Two columns admin page
+  .pp-columns-wrapper {
+
+    .pp-column-left {
+
+      .postbox {
+        padding: 20px;
+      }
+    }
+
+    .pp-column-right {
+
+      .pp-sidebar-box p:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  // Features boxes
+  .advgb-features-boxes {
+    margin-bottom: 20px;
+    display: grid;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+
+    &--isfree {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    &--ispro {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 979px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    .advgb-feature-box {
+      position: relative;
+      padding: 20px 20px 0;
+      background-color: #fff;
+      box-shadow: 0 10px 30px 0 rgba(160, 166, 190, 0.08);
+      border: 1px solid #dcdcdc;
+
+      h3 {
+        margin: 0 0 1em;
+        line-height: 1.5em;
+        padding: 0;
+
+        span {
+          background: $black;
+          padding: 2px 5px;
+          color: #fff;
+          border-radius: 4px;
+          font-size: 0.8em;
+
+          &.advgb-label-beta {
+            background: $gray;
+          }
+        }
+      }
+
+      .advgb-feature-description {
+        line-height: 1.6em;
+        padding: 0 0 20px;
+        height: 150px;
+
+        @media (max-width: 979px) {
+          height: auto;
+        }
+      }
+
+      .advgb-feature-setting {
+        background: #fbfbfb;
+        margin: 0 -20px;
+        padding: 0 20px;
+        line-height: 60px;
+        border-top: 1px solid #dcdcdc;
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        grid-column-gap: 20px;
+
+        @media (min-width: 980px) {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          box-sizing: border-box;
+        }
+
+        .advgb-switch-button {
+          float: none;
+          margin: 0;
+
+          .switch {
+            margin: 17px 0;
+          }
+        }
+
+        .advgb-switch-status {
+          text-align: right;
+          opacity: 0.6;
+        }
+      }
+
+      &--disabled {
+        cursor: pointer;
+
+        &:hover {
+          border-color: $yellow;
+          box-shadow: 0 0 0 4px rgba($yellow, 0.2);
+        }
+
+        .advgb-feature-setting > div {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+
   // Loading
   .advgb-block-feature-loading-msg {
     background: #f0f0f1;
