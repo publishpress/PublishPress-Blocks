@@ -1756,7 +1756,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function subAdminPages()
         {
 
-            $submenu_pages = [];
+            // Duplicate this parent menu as submenu to generate a different submenu title
+            $submenu_pages = [
+                [
+                    'slug' => 'advgb_main',
+                    'title' => esc_html__( 'Dashboard', 'advanced-gutenberg' ),
+                    'callback' => 'loadMainPage',
+                    'order' => 1
+                ]
+            ];
+
             // Block access
             if( $this->settingIsEnabled( 'enable_block_access' ) ) {
                 array_push(
