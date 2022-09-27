@@ -92,9 +92,6 @@ defined( 'ABSPATH' ) || die;
         			    __( 'PublishPress Blocks Pro', 'advanced-gutenberg' ),
         			    [
                             __( 'Priority, personal support', 'advanced-gutenberg' ),
-                            __( 'Countdown block', 'advanced-gutenberg' ),
-                            __( 'Pricing Table block', 'advanced-gutenberg' ),
-                            __( 'Feature List block', 'advanced-gutenberg' ),
                             __( 'Pro features for Accordion block', 'advanced-gutenberg' ),
                             __( 'Pro features for Tabs block', 'advanced-gutenberg' ),
                             __( 'Pro features for Content Display block', 'advanced-gutenberg' ),
@@ -105,6 +102,9 @@ defined( 'ABSPATH' ) || die;
                             __( 'Pro features for Testimonial block', 'advanced-gutenberg' ),
                             __( 'Pro features for Advanced Image block', 'advanced-gutenberg' ),
                             __( 'Google Fonts support', 'advanced-gutenberg' ),
+                            __( 'Countdown block', 'advanced-gutenberg' ),
+                            __( 'Pricing Table block', 'advanced-gutenberg' ),
+                            __( 'Feature List block', 'advanced-gutenberg' ),
                             __( 'Remove PublishPress ads and branding', 'advanced-gutenberg' )
                         ],
         			    'https://publishpress.com/links/blocks-banner',

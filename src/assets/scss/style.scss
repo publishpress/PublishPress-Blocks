@@ -354,6 +354,35 @@ body[class*="_page_advgb_"] #wpcontent {
   }
 }
 
+// Floating notifications
+.advgb-floating-status {
+  position: fixed;
+  bottom: 20px;
+  left: 184px;
+  background: #2c3338;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  transition: all 0.5s ease-out;
+  box-shadow: 0 0 15px #999;
+  z-index: 999;
+
+  @media (max-width: 782px) {
+    left: 60px;
+  }
+
+  &.advgb-floating-status {
+
+    &--success {
+      color: #00d084;
+    }
+
+    &--error {
+      color: #d63638;
+    }
+  }
+}
+
 // PublishPress Footer
 .advgb-footer {
     text-align: center;
@@ -916,6 +945,10 @@ ul.blocks-list li.block-item .advgb-switch-button input:checked + .slider:before
 
 .switch-label svg, .switch-label i {
     vertical-align: top;
+}
+
+.advgb-hide-menu-item {
+    display: none !important;
 }
 
 .rtl ul.blocks-list li.block-item .advgb-switch-button {

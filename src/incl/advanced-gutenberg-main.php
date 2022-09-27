@@ -1756,64 +1756,46 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function subAdminPages()
         {
 
-            // Duplicate this parent menu as submenu to generate a different submenu title
+            /* Duplicate first submenu from parent to generate a different menu title.
+             * 'Blocks' -> 'Dashboard'
+             */
             $submenu_pages = [
                 [
                     'slug' => 'advgb_main',
                     'title' => esc_html__( 'Dashboard', 'advanced-gutenberg' ),
                     'callback' => 'loadMainPage',
-                    'order' => 1
-                ]
-            ];
-
-            // Block access
-            if( $this->settingIsEnabled( 'enable_block_access' ) ) {
-                array_push(
-                    $submenu_pages,
-                    [
-                        'slug' => 'advgb_block_access',
-                        'title' => esc_html__( 'Block Permissions', 'advanced-gutenberg' ),
-                        'callback' => 'loadBlockAccessPage',
-                        'order' => 2
-                    ]
-                );
-            }
-
-            // PublishPress Blocks and Email & form
-            if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
-                array_push(
-                    $submenu_pages,
-                    [
-                        'slug' => 'advgb_block_settings',
-                        'title' => esc_html__( 'Block Settings', 'advanced-gutenberg' ),
-                        'callback' => 'loadBlockSettingsPage',
-                        'order' => 3
-                    ]
-                );
-            }
-
-            // Custom styles
-            if( $this->settingIsEnabled( 'enable_custom_styles' ) ) {
-                array_push(
-                    $submenu_pages,
-                    [
-                        'slug' => 'advgb_custom_styles',
-                        'title' => esc_html__( 'Custom Styles', 'advanced-gutenberg' ),
-                        'callback' => 'loadCustomStylesPage',
-                        'order' => 5
-                    ]
-                );
-            }
-
-            array_push(
-                $submenu_pages,
+                    'order' => 1,
+                    'enabled' => true
+                ],
+                [
+                    'slug' => 'advgb_block_access',
+                    'title' => esc_html__( 'Block Permissions', 'advanced-gutenberg' ),
+                    'callback' => 'loadBlockAccessPage',
+                    'order' => 2,
+                    'enabled' => $this->settingIsEnabled( 'enable_block_access' )
+                ],
+                [
+                    'slug' => 'advgb_block_settings',
+                    'title' => esc_html__( 'Block Settings', 'advanced-gutenberg' ),
+                    'callback' => 'loadBlockSettingsPage',
+                    'order' => 3,
+                    'enabled' => $this->settingIsEnabled( 'enable_advgb_blocks' )
+                ],
+                [
+                    'slug' => 'advgb_custom_styles',
+                    'title' => esc_html__( 'Custom Styles', 'advanced-gutenberg' ),
+                    'callback' => 'loadCustomStylesPage',
+                    'order' => 5,
+                    'enabled' => $this->settingIsEnabled( 'enable_custom_styles' )
+                ],
                 [
                     'slug' => 'advgb_settings',
                     'title' => esc_html__( 'Settings', 'advanced-gutenberg' ),
                     'callback' => 'loadSettingsPage',
-                    'order' => 6
+                    'order' => 6,
+                    'enabled' => true
                 ]
-            );
+            ];
 
             return $submenu_pages;
         }
@@ -1838,7 +1820,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     20
                 );
 
-                $submenu_slugs = [];
                 $submenu_pages = $this->subAdminPages();
                 foreach( $submenu_pages as $page ) {
                     $hook = add_submenu_page(
@@ -1870,18 +1851,33 @@ if(!class_exists('AdvancedGutenbergMain')) {
                  * through main page enable/disable features
                  * e.g. <li class="advgb_custom_styles-menu-item"><a href="admin.php?page=advgb_custom_styles" class="advgb_custom_styles-menu-item">Custom Styles</a></li>
                  */
-                $submenu_slugs = [
-                    'advgb_main',
-                    'advgb_block_access',
-                    'advgb_block_settings',
-                    'advgb_custom_styles',
-                    'advgb_settings'
-                ];
-
-                foreach( $submenu['advgb_main'] as $key => $value ) {
-                    if( in_array( $submenu['advgb_main'][$key][2], $submenu_slugs ) )
-                    $submenu['advgb_main'][$key][4] = $submenu['advgb_main'][$key][2] . '-menu-item';
+                $submenu_slugs              = [];
+                $submenu_slugs_conditions   = [];
+                foreach( $submenu_pages as $page ) {
+                    $submenu_slugs[]            = $page['slug'];
+                    $submenu_slugs_conditions[] = [ $page['slug'], $page['enabled'] ];
                 }
+
+                /*echo '<pre>';
+                var_dump($submenu_slugs_conditions);
+                echo '</pre>';
+                exit;*/
+                foreach( $submenu['advgb_main'] as $key => $value ) {
+                    if( in_array( $submenu['advgb_main'][$key][2], $submenu_slugs ) ) {
+                        $slug_ = $submenu['advgb_main'][$key][2];
+
+                        // Add a class to hide menu if feature is disabled on Dashboard
+                        foreach( $submenu_slugs_conditions as $item ) {
+                            if( $item[0] === $slug_ ) {
+                                $showHide = $item[1] === false ? ' advgb-hide-menu-item' : '';
+                                break;
+                            }
+                        }
+
+                        $submenu['advgb_main'][$key][4] = $slug_ . '-menu-item' . $showHide;
+                    }
+                }
+                //exit;
             }
         }
 
@@ -1926,18 +1922,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                            echo ' disabled';
                                        }
                                        ?>">
-                                <span class="slider"></span>
+                                <span class="slider<?php echo ( ! $feature['access'] ? ' slider--disabled' : '' ); ?>"></span>
                             </label>
-                        </div>
-                        <div class="advgb-switch-status">
-                            <?php if( $feature['access'] ) : ?>
-                                <span class="advgb-switch-status--success" style="display:none;">
-                                    <?php _e( 'Changes saved!', 'advanced-gutenberg' ) ?>
-                                </span>
-                                <span class="advgb-switch-status--error" style="display:none;">
-                                    <?php _e( 'Error: changes can\'t be saved.', 'advanced-gutenberg' ) ?>
-                                </span>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -2017,7 +2003,20 @@ if(!class_exists('AdvancedGutenbergMain')) {
             // Check users permissions
             if ( ! current_user_can( 'administrator' ) ) {
                 wp_die(
-                    esc_html__( 'You do not have permission to manage Block Permissions', 'advanced-gutenberg' )
+                    esc_html__(
+                        'This feature is disabled. In order to use, please enable back through Dashboard.',
+                        'advanced-gutenberg'
+                    )
+                );
+            }
+
+            // Block accessis disabled
+            if ( ! $this->settingIsEnabled( 'enable_block_access' ) ) {
+                wp_die(
+                    esc_html__(
+                        'This feature is disabled. In order to use, please enable through Dashboard.',
+                        'advanced-gutenberg'
+                    )
                 );
             }
 
@@ -2051,6 +2050,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
+            // PublishPress block disabled
+            if ( ! $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                wp_die(
+                    esc_html__(
+                        'This feature is disabled. In order to use, please enable back through Dashboard.',
+                        'advanced-gutenberg'
+                    )
+                );
+            }
+
             $this->commonAdminPagesAssets();
             $this->loadPage( 'block-settings' );
         }
@@ -2081,6 +2090,16 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             if ( ! current_user_can( 'activate_plugins' ) ) {
                 return false;
+            }
+
+            // Custom styles disabled
+            if ( ! $this->settingIsEnabled( 'enable_custom_styles' ) ) {
+                wp_die(
+                    esc_html__(
+                        'This feature is disabled. In order to use, please enable back through Dashboard.',
+                        'advanced-gutenberg'
+                    )
+                );
             }
 
             wp_enqueue_script( 'less_js' );
