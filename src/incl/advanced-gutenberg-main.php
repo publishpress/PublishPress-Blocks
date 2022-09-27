@@ -1550,7 +1550,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // @TODO - Check if we really need all the dependencies from 'advgb_main_js'
                 wp_register_script(
                     'advgb_main_js',
-                    plugins_url('assets/js/main.js', dirname(__FILE__)),
+                    plugins_url('assets/js/main.min.js', dirname(__FILE__)),
                     array(
                         'jquery',
                         'wp-block-editor',
@@ -1574,7 +1574,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 );
                 wp_register_script(
                     'advgb_settings_js',
-                    plugins_url('assets/js/settings.js', dirname(__FILE__)),
+                    plugins_url('assets/js/settings.min.js', dirname(__FILE__)),
                     array('wp-i18n'),
                     ADVANCED_GUTENBERG_VERSION
                 );

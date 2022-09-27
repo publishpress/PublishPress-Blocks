@@ -21,6 +21,8 @@ function bundle() {
         "!src/composer.lock",
         "!src/assets/**/*.jsx",
         "!src/assets/scss/**",
+        "!src/assets/js/main.js",
+        "!src/assets/js/settings.js",
         "!src/assets/blocks/*.js.map",
     ])
     .pipe(zip('advanced-gutenberg.zip'))
