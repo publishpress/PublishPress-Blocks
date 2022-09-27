@@ -29,7 +29,7 @@ defined( 'ABSPATH' ) || die;
                         ],
                         [
                             'name' => 'enable_block_access',
-                            'title' => __( 'Block access', 'advanced-gutenberg' ),
+                            'title' => __( 'Block permissions', 'advanced-gutenberg' ),
                             'description' => __(
                                 'You can control who can use each block, including default WordPress blocks.', 'advanced-gutenberg'
                             ),
@@ -71,7 +71,7 @@ defined( 'ABSPATH' ) || die;
                             'name' => 'enable_core_blocks_features',
                             'title' => __( 'Core blocks features', 'advanced-gutenberg' ),
                             'description' => __(
-                                'Add Google Font support to core Paragraph and Heading blocks.', 'advanced-gutenberg'
+                                'Google Fonts support to core Paragraph and Heading blocks.', 'advanced-gutenberg'
                             ),
                             'default' => 1,
                             'access' => $isPro // Feature available on pro only. In free we display a placeholder.
@@ -91,10 +91,21 @@ defined( 'ABSPATH' ) || die;
         			    '',
         			    __( 'PublishPress Blocks Pro', 'advanced-gutenberg' ),
         			    [
-                            __(
-                                'The Pro version comes with faster support and all the features you need to super-charge the WordPress block editor.',
-                                'advanced-gutenberg'
-                            )
+                            __( 'Priority, personal support', 'advanced-gutenberg' ),
+                            __( 'Countdown block', 'advanced-gutenberg' ),
+                            __( 'Pricing Table block', 'advanced-gutenberg' ),
+                            __( 'Feature List block', 'advanced-gutenberg' ),
+                            __( 'Pro features for Accordion block', 'advanced-gutenberg' ),
+                            __( 'Pro features for Tabs block', 'advanced-gutenberg' ),
+                            __( 'Pro features for Content Display block', 'advanced-gutenberg' ),
+                            __( 'Pro features for Images Slider block', 'advanced-gutenberg' ),
+                            __( 'Pro features for Button block', 'advanced-gutenberg' ),
+                            __( 'Pro features for List block', 'advanced-gutenberg' ),
+                            __( 'Pro features for Count Up block', 'advanced-gutenberg' ),
+                            __( 'Pro features for Testimonial block', 'advanced-gutenberg' ),
+                            __( 'Pro features for Advanced Image block', 'advanced-gutenberg' ),
+                            __( 'Google Fonts support', 'advanced-gutenberg' ),
+                            __( 'Remove PublishPress ads and branding', 'advanced-gutenberg' )
                         ],
         			    'https://publishpress.com/links/blocks-banner',
         			    __( 'Upgrade to Pro', 'advanced-gutenberg' ),

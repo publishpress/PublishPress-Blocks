@@ -28,10 +28,6 @@ $current_tab = isset( $_GET['tab'] ) && ! empty( $_GET['tab'] )
         [
             'title' => __( 'General', 'advanced-gutenberg' ),
             'slug' => 'general'
-        ],
-        [
-            'title' => __( 'Features', 'advanced-gutenberg' ),
-            'slug' => 'features'
         ]
     ];
 

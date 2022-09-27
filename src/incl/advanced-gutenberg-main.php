@@ -1772,7 +1772,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $submenu_pages,
                     [
                         'slug' => 'advgb_block_access',
-                        'title' => esc_html__( 'Block Access', 'advanced-gutenberg' ),
+                        'title' => esc_html__( 'Block Permissions', 'advanced-gutenberg' ),
                         'callback' => 'loadBlockAccessPage',
                         'order' => 2
                     ]
@@ -2017,7 +2017,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             // Check users permissions
             if ( ! current_user_can( 'administrator' ) ) {
                 wp_die(
-                    esc_html__( 'You do not have permission to manage Block Access', 'advanced-gutenberg' )
+                    esc_html__( 'You do not have permission to manage Block Permissions', 'advanced-gutenberg' )
                 );
             }
 
@@ -2035,7 +2035,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             // Render form
             $this->blocksFeatureForm(
                 'access', // Feature name in lowercase
-                __( 'Block Access', 'advanced-gutenberg' ) // Name of the feature
+                __( 'Block Permissions', 'advanced-gutenberg' ) // Name of the feature
             );
         }
 
@@ -2977,7 +2977,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          *
          * @since 3.0.0
          * @param string $feature   Feature name in lowercase - e.g. 'access'
-         * @param string $label     Name of the feature with text-domain - e.g. __('Block Access', 'advanced-gutenberg')
+         * @param string $label     Name of the feature with text-domain - e.g. __('Block Permissions', 'advanced-gutenberg')
          *
          * @return void
          */

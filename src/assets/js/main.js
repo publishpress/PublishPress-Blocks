@@ -38,9 +38,15 @@
                     newState == 1 ? checkbox.prop('checked', true) : checkbox.prop('checked', false);
                     slider.css('opacity', 1);
 
-                    if (typeof statusMsgNotification !== 'undefined') {
-                        clearTimeout(statusMsgNotification);
-                    }
+                    /*
+                     * Submenu order:
+                     * 1. Dashboard
+                     * 2. Block Permissions
+                     * 3. Block Settings
+                     * 4. Custom styles
+                     * 5. Settings
+                     * 6. Upgrade to Pro
+                     */
 
                     // Dynamic submenu display/hide
                     var pMenu = $('#toplevel_page_advgb_main');
@@ -72,26 +78,27 @@
                         break;
                     }
 
-                    statusMsgNotification = setTimeout( function() {
-                        statusMsg.find('.advgb-switch-status--success').fadeIn(200).delay(2000).fadeOut(1000)
-                    }, 500);
+                    statusMsgNotification = advgbTimerStatus( statusMsg );
                 },
                 error: function(jqXHR, textStatus, errorThrown){
                     console.error(jqXHR.responseText);
-
-                    if (typeof statusMsgNotification !== 'undefined') {
-                        clearTimeout(statusMsgNotification);
-                    }
-
-                    statusMsgNotification = setTimeout( function() {
-                        statusMsg.find('.advgb-switch-status--error').fadeIn(200).delay(15000).fadeOut(1000)
-                    }, 500);
+                    statusMsgNotification = advgbTimerStatus( statusMsg, 'error' );
                 }
             });
         } catch(e) {
             console.error(e);
         }
     });
+
+    function advgbTimerStatus( element, type = 'success' ) {
+        if ( typeof element !== 'undefined' ) {
+            clearTimeout( element );
+        }
+
+        setTimeout( function() {
+            element.find('.advgb-switch-status--' + type).fadeIn(200).delay(15000).fadeOut(1000)
+        }, 500);
+    }
 
     /**
      * Dynamically show/hide admin submenu
