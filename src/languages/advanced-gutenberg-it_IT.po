@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - Gutenberg Blocks &#8211; PublishPress Blocks "
 "Gutenberg Editor Plugin - Stable (latest release)\n"
 "POT-Creation-Date: 2022-09-28 09:45-0500\n"
-"PO-Revision-Date: 2022-09-28 09:46-0500\n"
+"PO-Revision-Date: 2022-09-28 11:02-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -4710,7 +4710,7 @@ msgstr ""
 
 #: incl/pages/settings/features.php:37
 msgid "Extend supported blocks (beta)"
-msgstr ""
+msgstr "Estensione dei blocchi supportati (beta)"
 
 #: incl/pages/settings/features.php:48
 msgid ""
@@ -5043,6 +5043,13 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "https://publishpress.com/"
 msgstr "https://publishpress.com/"
+
+#~ msgid ""
+#~ "If some blocks are not listed in Block access, try enabling Extend "
+#~ "supported blocks"
+#~ msgstr ""
+#~ "Se alcuni blocchi non sono elencati nell'accesso ai blocchi, provare ad "
+#~ "abilitare l'estensione dei blocchi supportati"
 
 #~ msgid "Enable block controls panel to schedule blocks"
 #~ msgstr ""
