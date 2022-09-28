@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 6.0.2
-Stable tag: 3.0.0b2
+Stable tag: 3.0.0b3
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -257,7 +257,9 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.0.0 - 16 Sep 2022 =
+= 3.0.0 - 28 Sep 2022 =
+  * Add: Separated admin pages
+  * Add: Admin dashboard
 
 = 2.14.2 - 25 Aug 2022 =
   * Add: Extend supported blocks setting to support blocks not listed in Block access
