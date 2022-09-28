@@ -1,13 +1,11 @@
 <?php
 defined( 'ABSPATH' ) || die;
 
-$settings               = get_option( 'advgb_settings' );
-
-$block_extend           = $this->getOptionSetting( $settings['block_extend'], 'checkbox', 0 );
-$enable_block_access    = $this->getOptionSetting( $settings['enable_block_access'], 'checkbox', 1 );
-$enable_custom_styles   = $this->getOptionSetting( $settings['enable_custom_styles'], 'checkbox', 1 );
-$enable_advgb_blocks    = $this->getOptionSetting( $settings['enable_advgb_blocks'], 'checkbox', 1 );
-$block_controls         = $this->getOptionSetting( $settings['block_controls'], 'checkbox', 1 );
+$block_extend           = $this->getOptionSetting( 'advgb_settings', 'block_extend', 'checkbox', 0 );
+$enable_block_access    = $this->getOptionSetting( 'advgb_settings', 'enable_block_access', 'checkbox', 1 );
+$enable_custom_styles   = $this->getOptionSetting( 'advgb_settings', 'enable_custom_styles', 'checkbox', 1 );
+$enable_advgb_blocks    = $this->getOptionSetting( 'advgb_settings', 'enable_advgb_blocks', 'checkbox', 1 );
+$block_controls         = $this->getOptionSetting( 'advgb_settings', 'block_controls', 'checkbox', 1 );
 ?>
 <form method="post">
     <?php wp_nonce_field( 'advgb_settings_features_nonce', 'advgb_settings_features_nonce_field' ) ?>

@@ -3,14 +3,18 @@ defined( 'ABSPATH' ) || die;
 
 wp_enqueue_media(); // We require this for "Default thumbnail" setting
 
-$settings                   = get_option( 'advgb_settings' );
+$settings           = get_option( 'advgb_settings' );
+$default_thumb      = plugins_url(
+                        'assets/blocks/recent-posts/recent-post-default.png',
+                        ADVANCED_GUTENBERG_PLUGIN
+                    );
+$rp_default_thumb   = isset( $settings['rp_default_thumb'] )
+                    ? $settings['rp_default_thumb']
+                    : [ 'url' => $default_thumb, 'id' => 0 ];
 
-$gallery_lightbox_caption   = $this->getOptionSetting( $settings['gallery_lightbox_caption'], 'text', '1' );
-$gallery_lightbox_checked   = $this->getOptionSetting( $settings['gallery_lightbox'], 'checkbox', 1 );
-$default_thumb              = plugins_url( 'assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN );
-$rp_default_thumb           = isset( $settings['rp_default_thumb'])
-                                ? $settings['rp_default_thumb']
-                                : [ 'url' => $default_thumb, 'id' => 0 ];
+$gallery_lightbox_caption   = $this->getOptionSetting( 'advgb_settings', 'gallery_lightbox_caption', 'text', '1' );
+$gallery_lightbox_checked   = $this->getOptionSetting( 'advgb_settings', 'gallery_lightbox', 'checkbox', 1 );
+
 ?>
 <form method="post">
     <?php wp_nonce_field( 'advgb_settings_images_nonce', 'advgb_settings_images_nonce_field' ) ?>

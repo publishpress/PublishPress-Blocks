@@ -1891,7 +1891,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function featuresBoxes( $features )
         {
-            $settings = get_option( 'advgb_settings' );
             ?>
             <div class="advgb-features-boxes advgb-features-boxes--<?php echo ( defined( 'ADVANCED_GUTENBERG_PRO' ) ? 'ispro': 'isfree' ) ?>">
             <?php foreach( $features as $feature ) : ?>
@@ -1914,7 +1913,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                        <?php
                                        if( $feature['access'] ) {
                                            echo $this->getOptionSetting(
-                                               $settings[$feature['name']],
+                                               'advgb_settings',
+                                               $feature['name'],
                                                'checkbox',
                                                $feature['default']
                                            ) . ' data-feature="' . $feature['name'];
@@ -2271,22 +2271,24 @@ if(!class_exists('AdvancedGutenbergMain')) {
          * to output in an HTML form
          *
          * @since 3.0.0
-         * @param string $setting   Setting - e.g. $advgb_settings['lorem'] from advgb_settings option
-         * @param string $type      $setting field type
+         * @param string $option    Database option name. e.g. 'advgb_settings'
+         * @param mixed $name       Setting name - e.g. 'lorem' from advgb_settings option
+         * @param string $type      $setting field type. 'checkbox' or 'text'
          * @param mixed $default    Default value when $setting doesn't exist in $option
          *
          * @return mixed
          */
-        public function getOptionSetting( $setting, $type, $default ) {
+        public function getOptionSetting( $option, $name, $type, $default ) {
+            $settings = get_option( $option );
             switch( $type ) {
                 case 'checkbox':
-                    $result = isset( $setting ) && $setting ? 'checked' : '';
-                    if ( ! isset( $setting ) && $default === 1 ) {
+                    $result = isset( $settings[$name] ) && $settings[$name] ? 'checked' : '';
+                    if ( ! isset( $settings[$name] ) && $default === 1 ) {
                         $result = 'checked';
                     }
                 break;
                 case 'text': // For input types: text, number and textarea
-                    $result = isset( $setting ) && ! empty( $setting ) ? $setting : $default;
+                    $result = isset( $settings[$name] ) && ! empty( $settings[$name] ) ? $settings[$name] : $default;
                 break;
             }
 

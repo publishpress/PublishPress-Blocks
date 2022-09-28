@@ -1,19 +1,20 @@
 <?php
 defined( 'ABSPATH' ) || die;
 
-$settings                       = get_option( 'advgb_email_sender' );
 $website_title                  = get_option( 'blogname' );
 $admin_email                    = get_option( 'admin_email' );
 
-$contact_form_sender_name       = $this->getOptionSetting( $settings['contact_form_sender_name'], 'text', $website_title );
-$contact_form_sender_email      = $this->getOptionSetting( $settings['contact_form_sender_email'], 'text', $admin_email );
+$contact_form_sender_name       = $this->getOptionSetting( 'advgb_email_sender', 'contact_form_sender_name', 'text', $website_title );
+$contact_form_sender_email      = $this->getOptionSetting( 'advgb_email_sender', 'contact_form_sender_email', 'text', $admin_email );
 $contact_form_email_title       = $this->getOptionSetting(
-                                    $settings['contact_form_email_title'],
+                                    'advgb_email_sender',
+                                    'contact_form_email_title',
                                     'text',
                                     __( 'Website Contact', 'advanced-gutenberg' )
                                 );
 $contact_form_email_receiver    = $this->getOptionSetting(
-                                    $settings['contact_form_email_receiver'],
+                                    'advgb_email_sender',
+                                    'contact_form_email_receiver',
                                     'text',
                                     $admin_email
                                 );

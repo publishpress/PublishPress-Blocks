@@ -1,15 +1,13 @@
 <?php
 defined( 'ABSPATH' ) || die;
 
-$settings                       = get_option( 'advgb_settings' );
-
-$google_api_key_saved           = $this->getOptionSetting( $settings['google_api_key'], 'text', '' );
-$enable_blocks_spacing          = $this->getOptionSetting( $settings['enable_blocks_spacing'], 'checkbox', 0 );
-$blocks_spacing                 = $this->getOptionSetting( $settings['blocks_spacing'], 'text', 0 );
-$blocks_icon_color              = $this->getOptionSetting( $settings['blocks_icon_color'], 'text', '#5952de' );
-$editor_width                   = $this->getOptionSetting( $settings['editor_width'], 'text', '0' );
-$disable_wpautop_checked        = $this->getOptionSetting( $settings['disable_wpautop'], 'checkbox', 0 );
-$enable_columns_visual_guide    = $this->getOptionSetting( $settings['enable_columns_visual_guide'], 'checkbox', 1 );
+$google_api_key_saved           = $this->getOptionSetting( 'advgb_settings', 'google_api_key', 'text', '' );
+$enable_blocks_spacing          = $this->getOptionSetting( 'advgb_settings', 'enable_blocks_spacing', 'checkbox', 0 );
+$blocks_spacing                 = $this->getOptionSetting( 'advgb_settings', 'blocks_spacing', 'text', 0 );
+$blocks_icon_color              = $this->getOptionSetting( 'advgb_settings', 'blocks_icon_color', 'text', '#5952de' );
+$editor_width                   = $this->getOptionSetting( 'advgb_settings', 'editor_width', 'text', '0' );
+$disable_wpautop_checked        = $this->getOptionSetting( 'advgb_settings', 'disable_wpautop', 'checkbox', 0 );
+$enable_columns_visual_guide    = $this->getOptionSetting( 'advgb_settings', 'enable_columns_visual_guide', 'checkbox', 1 );
 ?>
 <form method="post">
     <?php wp_nonce_field( 'advgb_settings_general_nonce', 'advgb_settings_general_nonce_field' ) ?>
