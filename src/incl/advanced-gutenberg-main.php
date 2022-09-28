@@ -1224,7 +1224,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'enable_block_access',
                 'block_extend',
                 'enable_custom_styles',
-                'enable_advgb_blocks'
+                'enable_advgb_blocks',
+                'enable_pp_branding'
             ];
 
             // Pro features
@@ -1780,7 +1781,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 ],
                 [
                     'slug' => 'advgb_block_settings',
-                    'title' => esc_html__( 'Block Settings', 'advanced-gutenberg' ),
+                    'title' => esc_html__( 'PublishPress Blocks', 'advanced-gutenberg' ),
                     'callback' => 'loadBlockSettingsPage',
                     'order' => 3,
                     'enabled' => $this->settingIsEnabled( 'enable_advgb_blocks' )
@@ -2429,12 +2430,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $advgb_settings['blocks_icon_color']            = sanitize_hex_color( $_POST['blocks_icon_color'] );
                 $advgb_settings['editor_width']                 = sanitize_text_field( $_POST['editor_width'] );
 
-                // Pro
+                /*/ Pro
                 if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
                     if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_setting_set_value' ) ) {
                         $advgb_settings['enable_pp_branding'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_pp_branding' );
                     }
-                }
+                }*/
 
                 update_option( 'advgb_settings', $advgb_settings );
 

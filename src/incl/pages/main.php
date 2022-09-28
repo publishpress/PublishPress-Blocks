@@ -19,17 +19,8 @@ defined( 'ABSPATH' ) || die;
                     $isPro = defined( 'ADVANCED_GUTENBERG_PRO') ? true : false;
                     $features = [
                         [
-                            'name' => 'block_controls',
-                            'title' => __( 'Block controls', 'advanced-gutenberg' ),
-                            'description' => __(
-                                'Schedule blocks to be published and unpublished. Every block can have a “Start showing” and/or “Stop showing” option.', 'advanced-gutenberg'
-                            ),
-                            'default' => 1,
-                            'access' => true
-                        ],
-                        [
                             'name' => 'enable_block_access',
-                            'title' => __( 'Block permissions', 'advanced-gutenberg' ),
+                            'title' => __( 'Block Permissions', 'advanced-gutenberg' ),
                             'description' => __(
                                 'You can control who can use each block, including default WordPress blocks.', 'advanced-gutenberg'
                             ),
@@ -37,30 +28,8 @@ defined( 'ABSPATH' ) || die;
                             'access' => true
                         ],
                         [
-                            'name' => 'block_extend',
-                            'title' => sprintf(
-                                __( 'Extend supported blocks %sBeta%s', 'advanced-gutenberg' ),
-                                '<span class="advgb-label-beta">',
-                                '</span>'
-                            ),
-                            'description' => __(
-                                ' If some blocks are not listed in Block access, try enabling this feature and be sure all the blocks are saved.', 'advanced-gutenberg'
-                            ),
-                            'default' => 0,
-                            'access' => true
-                        ],
-                        [
-                            'name' => 'enable_custom_styles',
-                            'title' => __( 'Custom styles', 'advanced-gutenberg' ),
-                            'description' => __(
-                                'You can add your own CSS styles for your blocks. Anyone editing posts can quickly add the styles to blocks.', 'advanced-gutenberg'
-                            ),
-                            'default' => 1,
-                            'access' => true
-                        ],
-                        [
                             'name' => 'enable_advgb_blocks',
-                            'title' => __( 'PublishPress blocks', 'advanced-gutenberg' ),
+                            'title' => __( 'PublishPress Blocks', 'advanced-gutenberg' ),
                             'description' => __(
                                 'If disabled, blocks from PublishPress Blocks plugin won\'t be available.', 'advanced-gutenberg'
                             ),
@@ -68,8 +37,48 @@ defined( 'ABSPATH' ) || die;
                             'access' => true
                         ],
                         [
+                            'name' => 'enable_custom_styles',
+                            'title' => __( 'Custom Styles', 'advanced-gutenberg' ),
+                            'description' => __(
+                                'You can add your own CSS styles for your blocks. Anyone editing posts can quickly add the styles to blocks.', 'advanced-gutenberg'
+                            ),
+                            'default' => 1,
+                            'access' => true
+                        ],
+                        [
+                            'name' => 'block_controls',
+                            'title' => __( 'Block Controls', 'advanced-gutenberg' ),
+                            'description' => __(
+                                'Schedule blocks to be published and unpublished. Every block can have a “Start showing” and/or “Stop showing” option.', 'advanced-gutenberg'
+                            ),
+                            'default' => 1,
+                            'access' => true
+                        ],
+                        [
+                            'name' => 'block_extend',
+                            'title' => sprintf(
+                                __( 'Extend Supported Blocks %sBeta%s', 'advanced-gutenberg' ),
+                                '<span class="advgb-label-beta">',
+                                '</span>'
+                            ),
+                            'description' => __(
+                                ' If some blocks are not listed in Block permissions, try enabling this feature and be sure all the blocks are saved.', 'advanced-gutenberg'
+                            ),
+                            'default' => 0,
+                            'access' => true
+                        ],
+                        [
+                            'name' => 'enable_pp_branding',
+                            'title' => __( 'PublishPress Branding', 'advanced-gutenberg' ),
+                            'description' => __(
+                                'Display PublishPress logo and links in the footer of the admin pages.', 'advanced-gutenberg'
+                            ),
+                            'default' => 1,
+                            'access' => $isPro // Feature available on pro only. In free we display a placeholder.
+                        ],
+                        [
                             'name' => 'enable_core_blocks_features',
-                            'title' => __( 'Core blocks features', 'advanced-gutenberg' ),
+                            'title' => __( 'Core Blocks Features', 'advanced-gutenberg' ),
                             'description' => __(
                                 'Google Fonts support to core Paragraph and Heading blocks.', 'advanced-gutenberg'
                             ),

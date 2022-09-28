@@ -14,7 +14,7 @@ $enable_columns_visual_guide    = $this->getOptionSetting( 'advgb_settings', 'en
     <table class="form-table">
 
         <?php
-        // Pro settings
+        /*/ Pro settings
         if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
             if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_setting' ) ) {
                 echo PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting(
@@ -23,7 +23,7 @@ $enable_columns_visual_guide    = $this->getOptionSetting( 'advgb_settings', 'en
                     __( 'PublishPress logo and links in the footer of the admin pages', 'advanced-gutenberg' )
                 );
             }
-        }
+        }*/
         ?>
 
         <tr>

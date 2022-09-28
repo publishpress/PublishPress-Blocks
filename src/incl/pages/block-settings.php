@@ -60,7 +60,7 @@ if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
 <div class="publishpress-admin wrap">
     <header>
         <h1 class="wp-heading-inline">
-            <?php esc_html_e( 'Block Settings', 'advanced-gutenberg' ) ?>
+            <?php esc_html_e( 'PublishPress Blocks', 'advanced-gutenberg' ) ?>
         </h1>
     </header>
     <div class="wrap">

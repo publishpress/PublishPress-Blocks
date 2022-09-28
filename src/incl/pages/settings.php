@@ -19,7 +19,7 @@ $current_tab = isset( $_GET['tab'] ) && ! empty( $_GET['tab'] )
 
     <header>
         <h1 class="wp-heading-inline">
-            <?php esc_html_e( 'Blocks Settings', 'advanced-gutenberg' ) ?>
+            <?php esc_html_e( 'Settings', 'advanced-gutenberg' ) ?>
         </h1>
     </header>
 

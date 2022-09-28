@@ -16,7 +16,7 @@ $custom_styles_saved = get_option( 'advgb_custom_styles', $this::$default_custom
 
     <header>
         <h1 class="wp-heading-inline">
-            <?php esc_html_e( 'Custom styles', 'advanced-gutenberg' ); ?>
+            <?php esc_html_e( 'Custom Styles', 'advanced-gutenberg' ); ?>
         </h1>
     </header>
 
