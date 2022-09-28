@@ -2014,7 +2014,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if ( ! $this->settingIsEnabled( 'enable_block_access' ) ) {
                 wp_die(
                     esc_html__(
-                        'This feature is disabled. In order to use, please enable through Dashboard.',
+                        'This feature is disabled. In order to use, please enable back through Dashboard.',
                         'advanced-gutenberg'
                     )
                 );

@@ -9,7 +9,7 @@
 
     $('.advgb-feature-box--disabled, .slider--disabled').bind( 'click', function(e) {
         e.preventDefault();
-        window.open( 'https://publishpress.com/blocks/' );
+        window.open( 'https://publishpress.com/links/blocks-banner' );
     });
 
     // Toggle to save a single feature at the time
