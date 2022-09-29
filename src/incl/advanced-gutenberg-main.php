@@ -2422,7 +2422,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $advgb_settings                                 = get_option( 'advgb_settings' );
 
                 $advgb_settings['enable_blocks_spacing']        = isset( $_POST['enable_blocks_spacing'] ) ? 1 : 0;
-                $advgb_settings['disable_wpautop']              = isset( $_POST['disable_wpautop'] ) ? 1 : 0;
+                $advgb_settings['disable_wpautop']              = isset( $_POST['disable_wpautop'] ) ? 1 : 0; // @TODO Remove later
                 $advgb_settings['enable_columns_visual_guide']  = isset( $_POST['enable_columns_visual_guide'] ) ? 1 : 0;
                 $advgb_settings['blocks_spacing']               = (int) $_POST['blocks_spacing'];
                 $advgb_settings['blocks_icon_color']            = sanitize_hex_color( $_POST['blocks_icon_color'] );
@@ -5732,6 +5732,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 		}
 
         /**
+         * @TODO Remove later
          * Check to disable autop used to prevent unwanted paragraphs to blocks
          *
          * @param string $filter_name filter name; 'the_content' or 'widget_block_content'

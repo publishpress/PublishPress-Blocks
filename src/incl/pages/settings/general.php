@@ -4,15 +4,29 @@ defined( 'ABSPATH' ) || die;
 $enable_blocks_spacing          = $this->getOptionSetting( 'advgb_settings', 'enable_blocks_spacing', 'checkbox', 0 );
 $blocks_spacing                 = $this->getOptionSetting( 'advgb_settings', 'blocks_spacing', 'text', 0 );
 $editor_width                   = $this->getOptionSetting( 'advgb_settings', 'editor_width', 'text', '0' );
-$disable_wpautop_checked        = $this->getOptionSetting( 'advgb_settings', 'disable_wpautop', 'checkbox', 0 );
 $enable_columns_visual_guide    = $this->getOptionSetting( 'advgb_settings', 'enable_columns_visual_guide', 'checkbox', 1 );
 $blocks_icon_color              = $this->getOptionSetting( 'advgb_settings', 'blocks_icon_color', 'text', '#655997' );
 
-// Replace old default color with the new one
-if( $blocks_icon_color === '#5952de' ) {
-    $blocks_icon_color  = '#655997';
-    $advgb_settings     = get_option( 'advgb_settings' );
-    $advgb_settings['blocks_icon_color'] = $blocks_icon_color;
+// Disabled since 3.0.0 - @TODO Remove later
+$disable_wpautop_checked        = $this->getOptionSetting( 'advgb_settings', 'disable_wpautop', 'checkbox', 0 );
+
+// Replace old default icon color and disable wpautop since 3.0.0 - @TODO Remove later
+if( $blocks_icon_color === '#5952de' || $disable_wpautop_checked === 'checked' ) {
+
+    $advgb_settings = get_option( 'advgb_settings' );
+
+    // Replace old default color since 3.0.0 - Remove @TODO later
+    if( $blocks_icon_color === '#5952de' ) {
+        $blocks_icon_color = '#655997';
+        $advgb_settings['blocks_icon_color'] = $blocks_icon_color;
+    }
+
+    // Force to be disabled since 3.0.0 - Remove @TODO later
+    if( $disable_wpautop_checked === 'checked' ) {
+        $disable_wpautop_checked = '';
+        $advgb_settings['disable_wpautop'] = 0;
+    }
+
     update_option( 'advgb_settings', $advgb_settings );
 }
 ?>
@@ -134,7 +148,7 @@ if( $blocks_icon_color === '#5952de' ) {
                 </label>
             </td>
         </tr>
-        <tr>
+        <tr style="display: none;">
             <th scope="row">
                 <?php _e( 'Remove autop', 'advanced-gutenberg' ) ?>
             </th>
