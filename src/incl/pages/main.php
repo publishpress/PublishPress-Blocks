@@ -61,8 +61,18 @@ defined( 'ABSPATH' ) || die;
                                 '<span class="advgb-label-beta">',
                                 '</span>'
                             ),
-                            'description' => __(
-                                ' If some blocks are not listed in Block permissions, try enabling this feature and be sure all the blocks are saved.', 'advanced-gutenberg'
+                            'description' => sprintf(
+                                __(
+                                    'If some blocks are not listed in Block permissions, try enabling this feature and be sure all the blocks are saved. %s',
+                                    'advanced-gutenberg'
+                                ),
+                                sprintf(
+                                    '<span class="dashicons dashicons-info advgb_qtip" data-qtip="%s"></span>',
+                                    esc_attr__(
+                                        'To be sure all the blocks are saved in our system, simply go to Posts and edit one without making changes either updating. Our system will save the blocks in the background.',
+                                        'advanced-gutenberg'
+                                    )
+                                )
                             ),
                             'default' => 0,
                             'access' => true

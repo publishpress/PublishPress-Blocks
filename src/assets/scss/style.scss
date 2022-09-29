@@ -145,6 +145,14 @@ body[class*="_page_advgb_"] #wpcontent {
         @media (max-width: 979px) {
           height: auto;
         }
+
+        .dashicons {
+          color: $gray;
+
+          &:hover {
+            color: $dark-light;
+          }
+        }
       }
 
       .advgb-feature-setting {
