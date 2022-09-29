@@ -1787,7 +1787,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 ],
                 [
                     'slug' => 'advgb_custom_styles',
-                    'title' => esc_html__( 'Custom Styles', 'advanced-gutenberg' ),
+                    'title' => esc_html__( 'Block Styles', 'advanced-gutenberg' ),
                     'callback' => 'loadCustomStylesPage',
                     'order' => 5,
                     'enabled' => $this->settingIsEnabled( 'enable_custom_styles' )
@@ -1853,7 +1853,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 /* Add CSS classes to these submenus to dynamically show/hide them
                  * through main page enable/disable features
-                 * e.g. <li class="advgb_custom_styles-menu-item"><a href="admin.php?page=advgb_custom_styles" class="advgb_custom_styles-menu-item">Custom Styles</a></li>
+                 * e.g. <li class="advgb_custom_styles-menu-item"><a href="admin.php?page=advgb_custom_styles" class="advgb_custom_styles-menu-item">Block Styles</a></li>
                  */
                 $submenu_slugs              = [];
                 $submenu_slugs_conditions   = [];
@@ -2721,7 +2721,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Load Custom Styles in <head> in frontend
+         * Load Block Styles in <head> in frontend
          *
          * @return void
          */
@@ -2733,7 +2733,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Get Custom Styles in use in Contennt
+         * Get Block Styles in use in Contennt
          *
          * @return string
          */
@@ -2761,7 +2761,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Load Custom Styles in <head> in admin
+         * Load Block Styles in <head> in admin
          *
          * @return void
          */

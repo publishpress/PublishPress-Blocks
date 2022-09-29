@@ -31,14 +31,14 @@ defined( 'ABSPATH' ) || die;
                             'name' => 'enable_advgb_blocks',
                             'title' => __( 'PublishPress Blocks', 'advanced-gutenberg' ),
                             'description' => __(
-                                'If disabled, blocks from PublishPress Blocks plugin won\'t be available.', 'advanced-gutenberg'
+                                'Enable extra blocks including content displays, sliders, buttons, icons, tabs, accordions, and more.', 'advanced-gutenberg'
                             ),
                             'default' => 1,
                             'access' => true
                         ],
                         [
                             'name' => 'enable_custom_styles',
-                            'title' => __( 'Custom Styles', 'advanced-gutenberg' ),
+                            'title' => __( 'Block Styles', 'advanced-gutenberg' ),
                             'description' => __(
                                 'You can add your own CSS styles for your blocks. Anyone editing posts can quickly add the styles to blocks.', 'advanced-gutenberg'
                             ),
@@ -61,18 +61,9 @@ defined( 'ABSPATH' ) || die;
                                 '<span class="advgb-label-beta">',
                                 '</span>'
                             ),
-                            'description' => sprintf(
-                                __(
-                                    'If some blocks are not listed in Block permissions, try enabling this feature and be sure all the blocks are saved. %s',
-                                    'advanced-gutenberg'
-                                ),
-                                sprintf(
-                                    '<span class="dashicons dashicons-info advgb_qtip" data-qtip="%s"></span>',
-                                    esc_attr__(
-                                        'To be sure all the blocks are saved in our system, simply go to Posts and edit one without making changes either updating. Our system will save the blocks in the background.',
-                                        'advanced-gutenberg'
-                                    )
-                                )
+                            'description' => __(
+                                'If some blocks are not listed in Block Permissions, try enabling this feature.',
+                                'advanced-gutenberg'
                             ),
                             'default' => 0,
                             'access' => true
@@ -81,7 +72,7 @@ defined( 'ABSPATH' ) || die;
                             'name' => 'enable_core_blocks_features',
                             'title' => __( 'Core Blocks Features', 'advanced-gutenberg' ),
                             'description' => __(
-                                'Google Fonts support to core Paragraph and Heading blocks.', 'advanced-gutenberg'
+                                'Add Google Fonts support to core blocks including paragraphs and headings.', 'advanced-gutenberg'
                             ),
                             'default' => 1,
                             'access' => $isPro // Feature available on pro only. In free we display a placeholder.
