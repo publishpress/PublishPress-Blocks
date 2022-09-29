@@ -3052,6 +3052,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                 ?>
                                 <input type="hidden" name="advgb_page_slug" id="advgb_page_slug" value="<?php esc_attr_e( $_GET['page'] ) ?>" />
                             <?php } ?>
+                            <input type="hidden" name="advgb_feature" id="advgb_feature" value="<?php echo $feature ?>" />
                             <div>
                             <select name="user_role" id="user_role">
                                 <?php

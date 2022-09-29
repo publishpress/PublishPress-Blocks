@@ -312,6 +312,15 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page ) {
             }
         });
 
+        // Set "Enable or disable all blocks" as enabled for not saved user roles
+        var feature = $('#advgb_feature').val();
+        if( typeof feature !== 'undefined' &&
+            ! advgbCUserRole[feature].active_blocks.length &&
+            ! advgbCUserRole[feature].inactive_blocks.length
+        ) {
+            $('#toggle_all_blocks').prop('checked', true);
+        }
+
         // Search blocks function
         $('.blocks-search-input').on('input', function () {
             var searchKey = $(this).val().trim().toLowerCase();
