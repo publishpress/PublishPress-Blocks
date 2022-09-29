@@ -68,15 +68,6 @@ defined( 'ABSPATH' ) || die;
                             'access' => true
                         ],
                         [
-                            'name' => 'enable_pp_branding',
-                            'title' => __( 'PublishPress Branding', 'advanced-gutenberg' ),
-                            'description' => __(
-                                'Display PublishPress logo and links in the footer of the admin pages.', 'advanced-gutenberg'
-                            ),
-                            'default' => 1,
-                            'access' => $isPro // Feature available on pro only. In free we display a placeholder.
-                        ],
-                        [
                             'name' => 'enable_core_blocks_features',
                             'title' => __( 'Core Blocks Features', 'advanced-gutenberg' ),
                             'description' => __(
