@@ -81,6 +81,7 @@ if( $blocks_icon_color === '#5952de' ) {
                            id="blocks_icon_color"
                            class="minicolors minicolors-input"
                            value="<?php echo esc_attr( $blocks_icon_color ) ?>"
+                           style="width:100px"
                     />
                 </label>
                 <p class="description">
