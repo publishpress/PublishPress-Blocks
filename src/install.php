@@ -41,7 +41,7 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
         update_option('advgb_settings', array(
             'gallery_lightbox' => 1,
             'gallery_lightbox_caption' => '1',
-            'blocks_icon_color' => '#5952de',
+            'blocks_icon_color' => '#655897',
             'disable_wpautop' => 0,
             'enable_columns_visual_guide' => 1,
             'enable_block_access' => 1,

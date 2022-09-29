@@ -576,7 +576,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $custom_styles_data     = get_option('advgb_custom_styles');
             $recaptcha_config       = get_option('advgb_recaptcha_config');
             $recaptcha_config       = $recaptcha_config !== false ? $recaptcha_config : array('recaptcha_enable' => 0);
-            $blocks_icon_color      = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#5952de';
+            $blocks_icon_color      = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#655897';
             $rp_default_thumb       = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
             $icons                  = array();
             $icons['material']      = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
@@ -2424,7 +2424,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $advgb_settings['enable_blocks_spacing']        = isset( $_POST['enable_blocks_spacing'] ) ? 1 : 0;
                 $advgb_settings['disable_wpautop']              = isset( $_POST['disable_wpautop'] ) ? 1 : 0;
                 $advgb_settings['enable_columns_visual_guide']  = isset( $_POST['enable_columns_visual_guide'] ) ? 1 : 0;
-                $advgb_settings['google_api_key']               = sanitize_text_field( $_POST['google_api_key'] );
                 $advgb_settings['blocks_spacing']               = (int) $_POST['blocks_spacing'];
                 $advgb_settings['blocks_icon_color']            = sanitize_hex_color( $_POST['blocks_icon_color'] );
                 $advgb_settings['editor_width']                 = sanitize_text_field( $_POST['editor_width'] );
@@ -2471,37 +2470,26 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     exit;
                 }
             }
-            // Images settings
-            elseif ( isset( $_POST['save_settings_features'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            // Maps settings
+            elseif ( isset( $_POST['save_settings_maps'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
             {
                 if (
                     ! wp_verify_nonce(
-                        sanitize_key( $_POST['advgb_settings_features_nonce_field'] ),
-                        'advgb_settings_features_nonce'
+                        sanitize_key( $_POST['advgb_settings_maps_nonce_field'] ),
+                        'advgb_settings_maps_nonce'
                     )
                 ) {
                     return false;
                 }
 
-                $advgb_settings                         = get_option( 'advgb_settings' );
+                $advgb_settings                     = get_option( 'advgb_settings' );
 
-                $advgb_settings['block_controls']       = isset( $_POST['block_controls'] ) ? 1 : 0;
-                $advgb_settings['enable_block_access']  = isset( $_POST['enable_block_access'] ) ? 1 : 0;
-                $advgb_settings['block_extend']         = isset( $_POST['block_extend'] ) ? 1 : 0;
-                $advgb_settings['enable_custom_styles'] = isset( $_POST['enable_custom_styles'] ) ? 1 : 0;
-                $advgb_settings['enable_advgb_blocks']  = isset( $_POST['enable_advgb_blocks'] ) ? 1 : 0;
-
-                // Pro
-                if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
-                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_setting_set_value' ) ) {
-                        $advgb_settings['enable_core_blocks_features'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_core_blocks_features' );
-                    }
-                }
+                $advgb_settings['google_api_key']   = sanitize_text_field( $_POST['google_api_key'] );
 
                 update_option( 'advgb_settings', $advgb_settings );
 
                 if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
-                    wp_safe_redirect( admin_url( 'admin.php?page=advgb_settings&tab=features&save=success' ) );
+                    wp_safe_redirect( admin_url( 'admin.php?page=advgb_settings&tab=maps&save=success' ) );
                     exit;
                 }
             }

@@ -39,6 +39,10 @@ $current_tab = isset( $_GET['tab'] ) && ! empty( $_GET['tab'] )
                 'slug' => 'images'
             ],
             [
+                'title' => __( 'Maps', 'advanced-gutenberg' ),
+                'slug' => 'maps'
+            ],
+            [
                 'title' => __( 'Email & Forms', 'advanced-gutenberg' ),
                 'slug' => 'forms'
             ],
@@ -47,7 +51,7 @@ $current_tab = isset( $_GET['tab'] ) && ! empty( $_GET['tab'] )
                 'slug' => 'recaptcha'
             ],
             [
-                'title' => __( 'Data export', 'advanced-gutenberg' ),
+                'title' => __( 'Data Export', 'advanced-gutenberg' ),
                 'slug' => 'data'
             ]
         );

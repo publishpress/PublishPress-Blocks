@@ -1,10 +1,9 @@
 <?php
 defined( 'ABSPATH' ) || die;
 
-$google_api_key_saved           = $this->getOptionSetting( 'advgb_settings', 'google_api_key', 'text', '' );
 $enable_blocks_spacing          = $this->getOptionSetting( 'advgb_settings', 'enable_blocks_spacing', 'checkbox', 0 );
 $blocks_spacing                 = $this->getOptionSetting( 'advgb_settings', 'blocks_spacing', 'text', 0 );
-$blocks_icon_color              = $this->getOptionSetting( 'advgb_settings', 'blocks_icon_color', 'text', '#5952de' );
+$blocks_icon_color              = $this->getOptionSetting( 'advgb_settings', 'blocks_icon_color', 'text', '#655897' );
 $editor_width                   = $this->getOptionSetting( 'advgb_settings', 'editor_width', 'text', '0' );
 $disable_wpautop_checked        = $this->getOptionSetting( 'advgb_settings', 'disable_wpautop', 'checkbox', 0 );
 $enable_columns_visual_guide    = $this->getOptionSetting( 'advgb_settings', 'enable_columns_visual_guide', 'checkbox', 1 );
@@ -26,58 +25,6 @@ $enable_columns_visual_guide    = $this->getOptionSetting( 'advgb_settings', 'en
         }
         ?>
 
-        <tr>
-            <th scope="row">
-                <?php _e( 'Remove autop', 'advanced-gutenberg' ) ?>
-            </th>
-            <td>
-                <label>
-                    <input type="checkbox" name="disable_wpautop"
-                           id="ag_disable_wpautop"
-                           value="1"
-                        <?php echo esc_attr( $disable_wpautop_checked ) ?>
-                    />
-                    <?php
-                    _e(
-                        'Autop WordPress function is used to prevent unwanted paragraphs to be added',
-                        'advanced-gutenberg'
-                    )
-                    ?>
-                </label>
-            </td>
-        </tr>
-        <tr<?php echo ( ! $this->settingIsEnabled( 'enable_advgb_blocks' ) ? ' style="display:none;"' : '' ) ?>>
-            <th scope="row">
-                <?php _e( 'Google API key', 'advanced-gutenberg' ) ?>
-            </th>
-            <td>
-                <label>
-                    <input type="text"
-                           name="google_api_key"
-                           id="google_api_key"
-                           class="regular-text"
-                           value="<?php echo esc_attr( $google_api_key_saved ) ?>"
-                    />
-                </label>
-                <p class="description">
-                    <a target="_blank"
-                       href="https://developers.google.com/maps/documentation/javascript/get-api-key">
-                        <?php
-                        esc_html_e(
-                            'How to create a Google API Key',
-                            'advanced-gutenberg'
-                        )
-                        ?>
-                    </a><br/>
-                    <?php
-                    _e(
-                        'A Google API key is required to use the Map block without any warning.',
-                        'advanced-gutenberg'
-                    );
-                    ?>
-                </p>
-            </td>
-        </tr>
         <tr>
             <th scope="row">
                 <?php _e( 'Enable blocks spacing', 'advanced-gutenberg' ) ?>
@@ -172,6 +119,26 @@ $enable_columns_visual_guide    = $this->getOptionSetting( 'advgb_settings', 'en
                     <?php
                     _e(
                         'Visual guide for PublishPress Blocks Columns block',
+                        'advanced-gutenberg'
+                    )
+                    ?>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <?php _e( 'Remove autop', 'advanced-gutenberg' ) ?>
+            </th>
+            <td>
+                <label>
+                    <input type="checkbox" name="disable_wpautop"
+                           id="ag_disable_wpautop"
+                           value="1"
+                        <?php echo esc_attr( $disable_wpautop_checked ) ?>
+                    />
+                    <?php
+                    _e(
+                        'Autop WordPress function is used to prevent unwanted paragraphs to be added',
                         'advanced-gutenberg'
                     )
                     ?>
