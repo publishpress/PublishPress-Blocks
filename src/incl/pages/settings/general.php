@@ -3,10 +3,18 @@ defined( 'ABSPATH' ) || die;
 
 $enable_blocks_spacing          = $this->getOptionSetting( 'advgb_settings', 'enable_blocks_spacing', 'checkbox', 0 );
 $blocks_spacing                 = $this->getOptionSetting( 'advgb_settings', 'blocks_spacing', 'text', 0 );
-$blocks_icon_color              = $this->getOptionSetting( 'advgb_settings', 'blocks_icon_color', 'text', '#655897' );
 $editor_width                   = $this->getOptionSetting( 'advgb_settings', 'editor_width', 'text', '0' );
 $disable_wpautop_checked        = $this->getOptionSetting( 'advgb_settings', 'disable_wpautop', 'checkbox', 0 );
 $enable_columns_visual_guide    = $this->getOptionSetting( 'advgb_settings', 'enable_columns_visual_guide', 'checkbox', 1 );
+$blocks_icon_color              = $this->getOptionSetting( 'advgb_settings', 'blocks_icon_color', 'text', '#655897' );
+
+// Replace old default color with the new one
+if( $blocks_icon_color === '#5952de' ) {
+    $blocks_icon_color  = '#655897';
+    $advgb_settings     = get_option( 'advgb_settings' );
+    $advgb_settings['blocks_icon_color'] = sanitize_hex_color( $blocks_icon_color );
+    update_option( 'advgb_settings', $advgb_settings );
+}
 ?>
 <form method="post">
     <?php wp_nonce_field( 'advgb_settings_general_nonce', 'advgb_settings_general_nonce_field' ) ?>
