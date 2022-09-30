@@ -3,8 +3,8 @@
  * Plugin Name: PublishPress Blocks
  * Plugin URI: https://publishpress.com/blocks/
  * Description: PublishPress Blocks has everything you need to build professional websites with the Gutenberg editor.
- * Version: 2.14.2
- * Tested up to: 6.0.1
+ * Version: 3.0.0b5
+ * Tested up to: 6.0.2
  * Author: PublishPress
  * Author URI: https://publishpress.com/
  * License: GPL2
@@ -56,15 +56,12 @@ if (class_exists('PublishPressInstanceProtection\\Config')) {
 if (! defined('ADVANCED_GUTENBERG_LOADED')) {
 
     if (! defined('ADVANCED_GUTENBERG_VERSION')) {
-        define('ADVANCED_GUTENBERG_VERSION', '2.14.2');
+        define('ADVANCED_GUTENBERG_VERSION', '3.0.0b5');
     }
 
     if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
         define('ADVANCED_GUTENBERG_PLUGIN', __FILE__);
     }
-
-    // Code shared with Pro version
-    require_once __DIR__ . '/init.php';
 
     // Vendor and Ask-for-Review
     if(
@@ -80,7 +77,18 @@ if (! defined('ADVANCED_GUTENBERG_LOADED')) {
         if( file_exists(__DIR__ . '/review/review-request.php') ) {
             require_once __DIR__ . '/review/review-request.php';
         }
+
+        // Display ads for Pro version
+        if ( ! defined( 'PP_VERSION_NOTICES_LOADED' ) ) {
+            $noticesPath = __DIR__ . '/vendor/publishpress/wordpress-version-notices/includes.php';
+            if ( file_exists( $noticesPath ) ) {
+                require_once $noticesPath;
+            }
+        }
     }
+
+    // Code shared with Pro version
+    require_once __DIR__ . '/init.php';
 
     define('ADVANCED_GUTENBERG_LOADED', true);
 }

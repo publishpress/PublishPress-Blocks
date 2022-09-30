@@ -1,8 +1,4 @@
 jQuery(document).ready(function ($) {
-    $('.ju-top-tabs .tab a').click(function () {
-        var currentText = $(this).text().trim();
-        $(this).closest('.ju-content-wrapper').find('.advgb-settings-header').text(currentText);
-    });
 
     $('.advgb_qtip').qtip({
         content: {
