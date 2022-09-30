@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress Blocks\n"
-"POT-Creation-Date: 2022-09-30 12:27-0500\n"
+"POT-Creation-Date: 2022-09-30 13:42-0500\n"
 "PO-Revision-Date: 2020-12-04 12:47-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -3627,7 +3627,8 @@ msgstr ""
 msgid "Want more features in your %s blocks?"
 msgstr ""
 
-#: assets/blocks/pro-ad.js:172 incl/pages/main.php:112
+#: assets/blocks/pro-ad.js:172 incl/advanced-gutenberg-main.php:824
+#: incl/pages/main.php:112
 msgid "Upgrade to Pro"
 msgstr ""
 
@@ -3680,6 +3681,13 @@ msgstr ""
 #: incl/advanced-gutenberg-main.php:252 incl/advanced-gutenberg-main.php:1783
 #: incl/pages/block-settings.php:63 incl/pages/main.php:8 incl/pages/main.php:32
 msgid "PublishPress Blocks"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:803
+#, php-format
+msgid ""
+"You're using PublishPress Blocks Free. The Pro version has more features and "
+"support. %sUpgrade to Pro%s"
 msgstr ""
 
 #: incl/advanced-gutenberg-main.php:1066 incl/advanced-gutenberg-main.php:1203

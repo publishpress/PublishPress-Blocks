@@ -800,7 +800,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     \PPVersionNotices\Module\TopNotice\Module::SETTINGS_FILTER,
                     function ($settings) {
                         $settings['advanced-gutenberg'] = [
-                            'message' => 'You\'re using PublishPress Blocks Free. The Pro version has more features and support. %sUpgrade to Pro%s',
+                            'message' => __( 'You\'re using PublishPress Blocks Free. The Pro version has more features and support. %sUpgrade to Pro%s', 'advanced-gutenberg' ),
                             'link'    => 'https://publishpress.com/links/blocks-banner',
                             'screens' => [
                                 ['base' => 'toplevel_page_advgb_main'],
@@ -821,7 +821,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     function ( $settings ) {
                         $settings['advanced-gutenberg'] = [
                             'parent' => 'advgb_main',
-                            'label'  => 'Upgrade to Pro',
+                            'label'  => __( 'Upgrade to Pro', 'advanced-gutenberg' ),
                             'link'   => 'https://publishpress.com/links/blocks-menu',
                         ];
 

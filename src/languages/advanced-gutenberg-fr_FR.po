@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Gutenberg Blocks &#8211; PublishPress Blocks "
 "Gutenberg Editor Plugin - Stable (latest release)\n"
-"POT-Creation-Date: 2022-09-30 12:27-0500\n"
-"PO-Revision-Date: 2022-09-30 12:28-0500\n"
+"POT-Creation-Date: 2022-09-30 13:42-0500\n"
+"PO-Revision-Date: 2022-09-30 13:44-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -3706,7 +3706,8 @@ msgstr "PublishPress"
 msgid "Want more features in your %s blocks?"
 msgstr "Voulez-vous plus de fonctionnalités dans vos blocs %s ?"
 
-#: assets/blocks/pro-ad.js:172 incl/pages/main.php:112
+#: assets/blocks/pro-ad.js:172 incl/advanced-gutenberg-main.php:824
+#: incl/pages/main.php:112
 msgid "Upgrade to Pro"
 msgstr "Mettre à niveau vers Pro"
 
@@ -3761,6 +3762,13 @@ msgstr "Configuration par défaut"
 #: incl/pages/main.php:32
 msgid "PublishPress Blocks"
 msgstr "PublishPress Blocks"
+
+#: incl/advanced-gutenberg-main.php:803
+#, php-format
+msgid ""
+"You're using PublishPress Blocks Free. The Pro version has more features and "
+"support. %sUpgrade to Pro%s"
+msgstr ""
 
 #: incl/advanced-gutenberg-main.php:1066 incl/advanced-gutenberg-main.php:1203
 #: incl/advanced-gutenberg-main.php:1259
