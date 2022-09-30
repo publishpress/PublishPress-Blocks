@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - Gutenberg Blocks &#8211; PublishPress Blocks "
 "Gutenberg Editor Plugin - Stable (latest release)\n"
 "POT-Creation-Date: 2022-09-30 12:27-0500\n"
-"PO-Revision-Date: 2022-09-30 13:20-0500\n"
+"PO-Revision-Date: 2022-09-30 13:28-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_MX\n"
@@ -3852,7 +3852,7 @@ msgid ""
 "Dashboard."
 msgstr ""
 "Esta función está deshabilitada. Para utilizarla, vuelve a habilitarla a "
-"través del Panel de control."
+"través del escritorio."
 
 #: incl/advanced-gutenberg-main.php:2162
 #, php-format
