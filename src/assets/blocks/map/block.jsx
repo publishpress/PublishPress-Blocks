@@ -1437,7 +1437,7 @@
     };
 
     registerBlockType( 'advgb/map', {
-        title: __( 'Map', 'advanced-gutenberg' ),
+        title: __( 'Map - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Display a location using Google Maps.', 'advanced-gutenberg' ),
         icon: {
             src: mapBlockIcon,

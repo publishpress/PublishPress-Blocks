@@ -315,7 +315,7 @@
     };
 
     registerBlockType('advgb/list', {
-        title: __('Advanced List', 'advanced-gutenberg'),
+        title: __('List - PublishPress', 'advanced-gutenberg'),
         description: __('List block with custom icons and styles.', 'advanced-gutenberg'),
         icon: {
             src: listBlockIcon,

@@ -973,7 +973,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
     };
 
     registerBlockType( 'advgb/login-form', {
-        title: __( 'Login/Register Form', 'advanced-gutenberg' ),
+        title: __( 'Login and Register - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Create a login form for your post/page.', 'advanced-gutenberg' ),
         icon: {
             src: loginFormBlockIcon,

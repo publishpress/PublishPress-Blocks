@@ -351,7 +351,7 @@
     };
 
     registerBlockType( 'advgb/tabs', {
-        title: __( 'Tabs', 'advanced-gutenberg' ),
+        title: __( 'Tabs - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Create horizontal or vertical tabs to display your content.', 'advanced-gutenberg' ),
         icon: {
             src: tabsBlockIcon,

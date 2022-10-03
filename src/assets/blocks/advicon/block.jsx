@@ -506,8 +506,8 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
     };
 
     registerBlockType( 'advgb/icon', {
-        title: __( 'Advanced Icon', 'advanced-gutenberg' ),
-        description: __( 'Advanced icon block with more options and styles.', 'advanced-gutenberg' ),
+        title: __( 'Icon - PublishPress', 'advanced-gutenberg' ),
+        description: __( 'Icon block with more options and styles.', 'advanced-gutenberg' ),
         icon: {
             src: blockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,

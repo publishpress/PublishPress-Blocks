@@ -397,7 +397,7 @@
     };
 
     registerBlockType( 'advgb/woo-products', {
-        title: __( 'Woo Products', 'advanced-gutenberg' ),
+        title: __( 'Woo Products - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Listing your products in a easy way.', 'advanced-gutenberg' ),
         icon: {
             src: advProductsBlockIcon,
