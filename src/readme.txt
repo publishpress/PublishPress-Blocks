@@ -261,6 +261,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Add: Separated admin pages
   * Add: Admin dashboard
   * Add: PublishPress brand color as default icon color
+  * Add: New names for PublishPress blocks
 
 = 2.14.2 - 25 Aug 2022 =
   * Add: Extend supported blocks setting to support blocks not listed in Block access
