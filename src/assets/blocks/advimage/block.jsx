@@ -381,7 +381,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'image', 'advanced-gutenberg' ), __( 'photo', 'advanced-gutenberg' ), __( 'box', 'advanced-gutenberg' ) ],
+        keywords: [ __( 'image', 'advanced-gutenberg' ), __( 'advanced image', 'advanced-gutenberg' ), __( 'photo', 'advanced-gutenberg' ), __( 'box', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
         example: {
             attributes: {

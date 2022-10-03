@@ -709,7 +709,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'button', 'advanced-gutenberg' ), __( 'link', 'advanced-gutenberg' ) ],
+        keywords: [ __( 'button', 'advanced-gutenberg' ), __( 'advanced button', 'advanced-gutenberg' ), __( 'link', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
         example: {
             attributes: {

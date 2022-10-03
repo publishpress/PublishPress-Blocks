@@ -1377,7 +1377,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [__('table', 'advanced-gutenberg'), __('cell', 'advanced-gutenberg'), __('data', 'advanced-gutenberg')],
+        keywords: [__('table', 'advanced-gutenberg'), __( 'advanced table', 'advanced-gutenberg' ), __('cell', 'advanced-gutenberg'), __('data', 'advanced-gutenberg')],
         attributes: {
             head: {
                 type: 'array',

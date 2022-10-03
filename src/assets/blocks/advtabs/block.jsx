@@ -700,7 +700,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: "advgb-category",
-        keywords: [ __( 'tabs', 'advanced-gutenberg' ), __( 'cards', 'advanced-gutenberg' ) ],
+        keywords: [ __( 'tabs', 'advanced-gutenberg' ), __( 'advanced tabs', 'advanced-gutenberg' ), __( 'cards', 'advanced-gutenberg' ) ],
         attributes: tabBlockAttrs,
         example: {
             attributes: {

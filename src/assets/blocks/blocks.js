@@ -7288,7 +7288,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('accordion', 'advanced-gutenberg'), __('list', 'advanced-gutenberg'), __('faq', 'advanced-gutenberg')],
+        keywords: [__('accordion', 'advanced-gutenberg'), __('advanced accordion', 'advanced-gutenberg'), __('list', 'advanced-gutenberg'), __('faq', 'advanced-gutenberg')],
         attributes: blockAttrs,
         example: {
             attributes: {
@@ -8196,7 +8196,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('button', 'advanced-gutenberg'), __('link', 'advanced-gutenberg')],
+        keywords: [__('button', 'advanced-gutenberg'), __('advanced button', 'advanced-gutenberg'), __('link', 'advanced-gutenberg')],
         attributes: blockAttrs,
         example: {
             attributes: {
@@ -9026,7 +9026,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('icon', 'advanced-gutenberg')],
+        keywords: [__('icon', 'advanced-gutenberg'), __('advanced icon', 'advanced-gutenberg')],
         attributes: blockAttrs,
         supports: {
             align: ["left", "center", "right"]
@@ -9746,7 +9746,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('image', 'advanced-gutenberg'), __('photo', 'advanced-gutenberg'), __('box', 'advanced-gutenberg')],
+        keywords: [__('image', 'advanced-gutenberg'), __('advanced image', 'advanced-gutenberg'), __('photo', 'advanced-gutenberg'), __('box', 'advanced-gutenberg')],
         attributes: blockAttrs,
         example: {
             attributes: {
@@ -10308,7 +10308,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('list', 'advanced-gutenberg'), __('icon', 'advanced-gutenberg')],
+        keywords: [__('list', 'advanced-gutenberg'), __('advanced list', 'advanced-gutenberg'), __('icon', 'advanced-gutenberg')],
         attributes: listBlockAttrs,
         example: {
             attributes: {
@@ -12009,7 +12009,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('table', 'advanced-gutenberg'), __('cell', 'advanced-gutenberg'), __('data', 'advanced-gutenberg')],
+        keywords: [__('table', 'advanced-gutenberg'), __('advanced table', 'advanced-gutenberg'), __('cell', 'advanced-gutenberg'), __('data', 'advanced-gutenberg')],
         attributes: {
             head: {
                 type: 'array',
@@ -13316,7 +13316,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: "advgb-category",
-        keywords: [__('tabs', 'advanced-gutenberg'), __('cards', 'advanced-gutenberg')],
+        keywords: [__('tabs', 'advanced-gutenberg'), __('advanced tabs', 'advanced-gutenberg'), __('cards', 'advanced-gutenberg')],
         attributes: tabBlockAttrs,
         example: {
             attributes: {
@@ -14678,7 +14678,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('video', 'advanced-gutenberg'), __('embed', 'advanced-gutenberg'), __('media', 'advanced-gutenberg')],
+        keywords: [__('video', 'advanced-gutenberg'), __('advanced video', 'advanced-gutenberg'), __('embed', 'advanced-gutenberg'), __('media', 'advanced-gutenberg')],
         attributes: blockAttrs,
         example: {
             attributes: {
@@ -15812,7 +15812,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('columns', 'advanced-gutenberg'), __('row', 'advanced-gutenberg'), __('layout', 'advanced-gutenberg')],
+        keywords: [__('columns', 'advanced-gutenberg'), __('columns manager', 'advanced-gutenberg'), __('row', 'advanced-gutenberg'), __('layout', 'advanced-gutenberg')],
         supports: {
             align: ['wide', 'full'],
             html: false

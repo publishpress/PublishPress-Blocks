@@ -608,6 +608,7 @@
         category: 'advgb-category',
         keywords: [
             __( 'video', 'advanced-gutenberg' ),
+            __( 'advanced video', 'advanced-gutenberg' ),
             __( 'embed', 'advanced-gutenberg' ),
             __( 'media', 'advanced-gutenberg' )
         ],

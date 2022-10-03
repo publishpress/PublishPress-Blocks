@@ -513,7 +513,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'icon', 'advanced-gutenberg' ) ],
+        keywords: [ __( 'icon', 'advanced-gutenberg' ), __( 'advanced icon', 'advanced-gutenberg' ), ],
         attributes: blockAttrs,
         supports: {
             align: ["left", "center", "right"],
