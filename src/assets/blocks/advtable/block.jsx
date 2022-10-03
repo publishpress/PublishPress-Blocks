@@ -1370,14 +1370,14 @@
     }
 
     registerBlockType('advgb/table', {
-        title: __('Advanced Table', 'advanced-gutenberg'),
-        description: __('Advanced table block with more styles and functions.', 'advanced-gutenberg'),
+        title: __('Table - PublishPress', 'advanced-gutenberg'),
+        description: __('Table block with more styles and functions.', 'advanced-gutenberg'),
         icon: {
             src: tableBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [__('table', 'advanced-gutenberg'), __('cell', 'advanced-gutenberg'), __('data', 'advanced-gutenberg')],
+        keywords: [__('table', 'advanced-gutenberg'), __( 'advanced table', 'advanced-gutenberg' ), __('cell', 'advanced-gutenberg'), __('data', 'advanced-gutenberg')],
         attributes: {
             head: {
                 type: 'array',

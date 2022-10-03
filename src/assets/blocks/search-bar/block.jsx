@@ -421,7 +421,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
     };
 
     registerBlockType('advgb/search-bar', {
-        title: __( 'Search Bar', 'advanced-gutenberg' ),
+        title: __( 'Search Bar - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Easy to create a search bar for your site.', 'advanced-gutenberg' ),
         icon: {
             src: searchBlockIcon,

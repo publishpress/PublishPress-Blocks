@@ -374,14 +374,14 @@
     };
 
     registerBlockType( 'advgb/image', {
-        title: __( 'Advanced Image', 'advanced-gutenberg' ),
-        description: __( 'Advanced image/photo block with more options and styles.', 'advanced-gutenberg' ),
+        title: __( 'Image - PublishPress', 'advanced-gutenberg' ),
+        description: __( 'Image/photo block with more options and styles.', 'advanced-gutenberg' ),
         icon: {
             src: advImageBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'image', 'advanced-gutenberg' ), __( 'photo', 'advanced-gutenberg' ), __( 'box', 'advanced-gutenberg' ) ],
+        keywords: [ __( 'image', 'advanced-gutenberg' ), __( 'advanced image', 'advanced-gutenberg' ), __( 'photo', 'advanced-gutenberg' ), __( 'box', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
         example: {
             attributes: {

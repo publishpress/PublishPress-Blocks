@@ -702,14 +702,14 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
     };
 
     registerBlockType( 'advgb/button', {
-        title: __( 'Advanced Button', 'advanced-gutenberg' ),
-        description: __( 'Advanced button block with more options and styles.', 'advanced-gutenberg' ),
+        title: __( 'Button - PublishPress', 'advanced-gutenberg' ),
+        description: __( 'Button block with more options and styles.', 'advanced-gutenberg' ),
         icon: {
             src: buttonBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'button', 'advanced-gutenberg' ), __( 'link', 'advanced-gutenberg' ) ],
+        keywords: [ __( 'button', 'advanced-gutenberg' ), __( 'advanced button', 'advanced-gutenberg' ), __( 'link', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
         example: {
             attributes: {

@@ -506,14 +506,14 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
     };
 
     registerBlockType( 'advgb/icon', {
-        title: __( 'Advanced Icon', 'advanced-gutenberg' ),
-        description: __( 'Advanced icon block with more options and styles.', 'advanced-gutenberg' ),
+        title: __( 'Icon - PublishPress', 'advanced-gutenberg' ),
+        description: __( 'Icon block with more options and styles.', 'advanced-gutenberg' ),
         icon: {
             src: blockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'icon', 'advanced-gutenberg' ) ],
+        keywords: [ __( 'icon', 'advanced-gutenberg' ), __( 'advanced icon', 'advanced-gutenberg' ), ],
         attributes: blockAttrs,
         supports: {
             align: ["left", "center", "right"],

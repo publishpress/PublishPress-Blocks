@@ -105,7 +105,7 @@
     }
 
     registerBlockType( 'advgb/tab', {
-        title: __( 'Tab Item', 'advanced-gutenberg' ),
+        title: __( 'Tab Item - PublishPress', 'advanced-gutenberg' ),
         parent: [ 'advgb/adv-tabs' ],
         icon: {
             src: tabsBlockIcon,

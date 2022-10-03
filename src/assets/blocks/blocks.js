@@ -5859,7 +5859,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/accordion', {
-        title: __('Accordion', 'advanced-gutenberg'),
+        title: __('Accordion - PublishPress', 'advanced-gutenberg'),
         description: __('Create a sliding accordion display for your content.', 'advanced-gutenberg'),
         icon: {
             src: accordionBlockIcon,
@@ -6395,7 +6395,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     );
 
     registerBlockType('advgb/accordion-item', {
-        title: __('Accordion Item', 'advanced-gutenberg'),
+        title: __('Accordion Item - PublishPress', 'advanced-gutenberg'),
         description: __('Create a sliding accordion display for your content.', 'advanced-gutenberg'),
         icon: {
             src: accordionBlockIcon,
@@ -6407,7 +6407,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         attributes: {
             header: {
                 type: 'string',
-                default: 'Header text'
+                default: __('Header text', 'advanced-gutenberg')
             },
             headerBgColor: {
                 type: 'string',
@@ -7281,14 +7281,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/accordions', {
-        title: __('Advanced Accordion', 'advanced-gutenberg'),
+        title: __('Accordion - PublishPress', 'advanced-gutenberg'),
         description: __('Create a sliding accordion display for your content.', 'advanced-gutenberg'),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('accordion', 'advanced-gutenberg'), __('list', 'advanced-gutenberg'), __('faq', 'advanced-gutenberg')],
+        keywords: [__('accordion', 'advanced-gutenberg'), __('advanced accordion', 'advanced-gutenberg'), __('list', 'advanced-gutenberg'), __('faq', 'advanced-gutenberg')],
         attributes: blockAttrs,
         example: {
             attributes: {
@@ -8189,14 +8189,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/button', {
-        title: __('Advanced Button', 'advanced-gutenberg'),
-        description: __('Advanced button block with more options and styles.', 'advanced-gutenberg'),
+        title: __('Button - PublishPress', 'advanced-gutenberg'),
+        description: __('Button block with more options and styles.', 'advanced-gutenberg'),
         icon: {
             src: buttonBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('button', 'advanced-gutenberg'), __('link', 'advanced-gutenberg')],
+        keywords: [__('button', 'advanced-gutenberg'), __('advanced button', 'advanced-gutenberg'), __('link', 'advanced-gutenberg')],
         attributes: blockAttrs,
         example: {
             attributes: {
@@ -9019,14 +9019,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/icon', {
-        title: __('Advanced Icon', 'advanced-gutenberg'),
-        description: __('Advanced icon block with more options and styles.', 'advanced-gutenberg'),
+        title: __('Icon - PublishPress', 'advanced-gutenberg'),
+        description: __('Icon block with more options and styles.', 'advanced-gutenberg'),
         icon: {
             src: blockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('icon', 'advanced-gutenberg')],
+        keywords: [__('icon', 'advanced-gutenberg'), __('advanced icon', 'advanced-gutenberg')],
         attributes: blockAttrs,
         supports: {
             align: ["left", "center", "right"]
@@ -9739,14 +9739,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/image', {
-        title: __('Advanced Image', 'advanced-gutenberg'),
-        description: __('Advanced image/photo block with more options and styles.', 'advanced-gutenberg'),
+        title: __('Image - PublishPress', 'advanced-gutenberg'),
+        description: __('Image/photo block with more options and styles.', 'advanced-gutenberg'),
         icon: {
             src: advImageBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('image', 'advanced-gutenberg'), __('photo', 'advanced-gutenberg'), __('box', 'advanced-gutenberg')],
+        keywords: [__('image', 'advanced-gutenberg'), __('advanced image', 'advanced-gutenberg'), __('photo', 'advanced-gutenberg'), __('box', 'advanced-gutenberg')],
         attributes: blockAttrs,
         example: {
             attributes: {
@@ -10301,14 +10301,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/list', {
-        title: __('Advanced List', 'advanced-gutenberg'),
+        title: __('List - PublishPress', 'advanced-gutenberg'),
         description: __('List block with custom icons and styles.', 'advanced-gutenberg'),
         icon: {
             src: listBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('list', 'advanced-gutenberg'), __('icon', 'advanced-gutenberg')],
+        keywords: [__('list', 'advanced-gutenberg'), __('advanced list', 'advanced-gutenberg'), __('icon', 'advanced-gutenberg')],
         attributes: listBlockAttrs,
         example: {
             attributes: {
@@ -12002,14 +12002,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }(Component);
 
     registerBlockType('advgb/table', {
-        title: __('Advanced Table', 'advanced-gutenberg'),
-        description: __('Advanced table block with more styles and functions.', 'advanced-gutenberg'),
+        title: __('Table - PublishPress', 'advanced-gutenberg'),
+        description: __('Table block with more styles and functions.', 'advanced-gutenberg'),
         icon: {
             src: tableBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('table', 'advanced-gutenberg'), __('cell', 'advanced-gutenberg'), __('data', 'advanced-gutenberg')],
+        keywords: [__('table', 'advanced-gutenberg'), __('advanced table', 'advanced-gutenberg'), __('cell', 'advanced-gutenberg'), __('data', 'advanced-gutenberg')],
         attributes: {
             head: {
                 type: 'array',
@@ -12747,7 +12747,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 insertBlock(tabItemBlock, attributes.tabHeaders.length, clientId);
                 setAttributes({
-                    tabHeaders: [].concat(_toConsumableArray(attributes.tabHeaders), ['Tab header']),
+                    tabHeaders: [].concat(_toConsumableArray(attributes.tabHeaders), [__('Tab Header', 'advanced-gutenberg')]),
                     tabAnchors: [].concat(_toConsumableArray(attributes.tabAnchors), [''])
                 });
                 this.props.resetOrder();
@@ -13309,14 +13309,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/adv-tabs', {
-        title: __('Advanced Tabs', 'advanced-gutenberg'),
+        title: __('Tabs - PublishPress', 'advanced-gutenberg'),
         description: __('Create horizontal or vertical tabs to display your content.', 'advanced-gutenberg'),
         icon: {
             src: tabsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: "advgb-category",
-        keywords: [__('tabs', 'advanced-gutenberg'), __('cards', 'advanced-gutenberg')],
+        keywords: [__('tabs', 'advanced-gutenberg'), __('advanced tabs', 'advanced-gutenberg'), __('cards', 'advanced-gutenberg')],
         attributes: tabBlockAttrs,
         example: {
             attributes: {
@@ -13800,7 +13800,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }(Component);
 
     registerBlockType('advgb/tab', {
-        title: __('Tab Item', 'advanced-gutenberg'),
+        title: __('Tab Item - PublishPress', 'advanced-gutenberg'),
         parent: ['advgb/adv-tabs'],
         icon: {
             src: tabsBlockIcon,
@@ -14671,14 +14671,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/video', {
-        title: __('Advanced Video', 'advanced-gutenberg'),
+        title: __('Video - PublishPress', 'advanced-gutenberg'),
         description: __('Add more options and styles for videos in your Media Library.', 'advanced-gutenberg'),
         icon: {
             src: advVideoBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('video', 'advanced-gutenberg'), __('embed', 'advanced-gutenberg'), __('media', 'advanced-gutenberg')],
+        keywords: [__('video', 'advanced-gutenberg'), __('advanced video', 'advanced-gutenberg'), __('embed', 'advanced-gutenberg'), __('media', 'advanced-gutenberg')],
         attributes: blockAttrs,
         example: {
             attributes: {
@@ -15805,14 +15805,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/columns', {
-        title: __('Columns Manager', 'advanced-gutenberg'),
+        title: __('Columns - PublishPress', 'advanced-gutenberg'),
         description: __('Create flexible layouts for your content with advanced options and styles.', 'advanced-gutenberg'),
         icon: {
             src: 'layout',
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('columns', 'advanced-gutenberg'), __('row', 'advanced-gutenberg'), __('layout', 'advanced-gutenberg')],
+        keywords: [__('columns', 'advanced-gutenberg'), __('columns manager', 'advanced-gutenberg'), __('row', 'advanced-gutenberg'), __('layout', 'advanced-gutenberg')],
         supports: {
             align: ['wide', 'full'],
             html: false
@@ -16381,7 +16381,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/column', {
-        title: __('Adv. Column', 'advanced-gutenberg'),
+        title: __('Column - PublishPress', 'advanced-gutenberg'),
         parent: ['advgb/columns'],
         description: __('Column in row.', 'advanced-gutenberg'),
         icon: {
@@ -16908,7 +16908,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/contact-form', {
-        title: __('Contact Form', 'advanced-gutenberg'),
+        title: __('Contact Form - PublishPress', 'advanced-gutenberg'),
         description: __('Fastest way to create a contact form for your page.', 'advanced-gutenberg'),
         icon: {
             src: contactBlockIcon,
@@ -17060,7 +17060,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     );
 
     registerBlockType('advgb/container', {
-        title: __('Container', 'advanced-gutenberg'),
+        title: __('Container - PublishPress', 'advanced-gutenberg'),
         description: __('Block for containing other blocks.', 'advanced-gutenberg'),
         icon: {
             src: containerBlockIcon,
@@ -17691,7 +17691,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/count-up', {
-        title: __('Count Up', 'advanced-gutenberg'),
+        title: __('Count Up - PublishPress', 'advanced-gutenberg'),
         description: __('Create an animated display for important numbers.', 'advanced-gutenberg'),
         icon: {
             src: countUpBlockIcon,
@@ -18704,7 +18704,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/images-slider', {
-        title: __('Images Slider', 'advanced-gutenberg'),
+        title: __('Images Slider - PublishPress', 'advanced-gutenberg'),
         description: __('Display your images in a slider.', 'advanced-gutenberg'),
         icon: {
             src: imageSliderBlockIcon,
@@ -20339,8 +20339,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/infobox', {
-        title: __('Info Box', 'advanced-gutenberg'),
-        description: __('Advanced icon block with more options and styles.', 'advanced-gutenberg'),
+        title: __('Info Box - PublishPress', 'advanced-gutenberg'),
+        description: __('Icon block with more options and styles.', 'advanced-gutenberg'),
         icon: {
             src: blockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -21736,7 +21736,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/login-form', {
-        title: __('Login/Register Form', 'advanced-gutenberg'),
+        title: __('Login and Register - PublishPress', 'advanced-gutenberg'),
         description: __('Create a login form for your post/page.', 'advanced-gutenberg'),
         icon: {
             src: loginFormBlockIcon,
@@ -23411,7 +23411,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/map', {
-        title: __('Map', 'advanced-gutenberg'),
+        title: __('Map - PublishPress', 'advanced-gutenberg'),
         description: __('Display a location using Google Maps.', 'advanced-gutenberg'),
         icon: {
             src: mapBlockIcon,
@@ -23946,7 +23946,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }(Component);
 
     registerBlockType('advgb/newsletter', {
-        title: __('Newsletter', 'advanced-gutenberg'),
+        title: __('Newsletter - PublishPress', 'advanced-gutenberg'),
         description: __('Fastest way to create a newsletter form for your page.', 'advanced-gutenberg'),
         icon: {
             src: newsletterBlockIcon,
@@ -26277,7 +26277,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }(Component);
 
     registerBlockType('advgb/recent-posts', {
-        title: __('Content Display', 'advanced-gutenberg'),
+        title: __('Content Display - PublishPress', 'advanced-gutenberg'),
         description: __('Displays your content in grid, list, slider, frontpage, newspaper, and masonry views with beautiful layouts and styles.', 'advanced-gutenberg'),
         icon: {
             src: advRecentPostsBlockIcon,
@@ -27163,7 +27163,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/search-bar', {
-        title: __('Search Bar', 'advanced-gutenberg'),
+        title: __('Search Bar - PublishPress', 'advanced-gutenberg'),
         description: __('Easy to create a search bar for your site.', 'advanced-gutenberg'),
         icon: {
             src: searchBlockIcon,
@@ -27788,7 +27788,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/social-links', {
-        title: __('Social Links', 'advanced-gutenberg'),
+        title: __('Social Links - PublishPress', 'advanced-gutenberg'),
         description: __('Create a styling display of links to your social media profiles.', 'advanced-gutenberg'),
         icon: {
             src: socialBlockIcon,
@@ -27970,7 +27970,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var previewImageData = 'data:image/png;base64,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';
 
-    var summaryBlockTitle = __('Table of Contents', 'advanced-gutenberg');
+    var summaryBlockTitle = __('Table of Contents - PublishPress', 'advanced-gutenberg');
 
     // Add button to insert summary inside table of contents component
     (function () {
@@ -28941,7 +28941,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/tabs', {
-        title: __('Tabs', 'advanced-gutenberg'),
+        title: __('Tabs - PublishPress', 'advanced-gutenberg'),
         description: __('Create horizontal or vertical tabs to display your content.', 'advanced-gutenberg'),
         icon: {
             src: tabsBlockIcon,
@@ -29943,7 +29943,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/testimonial', {
-        title: __('Testimonial', 'advanced-gutenberg'),
+        title: __('Testimonial - PublishPress', 'advanced-gutenberg'),
         description: __('Block for creating personal or team/group information.', 'advanced-gutenberg'),
         icon: {
             src: testimonialBlockIcon,
@@ -30664,7 +30664,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/woo-products', {
-        title: __('Woo Products', 'advanced-gutenberg'),
+        title: __('Woo Products - PublishPress', 'advanced-gutenberg'),
         description: __('Listing your products in a easy way.', 'advanced-gutenberg'),
         icon: {
             src: advProductsBlockIcon,

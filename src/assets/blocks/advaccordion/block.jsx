@@ -351,14 +351,14 @@
     };
 
     registerBlockType( 'advgb/accordions', {
-        title: __( 'Advanced Accordion', 'advanced-gutenberg' ),
+        title: __( 'Accordion - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Create a sliding accordion display for your content.', 'advanced-gutenberg' ),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'accordion', 'advanced-gutenberg' ), __( 'list', 'advanced-gutenberg' ), __( 'faq', 'advanced-gutenberg' ) ],
+        keywords: [ __( 'accordion', 'advanced-gutenberg' ), __( 'advanced accordion', 'advanced-gutenberg' ), __( 'list', 'advanced-gutenberg' ), __( 'faq', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
         example: {
             attributes: {

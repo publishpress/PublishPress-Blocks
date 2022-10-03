@@ -665,7 +665,7 @@
     };
 
     registerBlockType( 'advgb/testimonial', {
-        title: __( 'Testimonial', 'advanced-gutenberg' ),
+        title: __( 'Testimonial - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Block for creating personal or team/group information.', 'advanced-gutenberg' ),
         icon: {
             src: testimonialBlockIcon,

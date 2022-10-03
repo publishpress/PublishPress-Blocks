@@ -207,7 +207,7 @@
             setAttributes( {
                 tabHeaders: [
                     ...attributes.tabHeaders,
-                    'Tab header'
+                    __( 'Tab Header', 'advanced-gutenberg' )
                 ],
                 tabAnchors: [
                     ...attributes.tabAnchors,
@@ -693,14 +693,14 @@
     };
 
     registerBlockType( 'advgb/adv-tabs', {
-        title: __( 'Advanced Tabs', 'advanced-gutenberg' ),
+        title: __( 'Tabs - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Create horizontal or vertical tabs to display your content.', 'advanced-gutenberg' ),
         icon: {
             src: tabsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: "advgb-category",
-        keywords: [ __( 'tabs', 'advanced-gutenberg' ), __( 'cards', 'advanced-gutenberg' ) ],
+        keywords: [ __( 'tabs', 'advanced-gutenberg' ), __( 'advanced tabs', 'advanced-gutenberg' ), __( 'cards', 'advanced-gutenberg' ) ],
         attributes: tabBlockAttrs,
         example: {
             attributes: {
