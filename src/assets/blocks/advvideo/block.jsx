@@ -599,7 +599,7 @@
     };
 
     registerBlockType( 'advgb/video', {
-        title: __( 'Advanced Video', 'advanced-gutenberg' ),
+        title: __( 'Video (PublishPress)', 'advanced-gutenberg' ),
         description: __( 'Add more options and styles for videos in your Media Library.', 'advanced-gutenberg' ),
         icon: {
             src: advVideoBlockIcon,

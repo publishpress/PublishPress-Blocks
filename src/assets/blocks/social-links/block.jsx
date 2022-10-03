@@ -377,7 +377,7 @@
     };
 
     registerBlockType( 'advgb/social-links', {
-        title: __( 'Social Links', 'advanced-gutenberg' ),
+        title: __( 'Social Links (PublishPress)', 'advanced-gutenberg' ),
         description: __( 'Create a styling display of links to your social media profiles.', 'advanced-gutenberg' ),
         icon: {
             src: socialBlockIcon,
