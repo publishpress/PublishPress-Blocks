@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-30 12:27-0500\n"
+"POT-Creation-Date: 2022-10-03 16:56-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -309,8 +309,9 @@ msgstr ""
 msgid "Enter header…"
 msgstr ""
 
-#: assets/blocks/blocks.js:5862 assets/blocks/pro-ad.js:116
-msgid "Accordion"
+#: assets/blocks/blocks.js:5862 assets/blocks/blocks.js:7284
+#: incl/pages/block-settings.php:52
+msgid "Accordion - PublishPress"
 msgstr ""
 
 #: assets/blocks/blocks.js:5863 assets/blocks/blocks.js:6399
@@ -350,19 +351,23 @@ msgid "Header Tag"
 msgstr ""
 
 #: assets/blocks/blocks.js:6398
-msgid "Accordion Item"
+msgid "Accordion Item - PublishPress"
 msgstr ""
 
 #: assets/blocks/blocks.js:6410
 msgid "Header text"
 msgstr ""
 
-#: assets/blocks/blocks.js:7040 assets/blocks/blocks.js:7284
+#: assets/blocks/blocks.js:7040
 msgid "Advanced Accordion"
 msgstr ""
 
 #: assets/blocks/blocks.js:7054 assets/blocks/blocks.js:25429
 msgid "Refresh"
+msgstr ""
+
+#: assets/blocks/blocks.js:7291
+msgid "advanced accordion"
 msgstr ""
 
 #: assets/blocks/blocks.js:7556 assets/blocks/blocks.js:9434
@@ -400,7 +405,7 @@ msgstr ""
 msgid "Shadow Color"
 msgstr "影の色"
 
-#: assets/blocks/blocks.js:7643 assets/blocks/blocks.js:8192
+#: assets/blocks/blocks.js:7643
 msgid "Advanced Button"
 msgstr ""
 
@@ -584,12 +589,20 @@ msgstr ""
 msgid "Spacing between icon and text"
 msgstr ""
 
+#: assets/blocks/blocks.js:8192 incl/pages/block-settings.php:53
+msgid "Button - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:8193
-msgid "Advanced button block with more options and styles."
+msgid "Button block with more options and styles."
 msgstr ""
 
 #: assets/blocks/blocks.js:8199
 msgid "button"
+msgstr ""
+
+#: assets/blocks/blocks.js:8199
+msgid "advanced button"
 msgstr ""
 
 #: assets/blocks/blocks.js:8199
@@ -612,7 +625,7 @@ msgstr ""
 msgid "Squared Outline"
 msgstr ""
 
-#: assets/blocks/blocks.js:8637 assets/blocks/blocks.js:9022
+#: assets/blocks/blocks.js:8637
 msgid "Advanced Icon"
 msgstr ""
 
@@ -685,8 +698,12 @@ msgstr ""
 msgid "Unit"
 msgstr ""
 
+#: assets/blocks/blocks.js:9022 incl/pages/block-settings.php:54
+msgid "Icon - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:9023 assets/blocks/blocks.js:20343
-msgid "Advanced icon block with more options and styles."
+msgid "Icon block with more options and styles."
 msgstr ""
 
 #: assets/blocks/blocks.js:9029 assets/blocks/blocks.js:10311
@@ -694,8 +711,11 @@ msgstr ""
 msgid "icon"
 msgstr ""
 
+#: assets/blocks/blocks.js:9029
+msgid "advanced icon"
+msgstr ""
+
 #: assets/blocks/blocks.js:9392 assets/blocks/blocks.js:9430
-#: assets/blocks/blocks.js:9742
 msgid "Advanced Image"
 msgstr ""
 
@@ -831,12 +851,20 @@ msgstr ""
 msgid "Enter subtitle…"
 msgstr ""
 
+#: assets/blocks/blocks.js:9742 incl/pages/block-settings.php:55
+msgid "Image - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:9743
-msgid "Advanced image/photo block with more options and styles."
+msgid "Image/photo block with more options and styles."
 msgstr ""
 
 #: assets/blocks/blocks.js:9749
 msgid "image"
+msgstr ""
+
+#: assets/blocks/blocks.js:9749
+msgid "advanced image"
 msgstr ""
 
 #: assets/blocks/blocks.js:9749
@@ -933,7 +961,7 @@ msgstr ""
 msgid "Circle"
 msgstr "円"
 
-#: assets/blocks/blocks.js:10071 assets/blocks/blocks.js:10304
+#: assets/blocks/blocks.js:10071
 msgid "Advanced List"
 msgstr ""
 
@@ -972,8 +1000,16 @@ msgstr ""
 msgid "Write advanced list…"
 msgstr ""
 
+#: assets/blocks/blocks.js:10304 incl/pages/block-settings.php:56
+msgid "List - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:10305
 msgid "List block with custom icons and styles."
+msgstr ""
+
+#: assets/blocks/blocks.js:10311
+msgid "advanced list"
 msgstr ""
 
 #: assets/blocks/blocks.js:10714
@@ -985,7 +1021,6 @@ msgid "Cannot select multi cells from difference section!"
 msgstr ""
 
 #: assets/blocks/blocks.js:11449 assets/blocks/blocks.js:11739
-#: assets/blocks/blocks.js:12005
 msgid "Advanced Table"
 msgstr ""
 
@@ -1179,12 +1214,20 @@ msgstr ""
 msgid "Vertical Align"
 msgstr ""
 
+#: assets/blocks/blocks.js:12005 incl/pages/block-settings.php:57
+msgid "Table - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:12006
-msgid "Advanced table block with more styles and functions."
+msgid "Table block with more styles and functions."
 msgstr ""
 
 #: assets/blocks/blocks.js:12012
 msgid "table"
+msgstr ""
+
+#: assets/blocks/blocks.js:12012
+msgid "advanced table"
 msgstr ""
 
 #: assets/blocks/blocks.js:12012
@@ -1230,7 +1273,7 @@ msgstr ""
 msgid "mobile"
 msgstr ""
 
-#: assets/blocks/blocks.js:12886 assets/blocks/blocks.js:13312
+#: assets/blocks/blocks.js:12886
 msgid "Advanced Tabs"
 msgstr ""
 
@@ -1308,6 +1351,11 @@ msgstr ""
 msgid "Tab 3"
 msgstr ""
 
+#: assets/blocks/blocks.js:13312 assets/blocks/blocks.js:28944
+#: incl/pages/block-settings.php:58
+msgid "Tabs - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:13313 assets/blocks/blocks.js:28945
 msgid "Create horizontal or vertical tabs to display your content."
 msgstr ""
@@ -1316,19 +1364,23 @@ msgstr ""
 msgid "tabs"
 msgstr ""
 
+#: assets/blocks/blocks.js:13319
+msgid "advanced tabs"
+msgstr ""
+
 #: assets/blocks/blocks.js:13319 assets/blocks/blocks.js:28951
 msgid "cards"
 msgstr ""
 
 #: assets/blocks/blocks.js:13803
-msgid "Tab Item"
+msgid "Tab Item - PublishPress"
 msgstr ""
 
 #: assets/blocks/blocks.js:13848
 msgid "tab"
 msgstr ""
 
-#: assets/blocks/blocks.js:14246 assets/blocks/blocks.js:14674
+#: assets/blocks/blocks.js:14246
 msgid "Advanced Video"
 msgstr ""
 
@@ -1432,12 +1484,20 @@ msgstr ""
 msgid "Not selected yet."
 msgstr ""
 
+#: assets/blocks/blocks.js:14674 incl/pages/block-settings.php:59
+msgid "Video - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:14675
 msgid "Add more options and styles for videos in your Media Library."
 msgstr ""
 
 #: assets/blocks/blocks.js:14681
 msgid "video"
+msgstr ""
+
+#: assets/blocks/blocks.js:14681
+msgid "advanced video"
 msgstr ""
 
 #: assets/blocks/blocks.js:14681
@@ -1652,7 +1712,7 @@ msgstr ""
 msgid "Six: Three Columns"
 msgstr ""
 
-#: assets/blocks/blocks.js:15080 assets/blocks/blocks.js:15808
+#: assets/blocks/blocks.js:15080
 msgid "Columns Manager"
 msgstr ""
 
@@ -1739,6 +1799,10 @@ msgstr ""
 msgid "Content Max Height"
 msgstr ""
 
+#: assets/blocks/blocks.js:15808 incl/pages/block-settings.php:60
+msgid "Columns - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:15809
 msgid ""
 "Create flexible layouts for your content with advanced options and styles."
@@ -1746,6 +1810,10 @@ msgstr ""
 
 #: assets/blocks/blocks.js:15815 assets/blocks/blocks.js:16392
 msgid "columns"
+msgstr ""
+
+#: assets/blocks/blocks.js:15815
+msgid "columns manager"
 msgstr ""
 
 #: assets/blocks/blocks.js:15815 assets/blocks/blocks.js:16392
@@ -1788,15 +1856,15 @@ msgstr ""
 msgid "Unit (px)"
 msgstr ""
 
-#: assets/blocks/blocks.js:16384
-msgid "Adv. Column"
+#: assets/blocks/blocks.js:16384 incl/pages/block-settings.php:61
+msgid "Column - PublishPress"
 msgstr ""
 
 #: assets/blocks/blocks.js:16386
 msgid "Column in row."
 msgstr ""
 
-#: assets/blocks/blocks.js:16604 assets/blocks/blocks.js:16911
+#: assets/blocks/blocks.js:16604
 msgid "Contact Form"
 msgstr ""
 
@@ -1907,6 +1975,10 @@ msgstr ""
 msgid "Button position"
 msgstr ""
 
+#: assets/blocks/blocks.js:16911 incl/pages/block-settings.php:62
+msgid "Contact Form - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:16912
 msgid "Fastest way to create a contact form for your page."
 msgstr ""
@@ -1920,7 +1992,7 @@ msgid "form"
 msgstr ""
 
 #: assets/blocks/blocks.js:17063
-msgid "Container"
+msgid "Container - PublishPress"
 msgstr ""
 
 #: assets/blocks/blocks.js:17064
@@ -1936,8 +2008,7 @@ msgstr ""
 msgid "Container Settings"
 msgstr ""
 
-#: assets/blocks/blocks.js:17267 assets/blocks/blocks.js:17694
-#: assets/blocks/pro-ad.js:141
+#: assets/blocks/blocks.js:17267 assets/blocks/pro-ad.js:141
 msgid "Count Up"
 msgstr ""
 
@@ -1996,6 +2067,10 @@ msgstr ""
 msgid "Enter text…"
 msgstr ""
 
+#: assets/blocks/blocks.js:17694 incl/pages/block-settings.php:63
+msgid "Count Up - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:17695
 msgid "Create an animated display for important numbers."
 msgstr ""
@@ -2013,7 +2088,7 @@ msgid "increase"
 msgstr ""
 
 #: assets/blocks/blocks.js:18261 assets/blocks/blocks.js:18300
-#: assets/blocks/blocks.js:18707 assets/blocks/pro-ad.js:129
+#: assets/blocks/pro-ad.js:129
 msgid "Images Slider"
 msgstr ""
 
@@ -2077,6 +2152,10 @@ msgstr ""
 msgid "Add image"
 msgstr ""
 
+#: assets/blocks/blocks.js:18707 incl/pages/block-settings.php:64
+msgid "Images Slider - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:18708
 msgid "Display your images in a slider."
 msgstr ""
@@ -2093,7 +2172,7 @@ msgstr ""
 msgid "photos"
 msgstr ""
 
-#: assets/blocks/blocks.js:19405 assets/blocks/blocks.js:20342
+#: assets/blocks/blocks.js:19405
 msgid "Info Box"
 msgstr ""
 
@@ -2151,6 +2230,10 @@ msgstr ""
 msgid "H6"
 msgstr ""
 
+#: assets/blocks/blocks.js:20342 incl/pages/block-settings.php:65
+msgid "Info Box - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:20349
 msgid "info"
 msgstr ""
@@ -2201,7 +2284,7 @@ msgstr ""
 msgid "Email label…"
 msgstr ""
 
-#: assets/blocks/blocks.js:21193 assets/blocks/blocks.js:21739
+#: assets/blocks/blocks.js:21193
 msgid "Login/Register Form"
 msgstr ""
 
@@ -2332,6 +2415,10 @@ msgid ""
 "General settings to use registration form"
 msgstr ""
 
+#: assets/blocks/blocks.js:21739
+msgid "Login and Register - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:21740
 msgid "Create a login form for your post/page."
 msgstr ""
@@ -2340,7 +2427,7 @@ msgstr ""
 msgid "No matching address found!"
 msgstr ""
 
-#: assets/blocks/blocks.js:23130 assets/blocks/blocks.js:23414
+#: assets/blocks/blocks.js:23130
 msgid "Map"
 msgstr ""
 
@@ -2477,6 +2564,10 @@ msgstr ""
 msgid "Add Google API Key"
 msgstr ""
 
+#: assets/blocks/blocks.js:23414 incl/pages/block-settings.php:66
+msgid "Map - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:23415
 msgid "Display a location using Google Maps."
 msgstr ""
@@ -2493,7 +2584,7 @@ msgstr ""
 msgid "address"
 msgstr ""
 
-#: assets/blocks/blocks.js:23659 assets/blocks/blocks.js:23949
+#: assets/blocks/blocks.js:23659
 msgid "Newsletter"
 msgstr ""
 
@@ -2527,6 +2618,10 @@ msgstr ""
 
 #: assets/blocks/blocks.js:23896 assets/blocks/blocks.js:24109
 msgid "Last Name"
+msgstr ""
+
+#: assets/blocks/blocks.js:23949 incl/pages/block-settings.php:67
+msgid "Newsletter - PublishPress"
 msgstr ""
 
 #: assets/blocks/blocks.js:23950
@@ -2922,7 +3017,7 @@ msgid ""
 msgstr ""
 
 #: assets/blocks/blocks.js:25354 assets/blocks/blocks.js:25416
-#: assets/blocks/blocks.js:26280 assets/blocks/pro-ad.js:125
+#: assets/blocks/pro-ad.js:125
 msgid "Content Display"
 msgstr ""
 
@@ -2965,6 +3060,10 @@ msgstr ""
 #: assets/blocks/blocks.js:25644 assets/blocks/recent-posts/block.php:413
 msgid "Read More"
 msgstr "続きを読む"
+
+#: assets/blocks/blocks.js:26280
+msgid "Content Display - PublishPress"
+msgstr ""
 
 #: assets/blocks/blocks.js:26281
 msgid ""
@@ -3058,7 +3157,7 @@ msgstr ""
 msgid "Number of items"
 msgstr ""
 
-#: assets/blocks/blocks.js:26813 assets/blocks/blocks.js:27166
+#: assets/blocks/blocks.js:26813
 msgid "Search Bar"
 msgstr ""
 
@@ -3106,6 +3205,10 @@ msgstr ""
 msgid "Hover Shadow"
 msgstr ""
 
+#: assets/blocks/blocks.js:27166
+msgid "Search Bar - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:27167
 msgid "Easy to create a search bar for your site."
 msgstr ""
@@ -3114,7 +3217,7 @@ msgstr ""
 msgid "Classic"
 msgstr ""
 
-#: assets/blocks/blocks.js:27532 assets/blocks/blocks.js:27791
+#: assets/blocks/blocks.js:27532
 msgid "Social Links"
 msgstr ""
 
@@ -3167,6 +3270,10 @@ msgstr ""
 msgid "Enter social link…"
 msgstr ""
 
+#: assets/blocks/blocks.js:27791 incl/pages/block-settings.php:68
+msgid "Social Links - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:27792
 msgid "Create a styling display of links to your social media profiles."
 msgstr ""
@@ -3183,8 +3290,8 @@ msgstr ""
 msgid "icon link"
 msgstr ""
 
-#: assets/blocks/blocks.js:27973 assets/blocks/blocks.js:28158
-msgid "Table of Contents"
+#: assets/blocks/blocks.js:27973 incl/pages/block-settings.php:69
+msgid "Table of Contents - PublishPress"
 msgstr ""
 
 #: assets/blocks/blocks.js:27997
@@ -3195,6 +3302,10 @@ msgstr ""
 msgid ""
 "After manually changing the anchor, remember to refresh Table of Contents "
 "block to make the links work!"
+msgstr ""
+
+#: assets/blocks/blocks.js:28158
+msgid "Table of Contents"
 msgstr ""
 
 #: assets/blocks/blocks.js:28163
@@ -3258,12 +3369,7 @@ msgid ""
 "characteristics of a real written text, but is random or otherwise generated."
 msgstr ""
 
-#: assets/blocks/blocks.js:28944 assets/blocks/pro-ad.js:121
-msgid "Tabs"
-msgstr ""
-
-#: assets/blocks/blocks.js:29421 assets/blocks/blocks.js:29946
-#: assets/blocks/pro-ad.js:145
+#: assets/blocks/blocks.js:29421 assets/blocks/pro-ad.js:145
 msgid "Testimonial"
 msgstr ""
 
@@ -3398,6 +3504,10 @@ msgstr ""
 msgid "Show default avatar"
 msgstr ""
 
+#: assets/blocks/blocks.js:29946 incl/pages/block-settings.php:70
+msgid "Testimonial - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:29947
 msgid "Block for creating personal or team/group information."
 msgstr ""
@@ -3418,7 +3528,7 @@ msgstr ""
 msgid "Normal View"
 msgstr ""
 
-#: assets/blocks/blocks.js:30461 assets/blocks/blocks.js:30667
+#: assets/blocks/blocks.js:30461
 msgid "Woo Products"
 msgstr ""
 
@@ -3512,6 +3622,10 @@ msgstr ""
 msgid "Try again"
 msgstr ""
 
+#: assets/blocks/blocks.js:30667 incl/pages/block-settings.php:71
+msgid "Woo Products - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:30668
 msgid "Listing your products in a easy way."
 msgstr ""
@@ -3600,6 +3714,14 @@ msgstr ""
 msgid "Border to materialize PublishPress Blocks Column block"
 msgstr ""
 
+#: assets/blocks/pro-ad.js:116
+msgid "Accordion"
+msgstr ""
+
+#: assets/blocks/pro-ad.js:121
+msgid "Tabs"
+msgstr ""
+
 #: assets/blocks/pro-ad.js:133
 msgid "Button"
 msgstr ""
@@ -3618,7 +3740,8 @@ msgstr ""
 msgid "Want more features in your %s blocks?"
 msgstr ""
 
-#: assets/blocks/pro-ad.js:172 incl/pages/main.php:112
+#: assets/blocks/pro-ad.js:172 incl/advanced-gutenberg-main.php:824
+#: incl/pages/main.php:112
 msgid "Upgrade to Pro"
 msgstr ""
 
@@ -3669,9 +3792,16 @@ msgstr ""
 
 #. Plugin Name of the plugin/theme
 #: incl/advanced-gutenberg-main.php:252 incl/advanced-gutenberg-main.php:1783
-#: incl/pages/block-settings.php:63 incl/pages/main.php:8
+#: incl/pages/block-settings.php:90 incl/pages/main.php:8
 #: incl/pages/main.php:32
 msgid "PublishPress Blocks"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:803
+#, php-format
+msgid ""
+"You're using PublishPress Blocks Free. The Pro version has more features and "
+"support. %sUpgrade to Pro%s"
 msgstr ""
 
 #: incl/advanced-gutenberg-main.php:1066 incl/advanced-gutenberg-main.php:1203
@@ -3815,7 +3945,7 @@ msgstr ""
 msgid "%s can't be saved. Please try again."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3063 incl/pages/block-settings.php:70
+#: incl/advanced-gutenberg-main.php:3063 incl/pages/block-settings.php:97
 msgid "Search blocks"
 msgstr "検索ブロック"
 
@@ -4366,12 +4496,12 @@ msgstr ""
 msgid "Username or password is incorrect!"
 msgstr ""
 
-#: incl/pages/block-settings.php:88 incl/pages/custom-styles.php:35
+#: incl/pages/block-settings.php:123 incl/pages/custom-styles.php:35
 #: incl/pages/settings/images.php:84
 msgid "Edit"
 msgstr "編集"
 
-#: incl/pages/block-settings.php:98
+#: incl/pages/block-settings.php:133
 msgid ""
 "No blocks available. Please go to a post edit (without saving either "
 "modifying anything). Then come back to Block Settings to see the blocks list."

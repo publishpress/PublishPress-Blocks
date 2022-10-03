@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Gutenberg Blocks &#8211; PublishPress Blocks "
 "Gutenberg Editor Plugin - Stable (latest release)\n"
-"POT-Creation-Date: 2022-09-30 12:27-0500\n"
-"PO-Revision-Date: 2022-09-30 12:29-0500\n"
+"POT-Creation-Date: 2022-10-03 16:56-0500\n"
+"PO-Revision-Date: 2022-10-03 16:57-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: da_DK\n"
@@ -322,9 +322,10 @@ msgstr ""
 msgid "Enter header…"
 msgstr "Angiv sidehoved..."
 
-#: assets/blocks/blocks.js:5862 assets/blocks/pro-ad.js:116
-msgid "Accordion"
-msgstr "Harmonika"
+#: assets/blocks/blocks.js:5862 assets/blocks/blocks.js:7284
+#: incl/pages/block-settings.php:52
+msgid "Accordion - PublishPress"
+msgstr ""
 
 #: assets/blocks/blocks.js:5863 assets/blocks/blocks.js:6399
 #: assets/blocks/blocks.js:7285
@@ -363,20 +364,24 @@ msgid "Header Tag"
 msgstr "Sidehoved emneord"
 
 #: assets/blocks/blocks.js:6398
-msgid "Accordion Item"
-msgstr "Harmonikaelement"
+msgid "Accordion Item - PublishPress"
+msgstr ""
 
 #: assets/blocks/blocks.js:6410
 msgid "Header text"
 msgstr ""
 
-#: assets/blocks/blocks.js:7040 assets/blocks/blocks.js:7284
+#: assets/blocks/blocks.js:7040
 msgid "Advanced Accordion"
 msgstr "Avanceret Harmonika"
 
 #: assets/blocks/blocks.js:7054 assets/blocks/blocks.js:25429
 msgid "Refresh"
 msgstr "Genopfrisk"
+
+#: assets/blocks/blocks.js:7291
+msgid "advanced accordion"
+msgstr ""
 
 #: assets/blocks/blocks.js:7556 assets/blocks/blocks.js:9434
 #: assets/blocks/blocks.js:10046 assets/blocks/blocks.js:11852
@@ -413,7 +418,7 @@ msgstr "Outset"
 msgid "Shadow Color"
 msgstr "Skyggefarve"
 
-#: assets/blocks/blocks.js:7643 assets/blocks/blocks.js:8192
+#: assets/blocks/blocks.js:7643
 msgid "Advanced Button"
 msgstr "Avanceret knap"
 
@@ -597,13 +602,21 @@ msgstr ""
 msgid "Spacing between icon and text"
 msgstr ""
 
+#: assets/blocks/blocks.js:8192 incl/pages/block-settings.php:53
+msgid "Button - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:8193
-msgid "Advanced button block with more options and styles."
+msgid "Button block with more options and styles."
 msgstr ""
 
 #: assets/blocks/blocks.js:8199
 msgid "button"
 msgstr "knap"
+
+#: assets/blocks/blocks.js:8199
+msgid "advanced button"
+msgstr ""
 
 #: assets/blocks/blocks.js:8199
 msgid "link"
@@ -625,7 +638,7 @@ msgstr "Kantet"
 msgid "Squared Outline"
 msgstr "Firkantet omrids"
 
-#: assets/blocks/blocks.js:8637 assets/blocks/blocks.js:9022
+#: assets/blocks/blocks.js:8637
 msgid "Advanced Icon"
 msgstr "Avanceret Ikon"
 
@@ -698,17 +711,24 @@ msgstr "Titel for Hjælp til handicappede"
 msgid "Unit"
 msgstr "Enhed"
 
+#: assets/blocks/blocks.js:9022 incl/pages/block-settings.php:54
+msgid "Icon - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:9023 assets/blocks/blocks.js:20343
-msgid "Advanced icon block with more options and styles."
-msgstr "Avanceret ikonblok med flere indstillinger og typografier."
+msgid "Icon block with more options and styles."
+msgstr ""
 
 #: assets/blocks/blocks.js:9029 assets/blocks/blocks.js:10311
 #: assets/blocks/blocks.js:20349
 msgid "icon"
 msgstr "ikon"
 
+#: assets/blocks/blocks.js:9029
+msgid "advanced icon"
+msgstr ""
+
 #: assets/blocks/blocks.js:9392 assets/blocks/blocks.js:9430
-#: assets/blocks/blocks.js:9742
 msgid "Advanced Image"
 msgstr "Avanceret billede"
 
@@ -844,13 +864,21 @@ msgstr "Angiv titel..."
 msgid "Enter subtitle…"
 msgstr "Angiv undertitel..."
 
+#: assets/blocks/blocks.js:9742 incl/pages/block-settings.php:55
+msgid "Image - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:9743
-msgid "Advanced image/photo block with more options and styles."
-msgstr "Avanceret billed-/fotoblok med flere muligheder og typografier."
+msgid "Image/photo block with more options and styles."
+msgstr ""
 
 #: assets/blocks/blocks.js:9749
 msgid "image"
 msgstr "billede"
+
+#: assets/blocks/blocks.js:9749
+msgid "advanced image"
+msgstr ""
 
 #: assets/blocks/blocks.js:9749
 msgid "photo"
@@ -946,7 +974,7 @@ msgstr "Info 2"
 msgid "Circle"
 msgstr "Cirkel"
 
-#: assets/blocks/blocks.js:10071 assets/blocks/blocks.js:10304
+#: assets/blocks/blocks.js:10071
 msgid "Advanced List"
 msgstr "Avanceret liste"
 
@@ -985,9 +1013,17 @@ msgstr "Linjehøjde"
 msgid "Write advanced list…"
 msgstr "Skriv avanceret liste..."
 
+#: assets/blocks/blocks.js:10304 incl/pages/block-settings.php:56
+msgid "List - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:10305
 msgid "List block with custom icons and styles."
 msgstr "Listeblok med brugerdefinerede ikoner og typografier."
+
+#: assets/blocks/blocks.js:10311
+msgid "advanced list"
+msgstr ""
 
 #: assets/blocks/blocks.js:10714
 msgid "At least 1 row of current section must present."
@@ -998,7 +1034,6 @@ msgid "Cannot select multi cells from difference section!"
 msgstr "Der kan ikke markeres flere celler fra differencesektionen!"
 
 #: assets/blocks/blocks.js:11449 assets/blocks/blocks.js:11739
-#: assets/blocks/blocks.js:12005
 msgid "Advanced Table"
 msgstr "Avanceret tabel"
 
@@ -1195,13 +1230,21 @@ msgstr "Vandret justering"
 msgid "Vertical Align"
 msgstr "Lodret justering"
 
+#: assets/blocks/blocks.js:12005 incl/pages/block-settings.php:57
+msgid "Table - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:12006
-msgid "Advanced table block with more styles and functions."
-msgstr "Avanceret tabelblok med flere typografier og funktioner."
+msgid "Table block with more styles and functions."
+msgstr ""
 
 #: assets/blocks/blocks.js:12012
 msgid "table"
 msgstr "tabel"
+
+#: assets/blocks/blocks.js:12012
+msgid "advanced table"
+msgstr ""
 
 #: assets/blocks/blocks.js:12012
 msgid "cell"
@@ -1246,7 +1289,7 @@ msgstr ""
 msgid "mobile"
 msgstr ""
 
-#: assets/blocks/blocks.js:12886 assets/blocks/blocks.js:13312
+#: assets/blocks/blocks.js:12886
 msgid "Advanced Tabs"
 msgstr "Avancerede faner"
 
@@ -1324,6 +1367,11 @@ msgstr "Faner 2"
 msgid "Tab 3"
 msgstr "Faner 3"
 
+#: assets/blocks/blocks.js:13312 assets/blocks/blocks.js:28944
+#: incl/pages/block-settings.php:58
+msgid "Tabs - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:13313 assets/blocks/blocks.js:28945
 msgid "Create horizontal or vertical tabs to display your content."
 msgstr ""
@@ -1332,19 +1380,23 @@ msgstr ""
 msgid "tabs"
 msgstr "faner"
 
+#: assets/blocks/blocks.js:13319
+msgid "advanced tabs"
+msgstr ""
+
 #: assets/blocks/blocks.js:13319 assets/blocks/blocks.js:28951
 msgid "cards"
 msgstr "kort"
 
 #: assets/blocks/blocks.js:13803
-msgid "Tab Item"
-msgstr "Tabulatorelement"
+msgid "Tab Item - PublishPress"
+msgstr ""
 
 #: assets/blocks/blocks.js:13848
 msgid "tab"
 msgstr "fane"
 
-#: assets/blocks/blocks.js:14246 assets/blocks/blocks.js:14674
+#: assets/blocks/blocks.js:14246
 msgid "Advanced Video"
 msgstr "Avanceret video"
 
@@ -1448,6 +1500,10 @@ msgstr "Forkert video-URL/id. Prøv en anden."
 msgid "Not selected yet."
 msgstr "Ikke valgt endnu."
 
+#: assets/blocks/blocks.js:14674 incl/pages/block-settings.php:59
+msgid "Video - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:14675
 msgid "Add more options and styles for videos in your Media Library."
 msgstr ""
@@ -1455,6 +1511,10 @@ msgstr ""
 #: assets/blocks/blocks.js:14681
 msgid "video"
 msgstr "video"
+
+#: assets/blocks/blocks.js:14681
+msgid "advanced video"
+msgstr ""
 
 #: assets/blocks/blocks.js:14681
 msgid "embed"
@@ -1668,7 +1728,7 @@ msgstr "Seks: To kolonner"
 msgid "Six: Three Columns"
 msgstr "Seks: Tre kolonner"
 
-#: assets/blocks/blocks.js:15080 assets/blocks/blocks.js:15808
+#: assets/blocks/blocks.js:15080
 msgid "Columns Manager"
 msgstr "Kolonnestyring"
 
@@ -1757,6 +1817,10 @@ msgstr "Indhold min. højde"
 msgid "Content Max Height"
 msgstr "Indhold Max Højde"
 
+#: assets/blocks/blocks.js:15808 incl/pages/block-settings.php:60
+msgid "Columns - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:15809
 msgid ""
 "Create flexible layouts for your content with advanced options and styles."
@@ -1765,6 +1829,10 @@ msgstr ""
 #: assets/blocks/blocks.js:15815 assets/blocks/blocks.js:16392
 msgid "columns"
 msgstr "kolonner"
+
+#: assets/blocks/blocks.js:15815
+msgid "columns manager"
+msgstr ""
 
 #: assets/blocks/blocks.js:15815 assets/blocks/blocks.js:16392
 #: assets/blocks/blocks.js:17070
@@ -1808,15 +1876,15 @@ msgstr " tekstjustering"
 msgid "Unit (px)"
 msgstr "Enhed (px)"
 
-#: assets/blocks/blocks.js:16384
-msgid "Adv. Column"
-msgstr "Adv. kolonne"
+#: assets/blocks/blocks.js:16384 incl/pages/block-settings.php:61
+msgid "Column - PublishPress"
+msgstr ""
 
 #: assets/blocks/blocks.js:16386
 msgid "Column in row."
 msgstr "Kolonne i række."
 
-#: assets/blocks/blocks.js:16604 assets/blocks/blocks.js:16911
+#: assets/blocks/blocks.js:16604
 msgid "Contact Form"
 msgstr "Kontaktformular"
 
@@ -1931,6 +1999,10 @@ msgstr "Knapkantradius"
 msgid "Button position"
 msgstr "Knap position"
 
+#: assets/blocks/blocks.js:16911 incl/pages/block-settings.php:62
+msgid "Contact Form - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:16912
 msgid "Fastest way to create a contact form for your page."
 msgstr "Den hurtigste måde at oprette en kontaktformular til din side på."
@@ -1944,8 +2016,8 @@ msgid "form"
 msgstr "formular"
 
 #: assets/blocks/blocks.js:17063
-msgid "Container"
-msgstr "Boks"
+msgid "Container - PublishPress"
+msgstr ""
 
 #: assets/blocks/blocks.js:17064
 msgid "Block for containing other blocks."
@@ -1960,8 +2032,7 @@ msgstr "beholder"
 msgid "Container Settings"
 msgstr "Boksindstillinger"
 
-#: assets/blocks/blocks.js:17267 assets/blocks/blocks.js:17694
-#: assets/blocks/pro-ad.js:141
+#: assets/blocks/blocks.js:17267 assets/blocks/pro-ad.js:141
 msgid "Count Up"
 msgstr "Tæl op"
 
@@ -2022,6 +2093,10 @@ msgstr ""
 msgid "Enter text…"
 msgstr "Indtast tekst..."
 
+#: assets/blocks/blocks.js:17694 incl/pages/block-settings.php:63
+msgid "Count Up - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:17695
 msgid "Create an animated display for important numbers."
 msgstr ""
@@ -2039,7 +2114,7 @@ msgid "increase"
 msgstr "forøg"
 
 #: assets/blocks/blocks.js:18261 assets/blocks/blocks.js:18300
-#: assets/blocks/blocks.js:18707 assets/blocks/pro-ad.js:129
+#: assets/blocks/pro-ad.js:129
 msgid "Images Slider"
 msgstr "Billede Slider"
 
@@ -2105,6 +2180,10 @@ msgstr "Flyt til højre"
 msgid "Add image"
 msgstr "Tilføj billede"
 
+#: assets/blocks/blocks.js:18707 incl/pages/block-settings.php:64
+msgid "Images Slider - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:18708
 msgid "Display your images in a slider."
 msgstr "Vis dine billeder i en slider."
@@ -2121,7 +2200,7 @@ msgstr "galleri"
 msgid "photos"
 msgstr "billeder"
 
-#: assets/blocks/blocks.js:19405 assets/blocks/blocks.js:20342
+#: assets/blocks/blocks.js:19405
 msgid "Info Box"
 msgstr "Info boks"
 
@@ -2179,6 +2258,10 @@ msgstr "H5"
 msgid "H6"
 msgstr "H6"
 
+#: assets/blocks/blocks.js:20342 incl/pages/block-settings.php:65
+msgid "Info Box - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:20349
 msgid "info"
 msgstr "info"
@@ -2229,7 +2312,7 @@ msgstr "Tilbage …"
 msgid "Email label…"
 msgstr "E-mail-etiket…"
 
-#: assets/blocks/blocks.js:21193 assets/blocks/blocks.js:21739
+#: assets/blocks/blocks.js:21193
 msgid "Login/Register Form"
 msgstr "Formular til logon/registrer"
 
@@ -2362,6 +2445,10 @@ msgstr ""
 "Tilmelding til dit websted er i øjeblikket deaktiveret, aktiver det i "
 "WordPress Generelle indstillinger til at bruge registreringsformularen"
 
+#: assets/blocks/blocks.js:21739
+msgid "Login and Register - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:21740
 msgid "Create a login form for your post/page."
 msgstr "Opret en loginformular til dit indlæg/din side."
@@ -2370,7 +2457,7 @@ msgstr "Opret en loginformular til dit indlæg/din side."
 msgid "No matching address found!"
 msgstr "Der blev ikke fundet nogen tilsvarende adresse!"
 
-#: assets/blocks/blocks.js:23130 assets/blocks/blocks.js:23414
+#: assets/blocks/blocks.js:23130
 msgid "Map"
 msgstr "Kort"
 
@@ -2509,6 +2596,10 @@ msgstr ""
 msgid "Add Google API Key"
 msgstr "Tilføj Google API-nøgle"
 
+#: assets/blocks/blocks.js:23414 incl/pages/block-settings.php:66
+msgid "Map - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:23415
 msgid "Display a location using Google Maps."
 msgstr ""
@@ -2525,7 +2616,7 @@ msgstr "placering"
 msgid "address"
 msgstr "adresse"
 
-#: assets/blocks/blocks.js:23659 assets/blocks/blocks.js:23949
+#: assets/blocks/blocks.js:23659
 msgid "Newsletter"
 msgstr "Nyhedsbrev"
 
@@ -2560,6 +2651,10 @@ msgstr "Fornavn"
 #: assets/blocks/blocks.js:23896 assets/blocks/blocks.js:24109
 msgid "Last Name"
 msgstr "Efternavn"
+
+#: assets/blocks/blocks.js:23949 incl/pages/block-settings.php:67
+msgid "Newsletter - PublishPress"
+msgstr ""
 
 #: assets/blocks/blocks.js:23950
 msgid "Fastest way to create a newsletter form for your page."
@@ -2962,7 +3057,7 @@ msgid ""
 msgstr ""
 
 #: assets/blocks/blocks.js:25354 assets/blocks/blocks.js:25416
-#: assets/blocks/blocks.js:26280 assets/blocks/pro-ad.js:125
+#: assets/blocks/pro-ad.js:125
 msgid "Content Display"
 msgstr "Indholdsvisning"
 
@@ -3005,6 +3100,10 @@ msgstr "Indlægsbillede"
 #: assets/blocks/blocks.js:25644 assets/blocks/recent-posts/block.php:413
 msgid "Read More"
 msgstr "Læs mere"
+
+#: assets/blocks/blocks.js:26280
+msgid "Content Display - PublishPress"
+msgstr ""
 
 #: assets/blocks/blocks.js:26281
 msgid ""
@@ -3100,7 +3199,7 @@ msgstr "Kategori"
 msgid "Number of items"
 msgstr "Antal elementer"
 
-#: assets/blocks/blocks.js:26813 assets/blocks/blocks.js:27166
+#: assets/blocks/blocks.js:26813
 msgid "Search Bar"
 msgstr "Søgefelt"
 
@@ -3148,6 +3247,10 @@ msgstr "Påvirker både input og knap."
 msgid "Hover Shadow"
 msgstr "Hover skygge"
 
+#: assets/blocks/blocks.js:27166
+msgid "Search Bar - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:27167
 msgid "Easy to create a search bar for your site."
 msgstr "Let at oprette en søgelinje til dit websted."
@@ -3156,7 +3259,7 @@ msgstr "Let at oprette en søgelinje til dit websted."
 msgid "Classic"
 msgstr "Klassisk"
 
-#: assets/blocks/blocks.js:27532 assets/blocks/blocks.js:27791
+#: assets/blocks/blocks.js:27532
 msgid "Social Links"
 msgstr "Sociale links"
 
@@ -3209,6 +3312,10 @@ msgstr "Socialt link:"
 msgid "Enter social link…"
 msgstr "Angiv et socialt link ..."
 
+#: assets/blocks/blocks.js:27791 incl/pages/block-settings.php:68
+msgid "Social Links - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:27792
 msgid "Create a styling display of links to your social media profiles."
 msgstr ""
@@ -3225,9 +3332,9 @@ msgstr "delinger"
 msgid "icon link"
 msgstr "ikonlink"
 
-#: assets/blocks/blocks.js:27973 assets/blocks/blocks.js:28158
-msgid "Table of Contents"
-msgstr "Indholdsfortegnelse"
+#: assets/blocks/blocks.js:27973 incl/pages/block-settings.php:69
+msgid "Table of Contents - PublishPress"
+msgstr ""
 
 #: assets/blocks/blocks.js:27997
 msgid "Insert Table of Contents"
@@ -3240,6 +3347,10 @@ msgid ""
 msgstr ""
 "Når du har ændret ankeret manuelt, skal du huske at opdatere "
 "indholdsfortegnelsesblokken for at få linkene til at fungere!"
+
+#: assets/blocks/blocks.js:28158
+msgid "Table of Contents"
+msgstr "Indholdsfortegnelse"
 
 #: assets/blocks/blocks.js:28163
 msgid ""
@@ -3307,12 +3418,7 @@ msgstr ""
 "nogle karakteristika for en rigtig skriftlig tekst, men som er tilfældigt "
 "eller på anden måde genereret."
 
-#: assets/blocks/blocks.js:28944 assets/blocks/pro-ad.js:121
-msgid "Tabs"
-msgstr "Faneblade"
-
-#: assets/blocks/blocks.js:29421 assets/blocks/blocks.js:29946
-#: assets/blocks/pro-ad.js:145
+#: assets/blocks/blocks.js:29421 assets/blocks/pro-ad.js:145
 msgid "Testimonial"
 msgstr "Udtalelse"
 
@@ -3447,6 +3553,10 @@ msgstr "Klik for at ændre avatar"
 msgid "Show default avatar"
 msgstr "Vis standard avatar"
 
+#: assets/blocks/blocks.js:29946 incl/pages/block-settings.php:70
+msgid "Testimonial - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:29947
 msgid "Block for creating personal or team/group information."
 msgstr "Blok til at oprette personlige eller team-/gruppeoplysninger."
@@ -3467,7 +3577,7 @@ msgstr "om"
 msgid "Normal View"
 msgstr "Normal visning"
 
-#: assets/blocks/blocks.js:30461 assets/blocks/blocks.js:30667
+#: assets/blocks/blocks.js:30461
 msgid "Woo Products"
 msgstr "Woo Produkter blok"
 
@@ -3563,6 +3673,10 @@ msgstr ""
 msgid "Try again"
 msgstr "Prøv igen"
 
+#: assets/blocks/blocks.js:30667 incl/pages/block-settings.php:71
+msgid "Woo Products - PublishPress"
+msgstr ""
+
 #: assets/blocks/blocks.js:30668
 msgid "Listing your products in a easy way."
 msgstr "Fremvis dine produkter på en nem måde."
@@ -3654,6 +3768,14 @@ msgstr "Visuel vejledning til kolonner"
 msgid "Border to materialize PublishPress Blocks Column block"
 msgstr "Kant for PublishPress Blocks Column blok"
 
+#: assets/blocks/pro-ad.js:116
+msgid "Accordion"
+msgstr "Harmonika"
+
+#: assets/blocks/pro-ad.js:121
+msgid "Tabs"
+msgstr "Faneblade"
+
 #: assets/blocks/pro-ad.js:133
 msgid "Button"
 msgstr ""
@@ -3672,7 +3794,8 @@ msgstr "PublishPress"
 msgid "Want more features in your %s blocks?"
 msgstr ""
 
-#: assets/blocks/pro-ad.js:172 incl/pages/main.php:112
+#: assets/blocks/pro-ad.js:172 incl/advanced-gutenberg-main.php:824
+#: incl/pages/main.php:112
 msgid "Upgrade to Pro"
 msgstr "Opgrader til Pro"
 
@@ -3723,10 +3846,17 @@ msgstr "standard indstilling"
 
 #. Plugin Name of the plugin/theme
 #: incl/advanced-gutenberg-main.php:252 incl/advanced-gutenberg-main.php:1783
-#: incl/pages/block-settings.php:63 incl/pages/main.php:8
+#: incl/pages/block-settings.php:90 incl/pages/main.php:8
 #: incl/pages/main.php:32
 msgid "PublishPress Blocks"
 msgstr "PublishPress Blocks"
+
+#: incl/advanced-gutenberg-main.php:803
+#, php-format
+msgid ""
+"You're using PublishPress Blocks Free. The Pro version has more features and "
+"support. %sUpgrade to Pro%s"
+msgstr ""
 
 #: incl/advanced-gutenberg-main.php:1066 incl/advanced-gutenberg-main.php:1203
 #: incl/advanced-gutenberg-main.php:1259
@@ -3869,7 +3999,7 @@ msgstr ""
 msgid "%s can't be saved. Please try again."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3063 incl/pages/block-settings.php:70
+#: incl/advanced-gutenberg-main.php:3063 incl/pages/block-settings.php:97
 msgid "Search blocks"
 msgstr "Søg blokke"
 
@@ -4420,12 +4550,12 @@ msgstr "Captcha skal kontrolleres!"
 msgid "Username or password is incorrect!"
 msgstr "Brugernavn eller adgangskode er forkert!"
 
-#: incl/pages/block-settings.php:88 incl/pages/custom-styles.php:35
+#: incl/pages/block-settings.php:123 incl/pages/custom-styles.php:35
 #: incl/pages/settings/images.php:84
 msgid "Edit"
 msgstr "Redigér"
 
-#: incl/pages/block-settings.php:98
+#: incl/pages/block-settings.php:133
 msgid ""
 "No blocks available. Please go to a post edit (without saving either "
 "modifying anything). Then come back to Block Settings to see the blocks list."
@@ -4954,6 +5084,27 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "https://publishpress.com/"
 msgstr "https://publishpress.com/"
+
+#~ msgid "Accordion Item"
+#~ msgstr "Harmonikaelement"
+
+#~ msgid "Advanced icon block with more options and styles."
+#~ msgstr "Avanceret ikonblok med flere indstillinger og typografier."
+
+#~ msgid "Advanced image/photo block with more options and styles."
+#~ msgstr "Avanceret billed-/fotoblok med flere muligheder og typografier."
+
+#~ msgid "Advanced table block with more styles and functions."
+#~ msgstr "Avanceret tabelblok med flere typografier og funktioner."
+
+#~ msgid "Tab Item"
+#~ msgstr "Tabulatorelement"
+
+#~ msgid "Adv. Column"
+#~ msgstr "Adv. kolonne"
+
+#~ msgid "Container"
+#~ msgstr "Boks"
 
 #~ msgid "Block Settings"
 #~ msgstr "Blokindstillinger"
