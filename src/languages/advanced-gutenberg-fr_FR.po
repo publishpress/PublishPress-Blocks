@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - Gutenberg Blocks &#8211; PublishPress Blocks "
 "Gutenberg Editor Plugin - Stable (latest release)\n"
 "POT-Creation-Date: 2022-09-30 13:42-0500\n"
-"PO-Revision-Date: 2022-09-30 13:44-0500\n"
+"PO-Revision-Date: 2022-10-03 11:06-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -373,7 +373,7 @@ msgstr "Élément d’accordéon"
 
 #: assets/blocks/blocks.js:6410
 msgid "Header text"
-msgstr ""
+msgstr "Texte d’en-tête"
 
 #: assets/blocks/blocks.js:7040 assets/blocks/blocks.js:7284
 msgid "Advanced Accordion"
@@ -644,7 +644,7 @@ msgstr "Nombre d’icônes"
 
 #: assets/blocks/blocks.js:8675
 msgid "Icon "
-msgstr ""
+msgstr "Icône "
 
 #: assets/blocks/blocks.js:8699 assets/blocks/blocks.js:14392
 msgid "Icon Style"
@@ -1236,7 +1236,7 @@ msgstr "Copier"
 
 #: assets/blocks/blocks.js:12750
 msgid "Tab Header"
-msgstr ""
+msgstr "En-tête de l’onglet"
 
 #: assets/blocks/blocks.js:12840 assets/blocks/blocks.js:15019
 #: assets/blocks/blocks.js:24546
@@ -2509,7 +2509,7 @@ msgstr ""
 
 #: assets/blocks/blocks.js:23324
 msgid "Enter your json code here…"
-msgstr "Saisir votre code json ici..."
+msgstr "Saisir votre code json ici…"
 
 #: assets/blocks/blocks.js:23339
 msgid "No API Key Provided!"
@@ -2521,6 +2521,9 @@ msgid ""
 "Key and refresh the page to start using Map Block. This is a requirement "
 "enforced by Google."
 msgstr ""
+"Opps ! Il semble que vous n’ayez pas encore configuré votre clé API Google. "
+"Ajoutez une clé API et rafraîchissez la page pour commencer à utiliser le "
+"bloc de carte. Il s’agit d’une exigence imposée par Google."
 
 #: assets/blocks/blocks.js:23348
 msgid "Add Google API Key"
@@ -3742,11 +3745,11 @@ msgstr "Mis à jour"
 
 #: assets/js/main.js:87
 msgid "Changes saved!"
-msgstr ""
+msgstr "Modifications enregistrées !"
 
 #: assets/js/main.js:88
 msgid " Error: changes can't be saved."
-msgstr ""
+msgstr " Erreur : les modifications ne peuvent pas être enregistrées."
 
 #: assets/js/settings.js:95
 msgid "Edit block"
@@ -3769,6 +3772,8 @@ msgid ""
 "You're using PublishPress Blocks Free. The Pro version has more features and "
 "support. %sUpgrade to Pro%s"
 msgstr ""
+"Vous utilisez PublishPress Blocks Free. La version Pro offre plus de "
+"fonctionnalités et de support. %sPasser à la version Pro%s"
 
 #: incl/advanced-gutenberg-main.php:1066 incl/advanced-gutenberg-main.php:1203
 #: incl/advanced-gutenberg-main.php:1259
@@ -3783,15 +3788,15 @@ msgstr "Jeton de nonce invalide !"
 
 #: incl/advanced-gutenberg-main.php:1090
 msgid "Style title"
-msgstr ""
+msgstr "Titre du style"
 
 #: incl/advanced-gutenberg-main.php:1217
 msgid "Error: wrong data"
-msgstr ""
+msgstr "Erreur : données incorrectes"
 
 #: incl/advanced-gutenberg-main.php:1245
 msgid "Error: can't edit this feature"
-msgstr ""
+msgstr "Erreur : Impossible de modifier cette fonctionnalité"
 
 #: incl/advanced-gutenberg-main.php:1329 incl/advanced-gutenberg-main.php:1412
 #: incl/advanced-gutenberg-main.php:1462
@@ -3840,7 +3845,7 @@ msgstr "Message"
 
 #: incl/advanced-gutenberg-main.php:1389
 msgid "Error while sending the form. Please try again."
-msgstr ""
+msgstr "Erreur lors de l’envoi du formulaire. Veuillez réessayer."
 
 #: incl/advanced-gutenberg-main.php:1485
 msgid "Captcha validated"
@@ -3853,12 +3858,12 @@ msgstr "CAPTCHA est vide"
 #: incl/advanced-gutenberg-main.php:1776 incl/advanced-gutenberg-main.php:2041
 #: incl/pages/main.php:23
 msgid "Block Permissions"
-msgstr ""
+msgstr "Droits de blocs"
 
 #: incl/advanced-gutenberg-main.php:1790 incl/pages/custom-styles.php:19
 #: incl/pages/main.php:41
 msgid "Block Styles"
-msgstr ""
+msgstr "Styles de blocs"
 
 #: incl/advanced-gutenberg-main.php:1797 incl/pages/settings.php:22
 msgid "Settings"
@@ -3870,32 +3875,36 @@ msgid ""
 "This feature is disabled. In order to use, please enable back through "
 "Dashboard."
 msgstr ""
+"Cette fonctionnalité est désactivée. Pour l’utiliser, veuillez la réactiver "
+"via le tableau de bord."
 
 #: incl/advanced-gutenberg-main.php:2162
 #, php-format
 msgid ""
 "If you like %sPublishPress Blocks%s please leave us a %s rating. Thank you!"
 msgstr ""
+"Si vous aimez %sPublishPress Blocks%s, veuillez nous laisser une note de %s. "
+"Merci !"
 
 #: incl/advanced-gutenberg-main.php:2178
 msgid "About PublishPress Blocks"
-msgstr ""
+msgstr "À propos de PublishPress Blocks"
 
 #: incl/advanced-gutenberg-main.php:2181
 msgid "About"
-msgstr ""
+msgstr "À propos"
 
 #: incl/advanced-gutenberg-main.php:2188 incl/advanced-gutenberg-main.php:2191
 msgid "Documentation"
-msgstr ""
+msgstr "Documentation"
 
 #: incl/advanced-gutenberg-main.php:2199
 msgid "Contact the PublishPress team"
-msgstr ""
+msgstr "Contact de l’équipe de PublishPress"
 
 #: incl/advanced-gutenberg-main.php:2202
 msgid "Contact"
-msgstr ""
+msgstr "Contact"
 
 #: incl/advanced-gutenberg-main.php:2228
 msgid "PublishPress Blocks logo"
@@ -3921,7 +3930,7 @@ msgstr "Activer ou désactiver tous les blocs"
 
 #: incl/advanced-gutenberg-main.php:3081 incl/advanced-gutenberg-main.php:3126
 msgid "To save this configuration, enable at least one block."
-msgstr ""
+msgstr "Pour enregistrer cette configuration, activez au moins un bloc."
 
 #: incl/advanced-gutenberg-main.php:3094 incl/advanced-gutenberg-main.php:3117
 #, php-format
@@ -3930,7 +3939,7 @@ msgstr "Enregistrer %s"
 
 #: incl/advanced-gutenberg-main.php:3103
 msgid "Loading..."
-msgstr ""
+msgstr "Chargement…"
 
 #: incl/advanced-gutenberg-main.php:3343 incl/advanced-gutenberg-main.php:3344
 msgid "Block Config"
@@ -4487,7 +4496,7 @@ msgstr " bloc"
 
 #: incl/pages/custom-styles.php:12
 msgid "Your styles have been saved!"
-msgstr ""
+msgstr "Vos styles ont été enregistrés !"
 
 #: incl/pages/custom-styles.php:33
 msgid "Copy"
@@ -4499,7 +4508,7 @@ msgstr "Effacer"
 
 #: incl/pages/custom-styles.php:39
 msgid "Add new style"
-msgstr ""
+msgstr "Ajouter un nouveau style"
 
 #: incl/pages/custom-styles.php:46
 msgid "All modifications were saved!"
@@ -4507,7 +4516,7 @@ msgstr "Toutes les modifications ont été enregistrées !"
 
 #: incl/pages/custom-styles.php:56
 msgid "Class name"
-msgstr ""
+msgstr "Nom de la classe"
 
 #: incl/pages/custom-styles.php:66
 msgid ""
@@ -4515,6 +4524,10 @@ msgid ""
 "                                            (usually set this same as the "
 "custom style's background color)"
 msgstr ""
+"Cette option vous aide à identifier des styles personnalisés spécifiques "
+"dans la liste.\n"
+"                                            (généralement définie de la même "
+"manière que la couleur de fond du style personnalisé)"
 
 #: incl/pages/custom-styles.php:71
 msgid "Identification color"
@@ -4548,140 +4561,152 @@ msgstr "Paragraphe suivant."
 msgid ""
 "You can control who can use each block, including default WordPress blocks."
 msgstr ""
+"Vous pouvez contrôler qui peut utiliser chaque bloc, y compris les blocs "
+"WordPress par défaut."
 
 #: incl/pages/main.php:34
 msgid ""
 "Enable extra blocks including content displays, sliders, buttons, icons, "
 "tabs, accordions, and more."
 msgstr ""
+"Activez des blocs supplémentaires, notamment des affichages de contenu, des "
+"diaporamas, des boutons, des icônes, des onglets, des accordéons, etc."
 
 #: incl/pages/main.php:43
 msgid ""
 "You can add your own CSS styles for your blocks. Anyone editing posts can "
 "quickly add the styles to blocks."
 msgstr ""
+"Activez des blocs supplémentaires, notamment des affichages de contenu, des "
+"diaporamas, des boutons, des icônes, des onglets, des accordéons, etc."
 
 #: incl/pages/main.php:52
 msgid ""
 "Schedule blocks to be published and unpublished. Every block can have a "
 "“Start showing” and/or “Stop showing” option."
 msgstr ""
+"Programmez les blocs à publier et à dépublier. Chaque bloc peut avoir une "
+"option « Commencer à afficher » et/ou « Arrêter d’afficher »."
 
 #: incl/pages/main.php:60
 #, php-format
 msgid "Extend Supported Blocks %sBeta%s"
-msgstr ""
+msgstr "Étendre les blocs pris en charge %sBeta%s"
 
 #: incl/pages/main.php:65
 msgid ""
 "If some blocks are not listed in Block Permissions, try enabling this "
 "feature."
 msgstr ""
+"Si certains blocs ne figurent pas dans la liste des droits de blocs, essayez "
+"d’activer cette fonctionnalité."
 
 #: incl/pages/main.php:73
 msgid "Core Blocks Features"
-msgstr ""
+msgstr "Fonctionnalités des blocs du cœur"
 
 #: incl/pages/main.php:75
 msgid ""
 "Add Google Fonts support to core blocks including paragraphs and headings."
 msgstr ""
+"Ajout de la prise en charge des polices Google Fonts aux blocs principaux, y "
+"compris les paragraphes et les titres."
 
 #: incl/pages/main.php:93
 msgid "PublishPress Blocks Pro"
-msgstr ""
+msgstr "PublishPress Blocks Pro"
 
 #: incl/pages/main.php:95
 msgid "Priority, personal support"
-msgstr ""
+msgstr "Priorité et assistance personnelle"
 
 #: incl/pages/main.php:96
 msgid "Pro features for Accordion block"
-msgstr ""
+msgstr "Fonctionnalités pro pour le bloc accordéon"
 
 #: incl/pages/main.php:97
 msgid "Pro features for Tabs block"
-msgstr ""
+msgstr "Fonctionnalités pro pour le bloc d’onglets"
 
 #: incl/pages/main.php:98
 msgid "Pro features for Content Display block"
-msgstr ""
+msgstr "Fonctionnalités pro du bloc d’affichage du contenu"
 
 #: incl/pages/main.php:99
 msgid "Pro features for Images Slider block"
-msgstr ""
+msgstr "Fonctionnalités pro pour le bloc du curseur d’images"
 
 #: incl/pages/main.php:100
 msgid "Pro features for Button block"
-msgstr ""
+msgstr "Fonctionnalités pro pour le bloc de boutons"
 
 #: incl/pages/main.php:101
 msgid "Pro features for List block"
-msgstr ""
+msgstr "Fonctionnalités pro pour le bloc de listes"
 
 #: incl/pages/main.php:102
 msgid "Pro features for Count Up block"
-msgstr ""
+msgstr "Fonctionnalités pro pour le bloc de compter jusqu’à"
 
 #: incl/pages/main.php:103
 msgid "Pro features for Testimonial block"
-msgstr ""
+msgstr "Fonctionnalités pro pour le bloc de témoignages"
 
 #: incl/pages/main.php:104
 msgid "Pro features for Advanced Image block"
-msgstr ""
+msgstr "Fonctionnalités pro pour le bloc image avancée"
 
 #: incl/pages/main.php:105
 msgid "Google Fonts support"
-msgstr ""
+msgstr "Pris en charge de Google Fonts"
 
 #: incl/pages/main.php:106
 msgid "Countdown block"
-msgstr ""
+msgstr "Bloc de compte à rebours"
 
 #: incl/pages/main.php:107
 msgid "Pricing Table block"
-msgstr ""
+msgstr "Bloc du tableau des prix"
 
 #: incl/pages/main.php:108
 msgid "Feature List block"
-msgstr ""
+msgstr "Bloc de la liste des fonctionnalités"
 
 #: incl/pages/main.php:109
 msgid "Remove PublishPress ads and branding"
-msgstr ""
+msgstr "Retirez les publicités et l’image de marque de PublishPress"
 
 #: incl/pages/settings.php:15
 msgid "Settings saved successfully!"
-msgstr ""
+msgstr "Les réglages ont été enregistrés avec succès !"
 
 #: incl/pages/settings.php:29
 msgid "General"
-msgstr ""
+msgstr "Général"
 
 #: incl/pages/settings.php:38
 msgid "Images"
-msgstr ""
+msgstr "Images"
 
 #: incl/pages/settings.php:42
 msgid "Maps"
-msgstr ""
+msgstr "Cartes"
 
 #: incl/pages/settings.php:46
 msgid "Email & Forms"
-msgstr ""
+msgstr "E-mail et formulaires"
 
 #: incl/pages/settings.php:50
 msgid "reCAPTCHA"
-msgstr ""
+msgstr "reCAPTCHA"
 
 #: incl/pages/settings.php:54
 msgid "Data Export"
-msgstr ""
+msgstr "Exportation de données"
 
 #: incl/pages/settings.php:64
 msgid "License"
-msgstr ""
+msgstr "Licence"
 
 #: incl/pages/settings/data.php:15
 msgid "Download Contacts Form data"
@@ -4689,7 +4714,7 @@ msgstr "Télécharger les données du formulaire de contact"
 
 #: incl/pages/settings/data.php:19
 msgid "Data stored through Contact form blocks."
-msgstr ""
+msgstr "Données stockées par les blocs de formulaires de contact."
 
 #: incl/pages/settings/data.php:31 incl/pages/settings/data.php:64
 msgid "CSV"
@@ -4705,13 +4730,15 @@ msgstr "Télécharger les données du formulaire de newsletter"
 
 #: incl/pages/settings/data.php:52
 msgid "Data stored through Newsletter form blocks."
-msgstr ""
+msgstr "Données stockées par les blocs de formulaires de la newsletter."
 
 #: incl/pages/settings/forms.php:27
 msgid ""
 "These email settings apply to messages sent through PublishPress Contact "
 "form block."
 msgstr ""
+"Ces réglages d’e-mail s’appliquent aux messages envoyés par le bloc du "
+"formulaire de contact de PublishPress."
 
 #: incl/pages/settings/forms.php:35
 msgid "Sender name"
@@ -4731,7 +4758,7 @@ msgstr "Destinataire de l’e-mail"
 
 #: incl/pages/settings/forms.php:101
 msgid "Save Form Settings"
-msgstr ""
+msgstr "Enregistrer les réglages du formulaire"
 
 #: incl/pages/settings/general.php:43
 msgid "Display PublishPress branding"
@@ -4740,6 +4767,7 @@ msgstr "Afficher la marque PublishPress"
 #: incl/pages/settings/general.php:44
 msgid "PublishPress logo and links in the footer of the admin pages"
 msgstr ""
+"Logo et liens PublishPress dans le pied de page des pages d’administration"
 
 #: incl/pages/settings/general.php:52
 msgid "Enable blocks spacing"
@@ -4747,7 +4775,7 @@ msgstr "Activer l’espacement des blocs"
 
 #: incl/pages/settings/general.php:63
 msgid "Vertical spacing between blocks"
-msgstr ""
+msgstr "Espacement vertical entre les blocs"
 
 #: incl/pages/settings/general.php:72
 msgid "Blocks spacing"
@@ -4759,11 +4787,11 @@ msgstr "Couleur de l’icône des blocs"
 
 #: incl/pages/settings/general.php:104
 msgid "Apply in admin to blocks from PublishPress Blocks plugin."
-msgstr ""
+msgstr "Appliquez dans l’admin des blocs de l’extension PublishPress Blocks."
 
 #: incl/pages/settings/general.php:113
 msgid "Gutenberg editor width"
-msgstr ""
+msgstr "Largeur de l’éditeur Gutenberg"
 
 #: incl/pages/settings/general.php:133
 msgid "Enable columns visual guide"
@@ -4771,20 +4799,22 @@ msgstr "Activer le guidage visuel des colonnes"
 
 #: incl/pages/settings/general.php:144
 msgid "Visual guide for PublishPress Blocks Columns block"
-msgstr ""
+msgstr "Guide visuel pour le bloc colonnes de PublishPress Blocks"
 
 #: incl/pages/settings/general.php:153
 msgid "Remove autop"
-msgstr ""
+msgstr "Retirer autop"
 
 #: incl/pages/settings/general.php:164
 msgid ""
 "Autop WordPress function is used to prevent unwanted paragraphs to be added"
 msgstr ""
+"La fonction Autop WordPress est utilisée pour empêcher l’ajout de "
+"paragraphes non désirés."
 
 #: incl/pages/settings/general.php:178
 msgid "Save General Settings"
-msgstr ""
+msgstr "Enregistrer les réglages généraux"
 
 #: incl/pages/settings/images.php:24
 msgid "Open galleries in lightbox"
@@ -4811,6 +4841,8 @@ msgstr "Superposition"
 #: incl/pages/settings/images.php:63
 msgid "Display caption text on images loaded as lightbox in galleries."
 msgstr ""
+"Afficher le texte de la légende sur les images chargées en visionneuse dans "
+"les galeries."
 
 #: incl/pages/settings/images.php:72
 msgid "Default thumbnail"
@@ -4825,14 +4857,16 @@ msgid ""
 "Set the default post thumbnail to use in Content Display blocks for posts "
 "without featured image."
 msgstr ""
+"Définissez la vignette par défaut à utiliser dans les blocs d’affichage du "
+"contenu pour les articles sans image mise en avant."
 
 #: incl/pages/settings/images.php:105
 msgid "Save Image Settings"
-msgstr ""
+msgstr "Enregistrer les réglages de l’image"
 
 #: incl/pages/settings/maps.php:12
 msgid "Google API key"
-msgstr ""
+msgstr "Clé API Google"
 
 #: incl/pages/settings/maps.php:28
 msgid "How to create a Google API Key"
@@ -4846,7 +4880,7 @@ msgstr ""
 
 #: incl/pages/settings/maps.php:49
 msgid "Save Maps Settings"
-msgstr ""
+msgstr "Enregistrer les réglages des cartes"
 
 #: incl/pages/settings/recaptcha.php:16
 #, php-format
@@ -4854,6 +4888,9 @@ msgid ""
 "Use the Google reCAPTCHA to avoid spam in PublishPress Blocks forms. Get "
 "credentials for your domain by registering %shere%s."
 msgstr ""
+"Utilisez le reCAPTCHA de Google pour éviter le spam dans les formulaires "
+"PublishPress Blocks. Obtenez des informations d’identification pour votre "
+"domaine en vous enregistrant %sici%s."
 
 #: incl/pages/settings/recaptcha.php:27
 msgid "Enable reCAPTCHA"
@@ -4861,7 +4898,7 @@ msgstr "Activer reCAPTCHA"
 
 #: incl/pages/settings/recaptcha.php:42
 msgid "Site key"
-msgstr ""
+msgstr "Clé du site"
 
 #: incl/pages/settings/recaptcha.php:43 incl/pages/settings/recaptcha.php:59
 msgid "required"
@@ -4869,11 +4906,11 @@ msgstr "Champs obligatoires"
 
 #: incl/pages/settings/recaptcha.php:58
 msgid "Secret key"
-msgstr ""
+msgstr "Clé secrète"
 
 #: incl/pages/settings/recaptcha.php:74
 msgid "Language"
-msgstr ""
+msgstr "Langue"
 
 #: incl/pages/settings/recaptcha.php:81
 msgid "Auto detect"
@@ -4881,11 +4918,11 @@ msgstr "Détection automatique"
 
 #: incl/pages/settings/recaptcha.php:88
 msgid "Language codes list"
-msgstr ""
+msgstr "Liste des codes de langues"
 
 #: incl/pages/settings/recaptcha.php:95
 msgid "Theme"
-msgstr ""
+msgstr "Thème"
 
 #: incl/pages/settings/recaptcha.php:101
 msgid "Light"
@@ -4906,7 +4943,7 @@ msgstr ""
 
 #: incl/pages/settings/recaptcha.php:129
 msgid "Save reCAPTCHA Settings"
-msgstr ""
+msgstr "Enregistrer les réglages reCAPTCHA"
 
 #: install.php:20
 msgid "Gutenberg is not detected! Activate it or"
@@ -4929,6 +4966,8 @@ msgid ""
 "This plugin is outdated. You already have a more recent version installed. "
 "Please remove this version."
 msgstr ""
+"Cette extension est obsolète. Vous avez déjà installé une version plus "
+"récente. Veuillez supprimer cette version."
 
 #: vendor/publishpress/publishpress-instance-protection/core/InstanceChecker.php:243
 #, php-format
@@ -4936,6 +4975,8 @@ msgid ""
 "This plugin is not installed in the standard folder. The current path is %s "
 "but it is expected to be %s."
 msgstr ""
+"Cette extension n’est pas installée dans le dossier standard. Le chemin "
+"actuel est %s mais il devrait être %s."
 
 #: vendor/publishpress/publishpress-instance-protection/core/InstanceChecker.php:269
 #, php-format
@@ -4943,11 +4984,13 @@ msgid ""
 "You have activated multiple instances of %s. Please keep only one activated "
 "and remove the others."
 msgstr ""
+"Vous avez activé plusieurs instances de %s. Veuillez n’en garder qu’une "
+"seule activée et supprimer les autres."
 
 #: vendor/publishpress/publishpress-instance-protection/core/InstanceChecker.php:289
 #, php-format
 msgid "Please deactivate %s when %s is activated."
-msgstr ""
+msgstr "Veuillez désactiver %s lorsque %s est activée."
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:332
 #, php-format
@@ -4956,35 +4999,39 @@ msgid ""
 "been useful. Please could you quickly leave a 5-star rating on WordPress."
 "org? It really does help to keep %1$s growing."
 msgstr ""
+"Salut, vous avez utilisé %1$s pour %2$s sur votre site. Nous espérons que "
+"l’extension vous a été utile. Pourriez-vous rapidement laisser une note de 5 "
+"étoiles sur WordPress.org ? Cela aide vraiment à maintenir le développement "
+"de %1$s."
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:342
 msgid "1 week"
-msgstr ""
+msgstr "1 semaine"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:350
 msgid "1 month"
-msgstr ""
+msgstr "1 mois"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:361
 msgid "3 months"
-msgstr ""
+msgstr "3 mois"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:615
 #, php-format
 msgid "Click here to add your rating for %s"
-msgstr ""
+msgstr "Cliquez ici pour ajouter votre note pour %s"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:621
 msgid "Maybe later"
-msgstr ""
+msgstr "Peut-être plus tard"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:626
 msgid "I already did"
-msgstr ""
+msgstr "Je l’ai déjà fait"
 
 #: vendor/publishpress/wordpress-version-notices/src/Module/MenuLink/Module.php:129
 msgid "Amazing! We are redirecting you to our site..."
-msgstr ""
+msgstr "Incroyable ! Nous vous redirigeons vers notre site…"
 
 #. Plugin URI of the plugin/theme
 msgid "https://publishpress.com/blocks/"
