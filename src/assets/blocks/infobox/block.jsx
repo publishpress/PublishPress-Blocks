@@ -980,7 +980,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
     };
 
     registerBlockType( 'advgb/infobox', {
-        title: __( 'Info Box (PublishPress)', 'advanced-gutenberg' ),
+        title: __( 'Info Box - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Icon block with more options and styles.', 'advanced-gutenberg' ),
         icon: {
             src: blockIcon,

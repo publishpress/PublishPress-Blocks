@@ -350,7 +350,7 @@
     };
 
     registerBlockType( 'advgb/column', {
-        title: __( 'Column (PublishPress)', 'advanced-gutenberg' ),
+        title: __( 'Column - PublishPress', 'advanced-gutenberg' ),
         parent: [ 'advgb/columns' ],
         description: __( 'Column in row.', 'advanced-gutenberg' ),
         icon: {

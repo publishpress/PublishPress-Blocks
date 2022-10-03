@@ -374,7 +374,7 @@
     };
 
     registerBlockType( 'advgb/image', {
-        title: __( 'Image (PublishPress)', 'advanced-gutenberg' ),
+        title: __( 'Image - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Image/photo block with more options and styles.', 'advanced-gutenberg' ),
         icon: {
             src: advImageBlockIcon,

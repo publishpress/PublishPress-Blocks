@@ -279,7 +279,7 @@
     );
 
     registerBlockType( 'advgb/accordion-item', {
-        title: __( 'Accordion Item (PublishPress)', 'advanced-gutenberg' ),
+        title: __( 'Accordion Item - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Create a sliding accordion display for your content.', 'advanced-gutenberg' ),
         icon: {
             src: accordionBlockIcon,

@@ -702,7 +702,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
     };
 
     registerBlockType( 'advgb/button', {
-        title: __( 'Button (PublishPress)', 'advanced-gutenberg' ),
+        title: __( 'Button - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Button block with more options and styles.', 'advanced-gutenberg' ),
         icon: {
             src: buttonBlockIcon,

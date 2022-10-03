@@ -506,7 +506,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
     };
 
     registerBlockType( 'advgb/icon', {
-        title: __( 'Icon (PublishPress)', 'advanced-gutenberg' ),
+        title: __( 'Icon - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Icon block with more options and styles.', 'advanced-gutenberg' ),
         icon: {
             src: blockIcon,

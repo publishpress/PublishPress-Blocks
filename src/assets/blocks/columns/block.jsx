@@ -861,7 +861,7 @@
     };
 
     registerBlockType( 'advgb/columns', {
-        title: __( 'Columns (PublishPress)', 'advanced-gutenberg' ),
+        title: __( 'Columns - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Create flexible layouts for your content with advanced options and styles.', 'advanced-gutenberg' ),
         icon: {
             src: 'layout',

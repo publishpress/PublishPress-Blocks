@@ -299,7 +299,7 @@
     }
 
     registerBlockType( 'advgb/newsletter', {
-        title: __( 'Newsletter (PublishPress)', 'advanced-gutenberg' ),
+        title: __( 'Newsletter - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Fastest way to create a newsletter form for your page.', 'advanced-gutenberg' ),
         icon: {
             src: newsletterBlockIcon,

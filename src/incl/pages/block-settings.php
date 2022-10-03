@@ -42,6 +42,33 @@ $excluded_blocks_config = [
     'advgb/recent-posts',
     'advgb/login-form',
     'advgb/search-bar',
+    'advgb/countdown',
+    'advgb/feature-list',
+    'advgb/feature',
+    'advgb/pricing-table'
+];
+
+$new_titles = [
+    'advgb/accordions' => __( 'Accordion - PublishPress', 'advanced-gutenberg' ),
+    'advgb/button' => __( 'Button - PublishPress', 'advanced-gutenberg' ),
+    'advgb/icon' => __( 'Icon - PublishPress', 'advanced-gutenberg' ),
+    'advgb/image' => __( 'Image - PublishPress', 'advanced-gutenberg' ),
+    'advgb/list' => __( 'List - PublishPress', 'advanced-gutenberg' ),
+    'advgb/table' => __( 'Table - PublishPress', 'advanced-gutenberg' ),
+    'advgb/adv-tabs' => __( 'Tabs - PublishPress', 'advanced-gutenberg' ),
+    'advgb/video' => __( 'Video - PublishPress', 'advanced-gutenberg' ),
+    'advgb/columns' => __( 'Columns - PublishPress', 'advanced-gutenberg' ),
+    'advgb/column' => __( 'Column - PublishPress', 'advanced-gutenberg' ),
+    'advgb/contact-form' => __( 'Contact Form - PublishPress', 'advanced-gutenberg' ),
+    'advgb/count-up' => __( 'Count Up - PublishPress', 'advanced-gutenberg' ),
+    'advgb/images-slider' => __( 'Images Slider - PublishPress', 'advanced-gutenberg' ),
+    'advgb/infobox' => __( 'Info Box - PublishPress', 'advanced-gutenberg' ),
+    'advgb/map' => __( 'Map - PublishPress', 'advanced-gutenberg' ),
+    'advgb/newsletter' => __( 'Newsletter - PublishPress', 'advanced-gutenberg' ),
+    'advgb/social-links' => __( 'Social Links - PublishPress', 'advanced-gutenberg' ),
+    'advgb/summary' => __( 'Table of Contents - PublishPress', 'advanced-gutenberg' ),
+    'advgb/testimonial' => __( 'Testimonial - PublishPress', 'advanced-gutenberg' ),
+    'advgb/woo-products' => __( 'Woo Products - PublishPress', 'advanced-gutenberg' )
 ];
 
 // Pro
@@ -78,7 +105,15 @@ if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
                 }
                 if ( isset( $block['iconColor'] ) ) :
                     $iconColor = 'style="color:' . esc_attr( $block['iconColor'] ) . '"';
-                endif; ?>
+                endif;
+
+                // Use new block title
+                if( isset( $new_titles[$block['name']] ) ) {
+                    $block['title'] = $new_titles[$block['name']];
+                    //$block['title'] = str_replace( 'PublishPress', '', $new_titles[$block['name']] ); // Remove 'PublishPress'
+                    //$block['title'] = str_replace( '-', '', $block['title'] ); // Remove hyphen in RTL and LTR
+                }
+                ?>
             <li class="block-config-item advgb-settings-option" title="<?php echo esc_attr( __( $block['title'], 'advanced-gutenberg' ) ); ?>">
                 <span class="block-icon" <?php echo $iconColor ?>>
                     <?php echo html_entity_decode( html_entity_decode( stripslashes( $block['icon'] ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>

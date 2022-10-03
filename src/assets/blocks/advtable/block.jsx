@@ -1370,7 +1370,7 @@
     }
 
     registerBlockType('advgb/table', {
-        title: __('Table (PublishPress)', 'advanced-gutenberg'),
+        title: __('Table - PublishPress', 'advanced-gutenberg'),
         description: __('Table block with more styles and functions.', 'advanced-gutenberg'),
         icon: {
             src: tableBlockIcon,

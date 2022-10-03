@@ -598,7 +598,7 @@
     };
 
     registerBlockType('advgb/images-slider', {
-        title: __('Images Slider (PublishPress)', 'advanced-gutenberg'),
+        title: __('Images Slider - PublishPress', 'advanced-gutenberg'),
         description: __('Display your images in a slider.', 'advanced-gutenberg'),
         icon: {
             src: imageSliderBlockIcon,

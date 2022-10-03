@@ -1949,7 +1949,7 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
     }
 
     registerBlockType( 'advgb/recent-posts', {
-        title: __( 'Content Display (PublishPress)', 'advanced-gutenberg' ),
+        title: __( 'Content Display - PublishPress', 'advanced-gutenberg' ),
         description: __( 'Displays your content in grid, list, slider, frontpage, newspaper, and masonry views with beautiful layouts and styles.', 'advanced-gutenberg' ),
         icon: {
             src: advRecentPostsBlockIcon,
