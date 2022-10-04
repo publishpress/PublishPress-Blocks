@@ -257,6 +257,9 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
+= 3.0.1 - 4 Oct 2022 =
+  * Fix: Potential non load of version notices library
+
 = 3.0.0 - 3 Oct 2022 =
   * Add: Separated admin pages
   * Add: Admin dashboard
