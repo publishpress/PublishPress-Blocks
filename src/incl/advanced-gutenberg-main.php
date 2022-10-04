@@ -794,6 +794,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if (
                 current_user_can( 'install_plugins' )
                 && ! defined( 'ADVANCED_GUTENBERG_PRO' )
+                && class_exists( 'PPVersionNotices\Module\TopNotice\Module' )
+                && class_exists( 'PPVersionNotices\Module\MenuLink\Module' )
             ) {
                 // Top notice
                 add_filter(
