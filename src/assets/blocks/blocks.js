@@ -14283,7 +14283,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Advanced Video Settings', 'advanced-gutenberg') },
+                            { title: __('Video Settings', 'advanced-gutenberg') },
                             React.createElement(ToggleControl, {
                                 label: __('Open video in light box', 'advanced-gutenberg'),
                                 help: __('Lightbox offers additional display options.', 'advanced-gutenberg'),
