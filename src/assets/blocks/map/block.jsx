@@ -1370,9 +1370,9 @@
                         >
                             <a target="_blank"
                                className="button button-large"
-                               href={advgbBlocks.config_url + '#settings'}
+                               href={advgbBlocks.config_url + '&tab=maps'}
                             >
-                                { __( 'Add Google API Key', 'advanced-gutenberg' ) }
+                                { __( 'Add Google API Key in Settings', 'advanced-gutenberg' ) }
                             </a>
                         </Placeholder>
                     }

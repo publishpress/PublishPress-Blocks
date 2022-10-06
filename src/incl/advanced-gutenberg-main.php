@@ -601,7 +601,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'login_logo' => $login_logo,
                 'reg_logo' => $reg_logo,
                 'home_url' => home_url(),
-                'config_url' => admin_url('admin.php?page=advgb_main'),
+                'config_url' => admin_url('admin.php?page=advgb_settings'),
                 'customStyles' => !$custom_styles_data ? array() : $custom_styles_data,
                 'captchaEnabled' => $recaptcha_config['recaptcha_enable'],
                 'pluginUrl' => plugins_url('', ADVANCED_GUTENBERG_PLUGIN),
@@ -794,6 +794,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if (
                 current_user_can( 'install_plugins' )
                 && ! defined( 'ADVANCED_GUTENBERG_PRO' )
+                && class_exists( 'PPVersionNotices\Module\TopNotice\Module' )
+                && class_exists( 'PPVersionNotices\Module\MenuLink\Module' )
             ) {
                 // Top notice
                 add_filter(
@@ -1811,6 +1813,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function registerMainMenu()
         {
+            if ( ! current_user_can( 'manage_options' ) ) {
+                return false;
+            }
+
             global $submenu;
 
             if ( empty( $GLOBALS['admin_page_hooks']['advgb_main'] ) ) {
@@ -1862,10 +1868,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $submenu_slugs_conditions[] = [ $page['slug'], $page['enabled'] ];
                 }
 
-                /*echo '<pre>';
-                var_dump($submenu_slugs_conditions);
-                echo '</pre>';
-                exit;*/
                 foreach( $submenu['advgb_main'] as $key => $value ) {
                     if( in_array( $submenu['advgb_main'][$key][2], $submenu_slugs ) ) {
                         $slug_ = $submenu['advgb_main'][$key][2];
@@ -1881,7 +1883,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         $submenu['advgb_main'][$key][4] = $slug_ . '-menu-item' . $showHide;
                     }
                 }
-                //exit;
             }
         }
 
@@ -5568,9 +5569,15 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if( file_exists( plugin_dir_path( __FILE__ ) . 'pages/' . $page . '/' . $tab . '.php' ) ) {
                 include_once( plugin_dir_path( __FILE__ ) . 'pages/' . $page . '/' . $tab . '.php' );
             } else {
-                // Redirect to default page
-                wp_safe_redirect( admin_url( 'admin.php?page=advgb_settings' ) );
-                exit;
+                wp_add_inline_style(
+                    'advgb_admin_styles',
+                    '.publishpress-admin .nav-tab-wrapper { display: none !important; }'
+                );
+                printf(
+                    __( 'Page not found. Go to %sDashboard%s', 'advanced-gutenberg' ),
+                    '<a href="' . admin_url( 'admin.php?page=advgb_main' ) . '">',
+                    '</a>'
+                );
             }
         }
 

@@ -266,7 +266,7 @@
                         </BlockControls>
                         }
                         <InspectorControls>
-                            <PanelBody title={ __( 'Advanced Video Settings', 'advanced-gutenberg' ) }>
+                            <PanelBody title={ __( 'Video Settings', 'advanced-gutenberg' ) }>
                                 <ToggleControl
                                     label={ __( 'Open video in light box', 'advanced-gutenberg' ) }
                                     help={ __( 'Lightbox offers additional display options.', 'advanced-gutenberg' ) }

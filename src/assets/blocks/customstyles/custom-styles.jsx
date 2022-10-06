@@ -41,7 +41,7 @@
     if (typeof advgbBlocks.customStyles !== 'undefined' && advgbBlocks.customStyles) {
         advgbBlocks.customStyles.unshift( {
             id: 0,
-            label: __( 'Select a custom style', 'advanced-gutenberg' ),
+            label: __( 'Select a block style', 'advanced-gutenberg' ),
             value: '',
             identifyColor: ''
         } );
@@ -57,7 +57,7 @@
                     <div className="advgb-custom-styles-wrapper">
                         <SelectControl
                             label={ [
-                                __( 'Custom styles', 'advanced-gutenberg' ),
+                                __( 'Block styles', 'advanced-gutenberg' ),
                                 <span className={'components-panel__color-area'}
                                       key="customstyle-identify"
                                       style={ {

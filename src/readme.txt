@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 6.0.2
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -256,6 +256,14 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 16. Custom Styles for Blocks: You create custom CSS styles and make them available to end users.
 
 == Changelog ==
+
+= 3.0.1 - 6 Oct 2022 =
+  * Fix: Potential non load of version notices library
+  * Fix: Don't add Blocks menu custom CSS classes if menu is not created
+  * Fix: Settings panel title for Video block
+  * Fix: Block styles label in editor dropdown
+  * Fix: Links to settings from Login & Register, Map, Newsletter and Contact Form blocks
+  * Fix: Wrong tab name returns a "not found" message
 
 = 3.0.0 - 3 Oct 2022 =
   * Add: Separated admin pages
