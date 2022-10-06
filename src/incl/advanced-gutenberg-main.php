@@ -1813,6 +1813,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function registerMainMenu()
         {
+            if ( ! current_user_can( 'manage_options' ) ) {
+                return false;
+            }
+
             global $submenu;
 
             if ( empty( $GLOBALS['admin_page_hooks']['advgb_main'] ) ) {
@@ -1864,10 +1868,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $submenu_slugs_conditions[] = [ $page['slug'], $page['enabled'] ];
                 }
 
-                /*echo '<pre>';
-                var_dump($submenu_slugs_conditions);
-                echo '</pre>';
-                exit;*/
                 foreach( $submenu['advgb_main'] as $key => $value ) {
                     if( in_array( $submenu['advgb_main'][$key][2], $submenu_slugs ) ) {
                         $slug_ = $submenu['advgb_main'][$key][2];
@@ -1883,7 +1883,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         $submenu['advgb_main'][$key][4] = $slug_ . '-menu-item' . $showHide;
                     }
                 }
-                //exit;
             }
         }
 
