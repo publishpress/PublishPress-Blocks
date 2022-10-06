@@ -261,6 +261,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Potential non load of version notices library
   * Fix: Don't add Blocks menu custom CSS classes if menu is not created
   * Fix: Settings panel title for Video block
+  * Fix: Block styles label in editor dropdown
 
 = 3.0.0 - 3 Oct 2022 =
   * Add: Separated admin pages

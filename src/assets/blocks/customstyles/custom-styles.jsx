@@ -57,7 +57,7 @@
                     <div className="advgb-custom-styles-wrapper">
                         <SelectControl
                             label={ [
-                                __( 'Custom styles', 'advanced-gutenberg' ),
+                                __( 'Block styles', 'advanced-gutenberg' ),
                                 <span className={'components-panel__color-area'}
                                       key="customstyle-identify"
                                       style={ {

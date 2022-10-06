@@ -147,7 +147,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     'div',
                     { className: 'advgb-custom-styles-wrapper' },
                     React.createElement(SelectControl, {
-                        label: [__('Custom styles', 'advanced-gutenberg'), React.createElement('span', { className: 'components-panel__color-area',
+                        label: [__('Block styles', 'advanced-gutenberg'), React.createElement('span', { className: 'components-panel__color-area',
                             key: 'customstyle-identify',
                             style: {
                                 background: props.attributes.identifyColor,
