@@ -5569,9 +5569,15 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if( file_exists( plugin_dir_path( __FILE__ ) . 'pages/' . $page . '/' . $tab . '.php' ) ) {
                 include_once( plugin_dir_path( __FILE__ ) . 'pages/' . $page . '/' . $tab . '.php' );
             } else {
-                // Redirect to default page
-                wp_safe_redirect( admin_url( 'admin.php?page=advgb_settings' ) );
-                exit;
+                wp_add_inline_style(
+                    'advgb_admin_styles',
+                    '.publishpress-admin .nav-tab-wrapper { display: none !important; }'
+                );
+                printf(
+                    __( 'Page not found. Go to %sDashboard%s', 'advanced-gutenberg' ),
+                    '<a href="' . admin_url( 'admin.php?page=advgb_main' ) . '">',
+                    '</a>'
+                );
             }
         }
 

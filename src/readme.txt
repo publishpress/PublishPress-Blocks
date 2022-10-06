@@ -263,6 +263,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Settings panel title for Video block
   * Fix: Block styles label in editor dropdown
   * Fix: Links to settings from Login & Register, Map, Newsletter and Contact Form blocks
+  * Fix: Wrong tab name returns a "not found" message
 
 = 3.0.0 - 3 Oct 2022 =
   * Add: Separated admin pages
