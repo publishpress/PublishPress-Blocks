@@ -739,9 +739,9 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                         </PanelBody>
                         {(typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled)) && (
                             <PanelBody title={ __( 'Notice', 'advanced-gutenberg' ) }>
-                                <p style={ { fontStyle: 'italic', color: '#ff8800' } }>
-                                    { __( 'We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in', 'advanced-gutenberg' ) }
-                                    <a href={advgbBlocks.config_url + '#email-form'} target="_blank"> { __( 'settings', 'advanced-gutenberg' ) }.</a>
+                                <p style={ { fontStyle: 'italic' } }>
+                                    { __( 'We strongly recommend to enable Google reCAPTCHA to avoid spam.', 'advanced-gutenberg' ) }
+                                    <br/><a href={advgbBlocks.config_url + '&tab=recaptcha'} target="_blank">{ __( 'You can enable it in Settings', 'advanced-gutenberg' ) }</a>
                                 </p>
                             </PanelBody>
                         ) }

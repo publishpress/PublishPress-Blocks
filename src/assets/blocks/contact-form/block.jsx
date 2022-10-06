@@ -72,15 +72,15 @@
                             {(typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled)) && (
                                 <PanelBody title={ __( 'Notice', 'advanced-gutenberg' ) }>
                                     <p style={ { fontStyle: 'italic' } }>
-                                        { __( 'We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in', 'advanced-gutenberg' ) }
-                                        <a href={advgbBlocks.config_url + '#email-form'} target="_blank"> { __( 'settings', 'advanced-gutenberg' ) }.</a>
+                                        { __( 'We strongly recommend to enable Google reCAPTCHA to avoid spam.', 'advanced-gutenberg' ) }
+                                        <br/><a href={advgbBlocks.config_url + '&tab=recaptcha'} target="_blank">{ __( 'You can enable it in Settings', 'advanced-gutenberg' ) }</a>
                                     </p>
                                 </PanelBody>
                             ) }
                             <PanelBody title={ __( 'Email sender', 'advanced-gutenberg' ) } initialOpen={ false }>
                                 <p style={ { fontStyle: 'italic' } }>
                                     { __('An email will be sent to the admin email (by default) whenever a contact form is submitted. You can change it in ', 'advanced-gutenberg') }
-                                    <a href={advgbBlocks.config_url + '#settings'} target="_blank"> { __( 'settings', 'advanced-gutenberg' ) }.</a>
+                                    <a href={advgbBlocks.config_url + '&tab=forms'} target="_blank"> { __( 'settings', 'advanced-gutenberg' ) }.</a>
                                 </p>
                             </PanelBody>
                             <PanelBody title={ __( 'Text Label', 'advanced-gutenberg' ) }>

@@ -601,7 +601,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'login_logo' => $login_logo,
                 'reg_logo' => $reg_logo,
                 'home_url' => home_url(),
-                'config_url' => admin_url('admin.php?page=advgb_main'),
+                'config_url' => admin_url('admin.php?page=advgb_settings'),
                 'customStyles' => !$custom_styles_data ? array() : $custom_styles_data,
                 'captchaEnabled' => $recaptcha_config['recaptcha_enable'],
                 'pluginUrl' => plugins_url('', ADVANCED_GUTENBERG_PLUGIN),

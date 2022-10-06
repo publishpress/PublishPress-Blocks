@@ -16616,13 +16616,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     "p",
                                     { style: { fontStyle: 'italic' } },
-                                    __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in', 'advanced-gutenberg'),
+                                    __('We strongly recommend to enable Google reCAPTCHA to avoid spam.', 'advanced-gutenberg'),
+                                    React.createElement("br", null),
                                     React.createElement(
                                         "a",
-                                        { href: advgbBlocks.config_url + '#email-form', target: "_blank" },
-                                        " ",
-                                        __('settings', 'advanced-gutenberg'),
-                                        "."
+                                        { href: advgbBlocks.config_url + '&tab=recaptcha', target: "_blank" },
+                                        __('You can enable it in Settings', 'advanced-gutenberg')
                                     )
                                 )
                             ),
@@ -16635,7 +16634,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     __('An email will be sent to the admin email (by default) whenever a contact form is submitted. You can change it in ', 'advanced-gutenberg'),
                                     React.createElement(
                                         "a",
-                                        { href: advgbBlocks.config_url + '#settings', target: "_blank" },
+                                        { href: advgbBlocks.config_url + '&tab=forms', target: "_blank" },
                                         " ",
                                         __('settings', 'advanced-gutenberg'),
                                         "."
@@ -21504,14 +21503,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { title: __('Notice', 'advanced-gutenberg') },
                             React.createElement(
                                 "p",
-                                { style: { fontStyle: 'italic', color: '#ff8800' } },
-                                __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in', 'advanced-gutenberg'),
+                                { style: { fontStyle: 'italic' } },
+                                __('We strongly recommend to enable Google reCAPTCHA to avoid spam.', 'advanced-gutenberg'),
+                                React.createElement("br", null),
                                 React.createElement(
                                     "a",
-                                    { href: advgbBlocks.config_url + '#email-form', target: "_blank" },
-                                    " ",
-                                    __('settings', 'advanced-gutenberg'),
-                                    "."
+                                    { href: advgbBlocks.config_url + '&tab=recaptcha', target: "_blank" },
+                                    __('You can enable it in Settings', 'advanced-gutenberg')
                                 )
                             )
                         )
@@ -23343,9 +23341,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             "a",
                             { target: "_blank",
                                 className: "button button-large",
-                                href: advgbBlocks.config_url + '#settings'
+                                href: advgbBlocks.config_url + '&tab=maps'
                             },
-                            __('Add Google API Key', 'advanced-gutenberg')
+                            __('Add Google API Key in Settings', 'advanced-gutenberg')
                         )
                     )
                 );
@@ -23671,13 +23669,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     "p",
                                     { style: { fontStyle: 'italic' } },
-                                    __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in', 'advanced-gutenberg'),
+                                    __('We strongly recommend to enable Google reCAPTCHA to avoid spam.', 'advanced-gutenberg'),
+                                    React.createElement("br", null),
                                     React.createElement(
                                         "a",
-                                        { href: advgbBlocks.config_url + '#email-form', target: "_blank" },
-                                        " ",
-                                        __('settings', 'advanced-gutenberg'),
-                                        "."
+                                        { href: advgbBlocks.config_url + '&tab=recaptcha', target: "_blank" },
+                                        __('You can enable it in Settings', 'advanced-gutenberg')
                                     )
                                 )
                             ),
