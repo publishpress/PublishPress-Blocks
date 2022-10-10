@@ -623,6 +623,40 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $blocks_config_saved = $blocks_config_saved !== false ? $blocks_config_saved : array();
             wp_localize_script('wp-blocks', 'advgbDefaultConfig', $blocks_config_saved);
 
+            // Block controls
+            if( $this->settingIsEnabled( 'block_controls' ) ) {
+
+                // Get user role
+                if ( is_multisite() && is_super_admin() ) {
+                    /* Since a super admin in a child site from a multiste network doesn't have roles
+                     * so we set 'administrator' as role */
+                    $current_user_role = 'administrator';
+                } else {
+                    $current_user      = wp_get_current_user();
+                    $current_user_role = $current_user->roles[0];
+                }
+
+                $advgb_controls_user_roles = get_option( 'advgb_controls_user_roles' );
+                // Extract the inactive blocks for current user role in Gutenberg editor
+
+                // Get the array from advgb_controls_user_roles option that match current user role
+                $advgb_controls_user_roles = ! empty( get_option( 'advgb_controls_user_roles' ) ) ? get_option( 'advgb_controls_user_roles' ) : [];
+                $advgb_controls_user_roles = array_key_exists( $current_user_role, $advgb_controls_user_roles ) ? (array) $advgb_controls_user_roles[$current_user_role] : [];
+
+                if( is_array( $advgb_controls_user_roles )
+                    && count( $advgb_controls_user_roles ) > 0
+                    && is_array( $advgb_controls_user_roles['inactive_blocks'] )
+                    && count( $advgb_controls_user_roles['inactive_blocks'] ) > 0
+                ) {
+                    wp_localize_script(
+                        'wp-blocks', 'advgb_controls',
+                        [
+                            'non_supported' => $advgb_controls_user_roles['inactive_blocks']
+                        ]
+                    );
+                }
+            }
+
             // Pro
             if(defined('ADVANCED_GUTENBERG_PRO')) {
                 if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_fonts_list' ) ) {
@@ -810,6 +844,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                 ['base' => 'blocks_page_advgb_block_settings'],
                                 ['base' => 'blocks_page_advgb_custom_styles'],
                                 ['base' => 'blocks_page_advgb_settings'],
+                                ['base' => 'blocks_page_advgb_block_controls'],
                             ]
                         ];
 
@@ -1795,10 +1830,17 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'enabled' => $this->settingIsEnabled( 'enable_custom_styles' )
                 ],
                 [
+                    'slug' => 'advgb_block_controls',
+                    'title' => esc_html__( 'Block Controls', 'advanced-gutenberg' ),
+                    'callback' => 'loadBlockControlsPage',
+                    'order' => 6,
+                    'enabled' => $this->settingIsEnabled( 'block_controls' )
+                ],
+                [
                     'slug' => 'advgb_settings',
                     'title' => esc_html__( 'Settings', 'advanced-gutenberg' ),
                     'callback' => 'loadSettingsPage',
-                    'order' => 6,
+                    'order' => 7,
                     'enabled' => true
                 ]
             ];
@@ -2007,15 +2049,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             // Check users permissions
             if ( ! current_user_can( 'administrator' ) ) {
-                wp_die(
-                    esc_html__(
-                        'This feature is disabled. In order to use, please enable back through Dashboard.',
-                        'advanced-gutenberg'
-                    )
-                );
+                return false;
             }
 
-            // Block accessis disabled
+            // Block access is disabled
             if ( ! $this->settingIsEnabled( 'enable_block_access' ) ) {
                 wp_die(
                     esc_html__(
@@ -2040,6 +2077,47 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $this->blocksFeatureForm(
                 'access', // Feature name in lowercase
                 __( 'Block Permissions', 'advanced-gutenberg' ) // Name of the feature
+            );
+        }
+
+        /**
+         * Block controls page
+         *
+         * @since 3.1.0
+         * @return void
+         */
+        public function loadBlockControlsPage()
+        {
+            // Check users permissions
+            if ( ! current_user_can( 'administrator' ) ) {
+                return false;
+            }
+
+            // Block accessis disabled
+            if ( ! $this->settingIsEnabled( 'block_controls' ) ) {
+                wp_die(
+                    esc_html__(
+                        'This feature is disabled. In order to use, please enable back through Dashboard.',
+                        'advanced-gutenberg'
+                    )
+                );
+            }
+
+            $this->commonAdminPagesAssets();
+
+            /* Access current user blocks and saved blocks to build 2 javascript objects.
+             * 'advgbCUserRole' object for current user role from form dropdown
+             * 'advgb_blocks_list' object with all the saved blocks in 'advgb_blocks_list' option
+             */
+            $this->blocksFeatureData(
+                'controls', // The object name to store the active/inactive blocks. To see it in browser console: advgbCUserRole.access
+                'advgb_controls_user_roles' // Database option to check current user role's active/inactive blocks
+            );
+
+            // Render form
+            $this->blocksFeatureForm(
+                'controls', // Feature name in lowercase
+                __( 'Block Controls', 'advanced-gutenberg' ) // Name of the feature
             );
         }
 
@@ -2143,6 +2221,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'blocks_page_advgb_block_settings',
                 'blocks_page_advgb_custom_styles',
                 'blocks_page_advgb_settings',
+                'blocks_page_advgb_block_controls'
             ];
             if( ! in_array( $current_screen->base, $pages ) ) {
                 return $footer;
@@ -2679,6 +2758,32 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $this->blocksFeatureSave(
                     'access', // Feature in lowercase
                     'advgb_blocks_user_roles' // Database option to update
+                );
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /**
+         * Save block controls page data
+         * Name is build in registerMainMenu() > $function_name
+         *
+         * @since 3.1.0
+         * @return boolean true on success, false on failure
+         */
+        public function advgb_block_controls_save_page()
+        {
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                return false;
+            }
+
+            if( isset( $_POST['advgb_block_controls_save'] ) ) {
+                // Save Block Controls
+                $this->blocksFeatureSave(
+                    'controls', // Feature in lowercase
+                    'advgb_controls_user_roles' // Database option to update
                 );
 
                 return true;

@@ -65,6 +65,12 @@
                                 newState
                             );
                         break;
+                        case 'block_controls':
+                            advgbDynamicSubmenu(
+                                'advgb_block_controls',
+                                newState
+                            );
+                        break;
                     }
 
                     statusMsgNotification = advgbTimerStatus();

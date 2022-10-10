@@ -15,7 +15,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
     if( !parseInt(advgbBlocks.block_controls) ) return;
 
     // Blocks that are not supported
-    const NON_SUPPORTED_BLOCKS = [
+    let NON_SUPPORTED_BLOCKS = [
         'core/freeform',
         'core/legacy-widget',
         'core/widget-area',
@@ -24,6 +24,18 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
         'advgb/accordion-item',
         'advgb/column'
     ];
+
+    // Add non supported blocks according to Block controls
+    if( typeof advgb_controls !== 'undefined'
+        && typeof advgb_controls.non_supported !== 'undefined'
+        && advgb_controls.non_supported.length > 0
+    ) {
+        // Merge dynamically disabled blocks
+        NON_SUPPORTED_BLOCKS = [...NON_SUPPORTED_BLOCKS, ...advgb_controls.non_supported];
+        // Remove duplicated values
+        NON_SUPPORTED_BLOCKS = [...new Set(NON_SUPPORTED_BLOCKS)];
+    }
+    console.log(NON_SUPPORTED_BLOCKS);
 
     // Register block controls to blocks attributes
     addFilter( 'blocks.registerBlockType', 'advgb/blockControls', function ( settings ) {
