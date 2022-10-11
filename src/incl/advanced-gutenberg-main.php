@@ -3283,7 +3283,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         /* Remove from inactive blocks if is saved for the current user role.
                          * The lines below won't save nothing in db, is just for execution on editor. */
                         foreach ($advgb_blocks_user_roles['inactive_blocks'] as $key => $type) {
-                            if (in_array('core/legacy-widget', $advgb_blocks_user_roles['inactive_blocks'])) {
+                            // Fix by @igrginov - https://github.com/publishpress/PublishPress-Blocks/issues/1084
+                            if ($type === 'core/legacy-widget') {
                                 unset($advgb_blocks_user_roles['inactive_blocks'][$key]);
                             }
                         }
