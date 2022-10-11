@@ -269,18 +269,20 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page ) {
             blockHTML += block.icon;
             var checked = '';
 
-            if (
-                typeof inactive_blocks === 'object'
-                && inactive_blocks !== null
-            ) {
+            if ( typeof inactive_blocks === 'object' && inactive_blocks !== null ) {
                 checked = inactive_blocks.indexOf(block.name) === -1
-                && (
-                    force_deactivate_blocks.indexOf(block.name) === -1
-                    || force_activate_blocks.find(item => item.name === block.name)
-                )
-                    ? 'checked="checked"' : '';
+                        ? 'checked="checked"' : '';
             } else {
                 checked = 'checked="checked"';
+            }
+
+            // See if block is forced to be active or deactive
+            if( force_deactivate_blocks.indexOf(block.name) >= 0 ) {
+                checked = '';
+            } else if( force_activate_blocks.find(item => item.name === block.name) ) {
+                checked = 'checked="checked"';
+            } else {
+                // Nothing to do here
             }
 
             blockHTML +=        '</span>';

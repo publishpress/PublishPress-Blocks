@@ -259,6 +259,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 = 3.1.0 - 11 Oct 2022 =
   * Fix: Server check to active Legacy widget block for Block Permissions
+  * Fix: Adjust force active/inactive blocks javascript check in Block Permissions
 
 = 3.0.1 - 6 Oct 2022 =
   * Fix: Potential non load of version notices library
