@@ -21,7 +21,6 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
         'core/widget-area',
         'core/column',
         'advgb/tab',
-        'advgb/accordion-item',
         'advgb/column'
     ];
 
@@ -35,6 +34,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
         // Remove duplicated values
         NON_SUPPORTED_BLOCKS = [...new Set(NON_SUPPORTED_BLOCKS)];
     }
+    console.log('NON SUPPORTED BLOCKS');
     console.log(NON_SUPPORTED_BLOCKS);
 
     // Register block controls to blocks attributes

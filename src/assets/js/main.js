@@ -140,8 +140,9 @@ function advgbGetCookie(cname) {
  * @param {array}   inactive_blocks The inactive blocks - e.g. advgbCUserRole.access.inactive_blocks
  * @param {string}  nonce_field_id  The nonce field id - e.g. '#advgb_access_nonce_field'
  * @param {string}  page            The feature page - e.g. 'advgb_block_access' from admin.php?page=advgb_block_access
+ * @param {array}  exclude_blocks   Blocks to exclude from appearing in the feature form (is different to inactive_blocks!). e.g. ['core/paragraph','core/list'] - @since 3.1.0
  */
-function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page ) {
+function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_blocks = [] ) {
     if (typeof wp.blocks !== 'undefined') {
         if (wp.blockLibrary && typeof wp.blockLibrary.registerCoreBlocks === 'function') {
             wp.blockLibrary.registerCoreBlocks();
@@ -190,6 +191,10 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page ) {
             allBlocks.push(block);
         });
 
+        if( exclude_blocks.length ) {
+            console.log(exclude_blocks.length);
+            console.log( exclude_blocks );
+        }
 
         allBlocks.forEach(function (block) {
             var blockItemIcon = '';
@@ -262,6 +267,13 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page ) {
 
         // Update blocks
         listBlocks.forEach(function (block) {
+
+            // Exclude block
+            if( exclude_blocks.length > 0 && exclude_blocks.indexOf(block.name) >= 0 ) {
+                console.log('Block excluded: ' + block.name);
+                return;
+            }
+
             list_blocks_names.push(block.name);
 
             var blockHTML = '';

@@ -648,13 +648,22 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     && is_array( $advgb_controls_user_roles['inactive_blocks'] )
                     && count( $advgb_controls_user_roles['inactive_blocks'] ) > 0
                 ) {
-                    wp_localize_script(
-                        'wp-blocks', 'advgb_controls',
-                        [
-                            'non_supported' => $advgb_controls_user_roles['inactive_blocks']
-                        ]
+                    // Merge non supported saved and manually defined blocks
+                    $non_supported = array_merge(
+                        $advgb_controls_user_roles['inactive_blocks'],
+                        $this->blocksFeatureExclude( 'controls' )
                     );
+                    $non_supported = array_unique( $non_supported );
+                } else {
+                    // Non supported manually defined blocks
+                    $non_supported = $this->blocksFeatureExclude( 'controls' );
                 }
+
+                // Output js variable
+                wp_localize_script(
+                    'wp-blocks', 'advgb_controls',
+                    ['non_supported' => $non_supported]
+                );
             }
 
             // Pro
@@ -2111,7 +2120,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
              */
             $this->blocksFeatureData(
                 'controls', // The object name to store the active/inactive blocks. To see it in browser console: advgbCUserRole.access
-                'advgb_controls_user_roles' // Database option to check current user role's active/inactive blocks
+                'advgb_controls_user_roles', // Database option to check current user role's active/inactive blocks
+                $this->blocksFeatureExclude( 'controls' ) // Blocks to exclude
             );
 
             // Render form
@@ -2998,10 +3008,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
          * @since 3.0.0
          * @param string $feature   The object name to store the active/inactive blocks - e.g. 'access' => advgbCUserRole.access
          * @param string $option    Database option to check current user role's active/inactive blocks - e.g. 'advgb_blocks_user_roles'
+         * @param array $exclude    Blocks to exclude from appearing in the feature form (is different to inactive_blocks!). e.g. ['core/paragraph','core/list']
          *
          * @return void
          */
-        public function blocksFeatureData( $feature, $option )
+        public function blocksFeatureData( $feature, $option, $exclude = [] )
         {
             // Build blocks form and add filters functions
             wp_add_inline_script(
@@ -3010,7 +3021,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     advgbGetBlocksFeature(
                         advgbCUserRole.{$feature}.inactive_blocks,
                         '#advgb_block_{$feature}_nonce_field',
-                        'advgb_block_{$feature}'
+                        'advgb_block_{$feature}',
+                        " . wp_json_encode( $exclude ) . "
                     );
                 });"
             );
@@ -3241,6 +3253,31 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 </div>
             </div>
             <?php
+        }
+
+        /**
+         * Blocks to exclude
+         *
+         * @since 3.1.0
+         * @param string $feature   Feature name in lowercase - e.g. 'controls'
+         *
+         * @return void
+         */
+        public function blocksFeatureExclude( $feature )
+        {
+            if( $feature === 'controls' ) {
+                return [
+                    'core/freeform',
+                    'core/legacy-widget',
+                    'core/widget-area',
+                    'core/column',
+                    'advgb/tab',
+                    'advgb/column',
+                    'advgb/accordion' // @TODO - Remove this block later
+                ];
+            }
+
+            return [];
         }
 
         /**

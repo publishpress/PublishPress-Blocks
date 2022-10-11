@@ -322,7 +322,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     if (!parseInt(advgbBlocks.block_controls)) return;
 
     // Blocks that are not supported
-    var NON_SUPPORTED_BLOCKS = ['core/freeform', 'core/legacy-widget', 'core/widget-area', 'core/column', 'advgb/tab', 'advgb/accordion-item', 'advgb/column'];
+    var NON_SUPPORTED_BLOCKS = ['core/freeform', 'core/legacy-widget', 'core/widget-area', 'core/column', 'advgb/tab', 'advgb/column'];
 
     // Add non supported blocks according to Block controls
     if (typeof advgb_controls !== 'undefined' && typeof advgb_controls.non_supported !== 'undefined' && advgb_controls.non_supported.length > 0) {
@@ -331,6 +331,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         // Remove duplicated values
         NON_SUPPORTED_BLOCKS = [].concat(_toConsumableArray(new Set(NON_SUPPORTED_BLOCKS)));
     }
+    console.log('NON SUPPORTED BLOCKS');
     console.log(NON_SUPPORTED_BLOCKS);
 
     // Register block controls to blocks attributes
