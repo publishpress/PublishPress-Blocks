@@ -642,10 +642,19 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $non_supported = $this->blockControlsExclude();
                 }
 
+                $schedule_control   = isset( $advgb_block_controls['schedule_control'] ) ? $advgb_block_controls['schedule_control'] : 1;
+                $user_role_control  = isset( $advgb_block_controls['user_role_control'] ) ? $advgb_block_controls['user_role_control'] : 1;
+
                 // Output js variable
                 wp_localize_script(
                     'wp-blocks', 'advgb_controls',
-                    ['non_supported' => $non_supported]
+                    [
+                        'non_supported' => $non_supported,
+                        'controls' => [
+                            'schedule' => (bool) $schedule_control,
+                            'user_role' => (bool) $user_role_control
+                        ]
+                    ]
                 );
             }
 
@@ -2103,8 +2112,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
              */
             $this->blockControlsData();
 
-            // Render form
-            $this->blockControlsForm();
+            $this->loadPage( 'block-controls' );
         }
 
         /**
@@ -2765,11 +2773,84 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            if( isset( $_POST['advgb_block_controls_save'] ) ) {
-                // Save Block Controls
-                $this->blockControlsSave();
+            // Controls
+            if( isset( $_POST['save_controls'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            {
+                if ( ! wp_verify_nonce(
+                        sanitize_key( $_POST['advgb_controls_settings_nonce_field'] ),
+                        'advgb_controls_settings_nonce'
+                    )
+                ) {
+                    return false;
+                }
 
-                return true;
+                $advgb_block_controls                       = get_option( 'advgb_block_controls' );
+                $advgb_block_controls['schedule_control']   = isset( $_POST['schedule_control'] ) ? 1 : 0;
+                $advgb_block_controls['user_role_control']  = isset( $_POST['user_role_control'] ) ? 1 : 0;
+
+                update_option( 'advgb_block_controls', $advgb_block_controls );
+
+                wp_safe_redirect(
+                    add_query_arg(
+                        [
+                            'save' => 'success'
+                        ],
+                        str_replace( '/wp-admin/', '', $_POST['_wp_http_referer'] )
+                    )
+                );
+            }
+            // Blocks
+            elseif ( isset( $_POST['save_blocks'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
+            {
+                if ( ! wp_verify_nonce(
+                        sanitize_key( $_POST['advgb_controls_block_nonce_field'] ),
+                        'advgb_controls_block_nonce'
+                    )
+                ) {
+                    return false;
+                }
+
+                if ( isset( $_POST['blocks_list'] )
+                    && isset( $_POST['active_blocks'] )
+                    && is_array( $_POST['active_blocks'] )
+                ) {
+                    $blocks_list        = array_map(
+                        'sanitize_text_field',
+                        json_decode( stripslashes( $_POST['blocks_list'] ) )
+                    );
+                    $active_blocks      = array_map( 'sanitize_text_field', $_POST['active_blocks'] );
+                    $inactive_blocks    = array_values( array_diff( $blocks_list, $active_blocks ) );
+
+                    // Save block controls
+                    $block_controls                     = get_option( 'advgb_block_controls' );
+                    $block_controls['active_blocks']    = isset( $active_blocks ) ? $active_blocks : '';
+                    $block_controls['inactive_blocks']  = isset( $inactive_blocks ) ? $inactive_blocks : '';
+
+                    update_option( 'advgb_block_controls', $block_controls );
+
+                    // Redirect with success message
+                    wp_safe_redirect(
+                        add_query_arg(
+                            [
+                                'tab' => 'blocks',
+                                'save' => 'success'
+                            ],
+                            str_replace( '/wp-admin/', '', $_POST['_wp_http_referer'] )
+                        )
+                    );
+                } else {
+                    // Redirect with error message / Nothing was saved
+                    wp_safe_redirect(
+                        add_query_arg(
+                            [
+                                'save' => 'error'
+                            ],
+                            str_replace( '/wp-admin/', '', $_POST['_wp_http_referer'] )
+                        )
+                    );
+                }
+            } else {
+                // Nothing to do here
             }
 
             return false;
@@ -2949,68 +3030,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     add_query_arg(
                         [
                             'user_role' =>  $user_role,
-                            'save' => 'error'
-                        ],
-                        str_replace( '/wp-admin/', '', $_POST['_wp_http_referer'] )
-                    )
-                );
-            }
-        }
-
-        /**
-         * Save Block controls configuration
-         *
-         * @since 3.1.0
-         * @return void
-         */
-        public function blockControlsSave()
-        {
-            // Check nonce field exist
-            if ( ! isset( $_POST['advgb_block_controls_nonce_field'] ) ) {
-                return false;
-            }
-
-            // Verify nonce
-            if ( ! wp_verify_nonce( sanitize_key( $_POST['advgb_block_controls_nonce_field'] ), 'advgb_nonce' ) ) {
-                return false;
-            }
-
-            if ( ! current_user_can( 'administrator' ) ) {
-                return false;
-            }
-
-            if ( isset( $_POST['blocks_list'] )
-                && isset( $_POST['active_blocks'] )
-                && is_array( $_POST['active_blocks'] )
-            ) {
-                $blocks_list        = array_map(
-                    'sanitize_text_field',
-                    json_decode( stripslashes( $_POST['blocks_list'] ) )
-                );
-                $active_blocks      = array_map( 'sanitize_text_field', $_POST['active_blocks'] );
-                $inactive_blocks    = array_values( array_diff( $blocks_list, $active_blocks ) );
-
-                // Save block controls
-                $block_controls                     = get_option( 'advgb_block_controls' );
-                $block_controls['active_blocks']    = isset( $active_blocks ) ? $active_blocks : '';
-                $block_controls['inactive_blocks']  = isset( $inactive_blocks ) ? $inactive_blocks : '';
-
-                update_option( 'advgb_block_controls', $block_controls );
-
-                // Redirect with success message
-                wp_safe_redirect(
-                    add_query_arg(
-                        [
-                            'save' => 'success'
-                        ],
-                        str_replace( '/wp-admin/', '', $_POST['_wp_http_referer'] )
-                    )
-                );
-            } else {
-                // Redirect with error message / Nothing was saved
-                wp_safe_redirect(
-                    add_query_arg(
-                        [
                             'save' => 'error'
                         ],
                         str_replace( '/wp-admin/', '', $_POST['_wp_http_referer'] )
@@ -3385,9 +3404,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'wp-blocks',
                     'advgbBlockControls',
                     [
-                        'controls' => [
-                            'schedule' => true
-                        ],
+                        'schedule_control' => $block_controls['schedule_control'],
+                        'user_role_control' => $block_controls['user_role_control'],
                         'active_blocks' => $block_controls['active_blocks'],
                         'inactive_blocks' => $block_controls['inactive_blocks']
                     ]
@@ -3398,162 +3416,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'wp-blocks',
                     'advgbBlockControls',
                     [
-                        'controls' => [
-                            'schedule' => true
-                        ],
+                        'schedule_control' => 1,
+                        'user_role_control' => 1,
                         'active_blocks' => [],
                         'inactive_blocks' => []
                     ]
                 );
             }
-        }
-
-        /**
-         * Get the Block controls form
-         *
-         * @since 3.1.0
-         * @return void
-         */
-        public function blockControlsForm()
-        {
-            ?>
-            <div class="publishpress-admin wrap">
-                <?php
-                if ( isset( $_GET['save'] ) && $_GET['save'] === 'success' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display message, no action ?>
-                    <div id="message" class="updated fade">
-                        <p>
-                            <?php
-                            printf(
-                                __( '%s saved successfully!', 'advanced-gutenberg' ),
-                                __( 'Block Controls', 'advanced-gutenberg' )
-                            );
-                            ?>
-                        </p>
-                    </div>
-                <?php
-                } elseif ( isset($_GET['save']) && $_GET['save'] === 'error' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- advgb_nonce in place
-                    ?>
-                    <div class="error">
-                        <p>
-                            <?php
-                            printf(
-                                __( '%s can\'t be saved. Please try again.', 'advanced-gutenberg' ),
-                                __( 'Block Controls', 'advanced-gutenberg' )
-                            );
-                            ?>
-                        </p>
-                    </div>
-                    <?php
-                } else {
-                    // Nothing to do here
-                }
-                ?>
-                <header>
-                    <h1 class="wp-heading-inline">
-                        <?php _e( 'Block Controls', 'advanced-gutenberg' ) ?>
-                    </h1>
-                </header>
-                <div class="wrap">
-                    <form method="post">
-                        <?php wp_nonce_field( 'advgb_nonce', 'advgb_block_controls_nonce_field' ); ?>
-                        <div class="advgb-roles-wrapper">
-                            <?php
-                            // Get current page slug
-                            if ( isset( $_GET['page'] ) && $_GET['page'] ) {
-                                ?>
-                                <input type="hidden" name="advgb_page_slug" id="advgb_page_slug" value="<?php esc_attr_e( $_GET['page'] ) ?>" />
-                                <?php
-                            }
-                            ?>
-                            <input type="hidden" name="advgb_feature" id="advgb_feature" value="controls" />
-                            <div class="advgb-search-wrapper">
-                                <input type="text"
-                                       class="blocks-search-input advgb-search-input"
-                                       placeholder="<?php esc_attr_e( 'Search blocks', 'advanced-gutenberg' ) ?>"
-                                >
-                            </div>
-                            <div class="advgb-toggle-wrapper">
-                                <?php _e('Enable or disable controls for all blocks', 'advanced-gutenberg') ?>
-                                <div class="advgb-switch-button">
-                                    <label class="switch">
-                                        <input type="checkbox" name="toggle_all_blocks" id="toggle_all_blocks">
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="inline-button-wrapper">
-                                <span class="advgb-enable-one-block-msg" style="display: none;">
-                                    <span>
-                                        <span>
-                                            <?php
-                                            esc_attr_e(
-                                                'To save this configuration, enable at least one block.',
-                                                'advanced-gutenberg'
-                                            )
-                                            ?>
-                                        </span>
-                                        <span class="dashicons dashicons-warning"></span>
-                                    </span>
-                                </span>
-                                <button class="button button-primary save-profile-button"
-                                        type="submit"
-                                        name="advgb_block_controls_save"
-                                >
-                                    <span>
-                                        <?php
-                                        printf(
-                                            __( 'Save %s', 'advanced-gutenberg' ),
-                                            __( 'Block Controls', 'advanced-gutenberg' )
-                                        );
-                                        ?>
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Blocks list -->
-                        <div class="tab-content block-list-tab">
-                            <div class="advgb-block-feature-loading-msg" style="display: block;">
-                                <?php _e( 'Loading...', 'advanced-gutenberg' ) ?>
-                            </div>
-                            <div class="blocks-section">
-                                <input type="hidden" name="blocks_list" id="blocks_list" />
-                            </div>
-                        </div>
-
-                        <!-- Save button -->
-                        <div class="advgb-form-buttons-bottom">
-                            <button class="button button-primary save-profile-button"
-                                    type="submit"
-                                    name="advgb_block_controls_save"
-                            >
-                                <span>
-                                    <?php
-                                    printf(
-                                        __( 'Save %s', 'advanced-gutenberg' ),
-                                        __( 'Block Controls', 'advanced-gutenberg' )
-                                    );
-                                    ?>
-                                </span>
-                            </button>
-                            <span class="advgb-enable-one-block-msg" style="display: none;">
-                                <span>
-                                    <span class="dashicons dashicons-warning"></span>
-                                    <span>
-                                        <?php
-                                        esc_attr_e(
-                                            'To save this configuration, enable at least one block.',
-                                            'advanced-gutenberg'
-                                        )
-                                        ?>
-                                    </span>
-                                </span>
-                            </span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <?php
         }
 
         /**
