@@ -9,16 +9,6 @@ use Exception;
 if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
     class Controls
     {
-        public function __construct()
-        {
-            add_action( 'wp_loaded', [$this, 'addAttributes'], 999 );
-            add_filter( 'rest_pre_dispatch', [$this, 'removeAttributes'], 10, 3 );
-
-            if( ! is_admin() ) {
-                // Frontend
-                add_filter( 'render_block', [$this, 'checkBlockControls'], 10, 2 );
-            }
-        }
 
         /**
          * Check if block is using controls and decide to display or not in frontend
@@ -31,21 +21,21 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
          *
          * @return string                   $block_content or an empty string when block is hidden
          */
-        public function checkBlockControls( $block_content, $block ) {
+        public static function checkBlockControls( $block_content, $block ) {
             if ( Utilities::settingIsEnabled( 'block_controls' )
                 && $block['blockName']
-                && isset($block['attrs']['advgbBlockControls'][0]['enabled'])
+                && isset( $block['attrs']['advgbBlockControls'][0]['enabled'] )
                 && (bool) $block['attrs']['advgbBlockControls'][0]['enabled'] === true
             ) {
                 $bControl = $block['attrs']['advgbBlockControls'][0]; // [0] is for schedule control
                 $dateFrom = $dateTo = $recurring = null;
                 if ( ! empty( $bControl['dateFrom'] ) ) {
-                    $dateFrom = DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateFrom'] );
+                    $dateFrom = \DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateFrom'] );
                     // Reset seconds to zero to enable proper comparison
                     $dateFrom->setTime( $dateFrom->format('H'), $dateFrom->format('i'), 0 );
                 }
                 if ( ! empty( $bControl['dateTo'] ) ) {
-                    $dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateTo'] );
+                    $dateTo	= \DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateTo'] );
                     // Reset seconds to zero to enable proper comparison
                     $dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0 );
 
@@ -57,7 +47,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
 
                 if ( $dateFrom || $dateTo ) {
                     // Fetch current time keeping in mind the timezone
-                    $now = DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
+                    $now = \DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
 
                     // Reset seconds to zero to enable proper comparison
                     // as the from and to dates have those as 0
@@ -90,9 +80,9 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
          * @since 3.1.0 function renamed and migrated from AdvancedGutenbergMain
          * @since 2.14.0
          */
-        public function addAttributes()
+        public static function addAttributes()
         {
-            $registered_blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
+            $registered_blocks = \WP_Block_Type_Registry::get_instance()->get_all_registered();
     		foreach ( $registered_blocks as $block ) {
                 $block->attributes['advgbBlockControls'] = [
                     'type'    => 'array',
@@ -109,7 +99,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
          * @since 3.1.0 function renamed and migrated from AdvancedGutenbergMain
          * @since 2.14.0
          */
-        public function removeAttributes( $result, $server, $request )
+        public static function removeAttributes( $result, $server, $request )
         {
     		if ( strpos( $request->get_route(), '/wp/v2/block-renderer' ) !== false ) {
     			if ( isset( $request['attributes'] )

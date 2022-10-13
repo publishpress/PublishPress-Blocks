@@ -144,6 +144,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             add_action('init', array($this, 'registerPostMeta'));
             add_action('admin_init', array($this, 'registerStylesScripts'));
+            add_action('wp_loaded', ['PublishPress\Blocks\Controls', 'addAttributes'], 999);
+            add_filter('rest_pre_dispatch', ['PublishPress\Blocks\Controls', 'removeAttributes'], 10, 3);
             add_action('wp_enqueue_scripts', array($this, 'registerStylesScriptsFrontend'));
             add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
             add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
@@ -200,6 +202,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Front-end
                 add_filter('render_block_data', array($this, 'contentPreRender'));
                 add_filter('render_block', array($this, 'addNonceToFormBlocks'));
+                add_filter('render_block', ['PublishPress\Blocks\Controls', 'checkBlockControls'], 10, 2);
                 add_filter('the_content', array($this, 'addFrontendContentAssets'), 9);
 
                 if($wp_version >= 5.8) {
@@ -3393,7 +3396,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 ADVANCED_GUTENBERG_VERSION
             );
 
-            $blocks_settings_list = PublishPress\Blocks\Configuration::default();
+            $blocks_settings_list = PublishPress\Blocks\Configuration::defaultConfig();
 
             $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
             $current_block = $block;

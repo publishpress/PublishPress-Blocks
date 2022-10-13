@@ -9,7 +9,7 @@ use Exception;
 if( ! class_exists( '\\PublishPress\\Blocks\\Configuration' ) ) {
     class Configuration
     {
-        public static function default()
+        public static function defaultConfig()
         {
             return array(
                 'advgb-accordions' => array(
