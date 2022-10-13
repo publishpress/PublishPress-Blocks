@@ -625,37 +625,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             // Block controls
             if( $this->settingIsEnabled( 'block_controls' ) ) {
-
-                $advgb_block_controls = get_option( 'advgb_block_controls' );
-
-                if( is_array( $advgb_block_controls['inactive_blocks'] )
-                    && count( $advgb_block_controls['inactive_blocks'] ) > 0
-                ) {
-                    // Merge non supported saved and manually defined blocks
-                    $non_supported = array_merge(
-                        $advgb_block_controls['inactive_blocks'],
-                        $this->blockControlsExclude()
-                    );
-                    $non_supported = array_unique( $non_supported );
-                } else {
-                    // Non supported manually defined blocks
-                    $non_supported = $this->blockControlsExclude();
-                }
-
-                $schedule_control   = isset( $advgb_block_controls['schedule_control'] ) ? $advgb_block_controls['schedule_control'] : 1;
-                $user_role_control  = isset( $advgb_block_controls['user_role_control'] ) ? $advgb_block_controls['user_role_control'] : 1;
-
-                // Output js variable
-                wp_localize_script(
-                    'wp-blocks', 'advgb_controls',
-                    [
-                        'non_supported' => $non_supported,
-                        'controls' => [
-                            'schedule' => (bool) $schedule_control,
-                            'user_role' => (bool) $user_role_control
-                        ]
-                    ]
-                );
+                PublishPress\Blocks\Controls::editorData();
             }
 
             // Pro
@@ -2106,11 +2076,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             $this->commonAdminPagesAssets();
 
-            /* Access current user blocks and saved blocks to build 2 javascript objects.
-             * 'advgbBlockControls' object with saved active/inactive blocks for Block controls
-             * 'advgb_blocks_list' object with all the saved blocks in 'advgb_blocks_list' option
-             */
-            $this->blockControlsData();
+            // Output blocks through javascript
+            PublishPress\Blocks\Controls::adminData();
 
             $this->loadPage( 'block-controls' );
         }
@@ -2769,91 +2736,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgb_block_controls_save_page()
         {
-            if ( ! current_user_can( 'activate_plugins' ) ) {
-                return false;
-            }
-
-            // Controls
-            if( isset( $_POST['save_controls'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
-            {
-                if ( ! wp_verify_nonce(
-                        sanitize_key( $_POST['advgb_controls_settings_nonce_field'] ),
-                        'advgb_controls_settings_nonce'
-                    )
-                ) {
-                    return false;
-                }
-
-                $advgb_block_controls                       = get_option( 'advgb_block_controls' );
-                $advgb_block_controls['schedule_control']   = isset( $_POST['schedule_control'] ) ? 1 : 0;
-                $advgb_block_controls['user_role_control']  = isset( $_POST['user_role_control'] ) ? 1 : 0;
-
-                update_option( 'advgb_block_controls', $advgb_block_controls );
-
-                wp_safe_redirect(
-                    add_query_arg(
-                        [
-                            'save' => 'success'
-                        ],
-                        str_replace( '/wp-admin/', '', $_POST['_wp_http_referer'] )
-                    )
-                );
-            }
-            // Blocks
-            elseif ( isset( $_POST['save_blocks'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
-            {
-                if ( ! wp_verify_nonce(
-                        sanitize_key( $_POST['advgb_controls_block_nonce_field'] ),
-                        'advgb_controls_block_nonce'
-                    )
-                ) {
-                    return false;
-                }
-
-                if ( isset( $_POST['blocks_list'] )
-                    && isset( $_POST['active_blocks'] )
-                    && is_array( $_POST['active_blocks'] )
-                ) {
-                    $blocks_list        = array_map(
-                        'sanitize_text_field',
-                        json_decode( stripslashes( $_POST['blocks_list'] ) )
-                    );
-                    $active_blocks      = array_map( 'sanitize_text_field', $_POST['active_blocks'] );
-                    $inactive_blocks    = array_values( array_diff( $blocks_list, $active_blocks ) );
-
-                    // Save block controls
-                    $block_controls                     = get_option( 'advgb_block_controls' );
-                    $block_controls['active_blocks']    = isset( $active_blocks ) ? $active_blocks : '';
-                    $block_controls['inactive_blocks']  = isset( $inactive_blocks ) ? $inactive_blocks : '';
-
-                    update_option( 'advgb_block_controls', $block_controls );
-
-                    // Redirect with success message
-                    wp_safe_redirect(
-                        add_query_arg(
-                            [
-                                'tab' => 'blocks',
-                                'save' => 'success'
-                            ],
-                            str_replace( '/wp-admin/', '', $_POST['_wp_http_referer'] )
-                        )
-                    );
-                } else {
-                    // Redirect with error message / Nothing was saved
-                    wp_safe_redirect(
-                        add_query_arg(
-                            [
-                                'save' => 'error'
-                            ],
-                            str_replace( '/wp-admin/', '', $_POST['_wp_http_referer'] )
-                        )
-                    );
-                }
-            } else {
-                // Nothing to do here
-            }
-
-            return false;
+            PublishPress\Blocks\Controls::save();
         }
 
         /**
@@ -3310,122 +3193,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Blocks to exclude from Block controls
-         *
-         * @since 3.1.0
-         * @return void
-         */
-        public function blockControlsExclude()
-        {
-            return [
-                'core/freeform',
-                'core/legacy-widget',
-                'core/widget-area',
-                'core/column',
-                'advgb/tab',
-                'advgb/column',
-                'advgb/accordion' // @TODO - Deprecated block. Remove later.
-            ];
-        }
-
-        /**
-         * Access current user blocks and saved blocks to build 2 javascript objects.
-         * 'advgbCUserRole' object for current user role from form dropdown
-         * 'advgb_blocks_list' object with all the saved blocks in 'advgb_blocks_list' option
-         *
-         * @since 3.1.0
-         * @return void
-         */
-        public function blockControlsData()
-        {
-            // Blocm controls support for these blocks is not available
-            $exclude = $this->blockControlsExclude();
-
-            // Build blocks form and add filters functions
-            wp_add_inline_script(
-                'advgb_main_js',
-                "window.addEventListener('load', function () {
-                    advgbGetBlockControls(
-                        advgbBlockControls.inactive_blocks,
-                        '#advgb_block_controls_nonce_field',
-                        'advgb_block_controls',
-                        " . wp_json_encode( $exclude ) . "
-                    );
-                });"
-            );
-            do_action( 'enqueue_block_editor_assets' );
-
-            // Block categories
-            $blockCategories = array();
-            if (function_exists('get_block_categories')) {
-                $blockCategories = get_block_categories(get_post());
-            } elseif (function_exists('gutenberg_get_block_categories')) {
-                $blockCategories = gutenberg_get_block_categories(get_post());
-            }
-            wp_add_inline_script(
-                'wp-blocks',
-                sprintf('wp.blocks.setCategories( %s );', wp_json_encode($blockCategories)),
-                'after'
-            );
-
-            // Block types
-            $block_type_registry = \WP_Block_Type_Registry::get_instance();
-            foreach ( $block_type_registry->get_all_registered() as $block_name => $block_type ) {
-                if ( ! empty( $block_type->editor_script ) ) {
-                    wp_enqueue_script( $block_type->editor_script );
-                }
-            }
-
-            /* Get blocks saved in advgb_blocks_list option to include the ones that are missing
-             * as result of javascript method wp.blocks.getBlockTypes()
-             * e.g. blocks registered only via PHP
-             */
-            if( $this->settingIsEnabled( 'block_extend' ) ) {
-                $advgb_blocks_list = get_option( 'advgb_blocks_list' );
-                if( $advgb_blocks_list && is_array( $advgb_blocks_list ) ) {
-                    $saved_blocks = $advgb_blocks_list;
-                } else {
-                    $saved_blocks = [];
-                }
-                wp_localize_script(
-                    'advgb_main_js',
-                    'advgb_blocks_list',
-                    $saved_blocks
-                );
-            }
-
-            // Active and inactive blocks
-            $block_controls = get_option( 'advgb_block_controls' );
-            if( $block_controls
-                && is_array( $block_controls['active_blocks'] )
-                && is_array( $block_controls['inactive_blocks'] )
-            ) {
-                wp_localize_script(
-                    'wp-blocks',
-                    'advgbBlockControls',
-                    [
-                        'schedule_control' => $block_controls['schedule_control'],
-                        'user_role_control' => $block_controls['user_role_control'],
-                        'active_blocks' => $block_controls['active_blocks'],
-                        'inactive_blocks' => $block_controls['inactive_blocks']
-                    ]
-                );
-            } else {
-                // Nothing saved in database for current user role. Set empty (access to all blocks)
-                wp_localize_script(
-                    'wp-blocks',
-                    'advgbBlockControls',
-                    [
-                        'schedule_control' => 1,
-                        'user_role_control' => 1,
-                        'active_blocks' => [],
-                        'inactive_blocks' => []
-                    ]
-                );
-            }
-        }
-
-        /**
          * Download block form data
          *
          * @return mixed
@@ -3680,12 +3447,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 ADVANCED_GUTENBERG_VERSION
             );
 
-            require_once 'block-settings-main.php';
-            $blocks_settings                = new PublishPress\Blocks\Configuration;
-            $blocks_settings_list           = $blocks_settings->defaultConfiguration();
-
-            $advgb_blocks_default_config    = get_option('advgb_blocks_default_config');
-            $current_block                  = $block;
+            $blocks_settings_list = PublishPress\Blocks\Configuration::default();
 
             $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
             $current_block = $block;

@@ -1,8 +1,9 @@
 <?php
 defined( 'ABSPATH' ) || die;
 
-$schedule_control   = $this->getOptionSetting( 'advgb_block_controls', 'schedule_control', 'checkbox', 1 );
-$user_role_control  = $this->getOptionSetting( 'advgb_block_controls', 'user_role_control', 'checkbox', 1 );
+$block_controls     = new PublishPress\Blocks\Controls;
+$schedule_control   = $block_controls->getControlValue( 'schedule', 1 );
+$user_role_control  = $block_controls->getControlValue( 'user_role', 0 );
 ?>
 <form method="post">
     <?php wp_nonce_field( 'advgb_controls_settings_nonce', 'advgb_controls_settings_nonce_field' ); ?>
@@ -14,9 +15,8 @@ $user_role_control  = $this->getOptionSetting( 'advgb_block_controls', 'user_rol
             <td>
                 <label>
                     <input type="checkbox" name="schedule_control"
-                           id="schedule_control"
                            value="1"
-                           <?php echo esc_attr( $schedule_control ) ?>
+                           <?php echo $schedule_control ? ' checked' : '' ?>
                     />
                     <?php
                     _e(
@@ -34,9 +34,8 @@ $user_role_control  = $this->getOptionSetting( 'advgb_block_controls', 'user_rol
             <td>
                 <label>
                     <input type="checkbox" name="user_role_control"
-                           id="user_role_control"
                            value="1"
-                           <?php echo esc_attr( $user_role_control ) ?>
+                           <?php echo $user_role_control ? ' checked' : '' ?>
                     />
                     <?php
                     _e(

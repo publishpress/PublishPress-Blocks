@@ -3,10 +3,13 @@ namespace PublishPress\Blocks;
 
 use Exception;
 
+/*
+ * PublishPress blocks configurations
+ */
 if( ! class_exists( '\\PublishPress\\Blocks\\Configuration' ) ) {
     class Configuration
     {
-        public function defaultConfiguration()
+        public static function default()
         {
             return array(
                 'advgb-accordions' => array(
