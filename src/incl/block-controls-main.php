@@ -3,17 +3,134 @@ namespace PublishPress\Blocks;
 
 use Exception;
 
-/* 
+/*
  * Block controls logic
  */
 if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
     class Controls
     {
+        public function __construct()
+        {
+            add_action( 'wp_loaded', [$this, 'addAttributes'], 999 );
+            add_filter( 'rest_pre_dispatch', [$this, 'removeAttributes'], 10, 3 );
+
+            if( ! is_admin() ) {
+                // Frontend
+                add_filter( 'render_block', [$this, 'checkBlockControls'], 10, 2 );
+            }
+        }
+
+        /**
+         * Check if block is using controls and decide to display or not in frontend
+         *
+         * @since 3.1.0 function renamed and migrated from AdvancedGutenbergMain
+         * @since 2.14.0
+         *
+         * @param string    $block_content  Block HTML output
+         * @param array     $block          Block attributes
+         *
+         * @return string                   $block_content or an empty string when block is hidden
+         */
+        public function checkBlockControls( $block_content, $block ) {
+            if ( Utilities::settingIsEnabled( 'block_controls' )
+                && $block['blockName']
+                && isset($block['attrs']['advgbBlockControls'][0]['enabled'])
+                && (bool) $block['attrs']['advgbBlockControls'][0]['enabled'] === true
+            ) {
+                $bControl = $block['attrs']['advgbBlockControls'][0]; // [0] is for schedule control
+                $dateFrom = $dateTo = $recurring = null;
+                if ( ! empty( $bControl['dateFrom'] ) ) {
+                    $dateFrom = DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateFrom'] );
+                    // Reset seconds to zero to enable proper comparison
+                    $dateFrom->setTime( $dateFrom->format('H'), $dateFrom->format('i'), 0 );
+                }
+                if ( ! empty( $bControl['dateTo'] ) ) {
+                    $dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateTo'] );
+                    // Reset seconds to zero to enable proper comparison
+                    $dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0 );
+
+                    if ( $dateFrom ) {
+                        // Recurring is only relevant when both dateFrom and dateTo are defined
+                        $recurring = isset( $bControl['recurring'] ) ? $bControl['recurring'] : false;
+                    }
+                }
+
+                if ( $dateFrom || $dateTo ) {
+                    // Fetch current time keeping in mind the timezone
+                    $now = DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
+
+                    // Reset seconds to zero to enable proper comparison
+                    // as the from and to dates have those as 0
+                    // but do this only for the from comparison
+                    // as we need the block to stop showing at the right time and not 1 minute extra
+                    $nowFrom = clone $now;
+                    $nowFrom->setTime( $now->format('H'), $now->format('i'), 0 );
+
+                    if( $recurring ) {
+                        // Make the year same as today's
+                        $dateFrom->setDate( $nowFrom->format('Y'), $dateFrom->format('m'), $dateFrom->format('j') );
+                        $dateTo->setDate( $nowFrom->format('Y'), $dateTo->format('m'), $dateTo->format('j') );
+                    }
+
+                    if ( ! ( ( ! $dateFrom || $dateFrom->getTimestamp() <= $nowFrom->getTimestamp() ) && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) ) ) {
+                        // Empty $block_content (no visible)
+                        return '';
+                    }
+                }
+            }
+
+            return $block_content;
+        }
+
+        /**
+         * Add attributes to ServerSideRender blocks to fix "Invalid parameter(s): attributes" error.
+         * As example: 'core/latest-comments'
+         * Related Gutenberg issue: https://github.com/WordPress/gutenberg/issues/16850
+         *
+         * @since 3.1.0 function renamed and migrated from AdvancedGutenbergMain
+         * @since 2.14.0
+         */
+        public function addAttributes()
+        {
+            $registered_blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
+    		foreach ( $registered_blocks as $block ) {
+                $block->attributes['advgbBlockControls'] = [
+                    'type'    => 'array',
+                    'default' => [],
+                ];
+    		}
+        }
+
+        /**
+         * Make sure ServerSideRender blocks are rendererd correctly in editor.
+         * As example: 'core/latest-comments'
+         * https://github.com/brainstormforce/ultimate-addons-for-gutenberg/blob/master/classes/class-uagb-loader.php#L136-L194
+         *
+         * @since 3.1.0 function renamed and migrated from AdvancedGutenbergMain
+         * @since 2.14.0
+         */
+        public function removeAttributes( $result, $server, $request )
+        {
+    		if ( strpos( $request->get_route(), '/wp/v2/block-renderer' ) !== false ) {
+    			if ( isset( $request['attributes'] )
+                    && isset( $request['attributes']['advgbBlockControls'] )
+                ) {
+                    $attributes = $request['attributes'];
+                    if( $attributes['advgbBlockControls'] ) {
+                        unset( $attributes['advgbBlockControls'] );
+                    }
+                    $request['attributes'] = $attributes;
+    			}
+    		}
+
+    		return $result;
+    	}
 
         /**
          * Get a Block control value from database option
          *
          * @since 3.1.0
+         *
          * @param string $name  Setting name - e.g. 'schedule' from advgb_block_controls > controls
          * @param bool $default Default value when $setting doesn't exist in $option
          *
@@ -286,6 +403,36 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 'advgb/column',
                 'advgb/accordion' // @TODO - Deprecated block. Remove later.
             ];
+        }
+
+        /**
+         * Enqueue assets for editor
+         *
+         * @since 3.1.0
+         *
+         * @param $wp_editor_dep Block editor dependency based on current screen. e.g. 'wp-editor'
+         *
+         * @return void
+         */
+        public static function editorAssets( $wp_editor_dep )
+        {
+            if( Utilities::settingIsEnabled( 'block_controls' ) ) {
+                wp_enqueue_script(
+                    'advgb_block_controls',
+                    plugins_url( 'assets/blocks/block-controls.js', dirname( __FILE__ ) ),
+                    [
+                        'wp-blocks',
+                        'wp-i18n',
+                        'wp-element',
+                        'wp-data',
+                        $wp_editor_dep,
+                        'wp-plugins',
+                        'wp-compose'
+                    ],
+                    ADVANCED_GUTENBERG_VERSION,
+                    true
+                );
+            }
         }
     }
 }

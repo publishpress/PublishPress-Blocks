@@ -144,8 +144,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             add_action('init', array($this, 'registerPostMeta'));
             add_action('admin_init', array($this, 'registerStylesScripts'));
-            add_action('wp_loaded', array($this, 'blockControlsAddAttributes'), 999);
-            add_filter('rest_pre_dispatch', array( $this, 'blockControlsRemoveAttributes' ), 10, 3);
             add_action('wp_enqueue_scripts', array($this, 'registerStylesScriptsFrontend'));
             add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
             add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
@@ -202,7 +200,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Front-end
                 add_filter('render_block_data', array($this, 'contentPreRender'));
                 add_filter('render_block', array($this, 'addNonceToFormBlocks'));
-                add_filter('render_block', array($this, 'blockControls'), 10, 2);
                 add_filter('the_content', array($this, 'addFrontendContentAssets'), 9);
 
                 if($wp_version >= 5.8) {
@@ -435,8 +432,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         {
             $currentScreen = get_current_screen();
 
-            if(
-                $this->settingIsEnabled('enable_advgb_blocks')
+            if( $this->settingIsEnabled('enable_advgb_blocks')
                 || $this->settingIsEnabled('enable_block_access')
                 || $this->settingIsEnabled('block_controls')
             ) {
@@ -452,15 +448,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $wp_editor_dep = 'wp-editor';
                 }
 
-                if( $this->settingIsEnabled( 'block_controls' ) ) {
-                    wp_enqueue_script(
-                        'advgb_block_controls',
-                        plugins_url('assets/blocks/block-controls.js', dirname(__FILE__)),
-                        array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', $wp_editor_dep, 'wp-plugins', 'wp-compose' ),
-                        ADVANCED_GUTENBERG_VERSION,
-                        true
-                    );
-                }
+                PublishPress\Blocks\Controls::editorAssets( $wp_editor_dep );
 
                 if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                     wp_enqueue_script(
@@ -875,48 +863,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $controller->register_routes();
             }
         }
-
-        /**
-         * Add attributes to ServerSideRender blocks to fix "Invalid parameter(s): attributes" error.
-         * As example: 'core/latest-comments'
-         * Related Gutenberg issue: https://github.com/WordPress/gutenberg/issues/16850
-         *
-         * @since 2.14.0
-         */
-        public function blockControlsAddAttributes()
-        {
-            $registered_blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
-    		foreach ( $registered_blocks as $block ) {
-                $block->attributes['advgbBlockControls'] = array(
-                    'type'    => 'array',
-                    'default' => [],
-                );
-    		}
-        }
-
-        /**
-         * Make sure ServerSideRender blocks are rendererd correctly in editor.
-         * As example: 'core/latest-comments'
-         * https://github.com/brainstormforce/ultimate-addons-for-gutenberg/blob/master/classes/class-uagb-loader.php#L136-L194
-         *
-         * @since 2.14.0
-         */
-        public function blockControlsRemoveAttributes( $result, $server, $request )
-        {
-    		if ( strpos( $request->get_route(), '/wp/v2/block-renderer' ) !== false ) {
-    			if ( isset( $request['attributes'] )
-                    && isset( $request['attributes']['advgbBlockControls'] )
-                ) {
-                    $attributes = $request['attributes'];
-                    if( $attributes['advgbBlockControls'] ) {
-                        unset( $attributes['advgbBlockControls'] );
-                    }
-                    $request['attributes'] = $attributes;
-    			}
-    		}
-
-    		return $result;
-    	}
 
         /**
          * Get post author info for REST API
@@ -3537,67 +3483,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $html .= '</ul>';
 
             return $html;
-        }
-
-        /**
-         * Register Block controls attributes in REST API
-         *
-         * @since 2.14.0
-         * @param string    $block_content  Block HTML output
-         * @param array     $block          Block attributes
-         *
-         * @return string                   $block_content or an empty string when block is hidden
-         */
-        public function blockControls( $block_content, $block ) {
-            if (
-                $this->settingIsEnabled( 'block_controls' )
-                && $block['blockName']
-                && isset($block['attrs']['advgbBlockControls'][0]['enabled'])
-                && (bool) $block['attrs']['advgbBlockControls'][0]['enabled'] === true
-            ) {
-                $bControl = $block['attrs']['advgbBlockControls'][0]; // [0] is for schedule control
-                $dateFrom = $dateTo = $recurring = null;
-                if ( ! empty( $bControl['dateFrom'] ) ) {
-                    $dateFrom = DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateFrom'] );
-                    // Reset seconds to zero to enable proper comparison
-                    $dateFrom->setTime( $dateFrom->format('H'), $dateFrom->format('i'), 0 );
-                }
-                if ( ! empty( $bControl['dateTo'] ) ) {
-                    $dateTo	= DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateTo'] );
-                    // Reset seconds to zero to enable proper comparison
-                    $dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0 );
-
-                    if ( $dateFrom ) {
-                        // Recurring is only relevant when both dateFrom and dateTo are defined
-                        $recurring = isset( $bControl['recurring'] ) ? $bControl['recurring'] : false;
-                    }
-                }
-
-                if ( $dateFrom || $dateTo ) {
-                    // Fetch current time keeping in mind the timezone
-                    $now = DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
-
-                    // Reset seconds to zero to enable proper comparison
-                    // as the from and to dates have those as 0
-                    // but do this only for the from comparison
-                    // as we need the block to stop showing at the right time and not 1 minute extra
-                    $nowFrom = clone $now;
-                    $nowFrom->setTime( $now->format('H'), $now->format('i'), 0 );
-
-                    if( $recurring ) {
-                        // Make the year same as today's
-                        $dateFrom->setDate( $nowFrom->format('Y'), $dateFrom->format('m'), $dateFrom->format('j') );
-                        $dateTo->setDate( $nowFrom->format('Y'), $dateTo->format('m'), $dateTo->format('j') );
-                    }
-
-                    if ( ! ( ( ! $dateFrom || $dateFrom->getTimestamp() <= $nowFrom->getTimestamp() ) && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) ) ) {
-                        // Empty $block_content (no visible)
-                        return '';
-                    }
-                }
-            }
-
-            return $block_content;
         }
 
         /**
