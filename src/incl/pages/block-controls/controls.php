@@ -1,9 +1,8 @@
 <?php
 defined( 'ABSPATH' ) || die;
 
-$block_controls     = new PublishPress\Blocks\Controls;
-$schedule_control   = $block_controls->getControlValue( 'schedule', 1 );
-$user_role_control  = $block_controls->getControlValue( 'user_role', 0 );
+$schedule_control   = PublishPress\Blocks\Controls::getControlValue( 'schedule', 1 );
+$user_role_control  = PublishPress\Blocks\Controls::getControlValue( 'user_role', 0 );
 ?>
 <form method="post">
     <?php wp_nonce_field( 'advgb_controls_settings_nonce', 'advgb_controls_settings_nonce_field' ); ?>

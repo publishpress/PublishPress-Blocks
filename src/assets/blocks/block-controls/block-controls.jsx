@@ -25,12 +25,12 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
     ];
 
     // Add non supported blocks according to Block controls
-    if( typeof advgb_controls !== 'undefined'
-        && typeof advgb_controls.non_supported !== 'undefined'
-        && advgb_controls.non_supported.length > 0
+    if( typeof advgbBlockControls !== 'undefined'
+        && typeof advgbBlockControls.non_supported !== 'undefined'
+        && advgbBlockControls.non_supported.length > 0
     ) {
         // Merge dynamically disabled blocks
-        NON_SUPPORTED_BLOCKS = [...NON_SUPPORTED_BLOCKS, ...advgb_controls.non_supported];
+        NON_SUPPORTED_BLOCKS = [...NON_SUPPORTED_BLOCKS, ...advgbBlockControls.non_supported];
         // Remove duplicated values
         NON_SUPPORTED_BLOCKS = [...new Set(NON_SUPPORTED_BLOCKS)];
     }

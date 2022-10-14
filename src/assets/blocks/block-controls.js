@@ -325,9 +325,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     var NON_SUPPORTED_BLOCKS = ['core/freeform', 'core/legacy-widget', 'core/widget-area', 'core/column', 'advgb/tab', 'advgb/column'];
 
     // Add non supported blocks according to Block controls
-    if (typeof advgb_controls !== 'undefined' && typeof advgb_controls.non_supported !== 'undefined' && advgb_controls.non_supported.length > 0) {
+    if (typeof advgbBlockControls !== 'undefined' && typeof advgbBlockControls.non_supported !== 'undefined' && advgbBlockControls.non_supported.length > 0) {
         // Merge dynamically disabled blocks
-        NON_SUPPORTED_BLOCKS = [].concat(_toConsumableArray(NON_SUPPORTED_BLOCKS), _toConsumableArray(advgb_controls.non_supported));
+        NON_SUPPORTED_BLOCKS = [].concat(_toConsumableArray(NON_SUPPORTED_BLOCKS), _toConsumableArray(advgbBlockControls.non_supported));
         // Remove duplicated values
         NON_SUPPORTED_BLOCKS = [].concat(_toConsumableArray(new Set(NON_SUPPORTED_BLOCKS)));
     }
@@ -493,20 +493,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     var withAttributes = createHigherOrderComponent(function (BlockListBlock) {
         return function (props) {
             if (!NON_SUPPORTED_BLOCKS.includes(props.name) && hasBlockSupport(props.name, 'advgb/blockControls', true)) {
-                var advgbBlockControls = props.attributes.advgbBlockControls;
+                var _advgbBlockControls = props.attributes.advgbBlockControls;
                 // @TODO - Avoid having currentControlKey() duplicated. See 'blocks.registerBlockType' hook
 
                 var currentControlKey = function currentControlKey(control, key) {
-                    var itemIndex = advgbBlockControls.findIndex(function (element) {
+                    var itemIndex = _advgbBlockControls.findIndex(function (element) {
                         return element.control === control;
                     });
-                    var newArray = [].concat(_toConsumableArray(advgbBlockControls));
+                    var newArray = [].concat(_toConsumableArray(_advgbBlockControls));
                     var obj = newArray[itemIndex];
                     return obj[key];
                 };
                 var advgbBcClass = props.isSelected === false && currentControlKey('schedule', 'enabled') && (currentControlKey('schedule', 'dateFrom') || currentControlKey('schedule', 'dateTo')) ? 'advgb-bc-editor-preview' : '';
 
-                return React.createElement(BlockListBlock, _extends({}, props, { className: (0, _classnames2.default)(props.className, advgbBcClass), advgbBlockControls: '' + advgbBlockControls }));
+                return React.createElement(BlockListBlock, _extends({}, props, { className: (0, _classnames2.default)(props.className, advgbBcClass), advgbBlockControls: '' + _advgbBlockControls }));
             }
 
             return React.createElement(BlockListBlock, props);

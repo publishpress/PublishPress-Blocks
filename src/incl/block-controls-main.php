@@ -22,54 +22,101 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
          * @return string                   $block_content or an empty string when block is hidden
          */
         public static function checkBlockControls( $block_content, $block ) {
+
             if ( Utilities::settingIsEnabled( 'block_controls' )
+                && isset( $block['attrs']['advgbBlockControls'] )
                 && $block['blockName']
-                && isset( $block['attrs']['advgbBlockControls'][0]['enabled'] )
-                && (bool) $block['attrs']['advgbBlockControls'][0]['enabled'] === true
             ) {
-                $bControl = $block['attrs']['advgbBlockControls'][0]; // [0] is for schedule control
-                $dateFrom = $dateTo = $recurring = null;
-                if ( ! empty( $bControl['dateFrom'] ) ) {
-                    $dateFrom = \DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateFrom'] );
-                    // Reset seconds to zero to enable proper comparison
-                    $dateFrom->setTime( $dateFrom->format('H'), $dateFrom->format('i'), 0 );
-                }
-                if ( ! empty( $bControl['dateTo'] ) ) {
-                    $dateTo	= \DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateTo'] );
-                    // Reset seconds to zero to enable proper comparison
-                    $dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0 );
 
-                    if ( $dateFrom ) {
-                        // Recurring is only relevant when both dateFrom and dateTo are defined
-                        $recurring = isset( $bControl['recurring'] ) ? $bControl['recurring'] : false;
-                    }
-                }
+                /*echo '<pre>';
+                var_dump($block);
+                //foreach($block['attrs']['advgbBlockControls'] as $item){
+                    //var_dump($item);
+                    echo $item['control'] . ' ';
+                //}
+                echo '</pre>';*/
 
-                if ( $dateFrom || $dateTo ) {
-                    // Fetch current time keeping in mind the timezone
-                    $now = \DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
+                $controls = $block['attrs']['advgbBlockControls'];
+                foreach( $controls as $key => $item ){
+                    if ( isset( $item['control'] )
+                        && self::getControlValue( $item['control'], 1 ) === true // Is this control enabled? @TODO Dynamic way to define default value depending the control ; not all will be active (1) by default
+                        && self::isBlockEnabled( $block['blockName'] ) // Controls are enabled for this block?
+                        && isset( $item['enabled'] )
+                        && (bool) $item['enabled'] === true
+                    ) {
 
-                    // Reset seconds to zero to enable proper comparison
-                    // as the from and to dates have those as 0
-                    // but do this only for the from comparison
-                    // as we need the block to stop showing at the right time and not 1 minute extra
-                    $nowFrom = clone $now;
-                    $nowFrom->setTime( $now->format('H'), $now->format('i'), 0 );
-
-                    if( $recurring ) {
-                        // Make the year same as today's
-                        $dateFrom->setDate( $nowFrom->format('Y'), $dateFrom->format('m'), $dateFrom->format('j') );
-                        $dateTo->setDate( $nowFrom->format('Y'), $dateTo->format('m'), $dateTo->format('j') );
-                    }
-
-                    if ( ! ( ( ! $dateFrom || $dateFrom->getTimestamp() <= $nowFrom->getTimestamp() ) && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) ) ) {
-                        // Empty $block_content (no visible)
-                        return '';
+                        // Stop iteration; we reached a control that decides block shouln't be displayed
+                        if( self::blockVsControl( $block, $item['control'], $key ) === false ) {
+                            $block_content = ''; // Empty block content (no visible)
+                            break;
+                        }
                     }
                 }
             }
 
             return $block_content;
+        }
+
+        /**
+         * Check a single control against a block
+         *
+         * @since 3.1.0
+         *
+         * @param array $block      Block attributes
+         * @param string $control   Control to validate against a block. e.g. 'schedule'
+         * @param int $key          Array position for $control
+         *
+         * @return bool             True to display block, false to hide
+         */
+        private static function blockVsControl( $block, $control, $key )
+        {
+            switch( $control ) {
+                default:
+                case 'schedule':
+                    $bControl = $block['attrs']['advgbBlockControls'][$key];
+                    $dateFrom = $dateTo = $recurring = null;
+                    if ( ! empty( $bControl['dateFrom'] ) ) {
+                        $dateFrom = \DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateFrom'] );
+                        // Reset seconds to zero to enable proper comparison
+                        $dateFrom->setTime( $dateFrom->format('H'), $dateFrom->format('i'), 0 );
+                    }
+                    if ( ! empty( $bControl['dateTo'] ) ) {
+                        $dateTo	= \DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateTo'] );
+                        // Reset seconds to zero to enable proper comparison
+                        $dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0 );
+
+                        if ( $dateFrom ) {
+                            // Recurring is only relevant when both dateFrom and dateTo are defined
+                            $recurring = isset( $bControl['recurring'] ) ? $bControl['recurring'] : false;
+                        }
+                    }
+
+                    if ( $dateFrom || $dateTo ) {
+                        // Fetch current time keeping in mind the timezone
+                        $now = \DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
+
+                        // Reset seconds to zero to enable proper comparison
+                        // as the from and to dates have those as 0
+                        // but do this only for the from comparison
+                        // as we need the block to stop showing at the right time and not 1 minute extra
+                        $nowFrom = clone $now;
+                        $nowFrom->setTime( $now->format('H'), $now->format('i'), 0 );
+
+                        if( $recurring ) {
+                            // Make the year same as today's
+                            $dateFrom->setDate( $nowFrom->format('Y'), $dateFrom->format('m'), $dateFrom->format('j') );
+                            $dateTo->setDate( $nowFrom->format('Y'), $dateTo->format('m'), $dateTo->format('j') );
+                        }
+
+                        if ( ! ( ( ! $dateFrom || $dateFrom->getTimestamp() <= $nowFrom->getTimestamp() ) && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) ) ) {
+                            // No visible block
+                            return false;
+                        }
+                    }
+                break;
+            }
+
+            return true;
         }
 
         /**
@@ -126,7 +173,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
          *
          * @return bool
          */
-        public function getControlValue( $name, $default )
+        public static function getControlValue( $name, $default )
         {
             $settings = get_option( 'advgb_block_controls' );
 
@@ -135,6 +182,31 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 : (bool) $default;
 
             return $value;
+        }
+
+        /**
+         * Check if Block controls are enabled for a particular block
+         *
+         * @since 3.1.0
+         *
+         * @param string $block  Block name. e.g. 'core/paragraph'
+         *
+         * @return bool
+         */
+        public static function isBlockEnabled( $block )
+        {
+            $settings = get_option( 'advgb_block_controls' );
+
+            if( $settings
+                && isset( $settings['inactive_blocks'] )
+                && is_array( $settings['inactive_blocks'] )
+                && count( $settings['inactive_blocks'] ) > 0
+                && in_array( $block, $settings['inactive_blocks'] )
+            ) {
+                return false;
+            }
+
+            return true;
         }
 
         /**
