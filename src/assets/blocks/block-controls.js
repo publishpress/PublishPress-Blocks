@@ -339,6 +339,25 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     };
 
     /**
+     * Check how many controls are enabled
+     *
+     * @since 3.1.0
+     *
+     * @return {bool}
+     */
+    var countControlEnabled = function countControlEnabled() {
+        var allControls = typeof advgb_block_controls_vars.controls !== 'undefined' && Object.keys(advgb_block_controls_vars.controls).length > 0 ? advgb_block_controls_vars.controls : [];
+        var counter = 0;
+        Object.keys(allControls).map(function (item) {
+            if (isControlEnabled(advgb_block_controls_vars.controls[item])) {
+                counter++;
+            }
+        });
+
+        return counter > 0 ? true : false;
+    };
+
+    /**
      * Return single controls array attribute value
      *
      * @since 3.1.0
@@ -360,14 +379,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
         var newArray = [].concat(_toConsumableArray(controlAttrs));
         var obj = newArray[itemIndex];
-        /*console.log('itemIndex');
-        console.log(itemIndex);
-        console.log('newArray');
-        console.log(newArray);
-        console.log('obj');
-        console.log(obj);
-        console.log('obj[key]');
-        console.log(obj[key]);*/
 
         return obj[key];
     };
@@ -384,7 +395,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
     // Register block controls to blocks attributes
     addFilter('blocks.registerBlockType', 'advgb/blockControls', function (settings) {
-        if (!NON_SUPPORTED_BLOCKS.includes(settings.name)) {
+        if (!NON_SUPPORTED_BLOCKS.includes(settings.name) && countControlEnabled()) {
             settings.attributes = _extends(settings.attributes, {
                 advgbBlockControls: {
                     type: 'array',
@@ -478,7 +489,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
             //const [selectedUserRoles, setSelectedUserRoles] = useState( [] );
 
-            return [props.isSelected && !NON_SUPPORTED_BLOCKS.includes(props.name) && React.createElement(
+            return [props.isSelected && !NON_SUPPORTED_BLOCKS.includes(props.name) && countControlEnabled() && React.createElement(
                 InspectorControls,
                 { key: 'advgb-bc-controls' },
                 React.createElement(
@@ -559,7 +570,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         Fragment,
                         null,
                         React.createElement(ToggleControl, {
-                            label: __('Enable block user role', 'advanced-gutenberg'),
+                            label: __('Show block user roles', 'advanced-gutenberg'),
                             help: !currentControlKey(advgbBlockControls, 'user_role', 'enabled') ? __('Setup to which user roles this block will be visible', 'advanced-gutenberg') : '',
                             checked: currentControlKey(advgbBlockControls, 'user_role', 'enabled'),
                             onChange: function onChange() {
@@ -595,7 +606,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
     var withAttributes = createHigherOrderComponent(function (BlockListBlock) {
         return function (props) {
-            if (!NON_SUPPORTED_BLOCKS.includes(props.name) && hasBlockSupport(props.name, 'advgb/blockControls', true)) {
+            if (!NON_SUPPORTED_BLOCKS.includes(props.name) && hasBlockSupport(props.name, 'advgb/blockControls', true) && countControlEnabled()) {
                 var advgbBlockControls = props.attributes.advgbBlockControls;
 
                 var advgbBcClass = props.isSelected === false && (currentControlKey(advgbBlockControls, 'schedule', 'enabled') || currentControlKey(advgbBlockControls, 'user_role', 'enabled')) ? 'advgb-bc-editor-preview' : '';
