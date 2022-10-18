@@ -114,6 +114,28 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                         }
                     }
                 break;
+
+                case 'user_role':
+                    $bControl = $block['attrs']['advgbBlockControls'][$key];
+
+                    //echo '<pre>';
+                    //var_dump($bControl);
+
+                    if ( ! empty( $bControl['roles'] ) && is_array( $bControl['roles'] ) ) {
+
+                        //var_dump($bControl['roles']);
+
+                        $user = wp_get_current_user();
+                        $allowed_roles = $bControl['roles'];
+                        if ( ! array_intersect( $allowed_roles, $user->roles ) ) {
+                            // No visible block
+                            return false;
+                        }
+                    }
+
+                    //echo '</pre>';
+
+                break;
             }
 
             return true;
@@ -306,7 +328,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
 
         /**
          * Javascript objects with controls configuration to load in Admin.
-         * 'advgbBlockControls' object with controls configuration.
+         * 'advgb_block_controls_vars' object with controls configuration.
          * 'advgb_blocks_list' object with all the saved blocks in 'advgb_blocks_list' option.
          *
          * @since 3.1.0
@@ -319,7 +341,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 'advgb_main_js',
                 "window.addEventListener('load', function () {
                     advgbGetBlockControls(
-                        advgbBlockControls.inactive_blocks,
+                        advgb_block_controls_vars.inactive_blocks,
                         '#advgb_block_controls_nonce_field',
                         'advgb_block_controls',
                         " . wp_json_encode( self::defaultExcludedBlocks() ) . "
@@ -377,7 +399,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
             ) {
                 wp_localize_script(
                     'wp-blocks',
-                    'advgbBlockControls',
+                    'advgb_block_controls_vars',
                     [
                         'controls' => [
                             'schedule' => (bool) $block_controls['controls']['schedule'],
@@ -391,7 +413,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 // Nothing saved in database for current user role. Set empty (access to all blocks)
                 wp_localize_script(
                     'wp-blocks',
-                    'advgbBlockControls',
+                    'advgb_block_controls_vars',
                     [
                         'controls' => [
                             'schedule' => (bool) 1,
@@ -406,7 +428,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
 
         /**
          * Javascript objects with controls configuration to load in Editor.
-         * 'advgbBlockControls' object with controls configuration.
+         * 'advgb_block_controls_vars' object with controls configuration.
          *
          * @since 3.1.0
          * @return void
@@ -437,13 +459,14 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
             // Output js variable
             wp_localize_script(
                 'wp-blocks',
-                'advgbBlockControls',
+                'advgb_block_controls_vars',
                 [
                     'non_supported' => $non_supported,
                     'controls' => [
                         'schedule' => (bool) $schedule_control,
                         'user_role' => (bool) $user_role_control
-                    ]
+                    ],
+                    'user_roles' => self::getUserRoles()
                 ]
             );
         }
@@ -495,6 +518,28 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     true
                 );
             }
+        }
+
+        /**
+         * Retrieve User roles
+         *
+         * @since 3.1.0
+         *
+         * @return array
+         */
+        public static function getUserRoles()
+        {
+            global $wp_roles;
+            $result = [];
+            $roles_list = $wp_roles->get_names();
+            foreach ( $roles_list as $roles => $role_name ) {
+                $result[] = [
+                    'slug' => $roles,
+                    'title' => esc_attr( translate_user_role( $role_name ) )
+                ];
+            }
+
+            return $result;
         }
     }
 }

@@ -302,7 +302,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-(function (wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose) {
+(function (wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose, wpElement) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var addFilter = wpHooks.addFilter;
     var __ = wpI18n.__;
@@ -313,9 +313,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     var DateTimePicker = wpComponents.DateTimePicker,
         ToggleControl = wpComponents.ToggleControl,
         PanelBody = wpComponents.PanelBody,
-        Notice = wpComponents.Notice;
+        Notice = wpComponents.Notice,
+        FormTokenField = wpComponents.FormTokenField;
     var createHigherOrderComponent = wpCompose.createHigherOrderComponent;
-    var Fragment = wp.element.Fragment;
+    var Fragment = wpElement.Fragment,
+        useState = wpElement.useState;
 
     // do not show this feature if disabled.
 
@@ -324,10 +326,56 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     // Blocks that are not supported
     var NON_SUPPORTED_BLOCKS = ['core/freeform', 'core/legacy-widget', 'core/widget-area', 'core/column', 'advgb/tab', 'advgb/column'];
 
+    /**
+     * Check if a control is enabled
+     *
+     * @since 3.1.0
+     * @param {string} control  The use case block control. e.g. 'schedule'
+     *
+     * @return {bool}
+     */
+    var isControlEnabled = function isControlEnabled(control) {
+        return typeof control !== 'undefined' && control;
+    };
+
+    /**
+     * Return single controls array attribute value
+     *
+     * @since 3.1.0
+     * @param {string} controlAttrs     Controls attributes. e.g. advgbBlockControls or props.attributes @TODO Figure out a way to NOT require controlAttrs as param due is the same always
+     * @param {string} control          The use case block control. e.g. 'schedule'
+     * @param {string} key              The control key to check. e.g. 'enabled'
+     *
+     * @return {mixed}
+     */
+    var currentControlKey = function currentControlKey(controlAttrs, control, key) {
+        var itemIndex = controlAttrs.findIndex(function (element) {
+            return element.control === control;
+        });
+
+        // No control found
+        if (itemIndex < 0) {
+            return false;
+        }
+
+        var newArray = [].concat(_toConsumableArray(controlAttrs));
+        var obj = newArray[itemIndex];
+        console.log('itemIndex');
+        console.log(itemIndex);
+        console.log('newArray');
+        console.log(newArray);
+        console.log('obj');
+        console.log(obj);
+        console.log('obj[key]');
+        console.log(obj[key]);
+
+        return obj[key];
+    };
+
     // Add non supported blocks according to Block controls
-    if (typeof advgbBlockControls !== 'undefined' && typeof advgbBlockControls.non_supported !== 'undefined' && advgbBlockControls.non_supported.length > 0) {
+    if (typeof advgb_block_controls_vars !== 'undefined' && typeof advgb_block_controls_vars.non_supported !== 'undefined' && advgb_block_controls_vars.non_supported.length > 0) {
         // Merge dynamically disabled blocks
-        NON_SUPPORTED_BLOCKS = [].concat(_toConsumableArray(NON_SUPPORTED_BLOCKS), _toConsumableArray(advgbBlockControls.non_supported));
+        NON_SUPPORTED_BLOCKS = [].concat(_toConsumableArray(NON_SUPPORTED_BLOCKS), _toConsumableArray(advgb_block_controls_vars.non_supported));
         // Remove duplicated values
         NON_SUPPORTED_BLOCKS = [].concat(_toConsumableArray(new Set(NON_SUPPORTED_BLOCKS)));
     }
@@ -349,6 +397,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         dateFrom: null,
                         dateTo: null,
                         recurring: false
+                    }, {
+                        control: 'user_role',
+                        enabled: false,
+                        roles: []
                     }]
                 }
             });
@@ -363,26 +415,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             var advgbBlockControls = props.attributes.advgbBlockControls;
 
             /**
-             * Return current advgbBlockControls array attribute value
-             *
-             * @since 2.14.0
-             * @param {string} control  The use case block control. e.g. 'schedule'
-             * @param {string} key      The control key to modify. e.g. 'enabled'
-             *
-             * @return {mixed}
-             */
-
-            var currentControlKey = function currentControlKey(control, key) {
-                var itemIndex = advgbBlockControls.findIndex(function (element) {
-                    return element.control === control;
-                });
-                var newArray = [].concat(_toConsumableArray(advgbBlockControls));
-                var obj = newArray[itemIndex];
-
-                return obj[key];
-            };
-
-            /**
              * Update advgbBlockControls attribute when a key value changes
              *
              * @since 2.14.0
@@ -392,6 +424,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
              *
              * @return {void}
              */
+
             var changeControlKey = function changeControlKey(control, key) {
                 var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
@@ -417,26 +450,26 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         title: __('Block Controls', 'advanced-gutenberg'),
                         icon: 'visibility',
                         initialOpen: false,
-                        className: currentControlKey('schedule', 'enabled') && (currentControlKey('schedule', 'dateFrom') || currentControlKey('schedule', 'dateTo')) ? 'advgb-feature-icon-active' : ''
+                        className: currentControlKey(advgbBlockControls, 'schedule', 'enabled') || currentControlKey(advgbBlockControls, 'user_role', 'enabled') ? 'advgb-feature-icon-active' : ''
                     },
-                    React.createElement(
+                    isControlEnabled(advgb_block_controls_vars.controls.schedule) && React.createElement(
                         Fragment,
                         null,
                         React.createElement(ToggleControl, {
                             label: __('Enable block schedule', 'advanced-gutenberg'),
-                            help: !currentControlKey('schedule', 'enabled') ? __('Setup when to start showing and/or stop showing this block', 'advanced-gutenberg') : '',
-                            checked: currentControlKey('schedule', 'enabled'),
+                            help: !currentControlKey(advgbBlockControls, 'schedule', 'enabled') ? __('Setup when to start showing and/or stop showing this block', 'advanced-gutenberg') : '',
+                            checked: currentControlKey(advgbBlockControls, 'schedule', 'enabled'),
                             onChange: function onChange() {
                                 return changeControlKey('schedule', 'enabled');
                             }
                         }),
-                        currentControlKey('schedule', 'enabled') && React.createElement(
+                        currentControlKey(advgbBlockControls, 'schedule', 'enabled') && React.createElement(
                             Fragment,
                             null,
                             React.createElement(_datetime.AdvDateTimeControl, {
                                 buttonLabel: __('Now', 'advanced-gutenberg'),
                                 dateLabel: __('Start showing', 'advanced-gutenberg'),
-                                date: currentControlKey('schedule', 'dateFrom'),
+                                date: currentControlKey(advgbBlockControls, 'schedule', 'dateFrom'),
                                 onChangeDate: function onChangeDate(newDate) {
                                     return changeControlKey('schedule', 'dateFrom', newDate);
                                 },
@@ -448,7 +481,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                             React.createElement(_datetime.AdvDateTimeControl, {
                                 buttonLabel: __('Never', 'advanced-gutenberg'),
                                 dateLabel: __('Stop showing', 'advanced-gutenberg'),
-                                date: !!currentControlKey('schedule', 'dateTo') ? currentControlKey('schedule', 'dateTo') : null,
+                                date: !!currentControlKey(advgbBlockControls, 'schedule', 'dateTo') ? currentControlKey(advgbBlockControls, 'schedule', 'dateTo') : null,
                                 onChangeDate: function onChangeDate(newDate) {
                                     return changeControlKey('schedule', 'dateTo', newDate);
                                 },
@@ -457,16 +490,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 },
                                 onInvalidDate: function onInvalidDate(date) {
                                     // Disable all dates before dateFrom
-                                    if (currentControlKey('schedule', 'dateFrom')) {
+                                    if (currentControlKey(advgbBlockControls, 'schedule', 'dateFrom')) {
                                         var thisDate = new Date(date.getTime());
                                         thisDate.setHours(0, 0, 0, 0);
-                                        var fromDate = new Date(currentControlKey('schedule', 'dateFrom'));
+                                        var fromDate = new Date(currentControlKey(advgbBlockControls, 'schedule', 'dateFrom'));
                                         fromDate.setHours(0, 0, 0, 0);
                                         return thisDate.getTime() < fromDate.getTime();
                                     }
                                 }
                             }),
-                            currentControlKey('schedule', 'dateFrom') > currentControlKey('schedule', 'dateTo') && React.createElement(
+                            currentControlKey(advgbBlockControls, 'schedule', 'dateFrom') > currentControlKey(advgbBlockControls, 'schedule', 'dateTo') && React.createElement(
                                 Notice,
                                 {
                                     className: 'advgb-notice-sidebar',
@@ -475,15 +508,41 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 },
                                 __('"Stop showing" date should be after "Start showing" date!', 'advanced-gutenberg')
                             ),
-                            currentControlKey('schedule', 'dateFrom') && currentControlKey('schedule', 'dateTo') && React.createElement(ToggleControl, {
+                            currentControlKey(advgbBlockControls, 'schedule', 'dateFrom') && currentControlKey(advgbBlockControls, 'schedule', 'dateTo') && React.createElement(ToggleControl, {
                                 label: __('Recurring', 'advanced-gutenberg'),
-                                checked: currentControlKey('schedule', 'recurring'),
+                                checked: currentControlKey(advgbBlockControls, 'schedule', 'recurring'),
                                 onChange: function onChange() {
                                     return changeControlKey('schedule', 'recurring');
                                 },
                                 help: __('If Recurring is enabled, this block will be displayed every year between the selected dates.', 'advanced-gutenberg')
                             })
                         )
+                    ),
+                    isControlEnabled(advgb_block_controls_vars.controls.user_role) && React.createElement(
+                        Fragment,
+                        null,
+                        React.createElement(ToggleControl, {
+                            label: __('Enable block user role', 'advanced-gutenberg'),
+                            help: !currentControlKey(advgbBlockControls, 'user_role', 'enabled') ? __('Setup to which user roles this block will be visible', 'advanced-gutenberg') : '',
+                            checked: currentControlKey(advgbBlockControls, 'user_role', 'enabled'),
+                            onChange: function onChange() {
+                                return changeControlKey('user_role', 'enabled');
+                            }
+                        }),
+                        currentControlKey(advgbBlockControls, 'user_role', 'enabled') && React.createElement(FormTokenField, {
+                            multiple: true,
+                            label: __('User Roles', 'advanced-gutenberg'),
+                            placeholder: __('Search', 'advanced-gutenberg'),
+                            suggestions: typeof advgb_block_controls_vars.user_roles !== 'undefined' && advgb_block_controls_vars.user_roles.length > 0 ? advgb_block_controls_vars.user_roles.map(function (role) {
+                                return role.slug;
+                            }) : [],
+                            value: !!currentControlKey(advgbBlockControls, 'user_role', 'roles') ? currentControlKey(advgbBlockControls, 'user_role', 'roles') : [],
+                            onChange: function onChange(value) {
+                                changeControlKey('user_role', 'roles', value);
+                                /*console.log( 'value' );
+                                console.log( value );*/
+                            }
+                        })
                     )
                 )
             ), React.createElement(BlockEdit, _extends({ key: 'block-edit-advgb-dates' }, props))];
@@ -493,20 +552,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     var withAttributes = createHigherOrderComponent(function (BlockListBlock) {
         return function (props) {
             if (!NON_SUPPORTED_BLOCKS.includes(props.name) && hasBlockSupport(props.name, 'advgb/blockControls', true)) {
-                var _advgbBlockControls = props.attributes.advgbBlockControls;
-                // @TODO - Avoid having currentControlKey() duplicated. See 'blocks.registerBlockType' hook
+                var advgbBlockControls = props.attributes.advgbBlockControls;
 
-                var currentControlKey = function currentControlKey(control, key) {
-                    var itemIndex = _advgbBlockControls.findIndex(function (element) {
-                        return element.control === control;
-                    });
-                    var newArray = [].concat(_toConsumableArray(_advgbBlockControls));
-                    var obj = newArray[itemIndex];
-                    return obj[key];
-                };
-                var advgbBcClass = props.isSelected === false && currentControlKey('schedule', 'enabled') && (currentControlKey('schedule', 'dateFrom') || currentControlKey('schedule', 'dateTo')) ? 'advgb-bc-editor-preview' : '';
+                var advgbBcClass = props.isSelected === false && (currentControlKey(advgbBlockControls, 'schedule', 'enabled') || currentControlKey(advgbBlockControls, 'user_role', 'enabled')) ? 'advgb-bc-editor-preview' : '';
 
-                return React.createElement(BlockListBlock, _extends({}, props, { className: (0, _classnames2.default)(props.className, advgbBcClass), advgbBlockControls: '' + _advgbBlockControls }));
+                return React.createElement(BlockListBlock, _extends({}, props, { className: (0, _classnames2.default)(props.className, advgbBcClass), advgbBlockControls: '' + advgbBlockControls }));
             }
 
             return React.createElement(BlockListBlock, props);
@@ -515,7 +565,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
     // Apply custom styles on back-end
     wp.hooks.addFilter('editor.BlockListBlock', 'advgb/loadBackendBlockControls', withAttributes);
-})(wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components, wp.compose);
+})(wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components, wp.compose, wp.element);
 
 /***/ }),
 
