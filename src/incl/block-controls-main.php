@@ -71,6 +71,8 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
         private static function blockVsControl( $block, $control, $key )
         {
             switch( $control ) {
+
+                // Schedule control
                 default:
                 case 'schedule':
                     $bControl = $block['attrs']['advgbBlockControls'][$key];
@@ -115,25 +117,32 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     }
                 break;
 
+                // User role control
                 case 'user_role':
-                    $bControl = $block['attrs']['advgbBlockControls'][$key];
+                    $bControl       = $block['attrs']['advgbBlockControls'][$key];
+                    $allowed_roles  = is_array( $bControl['roles'] ) && count( $bControl['roles'] )
+                        ? $bControl['roles'] : [];
 
-                    //echo '<pre>';
-                    //var_dump($bControl);
+                    if( count( $allowed_roles ) ) {
 
-                    if ( ! empty( $bControl['roles'] ) && is_array( $bControl['roles'] ) ) {
+                        // Check if user role exists to avoid non-valid roles
+                        foreach( $allowed_roles as $key => $role ) {
+                            if( ! $GLOBALS['wp_roles']->is_role( $role ) ) {
+                                unset($allowed_roles[$key]);
+                            }
+                        }
+                    }
 
-                        //var_dump($bControl['roles']);
+                    // Let's count roles again in case we unset() a fake user role in previous foreach
+                    if( count( $allowed_roles ) ) {
 
+                        // Check current user role visit
                         $user = wp_get_current_user();
-                        $allowed_roles = $bControl['roles'];
                         if ( ! array_intersect( $allowed_roles, $user->roles ) ) {
                             // No visible block
                             return false;
                         }
                     }
-
-                    //echo '</pre>';
 
                 break;
             }
