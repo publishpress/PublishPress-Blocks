@@ -56,14 +56,14 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
 
         let newArray    = [...controlAttrs];
         const obj       = newArray[itemIndex];
-        console.log('itemIndex');
+        /*console.log('itemIndex');
         console.log(itemIndex);
         console.log('newArray');
         console.log(newArray);
         console.log('obj');
         console.log(obj);
         console.log('obj[key]');
-        console.log(obj[key]);
+        console.log(obj[key]);*/
 
         return obj[key];
     }
@@ -78,8 +78,8 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
         // Remove duplicated values
         NON_SUPPORTED_BLOCKS = [...new Set(NON_SUPPORTED_BLOCKS)];
     }
-    console.log('NON SUPPORTED BLOCKS');
-    console.log(NON_SUPPORTED_BLOCKS);
+    /*console.log('NON SUPPORTED BLOCKS');
+    console.log(NON_SUPPORTED_BLOCKS);*/
 
     // Register block controls to blocks attributes
     addFilter( 'blocks.registerBlockType', 'advgb/blockControls', function ( settings ) {
@@ -139,6 +139,44 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                     advgbBlockControls: newArray
                 } );
             }
+
+            /**
+             * Get available user role slugs from site
+             *
+             * @return {array}
+             */
+            const getUserRoleSlugs = function() {
+                return typeof advgb_block_controls_vars.user_roles !== 'undefined'
+                        && advgb_block_controls_vars.user_roles.length > 0
+                            ? advgb_block_controls_vars.user_roles.map( ( role ) => role.slug )
+                            : [];
+            }
+
+            /**
+             * Get available user role titles from site
+             *
+             * @return {array}
+             */
+            /*const getUserRoleTitles = function() {
+                return typeof advgb_block_controls_vars.user_roles !== 'undefined'
+                        && advgb_block_controls_vars.user_roles.length > 0
+                            ? advgb_block_controls_vars.user_roles.map( ( role ) => role.title )
+                            : [];
+            }*/
+
+            /**
+             * Get the User role titles and slugs
+             *
+             * @return {array}
+             */
+            /*const getUserRoleSlugTitles = function() {
+                return typeof advgb_block_controls_vars.user_roles !== 'undefined'
+                                && advgb_block_controls_vars.user_roles.length > 0
+                                    ? advgb_block_controls_vars.user_roles
+                                    : [];
+            }*/
+
+            //const [selectedUserRoles, setSelectedUserRoles] = useState( [] );
 
             return ( [
                 props.isSelected && (!NON_SUPPORTED_BLOCKS.includes( props.name )) &&
@@ -228,23 +266,27 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                             { currentControlKey( advgbBlockControls, 'user_role', 'enabled' ) && (
                                 <FormTokenField
                                     multiple
-                                    label={ __( 'User Roles', 'advanced-gutenberg' ) }
+                                    label={ __( 'Show to these user roles', 'advanced-gutenberg' ) }
                                     placeholder={ __( 'Search', 'advanced-gutenberg' ) }
-                                    suggestions={
-                                        typeof advgb_block_controls_vars.user_roles !== 'undefined'
-                                        && advgb_block_controls_vars.user_roles.length > 0
-                                            ? advgb_block_controls_vars.user_roles.map( ( role ) => role.slug )
-                                            : []
-                                    }
+                                    suggestions={ getUserRoleSlugs() }
+                                    maxSuggestions={ 10 }
                                     value={
                                         !! currentControlKey( advgbBlockControls, 'user_role', 'roles' )
                                             ? currentControlKey( advgbBlockControls, 'user_role', 'roles' )
                                             : []
                                     }
                                     onChange={ ( value ) => {
+                                        const roleSlugs = getUserRoleSlugs();
+                                        if( roleSlugs.length > 0 ) {
+                                            value.map( (item, index) => {
+                                                // Remove invalid user roles (doesn't exist)
+                                                if( roleSlugs.indexOf(item) === -1 ){
+                                                    value.splice(index, 1);
+                                                }
+                                            } );
+                                        }
+                                        //setSelectedUserRoles( value );
                                         changeControlKey( 'user_role', 'roles', value );
-                                        /*console.log( 'value' );
-                                        console.log( value );*/
                                     } }
                                 />
                             ) }

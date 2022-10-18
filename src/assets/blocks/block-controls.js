@@ -360,14 +360,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
         var newArray = [].concat(_toConsumableArray(controlAttrs));
         var obj = newArray[itemIndex];
-        console.log('itemIndex');
+        /*console.log('itemIndex');
         console.log(itemIndex);
         console.log('newArray');
         console.log(newArray);
         console.log('obj');
         console.log(obj);
         console.log('obj[key]');
-        console.log(obj[key]);
+        console.log(obj[key]);*/
 
         return obj[key];
     };
@@ -379,8 +379,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         // Remove duplicated values
         NON_SUPPORTED_BLOCKS = [].concat(_toConsumableArray(new Set(NON_SUPPORTED_BLOCKS)));
     }
-    console.log('NON SUPPORTED BLOCKS');
-    console.log(NON_SUPPORTED_BLOCKS);
+    /*console.log('NON SUPPORTED BLOCKS');
+    console.log(NON_SUPPORTED_BLOCKS);*/
 
     // Register block controls to blocks attributes
     addFilter('blocks.registerBlockType', 'advgb/blockControls', function (settings) {
@@ -440,6 +440,43 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     advgbBlockControls: newArray
                 });
             };
+
+            /**
+             * Get available user role slugs from site
+             *
+             * @return {array}
+             */
+            var getUserRoleSlugs = function getUserRoleSlugs() {
+                return typeof advgb_block_controls_vars.user_roles !== 'undefined' && advgb_block_controls_vars.user_roles.length > 0 ? advgb_block_controls_vars.user_roles.map(function (role) {
+                    return role.slug;
+                }) : [];
+            };
+
+            /**
+             * Get available user role titles from site
+             *
+             * @return {array}
+             */
+            /*const getUserRoleTitles = function() {
+                return typeof advgb_block_controls_vars.user_roles !== 'undefined'
+                        && advgb_block_controls_vars.user_roles.length > 0
+                            ? advgb_block_controls_vars.user_roles.map( ( role ) => role.title )
+                            : [];
+            }*/
+
+            /**
+             * Get the User role titles and slugs
+             *
+             * @return {array}
+             */
+            /*const getUserRoleSlugTitles = function() {
+                return typeof advgb_block_controls_vars.user_roles !== 'undefined'
+                                && advgb_block_controls_vars.user_roles.length > 0
+                                    ? advgb_block_controls_vars.user_roles
+                                    : [];
+            }*/
+
+            //const [selectedUserRoles, setSelectedUserRoles] = useState( [] );
 
             return [props.isSelected && !NON_SUPPORTED_BLOCKS.includes(props.name) && React.createElement(
                 InspectorControls,
@@ -531,16 +568,23 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         }),
                         currentControlKey(advgbBlockControls, 'user_role', 'enabled') && React.createElement(FormTokenField, {
                             multiple: true,
-                            label: __('User Roles', 'advanced-gutenberg'),
+                            label: __('Show to these user roles', 'advanced-gutenberg'),
                             placeholder: __('Search', 'advanced-gutenberg'),
-                            suggestions: typeof advgb_block_controls_vars.user_roles !== 'undefined' && advgb_block_controls_vars.user_roles.length > 0 ? advgb_block_controls_vars.user_roles.map(function (role) {
-                                return role.slug;
-                            }) : [],
+                            suggestions: getUserRoleSlugs(),
+                            maxSuggestions: 10,
                             value: !!currentControlKey(advgbBlockControls, 'user_role', 'roles') ? currentControlKey(advgbBlockControls, 'user_role', 'roles') : [],
                             onChange: function onChange(value) {
+                                var roleSlugs = getUserRoleSlugs();
+                                if (roleSlugs.length > 0) {
+                                    value.map(function (item, index) {
+                                        // Remove invalid user roles (doesn't exist)
+                                        if (roleSlugs.indexOf(item) === -1) {
+                                            value.splice(index, 1);
+                                        }
+                                    });
+                                }
+                                //setSelectedUserRoles( value );
                                 changeControlKey('user_role', 'roles', value);
-                                /*console.log( 'value' );
-                                console.log( value );*/
                             }
                         })
                     )
