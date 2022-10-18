@@ -339,6 +339,17 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     };
 
     /**
+     * Get all the available user roles from the site
+     *
+     * @since 3.1.0
+     *
+     * @return {array}
+     */
+    var getUserRoles = function getUserRoles() {
+        return typeof advgb_block_controls_vars.user_roles !== 'undefined' && advgb_block_controls_vars.user_roles.length > 0 ? advgb_block_controls_vars.user_roles : [];
+    };
+
+    /**
      * Check how many controls are enabled
      *
      * @since 3.1.0
@@ -453,41 +464,91 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             };
 
             /**
-             * Get available user role slugs from site
+             * Generate User role suggestions
              *
-             * @return {array}
+             * @since 3.1.0
+             *
+             * @return {array}  User role slugs e.g. ['subscriber','new_customer']
              */
-            var getUserRoleSlugs = function getUserRoleSlugs() {
-                return typeof advgb_block_controls_vars.user_roles !== 'undefined' && advgb_block_controls_vars.user_roles.length > 0 ? advgb_block_controls_vars.user_roles.map(function (role) {
-                    return role.slug;
-                }) : [];
+            var getUserRoleSuggestions = function getUserRoleSuggestions() {
+
+                /* All the available user roles in the site.
+                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
+                 */
+                var roles = getUserRoles();
+
+                return roles.map(function (role) {
+                    return role.title;
+                });
             };
 
             /**
-             * Get available user role titles from site
+             * Match user role slugs with its user role human readable titles
+             * to display as field value (but NOT saved!).
              *
-             * @return {array}
+             * @since 3.1.0
+             *
+             * @param  roles    User role slugs e.g. ['subscriber','new_customer']
+             *
+             * @return {array}  Human readable User roles e.g. ['Subscriber','New Customer']
              */
-            /*const getUserRoleTitles = function() {
-                return typeof advgb_block_controls_vars.user_roles !== 'undefined'
-                        && advgb_block_controls_vars.user_roles.length > 0
-                            ? advgb_block_controls_vars.user_roles.map( ( role ) => role.title )
-                            : [];
-            }*/
+            var getUserRoleTitles = function getUserRoleTitles(roles) {
+
+                /* All the available user roles in the site.
+                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
+                 */
+                var rolesToSelect = getUserRoles();
+
+                var field_value = [];
+
+                if (rolesToSelect !== null) {
+                    console.log('roles');
+                    console.log(roles);
+                    field_value = roles.map(function (role_slug) {
+                        console.log('role_slug');
+                        console.log(role_slug);
+                        var find_role = rolesToSelect.find(function (role) {
+                            return role.slug === role_slug;
+                        });
+                        if (find_role === undefined || !find_role) {
+                            return role_slug; // It should return false but creates empty selections
+                        }
+                        return find_role.title;
+                    });
+                }
+
+                return field_value;
+            };
 
             /**
-             * Get the User role titles and slugs
+             * Match user role human readable titles with its slugs, and save slugs
              *
-             * @return {array}
+             * @since 3.1.0
+             *
+             * @param roles     Human readable User roles e.g. ['Subscriber','New Customer']
+             *
+             * @return {array}  User role slugs e.g. ['subscriber','new_customer']
              */
-            /*const getUserRoleSlugTitles = function() {
-                return typeof advgb_block_controls_vars.user_roles !== 'undefined'
-                                && advgb_block_controls_vars.user_roles.length > 0
-                                    ? advgb_block_controls_vars.user_roles
-                                    : [];
-            }*/
+            var getUserRoleSlugs = function getUserRoleSlugs(roles) {
 
-            //const [selectedUserRoles, setSelectedUserRoles] = useState( [] );
+                /* All the available user roles in the site.
+                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
+                 */
+                var rolesToSelect = getUserRoles();
+
+                var roles_array = [];
+
+                roles.map(function (role_title) {
+                    var matching_role = rolesToSelect.find(function (role) {
+                        return role.title === role_title;
+                    });
+                    if (matching_role !== undefined) {
+                        roles_array.push(matching_role.slug);
+                    }
+                });
+
+                changeControlKey('user_role', 'roles', roles_array);
+            };
 
             return [props.isSelected && !NON_SUPPORTED_BLOCKS.includes(props.name) && countControlEnabled() && React.createElement(
                 InspectorControls,
@@ -581,21 +642,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                             multiple: true,
                             label: __('Show to these user roles', 'advanced-gutenberg'),
                             placeholder: __('Search', 'advanced-gutenberg'),
-                            suggestions: getUserRoleSlugs(),
+                            suggestions: getUserRoleSuggestions(),
                             maxSuggestions: 10,
-                            value: !!currentControlKey(advgbBlockControls, 'user_role', 'roles') ? currentControlKey(advgbBlockControls, 'user_role', 'roles') : [],
+                            value: getUserRoleTitles(!!currentControlKey(advgbBlockControls, 'user_role', 'roles') ? currentControlKey(advgbBlockControls, 'user_role', 'roles') : []),
                             onChange: function onChange(value) {
-                                var roleSlugs = getUserRoleSlugs();
-                                if (roleSlugs.length > 0) {
-                                    value.map(function (item, index) {
-                                        // Remove invalid user roles (doesn't exist)
-                                        if (roleSlugs.indexOf(item) === -1) {
-                                            value.splice(index, 1);
-                                        }
-                                    });
-                                }
-                                //setSelectedUserRoles( value );
-                                changeControlKey('user_role', 'roles', value);
+                                return getUserRoleSlugs(value);
                             }
                         })
                     )
