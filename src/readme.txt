@@ -2,8 +2,8 @@
 Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
-Tested up to: 6.0.2
-Stable tag: 3.1.0b1
+Tested up to: 6.0.3
+Stable tag: 3.1.0b2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -257,7 +257,9 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.0 - 11 Oct 2022 =
+= 3.1.0 - 20 Oct 2022 =
+  * Add: Block Controls admin page
+  * Add: User role block control
   * Fix: Server check to active Legacy widget block for Block Permissions
   * Fix: Adjust force active/inactive blocks javascript check in Block Permissions
 
