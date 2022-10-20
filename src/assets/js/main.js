@@ -191,11 +191,6 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
             allBlocks.push(block);
         });
 
-        if( exclude_blocks.length ) {
-            console.log(exclude_blocks.length);
-            console.log( exclude_blocks );
-        }
-
         allBlocks.forEach(function (block) {
             var blockItemIcon = '';
             var blockItem = {
@@ -270,7 +265,6 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
 
             // Exclude block
             if( exclude_blocks.length > 0 && exclude_blocks.indexOf(block.name) >= 0 ) {
-                console.log('Block excluded: ' + block.name);
                 return;
             }
 
@@ -445,11 +439,6 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
             allBlocks.push(block);
         });
 
-        if( exclude_blocks.length ) {
-            console.log(exclude_blocks.length);
-            console.log( exclude_blocks );
-        }
-
         allBlocks.forEach(function (block) {
             var blockItemIcon = '';
             var blockItem = {
@@ -524,7 +513,6 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
 
             // Exclude block
             if( exclude_blocks.length > 0 && exclude_blocks.indexOf(block.name) >= 0 ) {
-                console.log('Block excluded: ' + block.name);
                 return;
             }
 
