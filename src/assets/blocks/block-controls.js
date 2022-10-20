@@ -487,7 +487,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
              * to display as field value (but NOT saved!).
              *
              * @since 3.1.0
-             *
              * @param  roles    User role slugs e.g. ['subscriber','new_customer']
              *
              * @return {array}  Human readable User roles e.g. ['Subscriber','New Customer']
@@ -524,7 +523,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
              * Match user role human readable titles with its slugs, and save slugs
              *
              * @since 3.1.0
-             *
              * @param roles     Human readable User roles e.g. ['Subscriber','New Customer']
              *
              * @return {array}  User role slugs e.g. ['subscriber','new_customer']
@@ -547,7 +545,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     }
                 });
 
-                changeControlKey('user_role', 'roles', roles_array);
+                return roles_array;
             };
 
             return [props.isSelected && !NON_SUPPORTED_BLOCKS.includes(props.name) && countControlEnabled() && React.createElement(
@@ -646,7 +644,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                             maxSuggestions: 10,
                             value: getUserRoleTitles(!!currentControlKey(advgbBlockControls, 'user_role', 'roles') ? currentControlKey(advgbBlockControls, 'user_role', 'roles') : []),
                             onChange: function onChange(value) {
-                                return getUserRoleSlugs(value);
+                                changeControlKey('user_role', 'roles', getUserRoleSlugs(value));
                             }
                         })
                     )

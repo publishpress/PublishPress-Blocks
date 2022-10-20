@@ -190,7 +190,6 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
              * to display as field value (but NOT saved!).
              *
              * @since 3.1.0
-             *
              * @param  roles    User role slugs e.g. ['subscriber','new_customer']
              *
              * @return {array}  Human readable User roles e.g. ['Subscriber','New Customer']
@@ -227,7 +226,6 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
              * Match user role human readable titles with its slugs, and save slugs
              *
              * @since 3.1.0
-             *
              * @param roles     Human readable User roles e.g. ['Subscriber','New Customer']
              *
              * @return {array}  User role slugs e.g. ['subscriber','new_customer']
@@ -252,7 +250,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                     }
                 )
 
-                changeControlKey( 'user_role', 'roles', roles_array );
+                return roles_array;
             }
 
             return ( [
@@ -355,7 +353,9 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                                                 : []
                                         )
                                     }
-                                    onChange={ ( value ) => getUserRoleSlugs( value ) }
+                                    onChange={ ( value ) => {
+                                        changeControlKey( 'user_role', 'roles', getUserRoleSlugs( value ) )
+                                    } }
                                 />
                             ) }
                         </Fragment>
