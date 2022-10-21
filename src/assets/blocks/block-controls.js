@@ -314,7 +314,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         ToggleControl = wpComponents.ToggleControl,
         PanelBody = wpComponents.PanelBody,
         Notice = wpComponents.Notice,
-        FormTokenField = wpComponents.FormTokenField;
+        FormTokenField = wpComponents.FormTokenField,
+        SelectControl = wpComponents.SelectControl;
     var createHigherOrderComponent = wpCompose.createHigherOrderComponent;
     var Fragment = wpElement.Fragment,
         useState = wpElement.useState;
@@ -401,8 +402,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         // Remove duplicated values
         NON_SUPPORTED_BLOCKS = [].concat(_toConsumableArray(new Set(NON_SUPPORTED_BLOCKS)));
     }
-    /*console.log('NON SUPPORTED BLOCKS');
-    console.log(NON_SUPPORTED_BLOCKS);*/
 
     // Register block controls to blocks attributes
     addFilter('blocks.registerBlockType', 'advgb/blockControls', function (settings) {
@@ -422,7 +421,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     }, {
                         control: 'user_role',
                         enabled: false,
-                        roles: []
+                        roles: [],
+                        approach: 'public'
                     }]
                 }
             });
@@ -501,11 +501,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 var field_value = [];
 
                 if (rolesToSelect !== null) {
-                    console.log('roles');
-                    console.log(roles);
                     field_value = roles.map(function (role_slug) {
-                        console.log('role_slug');
-                        console.log(role_slug);
                         var find_role = rolesToSelect.find(function (role) {
                             return role.slug === role_slug;
                         });
@@ -564,7 +560,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         null,
                         React.createElement(ToggleControl, {
                             label: __('Enable block schedule', 'advanced-gutenberg'),
-                            help: !currentControlKey(advgbBlockControls, 'schedule', 'enabled') ? __('Setup when to start showing and/or stop showing this block', 'advanced-gutenberg') : '',
+                            help: __('Setup when to start showing and/or stop showing this block', 'advanced-gutenberg'),
                             checked: currentControlKey(advgbBlockControls, 'schedule', 'enabled'),
                             onChange: function onChange() {
                                 return changeControlKey('schedule', 'enabled');
@@ -573,80 +569,114 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         currentControlKey(advgbBlockControls, 'schedule', 'enabled') && React.createElement(
                             Fragment,
                             null,
-                            React.createElement(_datetime.AdvDateTimeControl, {
-                                buttonLabel: __('Now', 'advanced-gutenberg'),
-                                dateLabel: __('Start showing', 'advanced-gutenberg'),
-                                date: currentControlKey(advgbBlockControls, 'schedule', 'dateFrom'),
-                                onChangeDate: function onChangeDate(newDate) {
-                                    return changeControlKey('schedule', 'dateFrom', newDate);
-                                },
-                                onDateClear: function onDateClear() {
-                                    return changeControlKey('schedule', 'dateFrom', null);
-                                },
-                                onInvalidDate: false
-                            }),
-                            React.createElement(_datetime.AdvDateTimeControl, {
-                                buttonLabel: __('Never', 'advanced-gutenberg'),
-                                dateLabel: __('Stop showing', 'advanced-gutenberg'),
-                                date: !!currentControlKey(advgbBlockControls, 'schedule', 'dateTo') ? currentControlKey(advgbBlockControls, 'schedule', 'dateTo') : null,
-                                onChangeDate: function onChangeDate(newDate) {
-                                    return changeControlKey('schedule', 'dateTo', newDate);
-                                },
-                                onDateClear: function onDateClear() {
-                                    return changeControlKey('schedule', 'dateTo', null);
-                                },
-                                onInvalidDate: function onInvalidDate(date) {
-                                    // Disable all dates before dateFrom
-                                    if (currentControlKey(advgbBlockControls, 'schedule', 'dateFrom')) {
-                                        var thisDate = new Date(date.getTime());
-                                        thisDate.setHours(0, 0, 0, 0);
-                                        var fromDate = new Date(currentControlKey(advgbBlockControls, 'schedule', 'dateFrom'));
-                                        fromDate.setHours(0, 0, 0, 0);
-                                        return thisDate.getTime() < fromDate.getTime();
+                            React.createElement(
+                                'div',
+                                { style: { marginBottom: 30 } },
+                                React.createElement(_datetime.AdvDateTimeControl, {
+                                    buttonLabel: __('Now', 'advanced-gutenberg'),
+                                    dateLabel: __('Start showing', 'advanced-gutenberg'),
+                                    date: currentControlKey(advgbBlockControls, 'schedule', 'dateFrom'),
+                                    onChangeDate: function onChangeDate(newDate) {
+                                        return changeControlKey('schedule', 'dateFrom', newDate);
+                                    },
+                                    onDateClear: function onDateClear() {
+                                        return changeControlKey('schedule', 'dateFrom', null);
+                                    },
+                                    onInvalidDate: false
+                                }),
+                                React.createElement(_datetime.AdvDateTimeControl, {
+                                    buttonLabel: __('Never', 'advanced-gutenberg'),
+                                    dateLabel: __('Stop showing', 'advanced-gutenberg'),
+                                    date: !!currentControlKey(advgbBlockControls, 'schedule', 'dateTo') ? currentControlKey(advgbBlockControls, 'schedule', 'dateTo') : null,
+                                    onChangeDate: function onChangeDate(newDate) {
+                                        return changeControlKey('schedule', 'dateTo', newDate);
+                                    },
+                                    onDateClear: function onDateClear() {
+                                        return changeControlKey('schedule', 'dateTo', null);
+                                    },
+                                    onInvalidDate: function onInvalidDate(date) {
+                                        // Disable all dates before dateFrom
+                                        if (currentControlKey(advgbBlockControls, 'schedule', 'dateFrom')) {
+                                            var thisDate = new Date(date.getTime());
+                                            thisDate.setHours(0, 0, 0, 0);
+                                            var fromDate = new Date(currentControlKey(advgbBlockControls, 'schedule', 'dateFrom'));
+                                            fromDate.setHours(0, 0, 0, 0);
+                                            return thisDate.getTime() < fromDate.getTime();
+                                        }
                                     }
-                                }
-                            }),
-                            currentControlKey(advgbBlockControls, 'schedule', 'dateFrom') > currentControlKey(advgbBlockControls, 'schedule', 'dateTo') && React.createElement(
-                                Notice,
-                                {
-                                    className: 'advgb-notice-sidebar',
-                                    status: 'warning',
-                                    isDismissible: false
-                                },
-                                __('"Stop showing" date should be after "Start showing" date!', 'advanced-gutenberg')
-                            ),
-                            currentControlKey(advgbBlockControls, 'schedule', 'dateFrom') && currentControlKey(advgbBlockControls, 'schedule', 'dateTo') && React.createElement(ToggleControl, {
-                                label: __('Recurring', 'advanced-gutenberg'),
-                                checked: currentControlKey(advgbBlockControls, 'schedule', 'recurring'),
-                                onChange: function onChange() {
-                                    return changeControlKey('schedule', 'recurring');
-                                },
-                                help: __('If Recurring is enabled, this block will be displayed every year between the selected dates.', 'advanced-gutenberg')
-                            })
+                                }),
+                                currentControlKey(advgbBlockControls, 'schedule', 'dateFrom') > currentControlKey(advgbBlockControls, 'schedule', 'dateTo') && React.createElement(
+                                    Notice,
+                                    {
+                                        className: 'advgb-notice-sidebar',
+                                        status: 'warning',
+                                        isDismissible: false
+                                    },
+                                    __('"Stop showing" date should be after "Start showing" date!', 'advanced-gutenberg')
+                                ),
+                                currentControlKey(advgbBlockControls, 'schedule', 'dateFrom') && currentControlKey(advgbBlockControls, 'schedule', 'dateTo') && React.createElement(ToggleControl, {
+                                    label: __('Recurring', 'advanced-gutenberg'),
+                                    checked: currentControlKey(advgbBlockControls, 'schedule', 'recurring'),
+                                    onChange: function onChange() {
+                                        return changeControlKey('schedule', 'recurring');
+                                    },
+                                    help: __('If Recurring is enabled, this block will be displayed every year between the selected dates.', 'advanced-gutenberg')
+                                })
+                            )
                         )
                     ),
                     isControlEnabled(advgb_block_controls_vars.controls.user_role) && React.createElement(
                         Fragment,
                         null,
                         React.createElement(ToggleControl, {
-                            label: __('Show block user roles', 'advanced-gutenberg'),
-                            help: !currentControlKey(advgbBlockControls, 'user_role', 'enabled') ? __('Setup to which user roles this block will be visible', 'advanced-gutenberg') : '',
+                            label: __('Enable block user roles', 'advanced-gutenberg'),
+                            help: __('Choose to which users this block will be visible', 'advanced-gutenberg'),
                             checked: currentControlKey(advgbBlockControls, 'user_role', 'enabled'),
                             onChange: function onChange() {
                                 return changeControlKey('user_role', 'enabled');
                             }
                         }),
-                        currentControlKey(advgbBlockControls, 'user_role', 'enabled') && React.createElement(FormTokenField, {
-                            multiple: true,
-                            label: __('Show to these user roles', 'advanced-gutenberg'),
-                            placeholder: __('Search', 'advanced-gutenberg'),
-                            suggestions: getUserRoleSuggestions(),
-                            maxSuggestions: 10,
-                            value: getUserRoleTitles(!!currentControlKey(advgbBlockControls, 'user_role', 'roles') ? currentControlKey(advgbBlockControls, 'user_role', 'roles') : []),
-                            onChange: function onChange(value) {
-                                changeControlKey('user_role', 'roles', getUserRoleSlugs(value));
-                            }
-                        })
+                        currentControlKey(advgbBlockControls, 'user_role', 'enabled') && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(
+                                'div',
+                                { className: 'advgb-revert-mb' },
+                                React.createElement(SelectControl, {
+                                    value: currentControlKey(advgbBlockControls, 'user_role', 'approach'),
+                                    options: [{
+                                        value: 'public',
+                                        label: __('Show to everyone', 'advanced-gutenberg')
+                                    }, {
+                                        value: 'login',
+                                        label: __('Show to logged in users', 'advanced-gutenberg')
+                                    }, {
+                                        value: 'logout',
+                                        label: __('Show to logged out users', 'advanced-gutenberg')
+                                    }, {
+                                        value: 'include',
+                                        label: __('Show to the selected user roles', 'advanced-gutenberg')
+                                    }, {
+                                        value: 'exclude',
+                                        label: __('Hide to the selected user roles', 'advanced-gutenberg')
+                                    }],
+                                    onChange: function onChange(value) {
+                                        return changeControlKey('user_role', 'approach', value);
+                                    }
+                                })
+                            ),
+                            (currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'exclude') && React.createElement(FormTokenField, {
+                                multiple: true,
+                                label: __('Select user roles', 'advanced-gutenberg'),
+                                placeholder: __('Search', 'advanced-gutenberg'),
+                                suggestions: getUserRoleSuggestions(),
+                                maxSuggestions: 10,
+                                value: getUserRoleTitles(!!currentControlKey(advgbBlockControls, 'user_role', 'roles') ? currentControlKey(advgbBlockControls, 'user_role', 'roles') : []),
+                                onChange: function onChange(value) {
+                                    changeControlKey('user_role', 'roles', getUserRoleSlugs(value));
+                                }
+                            })
+                        )
                     )
                 )
             ), React.createElement(BlockEdit, _extends({ key: 'block-edit-advgb-dates' }, props))];

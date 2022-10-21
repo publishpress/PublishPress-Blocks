@@ -119,29 +119,46 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
 
                 // User role control
                 case 'user_role':
-                    $bControl       = $block['attrs']['advgbBlockControls'][$key];
-                    $allowed_roles  = is_array( $bControl['roles'] ) && count( $bControl['roles'] )
-                        ? $bControl['roles'] : [];
+                    $bControl           = $block['attrs']['advgbBlockControls'][$key];
+                    $selected_roles     = is_array( $bControl['roles'] ) && count( $bControl['roles'] )
+                                            ? $bControl['roles'] : [];
 
-                    if( count( $allowed_roles ) ) {
+                    if( count( $selected_roles ) ) {
 
                         // Check if user role exists to avoid non-valid roles
-                        foreach( $allowed_roles as $key => $role ) {
+                        foreach( $selected_roles as $key => $role ) {
                             if( ! $GLOBALS['wp_roles']->is_role( $role ) ) {
-                                unset($allowed_roles[$key]);
+                                unset($selected_roles[$key]);
                             }
                         }
                     }
 
-                    // Let's count roles again in case we unset() a fake user role in previous foreach
-                    if( count( $allowed_roles ) ) {
+                    // Check current user role visit
+                    $user       = wp_get_current_user();
+                    $approach   = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )
+                                    ? $bControl['approach'] : 'public';
 
-                        // Check current user role visit
-                        $user = wp_get_current_user();
-                        if ( ! array_intersect( $allowed_roles, $user->roles ) ) {
-                            // No visible block
-                            return false;
-                        }
+                    switch( $approach ) {
+                        default:
+                        case 'public':
+                            return true;
+                        break;
+
+                        case 'login':
+                            return is_user_logged_in() ? true : false;
+                        break;
+
+                        case 'logout':
+                            return ! is_user_logged_in() ? true : false;
+                        break;
+
+                        case 'include':
+                            return count( $selected_roles ) && array_intersect( $selected_roles, $user->roles ) ? true: false;
+                        break;
+
+                        case 'exclude':
+                            return count( $selected_roles ) && ! array_intersect( $selected_roles, $user->roles ) ? true: false;
+                        break;
                     }
 
                 break;
