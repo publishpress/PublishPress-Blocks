@@ -7,7 +7,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
     const { __ } = wpI18n;
     const { hasBlockSupport } = wpBlocks;
     const { InspectorControls, BlockControls } = wpBlockEditor;
-    const { DateTimePicker, ToggleControl, PanelBody, Notice, FormTokenField, RadioControl } = wpComponents;
+    const { DateTimePicker, ToggleControl, PanelBody, Notice, FormTokenField, SelectControl } = wpComponents;
     const { createHigherOrderComponent } = wpCompose;
     const { Fragment, useState } = wpElement;
 
@@ -130,7 +130,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                             control: 'user_role',
                             enabled: false,
                             roles: [],
-                            approach: 'include'
+                            approach: 'public'
                         }
                     ]
                 }
@@ -333,48 +333,64 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                             <ToggleControl
                                 label={ __( 'Enable block user roles', 'advanced-gutenberg' ) }
                                 help={
-                                    currentControlKey( advgbBlockControls, 'user_role', 'approach' ) === 'include'
-                                        ? __( 'Setup to which user roles this block will be visible', 'advanced-gutenberg' )
-                                        : __( 'Setup to which user roles this block will be hidden', 'advanced-gutenberg' )
+                                    __( 'Choose to which users this block will be visible', 'advanced-gutenberg' )
                                 }
                                 checked={ currentControlKey( advgbBlockControls, 'user_role', 'enabled' ) }
                                 onChange={ () => changeControlKey( 'user_role', 'enabled' ) }
                             />
                             { currentControlKey( advgbBlockControls, 'user_role', 'enabled' ) && (
                                 <Fragment>
-                                    <RadioControl
-                                        selected={
-                                            currentControlKey( advgbBlockControls, 'user_role', 'approach' )
-                                        }
-                                        options={ [
-                                            {
-                                                value: 'include',
-                                                label: __( 'Show to the selected user roles', 'advanced-gutenberg' )
-                                            },
-                                            {
-                                                value: 'exclude',
-                                                label: __( 'Hide to the selected user roles', 'advanced-gutenberg' )
+                                    <div className="advgb-revert-mb">
+                                        <SelectControl
+                                            value={
+                                                currentControlKey( advgbBlockControls, 'user_role', 'approach' )
                                             }
-                                        ] }
-                                        onChange={ ( value ) => changeControlKey( 'user_role', 'approach', value ) }
-                                    />
-                                    <FormTokenField
-                                        multiple
-                                        label={ __( 'Select user roles', 'advanced-gutenberg' ) }
-                                        placeholder={ __( 'Search', 'advanced-gutenberg' ) }
-                                        suggestions={ getUserRoleSuggestions() }
-                                        maxSuggestions={ 10 }
-                                        value={
-                                            getUserRoleTitles(
-                                                !! currentControlKey( advgbBlockControls, 'user_role', 'roles' )
-                                                    ? currentControlKey( advgbBlockControls, 'user_role', 'roles' )
-                                                    : []
-                                            )
-                                        }
-                                        onChange={ ( value ) => {
-                                            changeControlKey( 'user_role', 'roles', getUserRoleSlugs( value ) )
-                                        } }
-                                    />
+                                            options={ [
+                                                {
+                                                    value: 'public',
+                                                    label: __( 'Show to everyone', 'advanced-gutenberg' )
+                                                },
+                                                {
+                                                    value: 'login',
+                                                    label: __( 'Show to logged in users', 'advanced-gutenberg' )
+                                                },
+                                                {
+                                                    value: 'logout',
+                                                    label: __( 'Show to logged out users', 'advanced-gutenberg' )
+                                                },
+                                                {
+                                                    value: 'include',
+                                                    label: __( 'Show to the selected user roles', 'advanced-gutenberg' )
+                                                },
+                                                {
+                                                    value: 'exclude',
+                                                    label: __( 'Hide to the selected user roles', 'advanced-gutenberg' )
+                                                }
+                                            ] }
+                                            onChange={ ( value ) => changeControlKey( 'user_role', 'approach', value ) }
+                                        />
+                                    </div>
+                                    { ( currentControlKey( advgbBlockControls, 'user_role', 'approach' ) === 'include' ||
+                                        currentControlKey( advgbBlockControls, 'user_role', 'approach' ) === 'exclude'
+                                    ) && (
+                                        <FormTokenField
+                                            multiple
+                                            label={ __( 'Select user roles', 'advanced-gutenberg' ) }
+                                            placeholder={ __( 'Search', 'advanced-gutenberg' ) }
+                                            suggestions={ getUserRoleSuggestions() }
+                                            maxSuggestions={ 10 }
+                                            value={
+                                                getUserRoleTitles(
+                                                    !! currentControlKey( advgbBlockControls, 'user_role', 'roles' )
+                                                        ? currentControlKey( advgbBlockControls, 'user_role', 'roles' )
+                                                        : []
+                                                )
+                                            }
+                                            onChange={ ( value ) => {
+                                                changeControlKey( 'user_role', 'roles', getUserRoleSlugs( value ) )
+                                            } }
+                                        />
+                                    ) }
                                 </Fragment>
                             ) }
                         </Fragment>

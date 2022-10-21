@@ -315,7 +315,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         PanelBody = wpComponents.PanelBody,
         Notice = wpComponents.Notice,
         FormTokenField = wpComponents.FormTokenField,
-        RadioControl = wpComponents.RadioControl;
+        SelectControl = wpComponents.SelectControl;
     var createHigherOrderComponent = wpCompose.createHigherOrderComponent;
     var Fragment = wpElement.Fragment,
         useState = wpElement.useState;
@@ -424,7 +424,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         control: 'user_role',
                         enabled: false,
                         roles: [],
-                        approach: 'include'
+                        approach: 'public'
                     }]
                 }
             });
@@ -636,7 +636,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         null,
                         React.createElement(ToggleControl, {
                             label: __('Enable block user roles', 'advanced-gutenberg'),
-                            help: currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'include' ? __('Setup to which user roles this block will be visible', 'advanced-gutenberg') : __('Setup to which user roles this block will be hidden', 'advanced-gutenberg'),
+                            help: __('Choose to which users this block will be visible', 'advanced-gutenberg'),
                             checked: currentControlKey(advgbBlockControls, 'user_role', 'enabled'),
                             onChange: function onChange() {
                                 return changeControlKey('user_role', 'enabled');
@@ -645,20 +645,33 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         currentControlKey(advgbBlockControls, 'user_role', 'enabled') && React.createElement(
                             Fragment,
                             null,
-                            React.createElement(RadioControl, {
-                                selected: currentControlKey(advgbBlockControls, 'user_role', 'approach'),
-                                options: [{
-                                    value: 'include',
-                                    label: __('Show to the selected user roles', 'advanced-gutenberg')
-                                }, {
-                                    value: 'exclude',
-                                    label: __('Hide to the selected user roles', 'advanced-gutenberg')
-                                }],
-                                onChange: function onChange(value) {
-                                    return changeControlKey('user_role', 'approach', value);
-                                }
-                            }),
-                            React.createElement(FormTokenField, {
+                            React.createElement(
+                                'div',
+                                { className: 'advgb-revert-mb' },
+                                React.createElement(SelectControl, {
+                                    value: currentControlKey(advgbBlockControls, 'user_role', 'approach'),
+                                    options: [{
+                                        value: 'public',
+                                        label: __('Show to everyone', 'advanced-gutenberg')
+                                    }, {
+                                        value: 'login',
+                                        label: __('Show to logged in users', 'advanced-gutenberg')
+                                    }, {
+                                        value: 'logout',
+                                        label: __('Show to logged out users', 'advanced-gutenberg')
+                                    }, {
+                                        value: 'include',
+                                        label: __('Show to the selected user roles', 'advanced-gutenberg')
+                                    }, {
+                                        value: 'exclude',
+                                        label: __('Hide to the selected user roles', 'advanced-gutenberg')
+                                    }],
+                                    onChange: function onChange(value) {
+                                        return changeControlKey('user_role', 'approach', value);
+                                    }
+                                })
+                            ),
+                            (currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'exclude') && React.createElement(FormTokenField, {
                                 multiple: true,
                                 label: __('Select user roles', 'advanced-gutenberg'),
                                 placeholder: __('Search', 'advanced-gutenberg'),

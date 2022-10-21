@@ -133,22 +133,32 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                         }
                     }
 
-                    // Let's count roles again in case we unset() a fake user role in previous foreach
-                    if( count( $selected_roles ) ) {
+                    // Check current user role visit
+                    $user       = wp_get_current_user();
+                    $approach   = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )
+                                    ? $bControl['approach'] : 'public';
 
-                        // Check current user role visit
-                        $user = wp_get_current_user();
+                    switch( $approach ) {
+                        default:
+                        case 'public':
+                            return true;
+                        break;
 
-                        $approach = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )
-                                        ? $bControl['approach'] : 'include';
+                        case 'login':
+                            return is_user_logged_in() ? true : false;
+                        break;
 
-                        if ( $approach === 'include' && ! array_intersect( $selected_roles, $user->roles ) ) {
-                            // No visible block with include (show) approach
-                            return false;
-                        } elseif( $approach === 'exclude' && array_intersect( $selected_roles, $user->roles ) ) {
-                            // No visible block with exclude (hide) approach
-                            return false;
-                        }
+                        case 'logout':
+                            return ! is_user_logged_in() ? true : false;
+                        break;
+
+                        case 'include':
+                            return count( $selected_roles ) && array_intersect( $selected_roles, $user->roles ) ? true: false;
+                        break;
+
+                        case 'exclude':
+                            return count( $selected_roles ) && ! array_intersect( $selected_roles, $user->roles ) ? true: false;
+                        break;
                     }
 
                 break;
