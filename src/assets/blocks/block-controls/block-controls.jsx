@@ -106,8 +106,6 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
         // Remove duplicated values
         NON_SUPPORTED_BLOCKS = [...new Set(NON_SUPPORTED_BLOCKS)];
     }
-    /*console.log('NON SUPPORTED BLOCKS');
-    console.log(NON_SUPPORTED_BLOCKS);*/
 
     // Register block controls to blocks attributes
     addFilter( 'blocks.registerBlockType', 'advgb/blockControls', function ( settings ) {
@@ -205,11 +203,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                 let field_value = [];
 
                 if ( rolesToSelect !== null ) {
-                    /*console.log('roles');
-                    console.log(roles);*/
                     field_value = roles.map( ( role_slug ) => {
-                        /*console.log('role_slug');
-                        console.log(role_slug);*/
                         let find_role = rolesToSelect.find( ( role ) => {
                             return role.slug === role_slug;
                         } );

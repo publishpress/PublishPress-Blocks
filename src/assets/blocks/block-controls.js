@@ -402,8 +402,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         // Remove duplicated values
         NON_SUPPORTED_BLOCKS = [].concat(_toConsumableArray(new Set(NON_SUPPORTED_BLOCKS)));
     }
-    /*console.log('NON SUPPORTED BLOCKS');
-    console.log(NON_SUPPORTED_BLOCKS);*/
 
     // Register block controls to blocks attributes
     addFilter('blocks.registerBlockType', 'advgb/blockControls', function (settings) {
@@ -503,11 +501,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 var field_value = [];
 
                 if (rolesToSelect !== null) {
-                    /*console.log('roles');
-                    console.log(roles);*/
                     field_value = roles.map(function (role_slug) {
-                        /*console.log('role_slug');
-                        console.log(role_slug);*/
                         var find_role = rolesToSelect.find(function (role) {
                             return role.slug === role_slug;
                         });
