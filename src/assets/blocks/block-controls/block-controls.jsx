@@ -327,7 +327,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                             <ToggleControl
                                 label={ __( 'Enable block user roles', 'advanced-gutenberg' ) }
                                 help={
-                                    __( 'Choose to which users this block will be visible', 'advanced-gutenberg' )
+                                    __( 'Choose which users this block will be visible', 'advanced-gutenberg' )
                                 }
                                 checked={ currentControlKey( advgbBlockControls, 'user_role', 'enabled' ) }
                                 onChange={ () => changeControlKey( 'user_role', 'enabled' ) }

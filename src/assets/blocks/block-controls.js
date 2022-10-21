@@ -630,7 +630,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         null,
                         React.createElement(ToggleControl, {
                             label: __('Enable block user roles', 'advanced-gutenberg'),
-                            help: __('Choose to which users this block will be visible', 'advanced-gutenberg'),
+                            help: __('Choose which users this block will be visible', 'advanced-gutenberg'),
                             checked: currentControlKey(advgbBlockControls, 'user_role', 'enabled'),
                             onChange: function onChange() {
                                 return changeControlKey('user_role', 'enabled');
