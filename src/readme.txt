@@ -257,11 +257,12 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.0 - 21 Oct 2022 =
+= 3.1.0 - 24 Oct 2022 =
   * Add: Block Controls admin page
   * Add: User roles block control
   * Fix: Server check to active Legacy widget block for Block Permissions
   * Fix: Adjust force active/inactive blocks javascript check in Block Permissions
+  * Fix: Add each block control at the time and when enabled
 
 = 3.0.1 - 6 Oct 2022 =
   * Fix: Potential non load of version notices library

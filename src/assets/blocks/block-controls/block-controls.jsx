@@ -83,17 +83,32 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
      * @return {mixed}
      */
     const currentControlKey = function( controlAttrs, control, key ) {
-        const itemIndex = controlAttrs.findIndex(element => element.control === control);
 
-        // No control found
-        if( itemIndex < 0 ) {
-            return false;
+        // Check if advgbBlockControls attribute exists
+        const controlsAdded = typeof controlAttrs !== 'undefined' && controlAttrs.length
+                                ? true
+                                : false;
+        // Check if control exists in advgbBlockControls array
+        const controlExists = controlsAdded
+                            && controlAttrs.some( (element) => element.control === control )
+                                ? true
+                                : false;
+
+        if( controlExists ) {
+            const itemIndex = controlAttrs.findIndex(element => element.control === control);
+
+            // No control found (this check seems not necessary but is here to prevent an unlikely error)
+            if( itemIndex < 0 ) {
+                return false;
+            }
+
+            let newArray    = [...controlAttrs];
+            const obj       = newArray[itemIndex];
+
+            return obj[key];
         }
 
-        let newArray    = [...controlAttrs];
-        const obj       = newArray[itemIndex];
-
-        return obj[key];
+        return null;
     }
 
     // Add non supported blocks according to Block controls
@@ -116,21 +131,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                     items: {
                         type: 'object'
                     },
-                    default: [
-                        {
-                            control: 'schedule',
-                            enabled: false,
-                            dateFrom: null,
-                            dateTo: null,
-                            recurring: false
-                        },
-                        {
-                            control: 'user_role',
-                            enabled: false,
-                            roles: [],
-                            approach: 'public'
-                        }
-                    ]
+                    default: []
                 }
             } );
         }
@@ -138,7 +139,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
         return settings;
     } );
 
-    // Add option to add dates for supported blocks
+    // Add option to add controls for supported blocks
     addFilter( 'editor.BlockEdit', 'advgb/addBlockControls', function ( BlockEdit ) {
         return ( props ) => {
             const { advgbBlockControls } = props.attributes;
@@ -154,17 +155,96 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
              * @return {void}
              */
             const changeControlKey = function( control, key, value = '' ) {
-                const itemIndex = advgbBlockControls.findIndex(element => element.control === control);
-                let newArray    = [...advgbBlockControls];
-                const obj       = newArray[itemIndex];
 
-                newArray[itemIndex] = typeof obj[key] === 'boolean'
-                    ? { ...newArray[itemIndex], [key]: !obj[key] }
-                    : { ...newArray[itemIndex], [key]: value }
+                // Control objects to add  when enabled for the first time
+                const scheduleControl = {
+                    control: 'schedule',
+                    enabled: true,
+                    dateFrom: null,
+                    dateTo: null,
+                    recurring: false
+                };
+                const userRoleControl = {
+                    control: 'user_role',
+                    enabled: true,
+                    roles: [],
+                    approach: 'public'
+                };
 
-                props.setAttributes( {
-                    advgbBlockControls: newArray
-                } );
+                // Check if advgbBlockControls attribute exists
+                const controlsAdded = typeof advgbBlockControls !== 'undefined' && advgbBlockControls.length
+                                        ? true
+                                        : false;
+                // Check if control exists in advgbBlockControls array
+                const controlExists = controlsAdded &&
+                                    advgbBlockControls.some( (element) => element.control === control )
+                                        ? true
+                                        : false;
+
+                if( controlExists ) {
+                    const itemIndex = advgbBlockControls.findIndex(element => element.control === control);
+
+                    // No control found (this check seems not necessary but is here to prevent an unlikely error)
+                    if( itemIndex < 0 ) {
+                        return false;
+                    }
+
+                    let newArray    = [...advgbBlockControls];
+                    const obj       = newArray[itemIndex];
+
+                    newArray[itemIndex] = typeof obj[key] === 'boolean'
+                        ? { ...newArray[itemIndex], [key]: !obj[key] }
+                        : { ...newArray[itemIndex], [key]: value }
+
+                    props.setAttributes( {
+                        advgbBlockControls: newArray
+                    } );
+
+                    console.log('Modify an existing control key in a block');
+                } else if( controlsAdded && ! controlExists ) {
+
+                    // Add a new control object when other controls already exists
+                    console.log('Add a new control to a block when other controls already exists');
+
+                    switch( control ) {
+                        case 'schedule':
+                            props.setAttributes( {
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    scheduleControl
+                                ]
+                            } );
+                        break;
+
+                        case 'user_role':
+                            props.setAttributes( {
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    userRoleControl
+                                ]
+                            } );
+                        break;
+                    }
+
+                    console.log('advgbBlockControls',advgbBlockControls);
+                } else {
+                    // Add the first control object attribute
+                    console.log('Add the first control to a block');
+
+                    switch( control ) {
+                        case 'schedule':
+                            props.setAttributes( {
+                                advgbBlockControls: [ scheduleControl ]
+                            } );
+                        break;
+
+                        case 'user_role':
+                            props.setAttributes( {
+                                advgbBlockControls: [ userRoleControl ]
+                            } );
+                        break;
+                    }
+                }
             }
 
             /**

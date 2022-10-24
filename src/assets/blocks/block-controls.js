@@ -380,19 +380,31 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
      * @return {mixed}
      */
     var currentControlKey = function currentControlKey(controlAttrs, control, key) {
-        var itemIndex = controlAttrs.findIndex(function (element) {
-            return element.control === control;
-        });
 
-        // No control found
-        if (itemIndex < 0) {
-            return false;
+        // Check if advgbBlockControls attribute exists
+        var controlsAdded = typeof controlAttrs !== 'undefined' && controlAttrs.length ? true : false;
+        // Check if control exists in advgbBlockControls array
+        var controlExists = controlsAdded && controlAttrs.some(function (element) {
+            return element.control === control;
+        }) ? true : false;
+
+        if (controlExists) {
+            var itemIndex = controlAttrs.findIndex(function (element) {
+                return element.control === control;
+            });
+
+            // No control found (this check seems not necessary but is here to prevent an unlikely error)
+            if (itemIndex < 0) {
+                return false;
+            }
+
+            var newArray = [].concat(_toConsumableArray(controlAttrs));
+            var obj = newArray[itemIndex];
+
+            return obj[key];
         }
 
-        var newArray = [].concat(_toConsumableArray(controlAttrs));
-        var obj = newArray[itemIndex];
-
-        return obj[key];
+        return null;
     };
 
     // Add non supported blocks according to Block controls
@@ -412,18 +424,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     items: {
                         type: 'object'
                     },
-                    default: [{
-                        control: 'schedule',
-                        enabled: false,
-                        dateFrom: null,
-                        dateTo: null,
-                        recurring: false
-                    }, {
-                        control: 'user_role',
-                        enabled: false,
-                        roles: [],
-                        approach: 'public'
-                    }]
+                    default: []
                 }
             });
         }
@@ -431,7 +432,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         return settings;
     });
 
-    // Add option to add dates for supported blocks
+    // Add option to add controls for supported blocks
     addFilter('editor.BlockEdit', 'advgb/addBlockControls', function (BlockEdit) {
         return function (props) {
             var advgbBlockControls = props.attributes.advgbBlockControls;
@@ -450,17 +451,87 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             var changeControlKey = function changeControlKey(control, key) {
                 var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
-                var itemIndex = advgbBlockControls.findIndex(function (element) {
+
+                // Control objects to add  when enabled for the first time
+                var scheduleControl = {
+                    control: 'schedule',
+                    enabled: true,
+                    dateFrom: null,
+                    dateTo: null,
+                    recurring: false
+                };
+                var userRoleControl = {
+                    control: 'user_role',
+                    enabled: true,
+                    roles: [],
+                    approach: 'public'
+                };
+
+                // Check if advgbBlockControls attribute exists
+                var controlsAdded = typeof advgbBlockControls !== 'undefined' && advgbBlockControls.length ? true : false;
+                // Check if control exists in advgbBlockControls array
+                var controlExists = controlsAdded && advgbBlockControls.some(function (element) {
                     return element.control === control;
-                });
-                var newArray = [].concat(_toConsumableArray(advgbBlockControls));
-                var obj = newArray[itemIndex];
+                }) ? true : false;
 
-                newArray[itemIndex] = typeof obj[key] === 'boolean' ? _extends({}, newArray[itemIndex], _defineProperty({}, key, !obj[key])) : _extends({}, newArray[itemIndex], _defineProperty({}, key, value));
+                if (controlExists) {
+                    var itemIndex = advgbBlockControls.findIndex(function (element) {
+                        return element.control === control;
+                    });
 
-                props.setAttributes({
-                    advgbBlockControls: newArray
-                });
+                    // No control found (this check seems not necessary but is here to prevent an unlikely error)
+                    if (itemIndex < 0) {
+                        return false;
+                    }
+
+                    var newArray = [].concat(_toConsumableArray(advgbBlockControls));
+                    var obj = newArray[itemIndex];
+
+                    newArray[itemIndex] = typeof obj[key] === 'boolean' ? _extends({}, newArray[itemIndex], _defineProperty({}, key, !obj[key])) : _extends({}, newArray[itemIndex], _defineProperty({}, key, value));
+
+                    props.setAttributes({
+                        advgbBlockControls: newArray
+                    });
+
+                    console.log('Modify an existing control key in a block');
+                } else if (controlsAdded && !controlExists) {
+
+                    // Add a new control object when other controls already exists
+                    console.log('Add a new control to a block when other controls already exists');
+
+                    switch (control) {
+                        case 'schedule':
+                            props.setAttributes({
+                                advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [scheduleControl])
+                            });
+                            break;
+
+                        case 'user_role':
+                            props.setAttributes({
+                                advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [userRoleControl])
+                            });
+                            break;
+                    }
+
+                    console.log('advgbBlockControls', advgbBlockControls);
+                } else {
+                    // Add the first control object attribute
+                    console.log('Add the first control to a block');
+
+                    switch (control) {
+                        case 'schedule':
+                            props.setAttributes({
+                                advgbBlockControls: [scheduleControl]
+                            });
+                            break;
+
+                        case 'user_role':
+                            props.setAttributes({
+                                advgbBlockControls: [userRoleControl]
+                            });
+                            break;
+                    }
+                }
             };
 
             /**
