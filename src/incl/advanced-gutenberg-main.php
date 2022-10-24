@@ -173,6 +173,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
                 add_filter('admin_body_class', array($this, 'setAdvgEditorBodyClassses'));
                 add_filter( 'admin_footer_text', [$this, 'adminFooter'] );
+                add_action( 'admin_enqueue_scripts', [$this, 'adminMenuStyles'] );
 
                 if($wp_version >= 5.8) {
                     add_action('admin_enqueue_scripts', array($this, 'addEditorAssetsWidgets'), 9999);
@@ -1472,39 +1473,63 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Register CSS
                 wp_register_style(
                     'advgb_admin_styles',
-                    plugins_url('assets/css/style.css', dirname(__FILE__))
+                    plugins_url('assets/css/style.css', dirname(__FILE__)),
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
+                );
+                wp_register_style(
+                    'advgb_admin_menu_styles',
+                    plugins_url('assets/css/admin-menu.css', dirname(__FILE__)),
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_style(
                     'advgb_qtip_style',
-                    plugins_url('assets/css/jquery.qtip.css', dirname(__FILE__))
+                    plugins_url('assets/css/jquery.qtip.css', dirname(__FILE__)),
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_style(
                     'codemirror_css',
-                    plugins_url('assets/js/codemirror/lib/codemirror.css', dirname(__FILE__))
+                    plugins_url('assets/js/codemirror/lib/codemirror.css', dirname(__FILE__)),
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_style(
                     'codemirror_hint_style',
-                    plugins_url('assets/js/codemirror/addon/hint/show-hint.css', dirname(__FILE__))
+                    plugins_url('assets/js/codemirror/addon/hint/show-hint.css', dirname(__FILE__)),
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_style(
                     'minicolors_css',
-                    plugins_url('assets/css/jquery.minicolors.css', dirname(__FILE__))
+                    plugins_url('assets/css/jquery.minicolors.css', dirname(__FILE__)),
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_style(
                     'material_icon_font',
-                    plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))
+                    plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__)),
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_style(
                     'material_icon_font_custom',
-                    plugins_url('assets/css/fonts/material-icons-custom.min.css', dirname(__FILE__))
+                    plugins_url('assets/css/fonts/material-icons-custom.min.css', dirname(__FILE__)),
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_style(
                     'slick_style',
-                    plugins_url('assets/css/slick.css', dirname(__FILE__))
+                    plugins_url('assets/css/slick.css', dirname(__FILE__)),
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
                 );
                 wp_register_style(
                     'slick_theme_style',
-                    plugins_url('assets/css/slick-theme.css', dirname(__FILE__))
+                    plugins_url('assets/css/slick-theme.css', dirname(__FILE__)),
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
                 );
 
                 // Register JS
@@ -1975,9 +2000,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
             // Block access is disabled
             if ( ! $this->settingIsEnabled( 'enable_block_access' ) ) {
                 wp_die(
-                    esc_html__(
-                        'This feature is disabled. In order to use, please enable back through Dashboard.',
-                        'advanced-gutenberg'
+                    sprintf(
+                        esc_html(
+                            'This feature is disabled. In order to use, please enable back through %sDashboard%s.',
+                            'advanced-gutenberg'
+                        ),
+                        '<a href="' . admin_url( 'admin.php?page=advgb_main' ) . '">',
+                        '</a>'
                     )
                 );
             }
@@ -2016,9 +2045,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
             // Block accessis disabled
             if ( ! $this->settingIsEnabled( 'block_controls' ) ) {
                 wp_die(
-                    esc_html__(
-                        'This feature is disabled. In order to use, please enable back through Dashboard.',
-                        'advanced-gutenberg'
+                    sprintf(
+                        esc_html(
+                            'This feature is disabled. In order to use, please enable back through %sDashboard%s.',
+                            'advanced-gutenberg'
+                        ),
+                        '<a href="' . admin_url( 'admin.php?page=advgb_main' ) . '">',
+                        '</a>'
                     )
                 );
             }
@@ -2046,9 +2079,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
             // PublishPress block disabled
             if ( ! $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                 wp_die(
-                    esc_html__(
-                        'This feature is disabled. In order to use, please enable back through Dashboard.',
-                        'advanced-gutenberg'
+                    sprintf(
+                        esc_html(
+                            'This feature is disabled. In order to use, please enable back through %sDashboard%s.',
+                            'advanced-gutenberg'
+                        ),
+                        '<a href="' . admin_url( 'admin.php?page=advgb_main' ) . '">',
+                        '</a>'
                     )
                 );
             }
@@ -2088,9 +2125,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
             // Custom styles disabled
             if ( ! $this->settingIsEnabled( 'enable_custom_styles' ) ) {
                 wp_die(
-                    esc_html__(
-                        'This feature is disabled. In order to use, please enable back through Dashboard.',
-                        'advanced-gutenberg'
+                    sprintf(
+                        esc_html(
+                            'This feature is disabled. In order to use, please enable back through %sDashboard%s.',
+                            'advanced-gutenberg'
+                        ),
+                        '<a href="' . admin_url( 'admin.php?page=advgb_main' ) . '">',
+                        '</a>'
                     )
                 );
             }
@@ -2230,6 +2271,17 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             return $footer;
+        }
+
+        /**
+         * Admin menu styles
+         *
+         * @since 3.1.0
+         * @return void
+         */
+        public function adminMenuStyles()
+        {
+            wp_enqueue_style( 'advgb_admin_menu_styles' );
         }
 
         /**
