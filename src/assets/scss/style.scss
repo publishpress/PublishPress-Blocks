@@ -610,13 +610,17 @@ img.thumb-selected {
     vertical-align: middle;
 }
 
-/*Style for CustomStyle tab*/
+/* Style for Block Styles */
 #customstyles-tab {
   background-color: #f9fafb;
 
+  .advgb-style-title-wrapper {
+    margin-bottom: 20px;
+  }
+
   @media (min-width: 1024px) {
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 350px 3fr;
   }
 
   .advgb-customstyles-two-columns {
@@ -720,15 +724,6 @@ img.thumb-selected {
   .dashicons {
     line-height: 30px;
   }
-}
-
-#savedInfo {
-    margin: 0 20px;
-
-    .updated {
-      padding-top: 10px;
-      padding-bottom: 10px;
-    }
 }
 
 #advgb-customstyles-info {

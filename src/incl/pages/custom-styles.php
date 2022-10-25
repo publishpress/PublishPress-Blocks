@@ -32,7 +32,6 @@ $custom_styles_saved = get_option( 'advgb_custom_styles', $this::$default_custom
                             $content .= '<a><i class="title-icon" style="background-color: ' . esc_attr( $customStyles['identifyColor'] ) . '"></i><span class="advgb-customstyles-items-title">' . esc_html( $customStyles['title'] ) . '</span></a>';
                             $content .= '<a class="copy" title="' . esc_attr__( 'Copy', 'advanced-gutenberg' ) . '"><span class="dashicons dashicons-admin-page"></span></a>';
                             $content .= '<a class="trash" title="' . esc_attr__( 'Delete', 'advanced-gutenberg' ) . '"><span class="dashicons dashicons-no"></span></a>';
-                            $content .= '<a class="edit" title="' . esc_attr__( 'Edit', 'advanced-gutenberg' ) . '"><span class="dashicons dashicons-edit"></span></a>';
                             $content .= '<ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">(' . esc_html( $customStyles['name'] ) . ')</li></ul>';
                             $content .= '</li>';
                         }
@@ -41,15 +40,17 @@ $custom_styles_saved = get_option( 'advgb_custom_styles', $this::$default_custom
                         echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped
                         ?>
                     </ul>
-                    <div id="savedInfo" style="display:none;">
-                        <div class="updated inline">
-                            <?php esc_html_e( 'All modifications were saved!', 'advanced-gutenberg' ) ?>
-                        </div>
-                    </div>
                 </div>
             </div>
 
             <div id="advgb-customstyles-info">
+                <div class="advgb-style-title-wrapper">
+                    <label for="advgb-customstyles-title">
+                        <?php esc_html_e( 'Style title', 'advanced-gutenberg' ) ?>
+                    </label>
+                    <input type="text" class="regular-text" name="customstyles-title" id="advgb-customstyles-title"
+                           value=""/>
+                </div>
                 <div class="advgb-customstyles-two-columns">
                     <div>
                         <label for="advgb-customstyles-classname">

@@ -1025,7 +1025,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
             $regex = '/^[a-zA-Z0-9_\-]+$/';
-            $regexWithSpaces = '/^[\p{L}\p{N}_\- ]+$/u';
 
             if (!wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'advgb_cstyles_nonce')) {
                 wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
@@ -1109,6 +1108,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
             } elseif ($task === 'style_save') {
                 $style_id = (int)$_POST['id'];
+                $new_styletitle = sanitize_text_field($_POST['title']);
                 $new_classname = sanitize_text_field($_POST['name']);
                 $new_identify_color = sanitize_hex_color($_POST['mycolor']);
                 $new_css = wp_strip_all_tags($_POST['mycss']);
@@ -1121,6 +1121,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $new_data_array = array();
                 foreach ($data_saved as $data) {
                     if ($data['id'] === $style_id) {
+                        $data['title'] = $new_styletitle;
                         $data['name'] = $new_classname;
                         $data['css'] = $new_css;
                         $data['identifyColor'] = $new_identify_color;
@@ -1128,23 +1129,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     array_push($new_data_array, $data);
                 }
                 update_option('advgb_custom_styles', $new_data_array);
-            } elseif ($task === 'edit') {
-                $new_title = sanitize_text_field($_POST['title']);
-                $style_id = (int)$_POST['id'];
-                if (!preg_match($regexWithSpaces, $new_title)) {
-                    wp_send_json('Please use valid characters for a CSS classname! As example: hyphen or underscore instead of empty spaces.', 403);
-                    return false;
-                }
-                $data_saved = get_option('advgb_custom_styles');
-                $new_data_array = array();
-                foreach ($data_saved as $data) {
-                    if ($data['id'] === $style_id) {
-                        $data['title'] = $new_title;
-                    }
-                    array_push($new_data_array, $data);
-                }
-                update_option('advgb_custom_styles', $new_data_array);
-                wp_send_json(array('title' => $new_title), 200);
             } else {
                 wp_send_json(null, 404);
             }
