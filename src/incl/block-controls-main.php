@@ -28,14 +28,6 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 && $block['blockName']
             ) {
 
-                /*echo '<pre>';
-                var_dump($block);
-                //foreach($block['attrs']['advgbBlockControls'] as $item){
-                    //var_dump($item);
-                    echo $item['control'] . ' ';
-                //}
-                echo '</pre>';*/
-
                 $controls = $block['attrs']['advgbBlockControls'];
                 foreach( $controls as $key => $item ){
                     if ( isset( $item['control'] )
