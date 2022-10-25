@@ -574,11 +574,9 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
             }
         });
 
-        // Set "Enable or disable all blocks" as enabled for not saved user roles
-        var feature = $('#advgb_feature').val();
-        if( typeof feature !== 'undefined' &&
-            ! advgbBlockControls.active_blocks.length &&
-            ! advgbBlockControls.inactive_blocks.length
+        // Set "Enable or disable all blocks" as enabled when block controls are not saved
+        if( ! advgb_block_controls_vars.active_blocks.length &&
+            ! advgb_block_controls_vars.inactive_blocks.length
         ) {
             $('#toggle_all_blocks').prop('checked', true);
         }
@@ -597,11 +595,6 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
                     blockItem.hide();
                 }
             });
-        });
-
-        // On change user role dropdown
-        $('#user_role').on( 'change', function(){
-            window.location = 'admin.php?page=' + page + '&user_role=' + $(this).val();
         });
 
         // Check/Uncheck all
