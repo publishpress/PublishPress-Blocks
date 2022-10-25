@@ -2,8 +2,8 @@
 defined( 'ABSPATH' ) || die;
 ?>
 <form method="post">
-    <?php wp_nonce_field( 'advgb_controls_block_nonce', 'advgb_controls_block_nonce_field' ); ?>
     <div class="advgb-roles-wrapper">
+        <?php wp_nonce_field( 'advgb_controls_block_nonce', 'advgb_controls_block_nonce_field' ); ?>
         <div class="advgb-search-wrapper">
             <input type="text"
                    class="blocks-search-input advgb-search-input"
