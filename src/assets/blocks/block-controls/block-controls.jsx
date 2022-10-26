@@ -199,13 +199,9 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                     props.setAttributes( {
                         advgbBlockControls: newArray
                     } );
-
-                    console.log('Modify an existing control key in a block');
                 } else if( controlsAdded && ! controlExists ) {
 
                     // Add a new control object when other controls already exists
-                    console.log('Add a new control to a block when other controls already exists');
-
                     switch( control ) {
                         case 'schedule':
                             props.setAttributes( {
@@ -225,12 +221,8 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                             } );
                         break;
                     }
-
-                    console.log('advgbBlockControls',advgbBlockControls);
                 } else {
                     // Add the first control object attribute
-                    console.log('Add the first control to a block');
-
                     switch( control ) {
                         case 'schedule':
                             props.setAttributes( {

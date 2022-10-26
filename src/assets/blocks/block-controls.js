@@ -492,13 +492,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     props.setAttributes({
                         advgbBlockControls: newArray
                     });
-
-                    console.log('Modify an existing control key in a block');
                 } else if (controlsAdded && !controlExists) {
 
                     // Add a new control object when other controls already exists
-                    console.log('Add a new control to a block when other controls already exists');
-
                     switch (control) {
                         case 'schedule':
                             props.setAttributes({
@@ -512,12 +508,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                             });
                             break;
                     }
-
-                    console.log('advgbBlockControls', advgbBlockControls);
                 } else {
                     // Add the first control object attribute
-                    console.log('Add the first control to a block');
-
                     switch (control) {
                         case 'schedule':
                             props.setAttributes({
