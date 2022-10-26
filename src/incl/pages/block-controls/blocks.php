@@ -38,7 +38,7 @@ defined( 'ABSPATH' ) || die;
                     name="save_blocks"
             >
                 <span>
-                    <?php esc_html_e( 'Save Blocks Settings', 'advanced-gutenberg' ) ?>
+                    <?php esc_html_e( 'Save Blocks', 'advanced-gutenberg' ) ?>
                 </span>
             </button>
         </div>

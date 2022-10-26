@@ -5,15 +5,15 @@ msgstr ""
 "Project-Id-Version: Plugins - Gutenberg Blocks &#8211; PublishPress Blocks "
 "Gutenberg Editor Plugin - Stable (latest release)\n"
 "POT-Creation-Date: 2022-10-25 14:40-0500\n"
-"PO-Revision-Date: 2022-10-25 14:41-0500\n"
+"PO-Revision-Date: 2022-10-26 11:09+0200\n"
 "Last-Translator: \n"
-"Language-Team: \n"
+"Language-Team: Angelo Giammarresi - info@wocmultimedia.com\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: assets/blocks/block-controls.js:229 assets/blocks/blocks.js:5149
 msgid "Change date"
@@ -76,39 +76,39 @@ msgstr ""
 
 #: assets/blocks/block-controls.js:703
 msgid "Enable block user roles"
-msgstr ""
+msgstr "Activer el bloqueo por los perfiles de usuarios"
 
 #: assets/blocks/block-controls.js:704
 msgid "Choose which users this block will be visible"
-msgstr ""
+msgstr "Elige los usuarios que podrán ver este bloque"
 
 #: assets/blocks/block-controls.js:720
 msgid "Show to everyone"
-msgstr ""
+msgstr "Muestra a todos"
 
 #: assets/blocks/block-controls.js:723
 msgid "Show to logged in users"
-msgstr ""
+msgstr "Muestra a los usuario conectados"
 
 #: assets/blocks/block-controls.js:726
 msgid "Show to logged out users"
-msgstr ""
+msgstr "Muestra a los usuario desconectados"
 
 #: assets/blocks/block-controls.js:729
 msgid "Show to the selected user roles"
-msgstr ""
+msgstr "Muestra a los perfiles de usuario seleccionados"
 
 #: assets/blocks/block-controls.js:732
 msgid "Hide to the selected user roles"
-msgstr ""
+msgstr "Oculta a los perfiles de usuario seleccionados"
 
 #: assets/blocks/block-controls.js:741
 msgid "Select user roles"
-msgstr ""
+msgstr "Selecciona los perfiles de usuario"
 
 #: assets/blocks/block-controls.js:742
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: assets/blocks/blocks.js:5294
 msgid "Icon List"
@@ -364,7 +364,7 @@ msgstr "Introduce la cabecera…"
 
 #: assets/blocks/blocks.js:5862
 msgid "Accordion (deprecated) - PublishPress"
-msgstr ""
+msgstr "Acordeón (obsoleto) - PublishPress"
 
 #: assets/blocks/blocks.js:5863 assets/blocks/blocks.js:6399
 #: assets/blocks/blocks.js:7285
@@ -1941,11 +1941,13 @@ msgstr "Ajustes del formulario"
 #: assets/blocks/blocks.js:23672
 msgid "We strongly recommend to enable Google reCAPTCHA to avoid spam."
 msgstr ""
+"Te recomendamos encarecidamente que actives Google reCAPTCHA para evitar el "
+"spam."
 
 #: assets/blocks/blocks.js:16624 assets/blocks/blocks.js:21512
 #: assets/blocks/blocks.js:23677
 msgid "You can enable it in Settings"
-msgstr ""
+msgstr "Puedes activarlo en los ajustes"
 
 #: assets/blocks/blocks.js:16630
 msgid "Email sender"
@@ -2644,7 +2646,7 @@ msgstr ""
 
 #: assets/blocks/blocks.js:23346
 msgid "Add Google API Key in Settings"
-msgstr ""
+msgstr "Añade la clave de API de Google en los ajustes"
 
 #: assets/blocks/blocks.js:23412 incl/pages/block-settings.php:66
 msgid "Map - PublishPress"
@@ -3483,7 +3485,7 @@ msgstr ""
 
 #: assets/blocks/blocks.js:28941
 msgid "Tabs (deprecated) - PublishPress"
-msgstr ""
+msgstr "Pestañas (obsoleto) - PublishPress"
 
 #: assets/blocks/blocks.js:29418 assets/blocks/pro-ad.js:145
 msgid "Testimonial"
@@ -3762,11 +3764,11 @@ msgstr "lista de precios"
 
 #: assets/blocks/custom-styles.js:134
 msgid "Select a block style"
-msgstr ""
+msgstr "Selecciona un estilo de bloque"
 
 #: assets/blocks/custom-styles.js:150
 msgid "Block styles"
-msgstr ""
+msgstr "Estilos de bloque"
 
 #: assets/blocks/custom-styles.js:162
 msgid "This option let you add custom style for the current block"
@@ -3787,7 +3789,7 @@ msgstr "¡Usa una dirección de correo electrónico válida!"
 
 #: assets/blocks/newsletter/frontend.js:66
 msgid "Submitted with success!"
-msgstr "¡Enviado con éxito!"
+msgstr "¡Enviado correctamente!"
 
 #: assets/blocks/post-sidebar.js:126
 msgid "PublishPress Blocks Settings"
@@ -4054,7 +4056,7 @@ msgstr "Logotipo de PublishPress Blocks"
 #: incl/advanced-gutenberg-main.php:3047
 #, php-format
 msgid "%s saved successfully!"
-msgstr "¡%s guardado con éxito!"
+msgstr "¡%s guardado correctamente!"
 
 #: incl/advanced-gutenberg-main.php:3057
 #, php-format
@@ -4097,7 +4099,7 @@ msgstr "La configuración por defecto para este bloque no está disponible."
 #: incl/advanced-gutenberg-main.php:3491
 #, php-format
 msgid "Page not found. Go to %sDashboard%s"
-msgstr ""
+msgstr "Página no encontrada. Ve al %sEscritorio%s"
 
 #: incl/advanced-gutenberg-main.php:3909
 msgid "Type field not defined"
@@ -4619,19 +4621,19 @@ msgstr "Alto de línea (px)"
 
 #: incl/pages/block-controls.php:14
 msgid "Controls saved successfully!"
-msgstr ""
+msgstr "¡Los controles se han guardado correctamente!"
 
 #: incl/pages/block-controls.php:16
 msgid "Blocks saved successfully!"
-msgstr ""
+msgstr "¡Los bloques se han guardado correctamente!"
 
 #: incl/pages/block-controls.php:18 incl/pages/settings.php:15
 msgid "Settings saved successfully!"
-msgstr "¡Ajustes guardados con éxito!"
+msgstr "¡Los ajustes han sido guardados correctamente!"
 
 #: incl/pages/block-controls.php:37
 msgid "Controls"
-msgstr ""
+msgstr "Controles"
 
 #: incl/pages/block-controls.php:41
 msgid "Blocks"
@@ -4639,35 +4641,37 @@ msgstr "Bloques"
 
 #: incl/pages/block-controls/blocks.php:14
 msgid "Enable or disable controls for all blocks"
-msgstr ""
+msgstr "Activas o desactivas los controles para todos los bloques"
 
 #: incl/pages/block-controls/blocks.php:41
 msgid "Save Blocks Settings"
-msgstr ""
+msgstr "Guarda los ajustes de los bloques"
 
 #: incl/pages/block-controls/blocks.php:64
 msgid "Save Blocks"
-msgstr ""
+msgstr "Guarda los bloques"
 
 #: incl/pages/block-controls/controls.php:12
 msgid "Schedule control"
-msgstr ""
+msgstr "Control de la programación"
 
 #: incl/pages/block-controls/controls.php:22
 msgid "Every block can have a “Start showing” and/or “Stop showing” option."
 msgstr ""
+"Cada bloque puede tener una opción de «Empezar a mostrar» y/o «Dejar de "
+"mostrar»."
 
 #: incl/pages/block-controls/controls.php:31
 msgid "User role control"
-msgstr ""
+msgstr "Control de los perfiles de los usuarios"
 
 #: incl/pages/block-controls/controls.php:41
 msgid "Every block can have a “User roles” option."
-msgstr ""
+msgstr "Cada bloque puede tener una opción de «Perfiles de usuario»."
 
 #: incl/pages/block-controls/controls.php:55
 msgid "Save Controls"
-msgstr ""
+msgstr "Guardar los controles"
 
 #: incl/pages/block-settings.php:123 incl/pages/settings/images.php:84
 msgid "Edit"
