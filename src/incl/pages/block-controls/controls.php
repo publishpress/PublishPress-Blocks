@@ -19,7 +19,7 @@ $user_role_control  = PublishPress\Blocks\Controls::getControlValue( 'user_role'
                     />
                     <?php
                     _e(
-                        'Every block can have a “Start showing” and/or “Stop showing” option.',
+                        'Choose when to start showing and/or stop showing your blocks.',
                         'advanced-gutenberg'
                     )
                     ?>
@@ -38,7 +38,7 @@ $user_role_control  = PublishPress\Blocks\Controls::getControlValue( 'user_role'
                     />
                     <?php
                     _e(
-                        'Every block can have a “User roles” option.',
+                        'Choose which users can see your blocks.',
                         'advanced-gutenberg'
                     )
                     ?>
