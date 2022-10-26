@@ -173,7 +173,6 @@ jQuery(document).ready(function ($) {
             },
             success: function (res, stt) {
                 if (stt === 'success') {
-                    console.log('preview');
                     $('#advgb-customstyles-title').val(res.title);
                     $('#advgb-customstyles-classname').val(res.name);
                     $('#advgb-customstyles-identify-color').minicolors('value', res.identifyColor);
