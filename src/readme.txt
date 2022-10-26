@@ -262,6 +262,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Add: User roles block control
   * Add: Rename old accordions and tabs blocks as deprecated
   * Add: Edit Block style title above the class name
+  * Add: Allow to dynamically exclude blocks when calling advgbGetBlocksFeature()
   * Fix: Server check to active Legacy widget block for Block Permissions
   * Fix: Adjust force active/inactive blocks javascript check in Block Permissions
   * Fix: Add each block control at the time and when enabled
