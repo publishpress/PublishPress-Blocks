@@ -5859,7 +5859,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/accordion', {
-        title: __('Accordion - PublishPress', 'advanced-gutenberg'),
+        title: __('Accordion (deprecated) - PublishPress', 'advanced-gutenberg'),
         description: __('Create a sliding accordion display for your content.', 'advanced-gutenberg'),
         icon: {
             src: accordionBlockIcon,
@@ -28938,7 +28938,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/tabs', {
-        title: __('Tabs - PublishPress', 'advanced-gutenberg'),
+        title: __('Tabs (deprecated) - PublishPress', 'advanced-gutenberg'),
         description: __('Create horizontal or vertical tabs to display your content.', 'advanced-gutenberg'),
         icon: {
             src: tabsBlockIcon,

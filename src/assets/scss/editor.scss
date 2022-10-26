@@ -44,6 +44,11 @@
   .advgb-tab-body-wrapper .block-editor-inner-blocks .block-list-appender {
     display: none !important;
   }
+
+  // Remove margin-bottom from SelectControl
+  .advgb-revert-mb > .components-base-control {
+    margin-bottom: 0;
+  }
 }
 
 body:not(.advgb-editor-width-default) {
