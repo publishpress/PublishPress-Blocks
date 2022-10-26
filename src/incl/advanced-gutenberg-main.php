@@ -1,7 +1,6 @@
 <?php
 defined('ABSPATH') || die;
 
-
 /**
  * Main class of Gutenberg Advanced
  */
@@ -3987,15 +3986,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'advgb_blocks_styles',
                     '@media only screen and (min-width: 652px) {
                         .widget-area {
-                          grid-template-columns: repeat(2, minmax( 0, 1fr ));
+                            grid-template-columns: repeat(2, minmax( 0, 1fr ));
                         }
-                      }
-                      @media only screen and (min-width: 1024px) {
+                    }
+                    @media only screen and (min-width: 1024px) {
                         .widget-area {
-                          grid-template-columns: repeat(3, minmax( 0, 1fr ));
+                            grid-template-columns: repeat(3, minmax( 0, 1fr ));
                         }
-                      }
-                  }'
+                    }'
                 );
             }
         }
