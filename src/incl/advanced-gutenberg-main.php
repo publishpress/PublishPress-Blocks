@@ -1608,13 +1608,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ADVANCED_GUTENBERG_VERSION
                 );
 
-                /*/ Pro
-                if(defined('ADVANCED_GUTENBERG_PRO')) {
-                    if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_register_scripts_admin' ) ) {
-                        PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_register_scripts_admin();
-                    }
-                }*/
-
                 $saved_settings = get_option('advgb_settings');
                 if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
                     wp_add_inline_style(
