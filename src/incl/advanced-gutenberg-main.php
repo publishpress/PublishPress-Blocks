@@ -2889,7 +2889,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             'user_role' =>  $user_role,
                             'save' => 'success'
                         ],
-                        str_replace( '/wp-admin/', '', $_POST['_wp_http_referer'] )
+                        str_replace(
+                            '/wp-admin/',
+                            '',
+                            sanitize_url( $_POST['_wp_http_referer'] )
+                        )
                     )
                 );
             } else {
@@ -2900,7 +2904,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             'user_role' =>  $user_role,
                             'save' => 'error'
                         ],
-                        str_replace( '/wp-admin/', '', $_POST['_wp_http_referer'] )
+                        str_replace(
+                            '/wp-admin/',
+                            '',
+                            sanitize_url( $_POST['_wp_http_referer'] )
+                        )
                     )
                 );
             }

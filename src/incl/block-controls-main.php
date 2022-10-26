@@ -283,7 +283,11 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                         [
                             'save' => 'success'
                         ],
-                        str_replace( '/wp-admin/', '', $_POST['_wp_http_referer'] )
+                        str_replace(
+                            '/wp-admin/',
+                            '',
+                            sanitize_url( $_POST['_wp_http_referer'] ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                        )
                     )
                 );
             }
@@ -304,7 +308,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 ) {
                     $blocks_list        = array_map(
                         'sanitize_text_field',
-                        json_decode( stripslashes( $_POST['blocks_list'] ) )
+                        json_decode( stripslashes( $_POST['blocks_list'] ) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                     );
                     $active_blocks      = array_map( 'sanitize_text_field', $_POST['active_blocks'] );
                     $inactive_blocks    = array_values( array_diff( $blocks_list, $active_blocks ) );
@@ -323,7 +327,11 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                                 'tab' => 'blocks',
                                 'save' => 'success'
                             ],
-                            str_replace( '/wp-admin/', '', $_POST['_wp_http_referer'] )
+                            str_replace(
+                                '/wp-admin/',
+                                '',
+                                sanitize_url( $_POST['_wp_http_referer'] ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                            )
                         )
                     );
                 } else {
@@ -333,7 +341,11 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                             [
                                 'save' => 'error'
                             ],
-                            str_replace( '/wp-admin/', '', $_POST['_wp_http_referer'] )
+                            str_replace(
+                                '/wp-admin/',
+                                '',
+                                sanitize_url( $_POST['_wp_http_referer'] ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                            )
                         )
                     );
                 }
