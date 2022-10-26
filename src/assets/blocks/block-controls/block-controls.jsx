@@ -347,7 +347,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                             <ToggleControl
                                 label={ __( 'Enable block schedule', 'advanced-gutenberg' ) }
                                 help={
-                                    __( 'Setup when to start showing and/or stop showing this block', 'advanced-gutenberg' )
+                                    __( 'Choose when to start showing and/or stop showing this block.', 'advanced-gutenberg' )
                                 }
                                 checked={ currentControlKey( advgbBlockControls, 'schedule', 'enabled' ) }
                                 onChange={ () => changeControlKey( 'schedule', 'enabled' ) }
@@ -407,7 +407,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                             <ToggleControl
                                 label={ __( 'Enable block user roles', 'advanced-gutenberg' ) }
                                 help={
-                                    __( 'Choose which users this block will be visible', 'advanced-gutenberg' )
+                                    __( 'Choose which users can see this block.', 'advanced-gutenberg' )
                                 }
                                 checked={ currentControlKey( advgbBlockControls, 'user_role', 'enabled' ) }
                                 onChange={ () => changeControlKey( 'user_role', 'enabled' ) }

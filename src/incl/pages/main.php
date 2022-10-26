@@ -49,7 +49,7 @@ defined( 'ABSPATH' ) || die;
                             'name' => 'block_controls',
                             'title' => __( 'Block Controls', 'advanced-gutenberg' ),
                             'description' => __(
-                                'Schedule blocks to be published and unpublished. Every block can have a “Start showing” and/or “Stop showing” option.', 'advanced-gutenberg'
+                                'This feature adds display controls for blocks. You can schedule when blocks are shown, and add user role restrictions.', 'advanced-gutenberg'
                             ),
                             'default' => 1,
                             'access' => true
