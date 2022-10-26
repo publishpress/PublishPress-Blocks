@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress Blocks\n"
-"POT-Creation-Date: 2022-10-25 14:40-0500\n"
+"POT-Creation-Date: 2022-10-26 12:17-0500\n"
 "PO-Revision-Date: 2020-12-04 12:47-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -43,7 +43,7 @@ msgid "Enable block schedule"
 msgstr ""
 
 #: assets/blocks/block-controls.js:634
-msgid "Setup when to start showing and/or stop showing this block"
+msgid "Choose when to start showing and/or stop showing this block."
 msgstr ""
 
 #: assets/blocks/block-controls.js:647
@@ -81,7 +81,7 @@ msgid "Enable block user roles"
 msgstr ""
 
 #: assets/blocks/block-controls.js:704
-msgid "Choose which users this block will be visible"
+msgid "Choose which users can see this block."
 msgstr ""
 
 #: assets/blocks/block-controls.js:720
@@ -4569,11 +4569,7 @@ msgstr ""
 msgid "Enable or disable controls for all blocks"
 msgstr ""
 
-#: incl/pages/block-controls/blocks.php:41
-msgid "Save Blocks Settings"
-msgstr ""
-
-#: incl/pages/block-controls/blocks.php:64
+#: incl/pages/block-controls/blocks.php:41 incl/pages/block-controls/blocks.php:64
 msgid "Save Blocks"
 msgstr ""
 
@@ -4582,15 +4578,15 @@ msgid "Schedule control"
 msgstr ""
 
 #: incl/pages/block-controls/controls.php:22
-msgid "Every block can have a “Start showing” and/or “Stop showing” option."
+msgid "Choose when to start showing and/or stop showing your blocks."
 msgstr ""
 
 #: incl/pages/block-controls/controls.php:31
-msgid "User role control"
+msgid "User roles control"
 msgstr ""
 
 #: incl/pages/block-controls/controls.php:41
-msgid "Every block can have a “User roles” option."
+msgid "Choose which users can see your blocks."
 msgstr ""
 
 #: incl/pages/block-controls/controls.php:55
@@ -4690,8 +4686,8 @@ msgstr ""
 
 #: incl/pages/main.php:52
 msgid ""
-"Schedule blocks to be published and unpublished. Every block can have a “Start "
-"showing” and/or “Stop showing” option."
+"This feature adds display controls for blocks. You can schedule when blocks are "
+"shown, and add user role restrictions."
 msgstr ""
 
 #: incl/pages/main.php:60

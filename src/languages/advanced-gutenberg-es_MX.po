@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Gutenberg Blocks &#8211; PublishPress Blocks "
 "Gutenberg Editor Plugin - Stable (latest release)\n"
-"POT-Creation-Date: 2022-10-25 14:40-0500\n"
-"PO-Revision-Date: 2022-10-25 14:41-0500\n"
+"POT-Creation-Date: 2022-10-26 12:17-0500\n"
+"PO-Revision-Date: 2022-10-26 12:25-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_MX\n"
@@ -37,8 +37,8 @@ msgid "Enable block schedule"
 msgstr "Habilitar programación del bloque"
 
 #: assets/blocks/block-controls.js:634
-msgid "Setup when to start showing and/or stop showing this block"
-msgstr "Configurar cuando comenzar a mostrar y/o dejar de mostrar este bloque"
+msgid "Choose when to start showing and/or stop showing this block."
+msgstr "Elige cuando comenzar a mostrar y/o dejar de mostrar este bloque."
 
 #: assets/blocks/block-controls.js:647
 msgid "Now"
@@ -76,39 +76,39 @@ msgstr ""
 
 #: assets/blocks/block-controls.js:703
 msgid "Enable block user roles"
-msgstr ""
+msgstr "Habilitar perfiles de usuario de bloque"
 
 #: assets/blocks/block-controls.js:704
-msgid "Choose which users this block will be visible"
-msgstr ""
+msgid "Choose which users can see this block."
+msgstr "Elige que usuarios pueden ver este bloque."
 
 #: assets/blocks/block-controls.js:720
 msgid "Show to everyone"
-msgstr ""
+msgstr "Mostrar a todos"
 
 #: assets/blocks/block-controls.js:723
 msgid "Show to logged in users"
-msgstr ""
+msgstr "Mostrar a los usuario conectados"
 
 #: assets/blocks/block-controls.js:726
 msgid "Show to logged out users"
-msgstr ""
+msgstr "Mostrar a los usuario desconectados"
 
 #: assets/blocks/block-controls.js:729
 msgid "Show to the selected user roles"
-msgstr ""
+msgstr "Mostrar a los perfiles de usuario seleccionados"
 
 #: assets/blocks/block-controls.js:732
 msgid "Hide to the selected user roles"
-msgstr ""
+msgstr "Ocultar a los perfiles de usuario seleccionados"
 
 #: assets/blocks/block-controls.js:741
 msgid "Select user roles"
-msgstr ""
+msgstr "Selecciona los perfiles de usuario"
 
 #: assets/blocks/block-controls.js:742
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: assets/blocks/blocks.js:5294
 msgid "Icon List"
@@ -364,7 +364,7 @@ msgstr "Introduce el encabezado…"
 
 #: assets/blocks/blocks.js:5862
 msgid "Accordion (deprecated) - PublishPress"
-msgstr ""
+msgstr "Acordeón (obsoleto) - PublishPress"
 
 #: assets/blocks/blocks.js:5863 assets/blocks/blocks.js:6399
 #: assets/blocks/blocks.js:7285
@@ -3484,7 +3484,7 @@ msgstr ""
 
 #: assets/blocks/blocks.js:28941
 msgid "Tabs (deprecated) - PublishPress"
-msgstr ""
+msgstr "Pestañas (obsoleto) - PublishPress"
 
 #: assets/blocks/blocks.js:29418 assets/blocks/pro-ad.js:145
 msgid "Testimonial"
@@ -4620,11 +4620,11 @@ msgstr "Altura de línea (px)"
 
 #: incl/pages/block-controls.php:14
 msgid "Controls saved successfully!"
-msgstr ""
+msgstr "¡Los controles se han guardado correctamente!"
 
 #: incl/pages/block-controls.php:16
 msgid "Blocks saved successfully!"
-msgstr ""
+msgstr "¡Los bloques se han guardado correctamente!"
 
 #: incl/pages/block-controls.php:18 incl/pages/settings.php:15
 msgid "Settings saved successfully!"
@@ -4632,7 +4632,7 @@ msgstr "¡Ajustes guardados correctamente!"
 
 #: incl/pages/block-controls.php:37
 msgid "Controls"
-msgstr ""
+msgstr "Controles"
 
 #: incl/pages/block-controls.php:41
 msgid "Blocks"
@@ -4640,35 +4640,32 @@ msgstr "Bloques"
 
 #: incl/pages/block-controls/blocks.php:14
 msgid "Enable or disable controls for all blocks"
-msgstr ""
+msgstr "Habilitar o deshabilitar controles para todos los bloques"
 
 #: incl/pages/block-controls/blocks.php:41
-msgid "Save Blocks Settings"
-msgstr ""
-
 #: incl/pages/block-controls/blocks.php:64
 msgid "Save Blocks"
-msgstr ""
+msgstr "Guardar bloques"
 
 #: incl/pages/block-controls/controls.php:12
 msgid "Schedule control"
-msgstr ""
+msgstr "Control de programación"
 
 #: incl/pages/block-controls/controls.php:22
-msgid "Every block can have a “Start showing” and/or “Stop showing” option."
-msgstr ""
+msgid "Choose when to start showing and/or stop showing your blocks."
+msgstr "Elige cuándo empezar a mostrar y/o dejar de mostrar tus bloques."
 
 #: incl/pages/block-controls/controls.php:31
-msgid "User role control"
-msgstr ""
+msgid "User roles control"
+msgstr "Control de perfiles de usuario"
 
 #: incl/pages/block-controls/controls.php:41
-msgid "Every block can have a “User roles” option."
-msgstr ""
+msgid "Choose which users can see your blocks."
+msgstr "Elige que usuarios pueden ver tus bloques."
 
 #: incl/pages/block-controls/controls.php:55
 msgid "Save Controls"
-msgstr ""
+msgstr "Guardar controles"
 
 #: incl/pages/block-settings.php:123 incl/pages/settings/images.php:84
 msgid "Edit"
@@ -4776,11 +4773,12 @@ msgstr ""
 
 #: incl/pages/main.php:52
 msgid ""
-"Schedule blocks to be published and unpublished. Every block can have a "
-"“Start showing” and/or “Stop showing” option."
+"This feature adds display controls for blocks. You can schedule when blocks "
+"are shown, and add user role restrictions."
 msgstr ""
-"Programa bloques para ser publicados y despublicados. Cada bloque puede "
-"tener una opción \"Comenzar a mostrar\" y/o \"Dejar de mostrar\"."
+"Esta característica agrega controles de visualización para bloques. Puedes "
+"programar cuando se muestran los bloques y agregar restricciones de perfiles "
+"de usuario."
 
 #: incl/pages/main.php:60
 #, php-format
@@ -5235,6 +5233,17 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "https://publishpress.com/"
 msgstr "https://publishpress.com/"
+
+#~ msgid "Setup when to start showing and/or stop showing this block"
+#~ msgstr ""
+#~ "Configurar cuando comenzar a mostrar y/o dejar de mostrar este bloque"
+
+#~ msgid ""
+#~ "Schedule blocks to be published and unpublished. Every block can have a "
+#~ "“Start showing” and/or “Stop showing” option."
+#~ msgstr ""
+#~ "Programa bloques para ser publicados y despublicados. Cada bloque puede "
+#~ "tener una opción \"Comenzar a mostrar\" y/o \"Dejar de mostrar\"."
 
 #~ msgid ""
 #~ "This feature is disabled. In order to use, please enable back through "

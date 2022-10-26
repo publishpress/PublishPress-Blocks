@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Gutenberg Blocks &#8211; PublishPress Blocks "
 "Gutenberg Editor Plugin - Stable (latest release)\n"
-"POT-Creation-Date: 2022-10-25 14:40-0500\n"
-"PO-Revision-Date: 2022-10-26 11:08+0200\n"
+"POT-Creation-Date: 2022-10-26 12:17-0500\n"
+"PO-Revision-Date: 2022-10-26 12:18-0500\n"
 "Last-Translator: \n"
 "Language-Team: Angelo Giammarresi - info@wocmultimedia.com\n"
 "Language: it\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.2\n"
 
 #: assets/blocks/block-controls.js:229 assets/blocks/blocks.js:5149
 msgid "Change date"
@@ -37,9 +37,8 @@ msgid "Enable block schedule"
 msgstr "Abilita la programmazione del blocco"
 
 #: assets/blocks/block-controls.js:634
-msgid "Setup when to start showing and/or stop showing this block"
+msgid "Choose when to start showing and/or stop showing this block."
 msgstr ""
-"Imposta quando avviare e/o arrestare la visualizzazione di questo blocco"
 
 #: assets/blocks/block-controls.js:647
 msgid "Now"
@@ -80,8 +79,8 @@ msgid "Enable block user roles"
 msgstr "Abilita il blocco dei ruoli utente"
 
 #: assets/blocks/block-controls.js:704
-msgid "Choose which users this block will be visible"
-msgstr "Seleziona per quali utenti questo blocco sarà visibile"
+msgid "Choose which users can see this block."
+msgstr ""
 
 #: assets/blocks/block-controls.js:720
 msgid "Show to everyone"
@@ -4648,9 +4647,6 @@ msgid "Enable or disable controls for all blocks"
 msgstr "Abilita o disabilita i controlli per tutti i blocchi"
 
 #: incl/pages/block-controls/blocks.php:41
-msgid "Save Blocks Settings"
-msgstr "Salva le impostazioni dei blocchi"
-
 #: incl/pages/block-controls/blocks.php:64
 msgid "Save Blocks"
 msgstr "Salva i blocchi"
@@ -4660,18 +4656,16 @@ msgid "Schedule control"
 msgstr "Controllo programmazione"
 
 #: incl/pages/block-controls/controls.php:22
-msgid "Every block can have a “Start showing” and/or “Stop showing” option."
+msgid "Choose when to start showing and/or stop showing your blocks."
 msgstr ""
-"Ogni blocco può avere una opzione \"Inizia a mostrare\" e/o \"Termina di "
-"mostrare\"."
 
 #: incl/pages/block-controls/controls.php:31
-msgid "User role control"
-msgstr "Controllo del ruolo utente"
+msgid "User roles control"
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:41
-msgid "Every block can have a “User roles” option."
-msgstr "Ogni blocco può avere una opzione \"Ruolo utente\"."
+msgid "Choose which users can see your blocks."
+msgstr ""
 
 #: incl/pages/block-controls/controls.php:55
 msgid "Save Controls"
@@ -4783,11 +4777,9 @@ msgstr ""
 
 #: incl/pages/main.php:52
 msgid ""
-"Schedule blocks to be published and unpublished. Every block can have a "
-"“Start showing” and/or “Stop showing” option."
+"This feature adds display controls for blocks. You can schedule when blocks "
+"are shown, and add user role restrictions."
 msgstr ""
-"Programma i blocchi da pubblicare e non pubblicare. Ogni blocco può avere "
-"un'opzione \"Inizia a mostrare\" e/o \"Smetti di mostrare\"."
 
 #: incl/pages/main.php:60
 #, php-format
@@ -5242,6 +5234,34 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "https://publishpress.com/"
 msgstr "https://publishpress.com/"
+
+#~ msgid "Setup when to start showing and/or stop showing this block"
+#~ msgstr ""
+#~ "Imposta quando avviare e/o arrestare la visualizzazione di questo blocco"
+
+#~ msgid "Choose which users this block will be visible"
+#~ msgstr "Seleziona per quali utenti questo blocco sarà visibile"
+
+#~ msgid "Save Blocks Settings"
+#~ msgstr "Salva le impostazioni dei blocchi"
+
+#~ msgid "Every block can have a “Start showing” and/or “Stop showing” option."
+#~ msgstr ""
+#~ "Ogni blocco può avere una opzione \"Inizia a mostrare\" e/o \"Termina di "
+#~ "mostrare\"."
+
+#~ msgid "User role control"
+#~ msgstr "Controllo del ruolo utente"
+
+#~ msgid "Every block can have a “User roles” option."
+#~ msgstr "Ogni blocco può avere una opzione \"Ruolo utente\"."
+
+#~ msgid ""
+#~ "Schedule blocks to be published and unpublished. Every block can have a "
+#~ "“Start showing” and/or “Stop showing” option."
+#~ msgstr ""
+#~ "Programma i blocchi da pubblicare e non pubblicare. Ogni blocco può avere "
+#~ "un'opzione \"Inizia a mostrare\" e/o \"Smetti di mostrare\"."
 
 #~ msgid ""
 #~ "This feature is disabled. In order to use, please enable back through "
