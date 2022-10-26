@@ -2018,7 +2018,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            // Block accessis disabled
+            // Block controls is disabled
             if ( ! $this->settingIsEnabled( 'block_controls' ) ) {
                 wp_die(
                     sprintf(
@@ -2052,7 +2052,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            // PublishPress block disabled
+            // PublishPress blocks is disabled
             if ( ! $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                 wp_die(
                     sprintf(
@@ -2098,7 +2098,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 return false;
             }
 
-            // Custom styles disabled
+            // Custom styles is disabled
             if ( ! $this->settingIsEnabled( 'enable_custom_styles' ) ) {
                 wp_die(
                     sprintf(
