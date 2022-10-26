@@ -41,6 +41,8 @@ defined('ABSPATH') || die;
 $includeFilebRelativePath = '/publishpress/publishpress-instance-protection/include.php';
 if (file_exists(__DIR__ . '/vendor' . $includeFilebRelativePath)) {
     require_once __DIR__ . '/vendor' . $includeFilebRelativePath;
+} else if (defined('PP_AUTHORS_VENDOR_PATH') && file_exists(PP_AUTHORS_VENDOR_PATH . $includeFilebRelativePath)) {
+    require_once PP_AUTHORS_VENDOR_PATH . $includeFilebRelativePath;
 }
 
 if (class_exists('PublishPressInstanceProtection\\Config')) {
