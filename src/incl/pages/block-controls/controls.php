@@ -28,7 +28,7 @@ $user_role_control  = PublishPress\Blocks\Controls::getControlValue( 'user_role'
         </tr>
         <tr>
             <th scope="row">
-                <?php _e( 'User role control', 'advanced-gutenberg' ) ?>
+                <?php _e( 'User roles control', 'advanced-gutenberg' ) ?>
             </th>
             <td>
                 <label>
