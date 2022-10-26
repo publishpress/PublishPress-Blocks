@@ -1977,7 +1977,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if ( ! $this->settingIsEnabled( 'enable_block_access' ) ) {
                 wp_die(
                     sprintf(
-                        esc_html(
+                        esc_html__(
                             'This feature is disabled. In order to use, please enable back through %sDashboard%s.',
                             'advanced-gutenberg'
                         ),
@@ -2022,7 +2022,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if ( ! $this->settingIsEnabled( 'block_controls' ) ) {
                 wp_die(
                     sprintf(
-                        esc_html(
+                        esc_html__(
                             'This feature is disabled. In order to use, please enable back through %sDashboard%s.',
                             'advanced-gutenberg'
                         ),
@@ -2056,7 +2056,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if ( ! $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                 wp_die(
                     sprintf(
-                        esc_html(
+                        esc_html__(
                             'This feature is disabled. In order to use, please enable back through %sDashboard%s.',
                             'advanced-gutenberg'
                         ),
@@ -2102,7 +2102,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if ( ! $this->settingIsEnabled( 'enable_custom_styles' ) ) {
                 wp_die(
                     sprintf(
-                        esc_html(
+                        esc_html__(
                             'This feature is disabled. In order to use, please enable back through %sDashboard%s.',
                             'advanced-gutenberg'
                         ),
