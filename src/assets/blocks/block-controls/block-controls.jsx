@@ -24,6 +24,13 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
         'advgb/column'
     ];
 
+    const getGlobalControls = function () {
+        return typeof advgb_block_controls_vars.controls !== 'undefined'
+                            && Object.keys(advgb_block_controls_vars.controls).length > 0
+                                ? advgb_block_controls_vars.controls
+                                : [];
+    }
+
     /**
      * Check if a control is enabled
      *
@@ -51,19 +58,47 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
     }
 
     /**
-     * Check how many controls are enabled
+     * Check if at least one control is enabled per block instance
+     *
+     * @since 3.1.1
+     * @param {string} controlAttrs     Controls attributes. e.g. advgbBlockControls or props.attributes @TODO Figure out a way to NOT require controlAttrs as param due is the same always
+     *
+     * @return {bool}
+     */
+    const isAnyControlEnabledBlock = function( controlAttrs ) {
+        const globalControls    = getGlobalControls();
+        let counter             = 0;
+        let blockControls       = []; // Controls enabled in block instance
+
+        // Get enabled global controls (in Settings)
+        Object.keys(globalControls).forEach( (item) => {
+            if( isControlEnabled( advgb_block_controls_vars.controls[item] ) ) {
+                blockControls.push(item);
+            }
+        } );
+
+        // Get counter for enabled controls in block instance
+        blockControls.forEach( (item) => {
+            if( currentControlKey( controlAttrs, item, 'enabled' ) ) {
+                counter++;
+            }
+        } );
+
+        return counter > 0 ? true : false;
+    }
+
+    /**
+     * Check if at least one control is enabled globally (in Settings)
      *
      * @since 3.1.0
      *
      * @return {bool}
      */
-    const countControlEnabled = function() {
-        const allControls = typeof advgb_block_controls_vars.controls !== 'undefined'
-                            && Object.keys(advgb_block_controls_vars.controls).length > 0
-                                ? advgb_block_controls_vars.controls
-                                : [];
-        let counter = 0;
-        Object.keys(allControls).map( (item) => {
+    const isAnyControlEnabledGlobal = function() {
+        const globalControls    = getGlobalControls();
+        let counter             = 0;
+
+        Object.keys(globalControls).map( (item) => {
             if( isControlEnabled( advgb_block_controls_vars.controls[item] ) ) {
                 counter++;
             }
@@ -111,27 +146,6 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
         return null;
     }
 
-    /**
-     * Check if at least one control is enabled
-     *
-     * @since 3.1.1
-     * @param {string} controlAttrs     Controls attributes. e.g. advgbBlockControls or props.attributes @TODO Figure out a way to NOT require controlAttrs as param due is the same always
-     * @param {array} controls          Controls. e.g. ['schedule','user_role']
-     *
-     * @return {bool}
-     */
-    const isAnyControlEnabled = function( controlAttrs, controls ) {
-        let count = 0;
-
-        controls.forEach( (element) => {
-            if( currentControlKey( controlAttrs, element, 'enabled' ) ) {
-                count++;
-            }
-        });
-
-        return count > 0 ? true : false;
-    }
-
     // Add non supported blocks according to Block controls
     if( typeof advgb_block_controls_vars !== 'undefined'
         && typeof advgb_block_controls_vars.non_supported !== 'undefined'
@@ -145,7 +159,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
 
     // Register block controls to blocks attributes
     addFilter( 'blocks.registerBlockType', 'advgb/blockControls', function ( settings ) {
-        if ( ! NON_SUPPORTED_BLOCKS.includes( settings.name ) && countControlEnabled() ) {
+        if ( ! NON_SUPPORTED_BLOCKS.includes( settings.name ) && isAnyControlEnabledGlobal() ) {
             settings.attributes = Object.assign( settings.attributes, {
                 advgbBlockControls: {
                     type: 'array',
@@ -190,6 +204,11 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                     enabled: true,
                     roles: [],
                     approach: 'public'
+                };
+                const deviceControl = {
+                    control: 'device',
+                    enabled: true,
+                    devices: []
                 };
 
                 // Check if advgbBlockControls attribute exists
@@ -241,6 +260,15 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                                 ]
                             } );
                         break;
+
+                        case 'device':
+                            props.setAttributes( {
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    deviceControl
+                                ]
+                            } );
+                        break;
                     }
                 } else {
                     // Add the first control object attribute
@@ -254,6 +282,12 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                         case 'user_role':
                             props.setAttributes( {
                                 advgbBlockControls: [ userRoleControl ]
+                            } );
+                        break;
+
+                        case 'device':
+                            props.setAttributes( {
+                                advgbBlockControls: [ deviceControl ]
                             } );
                         break;
                     }
@@ -343,14 +377,14 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
 
             return ( [
                 props.isSelected && ( ! NON_SUPPORTED_BLOCKS.includes( props.name ) )
-                && countControlEnabled() &&
+                && isAnyControlEnabledGlobal() &&
                 <InspectorControls key="advgb-bc-controls">
                     <PanelBody
                         title={ __( 'Block Controls', 'advanced-gutenberg' ) }
                         icon="visibility"
                         initialOpen={ false }
                         className={
-                            isAnyControlEnabled( advgbBlockControls, ['schedule','user_role'] )
+                            isAnyControlEnabledBlock( advgbBlockControls )
                                 ? 'advgb-feature-icon-active' : ''
                         }
                     >
@@ -481,6 +515,18 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                             ) }
                         </Fragment>
                         ) }
+                        { isControlEnabled( advgb_block_controls_vars.controls.device ) && (
+                        <Fragment>
+                            <ToggleControl
+                                label={ __( 'Enable block device control', 'advanced-gutenberg' ) }
+                                help={
+                                    __( 'Choose in which devices this block can be displayed.', 'advanced-gutenberg' )
+                                }
+                                checked={ currentControlKey( advgbBlockControls, 'device', 'enabled' ) }
+                                onChange={ () => changeControlKey( 'device', 'enabled' ) }
+                            />
+                        </Fragment>
+                        ) }
                     </PanelBody>
                 </InspectorControls>,
                 <BlockEdit key="block-edit-advgb-dates" {...props} />,
@@ -490,10 +536,10 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
 
     const withAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
         return ( props ) => {
-            if ( ( !NON_SUPPORTED_BLOCKS.includes( props.name ) ) && hasBlockSupport( props.name, 'advgb/blockControls', true ) && countControlEnabled() ) {
+            if ( ( !NON_SUPPORTED_BLOCKS.includes( props.name ) ) && hasBlockSupport( props.name, 'advgb/blockControls', true ) && isAnyControlEnabledGlobal() ) {
                 const { advgbBlockControls } = props.attributes;
                 const advgbBcClass = props.isSelected === false
-                    && isAnyControlEnabled( advgbBlockControls, ['schedule','user_role'] )
+                    && isAnyControlEnabledBlock( advgbBlockControls )
                         ? 'advgb-bc-editor-preview' : '';
 
                 return <BlockListBlock { ...props } className={ classnames( props.className, advgbBcClass ) } advgbBlockControls={ `${ advgbBlockControls }` } />;

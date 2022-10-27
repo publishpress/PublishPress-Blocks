@@ -3,6 +3,7 @@ defined( 'ABSPATH' ) || die;
 
 $schedule_control   = PublishPress\Blocks\Controls::getControlValue( 'schedule', 1 );
 $user_role_control  = PublishPress\Blocks\Controls::getControlValue( 'user_role', 1 );
+$device_control     = PublishPress\Blocks\Controls::getControlValue( 'device', 1 );
 ?>
 <form method="post">
     <?php wp_nonce_field( 'advgb_controls_settings_nonce', 'advgb_controls_settings_nonce_field' ); ?>
@@ -39,6 +40,25 @@ $user_role_control  = PublishPress\Blocks\Controls::getControlValue( 'user_role'
                     <?php
                     _e(
                         'Choose which users can see your blocks.',
+                        'advanced-gutenberg'
+                    )
+                    ?>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <?php _e( 'Device control', 'advanced-gutenberg' ) ?>
+            </th>
+            <td>
+                <label>
+                    <input type="checkbox" name="device_control"
+                           value="1"
+                           <?php echo $device_control ? ' checked' : '' ?>
+                    />
+                    <?php
+                    _e(
+                        'Choose in which devices your blocks can be displayed.',
                         'advanced-gutenberg'
                     )
                     ?>

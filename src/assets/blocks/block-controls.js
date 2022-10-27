@@ -327,6 +327,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     // Blocks that are not supported
     var NON_SUPPORTED_BLOCKS = ['core/freeform', 'core/legacy-widget', 'core/widget-area', 'core/column', 'advgb/tab', 'advgb/column'];
 
+    var getGlobalControls = function getGlobalControls() {
+        return typeof advgb_block_controls_vars.controls !== 'undefined' && Object.keys(advgb_block_controls_vars.controls).length > 0 ? advgb_block_controls_vars.controls : [];
+    };
+
     /**
      * Check if a control is enabled
      *
@@ -351,16 +355,47 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     };
 
     /**
-     * Check how many controls are enabled
+     * Check if at least one control is enabled per block instance
+     *
+     * @since 3.1.1
+     * @param {string} controlAttrs     Controls attributes. e.g. advgbBlockControls or props.attributes @TODO Figure out a way to NOT require controlAttrs as param due is the same always
+     *
+     * @return {bool}
+     */
+    var isAnyControlEnabledBlock = function isAnyControlEnabledBlock(controlAttrs) {
+        var globalControls = getGlobalControls();
+        var counter = 0;
+        var blockControls = []; // Controls enabled in block instance
+
+        // Get enabled global controls (in Settings)
+        Object.keys(globalControls).forEach(function (item) {
+            if (isControlEnabled(advgb_block_controls_vars.controls[item])) {
+                blockControls.push(item);
+            }
+        });
+
+        // Get counter for enabled controls in block instance
+        blockControls.forEach(function (item) {
+            if (currentControlKey(controlAttrs, item, 'enabled')) {
+                counter++;
+            }
+        });
+
+        return counter > 0 ? true : false;
+    };
+
+    /**
+     * Check if at least one control is enabled globally (in Settings)
      *
      * @since 3.1.0
      *
      * @return {bool}
      */
-    var countControlEnabled = function countControlEnabled() {
-        var allControls = typeof advgb_block_controls_vars.controls !== 'undefined' && Object.keys(advgb_block_controls_vars.controls).length > 0 ? advgb_block_controls_vars.controls : [];
+    var isAnyControlEnabledGlobal = function isAnyControlEnabledGlobal() {
+        var globalControls = getGlobalControls();
         var counter = 0;
-        Object.keys(allControls).map(function (item) {
+
+        Object.keys(globalControls).map(function (item) {
             if (isControlEnabled(advgb_block_controls_vars.controls[item])) {
                 counter++;
             }
@@ -407,27 +442,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         return null;
     };
 
-    /**
-     * Check if at least one control is enabled
-     *
-     * @since 3.1.1
-     * @param {string} controlAttrs     Controls attributes. e.g. advgbBlockControls or props.attributes @TODO Figure out a way to NOT require controlAttrs as param due is the same always
-     * @param {array} controls          Controls. e.g. ['schedule','user_role']
-     *
-     * @return {bool}
-     */
-    var isAnyControlEnabled = function isAnyControlEnabled(controlAttrs, controls) {
-        var count = 0;
-
-        controls.forEach(function (element) {
-            if (currentControlKey(controlAttrs, element, 'enabled')) {
-                count++;
-            }
-        });
-
-        return count > 0 ? true : false;
-    };
-
     // Add non supported blocks according to Block controls
     if (typeof advgb_block_controls_vars !== 'undefined' && typeof advgb_block_controls_vars.non_supported !== 'undefined' && advgb_block_controls_vars.non_supported.length > 0) {
         // Merge dynamically disabled blocks
@@ -438,7 +452,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
     // Register block controls to blocks attributes
     addFilter('blocks.registerBlockType', 'advgb/blockControls', function (settings) {
-        if (!NON_SUPPORTED_BLOCKS.includes(settings.name) && countControlEnabled()) {
+        if (!NON_SUPPORTED_BLOCKS.includes(settings.name) && isAnyControlEnabledGlobal()) {
             settings.attributes = _extends(settings.attributes, {
                 advgbBlockControls: {
                     type: 'array',
@@ -487,6 +501,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     roles: [],
                     approach: 'public'
                 };
+                var deviceControl = {
+                    control: 'device',
+                    enabled: true,
+                    devices: []
+                };
 
                 // Check if advgbBlockControls attribute exists
                 var controlsAdded = typeof advgbBlockControls !== 'undefined' && advgbBlockControls.length ? true : false;
@@ -528,6 +547,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [userRoleControl])
                             });
                             break;
+
+                        case 'device':
+                            props.setAttributes({
+                                advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [deviceControl])
+                            });
+                            break;
                     }
                 } else {
                     // Add the first control object attribute
@@ -541,6 +566,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         case 'user_role':
                             props.setAttributes({
                                 advgbBlockControls: [userRoleControl]
+                            });
+                            break;
+
+                        case 'device':
+                            props.setAttributes({
+                                advgbBlockControls: [deviceControl]
                             });
                             break;
                     }
@@ -628,7 +659,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 return roles_array;
             };
 
-            return [props.isSelected && !NON_SUPPORTED_BLOCKS.includes(props.name) && countControlEnabled() && React.createElement(
+            return [props.isSelected && !NON_SUPPORTED_BLOCKS.includes(props.name) && isAnyControlEnabledGlobal() && React.createElement(
                 InspectorControls,
                 { key: 'advgb-bc-controls' },
                 React.createElement(
@@ -637,7 +668,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         title: __('Block Controls', 'advanced-gutenberg'),
                         icon: 'visibility',
                         initialOpen: false,
-                        className: isAnyControlEnabled(advgbBlockControls, ['schedule', 'user_role']) ? 'advgb-feature-icon-active' : ''
+                        className: isAnyControlEnabledBlock(advgbBlockControls) ? 'advgb-feature-icon-active' : ''
                     },
                     isControlEnabled(advgb_block_controls_vars.controls.schedule) && React.createElement(
                         Fragment,
@@ -761,6 +792,18 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 }
                             })
                         )
+                    ),
+                    isControlEnabled(advgb_block_controls_vars.controls.device) && React.createElement(
+                        Fragment,
+                        null,
+                        React.createElement(ToggleControl, {
+                            label: __('Enable block device control', 'advanced-gutenberg'),
+                            help: __('Choose in which devices this block can be displayed.', 'advanced-gutenberg'),
+                            checked: currentControlKey(advgbBlockControls, 'device', 'enabled'),
+                            onChange: function onChange() {
+                                return changeControlKey('device', 'enabled');
+                            }
+                        })
                     )
                 )
             ), React.createElement(BlockEdit, _extends({ key: 'block-edit-advgb-dates' }, props))];
@@ -769,10 +812,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
     var withAttributes = createHigherOrderComponent(function (BlockListBlock) {
         return function (props) {
-            if (!NON_SUPPORTED_BLOCKS.includes(props.name) && hasBlockSupport(props.name, 'advgb/blockControls', true) && countControlEnabled()) {
+            if (!NON_SUPPORTED_BLOCKS.includes(props.name) && hasBlockSupport(props.name, 'advgb/blockControls', true) && isAnyControlEnabledGlobal()) {
                 var advgbBlockControls = props.attributes.advgbBlockControls;
 
-                var advgbBcClass = props.isSelected === false && isAnyControlEnabled(advgbBlockControls, ['schedule', 'user_role']) ? 'advgb-bc-editor-preview' : '';
+                var advgbBcClass = props.isSelected === false && isAnyControlEnabledBlock(advgbBlockControls) ? 'advgb-bc-editor-preview' : '';
 
                 return React.createElement(BlockListBlock, _extends({}, props, { className: (0, _classnames2.default)(props.className, advgbBcClass), advgbBlockControls: '' + advgbBlockControls }));
             }

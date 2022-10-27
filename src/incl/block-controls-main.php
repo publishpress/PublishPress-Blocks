@@ -154,6 +154,13 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     }
 
                 break;
+
+                // Device control
+                case 'device':
+                    $bControl = $block['attrs']['advgbBlockControls'][$key];
+
+                    return true;
+                break;
             }
 
             return true;
@@ -275,6 +282,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 $advgb_block_controls                           = get_option( 'advgb_block_controls' );
                 $advgb_block_controls['controls']['schedule']   = isset( $_POST['schedule_control'] ) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['user_role']  = isset( $_POST['user_role_control'] ) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['device']     = isset( $_POST['device_control'] ) ? (bool) 1 : (bool) 0;
 
                 update_option( 'advgb_block_controls', $advgb_block_controls );
 
@@ -357,6 +365,37 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
         }
 
         /**
+         * Get controls status (enabled/disabled)
+         *
+         * @since 3.1.1
+         * @return array    e.g.['schedule' => true, 'user_role' => true]
+         */
+        private static function getControlsArray()
+        {
+            $block_controls = get_option( 'advgb_block_controls' );
+            $result         = [];
+            $controls       = [
+                'schedule',
+                'user_role',
+                'device'
+            ];
+
+            if( $block_controls ) {
+                foreach( $controls as $item ){
+                    $result[$item]  = isset( $block_controls['controls'][$item] )
+                                        ? (bool) $block_controls['controls'][$item]
+                                        : (bool) 1;
+                }
+            } else {
+                foreach( $controls as $item ){
+                    $result[$item] = (bool) 1;
+                }
+            }
+
+            return $result;
+        }
+
+        /**
          * Javascript objects with controls configuration to load in Admin.
          * 'advgb_block_controls_vars' object with controls configuration.
          * 'advgb_blocks_list' object with all the saved blocks in 'advgb_blocks_list' option.
@@ -431,10 +470,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     'wp-blocks',
                     'advgb_block_controls_vars',
                     [
-                        'controls' => [
-                            'schedule' => (bool) $block_controls['controls']['schedule'],
-                            'user_role' => (bool) $block_controls['controls']['user_role']
-                        ],
+                        'controls' => self::getControlsArray(),
                         'active_blocks' => $block_controls['active_blocks'],
                         'inactive_blocks' => $block_controls['inactive_blocks']
                     ]
@@ -445,10 +481,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     'wp-blocks',
                     'advgb_block_controls_vars',
                     [
-                        'controls' => [
-                            'schedule' => (bool) 1,
-                            'user_role' => (bool) 1
-                        ],
+                        'controls' => self::getControlsArray(),
                         'active_blocks' => [],
                         'inactive_blocks' => []
                     ]
@@ -483,19 +516,13 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 $non_supported = self::defaultExcludedBlocks();
             }
 
-            $schedule_control   = isset( $advgb_block_controls['controls']['schedule'] ) ? (bool) $advgb_block_controls['controls']['schedule'] : (bool) 1;
-            $user_role_control  = isset( $advgb_block_controls['controls']['user_role'] ) ? (bool) $advgb_block_controls['controls']['user_role'] : (bool) 1;
-
             // Output js variable
             wp_localize_script(
                 'wp-blocks',
                 'advgb_block_controls_vars',
                 [
                     'non_supported' => $non_supported,
-                    'controls' => [
-                        'schedule' => (bool) $schedule_control,
-                        'user_role' => (bool) $user_role_control
-                    ],
+                    'controls' => self::getControlsArray(),
                     'user_roles' => self::getUserRoles()
                 ]
             );
