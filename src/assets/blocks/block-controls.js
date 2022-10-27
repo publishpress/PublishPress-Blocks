@@ -407,6 +407,27 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         return null;
     };
 
+    /**
+     * Check if at least one control is enabled
+     *
+     * @since 3.1.1
+     * @param {string} controlAttrs     Controls attributes. e.g. advgbBlockControls or props.attributes @TODO Figure out a way to NOT require controlAttrs as param due is the same always
+     * @param {array} controls          Controls. e.g. ['schedule','user_role']
+     *
+     * @return {bool}
+     */
+    var isAnyControlEnabled = function isAnyControlEnabled(controlAttrs, controls) {
+        var count = 0;
+
+        controls.forEach(function (element) {
+            if (currentControlKey(controlAttrs, element, 'enabled')) {
+                count++;
+            }
+        });
+
+        return count > 0 ? true : false;
+    };
+
     // Add non supported blocks according to Block controls
     if (typeof advgb_block_controls_vars !== 'undefined' && typeof advgb_block_controls_vars.non_supported !== 'undefined' && advgb_block_controls_vars.non_supported.length > 0) {
         // Merge dynamically disabled blocks
@@ -616,7 +637,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         title: __('Block Controls', 'advanced-gutenberg'),
                         icon: 'visibility',
                         initialOpen: false,
-                        className: currentControlKey(advgbBlockControls, 'schedule', 'enabled') || currentControlKey(advgbBlockControls, 'user_role', 'enabled') ? 'advgb-feature-icon-active' : ''
+                        className: isAnyControlEnabled(advgbBlockControls, ['schedule', 'user_role']) ? 'advgb-feature-icon-active' : ''
                     },
                     isControlEnabled(advgb_block_controls_vars.controls.schedule) && React.createElement(
                         Fragment,
@@ -751,7 +772,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             if (!NON_SUPPORTED_BLOCKS.includes(props.name) && hasBlockSupport(props.name, 'advgb/blockControls', true) && countControlEnabled()) {
                 var advgbBlockControls = props.attributes.advgbBlockControls;
 
-                var advgbBcClass = props.isSelected === false && (currentControlKey(advgbBlockControls, 'schedule', 'enabled') || currentControlKey(advgbBlockControls, 'user_role', 'enabled')) ? 'advgb-bc-editor-preview' : '';
+                var advgbBcClass = props.isSelected === false && isAnyControlEnabled(advgbBlockControls, ['schedule', 'user_role']) ? 'advgb-bc-editor-preview' : '';
 
                 return React.createElement(BlockListBlock, _extends({}, props, { className: (0, _classnames2.default)(props.className, advgbBcClass), advgbBlockControls: '' + advgbBlockControls }));
             }

@@ -111,6 +111,27 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
         return null;
     }
 
+    /**
+     * Check if at least one control is enabled
+     *
+     * @since 3.1.1
+     * @param {string} controlAttrs     Controls attributes. e.g. advgbBlockControls or props.attributes @TODO Figure out a way to NOT require controlAttrs as param due is the same always
+     * @param {array} controls          Controls. e.g. ['schedule','user_role']
+     *
+     * @return {bool}
+     */
+    const isAnyControlEnabled = function( controlAttrs, controls ) {
+        let count = 0;
+
+        controls.forEach( (element) => {
+            if( currentControlKey( controlAttrs, element, 'enabled' ) ) {
+                count++;
+            }
+        });
+
+        return count > 0 ? true : false;
+    }
+
     // Add non supported blocks according to Block controls
     if( typeof advgb_block_controls_vars !== 'undefined'
         && typeof advgb_block_controls_vars.non_supported !== 'undefined'
@@ -329,9 +350,8 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                         icon="visibility"
                         initialOpen={ false }
                         className={
-                            ( currentControlKey( advgbBlockControls, 'schedule', 'enabled' )
-                                || currentControlKey( advgbBlockControls, 'user_role', 'enabled' )
-                            ) ? 'advgb-feature-icon-active' : ''
+                            isAnyControlEnabled( advgbBlockControls, ['schedule','user_role'] )
+                                ? 'advgb-feature-icon-active' : ''
                         }
                     >
                         { isControlEnabled( advgb_block_controls_vars.controls.schedule ) && (
@@ -473,9 +493,8 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
             if ( ( !NON_SUPPORTED_BLOCKS.includes( props.name ) ) && hasBlockSupport( props.name, 'advgb/blockControls', true ) && countControlEnabled() ) {
                 const { advgbBlockControls } = props.attributes;
                 const advgbBcClass = props.isSelected === false
-                    && ( currentControlKey( advgbBlockControls, 'schedule', 'enabled' )
-                        || currentControlKey( advgbBlockControls, 'user_role', 'enabled' )
-                    ) ? 'advgb-bc-editor-preview' : '';
+                    && isAnyControlEnabled( advgbBlockControls, ['schedule','user_role'] )
+                        ? 'advgb-bc-editor-preview' : '';
 
                 return <BlockListBlock { ...props } className={ classnames( props.className, advgbBcClass ) } advgbBlockControls={ `${ advgbBlockControls }` } />;
             }
