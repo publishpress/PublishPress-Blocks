@@ -721,7 +721,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                         label: __('Show to the selected user roles', 'advanced-gutenberg')
                                     }, {
                                         value: 'exclude',
-                                        label: __('Hide to the selected user roles', 'advanced-gutenberg')
+                                        label: __('Hide from the selected user roles', 'advanced-gutenberg')
                                     }],
                                     onChange: function onChange(value) {
                                         return changeControlKey('user_role', 'approach', value);

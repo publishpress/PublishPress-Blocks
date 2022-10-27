@@ -430,7 +430,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                                                 },
                                                 {
                                                     value: 'exclude',
-                                                    label: __( 'Hide to the selected user roles', 'advanced-gutenberg' )
+                                                    label: __( 'Hide from the selected user roles', 'advanced-gutenberg' )
                                                 }
                                             ] }
                                             onChange={ ( value ) => changeControlKey( 'user_role', 'approach', value ) }
