@@ -1,5 +1,10 @@
 import classnames from 'classnames';
 import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
+import {
+    getOptionSuggestions,
+    getOptionTitles,
+    getOptionSlugs
+} from "../0-adv-components/utils.jsx";
 
 (function ( wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose, wpElement ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
@@ -294,87 +299,6 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                 }
             }
 
-            /**
-             * Generate User role suggestions
-             *
-             * @since 3.1.0
-             *
-             * @return {array}  User role slugs e.g. ['subscriber','new_customer']
-             */
-            const getUserRoleSuggestions = function() {
-
-                /* All the available user roles in the site.
-                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
-                 */
-                const roles = getUserRoles();
-
-                return roles.map( ( role ) => role.title );
-            }
-
-            /**
-             * Match user role slugs with its user role human readable titles
-             * to display as field value (but NOT saved!).
-             *
-             * @since 3.1.0
-             * @param  roles    User role slugs e.g. ['subscriber','new_customer']
-             *
-             * @return {array}  Human readable User roles e.g. ['Subscriber','New Customer']
-             */
-            const getUserRoleTitles = function( roles ) {
-
-                /* All the available user roles in the site.
-                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
-                 */
-                const rolesToSelect = getUserRoles();
-
-                let field_value = [];
-
-                if ( rolesToSelect !== null ) {
-                    field_value = roles.map( ( role_slug ) => {
-                        let find_role = rolesToSelect.find( ( role ) => {
-                            return role.slug === role_slug;
-                        } );
-                        if ( find_role === undefined || ! find_role ) {
-                            return role_slug; // It should return false but creates empty selections
-                        }
-                        return find_role.title;
-                    } );
-                }
-
-                return field_value;
-            }
-
-            /**
-             * Match user role human readable titles with its slugs, and save slugs
-             *
-             * @since 3.1.0
-             * @param roles     Human readable User roles e.g. ['Subscriber','New Customer']
-             *
-             * @return {array}  User role slugs e.g. ['subscriber','new_customer']
-             */
-            const getUserRoleSlugs = function( roles ) {
-
-                /* All the available user roles in the site.
-                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
-                 */
-                const rolesToSelect = getUserRoles();
-
-                let roles_array = [];
-
-                roles.map(
-                    ( role_title ) => {
-                        const matching_role = rolesToSelect.find( ( role ) => {
-                            return role.title === role_title;
-                        } );
-                        if ( matching_role !== undefined ) {
-                            roles_array.push( matching_role.slug );
-                        }
-                    }
-                )
-
-                return roles_array;
-            }
-
             return ( [
                 props.isSelected && ( ! NON_SUPPORTED_BLOCKS.includes( props.name ) )
                 && isAnyControlEnabledGlobal() &&
@@ -497,17 +421,18 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                                             multiple
                                             label={ __( 'Select user roles', 'advanced-gutenberg' ) }
                                             placeholder={ __( 'Search', 'advanced-gutenberg' ) }
-                                            suggestions={ getUserRoleSuggestions() }
+                                            suggestions={ getOptionSuggestions( getUserRoles() ) }
                                             maxSuggestions={ 10 }
                                             value={
-                                                getUserRoleTitles(
+                                                getOptionTitles(
                                                     !! currentControlKey( advgbBlockControls, 'user_role', 'roles' )
                                                         ? currentControlKey( advgbBlockControls, 'user_role', 'roles' )
-                                                        : []
+                                                        : [],
+                                                    getUserRoles()
                                                 )
                                             }
                                             onChange={ ( value ) => {
-                                                changeControlKey( 'user_role', 'roles', getUserRoleSlugs( value ) )
+                                                changeControlKey( 'user_role', 'roles', getOptionSlugs( value, getUserRoles() ) )
                                             } }
                                         />
                                     ) }

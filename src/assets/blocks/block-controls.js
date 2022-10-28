@@ -278,6 +278,87 @@ function AdvDateTimeControl(props) {
 
 /***/ }),
 
+/***/ "./src/assets/blocks/0-adv-components/utils.jsx":
+/*!******************************************************!*\
+  !*** ./src/assets/blocks/0-adv-components/utils.jsx ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * Generate option title suggestions
+ *
+ * @since 3.1.1
+ * @param options Available options as objects with slug and title. e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
+ *
+ * @return {array}  Option slugs. e.g. ['subscriber','new_customer']
+ */
+var getOptionSuggestions = exports.getOptionSuggestions = function getOptionSuggestions(options) {
+    return options.map(function (item) {
+        return item.title;
+    });
+};
+
+/**
+ * Match option slugs with its option titles
+ * to display as field value (but NOT saved!).
+ *
+ * @since 3.1.1
+ * @param slugs     Option slugs. e.g. ['subscriber','new_customer']
+ * @param options   Available options as objects with slug and title. e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
+ *
+ * @return {array}  Option titles. e.g. ['Subscriber','New Customer']
+ */
+var getOptionTitles = exports.getOptionTitles = function getOptionTitles(slugs, options) {
+    var field_value = [];
+
+    if (options !== null) {
+        field_value = slugs.map(function (option_slug) {
+            var find_option = options.find(function (item) {
+                return item.slug === option_slug;
+            });
+            if (find_option === undefined || !find_option) {
+                return option_slug; // It should return false but creates empty selections
+            }
+            return find_option.title;
+        });
+    }
+
+    return field_value;
+};
+
+/**
+ * Match option titles with its slugs, and save slugs
+ *
+ * @since 3.1.1
+ * @param slugs     Option slugs. e.g. ['subscriber','new_customer']
+ * @param options   Available options as objects with slug and title. e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
+ *
+ * @return {array}  Option slugs. e.g. ['subscriber','new_customer']
+ */
+var getOptionSlugs = exports.getOptionSlugs = function getOptionSlugs(slugs, options) {
+    var slugs_array = [];
+
+    slugs.map(function (option_title) {
+        var matching_slug = options.find(function (item) {
+            return item.title === option_title;
+        });
+        if (matching_slug !== undefined) {
+            slugs_array.push(matching_slug.slug);
+        }
+    });
+
+    return slugs_array;
+};
+
+/***/ }),
+
 /***/ "./src/assets/blocks/block-controls/block-controls.jsx":
 /*!*************************************************************!*\
   !*** ./src/assets/blocks/block-controls/block-controls.jsx ***!
@@ -295,6 +376,8 @@ var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnam
 var _classnames2 = _interopRequireDefault(_classnames);
 
 var _datetime = __webpack_require__(/*! ../0-adv-components/datetime.jsx */ "./src/assets/blocks/0-adv-components/datetime.jsx");
+
+var _utils = __webpack_require__(/*! ../0-adv-components/utils.jsx */ "./src/assets/blocks/0-adv-components/utils.jsx");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -578,95 +661,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 }
             };
 
-            /**
-             * Generate User role suggestions
-             *
-             * @since 3.1.0
-             *
-             * @return {array}  User role slugs e.g. ['subscriber','new_customer']
-             */
-            var getUserRoleSuggestions = function getUserRoleSuggestions() {
-
-                /* All the available user roles in the site.
-                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
-                 */
-                var roles = getUserRoles();
-
-                return roles.map(function (role) {
-                    return role.title;
-                });
-            };
-
-            /**
-             * Match user role slugs with its user role human readable titles
-             * to display as field value (but NOT saved!).
-             *
-             * @since 3.1.0
-             * @param  roles    User role slugs e.g. ['subscriber','new_customer']
-             *
-             * @return {array}  Human readable User roles e.g. ['Subscriber','New Customer']
-             */
-            var getUserRoleTitles = function getUserRoleTitles(roles) {
-
-                /* All the available user roles in the site.
-                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
-                 */
-                var rolesToSelect = getUserRoles();
-
-                var field_value = [];
-
-                if (rolesToSelect !== null) {
-                    field_value = roles.map(function (role_slug) {
-                        var find_role = rolesToSelect.find(function (role) {
-                            return role.slug === role_slug;
-                        });
-                        if (find_role === undefined || !find_role) {
-                            return role_slug; // It should return false but creates empty selections
-                        }
-                        return find_role.title;
-                    });
-                }
-
-                return field_value;
-            };
-
-            /**
-             * Match user role human readable titles with its slugs, and save slugs
-             *
-             * @since 3.1.0
-             * @param roles     Human readable User roles e.g. ['Subscriber','New Customer']
-             *
-             * @return {array}  User role slugs e.g. ['subscriber','new_customer']
-             */
-            var getUserRoleSlugs = function getUserRoleSlugs(roles) {
-
-                /* All the available user roles in the site.
-                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
-                 */
-                var rolesToSelect = getUserRoles();
-
-                var roles_array = [];
-
-                roles.map(function (role_title) {
-                    var matching_role = rolesToSelect.find(function (role) {
-                        return role.title === role_title;
-                    });
-                    if (matching_role !== undefined) {
-                        roles_array.push(matching_role.slug);
-                    }
-                });
-
-                return roles_array;
-            };
-
             return [props.isSelected && !NON_SUPPORTED_BLOCKS.includes(props.name) && isAnyControlEnabledGlobal() && React.createElement(
                 InspectorControls,
-                { key: 'advgb-bc-controls' },
+                { key: "advgb-bc-controls" },
                 React.createElement(
                     PanelBody,
                     {
                         title: __('Block Controls', 'advanced-gutenberg'),
-                        icon: 'visibility',
+                        icon: "visibility",
                         initialOpen: false,
                         className: isAnyControlEnabledBlock(advgbBlockControls) ? 'advgb-feature-icon-active' : ''
                     },
@@ -685,7 +687,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                             Fragment,
                             null,
                             React.createElement(
-                                'div',
+                                "div",
                                 { style: { marginBottom: 30 } },
                                 React.createElement(_datetime.AdvDateTimeControl, {
                                     buttonLabel: __('Now', 'advanced-gutenberg'),
@@ -723,8 +725,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 currentControlKey(advgbBlockControls, 'schedule', 'dateFrom') > currentControlKey(advgbBlockControls, 'schedule', 'dateTo') && React.createElement(
                                     Notice,
                                     {
-                                        className: 'advgb-notice-sidebar',
-                                        status: 'warning',
+                                        className: "advgb-notice-sidebar",
+                                        status: "warning",
                                         isDismissible: false
                                     },
                                     __('"Stop showing" date should be after "Start showing" date!', 'advanced-gutenberg')
@@ -755,8 +757,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                             Fragment,
                             null,
                             React.createElement(
-                                'div',
-                                { className: 'advgb-revert-mb' },
+                                "div",
+                                { className: "advgb-revert-mb" },
                                 React.createElement(SelectControl, {
                                     value: currentControlKey(advgbBlockControls, 'user_role', 'approach'),
                                     options: [{
@@ -784,11 +786,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 multiple: true,
                                 label: __('Select user roles', 'advanced-gutenberg'),
                                 placeholder: __('Search', 'advanced-gutenberg'),
-                                suggestions: getUserRoleSuggestions(),
+                                suggestions: (0, _utils.getOptionSuggestions)(getUserRoles()),
                                 maxSuggestions: 10,
-                                value: getUserRoleTitles(!!currentControlKey(advgbBlockControls, 'user_role', 'roles') ? currentControlKey(advgbBlockControls, 'user_role', 'roles') : []),
+                                value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'user_role', 'roles') ? currentControlKey(advgbBlockControls, 'user_role', 'roles') : [], getUserRoles()),
                                 onChange: function onChange(value) {
-                                    changeControlKey('user_role', 'roles', getUserRoleSlugs(value));
+                                    changeControlKey('user_role', 'roles', (0, _utils.getOptionSlugs)(value, getUserRoles()));
                                 }
                             })
                         )
@@ -806,7 +808,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         })
                     )
                 )
-            ), React.createElement(BlockEdit, _extends({ key: 'block-edit-advgb-dates' }, props))];
+            ), React.createElement(BlockEdit, _extends({ key: "block-edit-advgb-dates" }, props))];
         };
     });
 
@@ -817,7 +819,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
                 var advgbBcClass = props.isSelected === false && isAnyControlEnabledBlock(advgbBlockControls) ? 'advgb-bc-editor-preview' : '';
 
-                return React.createElement(BlockListBlock, _extends({}, props, { className: (0, _classnames2.default)(props.className, advgbBcClass), advgbBlockControls: '' + advgbBlockControls }));
+                return React.createElement(BlockListBlock, _extends({}, props, { className: (0, _classnames2.default)(props.className, advgbBcClass), advgbBlockControls: "" + advgbBlockControls }));
             }
 
             return React.createElement(BlockListBlock, props);

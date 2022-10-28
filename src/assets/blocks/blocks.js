@@ -5434,6 +5434,87 @@ function IconListPopupHook(props) {
 
 /***/ }),
 
+/***/ "./src/assets/blocks/0-adv-components/utils.jsx":
+/*!******************************************************!*\
+  !*** ./src/assets/blocks/0-adv-components/utils.jsx ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * Generate option title suggestions
+ *
+ * @since 3.1.1
+ * @param options Available options as objects with slug and title. e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
+ *
+ * @return {array}  Option slugs. e.g. ['subscriber','new_customer']
+ */
+var getOptionSuggestions = exports.getOptionSuggestions = function getOptionSuggestions(options) {
+    return options.map(function (item) {
+        return item.title;
+    });
+};
+
+/**
+ * Match option slugs with its option titles
+ * to display as field value (but NOT saved!).
+ *
+ * @since 3.1.1
+ * @param slugs     Option slugs. e.g. ['subscriber','new_customer']
+ * @param options   Available options as objects with slug and title. e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
+ *
+ * @return {array}  Option titles. e.g. ['Subscriber','New Customer']
+ */
+var getOptionTitles = exports.getOptionTitles = function getOptionTitles(slugs, options) {
+    var field_value = [];
+
+    if (options !== null) {
+        field_value = slugs.map(function (option_slug) {
+            var find_option = options.find(function (item) {
+                return item.slug === option_slug;
+            });
+            if (find_option === undefined || !find_option) {
+                return option_slug; // It should return false but creates empty selections
+            }
+            return find_option.title;
+        });
+    }
+
+    return field_value;
+};
+
+/**
+ * Match option titles with its slugs, and save slugs
+ *
+ * @since 3.1.1
+ * @param slugs     Option slugs. e.g. ['subscriber','new_customer']
+ * @param options   Available options as objects with slug and title. e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
+ *
+ * @return {array}  Option slugs. e.g. ['subscriber','new_customer']
+ */
+var getOptionSlugs = exports.getOptionSlugs = function getOptionSlugs(slugs, options) {
+    var slugs_array = [];
+
+    slugs.map(function (option_title) {
+        var matching_slug = options.find(function (item) {
+            return item.title === option_title;
+        });
+        if (matching_slug !== undefined) {
+            slugs_array.push(matching_slug.slug);
+        }
+    });
+
+    return slugs_array;
+};
+
+/***/ }),
+
 /***/ "./src/assets/blocks/accordion/block.jsx":
 /*!***********************************************!*\
   !*** ./src/assets/blocks/accordion/block.jsx ***!
@@ -30734,15 +30815,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /***/ }),
 
 /***/ 0:
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./src/assets/blocks/0-adv-components/components.jsx ./src/assets/blocks/0-adv-components/datetime.jsx ./src/assets/blocks/0-adv-components/icon-class.jsx ./src/assets/blocks/accordion/block.jsx ./src/assets/blocks/advaccordion/accordion.jsx ./src/assets/blocks/advaccordion/block.jsx ./src/assets/blocks/advbutton/block.jsx ./src/assets/blocks/advicon/block.jsx ./src/assets/blocks/advimage/block.jsx ./src/assets/blocks/advlist/block.jsx ./src/assets/blocks/advtable/block.jsx ./src/assets/blocks/advtabs/block.jsx ./src/assets/blocks/advtabs/tab.jsx ./src/assets/blocks/advvideo/block.jsx ./src/assets/blocks/columns/block.jsx ./src/assets/blocks/columns/column.jsx ./src/assets/blocks/contact-form/block.jsx ./src/assets/blocks/container/block.jsx ./src/assets/blocks/count-up/block.jsx ./src/assets/blocks/images-slider/block.jsx ./src/assets/blocks/infobox/block.jsx ./src/assets/blocks/login-form/block.jsx ./src/assets/blocks/map/block.jsx ./src/assets/blocks/newsletter/block.jsx ./src/assets/blocks/recent-posts/block.jsx ./src/assets/blocks/recent-posts/query-controls.jsx ./src/assets/blocks/search-bar/block.jsx ./src/assets/blocks/social-links/block.jsx ./src/assets/blocks/summary/block.jsx ./src/assets/blocks/tabs/block.jsx ./src/assets/blocks/testimonial/block.jsx ./src/assets/blocks/woo-products/block.jsx ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./src/assets/blocks/0-adv-components/components.jsx ./src/assets/blocks/0-adv-components/datetime.jsx ./src/assets/blocks/0-adv-components/icon-class.jsx ./src/assets/blocks/0-adv-components/utils.jsx ./src/assets/blocks/accordion/block.jsx ./src/assets/blocks/advaccordion/accordion.jsx ./src/assets/blocks/advaccordion/block.jsx ./src/assets/blocks/advbutton/block.jsx ./src/assets/blocks/advicon/block.jsx ./src/assets/blocks/advimage/block.jsx ./src/assets/blocks/advlist/block.jsx ./src/assets/blocks/advtable/block.jsx ./src/assets/blocks/advtabs/block.jsx ./src/assets/blocks/advtabs/tab.jsx ./src/assets/blocks/advvideo/block.jsx ./src/assets/blocks/columns/block.jsx ./src/assets/blocks/columns/column.jsx ./src/assets/blocks/contact-form/block.jsx ./src/assets/blocks/container/block.jsx ./src/assets/blocks/count-up/block.jsx ./src/assets/blocks/images-slider/block.jsx ./src/assets/blocks/infobox/block.jsx ./src/assets/blocks/login-form/block.jsx ./src/assets/blocks/map/block.jsx ./src/assets/blocks/newsletter/block.jsx ./src/assets/blocks/recent-posts/block.jsx ./src/assets/blocks/recent-posts/query-controls.jsx ./src/assets/blocks/search-bar/block.jsx ./src/assets/blocks/social-links/block.jsx ./src/assets/blocks/summary/block.jsx ./src/assets/blocks/tabs/block.jsx ./src/assets/blocks/testimonial/block.jsx ./src/assets/blocks/woo-products/block.jsx ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! ./src/assets/blocks/0-adv-components/components.jsx */"./src/assets/blocks/0-adv-components/components.jsx");
 __webpack_require__(/*! ./src/assets/blocks/0-adv-components/datetime.jsx */"./src/assets/blocks/0-adv-components/datetime.jsx");
 __webpack_require__(/*! ./src/assets/blocks/0-adv-components/icon-class.jsx */"./src/assets/blocks/0-adv-components/icon-class.jsx");
+__webpack_require__(/*! ./src/assets/blocks/0-adv-components/utils.jsx */"./src/assets/blocks/0-adv-components/utils.jsx");
 __webpack_require__(/*! ./src/assets/blocks/accordion/block.jsx */"./src/assets/blocks/accordion/block.jsx");
 __webpack_require__(/*! ./src/assets/blocks/advaccordion/accordion.jsx */"./src/assets/blocks/advaccordion/accordion.jsx");
 __webpack_require__(/*! ./src/assets/blocks/advaccordion/block.jsx */"./src/assets/blocks/advaccordion/block.jsx");
