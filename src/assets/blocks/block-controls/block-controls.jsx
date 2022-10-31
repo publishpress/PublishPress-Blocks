@@ -63,6 +63,20 @@ import {
     }
 
     /**
+     * Get browsers
+     *
+     * @since 3.1.1
+     *
+     * @return {array}
+     */
+    const getBrowsers = function() {
+        return typeof advgb_block_controls_vars.browsers !== 'undefined'
+                && advgb_block_controls_vars.browsers.length > 0
+                    ? advgb_block_controls_vars.browsers
+                    : [];
+    }
+
+    /**
      * Check if at least one control is enabled per block instance
      *
      * @since 3.1.1
@@ -210,10 +224,10 @@ import {
                     roles: [],
                     approach: 'public'
                 };
-                const deviceControl = {
-                    control: 'device',
+                const browserControl = {
+                    control: 'browser',
                     enabled: true,
-                    devices: []
+                    browsers: []
                 };
 
                 // Check if advgbBlockControls attribute exists
@@ -266,11 +280,11 @@ import {
                             } );
                         break;
 
-                        case 'device':
+                        case 'browser':
                             props.setAttributes( {
                                 advgbBlockControls: [
                                     ...advgbBlockControls,
-                                    deviceControl
+                                    browserControl
                                 ]
                             } );
                         break;
@@ -290,9 +304,9 @@ import {
                             } );
                         break;
 
-                        case 'device':
+                        case 'browser':
                             props.setAttributes( {
-                                advgbBlockControls: [ deviceControl ]
+                                advgbBlockControls: [ browserControl ]
                             } );
                         break;
                     }
@@ -440,16 +454,36 @@ import {
                             ) }
                         </Fragment>
                         ) }
-                        { isControlEnabled( advgb_block_controls_vars.controls.device ) && (
+                        { isControlEnabled( advgb_block_controls_vars.controls.browser ) && (
                         <Fragment>
                             <ToggleControl
-                                label={ __( 'Enable block device control', 'advanced-gutenberg' ) }
+                                label={ __( 'Enable block browser', 'advanced-gutenberg' ) }
                                 help={
-                                    __( 'Choose in which devices this block can be displayed.', 'advanced-gutenberg' )
+                                    __( 'Choose in which browsers this block can be displayed.', 'advanced-gutenberg' )
                                 }
-                                checked={ currentControlKey( advgbBlockControls, 'device', 'enabled' ) }
-                                onChange={ () => changeControlKey( 'device', 'enabled' ) }
+                                checked={ currentControlKey( advgbBlockControls, 'browser', 'enabled' ) }
+                                onChange={ () => changeControlKey( 'browser', 'enabled' ) }
                             />
+                            { currentControlKey( advgbBlockControls, 'browser', 'enabled' ) && (
+                                <FormTokenField
+                                    multiple
+                                    label={ __( 'Select browsers', 'advanced-gutenberg' ) }
+                                    placeholder={ __( 'Search', 'advanced-gutenberg' ) }
+                                    suggestions={ getOptionSuggestions( getBrowsers() ) }
+                                    maxSuggestions={ 10 }
+                                    value={
+                                        getOptionTitles(
+                                            !! currentControlKey( advgbBlockControls, 'browser', 'browsers' )
+                                                ? currentControlKey( advgbBlockControls, 'browser', 'browsers' )
+                                                : [],
+                                            getBrowsers()
+                                        )
+                                    }
+                                    onChange={ ( value ) => {
+                                        changeControlKey( 'browser', 'browsers', getOptionSlugs( value, getBrowsers() ) )
+                                    } }
+                                />
+                            ) }
                         </Fragment>
                         ) }
                     </PanelBody>

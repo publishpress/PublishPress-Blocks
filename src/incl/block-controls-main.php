@@ -37,10 +37,9 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                         && (bool) $item['enabled'] === true
                     ) {
 
-                        // Stop iteration; we reached a control that decides block shouln't be displayed
-                        if( self::blockVsControl( $block, $item['control'], $key ) === false ) {
+                        if( self::displayBlock( $block, $item['control'], $key ) === false ) {
+                            // Stop iteration; we reached a control that decides block shouln't be displayed
                             $block_content = ''; // Empty block content (no visible)
-                            break;
                         }
                     }
                 }
@@ -54,13 +53,13 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
          *
          * @since 3.1.0
          *
-         * @param array $block      Block attributes
+         * @param array $block      Block object
          * @param string $control   Control to validate against a block. e.g. 'schedule'
          * @param int $key          Array position for $control
          *
          * @return bool             True to display block, false to hide
          */
-        private static function blockVsControl( $block, $control, $key )
+        private static function displayBlock( $block, $control, $key )
         {
             switch( $control ) {
 
@@ -155,11 +154,31 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
 
                 break;
 
-                // Device control
-                case 'device':
+                // Browser control
+                case 'browser':
                     $bControl = $block['attrs']['advgbBlockControls'][$key];
+                    $selected = is_array( $bControl['browsers'] ) ? $bControl['browsers'] : [];
 
-                    return true;
+                    if( count( $selected ) ) {
+
+                        $selected = array_map( 'sanitize_text_field', $selected );
+
+                        require_once( ADVANCED_GUTENBERG_VENDOR_PATH . 'wolfcast/browser-detection/lib/BrowserDetection.php' );
+                        $browser = new \Wolfcast\BrowserDetection();
+
+                        /* Convert current browser from human readable to lowercase without empty spaces
+                         * to match getBrowser() array values
+                         */
+                        $current = strtolower(
+                            str_replace(
+                                ' ',
+                                '_',
+                                $browser->getName()
+                            )
+                        );
+
+                        return in_array( $current, $selected ) ? true : false;
+                    }
                 break;
             }
 
@@ -282,7 +301,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 $advgb_block_controls                           = get_option( 'advgb_block_controls' );
                 $advgb_block_controls['controls']['schedule']   = isset( $_POST['schedule_control'] ) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['user_role']  = isset( $_POST['user_role_control'] ) ? (bool) 1 : (bool) 0;
-                $advgb_block_controls['controls']['device']     = isset( $_POST['device_control'] ) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['browser']    = isset( $_POST['browser_control'] ) ? (bool) 1 : (bool) 0;
 
                 update_option( 'advgb_block_controls', $advgb_block_controls );
 
@@ -377,7 +396,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
             $controls       = [
                 'schedule',
                 'user_role',
-                'device'
+                'browser'
             ];
 
             if( $block_controls ) {
@@ -523,7 +542,8 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 [
                     'non_supported' => $non_supported,
                     'controls' => self::getControlsArray(),
-                    'user_roles' => self::getUserRoles()
+                    'user_roles' => self::getUserRoles(),
+                    'browsers' => self::getBrowsers()
                 ]
             );
         }
@@ -597,6 +617,39 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
             }
 
             return $result;
+        }
+
+        /**
+         * Retrieve Browsers
+         *
+         * @since 3.1.1
+         *
+         * @return array
+         */
+        public static function getBrowsers()
+        {
+            return [
+                [
+                    'slug' => 'chrome',
+                    'title' => 'Chrome',
+                ],
+                [
+                    'slug' => 'edge',
+                    'title' => 'Edge',
+                ],
+                [
+                    'slug' => 'firefox',
+                    'title' => 'Firefox',
+                ],
+                [
+                    'slug' => 'opera',
+                    'title' => 'Opera',
+                ],
+                [
+                    'slug' => 'safari',
+                    'title' => 'Safari',
+                ]
+            ];
         }
     }
 }

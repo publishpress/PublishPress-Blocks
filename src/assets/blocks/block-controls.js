@@ -438,6 +438,17 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     };
 
     /**
+     * Get browsers
+     *
+     * @since 3.1.1
+     *
+     * @return {array}
+     */
+    var getBrowsers = function getBrowsers() {
+        return typeof advgb_block_controls_vars.browsers !== 'undefined' && advgb_block_controls_vars.browsers.length > 0 ? advgb_block_controls_vars.browsers : [];
+    };
+
+    /**
      * Check if at least one control is enabled per block instance
      *
      * @since 3.1.1
@@ -584,10 +595,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     roles: [],
                     approach: 'public'
                 };
-                var deviceControl = {
-                    control: 'device',
+                var browserControl = {
+                    control: 'browser',
                     enabled: true,
-                    devices: []
+                    browsers: []
                 };
 
                 // Check if advgbBlockControls attribute exists
@@ -631,9 +642,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                             });
                             break;
 
-                        case 'device':
+                        case 'browser':
                             props.setAttributes({
-                                advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [deviceControl])
+                                advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [browserControl])
                             });
                             break;
                     }
@@ -652,9 +663,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                             });
                             break;
 
-                        case 'device':
+                        case 'browser':
                             props.setAttributes({
-                                advgbBlockControls: [deviceControl]
+                                advgbBlockControls: [browserControl]
                             });
                             break;
                     }
@@ -795,15 +806,26 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                             })
                         )
                     ),
-                    isControlEnabled(advgb_block_controls_vars.controls.device) && React.createElement(
+                    isControlEnabled(advgb_block_controls_vars.controls.browser) && React.createElement(
                         Fragment,
                         null,
                         React.createElement(ToggleControl, {
-                            label: __('Enable block device control', 'advanced-gutenberg'),
-                            help: __('Choose in which devices this block can be displayed.', 'advanced-gutenberg'),
-                            checked: currentControlKey(advgbBlockControls, 'device', 'enabled'),
+                            label: __('Enable block browser', 'advanced-gutenberg'),
+                            help: __('Choose in which browsers this block can be displayed.', 'advanced-gutenberg'),
+                            checked: currentControlKey(advgbBlockControls, 'browser', 'enabled'),
                             onChange: function onChange() {
-                                return changeControlKey('device', 'enabled');
+                                return changeControlKey('browser', 'enabled');
+                            }
+                        }),
+                        currentControlKey(advgbBlockControls, 'browser', 'enabled') && React.createElement(FormTokenField, {
+                            multiple: true,
+                            label: __('Select browsers', 'advanced-gutenberg'),
+                            placeholder: __('Search', 'advanced-gutenberg'),
+                            suggestions: (0, _utils.getOptionSuggestions)(getBrowsers()),
+                            maxSuggestions: 10,
+                            value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'browser', 'browsers') ? currentControlKey(advgbBlockControls, 'browser', 'browsers') : [], getBrowsers()),
+                            onChange: function onChange(value) {
+                                changeControlKey('browser', 'browsers', (0, _utils.getOptionSlugs)(value, getBrowsers()));
                             }
                         })
                     )

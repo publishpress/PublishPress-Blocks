@@ -41,8 +41,8 @@ defined('ABSPATH') || die;
 $includeFilebRelativePath = '/publishpress/publishpress-instance-protection/include.php';
 if (file_exists(__DIR__ . '/vendor' . $includeFilebRelativePath)) {
     require_once __DIR__ . '/vendor' . $includeFilebRelativePath;
-} else if (defined('PP_AUTHORS_VENDOR_PATH') && file_exists(PP_AUTHORS_VENDOR_PATH . $includeFilebRelativePath)) {
-    require_once PP_AUTHORS_VENDOR_PATH . $includeFilebRelativePath;
+} else if (defined('ADVANCED_GUTENBERG_VENDOR_PATH') && file_exists(ADVANCED_GUTENBERG_VENDOR_PATH . $includeFilebRelativePath)) {
+    require_once ADVANCED_GUTENBERG_VENDOR_PATH . $includeFilebRelativePath;
 }
 
 if (class_exists('PublishPressInstanceProtection\\Config')) {
@@ -61,6 +61,14 @@ if (! defined('ADVANCED_GUTENBERG_LOADED')) {
 
     if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
         define('ADVANCED_GUTENBERG_PLUGIN', __FILE__);
+    }
+
+    if ( ! defined( 'ADVANCED_GUTENBERG_BASE_PATH' ) ) {
+        define( 'ADVANCED_GUTENBERG_BASE_PATH', __DIR__ );
+    }
+
+    if ( ! defined( 'ADVANCED_GUTENBERG_VENDOR_PATH' ) ) {
+        define( 'ADVANCED_GUTENBERG_VENDOR_PATH', ADVANCED_GUTENBERG_BASE_PATH . '/vendor/' );
     }
 
     // Vendor and Ask-for-Review
