@@ -176,8 +176,23 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                                 $browser->getName()
                             )
                         );
+                        $approach = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )
+                                        ? $bControl['approach'] : 'public';
 
-                        return in_array( $current, $selected ) ? true : false;
+                        switch( $approach ) {
+                            default:
+                            case 'public':
+                                return true;
+                            break;
+
+                            case 'include':
+                                return in_array( $current, $selected ) ? true : false;
+                            break;
+
+                            case 'exclude':
+                                return ! in_array( $current, $selected ) ? true : false;
+                            break;
+                        }
                     }
                 break;
             }

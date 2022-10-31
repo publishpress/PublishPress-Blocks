@@ -598,7 +598,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 var browserControl = {
                     control: 'browser',
                     enabled: true,
-                    browsers: []
+                    browsers: [],
+                    approach: 'public'
                 };
 
                 // Check if advgbBlockControls attribute exists
@@ -817,17 +818,41 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 return changeControlKey('browser', 'enabled');
                             }
                         }),
-                        currentControlKey(advgbBlockControls, 'browser', 'enabled') && React.createElement(FormTokenField, {
-                            multiple: true,
-                            label: __('Select browsers', 'advanced-gutenberg'),
-                            placeholder: __('Search', 'advanced-gutenberg'),
-                            suggestions: (0, _utils.getOptionSuggestions)(getBrowsers()),
-                            maxSuggestions: 10,
-                            value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'browser', 'browsers') ? currentControlKey(advgbBlockControls, 'browser', 'browsers') : [], getBrowsers()),
-                            onChange: function onChange(value) {
-                                changeControlKey('browser', 'browsers', (0, _utils.getOptionSlugs)(value, getBrowsers()));
-                            }
-                        })
+                        currentControlKey(advgbBlockControls, 'browser', 'enabled') && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(
+                                "div",
+                                { className: "advgb-revert-mb" },
+                                React.createElement(SelectControl, {
+                                    value: currentControlKey(advgbBlockControls, 'browser', 'approach'),
+                                    options: [{
+                                        value: 'public',
+                                        label: __('Show in all browsers', 'advanced-gutenberg')
+                                    }, {
+                                        value: 'include',
+                                        label: __('Show to the selected browsers', 'advanced-gutenberg')
+                                    }, {
+                                        value: 'exclude',
+                                        label: __('Hide to the selected browsers', 'advanced-gutenberg')
+                                    }],
+                                    onChange: function onChange(value) {
+                                        return changeControlKey('browser', 'approach', value);
+                                    }
+                                })
+                            ),
+                            React.createElement(FormTokenField, {
+                                multiple: true,
+                                label: __('Select browsers', 'advanced-gutenberg'),
+                                placeholder: __('Search', 'advanced-gutenberg'),
+                                suggestions: (0, _utils.getOptionSuggestions)(getBrowsers()),
+                                maxSuggestions: 10,
+                                value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'browser', 'browsers') ? currentControlKey(advgbBlockControls, 'browser', 'browsers') : [], getBrowsers()),
+                                onChange: function onChange(value) {
+                                    changeControlKey('browser', 'browsers', (0, _utils.getOptionSlugs)(value, getBrowsers()));
+                                }
+                            })
+                        )
                     )
                 )
             ), React.createElement(BlockEdit, _extends({ key: "block-edit-advgb-dates" }, props))];

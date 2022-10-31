@@ -227,7 +227,8 @@ import {
                 const browserControl = {
                     control: 'browser',
                     enabled: true,
-                    browsers: []
+                    browsers: [],
+                    approach: 'public'
                 };
 
                 // Check if advgbBlockControls attribute exists
@@ -465,24 +466,48 @@ import {
                                 onChange={ () => changeControlKey( 'browser', 'enabled' ) }
                             />
                             { currentControlKey( advgbBlockControls, 'browser', 'enabled' ) && (
-                                <FormTokenField
-                                    multiple
-                                    label={ __( 'Select browsers', 'advanced-gutenberg' ) }
-                                    placeholder={ __( 'Search', 'advanced-gutenberg' ) }
-                                    suggestions={ getOptionSuggestions( getBrowsers() ) }
-                                    maxSuggestions={ 10 }
-                                    value={
-                                        getOptionTitles(
-                                            !! currentControlKey( advgbBlockControls, 'browser', 'browsers' )
-                                                ? currentControlKey( advgbBlockControls, 'browser', 'browsers' )
-                                                : [],
-                                            getBrowsers()
-                                        )
-                                    }
-                                    onChange={ ( value ) => {
-                                        changeControlKey( 'browser', 'browsers', getOptionSlugs( value, getBrowsers() ) )
-                                    } }
-                                />
+                                <Fragment>
+                                    <div className="advgb-revert-mb">
+                                        <SelectControl
+                                            value={
+                                                currentControlKey( advgbBlockControls, 'browser', 'approach' )
+                                            }
+                                            options={ [
+                                                {
+                                                    value: 'public',
+                                                    label: __( 'Show in all browsers', 'advanced-gutenberg' )
+                                                },
+                                                {
+                                                    value: 'include',
+                                                    label: __( 'Show to the selected browsers', 'advanced-gutenberg' )
+                                                },
+                                                {
+                                                    value: 'exclude',
+                                                    label: __( 'Hide to the selected browsers', 'advanced-gutenberg' )
+                                                }
+                                            ] }
+                                            onChange={ ( value ) => changeControlKey( 'browser', 'approach', value ) }
+                                        />
+                                    </div>
+                                    <FormTokenField
+                                        multiple
+                                        label={ __( 'Select browsers', 'advanced-gutenberg' ) }
+                                        placeholder={ __( 'Search', 'advanced-gutenberg' ) }
+                                        suggestions={ getOptionSuggestions( getBrowsers() ) }
+                                        maxSuggestions={ 10 }
+                                        value={
+                                            getOptionTitles(
+                                                !! currentControlKey( advgbBlockControls, 'browser', 'browsers' )
+                                                    ? currentControlKey( advgbBlockControls, 'browser', 'browsers' )
+                                                    : [],
+                                                getBrowsers()
+                                            )
+                                        }
+                                        onChange={ ( value ) => {
+                                            changeControlKey( 'browser', 'browsers', getOptionSlugs( value, getBrowsers() ) )
+                                        } }
+                                    />
+                                </Fragment>
                             ) }
                         </Fragment>
                         ) }
