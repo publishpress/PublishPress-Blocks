@@ -841,7 +841,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                     }
                                 })
                             ),
-                            React.createElement(FormTokenField, {
+                            (currentControlKey(advgbBlockControls, 'browser', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'browser', 'approach') === 'exclude') && React.createElement(FormTokenField, {
                                 multiple: true,
                                 label: __('Select browsers', 'advanced-gutenberg'),
                                 placeholder: __('Search', 'advanced-gutenberg'),

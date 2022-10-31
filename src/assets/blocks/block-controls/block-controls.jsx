@@ -489,24 +489,28 @@ import {
                                             onChange={ ( value ) => changeControlKey( 'browser', 'approach', value ) }
                                         />
                                     </div>
-                                    <FormTokenField
-                                        multiple
-                                        label={ __( 'Select browsers', 'advanced-gutenberg' ) }
-                                        placeholder={ __( 'Search', 'advanced-gutenberg' ) }
-                                        suggestions={ getOptionSuggestions( getBrowsers() ) }
-                                        maxSuggestions={ 10 }
-                                        value={
-                                            getOptionTitles(
-                                                !! currentControlKey( advgbBlockControls, 'browser', 'browsers' )
-                                                    ? currentControlKey( advgbBlockControls, 'browser', 'browsers' )
-                                                    : [],
-                                                getBrowsers()
-                                            )
-                                        }
-                                        onChange={ ( value ) => {
-                                            changeControlKey( 'browser', 'browsers', getOptionSlugs( value, getBrowsers() ) )
-                                        } }
-                                    />
+                                    { ( currentControlKey( advgbBlockControls, 'browser', 'approach' ) === 'include' ||
+                                        currentControlKey( advgbBlockControls, 'browser', 'approach' ) === 'exclude'
+                                    ) && (
+                                        <FormTokenField
+                                            multiple
+                                            label={ __( 'Select browsers', 'advanced-gutenberg' ) }
+                                            placeholder={ __( 'Search', 'advanced-gutenberg' ) }
+                                            suggestions={ getOptionSuggestions( getBrowsers() ) }
+                                            maxSuggestions={ 10 }
+                                            value={
+                                                getOptionTitles(
+                                                    !! currentControlKey( advgbBlockControls, 'browser', 'browsers' )
+                                                        ? currentControlKey( advgbBlockControls, 'browser', 'browsers' )
+                                                        : [],
+                                                    getBrowsers()
+                                                )
+                                            }
+                                            onChange={ ( value ) => {
+                                                changeControlKey( 'browser', 'browsers', getOptionSlugs( value, getBrowsers() ) )
+                                            } }
+                                        />
+                                    ) }
                                 </Fragment>
                             ) }
                         </Fragment>
