@@ -841,7 +841,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         null,
                         React.createElement(ToggleControl, {
                             label: __('Enable block browsers', 'advanced-gutenberg'),
-                            help: __('Choose in which browsers this block can be displayed. Please note the result could not be 100% accurate due some browsers can mimic a different browser.', 'advanced-gutenberg'),
+                            help: __('Choose in which browsers this block can be displayed.', 'advanced-gutenberg'),
                             checked: currentControlKey(advgbBlockControls, 'browser', 'enabled'),
                             onChange: function onChange() {
                                 return changeControlKey('browser', 'enabled');

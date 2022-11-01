@@ -49,7 +49,7 @@ $platform_control   = PublishPress\Blocks\Controls::getControlValue( 'platform',
         </tr>
         <tr>
             <th scope="row">
-                <?php _e( 'Browser control', 'advanced-gutenberg' ) ?>
+                <?php _e( 'Browsers control', 'advanced-gutenberg' ) ?>
             </th>
             <td>
                 <label>

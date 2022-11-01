@@ -737,7 +737,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 ],
                 [
                     'slug' => 'macintosh',
-                    'title' => 'Mac',
+                    'title' => 'macOS',
                 ],
                 [
                     'slug' => 'android',

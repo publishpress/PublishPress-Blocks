@@ -495,7 +495,7 @@ import {
                             <ToggleControl
                                 label={ __( 'Enable block browsers', 'advanced-gutenberg' ) }
                                 help={
-                                    __( 'Choose in which browsers this block can be displayed. Please note the result could not be 100% accurate due some browsers can mimic a different browser.', 'advanced-gutenberg' )
+                                    __( 'Choose in which browsers this block can be displayed.', 'advanced-gutenberg' )
                                 }
                                 checked={ currentControlKey( advgbBlockControls, 'browser', 'enabled' ) }
                                 onChange={ () => changeControlKey( 'browser', 'enabled' ) }
