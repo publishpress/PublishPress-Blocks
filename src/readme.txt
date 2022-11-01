@@ -258,8 +258,11 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 == Changelog ==
 
 = 3.1.1 - 1 Nov 2022 =
-  * Add: Platform and Browser controls
-  
+  * Add: Platform and Browser block controls
+  * Add: Base path constant
+  * Add: Reusable methods for FormTokenField
+  * Fix: Vendor path constant
+
 = 3.1.0 - 26 Oct 2022 =
   * Add: Block Controls admin page
   * Add: User roles block control
