@@ -3,7 +3,8 @@ defined( 'ABSPATH' ) || die;
 
 $schedule_control   = PublishPress\Blocks\Controls::getControlValue( 'schedule', 1 );
 $user_role_control  = PublishPress\Blocks\Controls::getControlValue( 'user_role', 1 );
-$browser_control     = PublishPress\Blocks\Controls::getControlValue( 'browser', 1 );
+$browser_control    = PublishPress\Blocks\Controls::getControlValue( 'browser', 1 );
+$platform_control   = PublishPress\Blocks\Controls::getControlValue( 'platform', 1 );
 ?>
 <form method="post">
     <?php wp_nonce_field( 'advgb_controls_settings_nonce', 'advgb_controls_settings_nonce_field' ); ?>
@@ -59,6 +60,25 @@ $browser_control     = PublishPress\Blocks\Controls::getControlValue( 'browser',
                     <?php
                     _e(
                         'Choose in which browsers your blocks can be displayed.',
+                        'advanced-gutenberg'
+                    )
+                    ?>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <?php _e( 'Platforms control', 'advanced-gutenberg' ) ?>
+            </th>
+            <td>
+                <label>
+                    <input type="checkbox" name="platform_control"
+                           value="1"
+                           <?php echo $platform_control ? ' checked' : '' ?>
+                    />
+                    <?php
+                    _e(
+                        'Choose in which platforms your blocks can be displayed.',
                         'advanced-gutenberg'
                     )
                     ?>

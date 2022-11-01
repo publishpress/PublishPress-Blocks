@@ -167,7 +167,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                         $browser = new \Wolfcast\BrowserDetection();
 
                         /* Convert current browser from human readable to lowercase without empty spaces
-                         * to match getBrowser() array values
+                         * to match getBrowsers() array values
                          */
                         $current = strtolower(
                             str_replace(
@@ -194,6 +194,57 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                             break;
                         }
                     }
+                break;
+
+                // Platform control
+                case 'platform':
+                    $bControl = $block['attrs']['advgbBlockControls'][$key];
+                    $selected = is_array( $bControl['platforms'] ) ? $bControl['platforms'] : [];
+
+                    if( count( $selected ) ) {
+
+                        $selected = array_map( 'sanitize_text_field', $selected );
+
+                        require_once( ADVANCED_GUTENBERG_VENDOR_PATH . 'wolfcast/browser-detection/lib/BrowserDetection.php' );
+                        $platform = new \Wolfcast\BrowserDetection();
+
+                        /* Convert current platform from human readable to lowercase without empty spaces
+                         * to match getPlatforms() array values
+                         */
+                        $current = strtolower(
+                            str_replace(
+                                ' ',
+                                '_',
+                                $platform->getPlatform()
+                            )
+                        );
+
+                        // Since iPad now uses iPadOS but the library still recognizes as iOS, we check manually
+                        if(  strpos( $_SERVER['HTTP_USER_AGENT'], 'iPad' ) !== false ) {
+                            $current = 'ipados';
+                        }
+
+                        $approach = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )
+                                        ? $bControl['approach'] : 'public';
+
+                        switch( $approach ) {
+                            default:
+                            case 'public':
+                                return true;
+                            break;
+
+                            case 'include':
+                                return in_array( $current, $selected ) ? true : false;
+                            break;
+
+                            case 'exclude':
+                                return ! in_array( $current, $selected ) ? true : false;
+                            break;
+                        }
+                    }
+
+                    // browser is enabled, include or exclude selected but no platforms selected
+                    return false;
                 break;
             }
 
@@ -317,6 +368,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 $advgb_block_controls['controls']['schedule']   = isset( $_POST['schedule_control'] ) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['user_role']  = isset( $_POST['user_role_control'] ) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['browser']    = isset( $_POST['browser_control'] ) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['platform']   = isset( $_POST['platform_control'] ) ? (bool) 1 : (bool) 0;
 
                 update_option( 'advgb_block_controls', $advgb_block_controls );
 
@@ -411,7 +463,8 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
             $controls       = [
                 'schedule',
                 'user_role',
-                'browser'
+                'browser',
+                'platform'
             ];
 
             if( $block_controls ) {
@@ -558,7 +611,8 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     'non_supported' => $non_supported,
                     'controls' => self::getControlsArray(),
                     'user_roles' => self::getUserRoles(),
-                    'browsers' => self::getBrowsers()
+                    'browsers' => self::getBrowsers(),
+                    'platforms' => self::getPlatforms()
                 ]
             );
         }
@@ -663,6 +717,43 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 [
                     'slug' => 'safari',
                     'title' => 'Safari',
+                ]
+            ];
+        }
+
+        /**
+         * Retrieve Platforms
+         *
+         * @since 3.1.1
+         *
+         * @return array
+         */
+        public static function getPlatforms()
+        {
+            return [
+                [
+                    'slug' => 'windows',
+                    'title' => 'Windows',
+                ],
+                [
+                    'slug' => 'macintosh',
+                    'title' => 'Mac',
+                ],
+                [
+                    'slug' => 'android',
+                    'title' => 'Android',
+                ],
+                [
+                    'slug' => 'ios',
+                    'title' => 'iOS',
+                ],
+                [
+                    'slug' => 'ipados',
+                    'title' => 'iPadOS',
+                ],
+                [
+                    'slug' => 'linux',
+                    'title' => 'Linux',
                 ]
             ];
         }
