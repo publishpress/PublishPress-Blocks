@@ -1,5 +1,10 @@
 import classnames from 'classnames';
 import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
+import {
+    getOptionSuggestions,
+    getOptionTitles,
+    getOptionSlugs
+} from "../0-adv-components/utils.jsx";
 
 (function ( wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose, wpElement ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
@@ -23,6 +28,13 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
         'advgb/tab',
         'advgb/column'
     ];
+
+    const getGlobalControls = function () {
+        return typeof advgb_block_controls_vars.controls !== 'undefined'
+                            && Object.keys(advgb_block_controls_vars.controls).length > 0
+                                ? advgb_block_controls_vars.controls
+                                : [];
+    }
 
     /**
      * Check if a control is enabled
@@ -51,19 +63,75 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
     }
 
     /**
-     * Check how many controls are enabled
+     * Get platforms
+     *
+     * @since 3.1.1
+     *
+     * @return {array}
+     */
+    const getPlatforms = function() {
+        return typeof advgb_block_controls_vars.platforms !== 'undefined'
+                && advgb_block_controls_vars.platforms.length > 0
+                    ? advgb_block_controls_vars.platforms
+                    : [];
+    }
+
+    /**
+     * Get browsers
+     *
+     * @since 3.1.1
+     *
+     * @return {array}
+     */
+    const getBrowsers = function() {
+        return typeof advgb_block_controls_vars.browsers !== 'undefined'
+                && advgb_block_controls_vars.browsers.length > 0
+                    ? advgb_block_controls_vars.browsers
+                    : [];
+    }
+
+    /**
+     * Check if at least one control is enabled per block instance
+     *
+     * @since 3.1.1
+     * @param {string} controlAttrs     Controls attributes. e.g. advgbBlockControls or props.attributes @TODO Figure out a way to NOT require controlAttrs as param due is the same always
+     *
+     * @return {bool}
+     */
+    const isAnyControlEnabledBlock = function( controlAttrs ) {
+        const globalControls    = getGlobalControls();
+        let counter             = 0;
+        let blockControls       = []; // Controls enabled in block instance
+
+        // Get enabled global controls (in Settings)
+        Object.keys(globalControls).forEach( (item) => {
+            if( isControlEnabled( advgb_block_controls_vars.controls[item] ) ) {
+                blockControls.push(item);
+            }
+        } );
+
+        // Get counter for enabled controls in block instance
+        blockControls.forEach( (item) => {
+            if( currentControlKey( controlAttrs, item, 'enabled' ) ) {
+                counter++;
+            }
+        } );
+
+        return counter > 0 ? true : false;
+    }
+
+    /**
+     * Check if at least one control is enabled globally (in Settings)
      *
      * @since 3.1.0
      *
      * @return {bool}
      */
-    const countControlEnabled = function() {
-        const allControls = typeof advgb_block_controls_vars.controls !== 'undefined'
-                            && Object.keys(advgb_block_controls_vars.controls).length > 0
-                                ? advgb_block_controls_vars.controls
-                                : [];
-        let counter = 0;
-        Object.keys(allControls).map( (item) => {
+    const isAnyControlEnabledGlobal = function() {
+        const globalControls    = getGlobalControls();
+        let counter             = 0;
+
+        Object.keys(globalControls).map( (item) => {
             if( isControlEnabled( advgb_block_controls_vars.controls[item] ) ) {
                 counter++;
             }
@@ -124,7 +192,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
 
     // Register block controls to blocks attributes
     addFilter( 'blocks.registerBlockType', 'advgb/blockControls', function ( settings ) {
-        if ( ! NON_SUPPORTED_BLOCKS.includes( settings.name ) && countControlEnabled() ) {
+        if ( ! NON_SUPPORTED_BLOCKS.includes( settings.name ) && isAnyControlEnabledGlobal() ) {
             settings.attributes = Object.assign( settings.attributes, {
                 advgbBlockControls: {
                     type: 'array',
@@ -168,6 +236,18 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                     control: 'user_role',
                     enabled: true,
                     roles: [],
+                    approach: 'public'
+                };
+                const browserControl = {
+                    control: 'browser',
+                    enabled: true,
+                    browsers: [],
+                    approach: 'public'
+                };
+                const platformControl = {
+                    control: 'platform',
+                    enabled: true,
+                    platforms: [],
                     approach: 'public'
                 };
 
@@ -220,6 +300,24 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                                 ]
                             } );
                         break;
+
+                        case 'browser':
+                            props.setAttributes( {
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    browserControl
+                                ]
+                            } );
+                        break;
+
+                        case 'platform':
+                            props.setAttributes( {
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    platformControl
+                                ]
+                            } );
+                        break;
                     }
                 } else {
                     // Add the first control object attribute
@@ -235,103 +333,33 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                                 advgbBlockControls: [ userRoleControl ]
                             } );
                         break;
+
+                        case 'browser':
+                            props.setAttributes( {
+                                advgbBlockControls: [ browserControl ]
+                            } );
+                        break;
+
+                        case 'platform':
+                            props.setAttributes( {
+                                advgbBlockControls: [ platformControl ]
+                            } );
+                        break;
                     }
                 }
-            }
-
-            /**
-             * Generate User role suggestions
-             *
-             * @since 3.1.0
-             *
-             * @return {array}  User role slugs e.g. ['subscriber','new_customer']
-             */
-            const getUserRoleSuggestions = function() {
-
-                /* All the available user roles in the site.
-                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
-                 */
-                const roles = getUserRoles();
-
-                return roles.map( ( role ) => role.title );
-            }
-
-            /**
-             * Match user role slugs with its user role human readable titles
-             * to display as field value (but NOT saved!).
-             *
-             * @since 3.1.0
-             * @param  roles    User role slugs e.g. ['subscriber','new_customer']
-             *
-             * @return {array}  Human readable User roles e.g. ['Subscriber','New Customer']
-             */
-            const getUserRoleTitles = function( roles ) {
-
-                /* All the available user roles in the site.
-                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
-                 */
-                const rolesToSelect = getUserRoles();
-
-                let field_value = [];
-
-                if ( rolesToSelect !== null ) {
-                    field_value = roles.map( ( role_slug ) => {
-                        let find_role = rolesToSelect.find( ( role ) => {
-                            return role.slug === role_slug;
-                        } );
-                        if ( find_role === undefined || ! find_role ) {
-                            return role_slug; // It should return false but creates empty selections
-                        }
-                        return find_role.title;
-                    } );
-                }
-
-                return field_value;
-            }
-
-            /**
-             * Match user role human readable titles with its slugs, and save slugs
-             *
-             * @since 3.1.0
-             * @param roles     Human readable User roles e.g. ['Subscriber','New Customer']
-             *
-             * @return {array}  User role slugs e.g. ['subscriber','new_customer']
-             */
-            const getUserRoleSlugs = function( roles ) {
-
-                /* All the available user roles in the site.
-                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
-                 */
-                const rolesToSelect = getUserRoles();
-
-                let roles_array = [];
-
-                roles.map(
-                    ( role_title ) => {
-                        const matching_role = rolesToSelect.find( ( role ) => {
-                            return role.title === role_title;
-                        } );
-                        if ( matching_role !== undefined ) {
-                            roles_array.push( matching_role.slug );
-                        }
-                    }
-                )
-
-                return roles_array;
             }
 
             return ( [
                 props.isSelected && ( ! NON_SUPPORTED_BLOCKS.includes( props.name ) )
-                && countControlEnabled() &&
+                && isAnyControlEnabledGlobal() &&
                 <InspectorControls key="advgb-bc-controls">
                     <PanelBody
                         title={ __( 'Block Controls', 'advanced-gutenberg' ) }
                         icon="visibility"
                         initialOpen={ false }
                         className={
-                            ( currentControlKey( advgbBlockControls, 'schedule', 'enabled' )
-                                || currentControlKey( advgbBlockControls, 'user_role', 'enabled' )
-                            ) ? 'advgb-feature-icon-active' : ''
+                            isAnyControlEnabledBlock( advgbBlockControls )
+                                ? 'advgb-feature-icon-active' : ''
                         }
                     >
                         { isControlEnabled( advgb_block_controls_vars.controls.schedule ) && (
@@ -443,17 +471,18 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                                             multiple
                                             label={ __( 'Select user roles', 'advanced-gutenberg' ) }
                                             placeholder={ __( 'Search', 'advanced-gutenberg' ) }
-                                            suggestions={ getUserRoleSuggestions() }
+                                            suggestions={ getOptionSuggestions( getUserRoles() ) }
                                             maxSuggestions={ 10 }
                                             value={
-                                                getUserRoleTitles(
+                                                getOptionTitles(
                                                     !! currentControlKey( advgbBlockControls, 'user_role', 'roles' )
                                                         ? currentControlKey( advgbBlockControls, 'user_role', 'roles' )
-                                                        : []
+                                                        : [],
+                                                    getUserRoles()
                                                 )
                                             }
                                             onChange={ ( value ) => {
-                                                changeControlKey( 'user_role', 'roles', getUserRoleSlugs( value ) )
+                                                changeControlKey( 'user_role', 'roles', getOptionSlugs( value, getUserRoles() ) )
                                             } }
                                         />
                                     ) }
@@ -461,6 +490,148 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                             ) }
                         </Fragment>
                         ) }
+                        { isControlEnabled( advgb_block_controls_vars.controls.browser ) && (
+                        <Fragment>
+                            <ToggleControl
+                                label={ __( 'Enable block browsers', 'advanced-gutenberg' ) }
+                                help={
+                                    __( 'Choose in which browsers this block can be displayed.', 'advanced-gutenberg' )
+                                }
+                                checked={ currentControlKey( advgbBlockControls, 'browser', 'enabled' ) }
+                                onChange={ () => changeControlKey( 'browser', 'enabled' ) }
+                            />
+                            { currentControlKey( advgbBlockControls, 'browser', 'enabled' ) && (
+                                <Fragment>
+                                    <div className="advgb-revert-mb">
+                                        <SelectControl
+                                            value={
+                                                currentControlKey( advgbBlockControls, 'browser', 'approach' )
+                                            }
+                                            options={ [
+                                                {
+                                                    value: 'public',
+                                                    label: __( 'Show in all browsers', 'advanced-gutenberg' )
+                                                },
+                                                {
+                                                    value: 'include',
+                                                    label: __( 'Show in the selected browsers', 'advanced-gutenberg' )
+                                                },
+                                                {
+                                                    value: 'exclude',
+                                                    label: __( 'Hide in the selected browsers', 'advanced-gutenberg' )
+                                                }
+                                            ] }
+                                            onChange={ ( value ) => changeControlKey( 'browser', 'approach', value ) }
+                                        />
+                                    </div>
+                                    { ( currentControlKey( advgbBlockControls, 'browser', 'approach' ) === 'include' ||
+                                        currentControlKey( advgbBlockControls, 'browser', 'approach' ) === 'exclude'
+                                    ) && (
+                                        <Fragment>
+                                            <FormTokenField
+                                                multiple
+                                                label={ __( 'Select browsers', 'advanced-gutenberg' ) }
+                                                placeholder={ __( 'Search', 'advanced-gutenberg' ) }
+                                                suggestions={ getOptionSuggestions( getBrowsers() ) }
+                                                maxSuggestions={ 10 }
+                                                value={
+                                                    getOptionTitles(
+                                                        !! currentControlKey( advgbBlockControls, 'browser', 'browsers' )
+                                                            ? currentControlKey( advgbBlockControls, 'browser', 'browsers' )
+                                                            : [],
+                                                        getBrowsers()
+                                                    )
+                                                }
+                                                onChange={ ( value ) => {
+                                                    changeControlKey( 'browser', 'browsers', getOptionSlugs( value, getBrowsers() ) )
+                                                } }
+                                            />
+                                            <div className="components-form-token-field__help"
+                                                style={ { marginBottom: 30 } }
+                                            >
+                                            {
+                                                __(
+                                                    'Please note the result could not be 100% accurate due some browsers can mimic a different browser.',
+                                                    'advanced-gutenberg'
+                                                )
+                                            }
+                                            </div>
+                                        </Fragment>
+                                    ) }
+                                </Fragment>
+                            ) }
+                        </Fragment>
+                        ) }
+                        { isControlEnabled( advgb_block_controls_vars.controls.platform ) && (
+                        <Fragment>
+                            <ToggleControl
+                                label={ __( 'Enable block platforms', 'advanced-gutenberg' ) }
+                                help={
+                                    __( 'Choose in which platforms this block can be displayed.', 'advanced-gutenberg' )
+                                }
+                                checked={ currentControlKey( advgbBlockControls, 'platform', 'enabled' ) }
+                                onChange={ () => changeControlKey( 'platform', 'enabled' ) }
+                            />
+                            { currentControlKey( advgbBlockControls, 'platform', 'enabled' ) && (
+                                <Fragment>
+                                    <div className="advgb-revert-mb">
+                                        <SelectControl
+                                            value={
+                                                currentControlKey( advgbBlockControls, 'platform', 'approach' )
+                                            }
+                                            options={ [
+                                                {
+                                                    value: 'public',
+                                                    label: __( 'Show in all platforms', 'advanced-gutenberg' )
+                                                },
+                                                {
+                                                    value: 'include',
+                                                    label: __( 'Show in the selected platforms', 'advanced-gutenberg' )
+                                                },
+                                                {
+                                                    value: 'exclude',
+                                                    label: __( 'Hide in the selected platforms', 'advanced-gutenberg' )
+                                                }
+                                            ] }
+                                            onChange={ ( value ) => changeControlKey( 'platform', 'approach', value ) }
+                                        />
+                                    </div>
+                                    { ( currentControlKey( advgbBlockControls, 'platform', 'approach' ) === 'include' ||
+                                        currentControlKey( advgbBlockControls, 'platform', 'approach' ) === 'exclude'
+                                    ) && (
+                                        <Fragment>
+                                            <FormTokenField
+                                                multiple
+                                                label={ __( 'Select platforms', 'advanced-gutenberg' ) }
+                                                placeholder={ __( 'Search', 'advanced-gutenberg' ) }
+                                                suggestions={ getOptionSuggestions( getPlatforms() ) }
+                                                maxSuggestions={ 10 }
+                                                value={
+                                                    getOptionTitles(
+                                                        !! currentControlKey( advgbBlockControls, 'platform', 'platforms' )
+                                                            ? currentControlKey( advgbBlockControls, 'platform', 'platforms' )
+                                                            : [],
+                                                        getPlatforms()
+                                                    )
+                                                }
+                                                onChange={ ( value ) => {
+                                                    changeControlKey( 'platform', 'platforms', getOptionSlugs( value, getPlatforms() ) )
+                                                } }
+                                            />
+                                            <div className="components-form-token-field__help">
+                                            {
+                                                __(
+                                                    'Please note the result could not be 100% accurate due some browsers can mimic a different platform.',
+                                                    'advanced-gutenberg'
+                                                )
+                                            }
+                                            </div>
+                                        </Fragment>
+                                    ) }
+                                </Fragment>
+                            ) }
+                        </Fragment>
+                    ) }
                     </PanelBody>
                 </InspectorControls>,
                 <BlockEdit key="block-edit-advgb-dates" {...props} />,
@@ -470,12 +641,11 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
 
     const withAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
         return ( props ) => {
-            if ( ( !NON_SUPPORTED_BLOCKS.includes( props.name ) ) && hasBlockSupport( props.name, 'advgb/blockControls', true ) && countControlEnabled() ) {
+            if ( ( !NON_SUPPORTED_BLOCKS.includes( props.name ) ) && hasBlockSupport( props.name, 'advgb/blockControls', true ) && isAnyControlEnabledGlobal() ) {
                 const { advgbBlockControls } = props.attributes;
                 const advgbBcClass = props.isSelected === false
-                    && ( currentControlKey( advgbBlockControls, 'schedule', 'enabled' )
-                        || currentControlKey( advgbBlockControls, 'user_role', 'enabled' )
-                    ) ? 'advgb-bc-editor-preview' : '';
+                    && isAnyControlEnabledBlock( advgbBlockControls )
+                        ? 'advgb-bc-editor-preview' : '';
 
                 return <BlockListBlock { ...props } className={ classnames( props.className, advgbBcClass ) } advgbBlockControls={ `${ advgbBlockControls }` } />;
             }
