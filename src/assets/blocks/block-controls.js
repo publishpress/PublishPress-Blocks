@@ -310,7 +310,7 @@ var getOptionSuggestions = exports.getOptionSuggestions = function getOptionSugg
  * to display as field value (but NOT saved!).
  *
  * @since 3.1.1
- * @param slugs     Option slugs. e.g. ['subscriber','new_customer']
+ * @param slugs     Option slugs. e.g. ['subscriber','new_customer'] or [82, 92]
  * @param options   Available options as objects with slug and title. e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
  *
  * @return {array}  Option titles. e.g. ['Subscriber','New Customer']
@@ -369,6 +369,8 @@ var getOptionSlugs = exports.getOptionSlugs = function getOptionSlugs(slugs, opt
 "use strict";
 
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
@@ -401,7 +403,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         SelectControl = wpComponents.SelectControl;
     var createHigherOrderComponent = wpCompose.createHigherOrderComponent;
     var Fragment = wpElement.Fragment,
-        useState = wpElement.useState;
+        useState = wpElement.useState,
+        useEffect = wpElement.useEffect;
 
     // do not show this feature if disabled.
 
@@ -424,39 +427,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
      */
     var isControlEnabled = function isControlEnabled(control) {
         return typeof control !== 'undefined' && control;
-    };
-
-    /**
-     * Get all the available user roles from the site
-     *
-     * @since 3.1.0
-     *
-     * @return {array}
-     */
-    var getUserRoles = function getUserRoles() {
-        return typeof advgb_block_controls_vars.user_roles !== 'undefined' && advgb_block_controls_vars.user_roles.length > 0 ? advgb_block_controls_vars.user_roles : [];
-    };
-
-    /**
-     * Get platforms
-     *
-     * @since 3.1.1
-     *
-     * @return {array}
-     */
-    var getPlatforms = function getPlatforms() {
-        return typeof advgb_block_controls_vars.platforms !== 'undefined' && advgb_block_controls_vars.platforms.length > 0 ? advgb_block_controls_vars.platforms : [];
-    };
-
-    /**
-     * Get browsers
-     *
-     * @since 3.1.1
-     *
-     * @return {array}
-     */
-    var getBrowsers = function getBrowsers() {
-        return typeof advgb_block_controls_vars.browsers !== 'undefined' && advgb_block_controls_vars.browsers.length > 0 ? advgb_block_controls_vars.browsers : [];
     };
 
     /**
@@ -577,6 +547,36 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         return function (props) {
             var advgbBlockControls = props.attributes.advgbBlockControls;
 
+            var _useState = useState(!!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : []),
+                _useState2 = _slicedToArray(_useState, 2),
+                taxonomiesState = _useState2[0],
+                updateTaxonomiesState = _useState2[1];
+
+            // Remove selected terms from terms field when its taxonomy is removed from this field
+
+
+            useEffect(function () {
+                var currentTermSlugs = !!currentControlKey(advgbBlockControls, 'taxonomy', 'terms') ? currentControlKey(advgbBlockControls, 'taxonomy', 'terms') : [];
+                //console.log('currentTermSlugs', currentTermSlugs);
+
+                // Check if currentTermSlugs ara listed in validTermSlugs
+                if (currentTermSlugs.length) {
+                    var validTermSlugs = getTermSlugs(!!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : []);
+                    //console.log('validTermSlugs', validTermSlugs);
+
+                    // Remove non valid terms (due its taxonomy was removed)
+                    var result = currentTermSlugs.filter(function (item) {
+                        return validTermSlugs.includes(item);
+                    });
+                    console.log('result', result);
+
+                    // Update terms control
+                    changeControlKey('taxonomy', 'terms', result);
+                    //console.log('Saved terms!', currentControlKey( advgbBlockControls, 'taxonomy', 'terms' ));
+                }
+                //console.log(taxonomiesState);
+            }, [taxonomiesState]);
+
             /**
              * Update advgbBlockControls attribute when a key value changes
              *
@@ -587,7 +587,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
              *
              * @return {void}
              */
-
             var changeControlKey = function changeControlKey(control, key) {
                 var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
@@ -617,6 +616,19 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     enabled: true,
                     platforms: [],
                     approach: 'public'
+                };
+                var taxonomyControl = {
+                    control: 'taxonomy',
+                    enabled: true,
+                    taxonomies: [],
+                    terms: [],
+                    approach: 'exclude'
+                };
+                var miscControl = {
+                    control: 'misc',
+                    enabled: true,
+                    pages: [],
+                    approach: 'exclude'
                 };
 
                 // Check if advgbBlockControls attribute exists
@@ -671,6 +683,18 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [platformControl])
                             });
                             break;
+
+                        case 'taxonomy':
+                            props.setAttributes({
+                                advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [taxonomyControl])
+                            });
+                            break;
+
+                        case 'misc':
+                            props.setAttributes({
+                                advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [miscControl])
+                            });
+                            break;
                     }
                 } else {
                     // Add the first control object attribute
@@ -698,8 +722,159 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 advgbBlockControls: [platformControl]
                             });
                             break;
+
+                        case 'taxonomy':
+                            props.setAttributes({
+                                advgbBlockControls: [taxonomyControl]
+                            });
+                            break;
+
+                        case 'misc':
+                            props.setAttributes({
+                                advgbBlockControls: [miscControl]
+                            });
+                            break;
                     }
                 }
+            };
+
+            /**
+             * Get all the available user roles from the site
+             *
+             * @since 3.1.0
+             *
+             * @return {array}
+             */
+            var getUserRoles = function getUserRoles() {
+                return typeof advgb_block_controls_vars.user_roles !== 'undefined' && advgb_block_controls_vars.user_roles.length > 0 ? advgb_block_controls_vars.user_roles : [];
+            };
+
+            /**
+             * Get platforms
+             *
+             * @since 3.1.1
+             *
+             * @return {array}
+             */
+            var getPlatforms = function getPlatforms() {
+                return typeof advgb_block_controls_vars.platforms !== 'undefined' && advgb_block_controls_vars.platforms.length > 0 ? advgb_block_controls_vars.platforms : [];
+            };
+
+            /**
+             * Get browsers
+             *
+             * @since 3.1.1
+             *
+             * @return {array}
+             */
+            var getBrowsers = function getBrowsers() {
+                return typeof advgb_block_controls_vars.browsers !== 'undefined' && advgb_block_controls_vars.browsers.length > 0 ? advgb_block_controls_vars.browsers : [];
+            };
+
+            /**
+             * Get taxonomies
+             *
+             * @since 3.1.1
+             *
+             * @return {array}
+             */
+            var getTaxonomies = function getTaxonomies() {
+                return typeof advgb_block_controls_vars.taxonomies !== 'undefined' && advgb_block_controls_vars.taxonomies.length > 0 ? advgb_block_controls_vars.taxonomies : [];
+            };
+
+            /**
+             * Get filtered terms based on selected taxonomies
+             *
+             * @since 3.1.1
+             * @param {array} taxonomies Taxonomies slugs
+             *
+             * @return {array}
+             */
+            var getTerms = function getTerms(taxonomies) {
+                var allTaxonomies = getTaxonomies();
+                var terms = [];
+
+                taxonomies.forEach(function (tax) {
+                    var allTaxonomies = getTaxonomies();
+                    var itemIndex = allTaxonomies.findIndex(function (element) {
+                        return element.slug === tax;
+                    });
+
+                    allTaxonomies[itemIndex].terms.forEach(function (term) {
+                        terms.push({
+                            slug: term.slug,
+                            title: term.title + " (" + allTaxonomies[itemIndex].title + ")"
+                        });
+                    });
+                });
+
+                return terms;
+            };
+
+            /**
+             * Get filtered term slugs based on selected taxonomies
+             *
+             * @since 3.1.1
+             * @param {array} taxonomies Array of taxonomies slugs
+             *
+             * @return {array}
+             */
+            var getTermSlugs = function getTermSlugs(taxonomies) {
+                var allTaxonomies = getTaxonomies();
+                var terms = [];
+
+                taxonomies.forEach(function (tax) {
+                    var allTaxonomies = getTaxonomies();
+                    var itemIndex = allTaxonomies.findIndex(function (element) {
+                        return element.slug === tax;
+                    });
+
+                    allTaxonomies[itemIndex].terms.forEach(function (term) {
+                        terms.push(term.slug);
+                    });
+                });
+
+                return terms;
+            };
+
+            /*const getTerms = function() {
+                const taxonomies    = getTaxonomies();
+                let terms           = [];
+                 taxonomies.forEach( ( tax ) => {
+                    tax.terms.forEach( ( term ) => {
+                        terms.push( {
+                            slug: term.slug,
+                            title: `${term.title} (${tax.title})`
+                        } );
+                    } );
+                } );
+                 return terms;
+            }*/
+
+            /**
+             * Get misc pages
+             *
+             * @since 3.1.1
+             *
+             * @return {array}
+             */
+            var getMiscPages = function getMiscPages() {
+                return typeof advgb_block_controls_vars.misc !== 'undefined' && advgb_block_controls_vars.misc.length > 0 ? advgb_block_controls_vars.misc : [];
+            };
+
+            /**
+             * Get misc page slugs
+             *
+             * @since 3.1.1
+             *
+             * @return {array}
+             */
+            var getMiscPageSlugs = function getMiscPageSlugs() {
+                var pages = typeof advgb_block_controls_vars.misc !== 'undefined' && advgb_block_controls_vars.misc.length > 0 ? advgb_block_controls_vars.misc : [];
+
+                return pages.map(function (item) {
+                    return item.slug;
+                });
             };
 
             return [props.isSelected && !NON_SUPPORTED_BLOCKS.includes(props.name) && isAnyControlEnabledGlobal() && React.createElement(
@@ -832,7 +1007,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'user_role', 'roles') ? currentControlKey(advgbBlockControls, 'user_role', 'roles') : [], getUserRoles()),
                                 onChange: function onChange(value) {
                                     changeControlKey('user_role', 'roles', (0, _utils.getOptionSlugs)(value, getUserRoles()));
-                                }
+                                },
+                                __experimentalExpandOnFocus: true
                             })
                         )
                     ),
@@ -882,12 +1058,15 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                     value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'browser', 'browsers') ? currentControlKey(advgbBlockControls, 'browser', 'browsers') : [], getBrowsers()),
                                     onChange: function onChange(value) {
                                         changeControlKey('browser', 'browsers', (0, _utils.getOptionSlugs)(value, getBrowsers()));
-                                    }
+                                    },
+                                    __experimentalExpandOnFocus: true
                                 }),
                                 React.createElement(
-                                    "div",
-                                    { className: "components-form-token-field__help",
-                                        style: { marginBottom: 30 }
+                                    Notice,
+                                    {
+                                        className: "advgb-notice-sidebar",
+                                        status: "warning",
+                                        isDismissible: false
                                     },
                                     __('Please note the result could not be 100% accurate due some browsers can mimic a different browser.', 'advanced-gutenberg')
                                 )
@@ -940,14 +1119,128 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                     value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'platform', 'platforms') ? currentControlKey(advgbBlockControls, 'platform', 'platforms') : [], getPlatforms()),
                                     onChange: function onChange(value) {
                                         changeControlKey('platform', 'platforms', (0, _utils.getOptionSlugs)(value, getPlatforms()));
-                                    }
+                                    },
+                                    __experimentalExpandOnFocus: true
                                 }),
                                 React.createElement(
-                                    "div",
-                                    { className: "components-form-token-field__help" },
+                                    Notice,
+                                    {
+                                        className: "advgb-notice-sidebar",
+                                        status: "warning",
+                                        isDismissible: false
+                                    },
                                     __('Please note the result could not be 100% accurate due some browsers can mimic a different platform.', 'advanced-gutenberg')
                                 )
                             )
+                        )
+                    ),
+                    isControlEnabled(advgb_block_controls_vars.controls.taxonomy) && React.createElement(
+                        Fragment,
+                        null,
+                        React.createElement(ToggleControl, {
+                            label: __('Enable block taxonomies & terms', 'advanced-gutenberg'),
+                            help: __('Choose in which taxonomies & terms pages this block can be displayed.', 'advanced-gutenberg'),
+                            checked: currentControlKey(advgbBlockControls, 'taxonomy', 'enabled'),
+                            onChange: function onChange() {
+                                return changeControlKey('taxonomy', 'enabled');
+                            }
+                        }),
+                        currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(FormTokenField, {
+                                multiple: true,
+                                label: __('Select taxonomies', 'advanced-gutenberg'),
+                                placeholder: __('Search taxonomies', 'advanced-gutenberg'),
+                                suggestions: (0, _utils.getOptionSuggestions)(getTaxonomies()),
+                                maxSuggestions: 10,
+                                value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : [], getTaxonomies()),
+                                onChange: function onChange(value) {
+                                    var taxonomies = (0, _utils.getOptionSlugs)(value, getTaxonomies());
+                                    changeControlKey('taxonomy', 'taxonomies', taxonomies);
+                                    // Adust terms when removing taxonomies
+                                    updateTaxonomiesState(taxonomies);
+                                },
+                                __experimentalExpandOnFocus: true
+                            }),
+                            currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies').length > 0 && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-revert-mb--disabled", style: { marginBottom: 20 } },
+                                    React.createElement(SelectControl, {
+                                        value: currentControlKey(advgbBlockControls, 'taxonomy', 'approach'),
+                                        options: [{
+                                            value: 'include',
+                                            label: __('Show on pages with selected terms', 'advanced-gutenberg')
+                                        }, {
+                                            value: 'exclude',
+                                            label: __('Hide on pages with selected terms', 'advanced-gutenberg')
+                                        }],
+                                        onChange: function onChange(value) {
+                                            return changeControlKey('taxonomy', 'approach', value);
+                                        }
+                                    })
+                                ),
+                                React.createElement(FormTokenField, {
+                                    multiple: true,
+                                    label: __('Select terms', 'advanced-gutenberg'),
+                                    placeholder: __('Search terms', 'advanced-gutenberg'),
+                                    suggestions: (0, _utils.getOptionSuggestions)(getTerms(!!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : [])),
+                                    maxSuggestions: 10,
+                                    value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'taxonomy', 'terms') ? currentControlKey(advgbBlockControls, 'taxonomy', 'terms') : [], getTerms(!!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : [])),
+                                    onChange: function onChange(value) {
+                                        changeControlKey('taxonomy', 'terms', (0, _utils.getOptionSlugs)(value, getTerms(!!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : [])));
+                                    },
+                                    __experimentalExpandOnFocus: true
+                                })
+                            )
+                        )
+                    ),
+                    isControlEnabled(advgb_block_controls_vars.controls.misc) && React.createElement(
+                        Fragment,
+                        null,
+                        React.createElement(ToggleControl, {
+                            label: __('Enable block miscellaneous pages', 'advanced-gutenberg'),
+                            help: __('Choose in which miscellaneous pages this block can be displayed.', 'advanced-gutenberg'),
+                            checked: currentControlKey(advgbBlockControls, 'misc', 'enabled'),
+                            onChange: function onChange() {
+                                return changeControlKey('misc', 'enabled');
+                            }
+                        }),
+                        currentControlKey(advgbBlockControls, 'misc', 'enabled') && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(
+                                "div",
+                                { className: "advgb-revert-mb" },
+                                React.createElement(SelectControl, {
+                                    value: currentControlKey(advgbBlockControls, 'misc', 'approach'),
+                                    options: [{
+                                        value: 'include',
+                                        label: __('Show on the selected pages', 'advanced-gutenberg')
+                                    }, {
+                                        value: 'exclude',
+                                        label: __('Hide on the selected pages', 'advanced-gutenberg')
+                                    }],
+                                    onChange: function onChange(value) {
+                                        return changeControlKey('misc', 'approach', value);
+                                    }
+                                })
+                            ),
+                            (currentControlKey(advgbBlockControls, 'misc', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'misc', 'approach') === 'exclude') && React.createElement(FormTokenField, {
+                                multiple: true,
+                                label: __('Select miscellaneous pages', 'advanced-gutenberg'),
+                                placeholder: __('Search', 'advanced-gutenberg'),
+                                suggestions: (0, _utils.getOptionSuggestions)(getMiscPages()),
+                                maxSuggestions: 10,
+                                value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'misc', 'pages') ? currentControlKey(advgbBlockControls, 'misc', 'pages') : [], getMiscPages()),
+                                onChange: function onChange(value) {
+                                    changeControlKey('misc', 'pages', (0, _utils.getOptionSlugs)(value, getMiscPages()));
+                                },
+                                __experimentalExpandOnFocus: true
+                            })
                         )
                     )
                 )

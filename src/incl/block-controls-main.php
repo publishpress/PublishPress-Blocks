@@ -242,13 +242,114 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                             break;
                         }
                     }
+                break;
 
-                    // browser is enabled, include or exclude selected but no platforms selected
-                    return false;
+                // Taxonomy control
+                case 'taxonomy':
+                    $bControl       = $block['attrs']['advgbBlockControls'][$key];
+                    $selected_tax   = is_array( $bControl['taxonomies'] ) ?  array_map( 'sanitize_text_field', $bControl['taxonomies'] ) : [];
+                    $selected_terms = is_array( $bControl['terms'] ) ?  array_map( 'intval', $bControl['terms'] ) : [];
+                    $taxQuery       = get_queried_object();
+
+                    if( ! isset( $taxQuery->taxonomy ) ) {
+                        return true;
+                    }
+
+                    /*echo '<pre>';
+                    var_dump($selected_tax);
+                    echo '</pre><hr>';
+
+                    echo '<pre>';
+                    var_dump($selected_terms);
+                    echo '</pre><hr>';
+
+                    echo '<pre>';
+                    var_dump($taxQuery);
+                    echo '</pre>';*/
+
+                    if( count( $selected_tax ) ) {
+                        $approach = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )
+                                    ? $bControl['approach'] : 'public';
+
+                        if( count( $selected_tax ) ) {
+
+                            switch( $approach ) {
+                                case 'include':
+                                    return in_array( $taxQuery->taxonomy, $selected_tax )
+                                            && in_array( $taxQuery->term_id, $selected_terms )
+                                                ? true : false;
+                                break;
+
+                                case 'exclude':
+                                    return in_array( $taxQuery->taxonomy, $selected_tax )
+                                            && in_array( $taxQuery->term_id, $selected_terms )
+                                                ? false : true;
+                                break;
+                            }
+                        }
+                    }
+                break;
+
+                // Misc pages control
+                case 'misc':
+                    $bControl = $block['attrs']['advgbBlockControls'][$key];
+                    $selected = is_array( $bControl['pages'] ) ? $bControl['pages'] : [];
+
+                    if( count( $selected ) ) {
+
+                        $selected = array_map( 'sanitize_text_field', $selected );
+                        $approach = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )
+                                        ? $bControl['approach'] : 'public';
+
+                        switch( $approach ) {
+                            default:
+                            case 'public':
+                                return true;
+                            break;
+
+                            case 'include':
+                                return self::checkMiscPages( $selected ) ? true : false;
+                            break;
+
+                            case 'exclude':
+                                return self::checkMiscPages( $selected ) ? false : true;
+                            break;
+                        }
+                    }
                 break;
             }
 
             return true;
+        }
+
+        /**
+         * Check miscellaneous pages
+         *
+         * @since 3.1.1
+         *
+         * @param $selected Array of pages e.g. ['home', 'search']
+         *
+         * @return bool
+         */
+        public static function checkMiscPages( $selected )
+        {
+            if( in_array( 'home', $selected )
+                && ( ( is_home() && is_front_page() )
+                    || is_front_page()
+                )
+            ) {
+                return true;
+            } elseif( in_array( 'blog', $selected ) && is_home() ) {
+                return true;
+            } elseif( in_array( 'archive', $selected ) && is_archive() ) {
+                return true;
+            } elseif( in_array( 'search', $selected ) && is_search() ) {
+                return true;
+            } elseif( in_array( 'page404', $selected ) && is_404() ) {
+                return true;
+            }
+
+            return false;
         }
 
         /**
@@ -369,6 +470,8 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 $advgb_block_controls['controls']['user_role']  = isset( $_POST['user_role_control'] ) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['browser']    = isset( $_POST['browser_control'] ) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['platform']   = isset( $_POST['platform_control'] ) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['taxonomy']   = isset( $_POST['taxonomy_control'] ) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['misc']       = isset( $_POST['misc_control'] ) ? (bool) 1 : (bool) 0;
 
                 update_option( 'advgb_block_controls', $advgb_block_controls );
 
@@ -464,7 +567,9 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 'schedule',
                 'user_role',
                 'browser',
-                'platform'
+                'platform',
+                'taxonomy',
+                'misc'
             ];
 
             if( $block_controls ) {
@@ -612,7 +717,9 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     'controls' => self::getControlsArray(),
                     'user_roles' => self::getUserRoles(),
                     'browsers' => self::getBrowsers(),
-                    'platforms' => self::getPlatforms()
+                    'platforms' => self::getPlatforms(),
+                    'taxonomies' => self::getTaxonomies(),
+                    'misc' => self::getMiscPages()
                 ]
             );
         }
@@ -754,6 +861,106 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 [
                     'slug' => 'linux',
                     'title' => 'Linux',
+                ]
+            ];
+        }
+
+        /**
+         * Retrieve Taxonomies
+         *
+         * @since 3.1.1
+         *
+         * @return array
+         */
+        public static function getTaxonomies()
+        {
+            $taxonomies = get_taxonomies();
+            $result     = [];
+
+            // @TODO If later we require to load only these taxonomies...
+            $include    = [
+                'category',
+                'post_tag',
+                'author',
+                'series',
+                'series_group'
+            ];
+
+            $exclude    = [
+                'nav_menu',
+                'link_category',
+                'post_format',
+                'wp_theme',
+                'wp_template_part_area'
+            ];
+
+            foreach( $taxonomies as $item ){
+                $tax = get_taxonomy( $item );
+
+                if( ! in_array( $item, $exclude ) ) {
+                    $result[] = [
+                        'slug' => $item,
+                        'title' => $tax->labels->singular_name,
+                        'terms' => self::getTaxonomyTerms( $item )
+                    ];
+                }
+            }
+
+            return $result;
+        }
+
+        /**
+         * Retrieve terms
+         *
+         * @since 3.1.1
+         *
+         * @param $taxonomy Taxonomy slug. e.g. 'category'
+         *
+         * @return array
+         */
+        public static function getTaxonomyTerms( $taxonomy )
+        {
+            $terms  = get_terms( [$taxonomy] );
+            $result = [];
+            foreach( $terms as $item ) {
+                $result[] = [
+                    'slug' => $item->term_id,
+                    'title' => $item->name
+                ];
+            }
+
+            return $result;
+        }
+
+        /**
+         * Retrieve misc pages
+         *
+         * @since 3.1.1
+         *
+         * @return array
+         */
+        public static function getMiscPages()
+        {
+            return [
+                [
+                    'slug' => 'home',
+                    'title' => __( 'Home', 'advanced-gutenberg' )
+                ],
+                [
+                    'slug' => 'blog',
+                    'title' => __( 'Blog', 'advanced-gutenberg' )
+                ],
+                [
+                    'slug' => 'archive',
+                    'title' => __( 'Archive', 'advanced-gutenberg' )
+                ],
+                [
+                    'slug' => 'search',
+                    'title' => __( 'Search', 'advanced-gutenberg' )
+                ],
+                [
+                    'slug' => 'page404',
+                    'title' => __( '404', 'advanced-gutenberg' )
                 ]
             ];
         }

@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks
 Requires at least: 5.0
 Tested up to: 6.1.0
-Stable tag: 3.1.1b1
+Stable tag: 3.1.1b2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -257,7 +257,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.1 - 1 Nov 2022 =
+= 3.1.1 - 8 Nov 2022 =
   * Add: Platform and Browser block controls
   * Add: Base path constant
   * Add: Reusable methods for FormTokenField

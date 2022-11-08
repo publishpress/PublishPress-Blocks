@@ -5,6 +5,8 @@ $schedule_control   = PublishPress\Blocks\Controls::getControlValue( 'schedule',
 $user_role_control  = PublishPress\Blocks\Controls::getControlValue( 'user_role', 1 );
 $browser_control    = PublishPress\Blocks\Controls::getControlValue( 'browser', 1 );
 $platform_control   = PublishPress\Blocks\Controls::getControlValue( 'platform', 1 );
+$taxonomy_control   = PublishPress\Blocks\Controls::getControlValue( 'taxonomy', 1 );
+$misc_control       = PublishPress\Blocks\Controls::getControlValue( 'misc', 1 );
 ?>
 <form method="post">
     <?php wp_nonce_field( 'advgb_controls_settings_nonce', 'advgb_controls_settings_nonce_field' ); ?>
@@ -79,6 +81,44 @@ $platform_control   = PublishPress\Blocks\Controls::getControlValue( 'platform',
                     <?php
                     _e(
                         'Choose in which platforms your blocks can be displayed.',
+                        'advanced-gutenberg'
+                    )
+                    ?>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <?php _e( 'Taxonomies control', 'advanced-gutenberg' ) ?>
+            </th>
+            <td>
+                <label>
+                    <input type="checkbox" name="taxonomy_control"
+                           value="1"
+                           <?php echo $taxonomy_control ? ' checked' : '' ?>
+                    />
+                    <?php
+                    _e(
+                        'Choose in which taxonomies your blocks can be displayed.',
+                        'advanced-gutenberg'
+                    )
+                    ?>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <?php _e( 'Miscellaneous pages control', 'advanced-gutenberg' ) ?>
+            </th>
+            <td>
+                <label>
+                    <input type="checkbox" name="misc_control"
+                           value="1"
+                           <?php echo $misc_control ? ' checked' : '' ?>
+                    />
+                    <?php
+                    _e(
+                        'Choose in which miscellaneous pages your blocks can be displayed.',
                         'advanced-gutenberg'
                     )
                     ?>
