@@ -560,7 +560,7 @@ import {
                         { isControlEnabled( advgb_block_controls_vars.controls.schedule ) && (
                         <Fragment>
                             <ToggleControl
-                                label={ __( 'Enable block schedule', 'advanced-gutenberg' ) }
+                                label={ __( 'Schedule', 'advanced-gutenberg' ) }
                                 help={
                                     __( 'Choose when to start showing and/or stop showing this block.', 'advanced-gutenberg' )
                                 }
@@ -620,7 +620,7 @@ import {
                         { isControlEnabled( advgb_block_controls_vars.controls.user_role ) && (
                         <Fragment>
                             <ToggleControl
-                                label={ __( 'Enable block user roles', 'advanced-gutenberg' ) }
+                                label={ __( 'User roles', 'advanced-gutenberg' ) }
                                 help={
                                     __( 'Choose which users can see this block.', 'advanced-gutenberg' )
                                 }
@@ -689,7 +689,7 @@ import {
                         { isControlEnabled( advgb_block_controls_vars.controls.browser ) && (
                         <Fragment>
                             <ToggleControl
-                                label={ __( 'Enable block browsers', 'advanced-gutenberg' ) }
+                                label={ __( 'Browsers', 'advanced-gutenberg' ) }
                                 help={
                                     __( 'Choose in which browsers this block can be displayed.', 'advanced-gutenberg' )
                                 }
@@ -764,7 +764,7 @@ import {
                         { isControlEnabled( advgb_block_controls_vars.controls.platform ) && (
                         <Fragment>
                             <ToggleControl
-                                label={ __( 'Enable block platforms', 'advanced-gutenberg' ) }
+                                label={ __( 'Platforms', 'advanced-gutenberg' ) }
                                 help={
                                     __( 'Choose in which platforms this block can be displayed.', 'advanced-gutenberg' )
                                 }
@@ -839,7 +839,7 @@ import {
                         { isControlEnabled( advgb_block_controls_vars.controls.taxonomy ) && (
                         <Fragment>
                             <ToggleControl
-                                label={ __( 'Enable block taxonomies & terms', 'advanced-gutenberg' ) }
+                                label={ __( 'Taxonomies & terms', 'advanced-gutenberg' ) }
                                 help={
                                     __( 'Choose in which taxonomies & terms pages this block can be displayed.', 'advanced-gutenberg' )
                                 }
@@ -940,9 +940,9 @@ import {
                         { isControlEnabled( advgb_block_controls_vars.controls.misc ) && (
                         <Fragment>
                             <ToggleControl
-                                label={ __( 'Enable block miscellaneous pages', 'advanced-gutenberg' ) }
+                                label={ __( 'Pages', 'advanced-gutenberg' ) }
                                 help={
-                                    __( 'Choose in which miscellaneous pages this block can be displayed.', 'advanced-gutenberg' )
+                                    __( 'Choose in which pages this block can be displayed.', 'advanced-gutenberg' )
                                 }
                                 checked={ currentControlKey( advgbBlockControls, 'misc', 'enabled' ) }
                                 onChange={ () => changeControlKey( 'misc', 'enabled' ) }

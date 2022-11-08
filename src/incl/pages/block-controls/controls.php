@@ -13,7 +13,7 @@ $misc_control       = PublishPress\Blocks\Controls::getControlValue( 'misc', 1 )
     <table class="form-table">
         <tr>
             <th scope="row">
-                <?php _e( 'Schedule control', 'advanced-gutenberg' ) ?>
+                <?php _e( 'Schedule', 'advanced-gutenberg' ) ?>
             </th>
             <td>
                 <label>
@@ -32,7 +32,7 @@ $misc_control       = PublishPress\Blocks\Controls::getControlValue( 'misc', 1 )
         </tr>
         <tr>
             <th scope="row">
-                <?php _e( 'User roles control', 'advanced-gutenberg' ) ?>
+                <?php _e( 'User roles', 'advanced-gutenberg' ) ?>
             </th>
             <td>
                 <label>
@@ -51,7 +51,7 @@ $misc_control       = PublishPress\Blocks\Controls::getControlValue( 'misc', 1 )
         </tr>
         <tr>
             <th scope="row">
-                <?php _e( 'Browsers control', 'advanced-gutenberg' ) ?>
+                <?php _e( 'Browsers', 'advanced-gutenberg' ) ?>
             </th>
             <td>
                 <label>
@@ -70,7 +70,7 @@ $misc_control       = PublishPress\Blocks\Controls::getControlValue( 'misc', 1 )
         </tr>
         <tr>
             <th scope="row">
-                <?php _e( 'Platforms control', 'advanced-gutenberg' ) ?>
+                <?php _e( 'Platforms', 'advanced-gutenberg' ) ?>
             </th>
             <td>
                 <label>
@@ -89,7 +89,7 @@ $misc_control       = PublishPress\Blocks\Controls::getControlValue( 'misc', 1 )
         </tr>
         <tr>
             <th scope="row">
-                <?php _e( 'Taxonomies control', 'advanced-gutenberg' ) ?>
+                <?php _e( 'Taxonomies & terms', 'advanced-gutenberg' ) ?>
             </th>
             <td>
                 <label>
@@ -99,7 +99,7 @@ $misc_control       = PublishPress\Blocks\Controls::getControlValue( 'misc', 1 )
                     />
                     <?php
                     _e(
-                        'Choose in which taxonomies your blocks can be displayed.',
+                        'Choose in which taxonomies and terms pages your blocks can be displayed.',
                         'advanced-gutenberg'
                     )
                     ?>
@@ -108,7 +108,7 @@ $misc_control       = PublishPress\Blocks\Controls::getControlValue( 'misc', 1 )
         </tr>
         <tr>
             <th scope="row">
-                <?php _e( 'Miscellaneous pages control', 'advanced-gutenberg' ) ?>
+                <?php _e( 'Pages', 'advanced-gutenberg' ) ?>
             </th>
             <td>
                 <label>
@@ -118,7 +118,7 @@ $misc_control       = PublishPress\Blocks\Controls::getControlValue( 'misc', 1 )
                     />
                     <?php
                     _e(
-                        'Choose in which miscellaneous pages your blocks can be displayed.',
+                        'Choose in which pages your blocks can be displayed.',
                         'advanced-gutenberg'
                     )
                     ?>
