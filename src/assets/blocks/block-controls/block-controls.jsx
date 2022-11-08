@@ -561,8 +561,9 @@ import {
                         <Fragment>
                             <ToggleControl
                                 label={ __( 'Schedule', 'advanced-gutenberg' ) }
-                                help={
-                                    __( 'Choose when to start showing and/or stop showing this block.', 'advanced-gutenberg' )
+                                help={ currentControlKey( advgbBlockControls, 'schedule', 'enabled' )
+                                    ? __( 'Choose when to start showing and/or stop showing this block.', 'advanced-gutenberg' )
+                                    : ''
                                 }
                                 checked={ currentControlKey( advgbBlockControls, 'schedule', 'enabled' ) }
                                 onChange={ () => changeControlKey( 'schedule', 'enabled' ) }
@@ -621,8 +622,9 @@ import {
                         <Fragment>
                             <ToggleControl
                                 label={ __( 'User roles', 'advanced-gutenberg' ) }
-                                help={
-                                    __( 'Choose which users can see this block.', 'advanced-gutenberg' )
+                                help={ currentControlKey( advgbBlockControls, 'user_role', 'enabled' )
+                                    ? __( 'Choose which users can see this block.', 'advanced-gutenberg' )
+                                    : ''
                                 }
                                 checked={ currentControlKey( advgbBlockControls, 'user_role', 'enabled' ) }
                                 onChange={ () => changeControlKey( 'user_role', 'enabled' ) }
@@ -690,8 +692,9 @@ import {
                         <Fragment>
                             <ToggleControl
                                 label={ __( 'Browsers', 'advanced-gutenberg' ) }
-                                help={
-                                    __( 'Choose in which browsers this block can be displayed.', 'advanced-gutenberg' )
+                                help={ currentControlKey( advgbBlockControls, 'browser', 'enabled' )
+                                    ? __( 'Choose in which browsers this block can be displayed.', 'advanced-gutenberg' )
+                                    : ''
                                 }
                                 checked={ currentControlKey( advgbBlockControls, 'browser', 'enabled' ) }
                                 onChange={ () => changeControlKey( 'browser', 'enabled' ) }
@@ -765,8 +768,9 @@ import {
                         <Fragment>
                             <ToggleControl
                                 label={ __( 'Platforms', 'advanced-gutenberg' ) }
-                                help={
-                                    __( 'Choose in which platforms this block can be displayed.', 'advanced-gutenberg' )
+                                help={ currentControlKey( advgbBlockControls, 'platform', 'enabled' )
+                                    ? __( 'Choose in which platforms this block can be displayed.', 'advanced-gutenberg' )
+                                    : ''
                                 }
                                 checked={ currentControlKey( advgbBlockControls, 'platform', 'enabled' ) }
                                 onChange={ () => changeControlKey( 'platform', 'enabled' ) }
@@ -840,8 +844,9 @@ import {
                         <Fragment>
                             <ToggleControl
                                 label={ __( 'Taxonomies & terms', 'advanced-gutenberg' ) }
-                                help={
-                                    __( 'Choose in which taxonomies & terms pages this block can be displayed.', 'advanced-gutenberg' )
+                                help={ currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' )
+                                    ? __( 'Choose in which taxonomies & terms pages this block can be displayed.', 'advanced-gutenberg' )
+                                    : ''
                                 }
                                 checked={ currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' ) }
                                 onChange={ () => changeControlKey( 'taxonomy', 'enabled' ) }
@@ -941,8 +946,9 @@ import {
                         <Fragment>
                             <ToggleControl
                                 label={ __( 'Pages', 'advanced-gutenberg' ) }
-                                help={
-                                    __( 'Choose in which pages this block can be displayed.', 'advanced-gutenberg' )
+                                help={ currentControlKey( advgbBlockControls, 'misc', 'enabled' )
+                                    ? __( 'Choose in which pages this block can be displayed.', 'advanced-gutenberg' )
+                                    : ''
                                 }
                                 checked={ currentControlKey( advgbBlockControls, 'misc', 'enabled' ) }
                                 onChange={ () => changeControlKey( 'misc', 'enabled' ) }

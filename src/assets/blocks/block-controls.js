@@ -893,7 +893,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         null,
                         React.createElement(ToggleControl, {
                             label: __('Schedule', 'advanced-gutenberg'),
-                            help: __('Choose when to start showing and/or stop showing this block.', 'advanced-gutenberg'),
+                            help: currentControlKey(advgbBlockControls, 'schedule', 'enabled') ? __('Choose when to start showing and/or stop showing this block.', 'advanced-gutenberg') : '',
                             checked: currentControlKey(advgbBlockControls, 'schedule', 'enabled'),
                             onChange: function onChange() {
                                 return changeControlKey('schedule', 'enabled');
@@ -963,7 +963,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         null,
                         React.createElement(ToggleControl, {
                             label: __('User roles', 'advanced-gutenberg'),
-                            help: __('Choose which users can see this block.', 'advanced-gutenberg'),
+                            help: currentControlKey(advgbBlockControls, 'user_role', 'enabled') ? __('Choose which users can see this block.', 'advanced-gutenberg') : '',
                             checked: currentControlKey(advgbBlockControls, 'user_role', 'enabled'),
                             onChange: function onChange() {
                                 return changeControlKey('user_role', 'enabled');
@@ -1017,7 +1017,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         null,
                         React.createElement(ToggleControl, {
                             label: __('Browsers', 'advanced-gutenberg'),
-                            help: __('Choose in which browsers this block can be displayed.', 'advanced-gutenberg'),
+                            help: currentControlKey(advgbBlockControls, 'browser', 'enabled') ? __('Choose in which browsers this block can be displayed.', 'advanced-gutenberg') : '',
                             checked: currentControlKey(advgbBlockControls, 'browser', 'enabled'),
                             onChange: function onChange() {
                                 return changeControlKey('browser', 'enabled');
@@ -1078,7 +1078,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         null,
                         React.createElement(ToggleControl, {
                             label: __('Platforms', 'advanced-gutenberg'),
-                            help: __('Choose in which platforms this block can be displayed.', 'advanced-gutenberg'),
+                            help: currentControlKey(advgbBlockControls, 'platform', 'enabled') ? __('Choose in which platforms this block can be displayed.', 'advanced-gutenberg') : '',
                             checked: currentControlKey(advgbBlockControls, 'platform', 'enabled'),
                             onChange: function onChange() {
                                 return changeControlKey('platform', 'enabled');
@@ -1139,7 +1139,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         null,
                         React.createElement(ToggleControl, {
                             label: __('Taxonomies & terms', 'advanced-gutenberg'),
-                            help: __('Choose in which taxonomies & terms pages this block can be displayed.', 'advanced-gutenberg'),
+                            help: currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') ? __('Choose in which taxonomies & terms pages this block can be displayed.', 'advanced-gutenberg') : '',
                             checked: currentControlKey(advgbBlockControls, 'taxonomy', 'enabled'),
                             onChange: function onChange() {
                                 return changeControlKey('taxonomy', 'enabled');
@@ -1203,7 +1203,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         null,
                         React.createElement(ToggleControl, {
                             label: __('Pages', 'advanced-gutenberg'),
-                            help: __('Choose in which pages this block can be displayed.', 'advanced-gutenberg'),
+                            help: currentControlKey(advgbBlockControls, 'misc', 'enabled') ? __('Choose in which pages this block can be displayed.', 'advanced-gutenberg') : '',
                             checked: currentControlKey(advgbBlockControls, 'misc', 'enabled'),
                             onChange: function onChange() {
                                 return changeControlKey('misc', 'enabled');
