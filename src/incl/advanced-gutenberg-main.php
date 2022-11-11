@@ -865,6 +865,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $controller = new AdvgbProductsController();
                 $controller->register_routes();
             }
+
+            // Register custom routes for Block controls
+            if ( $this->settingIsEnabled( 'block_controls' )
+                && method_exists( 'PublishPress\Blocks\Controls', 'registerCustomRoutes' )
+            ) {
+                PublishPress\Blocks\Controls::registerCustomRoutes();
+            }
         }
 
         /**

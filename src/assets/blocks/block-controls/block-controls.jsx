@@ -14,7 +14,7 @@ import {
     const { InspectorControls, BlockControls } = wpBlockEditor;
     const { DateTimePicker, ToggleControl, PanelBody, Notice, FormTokenField, SelectControl } = wpComponents;
     const { createHigherOrderComponent } = wpCompose;
-    const { Component, Fragment, useState, useEffect } = wpElement;
+    const { Component, Fragment } = wpElement;
 
     // do not show this feature if disabled.
     if( !parseInt(advgbBlocks.block_controls) ) return;
@@ -165,7 +165,7 @@ import {
         return settings;
     } );
 
-    const withEdit = createHigherOrderComponent( ( BlockEdit ) => {
+    const withEditControls = createHigherOrderComponent( ( BlockEdit ) => {
 
         return class BlockControlsEdit extends Component {
 
@@ -173,10 +173,14 @@ import {
               super(...props);
 
               this.state = {
-                  taxonomiesUpdated: false
+                  taxonomiesUpdated: false, // When true, remove selected terms from removed taxonomy
+                  termOptions: [], // Store term options with slug (id) and title
+                  updateTerms: true, // When true, trigger apiFetch for terms
+                  searchTermWord: '', // Updated when searching terms
+                  initTaxonomyStatus: true // When true, trigger initTaxonomyControl()
               }
 
-              this.taxonomiesChanged = this.taxonomiesChanged.bind(this);
+              this.initTaxonomyControl = this.initTaxonomyControl.bind(this); // Executed once when block is selected
             }
 
             /**
@@ -299,24 +303,6 @@ import {
                             ? advgb_block_controls_vars.misc
                             : [];
             }
-
-            /**
-             * Get misc page slugs
-             *
-             * @since 3.1.1
-             *
-             * @return {array}
-             */
-            /*getMiscPageSlugs() {
-                const pages = typeof advgb_block_controls_vars.misc !== 'undefined'
-                        && advgb_block_controls_vars.misc.length > 0
-                            ? advgb_block_controls_vars.misc
-                            : [];
-
-                return pages.map( ( item ) => {
-                    return item.slug;
-                } );
-            }*/
 
             /**
              * Update advgbBlockControls attribute when a key value changes
@@ -500,32 +486,41 @@ import {
                 }
             }
 
-            // Execute when taxonomy selection changes
-            taxonomiesChanged( taxonomies ) {
+            /**
+             * Execute when taxonomy selection changes
+             *
+             * @since 3.1.1
+             *
+             * @return {void}
+             */
+            taxonomiesChanged() {
 
                 if( this.state.taxonomiesUpdated ) {
 
                     const { attributes } = this.props;
                     const { advgbBlockControls } = attributes;
 
-                    const currentTermSlugs = !! currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
-                       ? currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
-                       : [];
+                    const currentTerms  = !! currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
+                                            ? currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
+                                            : [];
+                    const taxonomies    = !! currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
+                                            ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
+                                            : [];
 
-                    // Check if currentTermSlugs ara listed in validTermSlugs
-                    if( currentTermSlugs.length ) {
-                       const validTermSlugs = this.getTermSlugs(
-                           !! currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                               ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                               : []
-                       );
+                    if( currentTerms.length ) {
 
-                       // Remove non valid terms (due its taxonomy was removed)
-                       const result = currentTermSlugs.filter( (item) => {
-                           return validTermSlugs.includes(item);
+                       let result = [];
+                       currentTerms.forEach( ( slug ) => {
+                           const itemIndex = this.state.termOptions.findIndex( ( item ) => item.slug === slug );
+
+                           /* Get only the terms that belongs to selected taxonomies
+                            * and skip the ones that belongs to the deleted taxonomy
+                            */
+                           if( taxonomies.includes( this.state.termOptions[itemIndex].tax ) ) {
+                              result.push( this.state.termOptions[itemIndex].slug );
+                           }
                        } );
 
-                       // Update terms control
                        this.changeControlKey(
                            'taxonomy',
                            'terms',
@@ -537,32 +532,108 @@ import {
                 }
             }
 
-            componentDidMount() {
-                //console.log('componentDidMount');
+            /**
+             * Get selected terms on first load (when block is selcted)
+             *
+             * @since 3.1.1
+             *
+             * @return {void}
+             */
+            initTaxonomyControl() {
+                const { attributes, isSelected, name } = this.props;
+                const { advgbBlockControls } = attributes;
+
+                if( isSelected
+                    && this.state.initTaxonomyStatus
+                    && ( ! NON_SUPPORTED_BLOCKS.includes( name ) )
+                    && isControlEnabled( advgb_block_controls_vars.controls.taxonomy )
+                    && currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ) !== null
+                    && currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ).length
+                    && currentControlKey( advgbBlockControls, 'taxonomy', 'terms' ) !== null
+                    && currentControlKey( advgbBlockControls, 'taxonomy', 'terms' ).length
+                ) {
+                    wp.apiFetch( {
+                        path: wp.url.addQueryArgs(
+                            'advgb/v1/terms',
+                            {
+                                taxonomies: !! currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
+                                    ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
+                                    : [],
+                                ids: !! currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
+                                    ? currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
+                                    : []
+                            }
+                        )
+                    } ).then( ( list ) => {
+                        this.setState( {
+                            termOptions: list,
+                            initTaxonomyStatus: false
+                        } );
+                    } );
+                }
             }
 
-            componentWillMount() {
-                //console.log('componentWillMount');
+            // Search terms
+            searchTerms() {
+                const { termOptions, updateTerms, searchTermWord } = this.state;
+                const { advgbBlockControls } = this.props.attributes;
+
+                if( updateTerms && searchTermWord.length > 2 ) {
+                    wp.apiFetch( {
+                        /*/ To get taxonomies
+                        path: wp.url.addQueryArgs( 'wp/v2/taxonomies', { context: 'edit' } )*/
+
+                        path: wp.url.addQueryArgs(
+                            'advgb/v1/terms',
+                            {
+                                search: searchTermWord,
+                                taxonomies: !! currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
+                                    ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
+                                    : []
+                            }
+                        )
+
+                    } ).then( ( list ) => {
+
+                        /*/ To get taxonomies
+                        Object.keys(list).forEach( (item) => {
+                            options.push( {
+                                label: list[item].name,
+                                value: list[item].slug
+                            } );
+                        });*/
+
+                        // Merge selected terms with results from fetch
+                        let options = [ ...termOptions, ...list ];
+
+                        // Remove duplicated values
+                        options = Array.from( new Set( options.map( a => a.slug ) ) )
+                            .map( slug => {
+                                return options.find( a => a.slug === slug )
+                            });
+
+                        this.setState( {
+                            termOptions: options,
+                            updateTerms: false
+                        } );
+                    } );
+                }
             }
 
-            componentDidMount() {
-                //console.log('componentDidMount');
-            }
-
-            componentDidUpdate( prevProps ) {
+            componentDidUpdate() {
+                this.searchTerms();
                 this.taxonomiesChanged();
             }
 
-            componentWillUpdate( nextProps ) {
-
-            }
-
             render() {
-                const { attributes, setAttributes, isSelected, name } = this.props;
+                const { attributes, setAttributes } = this.props;
                 const { advgbBlockControls } = attributes;
 
+                // Get human readable values on load for saved terms
+                this.initTaxonomyControl();
+
                 return ( [
-                        isSelected && ( ! NON_SUPPORTED_BLOCKS.includes( name ) )
+                        this.props.isSelected && ( ! NON_SUPPORTED_BLOCKS.includes( this.props.name ) )
                         && isAnyControlEnabledGlobal() &&
                         <InspectorControls key="advgb-bc-controls">
                             <PanelBody
@@ -917,11 +988,7 @@ import {
                                                         label={ __( 'Select terms', 'advanced-gutenberg' ) }
                                                         placeholder={ __( 'Search terms', 'advanced-gutenberg' ) }
                                                         suggestions={ getOptionSuggestions(
-                                                            this.getTerms(
-                                                                !! currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                                                    ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                                                    : []
-                                                            )
+                                                            this.state.termOptions
                                                         ) }
                                                         maxSuggestions={ 10 }
                                                         value={
@@ -929,11 +996,7 @@ import {
                                                                 !! currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
                                                                     ? currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
                                                                     : [],
-                                                                this.getTerms(
-                                                                    !! currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                                                        ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                                                        : []
-                                                                )
+                                                                this.state.termOptions
                                                             )
                                                         }
                                                         onChange={ ( value ) => {
@@ -942,15 +1005,16 @@ import {
                                                                 'terms',
                                                                 getOptionSlugs(
                                                                     value,
-                                                                    this.getTerms(
-                                                                        !! currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                                                            ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                                                            : []
-                                                                    )
+                                                                    this.state.termOptions
                                                                 )
                                                             )
                                                         } }
-                                                        __experimentalExpandOnFocus
+                                                        onInputChange={ ( value ) => {
+                                                            this.setState( {
+                                                                searchTermWord: value,
+                                                                updateTerms: true
+                                                            } );
+                                                        } }
                                                     />
                                                 </Fragment>
                                             ) }
@@ -1024,10 +1088,10 @@ import {
                     ] )
             }
         }
-    }, 'withEdit' );
+    }, 'withEditControls' );
 
     // Add option to add controls for supported blocks
-    addFilter( 'editor.BlockEdit', 'advgb/addBlockControls', withEdit );
+    addFilter( 'editor.BlockEdit', 'advgb/addBlockControls', withEditControls );
 
     const withAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
         return ( props ) => {
@@ -1044,7 +1108,7 @@ import {
         };
     }, 'withAttributes' );
 
-    // Apply custom styles on back-end
-    wp.hooks.addFilter( 'editor.BlockListBlock', 'advgb/loadBackendBlockControls', withAttributes );
+    // Apply attributes and CSS classes on backend
+    addFilter( 'editor.BlockListBlock', 'advgb/loadBackendBlockControls', withAttributes );
 
 })( wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components, wp.compose, wp.element );

@@ -900,8 +900,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 if( ! in_array( $item, $exclude ) ) {
                     $result[] = [
                         'slug' => $item,
-                        'title' => $tax->labels->singular_name,
-                        'terms' => self::getTaxonomyTerms( $item )
+                        'title' => $tax->labels->singular_name
                     ];
                 }
             }
@@ -910,26 +909,94 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
         }
 
         /**
-         * Retrieve terms
+         * Retrieve Taxonomies selected in a block
          *
          * @since 3.1.1
          *
-         * @param $taxonomy Taxonomy slug. e.g. 'category'
-         *
+         * @param array $selected Selected taxonomies in the block
          * @return array
          */
-        public static function getTaxonomyTerms( $taxonomy )
+        public static function getBlockTaxonomies( $selected )
         {
-            $terms  = get_terms( [$taxonomy] );
+            if( ! is_array( $selected ) || ! count( $selected ) ) {
+                return [];
+            }
+
+            global $wp_taxonomies;
+
             $result = [];
-            foreach( $terms as $item ) {
-                $result[] = [
-                    'slug' => $item->term_id,
-                    'title' => $item->name
-                ];
+            $taxonomies = $selected;
+
+            foreach ( $wp_taxonomies as $key => $value ) {
+                if ( in_array( $key, $taxonomies ) ){
+                    $result[] = [
+                        'slug' => $key,
+                        'name' => $value->labels->singular_name
+                    ];
+                }
             }
 
             return $result;
+        }
+
+        /**
+         * Retrieve Terms
+         *
+         * @since 3.1.1
+         *
+         * @return array
+         */
+        public static function getTerms( $data )
+        {
+            if( isset( $data['taxonomies'] )
+                && is_array( $data['taxonomies'] )
+                && count( $data['taxonomies'] )
+            ) {
+
+                $taxonomies = array_map( 'sanitize_text_field', $data['taxonomies'] );
+                $args['taxonomy'] = $taxonomies;
+
+                // Note: can't use search and include in the same request
+                if( isset( $data['search'] ) && ! empty( $data['search'] ) ) {
+                    $args['search'] = sanitize_text_field( $data['search'] );
+                    $args['number'] = 10;
+                }
+
+                if( isset( $data['ids'] ) && is_array( $data['ids'] ) && count( $data['ids'] ) ) {
+                    $args['include'] = array_map( 'intval', $data['ids'] );
+                }
+
+                $result     = [];
+                $term_query = new \WP_Term_Query( $args );
+
+                if ( ! empty( $term_query->terms ) ) {
+                    foreach ( $term_query->terms as $term ) {
+
+                        $taxLabel = $term->taxonomy;
+
+                        // Get human readable taxonomy name
+                        $blockTaxonomies = self::getBlockTaxonomies( $taxonomies );
+                        if( count( $blockTaxonomies ) ) {
+                            foreach( $blockTaxonomies as $tax ) {
+                                if( $tax['slug'] === $term->taxonomy ) {
+                                    $taxLabel = $tax['name'];
+                                    break;
+                                }
+                            }
+                        }
+
+                        $result[] = [
+                            'slug' => $term->term_id,
+                            'title' => $term->name . ' (' . $taxLabel . ')',
+                            'tax' => $term->taxonomy,
+                        ];
+                    }
+                }
+
+                return $result;
+            }
+
+            return [];
         }
 
         /**
@@ -963,6 +1030,104 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     'title' => __( '404', 'advanced-gutenberg' )
                 ]
             ];
+        }
+
+        /**
+         * Register custom REST API routes
+         *
+         * @since 3.1.1
+         *
+         * @return array
+         */
+        public static function registerCustomRoutes()
+        {
+            // Fetch searched terms from all selected taxonomies
+            register_rest_route(
+                'advgb/v1', '/terms',
+                [
+            		'methods' => 'GET',
+            		'callback' => ['PublishPress\Blocks\Controls', 'getTerms'],
+                    'args' => [
+                        'search' => [
+                            'validate_callback' => ['PublishPress\Blocks\Controls', 'validateString'],
+                            'sanitize_callback' => 'sanitize_text_field',
+                            'required' => false,
+                            'type' => 'string'
+                        ],
+                        'ids' => [
+                            'validate_callback' => ['PublishPress\Blocks\Controls', 'validateArray'],
+                            'sanitize_callback' => ['PublishPress\Blocks\Controls', 'sanitizeNumbersArray'],
+                            'required' => false,
+                            'type' => 'array'
+                        ],
+                        'taxonomies' => [
+                            'validate_callback' => ['PublishPress\Blocks\Controls', 'validateArray'],
+                            'sanitize_callback' => ['PublishPress\Blocks\Controls', 'sanitizeStringsArray'],
+                            'required' => true,
+                            'type' => 'array'
+                        ],
+                    ],
+            		'permission_callback' => function () {
+            			return current_user_can( 'edit_others_posts' );
+            		}
+                ]
+           );
+        }
+
+        /**
+         * Check if value is a string
+         *
+         * @since 3.1.1
+         *
+         * @param $value Value to check
+         *
+         * @return array
+         */
+        public static function validateString( $value )
+        {
+            return is_string( $value );
+        }
+
+        /**
+         * Check if value is an array
+         *
+         * @since 3.1.1
+         *
+         * @param $value Value to check
+         *
+         * @return array
+         */
+        public static function validateArray( $value )
+        {
+            return is_array( $value ) && count( $value );
+        }
+
+        /**
+         * Sanitize an array of strings
+         *
+         * @since 3.1.1
+         *
+         * @param $value Value to check
+         *
+         * @return array
+         */
+        public static function sanitizeStringsArray( $value )
+        {
+            return array_map( 'sanitize_key', $value );
+        }
+
+        /**
+         * Sanitize an array of numbers
+         *
+         * @since 3.1.1
+         *
+         * @param $value Value to check
+         *
+         * @return array
+         */
+        public static function sanitizeNumbersArray( $value )
+        {
+            return array_map( 'intval', $value );
         }
     }
 }
