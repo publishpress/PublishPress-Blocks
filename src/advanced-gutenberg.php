@@ -4,7 +4,7 @@
  * Plugin URI: https://publishpress.com/blocks/
  * Description: PublishPress Blocks has everything you need to build professional websites with the Gutenberg editor.
  * Version: 3.1.1b1
- * Tested up to: 6.1.0
+ * Tested up to: 6.1.1
  * Author: PublishPress
  * Author URI: https://publishpress.com/
  * License: GPL2
