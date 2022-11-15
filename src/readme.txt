@@ -261,6 +261,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Add: Base path constant
   * Add: Reusable methods for FormTokenField
   * Fix: Vendor path constant
+  * Fix: Undefined window._wpGutenbergDefaultPost in initializeEditor()
 
 = 3.1.0 - 26 Oct 2022 =
   * Add: Block Controls admin page
