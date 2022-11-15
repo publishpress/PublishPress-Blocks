@@ -438,28 +438,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     };
 
     /**
-     * Get platforms
-     *
-     * @since 3.1.1
-     *
-     * @return {array}
-     */
-    var getPlatforms = function getPlatforms() {
-        return typeof advgb_block_controls_vars.platforms !== 'undefined' && advgb_block_controls_vars.platforms.length > 0 ? advgb_block_controls_vars.platforms : [];
-    };
-
-    /**
-     * Get browsers
-     *
-     * @since 3.1.1
-     *
-     * @return {array}
-     */
-    var getBrowsers = function getBrowsers() {
-        return typeof advgb_block_controls_vars.browsers !== 'undefined' && advgb_block_controls_vars.browsers.length > 0 ? advgb_block_controls_vars.browsers : [];
-    };
-
-    /**
      * Check if at least one control is enabled per block instance
      *
      * @since 3.1.1
@@ -606,18 +584,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     roles: [],
                     approach: 'public'
                 };
-                var browserControl = {
-                    control: 'browser',
-                    enabled: true,
-                    browsers: [],
-                    approach: 'public'
-                };
-                var platformControl = {
-                    control: 'platform',
-                    enabled: true,
-                    platforms: [],
-                    approach: 'public'
-                };
 
                 // Check if advgbBlockControls attribute exists
                 var controlsAdded = typeof advgbBlockControls !== 'undefined' && advgbBlockControls.length ? true : false;
@@ -659,18 +625,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [userRoleControl])
                             });
                             break;
-
-                        case 'browser':
-                            props.setAttributes({
-                                advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [browserControl])
-                            });
-                            break;
-
-                        case 'platform':
-                            props.setAttributes({
-                                advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [platformControl])
-                            });
-                            break;
                     }
                 } else {
                     // Add the first control object attribute
@@ -684,18 +638,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         case 'user_role':
                             props.setAttributes({
                                 advgbBlockControls: [userRoleControl]
-                            });
-                            break;
-
-                        case 'browser':
-                            props.setAttributes({
-                                advgbBlockControls: [browserControl]
-                            });
-                            break;
-
-                        case 'platform':
-                            props.setAttributes({
-                                advgbBlockControls: [platformControl]
                             });
                             break;
                     }
@@ -834,120 +776,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                     changeControlKey('user_role', 'roles', (0, _utils.getOptionSlugs)(value, getUserRoles()));
                                 }
                             })
-                        )
-                    ),
-                    isControlEnabled(advgb_block_controls_vars.controls.browser) && React.createElement(
-                        Fragment,
-                        null,
-                        React.createElement(ToggleControl, {
-                            label: __('Enable block browsers', 'advanced-gutenberg'),
-                            help: __('Choose in which browsers this block can be displayed.', 'advanced-gutenberg'),
-                            checked: currentControlKey(advgbBlockControls, 'browser', 'enabled'),
-                            onChange: function onChange() {
-                                return changeControlKey('browser', 'enabled');
-                            }
-                        }),
-                        currentControlKey(advgbBlockControls, 'browser', 'enabled') && React.createElement(
-                            Fragment,
-                            null,
-                            React.createElement(
-                                "div",
-                                { className: "advgb-revert-mb" },
-                                React.createElement(SelectControl, {
-                                    value: currentControlKey(advgbBlockControls, 'browser', 'approach'),
-                                    options: [{
-                                        value: 'public',
-                                        label: __('Show in all browsers', 'advanced-gutenberg')
-                                    }, {
-                                        value: 'include',
-                                        label: __('Show in the selected browsers', 'advanced-gutenberg')
-                                    }, {
-                                        value: 'exclude',
-                                        label: __('Hide in the selected browsers', 'advanced-gutenberg')
-                                    }],
-                                    onChange: function onChange(value) {
-                                        return changeControlKey('browser', 'approach', value);
-                                    }
-                                })
-                            ),
-                            (currentControlKey(advgbBlockControls, 'browser', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'browser', 'approach') === 'exclude') && React.createElement(
-                                Fragment,
-                                null,
-                                React.createElement(FormTokenField, {
-                                    multiple: true,
-                                    label: __('Select browsers', 'advanced-gutenberg'),
-                                    placeholder: __('Search', 'advanced-gutenberg'),
-                                    suggestions: (0, _utils.getOptionSuggestions)(getBrowsers()),
-                                    maxSuggestions: 10,
-                                    value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'browser', 'browsers') ? currentControlKey(advgbBlockControls, 'browser', 'browsers') : [], getBrowsers()),
-                                    onChange: function onChange(value) {
-                                        changeControlKey('browser', 'browsers', (0, _utils.getOptionSlugs)(value, getBrowsers()));
-                                    }
-                                }),
-                                React.createElement(
-                                    "div",
-                                    { className: "components-form-token-field__help",
-                                        style: { marginBottom: 30 }
-                                    },
-                                    __('Please note the result could not be 100% accurate due some browsers can mimic a different browser.', 'advanced-gutenberg')
-                                )
-                            )
-                        )
-                    ),
-                    isControlEnabled(advgb_block_controls_vars.controls.platform) && React.createElement(
-                        Fragment,
-                        null,
-                        React.createElement(ToggleControl, {
-                            label: __('Enable block platforms', 'advanced-gutenberg'),
-                            help: __('Choose in which platforms this block can be displayed.', 'advanced-gutenberg'),
-                            checked: currentControlKey(advgbBlockControls, 'platform', 'enabled'),
-                            onChange: function onChange() {
-                                return changeControlKey('platform', 'enabled');
-                            }
-                        }),
-                        currentControlKey(advgbBlockControls, 'platform', 'enabled') && React.createElement(
-                            Fragment,
-                            null,
-                            React.createElement(
-                                "div",
-                                { className: "advgb-revert-mb" },
-                                React.createElement(SelectControl, {
-                                    value: currentControlKey(advgbBlockControls, 'platform', 'approach'),
-                                    options: [{
-                                        value: 'public',
-                                        label: __('Show in all platforms', 'advanced-gutenberg')
-                                    }, {
-                                        value: 'include',
-                                        label: __('Show in the selected platforms', 'advanced-gutenberg')
-                                    }, {
-                                        value: 'exclude',
-                                        label: __('Hide in the selected platforms', 'advanced-gutenberg')
-                                    }],
-                                    onChange: function onChange(value) {
-                                        return changeControlKey('platform', 'approach', value);
-                                    }
-                                })
-                            ),
-                            (currentControlKey(advgbBlockControls, 'platform', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'platform', 'approach') === 'exclude') && React.createElement(
-                                Fragment,
-                                null,
-                                React.createElement(FormTokenField, {
-                                    multiple: true,
-                                    label: __('Select platforms', 'advanced-gutenberg'),
-                                    placeholder: __('Search', 'advanced-gutenberg'),
-                                    suggestions: (0, _utils.getOptionSuggestions)(getPlatforms()),
-                                    maxSuggestions: 10,
-                                    value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'platform', 'platforms') ? currentControlKey(advgbBlockControls, 'platform', 'platforms') : [], getPlatforms()),
-                                    onChange: function onChange(value) {
-                                        changeControlKey('platform', 'platforms', (0, _utils.getOptionSlugs)(value, getPlatforms()));
-                                    }
-                                }),
-                                React.createElement(
-                                    "div",
-                                    { className: "components-form-token-field__help" },
-                                    __('Please note the result could not be 100% accurate due some browsers can mimic a different platform.', 'advanced-gutenberg')
-                                )
-                            )
                         )
                     )
                 )

@@ -63,34 +63,6 @@ import {
     }
 
     /**
-     * Get platforms
-     *
-     * @since 3.1.1
-     *
-     * @return {array}
-     */
-    const getPlatforms = function() {
-        return typeof advgb_block_controls_vars.platforms !== 'undefined'
-                && advgb_block_controls_vars.platforms.length > 0
-                    ? advgb_block_controls_vars.platforms
-                    : [];
-    }
-
-    /**
-     * Get browsers
-     *
-     * @since 3.1.1
-     *
-     * @return {array}
-     */
-    const getBrowsers = function() {
-        return typeof advgb_block_controls_vars.browsers !== 'undefined'
-                && advgb_block_controls_vars.browsers.length > 0
-                    ? advgb_block_controls_vars.browsers
-                    : [];
-    }
-
-    /**
      * Check if at least one control is enabled per block instance
      *
      * @since 3.1.1
@@ -238,18 +210,6 @@ import {
                     roles: [],
                     approach: 'public'
                 };
-                const browserControl = {
-                    control: 'browser',
-                    enabled: true,
-                    browsers: [],
-                    approach: 'public'
-                };
-                const platformControl = {
-                    control: 'platform',
-                    enabled: true,
-                    platforms: [],
-                    approach: 'public'
-                };
 
                 // Check if advgbBlockControls attribute exists
                 const controlsAdded = typeof advgbBlockControls !== 'undefined' && advgbBlockControls.length
@@ -300,24 +260,6 @@ import {
                                 ]
                             } );
                         break;
-
-                        case 'browser':
-                            props.setAttributes( {
-                                advgbBlockControls: [
-                                    ...advgbBlockControls,
-                                    browserControl
-                                ]
-                            } );
-                        break;
-
-                        case 'platform':
-                            props.setAttributes( {
-                                advgbBlockControls: [
-                                    ...advgbBlockControls,
-                                    platformControl
-                                ]
-                            } );
-                        break;
                     }
                 } else {
                     // Add the first control object attribute
@@ -331,18 +273,6 @@ import {
                         case 'user_role':
                             props.setAttributes( {
                                 advgbBlockControls: [ userRoleControl ]
-                            } );
-                        break;
-
-                        case 'browser':
-                            props.setAttributes( {
-                                advgbBlockControls: [ browserControl ]
-                            } );
-                        break;
-
-                        case 'platform':
-                            props.setAttributes( {
-                                advgbBlockControls: [ platformControl ]
                             } );
                         break;
                     }
@@ -490,148 +420,6 @@ import {
                             ) }
                         </Fragment>
                         ) }
-                        { isControlEnabled( advgb_block_controls_vars.controls.browser ) && (
-                        <Fragment>
-                            <ToggleControl
-                                label={ __( 'Enable block browsers', 'advanced-gutenberg' ) }
-                                help={
-                                    __( 'Choose in which browsers this block can be displayed.', 'advanced-gutenberg' )
-                                }
-                                checked={ currentControlKey( advgbBlockControls, 'browser', 'enabled' ) }
-                                onChange={ () => changeControlKey( 'browser', 'enabled' ) }
-                            />
-                            { currentControlKey( advgbBlockControls, 'browser', 'enabled' ) && (
-                                <Fragment>
-                                    <div className="advgb-revert-mb">
-                                        <SelectControl
-                                            value={
-                                                currentControlKey( advgbBlockControls, 'browser', 'approach' )
-                                            }
-                                            options={ [
-                                                {
-                                                    value: 'public',
-                                                    label: __( 'Show in all browsers', 'advanced-gutenberg' )
-                                                },
-                                                {
-                                                    value: 'include',
-                                                    label: __( 'Show in the selected browsers', 'advanced-gutenberg' )
-                                                },
-                                                {
-                                                    value: 'exclude',
-                                                    label: __( 'Hide in the selected browsers', 'advanced-gutenberg' )
-                                                }
-                                            ] }
-                                            onChange={ ( value ) => changeControlKey( 'browser', 'approach', value ) }
-                                        />
-                                    </div>
-                                    { ( currentControlKey( advgbBlockControls, 'browser', 'approach' ) === 'include' ||
-                                        currentControlKey( advgbBlockControls, 'browser', 'approach' ) === 'exclude'
-                                    ) && (
-                                        <Fragment>
-                                            <FormTokenField
-                                                multiple
-                                                label={ __( 'Select browsers', 'advanced-gutenberg' ) }
-                                                placeholder={ __( 'Search', 'advanced-gutenberg' ) }
-                                                suggestions={ getOptionSuggestions( getBrowsers() ) }
-                                                maxSuggestions={ 10 }
-                                                value={
-                                                    getOptionTitles(
-                                                        !! currentControlKey( advgbBlockControls, 'browser', 'browsers' )
-                                                            ? currentControlKey( advgbBlockControls, 'browser', 'browsers' )
-                                                            : [],
-                                                        getBrowsers()
-                                                    )
-                                                }
-                                                onChange={ ( value ) => {
-                                                    changeControlKey( 'browser', 'browsers', getOptionSlugs( value, getBrowsers() ) )
-                                                } }
-                                            />
-                                            <div className="components-form-token-field__help"
-                                                style={ { marginBottom: 30 } }
-                                            >
-                                            {
-                                                __(
-                                                    'Please note the result could not be 100% accurate due some browsers can mimic a different browser.',
-                                                    'advanced-gutenberg'
-                                                )
-                                            }
-                                            </div>
-                                        </Fragment>
-                                    ) }
-                                </Fragment>
-                            ) }
-                        </Fragment>
-                        ) }
-                        { isControlEnabled( advgb_block_controls_vars.controls.platform ) && (
-                        <Fragment>
-                            <ToggleControl
-                                label={ __( 'Enable block platforms', 'advanced-gutenberg' ) }
-                                help={
-                                    __( 'Choose in which platforms this block can be displayed.', 'advanced-gutenberg' )
-                                }
-                                checked={ currentControlKey( advgbBlockControls, 'platform', 'enabled' ) }
-                                onChange={ () => changeControlKey( 'platform', 'enabled' ) }
-                            />
-                            { currentControlKey( advgbBlockControls, 'platform', 'enabled' ) && (
-                                <Fragment>
-                                    <div className="advgb-revert-mb">
-                                        <SelectControl
-                                            value={
-                                                currentControlKey( advgbBlockControls, 'platform', 'approach' )
-                                            }
-                                            options={ [
-                                                {
-                                                    value: 'public',
-                                                    label: __( 'Show in all platforms', 'advanced-gutenberg' )
-                                                },
-                                                {
-                                                    value: 'include',
-                                                    label: __( 'Show in the selected platforms', 'advanced-gutenberg' )
-                                                },
-                                                {
-                                                    value: 'exclude',
-                                                    label: __( 'Hide in the selected platforms', 'advanced-gutenberg' )
-                                                }
-                                            ] }
-                                            onChange={ ( value ) => changeControlKey( 'platform', 'approach', value ) }
-                                        />
-                                    </div>
-                                    { ( currentControlKey( advgbBlockControls, 'platform', 'approach' ) === 'include' ||
-                                        currentControlKey( advgbBlockControls, 'platform', 'approach' ) === 'exclude'
-                                    ) && (
-                                        <Fragment>
-                                            <FormTokenField
-                                                multiple
-                                                label={ __( 'Select platforms', 'advanced-gutenberg' ) }
-                                                placeholder={ __( 'Search', 'advanced-gutenberg' ) }
-                                                suggestions={ getOptionSuggestions( getPlatforms() ) }
-                                                maxSuggestions={ 10 }
-                                                value={
-                                                    getOptionTitles(
-                                                        !! currentControlKey( advgbBlockControls, 'platform', 'platforms' )
-                                                            ? currentControlKey( advgbBlockControls, 'platform', 'platforms' )
-                                                            : [],
-                                                        getPlatforms()
-                                                    )
-                                                }
-                                                onChange={ ( value ) => {
-                                                    changeControlKey( 'platform', 'platforms', getOptionSlugs( value, getPlatforms() ) )
-                                                } }
-                                            />
-                                            <div className="components-form-token-field__help">
-                                            {
-                                                __(
-                                                    'Please note the result could not be 100% accurate due some browsers can mimic a different platform.',
-                                                    'advanced-gutenberg'
-                                                )
-                                            }
-                                            </div>
-                                        </Fragment>
-                                    ) }
-                                </Fragment>
-                            ) }
-                        </Fragment>
-                    ) }
                     </PanelBody>
                 </InspectorControls>,
                 <BlockEdit key="block-edit-advgb-dates" {...props} />,
