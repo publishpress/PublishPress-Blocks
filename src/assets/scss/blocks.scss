@@ -303,6 +303,10 @@ div.advgb-image-block .advgb-browse-image-btn {
     opacity: 0.5;
 }
 
+.advgb-image-text--linkable {
+  cursor: pointer;
+}
+
 /*Advanced List block styles*/
 #editor .wp-block-advgb-list {
     margin-left: 15px;

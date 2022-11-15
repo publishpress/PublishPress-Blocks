@@ -4838,16 +4838,31 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgb_AdvancedImageAssets($blockAttrs)
         {
-            if (array_key_exists('openOnClick', $blockAttrs) && $blockAttrs['openOnClick'] == 'lightbox') {
-                wp_enqueue_style('colorbox_style');
-                wp_enqueue_script('colorbox_js');
+            if ( array_key_exists('openOnClick', $blockAttrs) ) {
 
-                wp_enqueue_script(
-                    'advgbImageLightbox_js',
-                    plugins_url('assets/blocks/advimage/lightbox.js', dirname(__FILE__)),
-                    array('jquery'),
-                    ADVANCED_GUTENBERG_VERSION
-                );
+                if( $blockAttrs['openOnClick'] == 'lightbox' ) {
+                    // Lightbox
+                    wp_enqueue_style('colorbox_style');
+                    wp_enqueue_script('colorbox_js');
+
+                    wp_enqueue_script(
+                        'advgbImageLightbox_js',
+                        plugins_url('assets/blocks/advimage/lightbox.js', dirname(__FILE__)),
+                        array('jquery'),
+                        ADVANCED_GUTENBERG_VERSION
+                    );
+                } elseif( $blockAttrs['openOnClick'] == 'url' ) {
+                    // Custom URL
+                    wp_enqueue_script(
+                        'advgbImageCustomURL_js',
+                        plugins_url( 'assets/blocks/advimage/url.js', dirname( __FILE__ ) ),
+                        ['jquery'],
+                        ADVANCED_GUTENBERG_VERSION
+                    );
+                } else {
+                    // Nothing to do here
+                }
+
             }
         }
 
