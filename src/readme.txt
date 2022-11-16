@@ -274,6 +274,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Padding for date picker popup
   * Fix: Can't select items from core List block
   * Fix: Forced 100% width for core Button block
+  * Fix: Bring back Upgrade to Pro boxes in editor
 
 = 3.1.0 - 26 Oct 2022 =
   * Add: Block Controls admin page
