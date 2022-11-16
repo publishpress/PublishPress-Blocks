@@ -273,6 +273,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Reset icon moved to a new line when date is longer in Schedule block control
   * Fix: Padding for date picker popup
   * Fix: Can't select items from core List block
+  * Fix: Forced 100% width for core Button block
 
 = 3.1.0 - 26 Oct 2022 =
   * Add: Block Controls admin page
