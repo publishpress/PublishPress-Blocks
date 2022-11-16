@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9fe0ce431fd3932133592d5756012e4c",
+    "content-hash": "41908ce88e985cebf51bd6c58169cd84",
     "packages": [
         {
             "name": "pimple/pimple",
@@ -115,11 +115,11 @@
         },
         {
             "name": "publishpress/publishpress-instance-protection",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/publishpress-instance-protection",
-                "reference": "ef1a631a41b723ce2e856f534ff4befbe914e964"
+                "reference": "6a4e7038c95fac43264b1d61a5cdae2b1e3cc4ee"
             },
             "require": {
                 "php": ">=5.6.20"
@@ -139,7 +139,7 @@
             "keywords": [
                 "wordpress plugin"
             ],
-            "time": "2022-06-03T17:41:36+00:00"
+            "time": "2022-10-28T16:14:03+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
@@ -306,6 +306,56 @@
                 "source": "https://github.com/publishpress/WordPress-Version-Notices/tree/1.1.4"
             },
             "time": "2022-06-06T15:45:54+00:00"
+        },
+        {
+            "name": "wolfcast/browser-detection",
+            "version": "2.9.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wolfcast/BrowserDetection.git",
+                "reference": "77fad169776d6c4fc61fa740fb16495cafc505eb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Wolfcast/BrowserDetection/zipball/77fad169776d6c4fc61fa740fb16495cafc505eb",
+                "reference": "77fad169776d6c4fc61fa740fb16495cafc505eb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/BrowserDetection.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Alexandre Valiquette",
+                    "homepage": "https://wolfcast.com/",
+                    "role": "Lead developer"
+                }
+            ],
+            "description": "The Wolfcast BrowserDetection PHP class facilitates the identification of the user's environment such as Web browser, version, platform family, platform version or if it's a mobile device or not.",
+            "homepage": "https://github.com/Wolfcast/BrowserDetection",
+            "keywords": [
+                "browser",
+                "detection",
+                "environment",
+                "mobile",
+                "platform",
+                "version"
+            ],
+            "support": {
+                "issues": "https://github.com/Wolfcast/BrowserDetection/issues",
+                "source": "https://github.com/Wolfcast/BrowserDetection/tree/2.9.7"
+            },
+            "time": "2022-09-21T04:06:27+00:00"
         }
     ],
     "packages-dev": [],

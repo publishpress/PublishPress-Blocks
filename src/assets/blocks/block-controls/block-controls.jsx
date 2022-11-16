@@ -1,5 +1,10 @@
 import classnames from 'classnames';
 import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
+import {
+    getOptionSuggestions,
+    getOptionTitles,
+    getOptionSlugs
+} from "../0-adv-components/utils.jsx";
 
 (function ( wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose, wpElement ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
@@ -23,6 +28,13 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
         'advgb/tab',
         'advgb/column'
     ];
+
+    const getGlobalControls = function () {
+        return typeof advgb_block_controls_vars.controls !== 'undefined'
+                            && Object.keys(advgb_block_controls_vars.controls).length > 0
+                                ? advgb_block_controls_vars.controls
+                                : [];
+    }
 
     /**
      * Check if a control is enabled
@@ -51,19 +63,47 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
     }
 
     /**
-     * Check how many controls are enabled
+     * Check if at least one control is enabled per block instance
+     *
+     * @since 3.1.1
+     * @param {string} controlAttrs     Controls attributes. e.g. advgbBlockControls or props.attributes @TODO Figure out a way to NOT require controlAttrs as param due is the same always
+     *
+     * @return {bool}
+     */
+    const isAnyControlEnabledBlock = function( controlAttrs ) {
+        const globalControls    = getGlobalControls();
+        let counter             = 0;
+        let blockControls       = []; // Controls enabled in block instance
+
+        // Get enabled global controls (in Settings)
+        Object.keys(globalControls).forEach( (item) => {
+            if( isControlEnabled( advgb_block_controls_vars.controls[item] ) ) {
+                blockControls.push(item);
+            }
+        } );
+
+        // Get counter for enabled controls in block instance
+        blockControls.forEach( (item) => {
+            if( currentControlKey( controlAttrs, item, 'enabled' ) ) {
+                counter++;
+            }
+        } );
+
+        return counter > 0 ? true : false;
+    }
+
+    /**
+     * Check if at least one control is enabled globally (in Settings)
      *
      * @since 3.1.0
      *
      * @return {bool}
      */
-    const countControlEnabled = function() {
-        const allControls = typeof advgb_block_controls_vars.controls !== 'undefined'
-                            && Object.keys(advgb_block_controls_vars.controls).length > 0
-                                ? advgb_block_controls_vars.controls
-                                : [];
-        let counter = 0;
-        Object.keys(allControls).map( (item) => {
+    const isAnyControlEnabledGlobal = function() {
+        const globalControls    = getGlobalControls();
+        let counter             = 0;
+
+        Object.keys(globalControls).map( (item) => {
             if( isControlEnabled( advgb_block_controls_vars.controls[item] ) ) {
                 counter++;
             }
@@ -124,7 +164,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
 
     // Register block controls to blocks attributes
     addFilter( 'blocks.registerBlockType', 'advgb/blockControls', function ( settings ) {
-        if ( ! NON_SUPPORTED_BLOCKS.includes( settings.name ) && countControlEnabled() ) {
+        if ( ! NON_SUPPORTED_BLOCKS.includes( settings.name ) && isAnyControlEnabledGlobal() ) {
             settings.attributes = Object.assign( settings.attributes, {
                 advgbBlockControls: {
                     type: 'array',
@@ -239,99 +279,17 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                 }
             }
 
-            /**
-             * Generate User role suggestions
-             *
-             * @since 3.1.0
-             *
-             * @return {array}  User role slugs e.g. ['subscriber','new_customer']
-             */
-            const getUserRoleSuggestions = function() {
-
-                /* All the available user roles in the site.
-                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
-                 */
-                const roles = getUserRoles();
-
-                return roles.map( ( role ) => role.title );
-            }
-
-            /**
-             * Match user role slugs with its user role human readable titles
-             * to display as field value (but NOT saved!).
-             *
-             * @since 3.1.0
-             * @param  roles    User role slugs e.g. ['subscriber','new_customer']
-             *
-             * @return {array}  Human readable User roles e.g. ['Subscriber','New Customer']
-             */
-            const getUserRoleTitles = function( roles ) {
-
-                /* All the available user roles in the site.
-                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
-                 */
-                const rolesToSelect = getUserRoles();
-
-                let field_value = [];
-
-                if ( rolesToSelect !== null ) {
-                    field_value = roles.map( ( role_slug ) => {
-                        let find_role = rolesToSelect.find( ( role ) => {
-                            return role.slug === role_slug;
-                        } );
-                        if ( find_role === undefined || ! find_role ) {
-                            return role_slug; // It should return false but creates empty selections
-                        }
-                        return find_role.title;
-                    } );
-                }
-
-                return field_value;
-            }
-
-            /**
-             * Match user role human readable titles with its slugs, and save slugs
-             *
-             * @since 3.1.0
-             * @param roles     Human readable User roles e.g. ['Subscriber','New Customer']
-             *
-             * @return {array}  User role slugs e.g. ['subscriber','new_customer']
-             */
-            const getUserRoleSlugs = function( roles ) {
-
-                /* All the available user roles in the site.
-                 * e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
-                 */
-                const rolesToSelect = getUserRoles();
-
-                let roles_array = [];
-
-                roles.map(
-                    ( role_title ) => {
-                        const matching_role = rolesToSelect.find( ( role ) => {
-                            return role.title === role_title;
-                        } );
-                        if ( matching_role !== undefined ) {
-                            roles_array.push( matching_role.slug );
-                        }
-                    }
-                )
-
-                return roles_array;
-            }
-
             return ( [
                 props.isSelected && ( ! NON_SUPPORTED_BLOCKS.includes( props.name ) )
-                && countControlEnabled() &&
+                && isAnyControlEnabledGlobal() &&
                 <InspectorControls key="advgb-bc-controls">
                     <PanelBody
                         title={ __( 'Block Controls', 'advanced-gutenberg' ) }
                         icon="visibility"
                         initialOpen={ false }
                         className={
-                            ( currentControlKey( advgbBlockControls, 'schedule', 'enabled' )
-                                || currentControlKey( advgbBlockControls, 'user_role', 'enabled' )
-                            ) ? 'advgb-feature-icon-active' : ''
+                            isAnyControlEnabledBlock( advgbBlockControls )
+                                ? 'advgb-feature-icon-active' : ''
                         }
                     >
                         { isControlEnabled( advgb_block_controls_vars.controls.schedule ) && (
@@ -430,7 +388,7 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                                                 },
                                                 {
                                                     value: 'exclude',
-                                                    label: __( 'Hide to the selected user roles', 'advanced-gutenberg' )
+                                                    label: __( 'Hide from the selected user roles', 'advanced-gutenberg' )
                                                 }
                                             ] }
                                             onChange={ ( value ) => changeControlKey( 'user_role', 'approach', value ) }
@@ -443,17 +401,18 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
                                             multiple
                                             label={ __( 'Select user roles', 'advanced-gutenberg' ) }
                                             placeholder={ __( 'Search', 'advanced-gutenberg' ) }
-                                            suggestions={ getUserRoleSuggestions() }
+                                            suggestions={ getOptionSuggestions( getUserRoles() ) }
                                             maxSuggestions={ 10 }
                                             value={
-                                                getUserRoleTitles(
+                                                getOptionTitles(
                                                     !! currentControlKey( advgbBlockControls, 'user_role', 'roles' )
                                                         ? currentControlKey( advgbBlockControls, 'user_role', 'roles' )
-                                                        : []
+                                                        : [],
+                                                    getUserRoles()
                                                 )
                                             }
                                             onChange={ ( value ) => {
-                                                changeControlKey( 'user_role', 'roles', getUserRoleSlugs( value ) )
+                                                changeControlKey( 'user_role', 'roles', getOptionSlugs( value, getUserRoles() ) )
                                             } }
                                         />
                                     ) }
@@ -470,12 +429,11 @@ import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
 
     const withAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
         return ( props ) => {
-            if ( ( !NON_SUPPORTED_BLOCKS.includes( props.name ) ) && hasBlockSupport( props.name, 'advgb/blockControls', true ) && countControlEnabled() ) {
+            if ( ( !NON_SUPPORTED_BLOCKS.includes( props.name ) ) && hasBlockSupport( props.name, 'advgb/blockControls', true ) && isAnyControlEnabledGlobal() ) {
                 const { advgbBlockControls } = props.attributes;
                 const advgbBcClass = props.isSelected === false
-                    && ( currentControlKey( advgbBlockControls, 'schedule', 'enabled' )
-                        || currentControlKey( advgbBlockControls, 'user_role', 'enabled' )
-                    ) ? 'advgb-bc-editor-preview' : '';
+                    && isAnyControlEnabledBlock( advgbBlockControls )
+                        ? 'advgb-bc-editor-preview' : '';
 
                 return <BlockListBlock { ...props } className={ classnames( props.className, advgbBcClass ) } advgbBlockControls={ `${ advgbBlockControls }` } />;
             }

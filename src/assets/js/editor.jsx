@@ -110,6 +110,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                         'core/media-text',
                         'core/latest-comments',
                         'core/latest-posts',
+                        'core/list-item',
                         'core/missing',
                         'core/more',
                         'core/nextpage',
@@ -166,6 +167,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                         'core/comment-edit-link',
                         'core/comment-reply-link',
                         'core/comment-template',
+                        'core/comments',
                         'core/comments-title',
                         'core/comments-query-loop',
                         'core/comments-pagination',
@@ -187,7 +189,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                     const target = document.getElementById('editor');
 
                     // Initialize again the editor
-                    wp.editPost.initializeEditor('editor', advgb_blocks_vars.post_type, advgb_blocks_vars.post_id, new_settings, window._wpGutenbergDefaultPost);
+                    wp.editPost.initializeEditor('editor', advgb_blocks_vars.post_type, advgb_blocks_vars.post_id, new_settings, []);
 
                     var list_categories = wp.blocks.getCategories();
 
