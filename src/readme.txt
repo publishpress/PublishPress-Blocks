@@ -264,12 +264,13 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.1 - 15 Nov 2022 =
+= 3.1.1 - 16 Nov 2022 =
   * Add: Base path constant
   * Add: Reusable methods for FormTokenField
   * Fix: Vendor path constant
   * Fix: Undefined window._wpGutenbergDefaultPost in initializeEditor()
   * Fix: Make title and subtitle linkable for Image block custom URL
+  * Fix: Reset icon moved to a new line when date is longer in Schedule block control
 
 = 3.1.0 - 26 Oct 2022 =
   * Add: Block Controls admin page
