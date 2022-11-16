@@ -461,6 +461,23 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         ADVANCED_GUTENBERG_VERSION,
                         true
                     );
+
+                    // Pro Ads in some blocks for free version
+                    if( ! defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+                        wp_enqueue_script(
+                            'advgb_pro_ad_js',
+                            plugins_url( 'assets/blocks/pro-ad.js', dirname( __FILE__ ) ),
+                            ['advgb_blocks'],
+                            ADVANCED_GUTENBERG_VERSION,
+                            true
+                        );
+                        wp_enqueue_style(
+                            'advgb_pro_ad_css',
+                            plugins_url( 'assets/css/pro-ad.css', dirname( __FILE__ ) ),
+                            [],
+                            ADVANCED_GUTENBERG_VERSION
+                        );
+                    }
                 }
 
                 if( $this->settingIsEnabled( 'enable_block_access' ) ) {
