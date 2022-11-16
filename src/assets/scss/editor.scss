@@ -187,6 +187,10 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
       height: 32px;
     }
   }
+
+  .components-popover__content > .components-datetime {
+    padding: 0 16px 16px;
+  }
 }
 
 /* Custom toolbar */
