@@ -272,6 +272,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Make title and subtitle linkable for Image block custom URL
   * Fix: Reset icon moved to a new line when date is longer in Schedule block control
   * Fix: Padding for date picker popup
+  * Fix: Can't select items from core List block
 
 = 3.1.0 - 26 Oct 2022 =
   * Add: Block Controls admin page
