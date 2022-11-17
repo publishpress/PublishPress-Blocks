@@ -1025,25 +1025,19 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         initTaxonomy = _state2.initTaxonomy;
                     var prevTermWord = prevState.searchTermWord;
 
-                    // Get human readable selected terms on selection one time
+                    // Get human readable selected terms on block selection the first time
 
                     if (!this.isPost() && !NON_SUPPORTED_BLOCKS.includes(name) && isSelected && initTaxonomy && isControlEnabled(advgb_block_controls_vars.controls.taxonomy) && currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') && currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') !== null && currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies').length && currentControlKey(advgbBlockControls, 'taxonomy', 'terms') !== null && currentControlKey(advgbBlockControls, 'taxonomy', 'terms').length) {
-                        console.log('initTaxonomy!!', currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies'));
                         this.initTaxonomyControl();
                     }
 
                     // Search terms
                     if (searchTermWord !== prevTermWord && searchTermWord.length > 2) {
-                        /*console.log('prevTermWord',prevTermWord);
-                        console.log('searchTermWord',searchTermWord);*/
                         this.searchTerms();
                     }
 
                     // Update available terms and remove terms which taxonomy has been removed
                     if (!this.isPost() && isControlEnabled(advgb_block_controls_vars.controls.taxonomy) && currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') && currentControlKey(prevBlockControls, 'taxonomy', 'taxonomies') !== currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies')) {
-                        /*console.log('prevBlockControls',currentControlKey( prevBlockControls, 'taxonomy', 'taxonomies' ));
-                        console.log('advgbBlockControls',currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ));
-                        console.log('different!!!');*/
                         this.taxonomiesChanged();
                     }
                 }

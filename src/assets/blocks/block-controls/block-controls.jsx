@@ -622,7 +622,7 @@ import {
                 const { searchTermWord, initTaxonomy } = this.state;
                 const { searchTermWord: prevTermWord } = prevState;
 
-                // Get human readable selected terms on selection one time
+                // Get human readable selected terms on block selection the first time
                 if( ! this.isPost()
                     && ! NON_SUPPORTED_BLOCKS.includes( name )
                     && isSelected
@@ -634,14 +634,11 @@ import {
                     && currentControlKey( advgbBlockControls, 'taxonomy', 'terms' ) !== null
                     && currentControlKey( advgbBlockControls, 'taxonomy', 'terms' ).length
                 ) {
-                    console.log('initTaxonomy!!', currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ));
                     this.initTaxonomyControl();
                 }
 
                 // Search terms
                 if( searchTermWord !== prevTermWord && searchTermWord.length > 2 ) {
-                    /*console.log('prevTermWord',prevTermWord);
-                    console.log('searchTermWord',searchTermWord);*/
                     this.searchTerms();
                 }
 
@@ -651,9 +648,6 @@ import {
                     currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' ) &&
                     currentControlKey( prevBlockControls, 'taxonomy', 'taxonomies' ) !== currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
                 ) {
-                    /*console.log('prevBlockControls',currentControlKey( prevBlockControls, 'taxonomy', 'taxonomies' ));
-                    console.log('advgbBlockControls',currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ));
-                    console.log('different!!!');*/
                     this.taxonomiesChanged();
                 }
             }
