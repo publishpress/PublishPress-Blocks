@@ -400,13 +400,14 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
          * Get a Block control value from database option
          *
          * @since 3.1.0
+         * @since 3.1.2 - Remove static visibility
          *
          * @param string $name  Setting name - e.g. 'schedule' from advgb_block_controls > controls
          * @param bool $default Default value when $setting doesn't exist in $option
          *
          * @return bool
          */
-        public static function getControlValue( $name, $default )
+        public function getControlValue( $name, $default )
         {
             $settings = get_option( 'advgb_block_controls' );
 

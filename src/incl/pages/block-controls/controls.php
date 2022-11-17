@@ -1,12 +1,14 @@
 <?php
 defined( 'ABSPATH' ) || die;
 
-$schedule_control   = PublishPress\Blocks\Controls::getControlValue( 'schedule', 1 );
-$user_role_control  = PublishPress\Blocks\Controls::getControlValue( 'user_role', 1 );
-$browser_control    = PublishPress\Blocks\Controls::getControlValue( 'browser', 1 );
-$platform_control   = PublishPress\Blocks\Controls::getControlValue( 'platform', 1 );
-$taxonomy_control   = PublishPress\Blocks\Controls::getControlValue( 'taxonomy', 1 );
-$page_control       = PublishPress\Blocks\Controls::getControlValue( 'page', 1 );
+$controls           = new \PublishPress\Blocks\Controls;
+
+$schedule_control   = $controls->getControlValue( 'schedule', 1 );
+$user_role_control  = $controls->getControlValue( 'user_role', 1 );
+$browser_control    = $controls->getControlValue( 'browser', 1 );
+$platform_control   = $controls->getControlValue( 'platform', 1 );
+$taxonomy_control   = $controls->getControlValue( 'taxonomy', 1 );
+$page_control       = $controls->getControlValue( 'page', 1 );
 ?>
 <form method="post">
     <?php wp_nonce_field( 'advgb_controls_settings_nonce', 'advgb_controls_settings_nonce_field' ); ?>
