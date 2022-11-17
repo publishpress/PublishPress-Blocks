@@ -560,14 +560,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 var _this = _possibleConstructorReturn(this, (_ref = BlockControlsEdit.__proto__ || Object.getPrototypeOf(BlockControlsEdit)).call.apply(_ref, [this].concat(_toConsumableArray(props))));
 
                 _this.state = {
-                    taxonomiesUpdated: false, // When true, remove selected terms from removed taxonomy
                     termOptions: [], // Store term options with slug (id) and title
-                    updateTerms: true, // When true, trigger apiFetch for terms
                     searchTermWord: '', // Updated when searching terms
-                    initTaxonomyStatus: true // When true, trigger initTaxonomyControl()
+                    initTaxonomy: true // When true, trigger initTaxonomyControl()
                 };
 
-                _this.initTaxonomyControl = _this.initTaxonomyControl.bind(_this); // Executed once when block is selected
                 _this.isPost = _this.isPost.bind(_this);
                 return _this;
             }
@@ -889,39 +886,35 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 value: function taxonomiesChanged() {
                     var _this4 = this;
 
-                    if (this.state.taxonomiesUpdated) {
-                        var attributes = this.props.attributes;
-                        var advgbBlockControls = attributes.advgbBlockControls;
+                    var attributes = this.props.attributes;
+                    var advgbBlockControls = attributes.advgbBlockControls;
 
 
-                        var currentTerms = !!currentControlKey(advgbBlockControls, 'taxonomy', 'terms') ? currentControlKey(advgbBlockControls, 'taxonomy', 'terms') : [];
-                        var taxonomies = !!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : [];
+                    var currentTerms = !!currentControlKey(advgbBlockControls, 'taxonomy', 'terms') ? currentControlKey(advgbBlockControls, 'taxonomy', 'terms') : [];
+                    var taxonomies = !!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : [];
 
-                        if (currentTerms.length) {
+                    if (currentTerms.length) {
 
-                            var result = [];
-                            currentTerms.forEach(function (slug) {
-                                var itemIndex = _this4.state.termOptions.findIndex(function (item) {
-                                    return item.slug === slug;
-                                });
-
-                                /* Get only the terms that belongs to selected taxonomies
-                                 * and skip the ones that belongs to the deleted taxonomy
-                                 */
-                                if (taxonomies.includes(_this4.state.termOptions[itemIndex].tax)) {
-                                    result.push(_this4.state.termOptions[itemIndex].slug);
-                                }
+                        var result = [];
+                        currentTerms.forEach(function (slug) {
+                            var itemIndex = _this4.state.termOptions.findIndex(function (item) {
+                                return item.slug === slug;
                             });
 
-                            this.changeControlKey('taxonomy', 'terms', result);
-                        }
+                            /* Get only the terms that belongs to selected taxonomies
+                             * and skip the ones that belongs to the deleted taxonomy
+                             */
+                            if (taxonomies.includes(_this4.state.termOptions[itemIndex].tax)) {
+                                result.push(_this4.state.termOptions[itemIndex].slug);
+                            }
+                        });
 
-                        this.setState({ taxonomiesUpdated: false });
+                        this.changeControlKey('taxonomy', 'terms', result);
                     }
                 }
 
                 /**
-                 * Get selected terms on first load (when block is selcted)
+                 * Get selected terms on first load
                  *
                  * @since 3.1.1
                  *
@@ -933,29 +926,29 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 value: function initTaxonomyControl() {
                     var _this5 = this;
 
-                    var _props2 = this.props,
-                        attributes = _props2.attributes,
-                        isSelected = _props2.isSelected,
-                        name = _props2.name;
-                    var advgbBlockControls = attributes.advgbBlockControls;
+                    var advgbBlockControls = this.props.attributes.advgbBlockControls;
 
 
-                    if (isSelected && this.state.initTaxonomyStatus && !NON_SUPPORTED_BLOCKS.includes(name) && isControlEnabled(advgb_block_controls_vars.controls.taxonomy) && currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') !== null && currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies').length && currentControlKey(advgbBlockControls, 'taxonomy', 'terms') !== null && currentControlKey(advgbBlockControls, 'taxonomy', 'terms').length) {
-                        wp.apiFetch({
-                            path: wp.url.addQueryArgs('advgb/v1/terms', {
-                                taxonomies: !!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : [],
-                                ids: !!currentControlKey(advgbBlockControls, 'taxonomy', 'terms') ? currentControlKey(advgbBlockControls, 'taxonomy', 'terms') : []
-                            })
-                        }).then(function (list) {
-                            _this5.setState({
-                                termOptions: list,
-                                initTaxonomyStatus: false
-                            });
+                    wp.apiFetch({
+                        path: wp.url.addQueryArgs('advgb/v1/terms', {
+                            taxonomies: !!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : [],
+                            ids: !!currentControlKey(advgbBlockControls, 'taxonomy', 'terms') ? currentControlKey(advgbBlockControls, 'taxonomy', 'terms') : []
+                        })
+                    }).then(function (list) {
+                        _this5.setState({
+                            termOptions: list,
+                            initTaxonomy: false
                         });
-                    }
+                    });
                 }
 
-                // Search terms
+                /**
+                 * Search terms based on search
+                 *
+                 * @since 3.1.1
+                 *
+                 * @return {void}
+                 */
 
             }, {
                 key: "searchTerms",
@@ -964,49 +957,45 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
                     var _state = this.state,
                         termOptions = _state.termOptions,
-                        updateTerms = _state.updateTerms,
                         searchTermWord = _state.searchTermWord;
                     var advgbBlockControls = this.props.attributes.advgbBlockControls;
 
 
-                    if (updateTerms && searchTermWord.length > 2) {
-                        wp.apiFetch({
-                            /*/ To get taxonomies
-                            path: wp.url.addQueryArgs( 'wp/v2/taxonomies', { context: 'edit' } )*/
+                    wp.apiFetch({
+                        /*/ To get taxonomies
+                        path: wp.url.addQueryArgs( 'wp/v2/taxonomies', { context: 'edit' } )*/
 
-                            path: wp.url.addQueryArgs('advgb/v1/terms', {
-                                search: searchTermWord,
-                                taxonomies: !!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : []
-                            })
+                        path: wp.url.addQueryArgs('advgb/v1/terms', {
+                            search: searchTermWord,
+                            taxonomies: !!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : []
+                        })
 
-                        }).then(function (list) {
+                    }).then(function (list) {
 
-                            /*/ To get taxonomies
-                            Object.keys(list).forEach( (item) => {
-                                options.push( {
-                                    label: list[item].name,
-                                    value: list[item].slug
-                                } );
-                            });*/
+                        /*/ To get taxonomies
+                        Object.keys(list).forEach( (item) => {
+                            options.push( {
+                                label: list[item].name,
+                                value: list[item].slug
+                            } );
+                        });*/
 
-                            // Merge selected terms with results from fetch
-                            var options = [].concat(_toConsumableArray(termOptions), _toConsumableArray(list));
+                        // Merge selected terms with results from fetch
+                        var options = [].concat(_toConsumableArray(termOptions), _toConsumableArray(list));
 
-                            // Remove duplicated values
-                            options = Array.from(new Set(options.map(function (a) {
-                                return a.slug;
-                            }))).map(function (slug) {
-                                return options.find(function (a) {
-                                    return a.slug === slug;
-                                });
-                            });
-
-                            _this6.setState({
-                                termOptions: options,
-                                updateTerms: false
+                        // Remove duplicated values
+                        options = Array.from(new Set(options.map(function (a) {
+                            return a.slug;
+                        }))).map(function (slug) {
+                            return options.find(function (a) {
+                                return a.slug === slug;
                             });
                         });
-                    }
+
+                        _this6.setState({
+                            termOptions: options
+                        });
+                    });
                 }
 
                 /**
@@ -1024,9 +1013,39 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 }
             }, {
                 key: "componentDidUpdate",
-                value: function componentDidUpdate() {
-                    this.searchTerms();
-                    this.taxonomiesChanged();
+                value: function componentDidUpdate(prevProps, prevState) {
+                    var _props2 = this.props,
+                        attributes = _props2.attributes,
+                        isSelected = _props2.isSelected,
+                        name = _props2.name;
+                    var advgbBlockControls = attributes.advgbBlockControls;
+                    var prevBlockControls = prevProps.attributes.advgbBlockControls;
+                    var _state2 = this.state,
+                        searchTermWord = _state2.searchTermWord,
+                        initTaxonomy = _state2.initTaxonomy;
+                    var prevTermWord = prevState.searchTermWord;
+
+                    // Get human readable selected terms on selection one time
+
+                    if (!this.isPost() && !NON_SUPPORTED_BLOCKS.includes(name) && isSelected && initTaxonomy && isControlEnabled(advgb_block_controls_vars.controls.taxonomy) && currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') && currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') !== null && currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies').length && currentControlKey(advgbBlockControls, 'taxonomy', 'terms') !== null && currentControlKey(advgbBlockControls, 'taxonomy', 'terms').length) {
+                        console.log('initTaxonomy!!', currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies'));
+                        this.initTaxonomyControl();
+                    }
+
+                    // Search terms
+                    if (searchTermWord !== prevTermWord && searchTermWord.length > 2) {
+                        /*console.log('prevTermWord',prevTermWord);
+                        console.log('searchTermWord',searchTermWord);*/
+                        this.searchTerms();
+                    }
+
+                    // Update available terms and remove terms which taxonomy has been removed
+                    if (!this.isPost() && isControlEnabled(advgb_block_controls_vars.controls.taxonomy) && currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') && currentControlKey(prevBlockControls, 'taxonomy', 'taxonomies') !== currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies')) {
+                        /*console.log('prevBlockControls',currentControlKey( prevBlockControls, 'taxonomy', 'taxonomies' ));
+                        console.log('advgbBlockControls',currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ));
+                        console.log('different!!!');*/
+                        this.taxonomiesChanged();
+                    }
                 }
             }, {
                 key: "render",
@@ -1038,9 +1057,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         setAttributes = _props3.setAttributes;
                     var advgbBlockControls = attributes.advgbBlockControls;
 
-                    // Get human readable values on load for saved terms
-
-                    this.initTaxonomyControl();
 
                     return [this.props.isSelected && !NON_SUPPORTED_BLOCKS.includes(this.props.name) && isAnyControlEnabledGlobal() && React.createElement(
                         InspectorControls,
@@ -1327,8 +1343,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                             onChange: function onChange(value) {
                                                 var taxonomies = (0, _utils.getOptionSlugs)(value, _this7.getTaxonomies());
                                                 _this7.changeControlKey('taxonomy', 'taxonomies', taxonomies);
-                                                // Adust terms when removing taxonomies
-                                                _this7.setState({ taxonomiesUpdated: true });
                                             },
                                             __experimentalExpandOnFocus: true
                                         }),
@@ -1364,8 +1378,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                                 },
                                                 onInputChange: function onInputChange(value) {
                                                     _this7.setState({
-                                                        searchTermWord: value,
-                                                        updateTerms: true
+                                                        searchTermWord: value
                                                     });
                                                 }
                                             })

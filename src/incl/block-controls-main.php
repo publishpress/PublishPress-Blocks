@@ -876,16 +876,6 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
         {
             $taxonomies = get_taxonomies();
             $result     = [];
-
-            // @TODO If later we require to load only these taxonomies...
-            $include    = [
-                'category',
-                'post_tag',
-                'author',
-                'series',
-                'series_group'
-            ];
-
             $exclude    = [
                 'nav_menu',
                 'link_category',
