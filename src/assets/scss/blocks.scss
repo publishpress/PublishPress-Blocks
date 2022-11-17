@@ -18,10 +18,11 @@
     width: 65px;
 }
 
+/* Causes a bug in core List in WP 6.1. Is hard to select text
 .editor-styles-wrapper .wp-block .wp-block {
     max-width: 100%;
     width: 100%;
-}
+}*/
 
 /*#editor .slick-slide {*/
 /*    pointer-events: none;*/
@@ -301,6 +302,10 @@ div.advgb-image-block .advgb-browse-image-btn {
 
 .advgb-image-block:hover .advgb-image-overlay {
     opacity: 0.5;
+}
+
+.advgb-image-text--linkable {
+  cursor: pointer;
 }
 
 /*Advanced List block styles*/

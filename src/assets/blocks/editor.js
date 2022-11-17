@@ -198,7 +198,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                     var target = document.getElementById('editor');
 
                     // Initialize again the editor
-                    wp.editPost.initializeEditor('editor', advgb_blocks_vars.post_type, advgb_blocks_vars.post_id, new_settings, window._wpGutenbergDefaultPost);
+                    wp.editPost.initializeEditor('editor', advgb_blocks_vars.post_type, advgb_blocks_vars.post_id, new_settings, []);
 
                     var list_categories = wp.blocks.getCategories();
 

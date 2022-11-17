@@ -153,9 +153,10 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
       }
 
       &.advgb-advcalendar-remove-icon {
-        float: right;
         padding: 0;
         height: 32px;
+        position: absolute;
+        right: 12px;
       }
     }
   }
@@ -185,6 +186,10 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
       padding: 0;
       height: 32px;
     }
+  }
+
+  .components-popover__content > .components-datetime {
+    padding: 16px;
   }
 }
 
