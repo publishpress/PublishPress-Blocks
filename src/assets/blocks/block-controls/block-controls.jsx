@@ -181,6 +181,7 @@ import {
               }
 
               this.initTaxonomyControl = this.initTaxonomyControl.bind(this); // Executed once when block is selected
+              this.isPost = this.isPost.bind(this);
             }
 
             /**
@@ -620,6 +621,17 @@ import {
                 }
             }
 
+            /**
+             * Check if we're in post edit screen
+             *
+             * @since 3.1.2
+             *
+             * @return {bool}
+             */
+            isPost() {
+                return wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
+            }
+
             componentDidUpdate() {
                 this.searchTerms();
                 this.taxonomiesChanged();
@@ -928,160 +940,163 @@ import {
                                     ) }
                                 </Fragment>
                                 ) }
-                                { isControlEnabled( advgb_block_controls_vars.controls.taxonomy ) && (
-                                <Fragment>
-                                    <ToggleControl
-                                        label={ __( 'Taxonomies & terms', 'advanced-gutenberg' ) }
-                                        help={ currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' )
-                                            ? __( 'Choose in which taxonomies & terms pages this block can be displayed.', 'advanced-gutenberg' )
-                                            : ''
-                                        }
-                                        checked={ currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' ) }
-                                        onChange={ () => this.changeControlKey( 'taxonomy', 'enabled' ) }
-                                    />
-                                    { currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' ) && (
+                                { ! this.isPost() && ( // Disabled in post edit
+                                    <Fragment>
+                                        { isControlEnabled( advgb_block_controls_vars.controls.taxonomy ) && (
                                         <Fragment>
-                                            <FormTokenField
-                                                multiple
-                                                label={ __( 'Select taxonomies', 'advanced-gutenberg' ) }
-                                                placeholder={ __( 'Search taxonomies', 'advanced-gutenberg' ) }
-                                                suggestions={ getOptionSuggestions( this.getTaxonomies() ) }
-                                                maxSuggestions={ 10 }
-                                                value={
-                                                    getOptionTitles(
-                                                        !! currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                                            ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                                            : [],
-                                                        this.getTaxonomies()
-                                                    )
+                                            <ToggleControl
+                                                label={ __( 'Taxonomies & terms', 'advanced-gutenberg' ) }
+                                                help={ currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' )
+                                                    ? __( 'Choose in which taxonomies & terms pages this block can be displayed.', 'advanced-gutenberg' )
+                                                    : ''
                                                 }
-                                                onChange={ ( value ) => {
-                                                    const taxonomies = getOptionSlugs( value, this.getTaxonomies() );
-                                                    this.changeControlKey( 'taxonomy', 'taxonomies', taxonomies );
-                                                    // Adust terms when removing taxonomies
-                                                    this.setState( { taxonomiesUpdated: true } );
-                                                } }
-                                                __experimentalExpandOnFocus
+                                                checked={ currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' ) }
+                                                onChange={ () => this.changeControlKey( 'taxonomy', 'enabled' ) }
                                             />
-                                            { ( currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ).length > 0 ) && (
+                                            { currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' ) && (
                                                 <Fragment>
-                                                    <div className="advgb-revert-mb--disabled" style={{ marginBottom: 20 }}>
+                                                    <FormTokenField
+                                                        multiple
+                                                        label={ __( 'Select taxonomies', 'advanced-gutenberg' ) }
+                                                        placeholder={ __( 'Search taxonomies', 'advanced-gutenberg' ) }
+                                                        suggestions={ getOptionSuggestions( this.getTaxonomies() ) }
+                                                        maxSuggestions={ 10 }
+                                                        value={
+                                                            getOptionTitles(
+                                                                !! currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
+                                                                    ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
+                                                                    : [],
+                                                                this.getTaxonomies()
+                                                            )
+                                                        }
+                                                        onChange={ ( value ) => {
+                                                            const taxonomies = getOptionSlugs( value, this.getTaxonomies() );
+                                                            this.changeControlKey( 'taxonomy', 'taxonomies', taxonomies );
+                                                            // Adust terms when removing taxonomies
+                                                            this.setState( { taxonomiesUpdated: true } );
+                                                        } }
+                                                        __experimentalExpandOnFocus
+                                                    />
+                                                    { ( currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ).length > 0 ) && (
+                                                        <Fragment>
+                                                            <div className="advgb-revert-mb--disabled" style={{ marginBottom: 20 }}>
+                                                                <SelectControl
+                                                                    value={
+                                                                        currentControlKey( advgbBlockControls, 'taxonomy', 'approach' )
+                                                                    }
+                                                                    options={ [
+                                                                        {
+                                                                            value: 'include',
+                                                                            label: __( 'Show on pages with selected terms', 'advanced-gutenberg' )
+                                                                        },
+                                                                        {
+                                                                            value: 'exclude',
+                                                                            label: __( 'Hide on pages with selected terms', 'advanced-gutenberg' )
+                                                                        }
+                                                                    ] }
+                                                                    onChange={ ( value ) => this.changeControlKey( 'taxonomy', 'approach', value ) }
+                                                                />
+                                                            </div>
+                                                            <FormTokenField
+                                                                multiple
+                                                                label={ __( 'Select terms', 'advanced-gutenberg' ) }
+                                                                placeholder={ __( 'Search terms', 'advanced-gutenberg' ) }
+                                                                suggestions={ getOptionSuggestions(
+                                                                    this.state.termOptions
+                                                                ) }
+                                                                maxSuggestions={ 10 }
+                                                                value={
+                                                                    getOptionTitles(
+                                                                        !! currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
+                                                                            ? currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
+                                                                            : [],
+                                                                        this.state.termOptions
+                                                                    )
+                                                                }
+                                                                onChange={ ( value ) => {
+                                                                    this.changeControlKey(
+                                                                        'taxonomy',
+                                                                        'terms',
+                                                                        getOptionSlugs(
+                                                                            value,
+                                                                            this.state.termOptions
+                                                                        )
+                                                                    )
+                                                                } }
+                                                                onInputChange={ ( value ) => {
+                                                                    this.setState( {
+                                                                        searchTermWord: value,
+                                                                        updateTerms: true
+                                                                    } );
+                                                                } }
+                                                            />
+                                                        </Fragment>
+                                                    ) }
+                                                </Fragment>
+                                            ) }
+                                        </Fragment>
+                                        ) }
+
+                                        { isControlEnabled( advgb_block_controls_vars.controls.page ) && (
+                                        <Fragment>
+                                            <ToggleControl
+                                                label={ __( 'Pages', 'advanced-gutenberg' ) }
+                                                help={ currentControlKey( advgbBlockControls, 'page', 'enabled' )
+                                                    ? __( 'Choose in which pages this block can be displayed.', 'advanced-gutenberg' )
+                                                    : ''
+                                                }
+                                                checked={ currentControlKey( advgbBlockControls, 'page', 'enabled' ) }
+                                                onChange={ () => this.changeControlKey( 'page', 'enabled' ) }
+                                            />
+                                            { currentControlKey( advgbBlockControls, 'page', 'enabled' ) && (
+                                                <Fragment>
+                                                    <div className="advgb-revert-mb">
                                                         <SelectControl
                                                             value={
-                                                                currentControlKey( advgbBlockControls, 'taxonomy', 'approach' )
+                                                                currentControlKey( advgbBlockControls, 'page', 'approach' )
                                                             }
                                                             options={ [
                                                                 {
                                                                     value: 'include',
-                                                                    label: __( 'Show on pages with selected terms', 'advanced-gutenberg' )
+                                                                    label: __( 'Show on the selected pages', 'advanced-gutenberg' )
                                                                 },
                                                                 {
                                                                     value: 'exclude',
-                                                                    label: __( 'Hide on pages with selected terms', 'advanced-gutenberg' )
+                                                                    label: __( 'Hide on the selected pages', 'advanced-gutenberg' )
                                                                 }
                                                             ] }
-                                                            onChange={ ( value ) => this.changeControlKey( 'taxonomy', 'approach', value ) }
+                                                            onChange={ ( value ) => this.changeControlKey( 'page', 'approach', value ) }
                                                         />
                                                     </div>
-                                                    <FormTokenField
-                                                        multiple
-                                                        label={ __( 'Select terms', 'advanced-gutenberg' ) }
-                                                        placeholder={ __( 'Search terms', 'advanced-gutenberg' ) }
-                                                        suggestions={ getOptionSuggestions(
-                                                            this.state.termOptions
-                                                        ) }
-                                                        maxSuggestions={ 10 }
-                                                        value={
-                                                            getOptionTitles(
-                                                                !! currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
-                                                                    ? currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
-                                                                    : [],
-                                                                this.state.termOptions
-                                                            )
-                                                        }
-                                                        onChange={ ( value ) => {
-                                                            this.changeControlKey(
-                                                                'taxonomy',
-                                                                'terms',
-                                                                getOptionSlugs(
-                                                                    value,
-                                                                    this.state.termOptions
+                                                    { ( currentControlKey( advgbBlockControls, 'page', 'approach' ) === 'include' ||
+                                                        currentControlKey( advgbBlockControls, 'page', 'approach' ) === 'exclude'
+                                                    ) && (
+                                                        <FormTokenField
+                                                            multiple
+                                                            label={ __( 'Select pages', 'advanced-gutenberg' ) }
+                                                            placeholder={ __( 'Search', 'advanced-gutenberg' ) }
+                                                            suggestions={ getOptionSuggestions( this.getPages() ) }
+                                                            maxSuggestions={ 10 }
+                                                            value={
+                                                                getOptionTitles(
+                                                                    !! currentControlKey( advgbBlockControls, 'page', 'pages' )
+                                                                        ? currentControlKey( advgbBlockControls, 'page', 'pages' )
+                                                                        : [],
+                                                                    this.getPages()
                                                                 )
-                                                            )
-                                                        } }
-                                                        onInputChange={ ( value ) => {
-                                                            this.setState( {
-                                                                searchTermWord: value,
-                                                                updateTerms: true
-                                                            } );
-                                                        } }
-                                                    />
+                                                            }
+                                                            onChange={ ( value ) => {
+                                                                this.changeControlKey( 'page', 'pages', getOptionSlugs( value, this.getPages() ) )
+                                                            } }
+                                                            __experimentalExpandOnFocus
+                                                        />
+                                                    ) }
                                                 </Fragment>
                                             ) }
                                         </Fragment>
-                                    ) }
-                                </Fragment>
+                                        ) }
+                                    </Fragment>
                                 ) }
-
-                                { isControlEnabled( advgb_block_controls_vars.controls.page ) && (
-                                <Fragment>
-                                    <ToggleControl
-                                        label={ __( 'Pages', 'advanced-gutenberg' ) }
-                                        help={ currentControlKey( advgbBlockControls, 'page', 'enabled' )
-                                            ? __( 'Choose in which pages this block can be displayed.', 'advanced-gutenberg' )
-                                            : ''
-                                        }
-                                        checked={ currentControlKey( advgbBlockControls, 'page', 'enabled' ) }
-                                        onChange={ () => this.changeControlKey( 'page', 'enabled' ) }
-                                    />
-                                    { currentControlKey( advgbBlockControls, 'page', 'enabled' ) && (
-                                        <Fragment>
-                                            <div className="advgb-revert-mb">
-                                                <SelectControl
-                                                    value={
-                                                        currentControlKey( advgbBlockControls, 'page', 'approach' )
-                                                    }
-                                                    options={ [
-                                                        {
-                                                            value: 'include',
-                                                            label: __( 'Show on the selected pages', 'advanced-gutenberg' )
-                                                        },
-                                                        {
-                                                            value: 'exclude',
-                                                            label: __( 'Hide on the selected pages', 'advanced-gutenberg' )
-                                                        }
-                                                    ] }
-                                                    onChange={ ( value ) => this.changeControlKey( 'page', 'approach', value ) }
-                                                />
-                                            </div>
-                                            { ( currentControlKey( advgbBlockControls, 'page', 'approach' ) === 'include' ||
-                                                currentControlKey( advgbBlockControls, 'page', 'approach' ) === 'exclude'
-                                            ) && (
-                                                <FormTokenField
-                                                    multiple
-                                                    label={ __( 'Select pages', 'advanced-gutenberg' ) }
-                                                    placeholder={ __( 'Search', 'advanced-gutenberg' ) }
-                                                    suggestions={ getOptionSuggestions( this.getPages() ) }
-                                                    maxSuggestions={ 10 }
-                                                    value={
-                                                        getOptionTitles(
-                                                            !! currentControlKey( advgbBlockControls, 'page', 'pages' )
-                                                                ? currentControlKey( advgbBlockControls, 'page', 'pages' )
-                                                                : [],
-                                                            this.getPages()
-                                                        )
-                                                    }
-                                                    onChange={ ( value ) => {
-                                                        this.changeControlKey( 'page', 'pages', getOptionSlugs( value, this.getPages() ) )
-                                                    } }
-                                                    __experimentalExpandOnFocus
-                                                />
-                                            ) }
-                                        </Fragment>
-                                    ) }
-                                </Fragment>
-                                ) }
-
                             </PanelBody>
                         </InspectorControls>,
                         <BlockEdit key="block-edit-advgb-dates" {...this.props} />,

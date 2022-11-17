@@ -568,6 +568,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 };
 
                 _this.initTaxonomyControl = _this.initTaxonomyControl.bind(_this); // Executed once when block is selected
+                _this.isPost = _this.isPost.bind(_this);
                 return _this;
             }
 
@@ -1007,6 +1008,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         });
                     }
                 }
+
+                /**
+                 * Check if we're in post edit screen
+                 *
+                 * @since 3.1.2
+                 *
+                 * @return {bool}
+                 */
+
+            }, {
+                key: "isPost",
+                value: function isPost() {
+                    return wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
+                }
             }, {
                 key: "componentDidUpdate",
                 value: function componentDidUpdate() {
@@ -1284,118 +1299,123 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                     )
                                 )
                             ),
-                            isControlEnabled(advgb_block_controls_vars.controls.taxonomy) && React.createElement(
+                            !this.isPost() && // Disabled in post edit
+                            React.createElement(
                                 Fragment,
                                 null,
-                                React.createElement(ToggleControl, {
-                                    label: __('Taxonomies & terms', 'advanced-gutenberg'),
-                                    help: currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') ? __('Choose in which taxonomies & terms pages this block can be displayed.', 'advanced-gutenberg') : '',
-                                    checked: currentControlKey(advgbBlockControls, 'taxonomy', 'enabled'),
-                                    onChange: function onChange() {
-                                        return _this7.changeControlKey('taxonomy', 'enabled');
-                                    }
-                                }),
-                                currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') && React.createElement(
+                                isControlEnabled(advgb_block_controls_vars.controls.taxonomy) && React.createElement(
                                     Fragment,
                                     null,
-                                    React.createElement(FormTokenField, {
-                                        multiple: true,
-                                        label: __('Select taxonomies', 'advanced-gutenberg'),
-                                        placeholder: __('Search taxonomies', 'advanced-gutenberg'),
-                                        suggestions: (0, _utils.getOptionSuggestions)(this.getTaxonomies()),
-                                        maxSuggestions: 10,
-                                        value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : [], this.getTaxonomies()),
-                                        onChange: function onChange(value) {
-                                            var taxonomies = (0, _utils.getOptionSlugs)(value, _this7.getTaxonomies());
-                                            _this7.changeControlKey('taxonomy', 'taxonomies', taxonomies);
-                                            // Adust terms when removing taxonomies
-                                            _this7.setState({ taxonomiesUpdated: true });
-                                        },
-                                        __experimentalExpandOnFocus: true
+                                    React.createElement(ToggleControl, {
+                                        label: __('Taxonomies & terms', 'advanced-gutenberg'),
+                                        help: currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') ? __('Choose in which taxonomies & terms pages this block can be displayed.', 'advanced-gutenberg') : '',
+                                        checked: currentControlKey(advgbBlockControls, 'taxonomy', 'enabled'),
+                                        onChange: function onChange() {
+                                            return _this7.changeControlKey('taxonomy', 'enabled');
+                                        }
                                     }),
-                                    currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies').length > 0 && React.createElement(
+                                    currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') && React.createElement(
+                                        Fragment,
+                                        null,
+                                        React.createElement(FormTokenField, {
+                                            multiple: true,
+                                            label: __('Select taxonomies', 'advanced-gutenberg'),
+                                            placeholder: __('Search taxonomies', 'advanced-gutenberg'),
+                                            suggestions: (0, _utils.getOptionSuggestions)(this.getTaxonomies()),
+                                            maxSuggestions: 10,
+                                            value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : [], this.getTaxonomies()),
+                                            onChange: function onChange(value) {
+                                                var taxonomies = (0, _utils.getOptionSlugs)(value, _this7.getTaxonomies());
+                                                _this7.changeControlKey('taxonomy', 'taxonomies', taxonomies);
+                                                // Adust terms when removing taxonomies
+                                                _this7.setState({ taxonomiesUpdated: true });
+                                            },
+                                            __experimentalExpandOnFocus: true
+                                        }),
+                                        currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies').length > 0 && React.createElement(
+                                            Fragment,
+                                            null,
+                                            React.createElement(
+                                                "div",
+                                                { className: "advgb-revert-mb--disabled", style: { marginBottom: 20 } },
+                                                React.createElement(SelectControl, {
+                                                    value: currentControlKey(advgbBlockControls, 'taxonomy', 'approach'),
+                                                    options: [{
+                                                        value: 'include',
+                                                        label: __('Show on pages with selected terms', 'advanced-gutenberg')
+                                                    }, {
+                                                        value: 'exclude',
+                                                        label: __('Hide on pages with selected terms', 'advanced-gutenberg')
+                                                    }],
+                                                    onChange: function onChange(value) {
+                                                        return _this7.changeControlKey('taxonomy', 'approach', value);
+                                                    }
+                                                })
+                                            ),
+                                            React.createElement(FormTokenField, {
+                                                multiple: true,
+                                                label: __('Select terms', 'advanced-gutenberg'),
+                                                placeholder: __('Search terms', 'advanced-gutenberg'),
+                                                suggestions: (0, _utils.getOptionSuggestions)(this.state.termOptions),
+                                                maxSuggestions: 10,
+                                                value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'taxonomy', 'terms') ? currentControlKey(advgbBlockControls, 'taxonomy', 'terms') : [], this.state.termOptions),
+                                                onChange: function onChange(value) {
+                                                    _this7.changeControlKey('taxonomy', 'terms', (0, _utils.getOptionSlugs)(value, _this7.state.termOptions));
+                                                },
+                                                onInputChange: function onInputChange(value) {
+                                                    _this7.setState({
+                                                        searchTermWord: value,
+                                                        updateTerms: true
+                                                    });
+                                                }
+                                            })
+                                        )
+                                    )
+                                ),
+                                isControlEnabled(advgb_block_controls_vars.controls.page) && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(ToggleControl, {
+                                        label: __('Pages', 'advanced-gutenberg'),
+                                        help: currentControlKey(advgbBlockControls, 'page', 'enabled') ? __('Choose in which pages this block can be displayed.', 'advanced-gutenberg') : '',
+                                        checked: currentControlKey(advgbBlockControls, 'page', 'enabled'),
+                                        onChange: function onChange() {
+                                            return _this7.changeControlKey('page', 'enabled');
+                                        }
+                                    }),
+                                    currentControlKey(advgbBlockControls, 'page', 'enabled') && React.createElement(
                                         Fragment,
                                         null,
                                         React.createElement(
                                             "div",
-                                            { className: "advgb-revert-mb--disabled", style: { marginBottom: 20 } },
+                                            { className: "advgb-revert-mb" },
                                             React.createElement(SelectControl, {
-                                                value: currentControlKey(advgbBlockControls, 'taxonomy', 'approach'),
+                                                value: currentControlKey(advgbBlockControls, 'page', 'approach'),
                                                 options: [{
                                                     value: 'include',
-                                                    label: __('Show on pages with selected terms', 'advanced-gutenberg')
+                                                    label: __('Show on the selected pages', 'advanced-gutenberg')
                                                 }, {
                                                     value: 'exclude',
-                                                    label: __('Hide on pages with selected terms', 'advanced-gutenberg')
+                                                    label: __('Hide on the selected pages', 'advanced-gutenberg')
                                                 }],
                                                 onChange: function onChange(value) {
-                                                    return _this7.changeControlKey('taxonomy', 'approach', value);
+                                                    return _this7.changeControlKey('page', 'approach', value);
                                                 }
                                             })
                                         ),
-                                        React.createElement(FormTokenField, {
+                                        (currentControlKey(advgbBlockControls, 'page', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'page', 'approach') === 'exclude') && React.createElement(FormTokenField, {
                                             multiple: true,
-                                            label: __('Select terms', 'advanced-gutenberg'),
-                                            placeholder: __('Search terms', 'advanced-gutenberg'),
-                                            suggestions: (0, _utils.getOptionSuggestions)(this.state.termOptions),
+                                            label: __('Select pages', 'advanced-gutenberg'),
+                                            placeholder: __('Search', 'advanced-gutenberg'),
+                                            suggestions: (0, _utils.getOptionSuggestions)(this.getPages()),
                                             maxSuggestions: 10,
-                                            value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'taxonomy', 'terms') ? currentControlKey(advgbBlockControls, 'taxonomy', 'terms') : [], this.state.termOptions),
+                                            value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'page', 'pages') ? currentControlKey(advgbBlockControls, 'page', 'pages') : [], this.getPages()),
                                             onChange: function onChange(value) {
-                                                _this7.changeControlKey('taxonomy', 'terms', (0, _utils.getOptionSlugs)(value, _this7.state.termOptions));
+                                                _this7.changeControlKey('page', 'pages', (0, _utils.getOptionSlugs)(value, _this7.getPages()));
                                             },
-                                            onInputChange: function onInputChange(value) {
-                                                _this7.setState({
-                                                    searchTermWord: value,
-                                                    updateTerms: true
-                                                });
-                                            }
+                                            __experimentalExpandOnFocus: true
                                         })
                                     )
-                                )
-                            ),
-                            isControlEnabled(advgb_block_controls_vars.controls.page) && React.createElement(
-                                Fragment,
-                                null,
-                                React.createElement(ToggleControl, {
-                                    label: __('Pages', 'advanced-gutenberg'),
-                                    help: currentControlKey(advgbBlockControls, 'page', 'enabled') ? __('Choose in which pages this block can be displayed.', 'advanced-gutenberg') : '',
-                                    checked: currentControlKey(advgbBlockControls, 'page', 'enabled'),
-                                    onChange: function onChange() {
-                                        return _this7.changeControlKey('page', 'enabled');
-                                    }
-                                }),
-                                currentControlKey(advgbBlockControls, 'page', 'enabled') && React.createElement(
-                                    Fragment,
-                                    null,
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-revert-mb" },
-                                        React.createElement(SelectControl, {
-                                            value: currentControlKey(advgbBlockControls, 'page', 'approach'),
-                                            options: [{
-                                                value: 'include',
-                                                label: __('Show on the selected pages', 'advanced-gutenberg')
-                                            }, {
-                                                value: 'exclude',
-                                                label: __('Hide on the selected pages', 'advanced-gutenberg')
-                                            }],
-                                            onChange: function onChange(value) {
-                                                return _this7.changeControlKey('page', 'approach', value);
-                                            }
-                                        })
-                                    ),
-                                    (currentControlKey(advgbBlockControls, 'page', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'page', 'approach') === 'exclude') && React.createElement(FormTokenField, {
-                                        multiple: true,
-                                        label: __('Select pages', 'advanced-gutenberg'),
-                                        placeholder: __('Search', 'advanced-gutenberg'),
-                                        suggestions: (0, _utils.getOptionSuggestions)(this.getPages()),
-                                        maxSuggestions: 10,
-                                        value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'page', 'pages') ? currentControlKey(advgbBlockControls, 'page', 'pages') : [], this.getPages()),
-                                        onChange: function onChange(value) {
-                                            _this7.changeControlKey('page', 'pages', (0, _utils.getOptionSlugs)(value, _this7.getPages()));
-                                        },
-                                        __experimentalExpandOnFocus: true
-                                    })
                                 )
                             )
                         )
