@@ -6,7 +6,7 @@ $user_role_control  = PublishPress\Blocks\Controls::getControlValue( 'user_role'
 $browser_control    = PublishPress\Blocks\Controls::getControlValue( 'browser', 1 );
 $platform_control   = PublishPress\Blocks\Controls::getControlValue( 'platform', 1 );
 $taxonomy_control   = PublishPress\Blocks\Controls::getControlValue( 'taxonomy', 1 );
-$misc_control       = PublishPress\Blocks\Controls::getControlValue( 'misc', 1 );
+$page_control       = PublishPress\Blocks\Controls::getControlValue( 'page', 1 );
 ?>
 <form method="post">
     <?php wp_nonce_field( 'advgb_controls_settings_nonce', 'advgb_controls_settings_nonce_field' ); ?>
@@ -112,9 +112,9 @@ $misc_control       = PublishPress\Blocks\Controls::getControlValue( 'misc', 1 )
             </th>
             <td>
                 <label>
-                    <input type="checkbox" name="misc_control"
+                    <input type="checkbox" name="page_control"
                            value="1"
-                           <?php echo $misc_control ? ' checked' : '' ?>
+                           <?php echo $page_control ? ' checked' : '' ?>
                     />
                     <?php
                     _e(

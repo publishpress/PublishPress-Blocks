@@ -290,8 +290,8 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     }
                 break;
 
-                // Misc pages control
-                case 'misc':
+                // Pages control
+                case 'page':
                     $bControl = $block['attrs']['advgbBlockControls'][$key];
                     $selected = is_array( $bControl['pages'] ) ? $bControl['pages'] : [];
 
@@ -308,11 +308,11 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                             break;
 
                             case 'include':
-                                return self::checkMiscPages( $selected ) ? true : false;
+                                return self::checkPages( $selected ) ? true : false;
                             break;
 
                             case 'exclude':
-                                return self::checkMiscPages( $selected ) ? false : true;
+                                return self::checkPages( $selected ) ? false : true;
                             break;
                         }
                     }
@@ -323,7 +323,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
         }
 
         /**
-         * Check miscellaneous pages
+         * Check pageellaneous pages
          *
          * @since 3.1.1
          *
@@ -331,7 +331,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
          *
          * @return bool
          */
-        public static function checkMiscPages( $selected )
+        public static function checkPages( $selected )
         {
             if( in_array( 'home', $selected )
                 && ( ( is_home() && is_front_page() )
@@ -471,7 +471,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 $advgb_block_controls['controls']['browser']    = isset( $_POST['browser_control'] ) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['platform']   = isset( $_POST['platform_control'] ) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['taxonomy']   = isset( $_POST['taxonomy_control'] ) ? (bool) 1 : (bool) 0;
-                $advgb_block_controls['controls']['misc']       = isset( $_POST['misc_control'] ) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['page']       = isset( $_POST['page_control'] ) ? (bool) 1 : (bool) 0;
 
                 update_option( 'advgb_block_controls', $advgb_block_controls );
 
@@ -569,7 +569,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 'browser',
                 'platform',
                 'taxonomy',
-                'misc'
+                'page'
             ];
 
             if( $block_controls ) {
@@ -719,7 +719,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     'browsers' => self::getBrowsers(),
                     'platforms' => self::getPlatforms(),
                     'taxonomies' => self::getTaxonomies(),
-                    'misc' => self::getMiscPages()
+                    'page' => self::getPages()
                 ]
             );
         }
@@ -1000,13 +1000,13 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
         }
 
         /**
-         * Retrieve misc pages
+         * Retrieve pages
          *
          * @since 3.1.1
          *
          * @return array
          */
-        public static function getMiscPages()
+        public static function getPages()
         {
             return [
                 [

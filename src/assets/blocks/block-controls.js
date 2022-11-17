@@ -694,7 +694,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 }
 
                 /**
-                 * Get misc pages
+                 * Get pages
                  *
                  * @since 3.1.1
                  *
@@ -702,9 +702,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                  */
 
             }, {
-                key: "getMiscPages",
-                value: function getMiscPages() {
-                    return typeof advgb_block_controls_vars.misc !== 'undefined' && advgb_block_controls_vars.misc.length > 0 ? advgb_block_controls_vars.misc : [];
+                key: "getPages",
+                value: function getPages() {
+                    return typeof advgb_block_controls_vars.page !== 'undefined' && advgb_block_controls_vars.page.length > 0 ? advgb_block_controls_vars.page : [];
                 }
 
                 /**
@@ -761,8 +761,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         terms: [],
                         approach: 'exclude'
                     };
-                    var miscControl = {
-                        control: 'misc',
+                    var pageControl = {
+                        control: 'page',
                         enabled: true,
                         pages: [],
                         approach: 'exclude'
@@ -827,9 +827,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 });
                                 break;
 
-                            case 'misc':
+                            case 'page':
                                 setAttributes({
-                                    advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [miscControl])
+                                    advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [pageControl])
                                 });
                                 break;
                         }
@@ -866,9 +866,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 });
                                 break;
 
-                            case 'misc':
+                            case 'page':
                                 setAttributes({
-                                    advgbBlockControls: [miscControl]
+                                    advgbBlockControls: [pageControl]
                                 });
                                 break;
                         }
@@ -1353,25 +1353,25 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                     )
                                 )
                             ),
-                            isControlEnabled(advgb_block_controls_vars.controls.misc) && React.createElement(
+                            isControlEnabled(advgb_block_controls_vars.controls.page) && React.createElement(
                                 Fragment,
                                 null,
                                 React.createElement(ToggleControl, {
                                     label: __('Pages', 'advanced-gutenberg'),
-                                    help: currentControlKey(advgbBlockControls, 'misc', 'enabled') ? __('Choose in which pages this block can be displayed.', 'advanced-gutenberg') : '',
-                                    checked: currentControlKey(advgbBlockControls, 'misc', 'enabled'),
+                                    help: currentControlKey(advgbBlockControls, 'page', 'enabled') ? __('Choose in which pages this block can be displayed.', 'advanced-gutenberg') : '',
+                                    checked: currentControlKey(advgbBlockControls, 'page', 'enabled'),
                                     onChange: function onChange() {
-                                        return _this7.changeControlKey('misc', 'enabled');
+                                        return _this7.changeControlKey('page', 'enabled');
                                     }
                                 }),
-                                currentControlKey(advgbBlockControls, 'misc', 'enabled') && React.createElement(
+                                currentControlKey(advgbBlockControls, 'page', 'enabled') && React.createElement(
                                     Fragment,
                                     null,
                                     React.createElement(
                                         "div",
                                         { className: "advgb-revert-mb" },
                                         React.createElement(SelectControl, {
-                                            value: currentControlKey(advgbBlockControls, 'misc', 'approach'),
+                                            value: currentControlKey(advgbBlockControls, 'page', 'approach'),
                                             options: [{
                                                 value: 'include',
                                                 label: __('Show on the selected pages', 'advanced-gutenberg')
@@ -1380,19 +1380,19 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                                 label: __('Hide on the selected pages', 'advanced-gutenberg')
                                             }],
                                             onChange: function onChange(value) {
-                                                return _this7.changeControlKey('misc', 'approach', value);
+                                                return _this7.changeControlKey('page', 'approach', value);
                                             }
                                         })
                                     ),
-                                    (currentControlKey(advgbBlockControls, 'misc', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'misc', 'approach') === 'exclude') && React.createElement(FormTokenField, {
+                                    (currentControlKey(advgbBlockControls, 'page', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'page', 'approach') === 'exclude') && React.createElement(FormTokenField, {
                                         multiple: true,
-                                        label: __('Select miscellaneous pages', 'advanced-gutenberg'),
+                                        label: __('Select pages', 'advanced-gutenberg'),
                                         placeholder: __('Search', 'advanced-gutenberg'),
-                                        suggestions: (0, _utils.getOptionSuggestions)(this.getMiscPages()),
+                                        suggestions: (0, _utils.getOptionSuggestions)(this.getPages()),
                                         maxSuggestions: 10,
-                                        value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'misc', 'pages') ? currentControlKey(advgbBlockControls, 'misc', 'pages') : [], this.getMiscPages()),
+                                        value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'page', 'pages') ? currentControlKey(advgbBlockControls, 'page', 'pages') : [], this.getPages()),
                                         onChange: function onChange(value) {
-                                            _this7.changeControlKey('misc', 'pages', (0, _utils.getOptionSlugs)(value, _this7.getMiscPages()));
+                                            _this7.changeControlKey('page', 'pages', (0, _utils.getOptionSlugs)(value, _this7.getPages()));
                                         },
                                         __experimentalExpandOnFocus: true
                                     })

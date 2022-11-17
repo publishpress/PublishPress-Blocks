@@ -291,16 +291,16 @@ import {
             }
 
             /**
-             * Get misc pages
+             * Get pages
              *
              * @since 3.1.1
              *
              * @return {array}
              */
-            getMiscPages() {
-                return typeof advgb_block_controls_vars.misc !== 'undefined'
-                        && advgb_block_controls_vars.misc.length > 0
-                            ? advgb_block_controls_vars.misc
+            getPages() {
+                return typeof advgb_block_controls_vars.page !== 'undefined'
+                        && advgb_block_controls_vars.page.length > 0
+                            ? advgb_block_controls_vars.page
                             : [];
             }
 
@@ -351,8 +351,8 @@ import {
                     terms: [],
                     approach: 'exclude'
                 };
-                const miscControl = {
-                    control: 'misc',
+                const pageControl = {
+                    control: 'page',
                     enabled: true,
                     pages: [],
                     approach: 'exclude'
@@ -435,11 +435,11 @@ import {
                             } );
                         break;
 
-                        case 'misc':
+                        case 'page':
                             setAttributes( {
                                 advgbBlockControls: [
                                     ...advgbBlockControls,
-                                    miscControl
+                                    pageControl
                                 ]
                             } );
                         break;
@@ -477,9 +477,9 @@ import {
                             } );
                         break;
 
-                        case 'misc':
+                        case 'page':
                             setAttributes( {
-                                advgbBlockControls: [ miscControl ]
+                                advgbBlockControls: [ pageControl ]
                             } );
                         break;
                     }
@@ -1023,23 +1023,23 @@ import {
                                 </Fragment>
                                 ) }
 
-                                { isControlEnabled( advgb_block_controls_vars.controls.misc ) && (
+                                { isControlEnabled( advgb_block_controls_vars.controls.page ) && (
                                 <Fragment>
                                     <ToggleControl
                                         label={ __( 'Pages', 'advanced-gutenberg' ) }
-                                        help={ currentControlKey( advgbBlockControls, 'misc', 'enabled' )
+                                        help={ currentControlKey( advgbBlockControls, 'page', 'enabled' )
                                             ? __( 'Choose in which pages this block can be displayed.', 'advanced-gutenberg' )
                                             : ''
                                         }
-                                        checked={ currentControlKey( advgbBlockControls, 'misc', 'enabled' ) }
-                                        onChange={ () => this.changeControlKey( 'misc', 'enabled' ) }
+                                        checked={ currentControlKey( advgbBlockControls, 'page', 'enabled' ) }
+                                        onChange={ () => this.changeControlKey( 'page', 'enabled' ) }
                                     />
-                                    { currentControlKey( advgbBlockControls, 'misc', 'enabled' ) && (
+                                    { currentControlKey( advgbBlockControls, 'page', 'enabled' ) && (
                                         <Fragment>
                                             <div className="advgb-revert-mb">
                                                 <SelectControl
                                                     value={
-                                                        currentControlKey( advgbBlockControls, 'misc', 'approach' )
+                                                        currentControlKey( advgbBlockControls, 'page', 'approach' )
                                                     }
                                                     options={ [
                                                         {
@@ -1051,28 +1051,28 @@ import {
                                                             label: __( 'Hide on the selected pages', 'advanced-gutenberg' )
                                                         }
                                                     ] }
-                                                    onChange={ ( value ) => this.changeControlKey( 'misc', 'approach', value ) }
+                                                    onChange={ ( value ) => this.changeControlKey( 'page', 'approach', value ) }
                                                 />
                                             </div>
-                                            { ( currentControlKey( advgbBlockControls, 'misc', 'approach' ) === 'include' ||
-                                                currentControlKey( advgbBlockControls, 'misc', 'approach' ) === 'exclude'
+                                            { ( currentControlKey( advgbBlockControls, 'page', 'approach' ) === 'include' ||
+                                                currentControlKey( advgbBlockControls, 'page', 'approach' ) === 'exclude'
                                             ) && (
                                                 <FormTokenField
                                                     multiple
-                                                    label={ __( 'Select miscellaneous pages', 'advanced-gutenberg' ) }
+                                                    label={ __( 'Select pages', 'advanced-gutenberg' ) }
                                                     placeholder={ __( 'Search', 'advanced-gutenberg' ) }
-                                                    suggestions={ getOptionSuggestions( this.getMiscPages() ) }
+                                                    suggestions={ getOptionSuggestions( this.getPages() ) }
                                                     maxSuggestions={ 10 }
                                                     value={
                                                         getOptionTitles(
-                                                            !! currentControlKey( advgbBlockControls, 'misc', 'pages' )
-                                                                ? currentControlKey( advgbBlockControls, 'misc', 'pages' )
+                                                            !! currentControlKey( advgbBlockControls, 'page', 'pages' )
+                                                                ? currentControlKey( advgbBlockControls, 'page', 'pages' )
                                                                 : [],
-                                                            this.getMiscPages()
+                                                            this.getPages()
                                                         )
                                                     }
                                                     onChange={ ( value ) => {
-                                                        this.changeControlKey( 'misc', 'pages', getOptionSlugs( value, this.getMiscPages() ) )
+                                                        this.changeControlKey( 'page', 'pages', getOptionSlugs( value, this.getPages() ) )
                                                     } }
                                                     __experimentalExpandOnFocus
                                                 />
