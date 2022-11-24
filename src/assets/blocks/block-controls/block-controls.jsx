@@ -9,7 +9,7 @@ import {
 (function ( wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose, wpElement ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { addFilter } = wpHooks;
-    const { __ } = wpI18n;
+    const { sprintf, __ } = wpI18n;
     const { hasBlockSupport } = wpBlocks;
     const { InspectorControls, BlockControls } = wpBlockEditor;
     const { DateTimePicker, ToggleControl, PanelBody, Notice, FormTokenField, SelectControl } = wpComponents;
@@ -308,7 +308,7 @@ import {
              * @since 2.14.0
              * @param {string} control  The use case block control. e.g. 'schedule'
              * @param {string} key      The control key to modify. e.g. 'enabled'
-             * @param {string} key      The control key value (not required for boolean keys)
+             * @param {string} value    The control key value (not required for boolean keys)
              *
              * @return {void}
              */
@@ -346,7 +346,6 @@ import {
                     control: 'taxonomy',
                     enabled: true,
                     taxonomies: [],
-                    terms: [],
                     approach: 'exclude'
                 };
                 const pageControl = {
@@ -485,6 +484,190 @@ import {
             }
 
             /**
+             * Update taxonomy control in advgbBlockControls attribute when taxonomies value changes
+             *
+             * @since 3.1.2
+             *
+             * @param {string} topic 'taxonomies' or 'terms'
+             * @param {string} slugs The taxonomy slugs or term ids to insert/modify. e.g. ['category','post_tag'] or [82,161,99] or ['all_<taxonomy_slug>']
+             *
+             * @return {void}
+             */
+            changeTaxonomyControl( topic, slugs ) {
+                const { attributes, setAttributes } = this.props;
+                const { advgbBlockControls } = attributes;
+
+                let taxArray        = [];
+                const controlIndex  = advgbBlockControls.findIndex(element => element.control === 'taxonomy');
+
+                // No control found (this check seems not necessary but is here to prevent an unlikely error)
+                if( controlIndex < 0 ) {
+                    return false;
+                }
+
+                let newArray = [...advgbBlockControls];
+
+                if( topic === 'taxonomies' ) {
+
+                    // Check each taxonomy and its terms
+                    slugs.forEach( (item) => {
+
+                        // Get terms from current taxonomy (item)
+                        const taxIndex = newArray[controlIndex].taxonomies.findIndex(element => element.tax === item);
+
+                        if( taxIndex === -1 ) {
+
+                            // The last selected taxonomy
+                            taxArray.push( {
+                                tax: item,
+                                terms: [],
+                                all: true
+                            } );
+
+                        } else {
+
+                            // Existing taxonomy
+                            const terms     = newArray[controlIndex].taxonomies[taxIndex].terms.length
+                                                ? newArray[controlIndex].taxonomies[taxIndex].terms
+                                                : [];
+                            const approach  = terms.length ? 'select' : 'all';
+
+                            taxArray.push( {
+                                tax: item,
+                                terms: terms,
+                                all: terms.length ? false : true
+                            } );
+                        }
+                    } );
+
+                    newArray[controlIndex] = { ...newArray[controlIndex], ['taxonomies']: taxArray }
+
+                    setAttributes( {
+                        advgbBlockControls: newArray
+                    } );
+
+                } else if( topic === 'terms' ) {
+
+                    let terms           = {};
+                    const taxonomies    = this.currentTaxonomyControl( 'taxonomies' );
+
+                    // Check each term id (item). slug means the id
+                    slugs.forEach( ( item ) => {
+
+                        // Find the current term in termOptions state to use its tax later
+                        const option = this.state.termOptions.find( el => el.slug === item);
+
+                        if( terms[option.tax] === undefined ) {
+                            terms[option.tax] = [];
+                        }
+
+                        // Get taxonomy from current term (item)
+                        const taxIndex = newArray[controlIndex].taxonomies.findIndex( element => element.tax === option.tax);
+
+                        /* Taxonomy for this term is selected? Is a bit reduntant but let's make sure
+                         * Then include the term.
+                         */
+                        if( taxonomies.includes( option.tax ) ) {
+                            terms[option.tax].push( item );
+                        }
+
+                    } );
+
+                    // Update taxonomies with at least one term selected
+                    Object.keys( terms ).forEach( (tax) => {
+
+                        // Get taxonomy from current tax
+                        const taxIndex = newArray[controlIndex].taxonomies.findIndex( element => element.tax === tax);
+
+                        if( taxIndex >= 0 ) {
+                            newArray[controlIndex].taxonomies[taxIndex] = {
+                                tax: tax,
+                                terms: terms[tax],
+                                all: terms[tax].length ? false : true
+                            };
+                        }
+                    } );
+
+                    // Include taxonomies with no terms selected (empty terms[option.tax] array)
+                    taxonomies.forEach( ( tax ) => {
+                        if( ! Object.keys( terms ).includes( tax ) ) {
+
+                            // Get taxonomy from current tax
+                            const taxIndex = newArray[controlIndex].taxonomies.findIndex( element => element.tax === tax);
+
+                            if( taxIndex >= 0 ) {
+                                newArray[controlIndex].taxonomies[taxIndex] = {
+                                    tax: tax,
+                                    terms: [],
+                                    all: true
+                                };
+                            }
+                        }
+                    } );
+
+                    setAttributes( {
+                        advgbBlockControls: newArray
+                    } );
+
+                } else {
+                    // Nothing to do here
+                }
+            }
+
+            /**
+             * Return merged taxonomies or terms
+             *
+             * @since 3.1.2
+             *
+             * @param {string} topic 'taxonomies' or 'terms'
+             *
+             * @return {array} An single array with all the selected terms or taxonomies ['category','post_tag'] or [99,182,42]
+             */
+            currentTaxonomyControl( topic ) {
+                const { attributes, setAttributes } = this.props;
+                const { advgbBlockControls } = attributes;
+
+                let result = [];
+
+                /* Get all the taxonomy objects.
+                 * e.g.
+                 * [
+                 *     { "tax": "post_tag", "terms": [220,221]},
+                 *     { "tax": "category", "terms": []}
+                 * ]
+                 */
+                const taxonomies    = currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ).length
+                                        ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
+                                        : [];
+
+                if( topic === 'taxonomies' ) {
+
+                    taxonomies.forEach( (item) => {
+                        result.push(item.tax);
+                    } );
+
+                } else if( topic === 'terms' ) {
+
+                    taxonomies.forEach( (item) => {
+                        item.terms.forEach( ( el ) => {
+                            result.push( el ); // term id
+                        } );
+                    } );
+
+                } /*else if( topic === 'toggle' ) {
+
+                    return true;
+
+                }*/ else {
+                    // Nothing to do here
+                }
+
+                console.log(topic, result);
+
+                return result;
+            }
+
+            /**
              * Execute when taxonomy selection changes
              *
              * @since 3.1.1
@@ -522,6 +705,15 @@ import {
                        result
                    );
                 }
+
+                /* Remove term options from non-selected taxonomies.
+                 * Case scenario: the terms from the last removed taxonomy.
+                 */
+                this.setState( {
+                    termOptions: this.state.termOptions.filter( (item) => {
+                        return this.currentTaxonomyControl( 'taxonomies' ).includes( item.tax );
+                    } )
+                } );
             }
 
             /**
@@ -538,12 +730,8 @@ import {
                     path: wp.url.addQueryArgs(
                         'advgb/v1/terms',
                         {
-                            taxonomies: !! currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                : [],
-                            ids: !! currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
-                                ? currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
-                                : []
+                            taxonomies: this.currentTaxonomyControl( 'taxonomies' ),
+                            ids: this.currentTaxonomyControl( 'terms' )
                         }
                     )
                 } ).then( ( list ) => {
@@ -573,9 +761,7 @@ import {
                         'advgb/v1/terms',
                         {
                             search: searchTermWord,
-                            taxonomies: !! currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                : []
+                            taxonomies: this.currentTaxonomyControl( 'taxonomies' )
                         }
                     )
 
@@ -612,7 +798,8 @@ import {
              * @return {bool}
              */
             isPost() {
-                return wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
+                return false;
+                //return wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
             }
 
             componentDidUpdate(prevProps, prevState) {
@@ -629,10 +816,8 @@ import {
                     && initTaxonomy
                     && isControlEnabled( advgb_block_controls_vars.controls.taxonomy )
                     && currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' )
-                    && currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ) !== null
-                    && currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ).length
-                    && currentControlKey( advgbBlockControls, 'taxonomy', 'terms' ) !== null
-                    && currentControlKey( advgbBlockControls, 'taxonomy', 'terms' ).length
+                    && this.currentTaxonomyControl( 'taxonomies' ).length
+                    && this.currentTaxonomyControl( 'terms' ).length
                 ) {
                     this.initTaxonomyControl();
                 }
@@ -967,6 +1152,24 @@ import {
                                             />
                                             { currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' ) && (
                                                 <Fragment>
+                                                    <div className="advgb-revert-mb--disabled" style={{ marginBottom: 20 }}>
+                                                        <SelectControl
+                                                            value={
+                                                                currentControlKey( advgbBlockControls, 'taxonomy', 'approach' )
+                                                            }
+                                                            options={ [
+                                                                {
+                                                                    value: 'include',
+                                                                    label: __( 'Show for selected terms', 'advanced-gutenberg' )
+                                                                },
+                                                                {
+                                                                    value: 'exclude',
+                                                                    label: __( 'Hide for selected terms', 'advanced-gutenberg' )
+                                                                }
+                                                            ] }
+                                                            onChange={ ( value ) => this.changeControlKey( 'taxonomy', 'approach', value ) }
+                                                        />
+                                                    </div>
                                                     <FormTokenField
                                                         multiple
                                                         label={ __( 'Select taxonomies', 'advanced-gutenberg' ) }
@@ -975,41 +1178,39 @@ import {
                                                         maxSuggestions={ 10 }
                                                         value={
                                                             getOptionTitles(
-                                                                !! currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                                                    ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                                                    : [],
+                                                                this.currentTaxonomyControl( 'taxonomies' ),
                                                                 this.getTaxonomies()
                                                             )
                                                         }
                                                         onChange={ ( value ) => {
-                                                            const taxonomies = getOptionSlugs( value, this.getTaxonomies() );
-                                                            this.changeControlKey( 'taxonomy', 'taxonomies', taxonomies );
+                                                            this.changeTaxonomyControl(
+                                                                'taxonomies',
+                                                                getOptionSlugs( value, this.getTaxonomies() )
+                                                            );
                                                         } }
                                                         __experimentalExpandOnFocus
                                                     />
                                                     { ( currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ).length > 0 ) && (
                                                         <Fragment>
-                                                            <div className="advgb-revert-mb--disabled" style={{ marginBottom: 20 }}>
-                                                                <SelectControl
-                                                                    value={
-                                                                        currentControlKey( advgbBlockControls, 'taxonomy', 'approach' )
-                                                                    }
-                                                                    options={ [
-                                                                        {
-                                                                            value: 'include',
-                                                                            label: __( 'Show on pages with selected terms', 'advanced-gutenberg' )
-                                                                        },
-                                                                        {
-                                                                            value: 'exclude',
-                                                                            label: __( 'Hide on pages with selected terms', 'advanced-gutenberg' )
+                                                            { /*this.currentTaxonomyControl( 'taxonomies' ).map( (tax) => {
+                                                                return (
+                                                                    <ToggleControl
+                                                                        label={
+                                                                            sprintf(
+                                                                                __( 'All %s terms', 'advanced-gutenberg' ),
+                                                                                tax
+                                                                            )
                                                                         }
-                                                                    ] }
-                                                                    onChange={ ( value ) => this.changeControlKey( 'taxonomy', 'approach', value ) }
-                                                                />
-                                                            </div>
+                                                                        checked={
+                                                                            this.currentTaxonomyControl( 'toggle' )
+                                                                        }
+                                                                        onChange={ () => this.changeTaxonomyControl( 'toggle', tax ) }
+                                                                    />
+                                                                )
+                                                            } )*/ }
                                                             <FormTokenField
                                                                 multiple
-                                                                label={ __( 'Select terms', 'advanced-gutenberg' ) }
+                                                                label={ __( 'Filter terms', 'advanced-gutenberg' ) }
                                                                 placeholder={ __( 'Search terms', 'advanced-gutenberg' ) }
                                                                 suggestions={ getOptionSuggestions(
                                                                     this.state.termOptions
@@ -1017,15 +1218,12 @@ import {
                                                                 maxSuggestions={ 10 }
                                                                 value={
                                                                     getOptionTitles(
-                                                                        !! currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
-                                                                            ? currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
-                                                                            : [],
+                                                                        this.currentTaxonomyControl( 'terms' ),
                                                                         this.state.termOptions
                                                                     )
                                                                 }
                                                                 onChange={ ( value ) => {
-                                                                    this.changeControlKey(
-                                                                        'taxonomy',
+                                                                    this.changeTaxonomyControl(
                                                                         'terms',
                                                                         getOptionSlugs(
                                                                             value,
@@ -1038,7 +1236,15 @@ import {
                                                                         searchTermWord: value
                                                                     } );
                                                                 } }
+                                                                __experimentalShowHowTo={ false }
                                                             />
+                                                            <div className="advgb-revert-mb--disabled components-form-token-field__help"
+                                                                style={{ marginBottom: 20 }}>
+                                                                { __(
+                                                                    'Use this filter to apply only to some terms instead of all terms from a selected taxonomy.',
+                                                                    'advanced-gutenberg'
+                                                                ) }
+                                                            </div>
                                                         </Fragment>
                                                     ) }
                                                 </Fragment>

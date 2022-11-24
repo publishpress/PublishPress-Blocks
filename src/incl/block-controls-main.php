@@ -247,43 +247,63 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 // Taxonomy control
                 case 'taxonomy':
                     $bControl       = $block['attrs']['advgbBlockControls'][$key];
-                    $selected_tax   = is_array( $bControl['taxonomies'] ) ?  array_map( 'sanitize_text_field', $bControl['taxonomies'] ) : [];
-                    $selected_terms = is_array( $bControl['terms'] ) ?  array_map( 'intval', $bControl['terms'] ) : [];
+                    $taxonomies     = is_array( $bControl['taxonomies'] ) ?  $bControl['taxonomies'] : [];
                     $taxQuery       = get_queried_object();
 
                     if( ! isset( $taxQuery->taxonomy ) ) {
                         return true;
                     }
 
+                    $merged_tax     = []; // To store selected taxonomies. e.g. [ 'category', 'post_tag' ]
+                    $merged_terms   = []; // To store selected terms from all taxonomies. e.g. [99,72,51]
+
+                    // Create taxonomies array
+                    if( isset( $taxonomies ) && count( $taxonomies ) ) {
+                        foreach( $taxonomies as $item ) {
+                            $merged_tax[] = sanitize_text_field( $item['tax'] );
+
+                            // Create terms array
+                            if( isset( $item['terms'] ) && count( $item['terms'] ) ) {
+                                foreach( $item['terms'] as $term ) {
+                                    $merged_terms[] = intval( $term );
+                                }
+                            }
+                        }
+                    }
+
                     /*echo '<pre>';
-                    var_dump($selected_tax);
+                    var_dump($bControl);
+                    echo '</pre><hr>';*/
+
+                    /*echo '<pre>';
+                    var_dump($taxonomies);
+                    echo '</pre><hr>';*/
+
+                    /*echo '<pre>';
+                    var_dump($merged_tax);
                     echo '</pre><hr>';
 
                     echo '<pre>';
-                    var_dump($selected_terms);
+                    var_dump($merged_terms);
                     echo '</pre><hr>';
 
                     echo '<pre>';
                     var_dump($taxQuery);
                     echo '</pre>';*/
 
-                    if( count( $selected_tax ) ) {
+                    if( count( $merged_tax ) ) {
                         $approach = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )
                                     ? $bControl['approach'] : 'public';
 
-                        if( count( $selected_tax ) ) {
+                        if( count( $merged_tax ) ) {
 
                             switch( $approach ) {
                                 case 'include':
-                                    return in_array( $taxQuery->taxonomy, $selected_tax )
-                                            && in_array( $taxQuery->term_id, $selected_terms )
-                                                ? true : false;
+                                    return self::checkTaxonomies( $taxonomies, $merged_terms, $taxQuery ) ? true : false;
                                 break;
 
                                 case 'exclude':
-                                    return in_array( $taxQuery->taxonomy, $selected_tax )
-                                            && in_array( $taxQuery->term_id, $selected_terms )
-                                                ? false : true;
+                                    return self::checkTaxonomies( $taxonomies, $merged_terms, $taxQuery ) ? false : true;
                                 break;
                             }
                         }
@@ -323,11 +343,39 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
         }
 
         /**
-         * Check pageellaneous pages
+         * Check taxonomies in frontend
+         *
+         * @since 3.1.2
+         *
+         * @param array $taxonomies Array of taxonomies setup e.g. [ ['tax'=>'category', 'terms' => [172,99,3], 'all' => false], ['tax'=>'post_tag', 'terms' => [], 'all' => true] ]
+         * @param array $terms      Array of term ids e.g. [172,99,3]
+         * @param object $taxQuery  WP_Term
+         *
+         * @return bool
+         */
+        public static function checkTaxonomies( $taxonomies, $terms, $taxQuery )
+        {
+            foreach( $taxonomies as $item ) {
+                if( sanitize_text_field( $item['tax'] ) === $taxQuery->taxonomy && (bool) $item['all'] ) {
+                    // Taxonomy found & all terms
+                    return true;
+                } elseif( in_array( $taxQuery->term_id, $terms ) ) {
+                    // Term found
+                    return true;
+                } else {
+                    // Nothing to do here
+                }
+            }
+
+            return false;
+        }
+
+        /**
+         * Check pages in frontend
          *
          * @since 3.1.1
          *
-         * @param $selected Array of pages e.g. ['home', 'search']
+         * @param array $selected Array of pages e.g. ['home', 'search']
          *
          * @return bool
          */
@@ -934,6 +982,8 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
          *
          * @since 3.1.1
          *
+         * @param array $data Taxonomy slugs and term ids or search word
+         *
          * @return array
          */
         public static function getTerms( $data )
@@ -942,6 +992,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 && is_array( $data['taxonomies'] )
                 && count( $data['taxonomies'] )
             ) {
+
 
                 $taxonomies = array_map( 'sanitize_text_field', $data['taxonomies'] );
                 $args['taxonomy'] = $taxonomies;
@@ -956,7 +1007,21 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     $args['include'] = array_map( 'intval', $data['ids'] );
                 }
 
-                $result     = [];
+                $result = [];
+
+                /*/ Include "All <taxonomy> terms" options
+                global $wp_taxonomies;
+                foreach( $taxonomies as $tax ) {
+                    $result[] = [
+                        'slug' => "all__{$tax}",
+                        'title' => sprintf(
+                                __( 'All %s terms', 'advanced-gutenberg' ),
+                                $wp_taxonomies[$tax]->labels->singular_name
+                            ),
+                        'tax' => $tax,
+                    ];
+                }*/
+
                 $term_query = new \WP_Term_Query( $args );
 
                 if ( ! empty( $term_query->terms ) ) {
