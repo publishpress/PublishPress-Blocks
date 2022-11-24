@@ -293,19 +293,16 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
 
                     if( count( $merged_tax ) ) {
                         $approach = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )
-                                    ? $bControl['approach'] : 'public';
+                                    ? $bControl['approach'] : 'exclude';
 
-                        if( count( $merged_tax ) ) {
+                        switch( $approach ) {
+                            case 'include':
+                                return self::checkTaxonomies( $taxonomies, $merged_terms, $taxQuery ) ? true : false;
+                            break;
 
-                            switch( $approach ) {
-                                case 'include':
-                                    return self::checkTaxonomies( $taxonomies, $merged_terms, $taxQuery ) ? true : false;
-                                break;
-
-                                case 'exclude':
-                                    return self::checkTaxonomies( $taxonomies, $merged_terms, $taxQuery ) ? false : true;
-                                break;
-                            }
+                            case 'exclude':
+                                return self::checkTaxonomies( $taxonomies, $merged_terms, $taxQuery ) ? false : true;
+                            break;
                         }
                     }
                 break;
@@ -356,7 +353,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
         public static function checkTaxonomies( $taxonomies, $terms, $taxQuery )
         {
             foreach( $taxonomies as $item ) {
-                if( sanitize_text_field( $item['tax'] ) === $taxQuery->taxonomy && (bool) $item['all'] ) {
+                if( (string) $item['tax'] === $taxQuery->taxonomy && (bool) $item['all'] ) {
                     // Taxonomy found & all terms
                     return true;
                 } elseif( in_array( $taxQuery->term_id, $terms ) ) {
