@@ -883,8 +883,7 @@ import {
              * @return {bool}
              */
             isPost() {
-                return false;
-                //return wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
+                return wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
             }
 
             componentDidMount() {

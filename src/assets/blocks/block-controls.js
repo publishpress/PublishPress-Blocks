@@ -1300,8 +1300,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             }, {
                 key: "isPost",
                 value: function isPost() {
-                    return false;
-                    //return wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
+                    return wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
                 }
             }, {
                 key: "componentDidMount",
