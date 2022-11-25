@@ -565,7 +565,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     termOptions: [], // Store term options with slug (id) and title
                     searchTermWord: '', // Updated when searching terms
                     initTaxonomy: true, // When true, trigger initTaxonomyControl()
-                    updateTaxLabels: true // When true, update taxonomy option labels
+                    updateTaxLabels: false // When true, update taxonomy option labels
                 };
 
                 _this.isPost = _this.isPost.bind(_this);

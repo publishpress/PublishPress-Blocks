@@ -177,7 +177,7 @@ import {
                   termOptions: [], // Store term options with slug (id) and title
                   searchTermWord: '', // Updated when searching terms
                   initTaxonomy: true, // When true, trigger initTaxonomyControl()
-                  updateTaxLabels: true // When true, update taxonomy option labels
+                  updateTaxLabels: false // When true, update taxonomy option labels
               }
 
               this.isPost = this.isPost.bind(this);
