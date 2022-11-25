@@ -173,9 +173,11 @@ import {
               super(...props);
 
               this.state = {
+                  taxModOptions: [], // Store modified taxonomy options to decide if selected tax is for "all terms" or "selected terms"
                   termOptions: [], // Store term options with slug (id) and title
                   searchTermWord: '', // Updated when searching terms
-                  initTaxonomy: true // When true, trigger initTaxonomyControl()
+                  initTaxonomy: true, // When true, trigger initTaxonomyControl()
+                  updateTaxLabels: true // When true, update taxonomy option labels
               }
 
               this.isPost = this.isPost.bind(this);
@@ -654,15 +656,9 @@ import {
                         } );
                     } );
 
-                } /*else if( topic === 'toggle' ) {
-
-                    return true;
-
-                }*/ else {
+                } else {
                     // Nothing to do here
                 }
-
-                console.log(topic, result);
 
                 return result;
             }
@@ -714,6 +710,9 @@ import {
                         return this.currentTaxonomyControl( 'taxonomies' ).includes( item.tax );
                     } )
                 } );
+
+                // Update tax label options to "All <taxonomy> terms" or "Selected <taxonomy> terms"
+                this.modifyTaxLabels();
             }
 
             /**
@@ -735,10 +734,96 @@ import {
                         }
                     )
                 } ).then( ( list ) => {
+
+                    // Update tax label options to "All <taxonomy> terms" or "Selected <taxonomy> terms"
+                    this.modifyTaxLabels();
+
                     this.setState( {
                         termOptions: list,
-                        initTaxonomy: false
+                        initTaxonomy: false,
+                        updateTaxLabels: false
                     } );
+                } );
+
+
+            }
+
+            /**
+             * Initial taxonomy labels to allow "All <taxonomy> terms" "Selected <taxonomy> terms" visual indicator
+             *
+             * @since 3.1.2
+             *
+             * @return {array}
+             */
+            iniTaxLabels() {
+
+                let result = [];
+                this.getTaxonomies().forEach( (item) => {
+                    /* Item example
+                     *  {
+                     *      "slug": "category",
+                     *      "title": "All Category terms",
+                     *      "singular": "Category"
+                     *  }
+                     */
+                    result.push( {
+                        slug: item.slug,
+                        title: sprintf(
+                            __( 'All %s terms', 'advanced-gutenberg' ),
+                            item.title
+                        ),
+                        singular: item.title
+
+                    } );
+                } );
+
+                return result;
+            }
+
+            /**
+             * Modify taxonomy labels. Very similar to iniTaxLabels()
+             *
+             * @since 3.1.2
+             *
+             * @return {array}
+             */
+            modifyTaxLabels() {
+                const { advgbBlockControls } = this.props.attributes;
+
+                /* Get all selected taxonomy objects.
+                 * e.g.
+                 * [
+                 *     { "tax": "post_tag", "terms": [220,221]},
+                 *     { "tax": "category", "terms": []}
+                 * ]
+                 */
+                const taxonomies    = currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ).length
+                                        ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
+                                        : [];
+
+                // Copy whole state
+                let options = [...this.state.taxModOptions];
+
+                options.forEach( (item, index) => {
+                    const tax = taxonomies.find( el => item.slug === el.tax );
+
+                    // Copy option to modify
+                    let option = { ...options[index] };
+                    // Update title value
+                    option.title = sprintf(
+                        tax === undefined || ! tax.terms.length
+                            ? __( 'All %s terms', 'advanced-gutenberg' )
+                            : __( 'Selected %s terms', 'advanced-gutenberg' ),
+                        option.singular
+                    );
+                    // Add option back to the state
+                    options[index] = option;
+                } );
+
+                // Save
+                this.setState( {
+                    taxModOptions: options,
+                    updateTaxLabels: false
                 } );
             }
 
@@ -802,6 +887,12 @@ import {
                 //return wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
             }
 
+            componentDidMount() {
+                this.setState( {
+                    taxModOptions: this.iniTaxLabels()
+                } );
+            }
+
             componentDidUpdate(prevProps, prevState) {
                 const { attributes, isSelected, name } = this.props;
                 const { advgbBlockControls } = attributes;
@@ -828,10 +919,13 @@ import {
                 }
 
                 // Update available terms and remove terms which taxonomy has been removed
-                if( ! this.isPost() &&
-                    isControlEnabled( advgb_block_controls_vars.controls.taxonomy ) &&
-                    currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' ) &&
-                    currentControlKey( prevBlockControls, 'taxonomy', 'taxonomies' ) !== currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
+                if( ! this.isPost()
+                    && isControlEnabled( advgb_block_controls_vars.controls.taxonomy )
+                    && currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' )
+                    && (
+                        currentControlKey( prevBlockControls, 'taxonomy', 'taxonomies' ) !== currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ) // This trigger works when taxo changes, but not terms
+                        || this.state.updateTaxLabels // Trigger when terms changes
+                    )
                 ) {
                     this.taxonomiesChanged();
                 }
@@ -1174,40 +1268,24 @@ import {
                                                         multiple
                                                         label={ __( 'Select taxonomies', 'advanced-gutenberg' ) }
                                                         placeholder={ __( 'Search taxonomies', 'advanced-gutenberg' ) }
-                                                        suggestions={ getOptionSuggestions( this.getTaxonomies() ) }
+                                                        suggestions={ getOptionSuggestions( this.state.taxModOptions || this.getTaxonomies() ) }
                                                         maxSuggestions={ 10 }
                                                         value={
                                                             getOptionTitles(
                                                                 this.currentTaxonomyControl( 'taxonomies' ),
-                                                                this.getTaxonomies()
+                                                                this.state.taxModOptions || this.getTaxonomies()
                                                             )
                                                         }
                                                         onChange={ ( value ) => {
                                                             this.changeTaxonomyControl(
                                                                 'taxonomies',
-                                                                getOptionSlugs( value, this.getTaxonomies() )
+                                                                getOptionSlugs( value, this.state.taxModOptions || this.getTaxonomies() )
                                                             );
                                                         } }
                                                         __experimentalExpandOnFocus
                                                     />
                                                     { ( currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ).length > 0 ) && (
                                                         <Fragment>
-                                                            { /*this.currentTaxonomyControl( 'taxonomies' ).map( (tax) => {
-                                                                return (
-                                                                    <ToggleControl
-                                                                        label={
-                                                                            sprintf(
-                                                                                __( 'All %s terms', 'advanced-gutenberg' ),
-                                                                                tax
-                                                                            )
-                                                                        }
-                                                                        checked={
-                                                                            this.currentTaxonomyControl( 'toggle' )
-                                                                        }
-                                                                        onChange={ () => this.changeTaxonomyControl( 'toggle', tax ) }
-                                                                    />
-                                                                )
-                                                            } )*/ }
                                                             <FormTokenField
                                                                 multiple
                                                                 label={ __( 'Filter terms', 'advanced-gutenberg' ) }
@@ -1229,7 +1307,10 @@ import {
                                                                             value,
                                                                             this.state.termOptions
                                                                         )
-                                                                    )
+                                                                    );
+                                                                    this.setState( {
+                                                                        updateTaxLabels: true
+                                                                    } );
                                                                 } }
                                                                 onInputChange={ ( value ) => {
                                                                     this.setState( {
@@ -1241,7 +1322,7 @@ import {
                                                             <div className="advgb-revert-mb--disabled components-form-token-field__help"
                                                                 style={{ marginBottom: 20 }}>
                                                                 { __(
-                                                                    'Use this filter to apply only to some terms instead of all terms from a selected taxonomy.',
+                                                                    'Use this filter to apply only to some terms.',
                                                                     'advanced-gutenberg'
                                                                 ) }
                                                             </div>

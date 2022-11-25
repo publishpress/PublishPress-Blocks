@@ -561,9 +561,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 var _this = _possibleConstructorReturn(this, (_ref = BlockControlsEdit.__proto__ || Object.getPrototypeOf(BlockControlsEdit)).call.apply(_ref, [this].concat(_toConsumableArray(props))));
 
                 _this.state = {
+                    taxModOptions: [], // Store modified taxonomy options to decide if selected tax is for "all terms" or "selected terms"
                     termOptions: [], // Store term options with slug (id) and title
                     searchTermWord: '', // Updated when searching terms
-                    initTaxonomy: true // When true, trigger initTaxonomyControl()
+                    initTaxonomy: true, // When true, trigger initTaxonomyControl()
+                    updateTaxLabels: true // When true, update taxonomy option labels
                 };
 
                 _this.isPost = _this.isPost.bind(_this);
@@ -1060,13 +1062,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 result.push(el); // term id
                             });
                         });
-                    } /*else if( topic === 'toggle' ) {
-                         return true;
-                      }*/else {
-                            // Nothing to do here
-                        }
-
-                    console.log(topic, result);
+                    } else {
+                        // Nothing to do here
+                    }
 
                     return result;
                 }
@@ -1118,6 +1116,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                             return _this5.currentTaxonomyControl('taxonomies').includes(item.tax);
                         })
                     });
+
+                    // Update tax label options to "All <taxonomy> terms" or "Selected <taxonomy> terms"
+                    this.modifyTaxLabels();
                 }
 
                 /**
@@ -1142,10 +1143,93 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                             ids: this.currentTaxonomyControl('terms')
                         })
                     }).then(function (list) {
+
+                        // Update tax label options to "All <taxonomy> terms" or "Selected <taxonomy> terms"
+                        _this6.modifyTaxLabels();
+
                         _this6.setState({
                             termOptions: list,
-                            initTaxonomy: false
+                            initTaxonomy: false,
+                            updateTaxLabels: false
                         });
+                    });
+                }
+
+                /**
+                 * Initial taxonomy labels to allow "All <taxonomy> terms" "Selected <taxonomy> terms" visual indicator
+                 *
+                 * @since 3.1.2
+                 *
+                 * @return {array}
+                 */
+
+            }, {
+                key: "iniTaxLabels",
+                value: function iniTaxLabels() {
+
+                    var result = [];
+                    this.getTaxonomies().forEach(function (item) {
+                        /* Item example
+                         *  {
+                         *      "slug": "category",
+                         *      "title": "All Category terms",
+                         *      "singular": "Category"
+                         *  }
+                         */
+                        result.push({
+                            slug: item.slug,
+                            title: sprintf(__('All %s terms', 'advanced-gutenberg'), item.title),
+                            singular: item.title
+
+                        });
+                    });
+
+                    return result;
+                }
+
+                /**
+                 * Modify taxonomy labels. Very similar to iniTaxLabels()
+                 *
+                 * @since 3.1.2
+                 *
+                 * @return {array}
+                 */
+
+            }, {
+                key: "modifyTaxLabels",
+                value: function modifyTaxLabels() {
+                    var advgbBlockControls = this.props.attributes.advgbBlockControls;
+
+                    /* Get all selected taxonomy objects.
+                     * e.g.
+                     * [
+                     *     { "tax": "post_tag", "terms": [220,221]},
+                     *     { "tax": "category", "terms": []}
+                     * ]
+                     */
+
+                    var taxonomies = currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies').length ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : [];
+
+                    // Copy whole state
+                    var options = [].concat(_toConsumableArray(this.state.taxModOptions));
+
+                    options.forEach(function (item, index) {
+                        var tax = taxonomies.find(function (el) {
+                            return item.slug === el.tax;
+                        });
+
+                        // Copy option to modify
+                        var option = _extends({}, options[index]);
+                        // Update title value
+                        option.title = sprintf(tax === undefined || !tax.terms.length ? __('All %s terms', 'advanced-gutenberg') : __('Selected %s terms', 'advanced-gutenberg'), option.singular);
+                        // Add option back to the state
+                        options[index] = option;
+                    });
+
+                    // Save
+                    this.setState({
+                        taxModOptions: options,
+                        updateTaxLabels: false
                     });
                 }
 
@@ -1220,6 +1304,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     //return wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
                 }
             }, {
+                key: "componentDidMount",
+                value: function componentDidMount() {
+                    this.setState({
+                        taxModOptions: this.iniTaxLabels()
+                    });
+                }
+            }, {
                 key: "componentDidUpdate",
                 value: function componentDidUpdate(prevProps, prevState) {
                     var _props4 = this.props,
@@ -1245,7 +1336,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     }
 
                     // Update available terms and remove terms which taxonomy has been removed
-                    if (!this.isPost() && isControlEnabled(advgb_block_controls_vars.controls.taxonomy) && currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') && currentControlKey(prevBlockControls, 'taxonomy', 'taxonomies') !== currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies')) {
+                    if (!this.isPost() && isControlEnabled(advgb_block_controls_vars.controls.taxonomy) && currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') && (currentControlKey(prevBlockControls, 'taxonomy', 'taxonomies') !== currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') // This trigger works when taxo changes, but not terms
+                    || this.state.updateTaxLabels // Trigger when terms changes
+                    )) {
                         this.taxonomiesChanged();
                     }
                 }
@@ -1556,11 +1649,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                             multiple: true,
                                             label: __('Select taxonomies', 'advanced-gutenberg'),
                                             placeholder: __('Search taxonomies', 'advanced-gutenberg'),
-                                            suggestions: (0, _utils.getOptionSuggestions)(this.getTaxonomies()),
+                                            suggestions: (0, _utils.getOptionSuggestions)(this.state.taxModOptions || this.getTaxonomies()),
                                             maxSuggestions: 10,
-                                            value: (0, _utils.getOptionTitles)(this.currentTaxonomyControl('taxonomies'), this.getTaxonomies()),
+                                            value: (0, _utils.getOptionTitles)(this.currentTaxonomyControl('taxonomies'), this.state.taxModOptions || this.getTaxonomies()),
                                             onChange: function onChange(value) {
-                                                _this8.changeTaxonomyControl('taxonomies', (0, _utils.getOptionSlugs)(value, _this8.getTaxonomies()));
+                                                _this8.changeTaxonomyControl('taxonomies', (0, _utils.getOptionSlugs)(value, _this8.state.taxModOptions || _this8.getTaxonomies()));
                                             },
                                             __experimentalExpandOnFocus: true
                                         }),
@@ -1576,6 +1669,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                                 value: (0, _utils.getOptionTitles)(this.currentTaxonomyControl('terms'), this.state.termOptions),
                                                 onChange: function onChange(value) {
                                                     _this8.changeTaxonomyControl('terms', (0, _utils.getOptionSlugs)(value, _this8.state.termOptions));
+                                                    _this8.setState({
+                                                        updateTaxLabels: true
+                                                    });
                                                 },
                                                 onInputChange: function onInputChange(value) {
                                                     _this8.setState({
@@ -1588,7 +1684,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                                 "div",
                                                 { className: "advgb-revert-mb--disabled components-form-token-field__help",
                                                     style: { marginBottom: 20 } },
-                                                __('Use this filter to apply only to some terms instead of all terms from a selected taxonomy.', 'advanced-gutenberg')
+                                                __('Use this filter to apply only to some terms.', 'advanced-gutenberg')
                                             )
                                         )
                                     )
