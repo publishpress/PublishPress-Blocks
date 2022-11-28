@@ -176,7 +176,7 @@ import {
                   taxModOptions: [], // Store modified taxonomy options to decide if selected tax is for "all terms" or "selected terms"
                   termOptions: [], // Store term options with slug (id) and title
                   searchTermWord: '', // Updated when searching terms
-                  initTaxonomy: true, // When true, trigger initTaxonomyControl()
+                  initArchive: true, // When true, trigger initArchiveControl()
                   updateTaxLabels: false // When true, update taxonomy option labels
               }
 
@@ -344,8 +344,8 @@ import {
                     platforms: [],
                     approach: 'public'
                 };
-                const taxonomyControl = {
-                    control: 'taxonomy',
+                const archiveControl = {
+                    control: 'archive',
                     enabled: true,
                     taxonomies: [],
                     approach: 'exclude'
@@ -425,11 +425,11 @@ import {
                             } );
                         break;
 
-                        case 'taxonomy':
+                        case 'archive':
                             setAttributes( {
                                 advgbBlockControls: [
                                     ...advgbBlockControls,
-                                    taxonomyControl
+                                    archiveControl
                                 ]
                             } );
                         break;
@@ -470,9 +470,9 @@ import {
                             } );
                         break;
 
-                        case 'taxonomy':
+                        case 'archive':
                             setAttributes( {
-                                advgbBlockControls: [ taxonomyControl ]
+                                advgbBlockControls: [ archiveControl ]
                             } );
                         break;
 
@@ -486,7 +486,7 @@ import {
             }
 
             /**
-             * Update taxonomy control in advgbBlockControls attribute when taxonomies value changes
+             * Update archive control in advgbBlockControls attribute when taxonomies value changes
              *
              * @since 3.1.2
              *
@@ -495,12 +495,12 @@ import {
              *
              * @return {void}
              */
-            changeTaxonomyControl( topic, slugs ) {
+            changeArchiveControl( topic, slugs ) {
                 const { attributes, setAttributes } = this.props;
                 const { advgbBlockControls } = attributes;
 
                 let taxArray        = [];
-                const controlIndex  = advgbBlockControls.findIndex(element => element.control === 'taxonomy');
+                const controlIndex  = advgbBlockControls.findIndex(element => element.control === 'archive');
 
                 // No control found (this check seems not necessary but is here to prevent an unlikely error)
                 if( controlIndex < 0 ) {
@@ -551,7 +551,7 @@ import {
                 } else if( topic === 'terms' ) {
 
                     let terms           = {};
-                    const taxonomies    = this.currentTaxonomyControl( 'taxonomies' );
+                    const taxonomies    = this.currentArchiveControl( 'taxonomies' );
 
                     // Check each term id (item). slug means the id
                     slugs.forEach( ( item ) => {
@@ -625,7 +625,7 @@ import {
              *
              * @return {array} An single array with all the selected terms or taxonomies ['category','post_tag'] or [99,182,42]
              */
-            currentTaxonomyControl( topic ) {
+            currentArchiveControl( topic ) {
                 const { attributes, setAttributes } = this.props;
                 const { advgbBlockControls } = attributes;
 
@@ -638,8 +638,8 @@ import {
                  *     { "tax": "category", "terms": []}
                  * ]
                  */
-                const taxonomies    = currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ).length
-                                        ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
+                const taxonomies    = currentControlKey( advgbBlockControls, 'archive', 'taxonomies' ).length
+                                        ? currentControlKey( advgbBlockControls, 'archive', 'taxonomies' )
                                         : [];
 
                 if( topic === 'taxonomies' ) {
@@ -674,11 +674,11 @@ import {
                 const { attributes } = this.props;
                 const { advgbBlockControls } = attributes;
 
-                const currentTerms  = !! currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
-                                        ? currentControlKey( advgbBlockControls, 'taxonomy', 'terms' )
+                const currentTerms  = !! currentControlKey( advgbBlockControls, 'archive', 'terms' )
+                                        ? currentControlKey( advgbBlockControls, 'archive', 'terms' )
                                         : [];
-                const taxonomies    = !! currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
-                                        ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
+                const taxonomies    = !! currentControlKey( advgbBlockControls, 'archive', 'taxonomies' )
+                                        ? currentControlKey( advgbBlockControls, 'archive', 'taxonomies' )
                                         : [];
 
                 if( currentTerms.length ) {
@@ -696,7 +696,7 @@ import {
                    } );
 
                    this.changeControlKey(
-                       'taxonomy',
+                       'archive',
                        'terms',
                        result
                    );
@@ -707,7 +707,7 @@ import {
                  */
                 this.setState( {
                     termOptions: this.state.termOptions.filter( (item) => {
-                        return this.currentTaxonomyControl( 'taxonomies' ).includes( item.tax );
+                        return this.currentArchiveControl( 'taxonomies' ).includes( item.tax );
                     } )
                 } );
 
@@ -722,15 +722,15 @@ import {
              *
              * @return {void}
              */
-            initTaxonomyControl() {
+            initArchiveControl() {
                 const { advgbBlockControls } = this.props.attributes;
 
                 wp.apiFetch( {
                     path: wp.url.addQueryArgs(
                         'advgb/v1/terms',
                         {
-                            taxonomies: this.currentTaxonomyControl( 'taxonomies' ),
-                            ids: this.currentTaxonomyControl( 'terms' )
+                            taxonomies: this.currentArchiveControl( 'taxonomies' ),
+                            ids: this.currentArchiveControl( 'terms' )
                         }
                     )
                 } ).then( ( list ) => {
@@ -740,7 +740,7 @@ import {
 
                     this.setState( {
                         termOptions: list,
-                        initTaxonomy: false,
+                        initArchive: false,
                         updateTaxLabels: false
                     } );
                 } );
@@ -797,8 +797,8 @@ import {
                  *     { "tax": "category", "terms": []}
                  * ]
                  */
-                const taxonomies    = currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ).length
-                                        ? currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' )
+                const taxonomies    = currentControlKey( advgbBlockControls, 'archive', 'taxonomies' ).length
+                                        ? currentControlKey( advgbBlockControls, 'archive', 'taxonomies' )
                                         : [];
 
                 // Copy whole state
@@ -846,7 +846,7 @@ import {
                         'advgb/v1/terms',
                         {
                             search: searchTermWord,
-                            taxonomies: this.currentTaxonomyControl( 'taxonomies' )
+                            taxonomies: this.currentArchiveControl( 'taxonomies' )
                         }
                     )
 
@@ -896,20 +896,20 @@ import {
                 const { attributes, isSelected, name } = this.props;
                 const { advgbBlockControls } = attributes;
                 const { advgbBlockControls: prevBlockControls } = prevProps.attributes;
-                const { searchTermWord, initTaxonomy } = this.state;
+                const { searchTermWord, initArchive } = this.state;
                 const { searchTermWord: prevTermWord } = prevState;
 
                 // Get human readable selected terms on block selection the first time
                 if( ! this.isPost()
                     && ! NON_SUPPORTED_BLOCKS.includes( name )
                     && isSelected
-                    && initTaxonomy
-                    && isControlEnabled( advgb_block_controls_vars.controls.taxonomy )
-                    && currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' )
-                    && this.currentTaxonomyControl( 'taxonomies' ).length
-                    && this.currentTaxonomyControl( 'terms' ).length
+                    && initArchive
+                    && isControlEnabled( advgb_block_controls_vars.controls.archive )
+                    && currentControlKey( advgbBlockControls, 'archive', 'enabled' )
+                    && this.currentArchiveControl( 'taxonomies' ).length
+                    && this.currentArchiveControl( 'terms' ).length
                 ) {
-                    this.initTaxonomyControl();
+                    this.initArchiveControl();
                 }
 
                 // Search terms
@@ -919,10 +919,10 @@ import {
 
                 // Update available terms and remove terms which taxonomy has been removed
                 if( ! this.isPost()
-                    && isControlEnabled( advgb_block_controls_vars.controls.taxonomy )
-                    && currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' )
+                    && isControlEnabled( advgb_block_controls_vars.controls.archive )
+                    && currentControlKey( advgbBlockControls, 'archive', 'enabled' )
                     && (
-                        currentControlKey( prevBlockControls, 'taxonomy', 'taxonomies' ) !== currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ) // This trigger works when taxo changes, but not terms
+                        currentControlKey( prevBlockControls, 'archive', 'taxonomies' ) !== currentControlKey( advgbBlockControls, 'archive', 'taxonomies' ) // This trigger works when taxo changes, but not terms
                         || this.state.updateTaxLabels // Trigger when terms changes
                     )
                 ) {
@@ -1232,23 +1232,23 @@ import {
                                 ) }
                                 { ! this.isPost() && ( // Disabled in post edit
                                     <Fragment>
-                                        { isControlEnabled( advgb_block_controls_vars.controls.taxonomy ) && (
+                                        { isControlEnabled( advgb_block_controls_vars.controls.archive ) && (
                                         <Fragment>
                                             <ToggleControl
                                                 label={ __( 'Term archives', 'advanced-gutenberg' ) }
-                                                help={ currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' )
+                                                help={ currentControlKey( advgbBlockControls, 'archive', 'enabled' )
                                                     ? __( 'Choose on which taxonomies and terms archive pages your blocks can be displayed.', 'advanced-gutenberg' )
                                                     : ''
                                                 }
-                                                checked={ currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' ) }
-                                                onChange={ () => this.changeControlKey( 'taxonomy', 'enabled' ) }
+                                                checked={ currentControlKey( advgbBlockControls, 'archive', 'enabled' ) }
+                                                onChange={ () => this.changeControlKey( 'archive', 'enabled' ) }
                                             />
-                                            { currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' ) && (
+                                            { currentControlKey( advgbBlockControls, 'archive', 'enabled' ) && (
                                                 <Fragment>
                                                     <div className="advgb-revert-mb--disabled" style={{ marginBottom: 20 }}>
                                                         <SelectControl
                                                             value={
-                                                                currentControlKey( advgbBlockControls, 'taxonomy', 'approach' )
+                                                                currentControlKey( advgbBlockControls, 'archive', 'approach' )
                                                             }
                                                             options={ [
                                                                 {
@@ -1260,7 +1260,7 @@ import {
                                                                     label: __( 'Hide for selected terms', 'advanced-gutenberg' )
                                                                 }
                                                             ] }
-                                                            onChange={ ( value ) => this.changeControlKey( 'taxonomy', 'approach', value ) }
+                                                            onChange={ ( value ) => this.changeControlKey( 'archive', 'approach', value ) }
                                                         />
                                                     </div>
                                                     <FormTokenField
@@ -1271,19 +1271,19 @@ import {
                                                         maxSuggestions={ 10 }
                                                         value={
                                                             getOptionTitles(
-                                                                this.currentTaxonomyControl( 'taxonomies' ),
+                                                                this.currentArchiveControl( 'taxonomies' ),
                                                                 this.state.taxModOptions || this.getTaxonomies()
                                                             )
                                                         }
                                                         onChange={ ( value ) => {
-                                                            this.changeTaxonomyControl(
+                                                            this.changeArchiveControl(
                                                                 'taxonomies',
                                                                 getOptionSlugs( value, this.state.taxModOptions || this.getTaxonomies() )
                                                             );
                                                         } }
                                                         __experimentalExpandOnFocus
                                                     />
-                                                    { ( currentControlKey( advgbBlockControls, 'taxonomy', 'taxonomies' ).length > 0 ) && (
+                                                    { ( currentControlKey( advgbBlockControls, 'archive', 'taxonomies' ).length > 0 ) && (
                                                         <Fragment>
                                                             <FormTokenField
                                                                 multiple
@@ -1295,12 +1295,12 @@ import {
                                                                 maxSuggestions={ 10 }
                                                                 value={
                                                                     getOptionTitles(
-                                                                        this.currentTaxonomyControl( 'terms' ),
+                                                                        this.currentArchiveControl( 'terms' ),
                                                                         this.state.termOptions
                                                                     )
                                                                 }
                                                                 onChange={ ( value ) => {
-                                                                    this.changeTaxonomyControl(
+                                                                    this.changeArchiveControl(
                                                                         'terms',
                                                                         getOptionSlugs(
                                                                             value,

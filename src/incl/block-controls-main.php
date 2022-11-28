@@ -244,8 +244,8 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     }
                 break;
 
-                // Taxonomy control
-                case 'taxonomy':
+                // Archive control
+                case 'archive':
                     $bControl       = $block['attrs']['advgbBlockControls'][$key];
                     $taxonomies     = is_array( $bControl['taxonomies'] ) ?  $bControl['taxonomies'] : [];
                     $taxQuery       = get_queried_object();
@@ -515,7 +515,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 $advgb_block_controls['controls']['user_role']  = isset( $_POST['user_role_control'] ) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['browser']    = isset( $_POST['browser_control'] ) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['platform']   = isset( $_POST['platform_control'] ) ? (bool) 1 : (bool) 0;
-                $advgb_block_controls['controls']['taxonomy']   = isset( $_POST['taxonomy_control'] ) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['archive']    = isset( $_POST['archive_control'] ) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['page']       = isset( $_POST['page_control'] ) ? (bool) 1 : (bool) 0;
 
                 update_option( 'advgb_block_controls', $advgb_block_controls );
@@ -613,7 +613,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 'user_role',
                 'browser',
                 'platform',
-                'taxonomy',
+                'archive',
                 'page'
             ];
 

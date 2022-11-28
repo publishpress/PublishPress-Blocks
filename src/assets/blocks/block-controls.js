@@ -564,7 +564,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     taxModOptions: [], // Store modified taxonomy options to decide if selected tax is for "all terms" or "selected terms"
                     termOptions: [], // Store term options with slug (id) and title
                     searchTermWord: '', // Updated when searching terms
-                    initTaxonomy: true, // When true, trigger initTaxonomyControl()
+                    initArchive: true, // When true, trigger initArchiveControl()
                     updateTaxLabels: false // When true, update taxonomy option labels
                 };
 
@@ -755,8 +755,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         platforms: [],
                         approach: 'public'
                     };
-                    var taxonomyControl = {
-                        control: 'taxonomy',
+                    var archiveControl = {
+                        control: 'archive',
                         enabled: true,
                         taxonomies: [],
                         approach: 'exclude'
@@ -821,9 +821,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 });
                                 break;
 
-                            case 'taxonomy':
+                            case 'archive':
                                 setAttributes({
-                                    advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [taxonomyControl])
+                                    advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [archiveControl])
                                 });
                                 break;
 
@@ -860,9 +860,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                 });
                                 break;
 
-                            case 'taxonomy':
+                            case 'archive':
                                 setAttributes({
-                                    advgbBlockControls: [taxonomyControl]
+                                    advgbBlockControls: [archiveControl]
                                 });
                                 break;
 
@@ -876,7 +876,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 }
 
                 /**
-                 * Update taxonomy control in advgbBlockControls attribute when taxonomies value changes
+                 * Update archive control in advgbBlockControls attribute when taxonomies value changes
                  *
                  * @since 3.1.2
                  *
@@ -887,8 +887,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                  */
 
             }, {
-                key: "changeTaxonomyControl",
-                value: function changeTaxonomyControl(topic, slugs) {
+                key: "changeArchiveControl",
+                value: function changeArchiveControl(topic, slugs) {
                     var _this4 = this;
 
                     var _props2 = this.props,
@@ -899,7 +899,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
                     var taxArray = [];
                     var controlIndex = advgbBlockControls.findIndex(function (element) {
-                        return element.control === 'taxonomy';
+                        return element.control === 'archive';
                     });
 
                     // No control found (this check seems not necessary but is here to prevent an unlikely error)
@@ -949,7 +949,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     } else if (topic === 'terms') {
 
                         var terms = {};
-                        var taxonomies = this.currentTaxonomyControl('taxonomies');
+                        var taxonomies = this.currentArchiveControl('taxonomies');
 
                         // Check each term id (item). slug means the id
                         slugs.forEach(function (item) {
@@ -1031,8 +1031,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                  */
 
             }, {
-                key: "currentTaxonomyControl",
-                value: function currentTaxonomyControl(topic) {
+                key: "currentArchiveControl",
+                value: function currentArchiveControl(topic) {
                     var _props3 = this.props,
                         attributes = _props3.attributes,
                         setAttributes = _props3.setAttributes;
@@ -1048,7 +1048,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                      *     { "tax": "category", "terms": []}
                      * ]
                      */
-                    var taxonomies = currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies').length ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : [];
+                    var taxonomies = currentControlKey(advgbBlockControls, 'archive', 'taxonomies').length ? currentControlKey(advgbBlockControls, 'archive', 'taxonomies') : [];
 
                     if (topic === 'taxonomies') {
 
@@ -1086,8 +1086,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     var advgbBlockControls = attributes.advgbBlockControls;
 
 
-                    var currentTerms = !!currentControlKey(advgbBlockControls, 'taxonomy', 'terms') ? currentControlKey(advgbBlockControls, 'taxonomy', 'terms') : [];
-                    var taxonomies = !!currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : [];
+                    var currentTerms = !!currentControlKey(advgbBlockControls, 'archive', 'terms') ? currentControlKey(advgbBlockControls, 'archive', 'terms') : [];
+                    var taxonomies = !!currentControlKey(advgbBlockControls, 'archive', 'taxonomies') ? currentControlKey(advgbBlockControls, 'archive', 'taxonomies') : [];
 
                     if (currentTerms.length) {
 
@@ -1105,7 +1105,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                             }
                         });
 
-                        this.changeControlKey('taxonomy', 'terms', result);
+                        this.changeControlKey('archive', 'terms', result);
                     }
 
                     /* Remove term options from non-selected taxonomies.
@@ -1113,7 +1113,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                      */
                     this.setState({
                         termOptions: this.state.termOptions.filter(function (item) {
-                            return _this5.currentTaxonomyControl('taxonomies').includes(item.tax);
+                            return _this5.currentArchiveControl('taxonomies').includes(item.tax);
                         })
                     });
 
@@ -1130,8 +1130,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                  */
 
             }, {
-                key: "initTaxonomyControl",
-                value: function initTaxonomyControl() {
+                key: "initArchiveControl",
+                value: function initArchiveControl() {
                     var _this6 = this;
 
                     var advgbBlockControls = this.props.attributes.advgbBlockControls;
@@ -1139,8 +1139,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
                     wp.apiFetch({
                         path: wp.url.addQueryArgs('advgb/v1/terms', {
-                            taxonomies: this.currentTaxonomyControl('taxonomies'),
-                            ids: this.currentTaxonomyControl('terms')
+                            taxonomies: this.currentArchiveControl('taxonomies'),
+                            ids: this.currentArchiveControl('terms')
                         })
                     }).then(function (list) {
 
@@ -1149,7 +1149,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
                         _this6.setState({
                             termOptions: list,
-                            initTaxonomy: false,
+                            initArchive: false,
                             updateTaxLabels: false
                         });
                     });
@@ -1208,7 +1208,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                      * ]
                      */
 
-                    var taxonomies = currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies').length ? currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') : [];
+                    var taxonomies = currentControlKey(advgbBlockControls, 'archive', 'taxonomies').length ? currentControlKey(advgbBlockControls, 'archive', 'taxonomies') : [];
 
                     // Copy whole state
                     var options = [].concat(_toConsumableArray(this.state.taxModOptions));
@@ -1258,7 +1258,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
                         path: wp.url.addQueryArgs('advgb/v1/terms', {
                             search: searchTermWord,
-                            taxonomies: this.currentTaxonomyControl('taxonomies')
+                            taxonomies: this.currentArchiveControl('taxonomies')
                         })
 
                     }).then(function (list) {
@@ -1320,13 +1320,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     var prevBlockControls = prevProps.attributes.advgbBlockControls;
                     var _state2 = this.state,
                         searchTermWord = _state2.searchTermWord,
-                        initTaxonomy = _state2.initTaxonomy;
+                        initArchive = _state2.initArchive;
                     var prevTermWord = prevState.searchTermWord;
 
                     // Get human readable selected terms on block selection the first time
 
-                    if (!this.isPost() && !NON_SUPPORTED_BLOCKS.includes(name) && isSelected && initTaxonomy && isControlEnabled(advgb_block_controls_vars.controls.taxonomy) && currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') && this.currentTaxonomyControl('taxonomies').length && this.currentTaxonomyControl('terms').length) {
-                        this.initTaxonomyControl();
+                    if (!this.isPost() && !NON_SUPPORTED_BLOCKS.includes(name) && isSelected && initArchive && isControlEnabled(advgb_block_controls_vars.controls.archive) && currentControlKey(advgbBlockControls, 'archive', 'enabled') && this.currentArchiveControl('taxonomies').length && this.currentArchiveControl('terms').length) {
+                        this.initArchiveControl();
                     }
 
                     // Search terms
@@ -1335,7 +1335,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     }
 
                     // Update available terms and remove terms which taxonomy has been removed
-                    if (!this.isPost() && isControlEnabled(advgb_block_controls_vars.controls.taxonomy) && currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') && (currentControlKey(prevBlockControls, 'taxonomy', 'taxonomies') !== currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies') // This trigger works when taxo changes, but not terms
+                    if (!this.isPost() && isControlEnabled(advgb_block_controls_vars.controls.archive) && currentControlKey(advgbBlockControls, 'archive', 'enabled') && (currentControlKey(prevBlockControls, 'archive', 'taxonomies') !== currentControlKey(advgbBlockControls, 'archive', 'taxonomies') // This trigger works when taxo changes, but not terms
                     || this.state.updateTaxLabels // Trigger when terms changes
                     )) {
                         this.taxonomiesChanged();
@@ -1613,25 +1613,25 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                             React.createElement(
                                 Fragment,
                                 null,
-                                isControlEnabled(advgb_block_controls_vars.controls.taxonomy) && React.createElement(
+                                isControlEnabled(advgb_block_controls_vars.controls.archive) && React.createElement(
                                     Fragment,
                                     null,
                                     React.createElement(ToggleControl, {
                                         label: __('Term archives', 'advanced-gutenberg'),
-                                        help: currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') ? __('Choose on which taxonomies and terms archive pages your blocks can be displayed.', 'advanced-gutenberg') : '',
-                                        checked: currentControlKey(advgbBlockControls, 'taxonomy', 'enabled'),
+                                        help: currentControlKey(advgbBlockControls, 'archive', 'enabled') ? __('Choose on which taxonomies and terms archive pages your blocks can be displayed.', 'advanced-gutenberg') : '',
+                                        checked: currentControlKey(advgbBlockControls, 'archive', 'enabled'),
                                         onChange: function onChange() {
-                                            return _this8.changeControlKey('taxonomy', 'enabled');
+                                            return _this8.changeControlKey('archive', 'enabled');
                                         }
                                     }),
-                                    currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') && React.createElement(
+                                    currentControlKey(advgbBlockControls, 'archive', 'enabled') && React.createElement(
                                         Fragment,
                                         null,
                                         React.createElement(
                                             "div",
                                             { className: "advgb-revert-mb--disabled", style: { marginBottom: 20 } },
                                             React.createElement(SelectControl, {
-                                                value: currentControlKey(advgbBlockControls, 'taxonomy', 'approach'),
+                                                value: currentControlKey(advgbBlockControls, 'archive', 'approach'),
                                                 options: [{
                                                     value: 'include',
                                                     label: __('Show for selected terms', 'advanced-gutenberg')
@@ -1640,7 +1640,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                                     label: __('Hide for selected terms', 'advanced-gutenberg')
                                                 }],
                                                 onChange: function onChange(value) {
-                                                    return _this8.changeControlKey('taxonomy', 'approach', value);
+                                                    return _this8.changeControlKey('archive', 'approach', value);
                                                 }
                                             })
                                         ),
@@ -1650,13 +1650,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                             placeholder: __('Search taxonomies', 'advanced-gutenberg'),
                                             suggestions: (0, _utils.getOptionSuggestions)(this.state.taxModOptions || this.getTaxonomies()),
                                             maxSuggestions: 10,
-                                            value: (0, _utils.getOptionTitles)(this.currentTaxonomyControl('taxonomies'), this.state.taxModOptions || this.getTaxonomies()),
+                                            value: (0, _utils.getOptionTitles)(this.currentArchiveControl('taxonomies'), this.state.taxModOptions || this.getTaxonomies()),
                                             onChange: function onChange(value) {
-                                                _this8.changeTaxonomyControl('taxonomies', (0, _utils.getOptionSlugs)(value, _this8.state.taxModOptions || _this8.getTaxonomies()));
+                                                _this8.changeArchiveControl('taxonomies', (0, _utils.getOptionSlugs)(value, _this8.state.taxModOptions || _this8.getTaxonomies()));
                                             },
                                             __experimentalExpandOnFocus: true
                                         }),
-                                        currentControlKey(advgbBlockControls, 'taxonomy', 'taxonomies').length > 0 && React.createElement(
+                                        currentControlKey(advgbBlockControls, 'archive', 'taxonomies').length > 0 && React.createElement(
                                             Fragment,
                                             null,
                                             React.createElement(FormTokenField, {
@@ -1665,9 +1665,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                                 placeholder: __('Search terms', 'advanced-gutenberg'),
                                                 suggestions: (0, _utils.getOptionSuggestions)(this.state.termOptions),
                                                 maxSuggestions: 10,
-                                                value: (0, _utils.getOptionTitles)(this.currentTaxonomyControl('terms'), this.state.termOptions),
+                                                value: (0, _utils.getOptionTitles)(this.currentArchiveControl('terms'), this.state.termOptions),
                                                 onChange: function onChange(value) {
-                                                    _this8.changeTaxonomyControl('terms', (0, _utils.getOptionSlugs)(value, _this8.state.termOptions));
+                                                    _this8.changeArchiveControl('terms', (0, _utils.getOptionSlugs)(value, _this8.state.termOptions));
                                                     _this8.setState({
                                                         updateTaxLabels: true
                                                     });

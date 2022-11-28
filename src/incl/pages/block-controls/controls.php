@@ -5,7 +5,7 @@ $schedule_control   = PublishPress\Blocks\Controls::getControlValue( 'schedule',
 $user_role_control  = PublishPress\Blocks\Controls::getControlValue( 'user_role', 1 );
 $browser_control    = PublishPress\Blocks\Controls::getControlValue( 'browser', 1 );
 $platform_control   = PublishPress\Blocks\Controls::getControlValue( 'platform', 1 );
-$taxonomy_control   = PublishPress\Blocks\Controls::getControlValue( 'taxonomy', 1 );
+$archive_control    = PublishPress\Blocks\Controls::getControlValue( 'archive', 1 );
 $page_control       = PublishPress\Blocks\Controls::getControlValue( 'page', 1 );
 ?>
 <form method="post">
@@ -93,9 +93,9 @@ $page_control       = PublishPress\Blocks\Controls::getControlValue( 'page', 1 )
             </th>
             <td>
                 <label>
-                    <input type="checkbox" name="taxonomy_control"
+                    <input type="checkbox" name="archive_control"
                            value="1"
-                           <?php echo $taxonomy_control ? ' checked' : '' ?>
+                           <?php echo $archive_control ? ' checked' : '' ?>
                     />
                     <?php
                     _e(
