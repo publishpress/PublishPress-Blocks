@@ -15,7 +15,7 @@ export const getOptionSuggestions = function( options ) {
  * to display as field value (but NOT saved!).
  *
  * @since 3.1.1
- * @param slugs     Option slugs. e.g. ['subscriber','new_customer']
+ * @param slugs     Option slugs. e.g. ['subscriber','new_customer'] or [82, 92]
  * @param options   Available options as objects with slug and title. e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
  *
  * @return {array}  Option titles. e.g. ['Subscriber','New Customer']

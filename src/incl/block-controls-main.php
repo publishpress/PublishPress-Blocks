@@ -153,9 +153,248 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     }
 
                 break;
+
+                // Browser control
+                case 'browser':
+                    $bControl = $block['attrs']['advgbBlockControls'][$key];
+                    $selected = is_array( $bControl['browsers'] ) ? $bControl['browsers'] : [];
+
+                    if( count( $selected ) ) {
+
+                        $selected = array_map( 'sanitize_text_field', $selected );
+
+                        require_once( ADVANCED_GUTENBERG_VENDOR_PATH . 'wolfcast/browser-detection/lib/BrowserDetection.php' );
+                        $browser = new \Wolfcast\BrowserDetection();
+
+                        /* Convert current browser from human readable to lowercase without empty spaces
+                         * to match getBrowsers() array values
+                         */
+                        $current = strtolower(
+                            str_replace(
+                                ' ',
+                                '_',
+                                $browser->getName()
+                            )
+                        );
+                        $approach = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )
+                                        ? $bControl['approach'] : 'public';
+
+                        switch( $approach ) {
+                            default:
+                            case 'public':
+                                return true;
+                            break;
+
+                            case 'include':
+                                return in_array( $current, $selected ) ? true : false;
+                            break;
+
+                            case 'exclude':
+                                return ! in_array( $current, $selected ) ? true : false;
+                            break;
+                        }
+                    }
+                break;
+
+                // Platform control
+                case 'platform':
+                    $bControl = $block['attrs']['advgbBlockControls'][$key];
+                    $selected = is_array( $bControl['platforms'] ) ? $bControl['platforms'] : [];
+
+                    if( count( $selected ) ) {
+
+                        $selected = array_map( 'sanitize_text_field', $selected );
+
+                        require_once( ADVANCED_GUTENBERG_VENDOR_PATH . 'wolfcast/browser-detection/lib/BrowserDetection.php' );
+                        $platform = new \Wolfcast\BrowserDetection();
+
+                        /* Convert current platform from human readable to lowercase without empty spaces
+                         * to match getPlatforms() array values
+                         */
+                        $current = strtolower(
+                            str_replace(
+                                ' ',
+                                '_',
+                                $platform->getPlatform()
+                            )
+                        );
+
+                        // Since iPad now uses iPadOS but the library still recognizes as iOS, we check manually
+                        if(  strpos( $_SERVER['HTTP_USER_AGENT'], 'iPad' ) !== false ) {
+                            $current = 'ipados';
+                        }
+
+                        $approach = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )
+                                        ? $bControl['approach'] : 'public';
+
+                        switch( $approach ) {
+                            default:
+                            case 'public':
+                                return true;
+                            break;
+
+                            case 'include':
+                                return in_array( $current, $selected ) ? true : false;
+                            break;
+
+                            case 'exclude':
+                                return ! in_array( $current, $selected ) ? true : false;
+                            break;
+                        }
+                    }
+                break;
+
+                // Archive control
+                case 'archive':
+                    $bControl       = $block['attrs']['advgbBlockControls'][$key];
+                    $taxonomies     = is_array( $bControl['taxonomies'] ) ?  $bControl['taxonomies'] : [];
+                    $taxQuery       = get_queried_object();
+
+                    if( ! isset( $taxQuery->taxonomy ) ) {
+                        return true;
+                    }
+
+                    $merged_tax     = []; // To store selected taxonomies. e.g. [ 'category', 'post_tag' ]
+                    $merged_terms   = []; // To store selected terms from all taxonomies. e.g. [99,72,51]
+
+                    // Create taxonomies array
+                    if( isset( $taxonomies ) && count( $taxonomies ) ) {
+                        foreach( $taxonomies as $item ) {
+                            $merged_tax[] = sanitize_text_field( $item['tax'] );
+
+                            // Create terms array
+                            if( isset( $item['terms'] ) && count( $item['terms'] ) ) {
+                                foreach( $item['terms'] as $term ) {
+                                    $merged_terms[] = intval( $term );
+                                }
+                            }
+                        }
+                    }
+
+                    /*echo '<pre>';
+                    var_dump($bControl);
+                    echo '</pre><hr>';*/
+
+                    /*echo '<pre>';
+                    var_dump($taxonomies);
+                    echo '</pre><hr>';*/
+
+                    /*echo '<pre>';
+                    var_dump($merged_tax);
+                    echo '</pre><hr>';
+
+                    echo '<pre>';
+                    var_dump($merged_terms);
+                    echo '</pre><hr>';
+
+                    echo '<pre>';
+                    var_dump($taxQuery);
+                    echo '</pre>';*/
+
+                    if( count( $merged_tax ) ) {
+                        $approach = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )
+                                    ? $bControl['approach'] : 'exclude';
+
+                        switch( $approach ) {
+                            case 'include':
+                                return self::checkTaxonomies( $taxonomies, $merged_terms, $taxQuery ) ? true : false;
+                            break;
+
+                            case 'exclude':
+                                return self::checkTaxonomies( $taxonomies, $merged_terms, $taxQuery ) ? false : true;
+                            break;
+                        }
+                    }
+                break;
+
+                // Pages control
+                case 'page':
+                    $bControl = $block['attrs']['advgbBlockControls'][$key];
+                    $selected = is_array( $bControl['pages'] ) ? $bControl['pages'] : [];
+
+                    if( count( $selected ) ) {
+
+                        $selected = array_map( 'sanitize_text_field', $selected );
+                        $approach = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )
+                                        ? $bControl['approach'] : 'public';
+
+                        switch( $approach ) {
+                            default:
+                            case 'public':
+                                return true;
+                            break;
+
+                            case 'include':
+                                return self::checkPages( $selected ) ? true : false;
+                            break;
+
+                            case 'exclude':
+                                return self::checkPages( $selected ) ? false : true;
+                            break;
+                        }
+                    }
+                break;
             }
 
             return true;
+        }
+
+        /**
+         * Check taxonomies in frontend
+         *
+         * @since 3.1.2
+         *
+         * @param array $taxonomies Array of taxonomies setup e.g. [ ['tax'=>'category', 'terms' => [172,99,3], 'all' => false], ['tax'=>'post_tag', 'terms' => [], 'all' => true] ]
+         * @param array $terms      Array of term ids e.g. [172,99,3]
+         * @param object $taxQuery  WP_Term
+         *
+         * @return bool
+         */
+        public static function checkTaxonomies( $taxonomies, $terms, $taxQuery )
+        {
+            foreach( $taxonomies as $item ) {
+                if( (string) $item['tax'] === $taxQuery->taxonomy && (bool) $item['all'] ) {
+                    // Taxonomy found & all terms
+                    return true;
+                } elseif( in_array( $taxQuery->term_id, $terms ) ) {
+                    // Term found
+                    return true;
+                } else {
+                    // Nothing to do here
+                }
+            }
+
+            return false;
+        }
+
+        /**
+         * Check pages in frontend
+         *
+         * @since 3.1.1
+         *
+         * @param array $selected Array of pages e.g. ['home', 'search']
+         *
+         * @return bool
+         */
+        public static function checkPages( $selected )
+        {
+            if( in_array( 'home', $selected )
+                && ( ( is_home() && is_front_page() )
+                    || is_front_page()
+                )
+            ) {
+                return true;
+            } elseif( in_array( 'blog', $selected ) && is_home() ) {
+                return true;
+            } elseif( in_array( 'archive', $selected ) && is_archive() ) {
+                return true;
+            } elseif( in_array( 'search', $selected ) && is_search() ) {
+                return true;
+            } elseif( in_array( 'page404', $selected ) && is_404() ) {
+                return true;
+            }
+
+            return false;
         }
 
         /**
@@ -274,6 +513,10 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 $advgb_block_controls                           = get_option( 'advgb_block_controls' );
                 $advgb_block_controls['controls']['schedule']   = isset( $_POST['schedule_control'] ) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['user_role']  = isset( $_POST['user_role_control'] ) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['browser']    = isset( $_POST['browser_control'] ) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['platform']   = isset( $_POST['platform_control'] ) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['archive']    = isset( $_POST['archive_control'] ) ? (bool) 1 : (bool) 0;
+                $advgb_block_controls['controls']['page']       = isset( $_POST['page_control'] ) ? (bool) 1 : (bool) 0;
 
                 update_option( 'advgb_block_controls', $advgb_block_controls );
 
@@ -367,7 +610,11 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
             $result         = [];
             $controls       = [
                 'schedule',
-                'user_role'
+                'user_role',
+                'browser',
+                'platform',
+                'archive',
+                'page'
             ];
 
             if( $block_controls ) {
@@ -513,7 +760,11 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 [
                     'non_supported' => $non_supported,
                     'controls' => self::getControlsArray(),
-                    'user_roles' => self::getUserRoles()
+                    'user_roles' => self::getUserRoles(),
+                    'browsers' => self::getBrowsers(),
+                    'platforms' => self::getPlatforms(),
+                    'taxonomies' => self::getTaxonomies(),
+                    'page' => self::getPages()
                 ]
             );
         }
@@ -587,6 +838,348 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
             }
 
             return $result;
+        }
+
+        /**
+         * Retrieve Browsers
+         *
+         * @since 3.1.1
+         *
+         * @return array
+         */
+        public static function getBrowsers()
+        {
+            return [
+                [
+                    'slug' => 'chrome',
+                    'title' => 'Chrome',
+                ],
+                [
+                    'slug' => 'edge',
+                    'title' => 'Edge',
+                ],
+                [
+                    'slug' => 'firefox',
+                    'title' => 'Firefox',
+                ],
+                [
+                    'slug' => 'opera',
+                    'title' => 'Opera',
+                ],
+                [
+                    'slug' => 'safari',
+                    'title' => 'Safari',
+                ]
+            ];
+        }
+
+        /**
+         * Retrieve Platforms
+         *
+         * @since 3.1.1
+         *
+         * @return array
+         */
+        public static function getPlatforms()
+        {
+            return [
+                [
+                    'slug' => 'windows',
+                    'title' => 'Windows',
+                ],
+                [
+                    'slug' => 'macintosh',
+                    'title' => 'macOS',
+                ],
+                [
+                    'slug' => 'android',
+                    'title' => 'Android',
+                ],
+                [
+                    'slug' => 'ios',
+                    'title' => 'iOS',
+                ],
+                [
+                    'slug' => 'ipados',
+                    'title' => 'iPadOS',
+                ],
+                [
+                    'slug' => 'linux',
+                    'title' => 'Linux',
+                ]
+            ];
+        }
+
+        /**
+         * Retrieve Taxonomies
+         *
+         * @since 3.1.1
+         *
+         * @return array
+         */
+        public static function getTaxonomies()
+        {
+            $taxonomies = get_taxonomies();
+            $result     = [];
+            $exclude    = [
+                'nav_menu',
+                'link_category',
+                'post_format',
+                'wp_theme',
+                'wp_template_part_area'
+            ];
+
+            foreach( $taxonomies as $item ){
+                $tax = get_taxonomy( $item );
+
+                if( ! in_array( $item, $exclude ) ) {
+                    $result[] = [
+                        'slug' => $item,
+                        'title' => $tax->labels->singular_name
+                    ];
+                }
+            }
+
+            return $result;
+        }
+
+        /**
+         * Retrieve Taxonomies selected in a block
+         *
+         * @since 3.1.1
+         *
+         * @param array $selected Selected taxonomies in the block
+         * @return array
+         */
+        public static function getBlockTaxonomies( $selected )
+        {
+            if( ! is_array( $selected ) || ! count( $selected ) ) {
+                return [];
+            }
+
+            global $wp_taxonomies;
+
+            $result = [];
+            $taxonomies = $selected;
+
+            foreach ( $wp_taxonomies as $key => $value ) {
+                if ( in_array( $key, $taxonomies ) ){
+                    $result[] = [
+                        'slug' => $key,
+                        'name' => $value->labels->singular_name
+                    ];
+                }
+            }
+
+            return $result;
+        }
+
+        /**
+         * Retrieve Terms
+         *
+         * @since 3.1.1
+         *
+         * @param array $data Taxonomy slugs and term ids or search word
+         *
+         * @return array
+         */
+        public static function getTerms( $data )
+        {
+            if( isset( $data['taxonomies'] )
+                && is_array( $data['taxonomies'] )
+                && count( $data['taxonomies'] )
+            ) {
+
+
+                $taxonomies = array_map( 'sanitize_text_field', $data['taxonomies'] );
+                $args['taxonomy'] = $taxonomies;
+
+                // Note: can't use search and include in the same request
+                if( isset( $data['search'] ) && ! empty( $data['search'] ) ) {
+                    $args['search'] = sanitize_text_field( $data['search'] );
+                    $args['number'] = 10;
+                }
+
+                if( isset( $data['ids'] ) && is_array( $data['ids'] ) && count( $data['ids'] ) ) {
+                    $args['include'] = array_map( 'intval', $data['ids'] );
+                }
+
+                $result = [];
+
+                /*/ Include "All <taxonomy> terms" options
+                global $wp_taxonomies;
+                foreach( $taxonomies as $tax ) {
+                    $result[] = [
+                        'slug' => "all__{$tax}",
+                        'title' => sprintf(
+                                __( 'All %s terms', 'advanced-gutenberg' ),
+                                $wp_taxonomies[$tax]->labels->singular_name
+                            ),
+                        'tax' => $tax,
+                    ];
+                }*/
+
+                $term_query = new \WP_Term_Query( $args );
+
+                if ( ! empty( $term_query->terms ) ) {
+                    foreach ( $term_query->terms as $term ) {
+
+                        $taxLabel = $term->taxonomy;
+
+                        // Get human readable taxonomy name
+                        $blockTaxonomies = self::getBlockTaxonomies( $taxonomies );
+                        if( count( $blockTaxonomies ) ) {
+                            foreach( $blockTaxonomies as $tax ) {
+                                if( $tax['slug'] === $term->taxonomy ) {
+                                    $taxLabel = $tax['name'];
+                                    break;
+                                }
+                            }
+                        }
+
+                        $result[] = [
+                            'slug' => $term->term_id,
+                            'title' => $term->name . ' (' . $taxLabel . ')',
+                            'tax' => $term->taxonomy,
+                        ];
+                    }
+                }
+
+                return $result;
+            }
+
+            return [];
+        }
+
+        /**
+         * Retrieve pages
+         *
+         * @since 3.1.1
+         *
+         * @return array
+         */
+        public static function getPages()
+        {
+            return [
+                [
+                    'slug' => 'home',
+                    'title' => __( 'Home', 'advanced-gutenberg' )
+                ],
+                [
+                    'slug' => 'blog',
+                    'title' => __( 'Blog', 'advanced-gutenberg' )
+                ],
+                [
+                    'slug' => 'archive',
+                    'title' => __( 'Archive', 'advanced-gutenberg' )
+                ],
+                [
+                    'slug' => 'search',
+                    'title' => __( 'Search', 'advanced-gutenberg' )
+                ],
+                [
+                    'slug' => 'page404',
+                    'title' => __( '404', 'advanced-gutenberg' )
+                ]
+            ];
+        }
+
+        /**
+         * Register custom REST API routes
+         *
+         * @since 3.1.1
+         *
+         * @return array
+         */
+        public static function registerCustomRoutes()
+        {
+            // Fetch searched terms from all selected taxonomies
+            register_rest_route(
+                'advgb/v1', '/terms',
+                [
+            		'methods' => 'GET',
+            		'callback' => ['PublishPress\Blocks\Controls', 'getTerms'],
+                    'args' => [
+                        'search' => [
+                            'validate_callback' => ['PublishPress\Blocks\Controls', 'validateString'],
+                            'sanitize_callback' => 'sanitize_text_field',
+                            'required' => false,
+                            'type' => 'string'
+                        ],
+                        'ids' => [
+                            'validate_callback' => ['PublishPress\Blocks\Controls', 'validateArray'],
+                            'sanitize_callback' => ['PublishPress\Blocks\Controls', 'sanitizeNumbersArray'],
+                            'required' => false,
+                            'type' => 'array'
+                        ],
+                        'taxonomies' => [
+                            'validate_callback' => ['PublishPress\Blocks\Controls', 'validateArray'],
+                            'sanitize_callback' => ['PublishPress\Blocks\Controls', 'sanitizeStringsArray'],
+                            'required' => true,
+                            'type' => 'array'
+                        ],
+                    ],
+            		'permission_callback' => function () {
+            			return current_user_can( 'edit_others_posts' );
+            		}
+                ]
+           );
+        }
+
+        /**
+         * Check if value is a string
+         *
+         * @since 3.1.1
+         *
+         * @param $value Value to check
+         *
+         * @return array
+         */
+        public static function validateString( $value )
+        {
+            return is_string( $value );
+        }
+
+        /**
+         * Check if value is an array
+         *
+         * @since 3.1.1
+         *
+         * @param $value Value to check
+         *
+         * @return array
+         */
+        public static function validateArray( $value )
+        {
+            return is_array( $value ) && count( $value );
+        }
+
+        /**
+         * Sanitize an array of strings
+         *
+         * @since 3.1.1
+         *
+         * @param $value Value to check
+         *
+         * @return array
+         */
+        public static function sanitizeStringsArray( $value )
+        {
+            return array_map( 'sanitize_key', $value );
+        }
+
+        /**
+         * Sanitize an array of numbers
+         *
+         * @since 3.1.1
+         *
+         * @param $value Value to check
+         *
+         * @return array
+         */
+        public static function sanitizeNumbersArray( $value )
+        {
+            return array_map( 'intval', $value );
         }
     }
 }

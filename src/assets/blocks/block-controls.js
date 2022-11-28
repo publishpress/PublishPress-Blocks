@@ -310,7 +310,7 @@ var getOptionSuggestions = exports.getOptionSuggestions = function getOptionSugg
  * to display as field value (but NOT saved!).
  *
  * @since 3.1.1
- * @param slugs     Option slugs. e.g. ['subscriber','new_customer']
+ * @param slugs     Option slugs. e.g. ['subscriber','new_customer'] or [82, 92]
  * @param options   Available options as objects with slug and title. e.g. [{slug: 'subscriber', title: 'Subscriber'}, {slug: 'new_customer', title: 'New Customer'}]
  *
  * @return {array}  Option titles. e.g. ['Subscriber','New Customer']
@@ -369,6 +369,8 @@ var getOptionSlugs = exports.getOptionSlugs = function getOptionSlugs(slugs, opt
 "use strict";
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
@@ -383,12 +385,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 (function (wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose, wpElement) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var addFilter = wpHooks.addFilter;
-    var __ = wpI18n.__;
+    var sprintf = wpI18n.sprintf,
+        __ = wpI18n.__;
     var hasBlockSupport = wpBlocks.hasBlockSupport;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
@@ -400,8 +409,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         FormTokenField = wpComponents.FormTokenField,
         SelectControl = wpComponents.SelectControl;
     var createHigherOrderComponent = wpCompose.createHigherOrderComponent;
-    var Fragment = wpElement.Fragment,
-        useState = wpElement.useState;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
 
     // do not show this feature if disabled.
 
@@ -424,17 +433,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
      */
     var isControlEnabled = function isControlEnabled(control) {
         return typeof control !== 'undefined' && control;
-    };
-
-    /**
-     * Get all the available user roles from the site
-     *
-     * @since 3.1.0
-     *
-     * @return {array}
-     */
-    var getUserRoles = function getUserRoles() {
-        return typeof advgb_block_controls_vars.user_roles !== 'undefined' && advgb_block_controls_vars.user_roles.length > 0 ? advgb_block_controls_vars.user_roles : [];
     };
 
     /**
@@ -550,238 +548,1210 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         return settings;
     });
 
-    // Add option to add controls for supported blocks
-    addFilter('editor.BlockEdit', 'advgb/addBlockControls', function (BlockEdit) {
-        return function (props) {
-            var advgbBlockControls = props.attributes.advgbBlockControls;
+    var withEditControls = createHigherOrderComponent(function (BlockEdit) {
+
+        return function (_Component) {
+            _inherits(BlockControlsEdit, _Component);
+
+            function BlockControlsEdit(props) {
+                var _ref;
+
+                _classCallCheck(this, BlockControlsEdit);
+
+                var _this = _possibleConstructorReturn(this, (_ref = BlockControlsEdit.__proto__ || Object.getPrototypeOf(BlockControlsEdit)).call.apply(_ref, [this].concat(_toConsumableArray(props))));
+
+                _this.state = {
+                    taxModOptions: [], // Store modified taxonomy options to decide if selected tax is for "all terms" or "selected terms"
+                    termOptions: [], // Store term options with slug (id) and title
+                    searchTermWord: '', // Updated when searching terms
+                    initArchive: true, // When true, trigger initArchiveControl()
+                    updateTaxLabels: false // When true, update taxonomy option labels
+                };
+
+                _this.isPost = _this.isPost.bind(_this);
+                return _this;
+            }
 
             /**
-             * Update advgbBlockControls attribute when a key value changes
+             * Get filtered term slugs based on selected taxonomies
              *
-             * @since 2.14.0
-             * @param {string} control  The use case block control. e.g. 'schedule'
-             * @param {string} key      The control key to modify. e.g. 'enabled'
-             * @param {string} key      The control key value (not required for boolean keys)
+             * @since 3.1.1
+             * @param {array} taxonomies Array of taxonomies slugs
              *
-             * @return {void}
+             * @return {array}
              */
 
-            var changeControlKey = function changeControlKey(control, key) {
-                var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
+            _createClass(BlockControlsEdit, [{
+                key: "getTermSlugs",
+                value: function getTermSlugs(taxonomies) {
+                    var _this2 = this;
 
-                // Control objects to add  when enabled for the first time
-                var scheduleControl = {
-                    control: 'schedule',
-                    enabled: true,
-                    dateFrom: null,
-                    dateTo: null,
-                    recurring: false
-                };
-                var userRoleControl = {
-                    control: 'user_role',
-                    enabled: true,
-                    roles: [],
-                    approach: 'public'
-                };
+                    var allTaxonomies = this.getTaxonomies();
+                    var terms = [];
 
-                // Check if advgbBlockControls attribute exists
-                var controlsAdded = typeof advgbBlockControls !== 'undefined' && advgbBlockControls.length ? true : false;
-                // Check if control exists in advgbBlockControls array
-                var controlExists = controlsAdded && advgbBlockControls.some(function (element) {
-                    return element.control === control;
-                }) ? true : false;
+                    taxonomies.forEach(function (tax) {
+                        var allTaxonomies = _this2.getTaxonomies();
+                        var itemIndex = allTaxonomies.findIndex(function (element) {
+                            return element.slug === tax;
+                        });
 
-                if (controlExists) {
-                    var itemIndex = advgbBlockControls.findIndex(function (element) {
+                        allTaxonomies[itemIndex].terms.forEach(function (term) {
+                            terms.push(term.slug);
+                        });
+                    });
+
+                    return terms;
+                }
+
+                /**
+                 * Get taxonomies
+                 *
+                 * @since 3.1.1
+                 *
+                 * @return {array}
+                 */
+
+            }, {
+                key: "getTaxonomies",
+                value: function getTaxonomies() {
+                    return typeof advgb_block_controls_vars.taxonomies !== 'undefined' && advgb_block_controls_vars.taxonomies.length > 0 ? advgb_block_controls_vars.taxonomies : [];
+                }
+
+                /**
+                 * Get all the available user roles from the site
+                 *
+                 * @since 3.1.0
+                 *
+                 * @return {array}
+                 */
+
+            }, {
+                key: "getUserRoles",
+                value: function getUserRoles() {
+                    return typeof advgb_block_controls_vars.user_roles !== 'undefined' && advgb_block_controls_vars.user_roles.length > 0 ? advgb_block_controls_vars.user_roles : [];
+                }
+
+                /**
+                 * Get platforms
+                 *
+                 * @since 3.1.1
+                 *
+                 * @return {array}
+                 */
+
+            }, {
+                key: "getPlatforms",
+                value: function getPlatforms() {
+                    return typeof advgb_block_controls_vars.platforms !== 'undefined' && advgb_block_controls_vars.platforms.length > 0 ? advgb_block_controls_vars.platforms : [];
+                }
+
+                /**
+                 * Get browsers
+                 *
+                 * @since 3.1.1
+                 *
+                 * @return {array}
+                 */
+
+            }, {
+                key: "getBrowsers",
+                value: function getBrowsers() {
+                    return typeof advgb_block_controls_vars.browsers !== 'undefined' && advgb_block_controls_vars.browsers.length > 0 ? advgb_block_controls_vars.browsers : [];
+                }
+
+                /**
+                 * Get filtered terms based on selected taxonomies
+                 *
+                 * @since 3.1.1
+                 * @param {array} taxonomies Taxonomies slugs
+                 *
+                 * @return {array}
+                 */
+
+            }, {
+                key: "getTerms",
+                value: function getTerms(taxonomies) {
+                    var _this3 = this;
+
+                    var allTaxonomies = this.getTaxonomies();
+                    var terms = [];
+
+                    taxonomies.forEach(function (tax) {
+                        var allTaxonomies = _this3.getTaxonomies();
+                        var itemIndex = allTaxonomies.findIndex(function (element) {
+                            return element.slug === tax;
+                        });
+
+                        allTaxonomies[itemIndex].terms.forEach(function (term) {
+                            terms.push({
+                                slug: term.slug,
+                                title: term.title + " (" + allTaxonomies[itemIndex].title + ")"
+                            });
+                        });
+                    });
+
+                    return terms;
+                }
+
+                /**
+                 * Get pages
+                 *
+                 * @since 3.1.1
+                 *
+                 * @return {array}
+                 */
+
+            }, {
+                key: "getPages",
+                value: function getPages() {
+                    return typeof advgb_block_controls_vars.page !== 'undefined' && advgb_block_controls_vars.page.length > 0 ? advgb_block_controls_vars.page : [];
+                }
+
+                /**
+                 * Update advgbBlockControls attribute when a key value changes
+                 *
+                 * @since 2.14.0
+                 * @param {string} control  The use case block control. e.g. 'schedule'
+                 * @param {string} key      The control key to modify. e.g. 'enabled'
+                 * @param {string} value    The control key value (not required for boolean keys)
+                 *
+                 * @return {void}
+                 */
+
+            }, {
+                key: "changeControlKey",
+                value: function changeControlKey(control, key) {
+                    var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+                    var _props = this.props,
+                        attributes = _props.attributes,
+                        setAttributes = _props.setAttributes;
+                    var advgbBlockControls = attributes.advgbBlockControls;
+
+                    // Control objects to add  when enabled for the first time
+
+                    var scheduleControl = {
+                        control: 'schedule',
+                        enabled: true,
+                        dateFrom: null,
+                        dateTo: null,
+                        recurring: false
+                    };
+                    var userRoleControl = {
+                        control: 'user_role',
+                        enabled: true,
+                        roles: [],
+                        approach: 'public'
+                    };
+                    var browserControl = {
+                        control: 'browser',
+                        enabled: true,
+                        browsers: [],
+                        approach: 'public'
+                    };
+                    var platformControl = {
+                        control: 'platform',
+                        enabled: true,
+                        platforms: [],
+                        approach: 'public'
+                    };
+                    var archiveControl = {
+                        control: 'archive',
+                        enabled: true,
+                        taxonomies: [],
+                        approach: 'exclude'
+                    };
+                    var pageControl = {
+                        control: 'page',
+                        enabled: true,
+                        pages: [],
+                        approach: 'exclude'
+                    };
+
+                    // Check if advgbBlockControls attribute exists
+                    var controlsAdded = typeof advgbBlockControls !== 'undefined' && advgbBlockControls.length ? true : false;
+                    // Check if control exists in advgbBlockControls array
+                    var controlExists = controlsAdded && advgbBlockControls.some(function (element) {
                         return element.control === control;
+                    }) ? true : false;
+
+                    if (controlExists) {
+                        var itemIndex = advgbBlockControls.findIndex(function (element) {
+                            return element.control === control;
+                        });
+
+                        // No control found (this check seems not necessary but is here to prevent an unlikely error)
+                        if (itemIndex < 0) {
+                            return false;
+                        }
+
+                        var newArray = [].concat(_toConsumableArray(advgbBlockControls));
+                        var obj = newArray[itemIndex];
+
+                        newArray[itemIndex] = typeof obj[key] === 'boolean' ? _extends({}, newArray[itemIndex], _defineProperty({}, key, !obj[key])) : _extends({}, newArray[itemIndex], _defineProperty({}, key, value));
+
+                        setAttributes({
+                            advgbBlockControls: newArray
+                        });
+                    } else if (controlsAdded && !controlExists) {
+
+                        // Add a new control object when other controls already exists
+                        switch (control) {
+                            case 'schedule':
+                                setAttributes({
+                                    advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [scheduleControl])
+                                });
+                                break;
+
+                            case 'user_role':
+                                setAttributes({
+                                    advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [userRoleControl])
+                                });
+                                break;
+
+                            case 'browser':
+                                setAttributes({
+                                    advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [browserControl])
+                                });
+                                break;
+
+                            case 'platform':
+                                setAttributes({
+                                    advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [platformControl])
+                                });
+                                break;
+
+                            case 'archive':
+                                setAttributes({
+                                    advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [archiveControl])
+                                });
+                                break;
+
+                            case 'page':
+                                setAttributes({
+                                    advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [pageControl])
+                                });
+                                break;
+                        }
+                    } else {
+                        // Add the first control object attribute
+                        switch (control) {
+                            case 'schedule':
+                                setAttributes({
+                                    advgbBlockControls: [scheduleControl]
+                                });
+                                break;
+
+                            case 'user_role':
+                                setAttributes({
+                                    advgbBlockControls: [userRoleControl]
+                                });
+                                break;
+
+                            case 'browser':
+                                setAttributes({
+                                    advgbBlockControls: [browserControl]
+                                });
+                                break;
+
+                            case 'platform':
+                                setAttributes({
+                                    advgbBlockControls: [platformControl]
+                                });
+                                break;
+
+                            case 'archive':
+                                setAttributes({
+                                    advgbBlockControls: [archiveControl]
+                                });
+                                break;
+
+                            case 'page':
+                                setAttributes({
+                                    advgbBlockControls: [pageControl]
+                                });
+                                break;
+                        }
+                    }
+                }
+
+                /**
+                 * Update archive control in advgbBlockControls attribute when taxonomies value changes
+                 *
+                 * @since 3.1.2
+                 *
+                 * @param {string} topic 'taxonomies' or 'terms'
+                 * @param {string} slugs The taxonomy slugs or term ids to insert/modify. e.g. ['category','post_tag'] or [82,161,99] or ['all_<taxonomy_slug>']
+                 *
+                 * @return {void}
+                 */
+
+            }, {
+                key: "changeArchiveControl",
+                value: function changeArchiveControl(topic, slugs) {
+                    var _this4 = this;
+
+                    var _props2 = this.props,
+                        attributes = _props2.attributes,
+                        setAttributes = _props2.setAttributes;
+                    var advgbBlockControls = attributes.advgbBlockControls;
+
+
+                    var taxArray = [];
+                    var controlIndex = advgbBlockControls.findIndex(function (element) {
+                        return element.control === 'archive';
                     });
 
                     // No control found (this check seems not necessary but is here to prevent an unlikely error)
-                    if (itemIndex < 0) {
+                    if (controlIndex < 0) {
                         return false;
                     }
 
                     var newArray = [].concat(_toConsumableArray(advgbBlockControls));
-                    var obj = newArray[itemIndex];
 
-                    newArray[itemIndex] = typeof obj[key] === 'boolean' ? _extends({}, newArray[itemIndex], _defineProperty({}, key, !obj[key])) : _extends({}, newArray[itemIndex], _defineProperty({}, key, value));
+                    if (topic === 'taxonomies') {
 
-                    props.setAttributes({
-                        advgbBlockControls: newArray
-                    });
-                } else if (controlsAdded && !controlExists) {
+                        // Check each taxonomy and its terms
+                        slugs.forEach(function (item) {
 
-                    // Add a new control object when other controls already exists
-                    switch (control) {
-                        case 'schedule':
-                            props.setAttributes({
-                                advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [scheduleControl])
+                            // Get terms from current taxonomy (item)
+                            var taxIndex = newArray[controlIndex].taxonomies.findIndex(function (element) {
+                                return element.tax === item;
                             });
-                            break;
 
-                        case 'user_role':
-                            props.setAttributes({
-                                advgbBlockControls: [].concat(_toConsumableArray(advgbBlockControls), [userRoleControl])
-                            });
-                            break;
-                    }
-                } else {
-                    // Add the first control object attribute
-                    switch (control) {
-                        case 'schedule':
-                            props.setAttributes({
-                                advgbBlockControls: [scheduleControl]
-                            });
-                            break;
+                            if (taxIndex === -1) {
 
-                        case 'user_role':
-                            props.setAttributes({
-                                advgbBlockControls: [userRoleControl]
+                                // The last selected taxonomy
+                                taxArray.push({
+                                    tax: item,
+                                    terms: [],
+                                    all: true
+                                });
+                            } else {
+
+                                // Existing taxonomy
+                                var terms = newArray[controlIndex].taxonomies[taxIndex].terms.length ? newArray[controlIndex].taxonomies[taxIndex].terms : [];
+                                var approach = terms.length ? 'select' : 'all';
+
+                                taxArray.push({
+                                    tax: item,
+                                    terms: terms,
+                                    all: terms.length ? false : true
+                                });
+                            }
+                        });
+
+                        newArray[controlIndex] = _extends({}, newArray[controlIndex], _defineProperty({}, 'taxonomies', taxArray));
+
+                        setAttributes({
+                            advgbBlockControls: newArray
+                        });
+                    } else if (topic === 'terms') {
+
+                        var terms = {};
+                        var taxonomies = this.currentArchiveControl('taxonomies');
+
+                        // Check each term id (item). slug means the id
+                        slugs.forEach(function (item) {
+
+                            // Find the current term in termOptions state to use its tax later
+                            var option = _this4.state.termOptions.find(function (el) {
+                                return el.slug === item;
                             });
-                            break;
+
+                            if (terms[option.tax] === undefined) {
+                                terms[option.tax] = [];
+                            }
+
+                            // Get taxonomy from current term (item)
+                            var taxIndex = newArray[controlIndex].taxonomies.findIndex(function (element) {
+                                return element.tax === option.tax;
+                            });
+
+                            /* Taxonomy for this term is selected? Is a bit reduntant but let's make sure
+                             * Then include the term.
+                             */
+                            if (taxonomies.includes(option.tax)) {
+                                terms[option.tax].push(item);
+                            }
+                        });
+
+                        // Update taxonomies with at least one term selected
+                        Object.keys(terms).forEach(function (tax) {
+
+                            // Get taxonomy from current tax
+                            var taxIndex = newArray[controlIndex].taxonomies.findIndex(function (element) {
+                                return element.tax === tax;
+                            });
+
+                            if (taxIndex >= 0) {
+                                newArray[controlIndex].taxonomies[taxIndex] = {
+                                    tax: tax,
+                                    terms: terms[tax],
+                                    all: terms[tax].length ? false : true
+                                };
+                            }
+                        });
+
+                        // Include taxonomies with no terms selected (empty terms[option.tax] array)
+                        taxonomies.forEach(function (tax) {
+                            if (!Object.keys(terms).includes(tax)) {
+
+                                // Get taxonomy from current tax
+                                var taxIndex = newArray[controlIndex].taxonomies.findIndex(function (element) {
+                                    return element.tax === tax;
+                                });
+
+                                if (taxIndex >= 0) {
+                                    newArray[controlIndex].taxonomies[taxIndex] = {
+                                        tax: tax,
+                                        terms: [],
+                                        all: true
+                                    };
+                                }
+                            }
+                        });
+
+                        setAttributes({
+                            advgbBlockControls: newArray
+                        });
+                    } else {
+                        // Nothing to do here
                     }
                 }
-            };
 
-            return [props.isSelected && !NON_SUPPORTED_BLOCKS.includes(props.name) && isAnyControlEnabledGlobal() && React.createElement(
-                InspectorControls,
-                { key: "advgb-bc-controls" },
-                React.createElement(
-                    PanelBody,
-                    {
-                        title: __('Block Controls', 'advanced-gutenberg'),
-                        icon: "visibility",
-                        initialOpen: false,
-                        className: isAnyControlEnabledBlock(advgbBlockControls) ? 'advgb-feature-icon-active' : ''
-                    },
-                    isControlEnabled(advgb_block_controls_vars.controls.schedule) && React.createElement(
-                        Fragment,
-                        null,
-                        React.createElement(ToggleControl, {
-                            label: __('Enable block schedule', 'advanced-gutenberg'),
-                            help: __('Choose when to start showing and/or stop showing this block.', 'advanced-gutenberg'),
-                            checked: currentControlKey(advgbBlockControls, 'schedule', 'enabled'),
-                            onChange: function onChange() {
-                                return changeControlKey('schedule', 'enabled');
+                /**
+                 * Return merged taxonomies or terms
+                 *
+                 * @since 3.1.2
+                 *
+                 * @param {string} topic 'taxonomies' or 'terms'
+                 *
+                 * @return {array} An single array with all the selected terms or taxonomies ['category','post_tag'] or [99,182,42]
+                 */
+
+            }, {
+                key: "currentArchiveControl",
+                value: function currentArchiveControl(topic) {
+                    var _props3 = this.props,
+                        attributes = _props3.attributes,
+                        setAttributes = _props3.setAttributes;
+                    var advgbBlockControls = attributes.advgbBlockControls;
+
+
+                    var result = [];
+
+                    /* Get all the taxonomy objects.
+                     * e.g.
+                     * [
+                     *     { "tax": "post_tag", "terms": [220,221]},
+                     *     { "tax": "category", "terms": []}
+                     * ]
+                     */
+                    var taxonomies = currentControlKey(advgbBlockControls, 'archive', 'taxonomies').length ? currentControlKey(advgbBlockControls, 'archive', 'taxonomies') : [];
+
+                    if (topic === 'taxonomies') {
+
+                        taxonomies.forEach(function (item) {
+                            result.push(item.tax);
+                        });
+                    } else if (topic === 'terms') {
+
+                        taxonomies.forEach(function (item) {
+                            item.terms.forEach(function (el) {
+                                result.push(el); // term id
+                            });
+                        });
+                    } else {
+                        // Nothing to do here
+                    }
+
+                    return result;
+                }
+
+                /**
+                 * Execute when taxonomy selection changes
+                 *
+                 * @since 3.1.1
+                 *
+                 * @return {void}
+                 */
+
+            }, {
+                key: "taxonomiesChanged",
+                value: function taxonomiesChanged() {
+                    var _this5 = this;
+
+                    var attributes = this.props.attributes;
+                    var advgbBlockControls = attributes.advgbBlockControls;
+
+
+                    var currentTerms = !!currentControlKey(advgbBlockControls, 'archive', 'terms') ? currentControlKey(advgbBlockControls, 'archive', 'terms') : [];
+                    var taxonomies = !!currentControlKey(advgbBlockControls, 'archive', 'taxonomies') ? currentControlKey(advgbBlockControls, 'archive', 'taxonomies') : [];
+
+                    if (currentTerms.length) {
+
+                        var result = [];
+                        currentTerms.forEach(function (slug) {
+                            var itemIndex = _this5.state.termOptions.findIndex(function (item) {
+                                return item.slug === slug;
+                            });
+
+                            /* Get only the terms that belongs to selected taxonomies
+                             * and skip the ones that belongs to the deleted taxonomy
+                             */
+                            if (taxonomies.includes(_this5.state.termOptions[itemIndex].tax)) {
+                                result.push(_this5.state.termOptions[itemIndex].slug);
                             }
-                        }),
-                        currentControlKey(advgbBlockControls, 'schedule', 'enabled') && React.createElement(
-                            Fragment,
-                            null,
-                            React.createElement(
-                                "div",
-                                { style: { marginBottom: 30 } },
-                                React.createElement(_datetime.AdvDateTimeControl, {
-                                    buttonLabel: __('Now', 'advanced-gutenberg'),
-                                    dateLabel: __('Start showing', 'advanced-gutenberg'),
-                                    date: currentControlKey(advgbBlockControls, 'schedule', 'dateFrom'),
-                                    onChangeDate: function onChangeDate(newDate) {
-                                        return changeControlKey('schedule', 'dateFrom', newDate);
-                                    },
-                                    onDateClear: function onDateClear() {
-                                        return changeControlKey('schedule', 'dateFrom', null);
-                                    },
-                                    onInvalidDate: false
-                                }),
-                                React.createElement(_datetime.AdvDateTimeControl, {
-                                    buttonLabel: __('Never', 'advanced-gutenberg'),
-                                    dateLabel: __('Stop showing', 'advanced-gutenberg'),
-                                    date: !!currentControlKey(advgbBlockControls, 'schedule', 'dateTo') ? currentControlKey(advgbBlockControls, 'schedule', 'dateTo') : null,
-                                    onChangeDate: function onChangeDate(newDate) {
-                                        return changeControlKey('schedule', 'dateTo', newDate);
-                                    },
-                                    onDateClear: function onDateClear() {
-                                        return changeControlKey('schedule', 'dateTo', null);
-                                    },
-                                    onInvalidDate: function onInvalidDate(date) {
-                                        // Disable all dates before dateFrom
-                                        if (currentControlKey(advgbBlockControls, 'schedule', 'dateFrom')) {
-                                            var thisDate = new Date(date.getTime());
-                                            thisDate.setHours(0, 0, 0, 0);
-                                            var fromDate = new Date(currentControlKey(advgbBlockControls, 'schedule', 'dateFrom'));
-                                            fromDate.setHours(0, 0, 0, 0);
-                                            return thisDate.getTime() < fromDate.getTime();
-                                        }
+                        });
+
+                        this.changeControlKey('archive', 'terms', result);
+                    }
+
+                    /* Remove term options from non-selected taxonomies.
+                     * Case scenario: the terms from the last removed taxonomy.
+                     */
+                    this.setState({
+                        termOptions: this.state.termOptions.filter(function (item) {
+                            return _this5.currentArchiveControl('taxonomies').includes(item.tax);
+                        })
+                    });
+
+                    // Update tax label options to "All <taxonomy> terms" or "Selected <taxonomy> terms"
+                    this.modifyTaxLabels();
+                }
+
+                /**
+                 * Get selected terms on first load
+                 *
+                 * @since 3.1.1
+                 *
+                 * @return {void}
+                 */
+
+            }, {
+                key: "initArchiveControl",
+                value: function initArchiveControl() {
+                    var _this6 = this;
+
+                    var advgbBlockControls = this.props.attributes.advgbBlockControls;
+
+
+                    wp.apiFetch({
+                        path: wp.url.addQueryArgs('advgb/v1/terms', {
+                            taxonomies: this.currentArchiveControl('taxonomies'),
+                            ids: this.currentArchiveControl('terms')
+                        })
+                    }).then(function (list) {
+
+                        // Update tax label options to "All <taxonomy> terms" or "Selected <taxonomy> terms"
+                        _this6.modifyTaxLabels();
+
+                        _this6.setState({
+                            termOptions: list,
+                            initArchive: false,
+                            updateTaxLabels: false
+                        });
+                    });
+                }
+
+                /**
+                 * Initial taxonomy labels to allow "All <taxonomy> terms" "Selected <taxonomy> terms" visual indicator
+                 *
+                 * @since 3.1.2
+                 *
+                 * @return {array}
+                 */
+
+            }, {
+                key: "iniTaxLabels",
+                value: function iniTaxLabels() {
+
+                    var result = [];
+                    this.getTaxonomies().forEach(function (item) {
+                        /* Item example
+                         *  {
+                         *      "slug": "category",
+                         *      "title": "All Category terms",
+                         *      "singular": "Category"
+                         *  }
+                         */
+                        result.push({
+                            slug: item.slug,
+                            title: sprintf(__('All %s terms', 'advanced-gutenberg'), item.title),
+                            singular: item.title
+
+                        });
+                    });
+
+                    return result;
+                }
+
+                /**
+                 * Modify taxonomy labels. Very similar to iniTaxLabels()
+                 *
+                 * @since 3.1.2
+                 *
+                 * @return {array}
+                 */
+
+            }, {
+                key: "modifyTaxLabels",
+                value: function modifyTaxLabels() {
+                    var advgbBlockControls = this.props.attributes.advgbBlockControls;
+
+                    /* Get all selected taxonomy objects.
+                     * e.g.
+                     * [
+                     *     { "tax": "post_tag", "terms": [220,221]},
+                     *     { "tax": "category", "terms": []}
+                     * ]
+                     */
+
+                    var taxonomies = currentControlKey(advgbBlockControls, 'archive', 'taxonomies').length ? currentControlKey(advgbBlockControls, 'archive', 'taxonomies') : [];
+
+                    // Copy whole state
+                    var options = [].concat(_toConsumableArray(this.state.taxModOptions));
+
+                    options.forEach(function (item, index) {
+                        var tax = taxonomies.find(function (el) {
+                            return item.slug === el.tax;
+                        });
+
+                        // Copy option to modify
+                        var option = _extends({}, options[index]);
+                        // Update title value
+                        option.title = sprintf(tax === undefined || !tax.terms.length ? __('All %s terms', 'advanced-gutenberg') : __('Selected %s terms', 'advanced-gutenberg'), option.singular);
+                        // Add option back to the state
+                        options[index] = option;
+                    });
+
+                    // Save
+                    this.setState({
+                        taxModOptions: options,
+                        updateTaxLabels: false
+                    });
+                }
+
+                /**
+                 * Search terms based on search
+                 *
+                 * @since 3.1.1
+                 *
+                 * @return {void}
+                 */
+
+            }, {
+                key: "searchTerms",
+                value: function searchTerms() {
+                    var _this7 = this;
+
+                    var _state = this.state,
+                        termOptions = _state.termOptions,
+                        searchTermWord = _state.searchTermWord;
+                    var advgbBlockControls = this.props.attributes.advgbBlockControls;
+
+
+                    wp.apiFetch({
+                        /*/ To get taxonomies
+                        path: wp.url.addQueryArgs( 'wp/v2/taxonomies', { context: 'edit' } )*/
+
+                        path: wp.url.addQueryArgs('advgb/v1/terms', {
+                            search: searchTermWord,
+                            taxonomies: this.currentArchiveControl('taxonomies')
+                        })
+
+                    }).then(function (list) {
+
+                        /*/ To get taxonomies
+                        Object.keys(list).forEach( (item) => {
+                            options.push( {
+                                label: list[item].name,
+                                value: list[item].slug
+                            } );
+                        });*/
+
+                        // Merge selected terms with results from fetch
+                        var options = [].concat(_toConsumableArray(termOptions), _toConsumableArray(list));
+
+                        // Remove duplicated values
+                        options = Array.from(new Set(options.map(function (a) {
+                            return a.slug;
+                        }))).map(function (slug) {
+                            return options.find(function (a) {
+                                return a.slug === slug;
+                            });
+                        });
+
+                        _this7.setState({
+                            termOptions: options
+                        });
+                    });
+                }
+
+                /**
+                 * Check if we're in post edit screen
+                 *
+                 * @since 3.1.2
+                 *
+                 * @return {bool}
+                 */
+
+            }, {
+                key: "isPost",
+                value: function isPost() {
+                    return wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
+                }
+            }, {
+                key: "componentDidMount",
+                value: function componentDidMount() {
+                    this.setState({
+                        taxModOptions: this.iniTaxLabels()
+                    });
+                }
+            }, {
+                key: "componentDidUpdate",
+                value: function componentDidUpdate(prevProps, prevState) {
+                    var _props4 = this.props,
+                        attributes = _props4.attributes,
+                        isSelected = _props4.isSelected,
+                        name = _props4.name;
+                    var advgbBlockControls = attributes.advgbBlockControls;
+                    var prevBlockControls = prevProps.attributes.advgbBlockControls;
+                    var _state2 = this.state,
+                        searchTermWord = _state2.searchTermWord,
+                        initArchive = _state2.initArchive;
+                    var prevTermWord = prevState.searchTermWord;
+
+                    // Get human readable selected terms on block selection the first time
+
+                    if (!this.isPost() && !NON_SUPPORTED_BLOCKS.includes(name) && isSelected && initArchive && isControlEnabled(advgb_block_controls_vars.controls.archive) && currentControlKey(advgbBlockControls, 'archive', 'enabled') && this.currentArchiveControl('taxonomies').length && this.currentArchiveControl('terms').length) {
+                        this.initArchiveControl();
+                    }
+
+                    // Search terms
+                    if (searchTermWord !== prevTermWord && searchTermWord.length > 2) {
+                        this.searchTerms();
+                    }
+
+                    // Update available terms and remove terms which taxonomy has been removed
+                    if (!this.isPost() && isControlEnabled(advgb_block_controls_vars.controls.archive) && currentControlKey(advgbBlockControls, 'archive', 'enabled') && (currentControlKey(prevBlockControls, 'archive', 'taxonomies') !== currentControlKey(advgbBlockControls, 'archive', 'taxonomies') // This trigger works when taxo changes, but not terms
+                    || this.state.updateTaxLabels // Trigger when terms changes
+                    )) {
+                        this.taxonomiesChanged();
+                    }
+                }
+            }, {
+                key: "render",
+                value: function render() {
+                    var _this8 = this;
+
+                    var _props5 = this.props,
+                        attributes = _props5.attributes,
+                        setAttributes = _props5.setAttributes;
+                    var advgbBlockControls = attributes.advgbBlockControls;
+
+
+                    return [this.props.isSelected && !NON_SUPPORTED_BLOCKS.includes(this.props.name) && isAnyControlEnabledGlobal() && React.createElement(
+                        InspectorControls,
+                        { key: "advgb-bc-controls" },
+                        React.createElement(
+                            PanelBody,
+                            {
+                                title: __('Block Controls', 'advanced-gutenberg'),
+                                icon: "visibility",
+                                initialOpen: false,
+                                className: isAnyControlEnabledBlock(advgbBlockControls) ? 'advgb-feature-icon-active' : ''
+                            },
+                            isControlEnabled(advgb_block_controls_vars.controls.schedule) && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(ToggleControl, {
+                                    label: __('Schedule', 'advanced-gutenberg'),
+                                    help: currentControlKey(advgbBlockControls, 'schedule', 'enabled') ? __('Choose when to start showing and/or stop showing this block.', 'advanced-gutenberg') : '',
+                                    checked: currentControlKey(advgbBlockControls, 'schedule', 'enabled'),
+                                    onChange: function onChange() {
+                                        return _this8.changeControlKey('schedule', 'enabled');
                                     }
                                 }),
-                                currentControlKey(advgbBlockControls, 'schedule', 'dateFrom') > currentControlKey(advgbBlockControls, 'schedule', 'dateTo') && React.createElement(
-                                    Notice,
-                                    {
-                                        className: "advgb-notice-sidebar",
-                                        status: "warning",
-                                        isDismissible: false
-                                    },
-                                    __('"Stop showing" date should be after "Start showing" date!', 'advanced-gutenberg')
-                                ),
-                                currentControlKey(advgbBlockControls, 'schedule', 'dateFrom') && currentControlKey(advgbBlockControls, 'schedule', 'dateTo') && React.createElement(ToggleControl, {
-                                    label: __('Recurring', 'advanced-gutenberg'),
-                                    checked: currentControlKey(advgbBlockControls, 'schedule', 'recurring'),
+                                currentControlKey(advgbBlockControls, 'schedule', 'enabled') && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(
+                                        "div",
+                                        { style: { marginBottom: 30 } },
+                                        React.createElement(_datetime.AdvDateTimeControl, {
+                                            buttonLabel: __('Now', 'advanced-gutenberg'),
+                                            dateLabel: __('Start showing', 'advanced-gutenberg'),
+                                            date: currentControlKey(advgbBlockControls, 'schedule', 'dateFrom'),
+                                            onChangeDate: function onChangeDate(newDate) {
+                                                return _this8.changeControlKey('schedule', 'dateFrom', newDate);
+                                            },
+                                            onDateClear: function onDateClear() {
+                                                return _this8.changeControlKey('schedule', 'dateFrom', null);
+                                            },
+                                            onInvalidDate: false
+                                        }),
+                                        React.createElement(_datetime.AdvDateTimeControl, {
+                                            buttonLabel: __('Never', 'advanced-gutenberg'),
+                                            dateLabel: __('Stop showing', 'advanced-gutenberg'),
+                                            date: !!currentControlKey(advgbBlockControls, 'schedule', 'dateTo') ? currentControlKey(advgbBlockControls, 'schedule', 'dateTo') : null,
+                                            onChangeDate: function onChangeDate(newDate) {
+                                                return _this8.changeControlKey('schedule', 'dateTo', newDate);
+                                            },
+                                            onDateClear: function onDateClear() {
+                                                return _this8.changeControlKey('schedule', 'dateTo', null);
+                                            },
+                                            onInvalidDate: function onInvalidDate(date) {
+                                                // Disable all dates before dateFrom
+                                                if (currentControlKey(advgbBlockControls, 'schedule', 'dateFrom')) {
+                                                    var thisDate = new Date(date.getTime());
+                                                    thisDate.setHours(0, 0, 0, 0);
+                                                    var fromDate = new Date(currentControlKey(advgbBlockControls, 'schedule', 'dateFrom'));
+                                                    fromDate.setHours(0, 0, 0, 0);
+                                                    return thisDate.getTime() < fromDate.getTime();
+                                                }
+                                            }
+                                        }),
+                                        currentControlKey(advgbBlockControls, 'schedule', 'dateFrom') > currentControlKey(advgbBlockControls, 'schedule', 'dateTo') && React.createElement(
+                                            Notice,
+                                            {
+                                                className: "advgb-notice-sidebar",
+                                                status: "warning",
+                                                isDismissible: false
+                                            },
+                                            __('"Stop showing" date should be after "Start showing" date!', 'advanced-gutenberg')
+                                        ),
+                                        currentControlKey(advgbBlockControls, 'schedule', 'dateFrom') && currentControlKey(advgbBlockControls, 'schedule', 'dateTo') && React.createElement(ToggleControl, {
+                                            label: __('Recurring', 'advanced-gutenberg'),
+                                            checked: currentControlKey(advgbBlockControls, 'schedule', 'recurring'),
+                                            onChange: function onChange() {
+                                                return _this8.changeControlKey('schedule', 'recurring');
+                                            },
+                                            help: __('If Recurring is enabled, this block will be displayed every year between the selected dates.', 'advanced-gutenberg')
+                                        })
+                                    )
+                                )
+                            ),
+                            isControlEnabled(advgb_block_controls_vars.controls.user_role) && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(ToggleControl, {
+                                    label: __('User roles', 'advanced-gutenberg'),
+                                    help: currentControlKey(advgbBlockControls, 'user_role', 'enabled') ? __('Choose which users can see this block.', 'advanced-gutenberg') : '',
+                                    checked: currentControlKey(advgbBlockControls, 'user_role', 'enabled'),
                                     onChange: function onChange() {
-                                        return changeControlKey('schedule', 'recurring');
-                                    },
-                                    help: __('If Recurring is enabled, this block will be displayed every year between the selected dates.', 'advanced-gutenberg')
-                                })
+                                        return _this8.changeControlKey('user_role', 'enabled');
+                                    }
+                                }),
+                                currentControlKey(advgbBlockControls, 'user_role', 'enabled') && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-revert-mb" },
+                                        React.createElement(SelectControl, {
+                                            value: currentControlKey(advgbBlockControls, 'user_role', 'approach'),
+                                            options: [{
+                                                value: 'public',
+                                                label: __('Show to everyone', 'advanced-gutenberg')
+                                            }, {
+                                                value: 'login',
+                                                label: __('Show to logged in users', 'advanced-gutenberg')
+                                            }, {
+                                                value: 'logout',
+                                                label: __('Show to logged out users', 'advanced-gutenberg')
+                                            }, {
+                                                value: 'include',
+                                                label: __('Show to the selected user roles', 'advanced-gutenberg')
+                                            }, {
+                                                value: 'exclude',
+                                                label: __('Hide from the selected user roles', 'advanced-gutenberg')
+                                            }],
+                                            onChange: function onChange(value) {
+                                                return _this8.changeControlKey('user_role', 'approach', value);
+                                            }
+                                        })
+                                    ),
+                                    (currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'exclude') && React.createElement(FormTokenField, {
+                                        multiple: true,
+                                        label: __('Select user roles', 'advanced-gutenberg'),
+                                        placeholder: __('Search', 'advanced-gutenberg'),
+                                        suggestions: (0, _utils.getOptionSuggestions)(this.getUserRoles()),
+                                        maxSuggestions: 10,
+                                        value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'user_role', 'roles') ? currentControlKey(advgbBlockControls, 'user_role', 'roles') : [], this.getUserRoles()),
+                                        onChange: function onChange(value) {
+                                            _this8.changeControlKey('user_role', 'roles', (0, _utils.getOptionSlugs)(value, _this8.getUserRoles()));
+                                        },
+                                        __experimentalExpandOnFocus: true
+                                    })
+                                )
+                            ),
+                            isControlEnabled(advgb_block_controls_vars.controls.browser) && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(ToggleControl, {
+                                    label: __('Browsers', 'advanced-gutenberg'),
+                                    help: currentControlKey(advgbBlockControls, 'browser', 'enabled') ? __('Choose in which browsers this block can be displayed.', 'advanced-gutenberg') : '',
+                                    checked: currentControlKey(advgbBlockControls, 'browser', 'enabled'),
+                                    onChange: function onChange() {
+                                        return _this8.changeControlKey('browser', 'enabled');
+                                    }
+                                }),
+                                currentControlKey(advgbBlockControls, 'browser', 'enabled') && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-revert-mb" },
+                                        React.createElement(SelectControl, {
+                                            value: currentControlKey(advgbBlockControls, 'browser', 'approach'),
+                                            options: [{
+                                                value: 'public',
+                                                label: __('Show in all browsers', 'advanced-gutenberg')
+                                            }, {
+                                                value: 'include',
+                                                label: __('Show in the selected browsers', 'advanced-gutenberg')
+                                            }, {
+                                                value: 'exclude',
+                                                label: __('Hide in the selected browsers', 'advanced-gutenberg')
+                                            }],
+                                            onChange: function onChange(value) {
+                                                return _this8.changeControlKey('browser', 'approach', value);
+                                            }
+                                        })
+                                    ),
+                                    (currentControlKey(advgbBlockControls, 'browser', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'browser', 'approach') === 'exclude') && React.createElement(
+                                        Fragment,
+                                        null,
+                                        React.createElement(FormTokenField, {
+                                            multiple: true,
+                                            label: __('Select browsers', 'advanced-gutenberg'),
+                                            placeholder: __('Search', 'advanced-gutenberg'),
+                                            suggestions: (0, _utils.getOptionSuggestions)(this.getBrowsers()),
+                                            maxSuggestions: 10,
+                                            value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'browser', 'browsers') ? currentControlKey(advgbBlockControls, 'browser', 'browsers') : [], this.getBrowsers()),
+                                            onChange: function onChange(value) {
+                                                _this8.changeControlKey('browser', 'browsers', (0, _utils.getOptionSlugs)(value, _this8.getBrowsers()));
+                                            },
+                                            __experimentalExpandOnFocus: true
+                                        }),
+                                        React.createElement(
+                                            Notice,
+                                            {
+                                                className: "advgb-notice-sidebar",
+                                                status: "warning",
+                                                isDismissible: false
+                                            },
+                                            __('Please note the result could not be 100% accurate due some browsers can mimic a different browser.', 'advanced-gutenberg')
+                                        )
+                                    )
+                                )
+                            ),
+                            isControlEnabled(advgb_block_controls_vars.controls.platform) && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(ToggleControl, {
+                                    label: __('Platforms', 'advanced-gutenberg'),
+                                    help: currentControlKey(advgbBlockControls, 'platform', 'enabled') ? __('Choose in which platforms this block can be displayed.', 'advanced-gutenberg') : '',
+                                    checked: currentControlKey(advgbBlockControls, 'platform', 'enabled'),
+                                    onChange: function onChange() {
+                                        return _this8.changeControlKey('platform', 'enabled');
+                                    }
+                                }),
+                                currentControlKey(advgbBlockControls, 'platform', 'enabled') && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-revert-mb" },
+                                        React.createElement(SelectControl, {
+                                            value: currentControlKey(advgbBlockControls, 'platform', 'approach'),
+                                            options: [{
+                                                value: 'public',
+                                                label: __('Show in all platforms', 'advanced-gutenberg')
+                                            }, {
+                                                value: 'include',
+                                                label: __('Show in the selected platforms', 'advanced-gutenberg')
+                                            }, {
+                                                value: 'exclude',
+                                                label: __('Hide in the selected platforms', 'advanced-gutenberg')
+                                            }],
+                                            onChange: function onChange(value) {
+                                                return _this8.changeControlKey('platform', 'approach', value);
+                                            }
+                                        })
+                                    ),
+                                    (currentControlKey(advgbBlockControls, 'platform', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'platform', 'approach') === 'exclude') && React.createElement(
+                                        Fragment,
+                                        null,
+                                        React.createElement(FormTokenField, {
+                                            multiple: true,
+                                            label: __('Select platforms', 'advanced-gutenberg'),
+                                            placeholder: __('Search', 'advanced-gutenberg'),
+                                            suggestions: (0, _utils.getOptionSuggestions)(this.getPlatforms()),
+                                            maxSuggestions: 10,
+                                            value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'platform', 'platforms') ? currentControlKey(advgbBlockControls, 'platform', 'platforms') : [], this.getPlatforms()),
+                                            onChange: function onChange(value) {
+                                                _this8.changeControlKey('platform', 'platforms', (0, _utils.getOptionSlugs)(value, _this8.getPlatforms()));
+                                            },
+                                            __experimentalExpandOnFocus: true
+                                        }),
+                                        React.createElement(
+                                            Notice,
+                                            {
+                                                className: "advgb-notice-sidebar",
+                                                status: "warning",
+                                                isDismissible: false
+                                            },
+                                            __('Please note the result could not be 100% accurate due some browsers can mimic a different platform.', 'advanced-gutenberg')
+                                        )
+                                    )
+                                )
+                            ),
+                            this.isPost() &&
+                            // Placeholder message when Archive and Page controls not available in post edit
+                            React.createElement(
+                                "div",
+                                { className: "components-form-token-field__help" },
+                                __('Term archives & Pages controls are available in Widgets and FSE screens.', 'advanced-gutenberg')
+                            ),
+                            !this.isPost() && // Disabled in post edit
+                            React.createElement(
+                                Fragment,
+                                null,
+                                isControlEnabled(advgb_block_controls_vars.controls.archive) && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(ToggleControl, {
+                                        label: __('Term archives', 'advanced-gutenberg'),
+                                        help: currentControlKey(advgbBlockControls, 'archive', 'enabled') ? __('Choose on which taxonomies and terms archive pages your blocks can be displayed.', 'advanced-gutenberg') : '',
+                                        checked: currentControlKey(advgbBlockControls, 'archive', 'enabled'),
+                                        onChange: function onChange() {
+                                            return _this8.changeControlKey('archive', 'enabled');
+                                        }
+                                    }),
+                                    currentControlKey(advgbBlockControls, 'archive', 'enabled') && React.createElement(
+                                        Fragment,
+                                        null,
+                                        React.createElement(
+                                            "div",
+                                            { className: "advgb-revert-mb--disabled", style: { marginBottom: 20 } },
+                                            React.createElement(SelectControl, {
+                                                value: currentControlKey(advgbBlockControls, 'archive', 'approach'),
+                                                options: [{
+                                                    value: 'include',
+                                                    label: __('Show for selected terms', 'advanced-gutenberg')
+                                                }, {
+                                                    value: 'exclude',
+                                                    label: __('Hide for selected terms', 'advanced-gutenberg')
+                                                }],
+                                                onChange: function onChange(value) {
+                                                    return _this8.changeControlKey('archive', 'approach', value);
+                                                }
+                                            })
+                                        ),
+                                        React.createElement(FormTokenField, {
+                                            multiple: true,
+                                            label: __('Select taxonomies', 'advanced-gutenberg'),
+                                            placeholder: __('Search taxonomies', 'advanced-gutenberg'),
+                                            suggestions: (0, _utils.getOptionSuggestions)(this.state.taxModOptions || this.getTaxonomies()),
+                                            maxSuggestions: 10,
+                                            value: (0, _utils.getOptionTitles)(this.currentArchiveControl('taxonomies'), this.state.taxModOptions || this.getTaxonomies()),
+                                            onChange: function onChange(value) {
+                                                _this8.changeArchiveControl('taxonomies', (0, _utils.getOptionSlugs)(value, _this8.state.taxModOptions || _this8.getTaxonomies()));
+                                            },
+                                            __experimentalExpandOnFocus: true
+                                        }),
+                                        currentControlKey(advgbBlockControls, 'archive', 'taxonomies').length > 0 && React.createElement(
+                                            Fragment,
+                                            null,
+                                            React.createElement(FormTokenField, {
+                                                multiple: true,
+                                                label: __('Filter terms', 'advanced-gutenberg'),
+                                                placeholder: __('Search terms', 'advanced-gutenberg'),
+                                                suggestions: (0, _utils.getOptionSuggestions)(this.state.termOptions),
+                                                maxSuggestions: 10,
+                                                value: (0, _utils.getOptionTitles)(this.currentArchiveControl('terms'), this.state.termOptions),
+                                                onChange: function onChange(value) {
+                                                    _this8.changeArchiveControl('terms', (0, _utils.getOptionSlugs)(value, _this8.state.termOptions));
+                                                    _this8.setState({
+                                                        updateTaxLabels: true
+                                                    });
+                                                },
+                                                onInputChange: function onInputChange(value) {
+                                                    _this8.setState({
+                                                        searchTermWord: value
+                                                    });
+                                                },
+                                                __experimentalShowHowTo: false
+                                            }),
+                                            React.createElement(
+                                                "div",
+                                                { className: "advgb-revert-mb--disabled components-form-token-field__help",
+                                                    style: { marginBottom: 20 } },
+                                                __('Use this filter to apply only to some terms.', 'advanced-gutenberg')
+                                            )
+                                        )
+                                    )
+                                ),
+                                isControlEnabled(advgb_block_controls_vars.controls.page) && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(ToggleControl, {
+                                        label: __('Pages', 'advanced-gutenberg'),
+                                        help: currentControlKey(advgbBlockControls, 'page', 'enabled') ? __('Choose in which pages this block can be displayed.', 'advanced-gutenberg') : '',
+                                        checked: currentControlKey(advgbBlockControls, 'page', 'enabled'),
+                                        onChange: function onChange() {
+                                            return _this8.changeControlKey('page', 'enabled');
+                                        }
+                                    }),
+                                    currentControlKey(advgbBlockControls, 'page', 'enabled') && React.createElement(
+                                        Fragment,
+                                        null,
+                                        React.createElement(
+                                            "div",
+                                            { className: "advgb-revert-mb" },
+                                            React.createElement(SelectControl, {
+                                                value: currentControlKey(advgbBlockControls, 'page', 'approach'),
+                                                options: [{
+                                                    value: 'include',
+                                                    label: __('Show on the selected pages', 'advanced-gutenberg')
+                                                }, {
+                                                    value: 'exclude',
+                                                    label: __('Hide on the selected pages', 'advanced-gutenberg')
+                                                }],
+                                                onChange: function onChange(value) {
+                                                    return _this8.changeControlKey('page', 'approach', value);
+                                                }
+                                            })
+                                        ),
+                                        (currentControlKey(advgbBlockControls, 'page', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'page', 'approach') === 'exclude') && React.createElement(FormTokenField, {
+                                            multiple: true,
+                                            label: __('Select pages', 'advanced-gutenberg'),
+                                            placeholder: __('Search', 'advanced-gutenberg'),
+                                            suggestions: (0, _utils.getOptionSuggestions)(this.getPages()),
+                                            maxSuggestions: 10,
+                                            value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'page', 'pages') ? currentControlKey(advgbBlockControls, 'page', 'pages') : [], this.getPages()),
+                                            onChange: function onChange(value) {
+                                                _this8.changeControlKey('page', 'pages', (0, _utils.getOptionSlugs)(value, _this8.getPages()));
+                                            },
+                                            __experimentalExpandOnFocus: true
+                                        })
+                                    )
+                                )
                             )
                         )
-                    ),
-                    isControlEnabled(advgb_block_controls_vars.controls.user_role) && React.createElement(
-                        Fragment,
-                        null,
-                        React.createElement(ToggleControl, {
-                            label: __('Enable block user roles', 'advanced-gutenberg'),
-                            help: __('Choose which users can see this block.', 'advanced-gutenberg'),
-                            checked: currentControlKey(advgbBlockControls, 'user_role', 'enabled'),
-                            onChange: function onChange() {
-                                return changeControlKey('user_role', 'enabled');
-                            }
-                        }),
-                        currentControlKey(advgbBlockControls, 'user_role', 'enabled') && React.createElement(
-                            Fragment,
-                            null,
-                            React.createElement(
-                                "div",
-                                { className: "advgb-revert-mb" },
-                                React.createElement(SelectControl, {
-                                    value: currentControlKey(advgbBlockControls, 'user_role', 'approach'),
-                                    options: [{
-                                        value: 'public',
-                                        label: __('Show to everyone', 'advanced-gutenberg')
-                                    }, {
-                                        value: 'login',
-                                        label: __('Show to logged in users', 'advanced-gutenberg')
-                                    }, {
-                                        value: 'logout',
-                                        label: __('Show to logged out users', 'advanced-gutenberg')
-                                    }, {
-                                        value: 'include',
-                                        label: __('Show to the selected user roles', 'advanced-gutenberg')
-                                    }, {
-                                        value: 'exclude',
-                                        label: __('Hide from the selected user roles', 'advanced-gutenberg')
-                                    }],
-                                    onChange: function onChange(value) {
-                                        return changeControlKey('user_role', 'approach', value);
-                                    }
-                                })
-                            ),
-                            (currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'exclude') && React.createElement(FormTokenField, {
-                                multiple: true,
-                                label: __('Select user roles', 'advanced-gutenberg'),
-                                placeholder: __('Search', 'advanced-gutenberg'),
-                                suggestions: (0, _utils.getOptionSuggestions)(getUserRoles()),
-                                maxSuggestions: 10,
-                                value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'user_role', 'roles') ? currentControlKey(advgbBlockControls, 'user_role', 'roles') : [], getUserRoles()),
-                                onChange: function onChange(value) {
-                                    changeControlKey('user_role', 'roles', (0, _utils.getOptionSlugs)(value, getUserRoles()));
-                                }
-                            })
-                        )
-                    )
-                )
-            ), React.createElement(BlockEdit, _extends({ key: "block-edit-advgb-dates" }, props))];
-        };
-    });
+                    ), React.createElement(BlockEdit, _extends({ key: "block-edit-advgb-dates" }, this.props))];
+                }
+            }]);
+
+            return BlockControlsEdit;
+        }(Component);
+    }, 'withEditControls');
+
+    // Add option to add controls for supported blocks
+    addFilter('editor.BlockEdit', 'advgb/addBlockControls', withEditControls);
 
     var withAttributes = createHigherOrderComponent(function (BlockListBlock) {
         return function (props) {
@@ -797,8 +1767,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         };
     }, 'withAttributes');
 
-    // Apply custom styles on back-end
-    wp.hooks.addFilter('editor.BlockListBlock', 'advgb/loadBackendBlockControls', withAttributes);
+    // Apply attributes and CSS classes on backend
+    addFilter('editor.BlockListBlock', 'advgb/loadBackendBlockControls', withAttributes);
 })(wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components, wp.compose, wp.element);
 
 /***/ }),
