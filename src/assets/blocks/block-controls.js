@@ -1609,6 +1609,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                     )
                                 )
                             ),
+                            this.isPost() &&
+                            // Placeholder message when Archive and Page controls not available in post edit
+                            React.createElement(
+                                "div",
+                                { className: "components-form-token-field__help" },
+                                __('Term archives & Pages controls are available in Widgets and FSE screens.', 'advanced-gutenberg')
+                            ),
                             !this.isPost() && // Disabled in post edit
                             React.createElement(
                                 Fragment,

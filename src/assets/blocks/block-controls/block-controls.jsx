@@ -1230,6 +1230,12 @@ import {
                                     ) }
                                 </Fragment>
                                 ) }
+                                { this.isPost() && (
+                                    // Placeholder message when Archive and Page controls not available in post edit
+                                    <div className="components-form-token-field__help">
+                                        { __( 'Term archives & Pages controls are available in Widgets and FSE screens.', 'advanced-gutenberg' ) }
+                                    </div>
+                                ) }
                                 { ! this.isPost() && ( // Disabled in post edit
                                     <Fragment>
                                         { isControlEnabled( advgb_block_controls_vars.controls.archive ) && (
