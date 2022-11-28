@@ -264,8 +264,8 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.2 - 25 Nov 2022 =
-  * Add: Taxonomy control
+= 3.1.2 - 28 Nov 2022 =
+  * Add: Term archives control
 
 = 3.1.1 - 16 Nov 2022 =
   * Add: Base path constant
