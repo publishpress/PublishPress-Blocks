@@ -1617,8 +1617,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                     Fragment,
                                     null,
                                     React.createElement(ToggleControl, {
-                                        label: __('Taxonomies & terms', 'advanced-gutenberg'),
-                                        help: currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') ? __('Choose in which taxonomies & terms pages this block can be displayed.', 'advanced-gutenberg') : '',
+                                        label: __('Term archives', 'advanced-gutenberg'),
+                                        help: currentControlKey(advgbBlockControls, 'taxonomy', 'enabled') ? __('Choose on which taxonomies and terms archive pages your blocks can be displayed.', 'advanced-gutenberg') : '',
                                         checked: currentControlKey(advgbBlockControls, 'taxonomy', 'enabled'),
                                         onChange: function onChange() {
                                             return _this8.changeControlKey('taxonomy', 'enabled');

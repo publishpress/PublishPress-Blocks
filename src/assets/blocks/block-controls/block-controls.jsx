@@ -1235,9 +1235,9 @@ import {
                                         { isControlEnabled( advgb_block_controls_vars.controls.taxonomy ) && (
                                         <Fragment>
                                             <ToggleControl
-                                                label={ __( 'Taxonomies & terms', 'advanced-gutenberg' ) }
+                                                label={ __( 'Term archives', 'advanced-gutenberg' ) }
                                                 help={ currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' )
-                                                    ? __( 'Choose in which taxonomies & terms pages this block can be displayed.', 'advanced-gutenberg' )
+                                                    ? __( 'Choose on which taxonomies and terms archive pages your blocks can be displayed.', 'advanced-gutenberg' )
                                                     : ''
                                                 }
                                                 checked={ currentControlKey( advgbBlockControls, 'taxonomy', 'enabled' ) }

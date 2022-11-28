@@ -89,7 +89,7 @@ $page_control       = PublishPress\Blocks\Controls::getControlValue( 'page', 1 )
         </tr>
         <tr>
             <th scope="row">
-                <?php _e( 'Taxonomies & terms', 'advanced-gutenberg' ) ?>
+                <?php _e( 'Term archives', 'advanced-gutenberg' ) ?>
             </th>
             <td>
                 <label>
@@ -99,7 +99,7 @@ $page_control       = PublishPress\Blocks\Controls::getControlValue( 'page', 1 )
                     />
                     <?php
                     _e(
-                        'Choose in which taxonomies and terms pages your blocks can be displayed.',
+                        'Choose on which taxonomies and terms archive pages your blocks can be displayed.',
                         'advanced-gutenberg'
                     )
                     ?>
