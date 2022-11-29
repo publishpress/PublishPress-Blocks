@@ -49,6 +49,11 @@
   .advgb-revert-mb > .components-base-control {
     margin-bottom: 0;
   }
+
+  // Spacer
+  .advgb-hr-separator {
+    width: 95%;
+  }
 }
 
 body:not(.advgb-editor-width-default) {
