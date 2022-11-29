@@ -986,6 +986,11 @@ import {
                                                         }
                                                     } }
                                                 />
+                                                <div className="components-form-token-field__help">
+                                                    { typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length
+                                                        ? `${advgbBlocks.timezone.replace(/_/g, ' ')} ${__( 'time', 'advanced-gutenberg' )}`
+                                                        : __( 'WordPress settings timezone', 'advanced-gutenberg' ) }
+                                                </div>
                                                 { ( currentControlKey( advgbBlockControls, 'schedule', 'dateFrom' ) > currentControlKey( advgbBlockControls, 'schedule', 'dateTo' ) ) &&
                                                     <Notice
                                                         className="advgb-notice-sidebar"
