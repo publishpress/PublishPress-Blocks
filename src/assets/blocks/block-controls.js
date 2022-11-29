@@ -1478,18 +1478,32 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                                             }
                                         })
                                     ),
-                                    (currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'exclude') && React.createElement(FormTokenField, {
-                                        multiple: true,
-                                        label: __('Select user roles', 'advanced-gutenberg'),
-                                        placeholder: __('Search', 'advanced-gutenberg'),
-                                        suggestions: (0, _utils.getOptionSuggestions)(this.getUserRoles()),
-                                        maxSuggestions: 10,
-                                        value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'user_role', 'roles') ? currentControlKey(advgbBlockControls, 'user_role', 'roles') : [], this.getUserRoles()),
-                                        onChange: function onChange(value) {
-                                            _this8.changeControlKey('user_role', 'roles', (0, _utils.getOptionSlugs)(value, _this8.getUserRoles()));
-                                        },
-                                        __experimentalExpandOnFocus: true
-                                    })
+                                    (currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'exclude') && React.createElement(
+                                        Fragment,
+                                        null,
+                                        React.createElement(FormTokenField, {
+                                            multiple: true,
+                                            label: __('Select user roles', 'advanced-gutenberg'),
+                                            placeholder: __('Search', 'advanced-gutenberg'),
+                                            suggestions: (0, _utils.getOptionSuggestions)(this.getUserRoles()),
+                                            maxSuggestions: 10,
+                                            value: (0, _utils.getOptionTitles)(!!currentControlKey(advgbBlockControls, 'user_role', 'roles') ? currentControlKey(advgbBlockControls, 'user_role', 'roles') : [], this.getUserRoles()),
+                                            onChange: function onChange(value) {
+                                                _this8.changeControlKey('user_role', 'roles', (0, _utils.getOptionSlugs)(value, _this8.getUserRoles()));
+                                            },
+                                            __experimentalExpandOnFocus: true
+                                        }),
+                                        (currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'include' || currentControlKey(advgbBlockControls, 'user_role', 'approach') === 'exclude') && !currentControlKey(advgbBlockControls, 'user_role', 'roles').length && React.createElement(
+                                            Notice,
+                                            {
+                                                className: "advgb-notice-sidebar",
+                                                status: "warning",
+                                                isDismissible: false,
+                                                style: { marginBottom: 30 }
+                                            },
+                                            __('Please select at least one user role.', 'advanced-gutenberg')
+                                        )
+                                    )
                                 )
                             ),
                             isControlEnabled(advgb_block_controls_vars.controls.browser) && React.createElement(

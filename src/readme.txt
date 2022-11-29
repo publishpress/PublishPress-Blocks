@@ -268,6 +268,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Add: Term archives and pages control
   * Add: Bring back map files
   * Add: Display timezone below dates
+  * Fix: For User role control, when no role is selected, the block is hidden to everyone
 
 = 3.1.1 - 16 Nov 2022 =
   * Add: Base path constant

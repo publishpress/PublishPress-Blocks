@@ -1059,25 +1059,45 @@ import {
                                             { ( currentControlKey( advgbBlockControls, 'user_role', 'approach' ) === 'include' ||
                                                 currentControlKey( advgbBlockControls, 'user_role', 'approach' ) === 'exclude'
                                             ) && (
-                                                <FormTokenField
-                                                    multiple
-                                                    label={ __( 'Select user roles', 'advanced-gutenberg' ) }
-                                                    placeholder={ __( 'Search', 'advanced-gutenberg' ) }
-                                                    suggestions={ getOptionSuggestions( this.getUserRoles() ) }
-                                                    maxSuggestions={ 10 }
-                                                    value={
-                                                        getOptionTitles(
-                                                            !! currentControlKey( advgbBlockControls, 'user_role', 'roles' )
-                                                                ? currentControlKey( advgbBlockControls, 'user_role', 'roles' )
-                                                                : [],
-                                                            this.getUserRoles()
-                                                        )
-                                                    }
-                                                    onChange={ ( value ) => {
-                                                        this.changeControlKey( 'user_role', 'roles', getOptionSlugs( value, this.getUserRoles() ) )
-                                                    } }
-                                                    __experimentalExpandOnFocus
-                                                />
+                                                <Fragment>
+                                                    <FormTokenField
+                                                        multiple
+                                                        label={ __( 'Select user roles', 'advanced-gutenberg' ) }
+                                                        placeholder={ __( 'Search', 'advanced-gutenberg' ) }
+                                                        suggestions={ getOptionSuggestions( this.getUserRoles() ) }
+                                                        maxSuggestions={ 10 }
+                                                        value={
+                                                            getOptionTitles(
+                                                                !! currentControlKey( advgbBlockControls, 'user_role', 'roles' )
+                                                                    ? currentControlKey( advgbBlockControls, 'user_role', 'roles' )
+                                                                    : [],
+                                                                this.getUserRoles()
+                                                            )
+                                                        }
+                                                        onChange={ ( value ) => {
+                                                            this.changeControlKey( 'user_role', 'roles', getOptionSlugs( value, this.getUserRoles() ) )
+                                                        } }
+                                                        __experimentalExpandOnFocus
+                                                    />
+                                                    { ( currentControlKey( advgbBlockControls, 'user_role', 'approach' ) === 'include' ||
+                                                        currentControlKey( advgbBlockControls, 'user_role', 'approach' ) === 'exclude'
+                                                    )
+                                                    && ! currentControlKey( advgbBlockControls, 'user_role', 'roles' ).length && (
+                                                        <Notice
+                                                                className="advgb-notice-sidebar"
+                                                                status="warning"
+                                                                isDismissible={ false }
+                                                                style={ { marginBottom: 30 } }
+                                                            >
+                                                            {
+                                                                __(
+                                                                    'Please select at least one user role.',
+                                                                    'advanced-gutenberg'
+                                                                )
+                                                            }
+                                                        </Notice>
+                                                    ) }
+                                                </Fragment>
                                             ) }
                                         </Fragment>
                                     ) }

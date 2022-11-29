@@ -144,11 +144,11 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                         break;
 
                         case 'include':
-                            return count( $selected_roles ) && array_intersect( $selected_roles, $user->roles ) ? true: false;
+                            return array_intersect( $selected_roles, $user->roles ) ? true : false;
                         break;
 
                         case 'exclude':
-                            return count( $selected_roles ) && ! array_intersect( $selected_roles, $user->roles ) ? true: false;
+                            return ! array_intersect( $selected_roles, $user->roles ) ? true : false;
                         break;
                     }
 
