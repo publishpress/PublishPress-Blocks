@@ -264,11 +264,12 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.2 - 29 Nov 2022 =
+= 3.1.2 - 30 Nov 2022 =
   * Add: Term archives and pages control
   * Add: Bring back map files
   * Add: Display timezone below dates
   * Fix: For User role control, when no role is selected, the block is hidden to everyone
+  * Fix: Hide widgets HTML wrapper when its block is not visible
 
 = 3.1.1 - 16 Nov 2022 =
   * Add: Base path constant
