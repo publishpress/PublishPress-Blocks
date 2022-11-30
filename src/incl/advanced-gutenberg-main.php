@@ -203,6 +203,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_filter('render_block_data', array($this, 'contentPreRender'));
                 add_filter('render_block', array($this, 'addNonceToFormBlocks'));
                 add_filter('render_block', ['PublishPress\Blocks\Controls', 'checkBlockControls'], 10, 2);
+                add_filter('widget_display_callback', ['PublishPress\Blocks\Controls', 'checkBlockControlsWidget']);
                 add_filter('the_content', array($this, 'addFrontendContentAssets'), 9);
 
                 if($wp_version >= 5.8) {
