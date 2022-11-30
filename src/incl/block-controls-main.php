@@ -21,8 +21,8 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
          *
          * @return string                   $block_content or an empty string when block is hidden
          */
-        public static function checkBlockControls( $block_content, $block ) {
-
+        public static function checkBlockControls( $block_content, $block )
+        {
             if ( Utilities::settingIsEnabled( 'block_controls' )
                 && isset( $block['attrs']['advgbBlockControls'] )
                 && $block['blockName']
@@ -46,6 +46,55 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
             }
 
             return $block_content;
+        }
+
+        /**
+         * Check if block in widgets area is using controls and decide to display or not in frontend,
+         * including its widget HTML wrapper.
+         *
+         * @since 3.1.2
+         *
+         * @param array $instance Widget instance
+         *
+         * @return bool false means block and its widget HTML wrapper is hidden
+         */
+        public static function checkBlockControlsWidget( $instance )
+        {
+            // Exclude REST API
+            if ( strpos( wp_get_raw_referer(), '/wp-admin/widgets.php' )
+                && isset( $_SERVER['REQUEST_URI'] )
+                && false !== strpos( filter_var( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/wp-json/' )
+            ) {
+                return $instance;
+            }
+
+            if( Utilities::settingIsEnabled( 'block_controls' )
+                && ! empty( $instance['content'] )
+                && has_blocks( $instance['content'] )
+            ) {
+
+                $blocks = parse_blocks( $instance['content'] );
+
+                if ( isset( $blocks[0]['attrs']['advgbBlockControls'] ) && $blocks[0]['blockName'] ) {
+
+                    $controls = $blocks[0]['attrs']['advgbBlockControls'];
+
+                    foreach( $controls as $key => $item ){
+                        if ( isset( $item['control'] )
+                            && self::getControlValue( $item['control'], 1 ) === true // Is this control enabled? @TODO Dynamic way to define default value depending the control ; not all will be active (1) by default
+                            && self::isBlockEnabled( $blocks[0]['blockName'] ) // Controls are enabled for this block?
+                            && isset( $item['enabled'] )
+                            && (bool) $item['enabled'] === true
+                        ) {
+                            if( self::displayBlock( $blocks[0], $item['control'], $key ) === false ) {
+                                return false; // This block is hidden
+                            }
+                        }
+                    }
+                }
+            }
+
+            return $instance;
         }
 
         /**
