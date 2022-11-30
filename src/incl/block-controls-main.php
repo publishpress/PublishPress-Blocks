@@ -49,7 +49,8 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
         }
 
         /**
-         * Check if block in widgets area is using controls and decide to display or not in frontend
+         * Check if block in widgets area is using controls and decide to display or not in frontend,
+         * including its widget HTML wrapper.
          *
          * @since 3.1.2
          *
