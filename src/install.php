@@ -121,7 +121,7 @@ if ( !function_exists('advgb_some_specific_updates') ) {
 
                 // Migrate Block Access by Profile to Block Access by Role
                 if( $blocks_by_role_access ) {
-                    update_option( 'advgb_blocks_user_roles', $blocks_by_role_access );
+                    update_option( 'advgb_blocks_user_roles', $blocks_by_role_access, false );
                 }
             }
         }

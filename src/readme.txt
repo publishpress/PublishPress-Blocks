@@ -271,6 +271,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Add: Minify compiled JSX files
   * Fix: For User role control, when no role is selected, the block is hidden to everyone
   * Fix: Hide widgets HTML wrapper when its block is not visible
+  * Fix: Set autoload to 'no' for bigger size options
 
 = 3.1.1 - 16 Nov 2022 =
   * Add: Base path constant

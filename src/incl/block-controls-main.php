@@ -567,7 +567,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 $advgb_block_controls['controls']['archive']    = isset( $_POST['archive_control'] ) ? (bool) 1 : (bool) 0;
                 $advgb_block_controls['controls']['page']       = isset( $_POST['page_control'] ) ? (bool) 1 : (bool) 0;
 
-                update_option( 'advgb_block_controls', $advgb_block_controls );
+                update_option( 'advgb_block_controls', $advgb_block_controls, false );
 
                 wp_safe_redirect(
                     add_query_arg(
@@ -609,7 +609,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     $block_controls['active_blocks']    = isset( $active_blocks ) ? $active_blocks : '';
                     $block_controls['inactive_blocks']  = isset( $inactive_blocks ) ? $inactive_blocks : '';
 
-                    update_option( 'advgb_block_controls', $block_controls );
+                    update_option( 'advgb_block_controls', $block_controls, false );
 
                     // Redirect with success message
                     wp_safe_redirect(

@@ -997,7 +997,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             // Check if we have new blocks installed
             $newBlocks = array_diff($blocksListName, $savedBlocksListName);
             if (count($newBlocks)) {
-                update_option('advgb_blocks_list', $blocksList);
+                update_option('advgb_blocks_list', $blocksList, false);
             }
 
             // Check that advgb_blocks_user_roles is up to date - The result of this check is not saved
@@ -1019,11 +1019,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     }
                 }
             }
-
-            /* We don't actually need to save the new blocks that are not detected by Access Blocks
-            if ($newAllowedBlocks) {
-                update_option( 'advgb_blocks_user_roles', $advgb_blocks_user_roles_updated );
-            }*/
 
             if ((defined('GUTENBERG_VERSION')
                 && version_compare(get_option('advgb_gutenberg_version'), GUTENBERG_VERSION, '<'))
@@ -1056,7 +1051,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             $check_exist = get_option('advgb_custom_styles');
             if ($check_exist === false) {
-                update_option('advgb_custom_styles', $this::$default_custom_styles);
+                update_option('advgb_custom_styles', $this::$default_custom_styles, false);
             }
 
             $custom_style_data = get_option('advgb_custom_styles');
@@ -1074,7 +1069,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'identifyColor' => '#000000'
                 );
                 array_push($custom_style_data, $new_style_array);
-                update_option('advgb_custom_styles', $custom_style_data);
+                update_option('advgb_custom_styles', $custom_style_data, false);
                 wp_send_json($new_style_array);
             } elseif ($task === 'delete') {
                 $custom_style_data_delete = get_option('advgb_custom_styles');
@@ -1088,7 +1083,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     }
                     array_push($new_style_deleted_array, $data);
                 }
-                update_option('advgb_custom_styles', $new_style_deleted_array);
+                update_option('advgb_custom_styles', $new_style_deleted_array, false);
                 if ($done) {
                     wp_send_json(array('id' => $style_id), 200);
                 }
@@ -1111,7 +1106,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         array_push($new_style_copied_array, $copied_styles);
                     }
                 }
-                update_option('advgb_custom_styles', $new_style_copied_array);
+                update_option('advgb_custom_styles', $new_style_copied_array, false);
                 wp_send_json($copied_styles);
             } elseif ($task === 'preview') {
                 $style_id = (int)$_POST['id'];
@@ -1152,7 +1147,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     }
                     array_push($new_data_array, $data);
                 }
-                update_option('advgb_custom_styles', $new_data_array);
+                update_option('advgb_custom_styles', $new_data_array, false);
             } else {
                 wp_send_json(null, 404);
             }
@@ -1270,7 +1265,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             $blocks_config_saved[$blockType] = $settings[$blockType];
 
-            update_option('advgb_blocks_default_config', $blocks_config_saved);
+            update_option('advgb_blocks_default_config', $blocks_config_saved, false);
             wp_send_json(true, 200);
         }
 
@@ -1328,7 +1323,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             array_push($contacts_saved, $contact_data);
 
-            $saved = update_option('advgb_contacts_saved', $contacts_saved);
+            $saved = update_option('advgb_contacts_saved', $contacts_saved, false);
             if ($saved) {
                 $saved_settings = get_option('advgb_email_sender');
                 $website_title  = get_option('blogname');
@@ -1411,7 +1406,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             array_push($newsletter_saved, $newsletter_data);
 
-            update_option('advgb_newsletter_saved', $newsletter_saved);
+            update_option('advgb_newsletter_saved', $newsletter_saved, false);
             wp_send_json($newsletter_data, 200);
             // phpcs:enable
         }
@@ -2897,7 +2892,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $block_feature_by_role[$user_role]['active_blocks']     = isset( $active_blocks ) ? $active_blocks : '';
                 $block_feature_by_role[$user_role]['inactive_blocks']   = isset( $inactive_blocks ) ? $inactive_blocks : '';
 
-                update_option( $option, $block_feature_by_role );
+                update_option( $option, $block_feature_by_role, false );
 
                 // Redirect with success message
                 wp_safe_redirect(
