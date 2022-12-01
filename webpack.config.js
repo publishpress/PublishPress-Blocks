@@ -1,5 +1,10 @@
 var glob = require("glob");
 var path = require("path");
+var MinifyPlugin = require("babel-minify-webpack-plugin");
+var minifySetup = new MinifyPlugin(
+    {},
+    { comments: false }
+);
 
 module.exports = [
     {
@@ -17,8 +22,9 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "blocks.js"
+            filename: "blocks.min.js"
         },
+        plugins: [minifySetup],
 
         module: {
             rules: [
@@ -39,8 +45,9 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "custom-styles.js"
+            filename: "custom-styles.min.js"
         },
+        plugins: [minifySetup],
 
         module: {
             rules: [
@@ -61,8 +68,9 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "pro-ad.js"
+            filename: "pro-ad.min.js"
         },
+        plugins: [minifySetup],
 
         module: {
             rules: [
@@ -83,8 +91,9 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "post-sidebar.js"
+            filename: "post-sidebar.min.js"
         },
+        plugins: [minifySetup],
 
         module: {
             rules: [
@@ -105,8 +114,9 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "block-controls.js"
+            filename: "block-controls.min.js"
         },
+        plugins: [minifySetup],
 
         module: {
             rules: [
@@ -125,8 +135,9 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "frontend.js"
+            filename: "frontend.min.js"
         },
+        plugins: [minifySetup],
 
         module: {
             rules: [
@@ -145,8 +156,9 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "editor.js"
+            filename: "editor.min.js"
         },
+        plugins: [minifySetup],
 
         module: {
             rules: [

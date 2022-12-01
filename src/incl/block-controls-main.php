@@ -851,7 +851,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
             if( Utilities::settingIsEnabled( 'block_controls' ) ) {
                 wp_enqueue_script(
                     'advgb_block_controls',
-                    plugins_url( 'assets/blocks/block-controls.js', dirname( __FILE__ ) ),
+                    plugins_url( 'assets/blocks/block-controls.min.js', dirname( __FILE__ ) ),
                     [
                         'wp-blocks',
                         'wp-i18n',
