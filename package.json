@@ -22,7 +22,6 @@
     "babel-preset-stage-0": "^6.24.1",
     "braces": "^3.0.2",
     "classnames": "^2.3.1",
-    "compile-sass": "^1.1.1",
     "counterup2": "^1.0.4",
     "elliptic": "^6.5.4",
     "glob-parent": "^5.1.2",
