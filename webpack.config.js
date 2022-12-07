@@ -1,10 +1,14 @@
 var glob = require("glob");
 var path = require("path");
-var MinifyPlugin = require("babel-minify-webpack-plugin");
-var minifySetup = new MinifyPlugin(
-    {},
-    { comments: false }
-);
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+var minifyJS = new UglifyJSPlugin( {
+    sourceMap: true,
+    uglifyOptions: {
+        output: {
+            comments: /@license/i
+        }
+    }
+} );
 
 module.exports = [
     {
@@ -24,8 +28,7 @@ module.exports = [
             path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "blocks.min.js"
         },
-        plugins: [minifySetup],
-
+        plugins: [minifyJS],
         module: {
             rules: [
                 {
@@ -47,8 +50,7 @@ module.exports = [
             path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "custom-styles.min.js"
         },
-        plugins: [minifySetup],
-
+        plugins: [minifyJS],
         module: {
             rules: [
                 {
@@ -70,8 +72,7 @@ module.exports = [
             path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "pro-ad.min.js"
         },
-        plugins: [minifySetup],
-
+        plugins: [minifyJS],
         module: {
             rules: [
                 {
@@ -93,8 +94,7 @@ module.exports = [
             path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "post-sidebar.min.js"
         },
-        plugins: [minifySetup],
-
+        plugins: [minifyJS],
         module: {
             rules: [
                 {
@@ -116,8 +116,7 @@ module.exports = [
             path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "block-controls.min.js"
         },
-        plugins: [minifySetup],
-
+        plugins: [minifyJS],
         module: {
             rules: [
                 {
@@ -137,8 +136,7 @@ module.exports = [
             path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "frontend.min.js"
         },
-        plugins: [minifySetup],
-
+        plugins: [minifyJS],
         module: {
             rules: [
                 {
@@ -158,8 +156,7 @@ module.exports = [
             path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "editor.min.js"
         },
-        plugins: [minifySetup],
-
+        plugins: [minifyJS],
         module: {
             rules: [
                 {
