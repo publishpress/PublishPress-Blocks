@@ -78,19 +78,75 @@ export function AdvDateTimeControl(props) {
 }
 
 export function AdvDaysControl(props) {
-    const days = [
-        { slug: 'su', label: __( 'S', 'advanced-gutenberg' ) },
-        { slug: 'm', label: __( 'M', 'advanced-gutenberg' ) },
-        { slug: 'tu', label: __( 'T', 'advanced-gutenberg' ) },
-        { slug: 'w', label: __( 'W', 'advanced-gutenberg' ) },
-        { slug: 'th', label: __( 'T', 'advanced-gutenberg' ) },
-        { slug: 'f', label: __( 'F', 'advanced-gutenberg' ) },
-        { slug: 'sa', label: __( 'S', 'advanced-gutenberg' ) }
+    // One digit day abbreviations. https://eventguide.com/topics/one_digit_day_abbreviations.html
+    const allDays = [
+        { slug: 'u', label: __( 'S', 'advanced-gutenberg' ) }, // Sunday
+        { slug: 'm', label: __( 'M', 'advanced-gutenberg' ) }, // Monday
+        { slug: 't', label: __( 'T', 'advanced-gutenberg' ) }, // Tuesday
+        { slug: 'w', label: __( 'W', 'advanced-gutenberg' ) }, // Wednesday
+        { slug: 'r', label: __( 'T', 'advanced-gutenberg' ) }, // Thursday
+        { slug: 'f', label: __( 'F', 'advanced-gutenberg' ) }, // Friday
+        { slug: 's', label: __( 'S', 'advanced-gutenberg' ) }  // Saturday
     ];
 
     const {
-        label
+        label,
+        days,
+        onChangeDays
     } = props;
+
+    // Use a single state variable to store the selected days
+    const [ selectedDays, setSelectedDays ] = useState( days );
+
+    /**
+    * Check if the day is selected or not
+    *
+    * @since 3.1.2
+    *
+    * @param {string} Day slug e.g. 'u' for Sunday, 't' for Tuesday
+    *
+    * @return {bool}
+    */
+    function isDaySelected( slug ) {
+        return selectedDays.some( el => el === slug );
+    }
+
+    /**
+    * Update the selected days state when a checkbox is changed
+    *
+    * @since 3.1.2
+    *
+    * @param {string} Day slug e.g. 'u' for Sunday, 't' for Tuesday
+    *
+    * @return {void}
+    */
+    function onChangeDay( slug ) {
+
+        // Check if the day is already selected
+        const isSelected = isDaySelected( slug );
+
+        // Create a new array with the updated selection
+        let updatedDays;
+        if ( isSelected ) {
+            // Remove the day from the selected days
+            updatedDays = selectedDays.filter( el => el !== slug );
+        } else {
+            // Add the day to the selected days
+            const findDay = allDays.find( el => el.slug === slug );
+            updatedDays = [ ...selectedDays, findDay.slug ];
+        }
+
+        // Remove duplicates
+        const uniqueDays = [ ...new Set( updatedDays ) ];
+
+        // Update the selected days state
+        setSelectedDays( uniqueDays );
+
+        // Call the onChangeDays prop to notify the parent component of the change
+        if ( onChangeDays ) {
+            onChangeDays( updatedDays );
+        }
+    }
 
     return (
         <Fragment>
@@ -99,12 +155,11 @@ export function AdvDaysControl(props) {
                     { label }
                 </label>
                 <div className="advgb-checkbox-inline">
-                    { days.map( (day, index) => (
+                    { allDays.map( day => (
                         <CheckboxControl
-                            key={ index }
                             label={ day.label }
-                            checked={ true }
-                            //onChange={ (checked) => this.setCategories( cat.id, checked ) }
+                            checked={ isDaySelected( day.slug ) }
+                            onChange={ () => onChangeDay( day.slug ) }
                         />
                     ) ) }
                 </div>
