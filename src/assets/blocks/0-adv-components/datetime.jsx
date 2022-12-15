@@ -1,8 +1,10 @@
-export function AdvDateTimeControl(props) {
-    const { Button, DateTimePicker,  Popover, Tooltip } = wp.components;
-    const { Fragment, useState } = wp.element;
-    const { __ } = wp.i18n;
+import hourConvert from 'hour-convert';
 
+const { ButtonGroup, Button, DateTimePicker, TextControl, CheckboxControl, Popover, Tooltip } = wp.components;
+const { Component, Fragment, useState } = wp.element;
+const { __ } = wp.i18n;
+
+export function AdvDateTimeControl(props) {
     const [popupState, setPopupState] = useState( false );
     const togglePopup = () => {
         setPopupState( ( state ) => ! state );
@@ -73,4 +75,281 @@ export function AdvDateTimeControl(props) {
         </Fragment>
 
     )
+}
+
+export function AdvDaysControl(props) {
+    const days = [
+        { slug: 'su', label: __( 'S', 'advanced-gutenberg' ) },
+        { slug: 'm', label: __( 'M', 'advanced-gutenberg' ) },
+        { slug: 'tu', label: __( 'T', 'advanced-gutenberg' ) },
+        { slug: 'w', label: __( 'W', 'advanced-gutenberg' ) },
+        { slug: 'th', label: __( 'T', 'advanced-gutenberg' ) },
+        { slug: 'f', label: __( 'F', 'advanced-gutenberg' ) },
+        { slug: 'sa', label: __( 'S', 'advanced-gutenberg' ) }
+    ];
+
+    const {
+        label
+    } = props;
+
+    return (
+        <Fragment>
+            <div className="advgb-checkbox-wrapper">
+                <label>
+                    { label }
+                </label>
+                <div className="advgb-checkbox-inline">
+                    { days.map( (day, index) => (
+                        <CheckboxControl
+                            key={ index }
+                            label={ day.label }
+                            checked={ true }
+                            //onChange={ (checked) => this.setCategories( cat.id, checked ) }
+                        />
+                    ) ) }
+                </div>
+            </div>
+        </Fragment>
+    )
+}
+
+class AdvTimeClass extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            onChangeTime: null,
+            currentTime: this.props.currentTime || null,
+            hours: null,
+            minutes: null,
+            meridian: 'am',
+            onInit: true
+        };
+    }
+
+    componentWillMount() {
+        const { onChangeTime, currentTime, onInit } = this.state;
+
+        if( this.props.onChangeTime !== onChangeTime ) {
+            this.setState( {
+                onChangeTime: this.props.onChangeTime,
+            } );
+        }
+
+        if( this.props.currentTime !== currentTime ) {
+            this.setState( {
+                currentTime: this.props.currentTime,
+            } );
+        }
+
+        // Init
+        if( currentTime && currentTime.includes(':') && onInit ) {
+            this.setState( {
+                hours:      currentTime.split(':')[0],
+                minutes:    currentTime.split(':')[1],
+                meridian:   parseInt( currentTime.split(':')[0] ) > 11 ? 'pm' : 'am', // We set > 11 because PM starts from 12:00:00
+                onInit:     false
+            } );
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const { onChangeTime, currentTime } = this.props;
+        const { hours, minutes, meridian } = this.state;
+        const { hours: prevHours, minutes: prevMinutes, meridian: prevMeridian } = prevState;
+
+        if( hours !== prevHours || minutes !== prevMinutes || meridian !== prevMeridian ) {
+
+            // When clearing time
+            if( ! hours && ! minutes ) {
+                return;
+            }
+
+            // Default minutes when hours selected
+            if( hours && ! minutes ) {
+                this.setState( {
+                    minutes: '00'
+                } );
+            }
+
+            // Default hours when minutes selected
+            if( minutes && ! hours ) {
+                this.setState( {
+                    hours: '01'
+                } );
+            }
+
+            /* Convert 12-hours to 24-hours.
+             * e.g. 12:00 AM becomes 00:00:00
+             *      12:00 PM becomes 12:00:00
+             *      01:00 PM becomes 13:00:00
+             */
+            const savedTime   = `${this.appendZero(
+                                    hourConvert.to24Hour( {
+                                        hour: parseInt( hours ),
+                                        meridiem: meridian
+                                    } )
+                                )}:${minutes}:00`;
+
+            // Value saved in source/attribute
+            this.props.onChangeTime( savedTime );
+        }
+    }
+
+    /**
+     * Append zero to one digit numbers. e.g. 9 becomes '09'
+     *
+     * @since 3.1.2
+     *
+     * @param {string value Hours or minutes
+     *
+     * @return {string}
+     */
+    appendZero( value ) {
+        if( isNaN( value ) ) {
+            return;
+        }
+
+        const res = parseInt( value );
+
+        return res > 9 ? res : `0${res}`;
+    }
+
+    render() {
+        const { onChangeTime, currentTime, hours, minutes, meridian } = this.state;
+
+        // Make sure hours are valid. 01: min, 12: max
+        const handleChangeHours = event => {
+            const value = Math.max( 1, Math.min( 12, Number( event.target.value ) ) );
+            this.setState( {
+                hours: this.appendZero( value )
+            } );
+        };
+
+        // Allow to use up/down keys for hours
+        const handleKeyDownHours = event => {
+            const value = Number( event.target.value );
+            if( event.key === 'ArrowUp' && value < 12 ) {
+                this.setState( {
+                    hours: this.appendZero( value + 1 )
+                } );
+            } else if ( event.key === 'ArrowDown' && value > 1 ) {
+                this.setState( {
+                    hours: this.appendZero( value - 1 )
+                } );
+            }
+        };
+
+        // Make sure minutes are valid. 01: min, 59: max
+        const handleChangeMinutes = event => {
+            const value = Math.max( 0, Math.min( 59, Number( event.target.value ) ) );
+            this.setState( {
+                minutes: this.appendZero( value )
+            } );
+        };
+
+        // Allow to use up/down keys for minutes
+        const handleKeyDownMinutes = event => {
+            const value = Number( event.target.value );
+            if( event.key === 'ArrowUp' && value < 59 ) {
+                this.setState( {
+                    minutes: this.appendZero( value + 1 )
+                } );
+            } else if ( event.key === 'ArrowDown' && value > 0 ) {
+                this.setState( {
+                    minutes: this.appendZero( value - 1 )
+                } );
+            }
+        };
+
+        return (
+            <Fragment>
+                <div className="advgb-advtime-control">
+                    <label>
+                        { this.props.label }
+                    </label>
+                    <div className="advgb-advtime-hours-minutes">
+                        <input
+                            type="text"
+                            value={
+                                hours
+                                    ? this.appendZero(
+                                        hourConvert.to12Hour( parseInt( hours ) ).hour
+                                    ) : ''
+                            }
+                            onChange={ handleChangeHours }
+                            onKeyDown={ handleKeyDownHours }
+                            placeholder="--"
+                        />
+                        <span>:</span>
+                        <input
+                            type="text"
+                            value={
+                                minutes ? minutes : ''
+                            }
+                            onChange={ handleChangeMinutes }
+                            onKeyDown={ handleKeyDownMinutes }
+                            placeholder="--"
+                        />
+                    </div>
+                    <ButtonGroup className="advgb-advtime-meridian">
+                        <Button
+                            variant={
+                                meridian === null || meridian === 'am' ? 'primary' : 'secondary'
+                            }
+                            onClick={ () => {
+                                this.setState( {
+                                    meridian: 'am'
+                                } );
+                            } }
+                        >
+                            { __( 'AM', 'advanced-gutenberg' ) }
+                        </Button>
+                        <Button
+                            variant={
+                                meridian === 'pm' ? 'primary' : 'secondary'
+                            }
+                            onClick={ () => {
+                                this.setState( {
+                                    meridian: 'pm'
+                                } );
+                            } }
+                        >
+                            { __( 'PM', 'advanced-gutenberg' ) }
+                        </Button>
+                    </ButtonGroup>
+                    { hours && minutes &&
+        				<Button
+                            className="advgb-advtime-remove-icon"
+        					icon="no-alt"
+                            onClick={
+                                () => {
+                                    this.props.onTimeClear();
+                                    this.setState( {
+                                        hours: null,
+                                        minutes: null,
+                                        meridian: 'am'
+                                    } );
+                                }
+                            }
+        				/>
+        			}
+                </div>
+            </Fragment>
+        )
+    }
+}
+export default AdvTimeClass;
+
+export function AdvTimeControl(props) {
+    const { label, currentTime, onChangeTime, onTimeClear } = props;
+
+    return(
+        <AdvTimeClass
+            label={ label }
+            currentTime={ currentTime }
+            onChangeTime={ onChangeTime }
+            onTimeClear={ onTimeClear }
+        />
+    );
 }
