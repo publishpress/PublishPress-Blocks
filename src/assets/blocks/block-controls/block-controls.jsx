@@ -1038,6 +1038,38 @@ import {
                                                             }
                                                             onTimeClear={ () => this.changeControlKey( 'schedule', 'timeTo', null ) }
                                                         />
+                                                        { ( currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
+                                                            && currentControlKey( advgbBlockControls, 'schedule', 'timeTo' )
+                                                            && ( '01/01/2020T' + currentControlKey( // We append a dummy date to make a datetime comparison
+                                                                    advgbBlockControls, 'schedule', 'timeFrom'
+                                                                ) > '01/01/2020T' + currentControlKey( // We append a dummy date to make a datetime comparison
+                                                                    advgbBlockControls, 'schedule', 'timeTo'
+                                                                )
+                                                            )
+                                                        ) &&
+                                                            <Notice
+                                                                className="advgb-notice-sidebar"
+                                                                status="warning"
+                                                                isDismissible={ false }
+                                                            >
+                                                                { __( '"To" time should be after "From" time!', 'advanced-gutenberg' ) }
+                                                            </Notice>
+                                                        }
+                                                        { (
+                                                            ( currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
+                                                                && ! currentControlKey( advgbBlockControls, 'schedule', 'timeTo' )
+                                                            ) || ( ! currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
+                                                                && currentControlKey( advgbBlockControls, 'schedule', 'timeTo' )
+                                                            )
+                                                        ) &&
+                                                            <Notice
+                                                                className="advgb-notice-sidebar"
+                                                                status="warning"
+                                                                isDismissible={ false }
+                                                            >
+                                                                { __( 'Please choose "From" time and "To" time.', 'advanced-gutenberg' ) }
+                                                            </Notice>
+                                                        }
                                                     </Fragment>
                                                 ) }
                                                 <Notice
