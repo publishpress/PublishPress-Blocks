@@ -302,6 +302,7 @@ class AdvTimeClass extends Component {
                                     meridian: 'am'
                                 } );
                             } }
+                            disabled={ hours && minutes ? false : true }
                         >
                             { __( 'AM', 'advanced-gutenberg' ) }
                         </Button>
@@ -314,6 +315,7 @@ class AdvTimeClass extends Component {
                                     meridian: 'pm'
                                 } );
                             } }
+                            disabled={ hours && minutes ? false : true }
                         >
                             { __( 'PM', 'advanced-gutenberg' ) }
                         </Button>
