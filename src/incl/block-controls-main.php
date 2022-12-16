@@ -155,10 +155,6 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
 
                         $timeTo = clone $timeNow;
                         $timeTo->modify( $bControl['timeTo'] );
-                        /*echo '<pre>';
-                        echo $timeFrom->format('Y-m-d\TH:i:s');
-                        echo $timeTo->format('Y-m-d\TH:i:s');
-                        echo '</pre>';*/
                     }
 
                     // Build current date & time
@@ -359,26 +355,6 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                             }
                         }
                     }
-
-                    /*echo '<pre>';
-                    var_dump($bControl);
-                    echo '</pre><hr>';*/
-
-                    /*echo '<pre>';
-                    var_dump($taxonomies);
-                    echo '</pre><hr>';*/
-
-                    /*echo '<pre>';
-                    var_dump($merged_tax);
-                    echo '</pre><hr>';
-
-                    echo '<pre>';
-                    var_dump($merged_terms);
-                    echo '</pre><hr>';
-
-                    echo '<pre>';
-                    var_dump($taxQuery);
-                    echo '</pre>';*/
 
                     if( count( $merged_tax ) ) {
                         $approach = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )
