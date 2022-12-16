@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { AdvDateTimeControl } from "../0-adv-components/datetime.jsx";
+import { AdvDateTimeControl, AdvDaysControl, AdvTimeControl } from "../0-adv-components/datetime.jsx";
 import {
     getOptionSuggestions,
     getOptionTitles,
@@ -986,11 +986,6 @@ import {
                                                         }
                                                     } }
                                                 />
-                                                <div className="components-form-token-field__help">
-                                                    { typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length
-                                                        ? `${advgbBlocks.timezone.replace(/_/g, ' ')} ${__( 'time', 'advanced-gutenberg' )}`
-                                                        : __( 'WordPress settings timezone', 'advanced-gutenberg' ) }
-                                                </div>
                                                 { ( currentControlKey( advgbBlockControls, 'schedule', 'dateFrom' ) > currentControlKey( advgbBlockControls, 'schedule', 'dateTo' ) ) &&
                                                     <Notice
                                                         className="advgb-notice-sidebar"
@@ -1008,6 +1003,106 @@ import {
                                                         help={ __( 'If Recurring is enabled, this block will be displayed every year between the selected dates.', 'advanced-gutenberg' ) }
                                                     />
                                                 }
+                                                <AdvDaysControl
+                                                    label={ __( 'On these days (optional)', 'advanced-gutenberg' ) }
+                                                    days={
+                                                        !! currentControlKey( advgbBlockControls, 'schedule', 'days' )
+                                                            ? currentControlKey( advgbBlockControls, 'schedule', 'days' )
+                                                            : []
+                                                    }
+                                                    onChangeDays={ ( value ) => this.changeControlKey( 'schedule', 'days', value ) }
+                                                />
+                                                { currentControlKey( advgbBlockControls, 'schedule', 'days' )
+                                                    && ( currentControlKey( advgbBlockControls, 'schedule', 'days' ).length > 0 ) &&
+                                                    <Fragment>
+                                                        <AdvTimeControl
+                                                            label={ __( 'From', 'advanced-gutenberg' ) }
+                                                            currentTime={
+                                                                !! currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
+                                                                    ? currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
+                                                                    : null
+                                                            }
+                                                            onChangeTime={
+                                                                ( newTime ) => this.changeControlKey(
+                                                                    'schedule',
+                                                                    'timeFrom',
+                                                                    newTime
+                                                                )
+                                                            }
+                                                            onTimeClear={ () => this.changeControlKey( 'schedule', 'timeFrom', null ) }
+                                                        />
+                                                        <AdvTimeControl
+                                                            label={ __( 'To', 'advanced-gutenberg' ) }
+                                                            currentTime={
+                                                                currentControlKey( advgbBlockControls, 'schedule', 'timeTo' ) || null
+                                                            }
+                                                            onChangeTime={
+                                                                ( newTime ) => this.changeControlKey(
+                                                                    'schedule',
+                                                                    'timeTo',
+                                                                    newTime
+                                                                )
+                                                            }
+                                                            onTimeClear={ () => this.changeControlKey( 'schedule', 'timeTo', null ) }
+                                                        />
+                                                    </Fragment>
+                                                }
+                                                { (
+                                                    (
+                                                        currentControlKey( advgbBlockControls, 'schedule', 'days' )
+                                                        && currentControlKey( advgbBlockControls, 'schedule', 'days' ).length > 0
+                                                    ) && (
+                                                        currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
+                                                        && currentControlKey( advgbBlockControls, 'schedule', 'timeTo' )
+                                                        && (
+                                                            '01/01/2020T' + currentControlKey( // We append a dummy date to make a datetime comparison
+                                                                advgbBlockControls, 'schedule', 'timeFrom'
+                                                            ) >= '01/01/2020T' + currentControlKey( // We append a dummy date to make a datetime comparison
+                                                                advgbBlockControls, 'schedule', 'timeTo'
+                                                            )
+                                                        )
+                                                    )
+                                                ) &&
+                                                    <Notice
+                                                        className="advgb-notice-sidebar"
+                                                        status="warning"
+                                                        isDismissible={ false }
+                                                    >
+                                                        { __( '"To" time should be after "From" time!', 'advanced-gutenberg' ) }
+                                                    </Notice>
+                                                }
+                                                { (
+                                                    (
+                                                        currentControlKey( advgbBlockControls, 'schedule', 'days' )
+                                                        && currentControlKey( advgbBlockControls, 'schedule', 'days' ).length > 0
+                                                    ) && (
+                                                        (
+                                                            currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
+                                                            && ! currentControlKey( advgbBlockControls, 'schedule', 'timeTo' )
+                                                        ) || (
+                                                            ! currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
+                                                            && currentControlKey( advgbBlockControls, 'schedule', 'timeTo' )
+                                                        )
+                                                    )
+                                                ) &&
+                                                    <Notice
+                                                        className="advgb-notice-sidebar"
+                                                        status="warning"
+                                                        isDismissible={ false }
+                                                    >
+                                                        { __( 'Please choose "From" time and "To" time.', 'advanced-gutenberg' ) }
+                                                    </Notice>
+                                                }
+
+                                                <Notice
+                                                    className="advgb-notice-sidebar"
+                                                    status="info"
+                                                    isDismissible={ false }
+                                                >
+                                                    { typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length
+                                                        ? `${advgbBlocks.timezone.replace(/_/g, ' ')} ${__( 'time', 'advanced-gutenberg' )}`
+                                                        : __( 'WordPress settings timezone', 'advanced-gutenberg' ) }
+                                                </Notice>
                                             </div>
                                         </Fragment>
                                     ) }

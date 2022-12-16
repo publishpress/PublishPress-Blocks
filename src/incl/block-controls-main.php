@@ -115,13 +115,19 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                 // Schedule control
                 default:
                 case 'schedule':
-                    $bControl = $block['attrs']['advgbBlockControls'][$key];
-                    $dateFrom = $dateTo = $recurring = null;
+                    $bControl   = $block['attrs']['advgbBlockControls'][$key];
+                    $dateFrom   = $dateTo = $recurring = $timeFrom = $timeTo = null;
+                    $days       = isset( $bControl['days'] ) && is_array( $bControl['days'] ) && count( $bControl['days'] )
+                                    ? $bControl['days'] : [];
+
+                    // Start showing
                     if ( ! empty( $bControl['dateFrom'] ) ) {
                         $dateFrom = \DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateFrom'] );
                         // Reset seconds to zero to enable proper comparison
                         $dateFrom->setTime( $dateFrom->format('H'), $dateFrom->format('i'), 0 );
                     }
+
+                    // Stop showing
                     if ( ! empty( $bControl['dateTo'] ) ) {
                         $dateTo	= \DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateTo'] );
                         // Reset seconds to zero to enable proper comparison
@@ -133,7 +139,25 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                         }
                     }
 
-                    if ( $dateFrom || $dateTo ) {
+                    // Days
+                    if( count( $days ) ) {
+                        $days = array_map( 'intval', $days );
+                    }
+
+                    // Time from and Time to
+                    if ( ! empty( $bControl['timeFrom'] ) && ! empty( $bControl['timeTo'] ) ) {
+
+                        // Get current date to replace later time with "Time from" and "Time to"
+                        $timeNow = \DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
+
+                        $timeFrom = clone $timeNow;
+                        $timeFrom->modify( $bControl['timeFrom'] );
+
+                        $timeTo = clone $timeNow;
+                        $timeTo->modify( $bControl['timeTo'] );
+                    }
+
+                    if ( $dateFrom || $dateTo || $days || ( $timeFrom && $timeTo ) ) {
                         // Fetch current time keeping in mind the timezone
                         $now = \DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
 
@@ -144,17 +168,28 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                         $nowFrom = clone $now;
                         $nowFrom->setTime( $now->format('H'), $now->format('i'), 0 );
 
+                        // Timezone object
+                        //$timezone = wp_timezone();
+
+                        // Decide if block is displayed or not
                         if( $recurring ) {
                             // Make the year same as today's
                             $dateFrom->setDate( $nowFrom->format('Y'), $dateFrom->format('m'), $dateFrom->format('j') );
                             $dateTo->setDate( $nowFrom->format('Y'), $dateTo->format('m'), $dateTo->format('j') );
                         }
 
-                        if ( ! ( ( ! $dateFrom || $dateFrom->getTimestamp() <= $nowFrom->getTimestamp() ) && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) ) ) {
+                        if ( ! (
+                            ( ! $dateFrom || $dateFrom->getTimestamp() <= $nowFrom->getTimestamp() ) // No "Start showing", or "Start showing" <= Now
+                            && ( ! $dateTo || $now->getTimestamp() < $dateTo->getTimestamp() ) // No "Stop showing", or now < "Stop showing"
+                            && ( ! count( $days ) || in_array( $nowFrom->format('N'), $days ) ) // "These days"
+                            && ( ! $timeFrom || $timeFrom->getTimestamp() <= $nowFrom->getTimestamp() ) // No "Time from", or "Time from" <= Now
+                            && ( ! $timeTo || $now->getTimestamp() < $timeTo->getTimestamp() ) // No "Time to", or now < "Time To"
+                        ) ) {
                             // No visible block
                             return false;
                         }
                     }
+
                 break;
 
                 // User role control
@@ -319,26 +354,6 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                             }
                         }
                     }
-
-                    /*echo '<pre>';
-                    var_dump($bControl);
-                    echo '</pre><hr>';*/
-
-                    /*echo '<pre>';
-                    var_dump($taxonomies);
-                    echo '</pre><hr>';*/
-
-                    /*echo '<pre>';
-                    var_dump($merged_tax);
-                    echo '</pre><hr>';
-
-                    echo '<pre>';
-                    var_dump($merged_terms);
-                    echo '</pre><hr>';
-
-                    echo '<pre>';
-                    var_dump($taxQuery);
-                    echo '</pre>';*/
 
                     if( count( $merged_tax ) ) {
                         $approach = isset( $bControl['approach'] ) && ! empty( sanitize_text_field( $bControl['approach'] ) )

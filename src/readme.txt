@@ -264,7 +264,8 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.2 - 1 Dec 2022 =
+= 3.1.2 - 16 Dec 2022 =
+  * Add: Days of the week and time range settings to Schedule control
   * Add: Term archives and pages control
   * Add: Bring back map files
   * Add: Display timezone below dates
