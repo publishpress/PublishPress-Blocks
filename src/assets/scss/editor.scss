@@ -1,4 +1,5 @@
 // Editor
+#site-editor,
 #widgets-editor,
 #editor,
 .customize-control-sidebar_block_editor {
@@ -38,6 +39,10 @@
 
   .advgb-notice-sidebar {
     margin: 10px 0 30px;
+
+    &.is-info {
+      background: #e8f5f9;
+    }
   }
 
   // Hide inserter for Adv Tab item to avoid inserting tabs inside tabs
