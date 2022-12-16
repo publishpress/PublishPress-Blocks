@@ -78,15 +78,14 @@ export function AdvDateTimeControl(props) {
 }
 
 export function AdvDaysControl(props) {
-    // One digit day abbreviations. https://eventguide.com/topics/one_digit_day_abbreviations.html
     const allDays = [
-        { slug: 'u', label: __( 'S', 'advanced-gutenberg' ) }, // Sunday
-        { slug: 'm', label: __( 'M', 'advanced-gutenberg' ) }, // Monday
-        { slug: 't', label: __( 'T', 'advanced-gutenberg' ) }, // Tuesday
-        { slug: 'w', label: __( 'W', 'advanced-gutenberg' ) }, // Wednesday
-        { slug: 'r', label: __( 'T', 'advanced-gutenberg' ) }, // Thursday
-        { slug: 'f', label: __( 'F', 'advanced-gutenberg' ) }, // Friday
-        { slug: 's', label: __( 'S', 'advanced-gutenberg' ) }  // Saturday
+        { slug: 0, label: __( 'S', 'advanced-gutenberg' ) }, // Sunday
+        { slug: 1, label: __( 'M', 'advanced-gutenberg' ) }, // Monday
+        { slug: 2, label: __( 'T', 'advanced-gutenberg' ) }, // Tuesday
+        { slug: 3, label: __( 'W', 'advanced-gutenberg' ) }, // Wednesday
+        { slug: 4, label: __( 'T', 'advanced-gutenberg' ) }, // Thursday
+        { slug: 5, label: __( 'F', 'advanced-gutenberg' ) }, // Friday
+        { slug: 6, label: __( 'S', 'advanced-gutenberg' ) }  // Saturday
     ];
 
     const {

@@ -1057,7 +1057,7 @@ import {
                                                         && (
                                                             '01/01/2020T' + currentControlKey( // We append a dummy date to make a datetime comparison
                                                                 advgbBlockControls, 'schedule', 'timeFrom'
-                                                            ) > '01/01/2020T' + currentControlKey( // We append a dummy date to make a datetime comparison
+                                                            ) >= '01/01/2020T' + currentControlKey( // We append a dummy date to make a datetime comparison
                                                                 advgbBlockControls, 'schedule', 'timeTo'
                                                             )
                                                         )
