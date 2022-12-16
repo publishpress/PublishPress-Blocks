@@ -157,7 +157,6 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                         $timeTo->modify( $bControl['timeTo'] );
                     }
 
-                    // Build current date & time
                     if ( $dateFrom || $dateTo || $days || ( $timeFrom && $timeTo ) ) {
                         // Fetch current time keeping in mind the timezone
                         $now = \DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
