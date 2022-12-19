@@ -660,15 +660,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             add_action('admin_head', array($this, 'setBlocksSpacingAdmin'));
 
-            wp_enqueue_style('dashicons');
-
             global $pagenow;
 
-            if (
-                is_admin()
+            if ( is_admin()
                 && $this->settingIsEnabled( 'enable_advgb_blocks' )
                 && $pagenow !== 'site-editor.php'
             ) {
+                wp_enqueue_style( 'dashicons' );
                 wp_enqueue_style(
                     'advgb_recent_posts_styles',
                     plugins_url('assets/css/recent-posts.css', dirname(__FILE__)),
@@ -1673,7 +1671,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
             );
             wp_register_style(
                 'slick_theme_style',
-                plugins_url('assets/css/slick-theme.css', dirname(__FILE__))
+                plugins_url('assets/css/slick-theme.css', dirname(__FILE__)),
+                ['dashicons'],
+                ADVANCED_GUTENBERG_VERSION
             );
             wp_register_style(
                 'material_icon_font',
@@ -4124,6 +4124,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 case 'advgb/list':
                     $html_style = $this->advgb_AdvancedListStyles($blockAttrs);
+                    $this->advgb_AdvancedListAssets();
                     break;
 
                 case 'advgb/button':
@@ -5146,6 +5147,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgb_AdvancedTestimonialAssets($blockAttrs)
         {
+            wp_enqueue_style('dashicons');
+
             // When sliderView exists...
             if (array_key_exists('sliderView', $blockAttrs)) {
                 wp_enqueue_style('slick_style');
@@ -5184,6 +5187,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgb_AdvancedLoginRegisterAssets($blockAttrs)
         {
+            wp_enqueue_style( 'dashicons' );
             wp_enqueue_script('jquery-effects-slide');
             wp_enqueue_script(
                 'advgb_lores_js',
@@ -5207,6 +5211,17 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
+         * Assets for List Block
+         *
+         * @since   3.1.2
+         * @return  void
+         */
+        public function advgb_AdvancedListAssets()
+        {
+            wp_enqueue_style('dashicons');
+        }
+
+        /**
          * Assets for Recent Posts Block
          *
          * @since   2.11.4
@@ -5215,6 +5230,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgb_AdvancedRecentPostsAssets($blockAttrs)
         {
+            wp_enqueue_style('dashicons');
             wp_enqueue_style('advgb_recent_posts_styles');
 
             if (array_key_exists('postView', $blockAttrs) && $blockAttrs['postView'] == 'slider') {

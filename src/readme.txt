@@ -264,7 +264,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.2 - 16 Dec 2022 =
+= 3.1.2 - 19 Dec 2022 =
   * Add: Days of the week and time range settings to Schedule control
   * Add: Term archives and pages control
   * Add: Bring back map files
@@ -273,6 +273,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: For User role control, when no role is selected, the block is hidden to everyone
   * Fix: Hide widgets HTML wrapper when its block is not visible
   * Fix: Set autoload to 'no' for bigger size options
+  * Fix: Load dashicons in frontend if blocks are using it
 
 = 3.1.1 - 16 Nov 2022 =
   * Add: Base path constant
