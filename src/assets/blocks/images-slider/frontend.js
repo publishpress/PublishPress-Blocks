@@ -3,4 +3,8 @@ jQuery(document).ready(function ( $ ) {
         dots: true,
         adaptiveHeight: true,
     })
+
+    if( $('.advgb-images-slider-block > .slick-initialized').length ) {
+        $('a.advgb-image-slider-overlay').attr('tabindex',-1).wrap('<div aria-hidden="true"></div>');
+    }
 });
