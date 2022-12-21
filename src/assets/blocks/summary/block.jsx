@@ -200,7 +200,9 @@ import latinize from "latinize";
             filteredBlocks.map(function ( block ) {
                 if (block.name === 'core/columns' || block.name === 'core/cover' || block.name === 'core/group') {
                     SummaryBlock.getHeadingBlocksFromColumns( block, headingBlocks );
-                } else if( block.name === 'advgb/accordions' ) {
+                } else if( block.name === 'advgb/accordions'
+                    && advgbBlocks.advgb_pro === '1' // Only in Pro
+                ) {
                     SummaryBlock.getHeadingsfromAccordion( block, headingBlocks );
                 } else {
                     headingBlocks.push( block );
