@@ -275,6 +275,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Hide widgets HTML wrapper when its block is not visible
   * Fix: Set autoload to 'no' for bigger size options
   * Fix: Load dashicons in frontend if blocks are using it
+  * Add: aria-label to overlay link for Images Slider block
 
 = 3.1.1 - 16 Nov 2022 =
   * Add: Base path constant
