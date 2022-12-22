@@ -1132,6 +1132,10 @@ import {
                                                             label: __( 'Show to everyone', 'advanced-gutenberg' )
                                                         },
                                                         {
+                                                            value: 'hidden',
+                                                            label: __( 'Hide from everyone', 'advanced-gutenberg' )
+                                                        },
+                                                        {
                                                             value: 'login',
                                                             label: __( 'Show to logged in users', 'advanced-gutenberg' )
                                                         },

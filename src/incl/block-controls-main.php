@@ -219,6 +219,10 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                             return true;
                         break;
 
+                        case 'hidden':
+                            return false;
+                        break;
+
                         case 'login':
                             return is_user_logged_in() ? true : false;
                         break;
