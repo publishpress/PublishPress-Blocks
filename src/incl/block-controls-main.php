@@ -144,16 +144,23 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                         $days = array_map( 'intval', $days );
                     }
 
-                    // Time from and Time to
-                    if ( ! empty( $bControl['timeFrom'] ) && ! empty( $bControl['timeTo'] ) ) {
+                    /*
+                     * Time from and Time to exists and are valid.
+                     * Valid times: "02:00:00", "19:35:00"
+                     * Invalid times: "-06:00:00", "25:00:00"
+                     */
+                    if ( ! empty( $bControl['timeFrom'] )
+                        && ! empty( $bControl['timeTo'] )
+                        && strtotime( $bControl['timeFrom'] ) !== false
+                        && strtotime( $bControl['timeTo'] ) !== false
+                    ) {
+                        // Get current datetime
+                        $timeNow    = \DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
+                        $timeFrom   = clone $timeNow;
+                        $timeTo     = clone $timeNow;
 
-                        // Get current date to replace later time with "Time from" and "Time to"
-                        $timeNow = \DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
-
-                        $timeFrom = clone $timeNow;
+                        // Replace with our time attributes in previously generated datetime
                         $timeFrom->modify( $bControl['timeFrom'] );
-
-                        $timeTo = clone $timeNow;
                         $timeTo->modify( $bControl['timeTo'] );
                     }
 
@@ -161,10 +168,11 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                         // Fetch current time keeping in mind the timezone
                         $now = \DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
 
-                        // Reset seconds to zero to enable proper comparison
-                        // as the from and to dates have those as 0
-                        // but do this only for the from comparison
-                        // as we need the block to stop showing at the right time and not 1 minute extra
+                        /* Reset seconds to zero to enable proper comparison
+                         * as the from and to dates have those as 0
+                         * but do this only for the from comparison
+                         * as we need the block to stop showing at the right time and not 1 minute extra
+                         */
                         $nowFrom = clone $now;
                         $nowFrom->setTime( $now->format('H'), $now->format('i'), 0 );
 

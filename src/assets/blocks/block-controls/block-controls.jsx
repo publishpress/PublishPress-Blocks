@@ -1012,54 +1012,47 @@ import {
                                                     }
                                                     onChangeDays={ ( value ) => this.changeControlKey( 'schedule', 'days', value ) }
                                                 />
-                                                { currentControlKey( advgbBlockControls, 'schedule', 'days' )
-                                                    && ( currentControlKey( advgbBlockControls, 'schedule', 'days' ).length > 0 ) &&
-                                                    <Fragment>
-                                                        <AdvTimeControl
-                                                            label={ __( 'From', 'advanced-gutenberg' ) }
-                                                            currentTime={
-                                                                !! currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
-                                                                    ? currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
-                                                                    : null
-                                                            }
-                                                            onChangeTime={
-                                                                ( newTime ) => this.changeControlKey(
-                                                                    'schedule',
-                                                                    'timeFrom',
-                                                                    newTime
-                                                                )
-                                                            }
-                                                            onTimeClear={ () => this.changeControlKey( 'schedule', 'timeFrom', null ) }
-                                                        />
-                                                        <AdvTimeControl
-                                                            label={ __( 'To', 'advanced-gutenberg' ) }
-                                                            currentTime={
-                                                                currentControlKey( advgbBlockControls, 'schedule', 'timeTo' ) || null
-                                                            }
-                                                            onChangeTime={
-                                                                ( newTime ) => this.changeControlKey(
-                                                                    'schedule',
-                                                                    'timeTo',
-                                                                    newTime
-                                                                )
-                                                            }
-                                                            onTimeClear={ () => this.changeControlKey( 'schedule', 'timeTo', null ) }
-                                                        />
-                                                    </Fragment>
-                                                }
+                                                <label style={ { marginBottom: 8, display: 'block' } }>
+                                                    { __( 'Between these times (optional)', 'advanced-gutenberg' ) }
+                                                </label>
+                                                <AdvTimeControl
+                                                    label={ __( 'From', 'advanced-gutenberg' ) }
+                                                    currentTime={
+                                                        !! currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
+                                                            ? currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
+                                                            : null
+                                                    }
+                                                    onChangeTime={
+                                                        ( newTime ) => this.changeControlKey(
+                                                            'schedule',
+                                                            'timeFrom',
+                                                            newTime
+                                                        )
+                                                    }
+                                                    onTimeClear={ () => this.changeControlKey( 'schedule', 'timeFrom', null ) }
+                                                />
+                                                <AdvTimeControl
+                                                    label={ __( 'To', 'advanced-gutenberg' ) }
+                                                    currentTime={
+                                                        currentControlKey( advgbBlockControls, 'schedule', 'timeTo' ) || null
+                                                    }
+                                                    onChangeTime={
+                                                        ( newTime ) => this.changeControlKey(
+                                                            'schedule',
+                                                            'timeTo',
+                                                            newTime
+                                                        )
+                                                    }
+                                                    onTimeClear={ () => this.changeControlKey( 'schedule', 'timeTo', null ) }
+                                                />
                                                 { (
-                                                    (
-                                                        currentControlKey( advgbBlockControls, 'schedule', 'days' )
-                                                        && currentControlKey( advgbBlockControls, 'schedule', 'days' ).length > 0
-                                                    ) && (
-                                                        currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
-                                                        && currentControlKey( advgbBlockControls, 'schedule', 'timeTo' )
-                                                        && (
-                                                            '01/01/2020T' + currentControlKey( // We append a dummy date to make a datetime comparison
-                                                                advgbBlockControls, 'schedule', 'timeFrom'
-                                                            ) >= '01/01/2020T' + currentControlKey( // We append a dummy date to make a datetime comparison
-                                                                advgbBlockControls, 'schedule', 'timeTo'
-                                                            )
+                                                    currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
+                                                    && currentControlKey( advgbBlockControls, 'schedule', 'timeTo' )
+                                                    && (
+                                                        '01/01/2020T' + currentControlKey( // We append a dummy date to make a datetime comparison
+                                                            advgbBlockControls, 'schedule', 'timeFrom'
+                                                        ) >= '01/01/2020T' + currentControlKey( // We append a dummy date to make a datetime comparison
+                                                            advgbBlockControls, 'schedule', 'timeTo'
                                                         )
                                                     )
                                                 ) &&
@@ -1073,16 +1066,11 @@ import {
                                                 }
                                                 { (
                                                     (
-                                                        currentControlKey( advgbBlockControls, 'schedule', 'days' )
-                                                        && currentControlKey( advgbBlockControls, 'schedule', 'days' ).length > 0
-                                                    ) && (
-                                                        (
-                                                            currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
-                                                            && ! currentControlKey( advgbBlockControls, 'schedule', 'timeTo' )
-                                                        ) || (
-                                                            ! currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
-                                                            && currentControlKey( advgbBlockControls, 'schedule', 'timeTo' )
-                                                        )
+                                                        currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
+                                                        && ! currentControlKey( advgbBlockControls, 'schedule', 'timeTo' )
+                                                    ) || (
+                                                        ! currentControlKey( advgbBlockControls, 'schedule', 'timeFrom' )
+                                                        && currentControlKey( advgbBlockControls, 'schedule', 'timeTo' )
                                                     )
                                                 ) &&
                                                     <Notice
