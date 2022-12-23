@@ -272,12 +272,12 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Add: Minify compiled JSX files
   * Add: Support for Accordion items in Table of Contents block for Pro version
   * Add: Hide from everyone option to User roles control
+  * Add: aria-label to overlay link for Images Slider block
   * Fix: For User role control, when no role is selected, the block is hidden to everyone
   * Fix: Hide widgets HTML wrapper when its block is not visible
   * Fix: Set autoload to 'no' for bigger size options
   * Fix: Load dashicons in frontend if blocks are using it
   * Fix: Optimize PublishPress blocks code to enqueue assets
-  * Add: aria-label to overlay link for Images Slider block
 
 = 3.1.1 - 16 Nov 2022 =
   * Add: Base path constant
