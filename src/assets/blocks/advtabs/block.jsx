@@ -5,7 +5,7 @@
     const { registerBlockType, createBlock, cloneBlock } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpBlockEditor;
     const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl, Button, TextControl } = wpComponents;
-    const { withDispatch, select, dispatch } = wp.data;
+    const { withDispatch, withSelect, select, dispatch } = wp.data;
     const { compose } = wpCompose;
     const { times } = lodash;
 
@@ -73,8 +73,8 @@
             }
         }
 
-        componentDidUpdate() {
-            const { attributes, setAttributes } = this.props;
+        componentDidUpdate(prevProps) {
+            const { attributes, setAttributes, innerBlocks } = this.props;
             const { isTransform } = attributes;
 
             if(isTransform) {
@@ -82,6 +82,17 @@
                     isTransform: false
                 } );
                 this.props.updateTabActive( 0 );
+            }
+
+            /* Fix when block is inserted (empty innerBlocks array), the 3 default tabs are displayed at once
+             * https://github.com/publishpress/PublishPress-Blocks/issues/1117
+             */
+            if( ! prevProps.innerBlocks.length ) {
+                times( innerBlocks.length, n => {
+                    wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( innerBlocks[ n ].clientId, {
+                        id: n,
+                    } );
+                } );
             }
         }
 
@@ -711,28 +722,30 @@
             anchor: true
         },
         edit: compose(
-            withDispatch( (dispatch, { clientId }, { select }) => {
-                const {
-                    getBlock,
-                } = select( 'core/block-editor' );
-                const {
-                    updateBlockAttributes,
-                } = dispatch( 'core/block-editor' );
-                const block = getBlock( clientId );
+            withSelect( (select, ownProps ) => {
+                const { clientId } = ownProps;
+
+                return {
+                    innerBlocks: select('core/block-editor').getBlock( clientId ).innerBlocks,
+                };
+            } ),
+            withDispatch( (dispatch, { clientId, innerBlocks }, { select } ) => {
+                const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+
                 return {
                     resetOrder() {
-                        times( block.innerBlocks.length, n => {
-                            updateBlockAttributes( block.innerBlocks[ n ].clientId, {
+                        times( innerBlocks.length, n => {
+                            updateBlockAttributes( innerBlocks[ n ].clientId, {
                                 id: n,
                             } );
                         } );
                     },
                     updateTabActive(tabActive) {
-                        updateBlockAttributes( block.clientId, {
+                        updateBlockAttributes( clientId, {
                             tabActive: tabActive,
                         } );
-                        times( block.innerBlocks.length, n => {
-                            updateBlockAttributes( block.innerBlocks[ n ].clientId, {
+                        times( innerBlocks.length, n => {
+                            updateBlockAttributes( innerBlocks[ n ].clientId, {
                                 tabActive: tabActive,
                             } );
                         } );

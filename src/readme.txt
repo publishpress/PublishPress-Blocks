@@ -264,7 +264,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.2 - 23 Dec 2022 =
+= 3.1.2 - 2 Jan 2023 =
   * Add: Days of the week and time range settings to Schedule control
   * Add: Term archives and pages control
   * Add: Bring back map files
@@ -278,6 +278,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Set autoload to 'no' for bigger size options
   * Fix: Load dashicons in frontend if blocks are using it
   * Fix: Optimize PublishPress blocks code to enqueue assets
+  * Fix: All tabs content displayed at once
 
 = 3.1.1 - 16 Nov 2022 =
   * Add: Base path constant
