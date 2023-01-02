@@ -3,8 +3,6 @@ defined( 'ABSPATH' ) || die;
 
 $schedule_control   = PublishPress\Blocks\Controls::getControlValue( 'schedule', 1 );
 $user_role_control  = PublishPress\Blocks\Controls::getControlValue( 'user_role', 1 );
-$browser_control    = PublishPress\Blocks\Controls::getControlValue( 'browser', 1 );
-$platform_control   = PublishPress\Blocks\Controls::getControlValue( 'platform', 1 );
 $archive_control    = PublishPress\Blocks\Controls::getControlValue( 'archive', 1 );
 $page_control       = PublishPress\Blocks\Controls::getControlValue( 'page', 1 );
 ?>
@@ -43,44 +41,6 @@ $page_control       = PublishPress\Blocks\Controls::getControlValue( 'page', 1 )
                     <?php
                     _e(
                         'Choose which users can see your blocks.',
-                        'advanced-gutenberg'
-                    )
-                    ?>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">
-                <?php _e( 'Browsers', 'advanced-gutenberg' ) ?>
-            </th>
-            <td>
-                <label>
-                    <input type="checkbox" name="browser_control"
-                           value="1"
-                           <?php echo $browser_control ? ' checked' : '' ?>
-                    />
-                    <?php
-                    _e(
-                        'Choose in which browsers your blocks can be displayed.',
-                        'advanced-gutenberg'
-                    )
-                    ?>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">
-                <?php _e( 'Platforms', 'advanced-gutenberg' ) ?>
-            </th>
-            <td>
-                <label>
-                    <input type="checkbox" name="platform_control"
-                           value="1"
-                           <?php echo $platform_control ? ' checked' : '' ?>
-                    />
-                    <?php
-                    _e(
-                        'Choose in which platforms your blocks can be displayed.',
                         'advanced-gutenberg'
                     )
                     ?>

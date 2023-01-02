@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41908ce88e985cebf51bd6c58169cd84",
+    "content-hash": "9fe0ce431fd3932133592d5756012e4c",
     "packages": [
         {
             "name": "pimple/pimple",
@@ -306,56 +306,6 @@
                 "source": "https://github.com/publishpress/WordPress-Version-Notices/tree/1.1.4"
             },
             "time": "2022-06-06T15:45:54+00:00"
-        },
-        {
-            "name": "wolfcast/browser-detection",
-            "version": "2.9.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Wolfcast/BrowserDetection.git",
-                "reference": "77fad169776d6c4fc61fa740fb16495cafc505eb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Wolfcast/BrowserDetection/zipball/77fad169776d6c4fc61fa740fb16495cafc505eb",
-                "reference": "77fad169776d6c4fc61fa740fb16495cafc505eb",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "lib/BrowserDetection.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Alexandre Valiquette",
-                    "homepage": "https://wolfcast.com/",
-                    "role": "Lead developer"
-                }
-            ],
-            "description": "The Wolfcast BrowserDetection PHP class facilitates the identification of the user's environment such as Web browser, version, platform family, platform version or if it's a mobile device or not.",
-            "homepage": "https://github.com/Wolfcast/BrowserDetection",
-            "keywords": [
-                "browser",
-                "detection",
-                "environment",
-                "mobile",
-                "platform",
-                "version"
-            ],
-            "support": {
-                "issues": "https://github.com/Wolfcast/BrowserDetection/issues",
-                "source": "https://github.com/Wolfcast/BrowserDetection/tree/2.9.7"
-            },
-            "time": "2022-09-21T04:06:27+00:00"
         }
     ],
     "packages-dev": [],
