@@ -1124,7 +1124,7 @@ import {
                                     // Placeholder message when Archive and Page controls not available in post edit
                                     <Fragment>
                                         <hr className="advgb-hr-separator" />
-                                        <div className="components-form-token-field__help">
+                                        <div>
                                             { __( 'Term archives & Pages controls are available in Widgets and FSE screens.', 'advanced-gutenberg' ) }
                                         </div>
                                     </Fragment>
