@@ -2,7 +2,7 @@ import hourConvert from 'hour-convert';
 
 const { ButtonGroup, Button, DateTimePicker, TextControl, CheckboxControl, Popover, Tooltip } = wp.components;
 const { Component, Fragment, useState } = wp.element;
-const { __ } = wp.i18n;
+const { __, _x } = wp.i18n;
 
 export function AdvDateTimeControl(props) {
     const [popupState, setPopupState] = useState( false );
@@ -79,13 +79,13 @@ export function AdvDateTimeControl(props) {
 
 export function AdvDaysControl(props) {
     const allDays = [
-        { slug: 0, label: __( 'S', 'advanced-gutenberg' ) }, // Sunday
+        { slug: 0, label: _x( 'S', 'Sunday first letter', 'advanced-gutenberg' ) }, // Sunday
         { slug: 1, label: __( 'M', 'advanced-gutenberg' ) }, // Monday
-        { slug: 2, label: __( 'T', 'advanced-gutenberg' ) }, // Tuesday
+        { slug: 2, label: _x( 'T', 'Tuesday first letter', 'advanced-gutenberg' ) }, // Tuesday
         { slug: 3, label: __( 'W', 'advanced-gutenberg' ) }, // Wednesday
-        { slug: 4, label: __( 'T', 'advanced-gutenberg' ) }, // Thursday
+        { slug: 4, label: _x( 'T', 'Thursday first letter', 'advanced-gutenberg' ) }, // Thursday
         { slug: 5, label: __( 'F', 'advanced-gutenberg' ) }, // Friday
-        { slug: 6, label: __( 'S', 'advanced-gutenberg' ) }  // Saturday
+        { slug: 6, label: _x( 'S', 'Saturday first letter', 'advanced-gutenberg' ) }  // Saturday
     ];
 
     const {

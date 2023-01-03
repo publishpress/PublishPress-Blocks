@@ -5167,7 +5167,9 @@ var _wp$element = wp.element,
     Component = _wp$element.Component,
     Fragment = _wp$element.Fragment,
     useState = _wp$element.useState;
-var __ = wp.i18n.__;
+var _wp$i18n = wp.i18n,
+    __ = _wp$i18n.__,
+    _x = _wp$i18n._x;
 function AdvDateTimeControl(props) {
     var _useState = useState(false),
         _useState2 = _slicedToArray(_useState, 2),
@@ -5264,13 +5266,13 @@ function AdvDateTimeControl(props) {
 }
 
 function AdvDaysControl(props) {
-    var allDays = [{ slug: 0, label: __('S', 'advanced-gutenberg') }, // Sunday
+    var allDays = [{ slug: 0, label: _x('S', 'Sunday first letter', 'advanced-gutenberg') }, // Sunday
     { slug: 1, label: __('M', 'advanced-gutenberg') }, // Monday
-    { slug: 2, label: __('T', 'advanced-gutenberg') }, // Tuesday
+    { slug: 2, label: _x('T', 'Tuesday first letter', 'advanced-gutenberg') }, // Tuesday
     { slug: 3, label: __('W', 'advanced-gutenberg') }, // Wednesday
-    { slug: 4, label: __('T', 'advanced-gutenberg') }, // Thursday
+    { slug: 4, label: _x('T', 'Thursday first letter', 'advanced-gutenberg') }, // Thursday
     { slug: 5, label: __('F', 'advanced-gutenberg') }, // Friday
-    { slug: 6, label: __('S', 'advanced-gutenberg') // Saturday
+    { slug: 6, label: _x('S', 'Saturday first letter', 'advanced-gutenberg') // Saturday
     }];
 
     var label = props.label,
