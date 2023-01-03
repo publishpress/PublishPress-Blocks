@@ -457,7 +457,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                     wp_enqueue_script(
                         'advgb_blocks',
-                        plugins_url('assets/blocks/blocks.min.js', dirname(__FILE__)),
+                        plugins_url('assets/blocks/blocks.js', dirname(__FILE__)),
                         array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', $wp_editor_dep, 'wp-plugins', 'wp-compose' ),
                         ADVANCED_GUTENBERG_VERSION,
                         true
@@ -467,7 +467,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     if( ! defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
                         wp_enqueue_script(
                             'advgb_pro_ad_js',
-                            plugins_url( 'assets/blocks/pro-ad.min.js', dirname( __FILE__ ) ),
+                            plugins_url( 'assets/blocks/pro-ad.js', dirname( __FILE__ ) ),
                             ['advgb_blocks'],
                             ADVANCED_GUTENBERG_VERSION,
                             true
@@ -484,7 +484,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 if( $this->settingIsEnabled( 'enable_block_access' ) ) {
                     wp_enqueue_script(
                         'advgb_blocks_editor',
-                        plugins_url('assets/blocks/editor.min.js', dirname(__FILE__)),
+                        plugins_url('assets/blocks/editor.js', dirname(__FILE__)),
                         array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', $wp_editor_dep, 'wp-plugins', 'wp-compose' ),
                         ADVANCED_GUTENBERG_VERSION,
                         true
@@ -492,7 +492,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
             }
 
-            // Don't load custom-styles.min.js in widgets.php, Theme Customizer > Widgets and Site Editor
+            // Don't load custom-styles.js in widgets.php, Theme Customizer > Widgets and Site Editor
             if(
                 $this->settingIsEnabled( 'enable_custom_styles' )
                 && $currentScreen->id !== 'widgets'
@@ -501,18 +501,18 @@ if(!class_exists('AdvancedGutenbergMain')) {
             ) {
                 wp_enqueue_script(
                     'advgb_custom_styles_script',
-                    plugins_url('assets/blocks/custom-styles.min.js', dirname(__FILE__)),
+                    plugins_url('assets/blocks/custom-styles.js', dirname(__FILE__)),
                     array( 'wp-blocks' ),
                     ADVANCED_GUTENBERG_VERSION,
                     true
                 );
             }
 
-            // Don't load post-sidebar.min.js in widgets.php, Theme Customizer > Widgets and Site Editor
+            // Don't load post-sidebar.js in widgets.php, Theme Customizer > Widgets and Site Editor
             if( $currentScreen->id !== 'site-editor' && $currentScreen->id !== 'widgets' && is_customize_preview() === false ) {
                 wp_enqueue_script(
                     'advgb_post_sidebar',
-                    plugins_url('assets/blocks/post-sidebar.min.js', dirname(__FILE__)),
+                    plugins_url('assets/blocks/post-sidebar.js', dirname(__FILE__)),
                     array( 'wp-blocks' ),
                     ADVANCED_GUTENBERG_VERSION,
                     true
@@ -1646,7 +1646,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                 wp_register_script(
                     'advgb_blocks_frontend_scripts',
-                    plugins_url('assets/blocks/frontend.min.js', dirname(__FILE__)),
+                    plugins_url('assets/blocks/frontend.js', dirname(__FILE__)),
                     array(),
                     ADVANCED_GUTENBERG_VERSION
                 );

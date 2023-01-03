@@ -1,14 +1,5 @@
 var glob = require("glob");
 var path = require("path");
-var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-var minifyJS = new UglifyJSPlugin( {
-    sourceMap: true,
-    uglifyOptions: {
-        output: {
-            comments: /@license/i
-        }
-    }
-} );
 
 module.exports = [
     {
@@ -26,9 +17,8 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "blocks.min.js"
+            filename: "blocks.js"
         },
-        plugins: [minifyJS],
         module: {
             rules: [
                 {
@@ -48,9 +38,8 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "custom-styles.min.js"
+            filename: "custom-styles.js"
         },
-        plugins: [minifyJS],
         module: {
             rules: [
                 {
@@ -70,9 +59,8 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "pro-ad.min.js"
+            filename: "pro-ad.js"
         },
-        plugins: [minifyJS],
         module: {
             rules: [
                 {
@@ -92,9 +80,8 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "post-sidebar.min.js"
+            filename: "post-sidebar.js"
         },
-        plugins: [minifyJS],
         module: {
             rules: [
                 {
@@ -114,9 +101,8 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "block-controls.min.js"
+            filename: "block-controls.js"
         },
-        plugins: [minifyJS],
         module: {
             rules: [
                 {
@@ -134,9 +120,8 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "frontend.min.js"
+            filename: "frontend.js"
         },
-        plugins: [minifyJS],
         module: {
             rules: [
                 {
@@ -154,9 +139,8 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "blocks"),
-            filename: "editor.min.js"
+            filename: "editor.js"
         },
-        plugins: [minifyJS],
         module: {
             rules: [
                 {
