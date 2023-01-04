@@ -63,7 +63,7 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
             // Exclude REST API
             if ( strpos( wp_get_raw_referer(), '/wp-admin/widgets.php' )
                 && isset( $_SERVER['REQUEST_URI'] )
-                && false !== strpos( filter_var( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/wp-json/' )
+                && false !== strpos( filter_var( wp_unslash( $_SERVER['REQUEST_URI'] ), FILTER_SANITIZE_URL ), '/wp-json/' )
             ) {
                 return $instance;
             }

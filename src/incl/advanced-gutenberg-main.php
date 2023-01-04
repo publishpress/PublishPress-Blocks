@@ -1172,7 +1172,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_send_json( __('Invalid nonce token!', 'advanced-gutenberg'), 400 );
             }
 
-            if( empty( $_POST['feature'] ) || ! $_POST['feature'] ) {
+            if( empty( $_POST['feature'] ) || ! $_POST['feature'] ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 wp_send_json( __('Error: wrong data', 'advanced-gutenberg'), 400 );
                 return false;
             }
@@ -1196,7 +1196,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             if( in_array( $feature, $all_features ) ) {
                 $advgb_settings             = get_option( 'advgb_settings' );
-                $advgb_settings[$feature]   = $_POST['new_state'] ? 1 : 0;
+                $advgb_settings[$feature]   = (bool) $_POST['new_state'] ? 1 : 0;
 
                 update_option( 'advgb_settings', $advgb_settings );
                 wp_send_json( true, 200 );
@@ -2882,7 +2882,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $user_role          = sanitize_text_field( $_POST['user_role'] );
                 $blocks_list        = array_map(
                     'sanitize_text_field',
-                    json_decode( stripslashes( $_POST['blocks_list'] ) )
+                    json_decode( stripslashes( $_POST['blocks_list'] ) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 );
                 $active_blocks      = array_map( 'sanitize_text_field', $_POST['active_blocks'] );
                 $inactive_blocks    = array_values( array_diff( $blocks_list, $active_blocks ) );
@@ -2901,11 +2901,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             'user_role' =>  $user_role,
                             'save' => 'success'
                         ],
-                        str_replace(
-                            '/wp-admin/',
-                            '',
-                            sanitize_url( $_POST['_wp_http_referer'] )
-                        )
+                        wp_get_referer()
                     )
                 );
             } else {
@@ -2916,11 +2912,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             'user_role' =>  $user_role,
                             'save' => 'error'
                         ],
-                        str_replace(
-                            '/wp-admin/',
-                            '',
-                            sanitize_url( $_POST['_wp_http_referer'] )
-                        )
+                        wp_get_referer()
                     )
                 );
             }
@@ -3096,9 +3088,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         <div class="advgb-roles-wrapper">
                             <?php
                             // Get current page slug
-                            if ( isset( $_GET['page'] ) && $_GET['page'] ) {
+                            if ( isset( $_GET['page'] ) && $_GET['page'] ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                                $page_ = sanitize_text_field( $_GET['page'] );
                                 ?>
-                                <input type="hidden" name="advgb_page_slug" id="advgb_page_slug" value="<?php esc_attr_e( $_GET['page'] ) ?>" />
+                                <input type="hidden" name="advgb_page_slug" id="advgb_page_slug" value="<?php esc_attr_e( $page_ ) ?>" />
                             <?php } ?>
                             <input type="hidden" name="advgb_feature" id="advgb_feature" value="<?php echo $feature ?>" />
                             <div>
