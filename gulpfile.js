@@ -23,7 +23,6 @@ function bundle() {
         "!src/assets/scss/**",
         "!src/assets/js/main.js",
         "!src/assets/js/settings.js",
-        "!src/assets/blocks/*.js.map",
     ])
     .pipe(zip('advanced-gutenberg.zip'))
     .pipe(gulp.dest("bundled"));

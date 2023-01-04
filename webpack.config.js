@@ -19,7 +19,6 @@ module.exports = [
             path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "blocks.js"
         },
-
         module: {
             rules: [
                 {
@@ -41,7 +40,6 @@ module.exports = [
             path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "custom-styles.js"
         },
-
         module: {
             rules: [
                 {
@@ -63,7 +61,6 @@ module.exports = [
             path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "pro-ad.js"
         },
-
         module: {
             rules: [
                 {
@@ -85,7 +82,6 @@ module.exports = [
             path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "post-sidebar.js"
         },
-
         module: {
             rules: [
                 {
@@ -107,7 +103,6 @@ module.exports = [
             path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "block-controls.js"
         },
-
         module: {
             rules: [
                 {
@@ -127,7 +122,6 @@ module.exports = [
             path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "frontend.js"
         },
-
         module: {
             rules: [
                 {
@@ -147,7 +141,6 @@ module.exports = [
             path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "editor.js"
         },
-
         module: {
             rules: [
                 {

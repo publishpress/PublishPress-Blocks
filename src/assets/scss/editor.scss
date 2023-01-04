@@ -1,4 +1,5 @@
 // Editor
+#site-editor,
 #widgets-editor,
 #editor,
 .customize-control-sidebar_block_editor {
@@ -37,7 +38,11 @@
   }
 
   .advgb-notice-sidebar {
-    margin: 0 0 8px;
+    margin: 10px 0 30px;
+
+    &.is-info {
+      background: #e8f5f9;
+    }
   }
 
   // Hide inserter for Adv Tab item to avoid inserting tabs inside tabs
@@ -48,6 +53,100 @@
   // Remove margin-bottom from SelectControl
   .advgb-revert-mb > .components-base-control {
     margin-bottom: 0;
+  }
+
+  // Spacer
+  .advgb-hr-separator {
+    width: 95%;
+  }
+
+  // Make checkboxes inline each other with labels below
+  .advgb-checkbox-wrapper {
+    margin-bottom: 10px;
+
+    label {
+      margin-bottom: 8px;
+      display: block;
+    }
+  }
+
+  .advgb-checkbox-inline {
+
+    .components-checkbox-control {
+      display: inline-block;
+      margin-right: 12px;
+      margin-bottom: 0;
+
+      .components-base-control__field {
+        display: grid;
+        grid-template-columns: 1fr;
+
+        .components-checkbox-control__input-container {
+          margin-right: 0;
+        }
+
+        .components-checkbox-control__label {
+          text-align: center;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  // Custom time picker
+  .advgb-advtime-control {
+    display: inline-flex;
+    margin-bottom: 10px;
+
+    label {
+      line-height: 36px;
+      width: 45px;
+    }
+
+    // Hours & minutes
+    .advgb-advtime-hours-minutes {
+      border-radius: 2px;
+      border: 1px solid #757575;
+      width: 82px;
+      height: 36px;
+      margin-right: 8px;
+
+      input {
+        appearance: textfield;
+        width: 36px;
+        font-size: 13px;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 0;
+        line-height: 34px;
+
+        &:first-of-type {
+          padding-left: 8px;
+          text-align: right;
+        }
+
+        &:last-of-type {
+          padding-right: 8px;
+          text-align: left;
+        }
+      }
+    }
+
+    // AM/PM
+    .advgb-advtime-meridian {
+      margin-right: 8px;
+
+      button.components-button {
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+    }
+
+    // Clear time
+    .advgb-advtime-remove-icon {
+      min-width: 27px;
+      padding: 0;
+    }
   }
 }
 

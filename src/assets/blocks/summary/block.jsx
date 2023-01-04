@@ -134,6 +134,46 @@ import latinize from "latinize";
             return storeData;
         }
 
+        /**
+         * Function to get headings from accordions blocks
+         *
+         * @since 3.1.2
+         *
+         * @param block     array Columns block to get data
+         * @param storeData array Data array to store heading blocks
+         *
+         * @returns array   array Headings from block given
+         */
+        static getHeadingsfromAccordion( block, storeData )
+        {
+            block.innerBlocks.map( (item) => {
+                if( item.name === 'advgb/accordion-item' ) {
+                    const content   = item.attributes.header || null;
+                    const level     = item.attributes.headerTag
+                                        ? parseInt( item.attributes.headerTag.substring( 1 ) )
+                                        : 3;
+
+                    if( content ) {
+
+                        // Create a valid heading block
+                        let block_ = wp.blocks.createBlock('core/heading', {
+                          content: content,
+                          level: level
+                        });
+
+                        // Add anchor attribute
+                        if( item.attributes.anchor ) {
+                            block_.attributes = Object.assign( block_.attributes, {
+                                anchor: item.attributes.anchor
+                            } );
+                        }
+
+                        storeData.push( block_ );
+                    }
+                }
+            });
+        }
+
         latinise(str) {
             let lettersArr = str.split('');
             let result = [];
@@ -155,10 +195,15 @@ import latinize from "latinize";
             const filteredBlocks = allBlocks.filter( ( block ) => (
                 block.name === 'core/heading' || block.name === 'core/columns'
                 || block.name === 'core/cover' || block.name === 'core/group'
+                || block.name === 'advgb/accordions'
             ) );
             filteredBlocks.map(function ( block ) {
                 if (block.name === 'core/columns' || block.name === 'core/cover' || block.name === 'core/group') {
                     SummaryBlock.getHeadingBlocksFromColumns( block, headingBlocks );
+                } else if( block.name === 'advgb/accordions'
+                    && advgbBlocks.advgb_pro === '1' // Only in Pro
+                ) {
+                    SummaryBlock.getHeadingsfromAccordion( block, headingBlocks );
                 } else {
                     headingBlocks.push( block );
                 }
