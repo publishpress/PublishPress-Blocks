@@ -14,18 +14,26 @@ $page_control       = PublishPress\Blocks\Controls::getControlValue( 'page', 1 )
                 <?php _e( 'Schedule', 'advanced-gutenberg' ) ?>
             </th>
             <td>
-                <label>
-                    <input type="checkbox" name="schedule_control"
-                           value="1"
-                           <?php echo $schedule_control ? ' checked' : '' ?>
-                    />
-                    <?php
-                    _e(
-                        'Choose when to start showing and/or stop showing your blocks.',
-                        'advanced-gutenberg'
-                    )
-                    ?>
-                </label>
+                <fieldset>
+                    <label>
+                        <input type="checkbox" name="schedule_control"
+                               value="1"
+                               <?php echo $schedule_control ? ' checked' : '' ?>
+                        />
+                        <?php
+                        _e(
+                            'Choose when to start showing and/or stop showing your blocks.',
+                            'advanced-gutenberg'
+                        )
+                        ?>
+                    </label><br>
+                    <p class="description advgb-control-desc">
+                        <?php _e( 'This block control is available on:', 'advanced-gutenberg' ) ?>
+                        <code><?php _e( 'Post', 'advanced-gutenberg' ) ?></code>
+                        <code><?php _e( 'Widgets', 'advanced-gutenberg' ) ?></code>
+                        <code><?php _e( 'Site Editor', 'advanced-gutenberg' ) ?></code>
+                    </p>
+                </fieldset>
             </td>
         </tr>
         <tr>
@@ -33,18 +41,26 @@ $page_control       = PublishPress\Blocks\Controls::getControlValue( 'page', 1 )
                 <?php _e( 'User roles', 'advanced-gutenberg' ) ?>
             </th>
             <td>
-                <label>
-                    <input type="checkbox" name="user_role_control"
-                           value="1"
-                           <?php echo $user_role_control ? ' checked' : '' ?>
-                    />
-                    <?php
-                    _e(
-                        'Choose which users can see your blocks.',
-                        'advanced-gutenberg'
-                    )
-                    ?>
-                </label>
+                <fieldset>
+                    <label>
+                        <input type="checkbox" name="user_role_control"
+                               value="1"
+                               <?php echo $user_role_control ? ' checked' : '' ?>
+                        />
+                        <?php
+                        _e(
+                            'Choose which users can see your blocks.',
+                            'advanced-gutenberg'
+                        )
+                        ?>
+                    </label><br>
+                    <p class="description advgb-control-desc">
+                        <?php _e( 'This block control is available on:', 'advanced-gutenberg' ) ?>
+                        <code><?php _e( 'Post', 'advanced-gutenberg' ) ?></code>
+                        <code><?php _e( 'Widgets', 'advanced-gutenberg' ) ?></code>
+                        <code><?php _e( 'Site Editor', 'advanced-gutenberg' ) ?></code>
+                    </p>
+                </fieldset>
             </td>
         </tr>
         <tr>
@@ -52,18 +68,25 @@ $page_control       = PublishPress\Blocks\Controls::getControlValue( 'page', 1 )
                 <?php _e( 'Term archives', 'advanced-gutenberg' ) ?>
             </th>
             <td>
-                <label>
-                    <input type="checkbox" name="archive_control"
-                           value="1"
-                           <?php echo $archive_control ? ' checked' : '' ?>
-                    />
-                    <?php
-                    _e(
-                        'Choose on which taxonomies and terms archive pages your blocks can be displayed.',
-                        'advanced-gutenberg'
-                    )
-                    ?>
-                </label>
+                <fieldset>
+                    <label>
+                        <input type="checkbox" name="archive_control"
+                               value="1"
+                               <?php echo $archive_control ? ' checked' : '' ?>
+                        />
+                        <?php
+                        _e(
+                            'Choose on which taxonomies and terms archive pages your blocks can be displayed.',
+                            'advanced-gutenberg'
+                        )
+                        ?>
+                    </label><br>
+                    <p class="description advgb-control-desc">
+                        <?php _e( 'This block control is available on:', 'advanced-gutenberg' ) ?>
+                        <code><?php _e( 'Widgets', 'advanced-gutenberg' ) ?></code>
+                        <code><?php _e( 'Site Editor', 'advanced-gutenberg' ) ?></code>
+                    </p>
+                </fieldset>
             </td>
         </tr>
         <tr>
@@ -71,18 +94,25 @@ $page_control       = PublishPress\Blocks\Controls::getControlValue( 'page', 1 )
                 <?php _e( 'Pages', 'advanced-gutenberg' ) ?>
             </th>
             <td>
-                <label>
-                    <input type="checkbox" name="page_control"
-                           value="1"
-                           <?php echo $page_control ? ' checked' : '' ?>
-                    />
-                    <?php
-                    _e(
-                        'Choose in which pages your blocks can be displayed.',
-                        'advanced-gutenberg'
-                    )
-                    ?>
-                </label>
+                <fieldset>
+                    <label>
+                        <input type="checkbox" name="page_control"
+                               value="1"
+                               <?php echo $page_control ? ' checked' : '' ?>
+                        />
+                        <?php
+                        _e(
+                            'Choose in which pages your blocks can be displayed.',
+                            'advanced-gutenberg'
+                        )
+                        ?>
+                    </label><br>
+                    <p class="description advgb-control-desc">
+                        <?php _e( 'This block control is available on:', 'advanced-gutenberg' ) ?>
+                        <code><?php _e( 'Widgets', 'advanced-gutenberg' ) ?></code>
+                        <code><?php _e( 'Site Editor', 'advanced-gutenberg' ) ?></code>
+                    </p>
+                </fieldset>
             </td>
         </tr>
     </table>
