@@ -13008,7 +13008,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         TextControl = wpComponents.TextControl;
     var _wp$data = wp.data,
         withDispatch = _wp$data.withDispatch,
-        withSelect = _wp$data.withSelect,
         select = _wp$data.select,
         dispatch = _wp$data.dispatch;
     var compose = wpCompose.compose;
@@ -13089,11 +13088,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             key: "componentDidUpdate",
-            value: function componentDidUpdate(prevProps) {
+            value: function componentDidUpdate() {
                 var _props2 = this.props,
                     attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes,
-                    innerBlocks = _props2.innerBlocks;
+                    setAttributes = _props2.setAttributes;
                 var isTransform = attributes.isTransform;
 
 
@@ -13102,17 +13100,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         isTransform: false
                     });
                     this.props.updateTabActive(0);
-                }
-
-                /* Fix when block is inserted (empty innerBlocks array), the 3 default tabs are displayed at once
-                 * https://github.com/publishpress/PublishPress-Blocks/issues/1117
-                 */
-                if (!prevProps.innerBlocks.length) {
-                    times(innerBlocks.length, function (n) {
-                        wp.data.dispatch('core/block-editor').updateBlockAttributes(innerBlocks[n].clientId, {
-                            id: n
-                        });
-                    });
                 }
             }
         }, {
@@ -13875,35 +13862,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         supports: {
             anchor: true
         },
-        edit: compose(withSelect(function (select, ownProps) {
-            var clientId = ownProps.clientId;
-
-
-            return {
-                innerBlocks: select('core/block-editor').getBlock(clientId).innerBlocks
-            };
-        }), withDispatch(function (dispatch, _ref18, _ref19) {
-            var clientId = _ref18.clientId,
-                innerBlocks = _ref18.innerBlocks;
+        edit: compose(withDispatch(function (dispatch, _ref18, _ref19) {
+            var clientId = _ref18.clientId;
             var select = _ref19.select;
+
+            var _select = select('core/block-editor'),
+                getBlock = _select.getBlock;
 
             var _dispatch = dispatch('core/block-editor'),
                 updateBlockAttributes = _dispatch.updateBlockAttributes;
 
+            var block = getBlock(clientId);
             return {
                 resetOrder: function resetOrder() {
-                    times(innerBlocks.length, function (n) {
-                        updateBlockAttributes(innerBlocks[n].clientId, {
+                    times(block.innerBlocks.length, function (n) {
+                        updateBlockAttributes(block.innerBlocks[n].clientId, {
                             id: n
                         });
                     });
                 },
                 updateTabActive: function updateTabActive(tabActive) {
-                    updateBlockAttributes(clientId, {
+                    updateBlockAttributes(block.clientId, {
                         tabActive: tabActive
                     });
-                    times(innerBlocks.length, function (n) {
-                        updateBlockAttributes(innerBlocks[n].clientId, {
+                    times(block.innerBlocks.length, function (n) {
+                        updateBlockAttributes(block.innerBlocks[n].clientId, {
                             tabActive: tabActive
                         });
                     });
