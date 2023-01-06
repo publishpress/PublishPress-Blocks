@@ -3,7 +3,7 @@
     const {__} = wpI18n;
     const {Component, Fragment} = wpElement;
     const {registerBlockType, createBlock} = wpBlocks;
-    const {InspectorControls, RichText, ColorPalette, BlockControls} = wpBlockEditor;
+    const {InspectorControls, RichText, ColorPalette, BlockControls, InnerBlocks, insertBlock} = wpBlockEditor;
     const {BaseControl, RangeControl, PanelBody, Dashicon, ToolbarGroup, ToolbarButton} = wpComponents;
 
     var parse = require('html-react-parser');
@@ -108,6 +108,7 @@
             const size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
             const marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
             const padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
+
             return (
                 isPreview ?
                     <img alt={__('Advanced List', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
@@ -203,37 +204,18 @@
                                 )}
                             </PanelBody>
                         </InspectorControls>
-                        <RichText
-                            multiline="li"
-                            tagName="ul"
-                            onChange={(value) => setAttributes({values: value})}
-                            value={values}
-                            className={listClassName}
-                            placeholder={__('Write advanced list…', 'advanced-gutenberg')}
-                            onMerge={mergeBlocks}
-                            unstableOnSplit={
-                                insertBlocksAfter ?
-                                    (before, after, ...blocks) => {
-                                        if (!blocks.length) {
-                                            blocks.push(createBlock('core/paragraph'));
-                                        }
-
-                                        if (after.length) {
-                                            blocks.push(createBlock('advgb/list', {
-                                                ...attributes,
-                                                values: after,
-                                                id: undefined,
-                                            }));
-                                        }
-
-                                        setAttributes({values: before});
-                                        insertBlocksAfter(blocks);
-                                    } :
-                                    undefined
-                            }
-                            onRemove={() => onReplace([])}
-                            isSelected={isSelected}
-                        />
+                        <ul className={ listClassName }>
+                            <InnerBlocks
+                                template={ [
+                                    [ 'advgb/list-item' ]
+                                ] }
+                                templateLock={ false }
+                                allowedBlocks={ [
+                                    'advgb/list-item',
+                                ] }
+                                className={ listClassName }
+                            />
+                        </ul>
                         <div>
                             <style>
                                 {`.${id} li { font-size: ${fontSize}px; }`}
@@ -389,10 +371,38 @@
             ].filter(Boolean).join(' ');
 
             return <div>
-                <ul className={listClassName}>
-                    {values}
+                <ul className={ listClassName }>
+                    <InnerBlocks.Content />
                 </ul>
             </div>
         },
+        deprecated: [
+            {
+                attributes: {
+                    ...listBlockAttrs
+                },
+                supports: {
+                    anchor: true
+                },
+                save: ( { attributes } ) => {
+                    const {
+                        id,
+                        values,
+                        icon,
+                    } = attributes;
+                    const listClassName = [
+                        id,
+                        icon && 'advgb-list',
+                        icon && `advgb-list-${icon}`
+                    ].filter(Boolean).join(' ');
+
+                    return <div>
+                        <ul className={listClassName}>
+                            {values}
+                        </ul>
+                    </div>
+                }
+            }
+        ]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
