@@ -15,24 +15,7 @@
         }
 
         componentWillMount() {
-            const { attributes, setAttributes } = this.props;
-            const currentBlockConfig = advgbDefaultConfig['advgb-list-item'];
-
-            // No override attributes of blocks inserted before
-            if (attributes.changed !== true) {
-                if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
-                    Object.keys(currentBlockConfig).map((attribute) => {
-                        if (typeof attributes[attribute] === 'boolean') {
-                            attributes[attribute] = !!currentBlockConfig[attribute];
-                        } else {
-                            attributes[attribute] = currentBlockConfig[attribute];
-                        }
-                    });
-                }
-
-                // Finally set changed attribute to true, so we don't modify anything again
-                setAttributes( { changed: true } );
-            }
+            console.log( 'attributes',this.props.attributes );
         }
 
         componentDidMount() {
@@ -144,11 +127,9 @@
     const blockAttrs = {
         content: {
             type: 'string',
+            source: 'html',
+            selector: 'li',
             default: '',
-        },
-        changed: {
-            type: 'boolean',
-            default: false,
         },
         isPreview: {
             type: 'boolean',

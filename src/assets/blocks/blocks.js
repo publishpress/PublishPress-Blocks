@@ -10556,6 +10556,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     // Finally set changed attribute to true, so we don't modify anything again
                     setAttributes({ changed: true });
                 }
+
+                //this.migrateToInnerBlocks();
             }
         }, {
             key: 'componentDidMount',
@@ -10577,6 +10579,58 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 setAttributes({
                     id: 'advgblist-' + clientId
                 });
+            }
+
+            // Migrate <li> to advgb/list-item innerBlocks
+
+        }, {
+            key: 'migrateToInnerBlocks',
+            value: function migrateToInnerBlocks() {
+                var values = this.props.attributes.values;
+
+
+                console.log('values', values);
+
+                if ((typeof values === 'undefined' ? 'undefined' : _typeof(values)) !== undefined && values.length) {
+
+                    /*const listValues = values.map( el => {
+                        if ( typeof( el ) === 'object') {
+                            return el.props.children[0];
+                        }
+                         return el;
+                    });
+                     listValues.forEach( item => {
+                        console.log(item);
+                    } );*/
+
+                    /*let listItem = '';
+                     values.map( ( item ) => {
+                        item.props.children.forEach( ( child ) => {
+                             if ( typeof child === 'string' ) {
+                                listItem += child;
+                            } else if ( child.type === 'br' ) {
+                                listItem += '<br>';
+                            } else if ( child.type === 'br' ) {
+                                listItem += '<br>';
+                            } else if ( child.type === 'br' ) {
+                                listItem += '<br>';
+                            } else {
+                                listItem += child;
+                            }
+                             console.log( listItem );
+                         } );
+                    } );
+                    console.log('---------------');*/
+
+                    values.forEach(function (item) {
+                        console.log(React.createElement(RichText, {
+                            tagName: 'li',
+                            value: item
+                        }));
+                    });
+
+                    this.props.setAttributes({ values: [] });
+                }
             }
         }, {
             key: 'render',
@@ -10799,12 +10853,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'number',
             default: 2
         },
-        values: {
-            type: 'array',
-            source: 'children',
-            selector: 'ul',
-            default: []
-        },
         changed: {
             type: 'boolean',
             default: false
@@ -10812,6 +10860,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         isPreview: {
             type: 'boolean',
             default: false
+        },
+        // Not in use since 3.1.3
+        values: {
+            type: 'array',
+            source: 'children',
+            selector: 'ul',
+            default: []
         }
     };
 
@@ -10931,8 +10986,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10969,27 +11022,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         _createClass(itemEdit, [{
             key: 'componentWillMount',
             value: function componentWillMount() {
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes;
-
-                var currentBlockConfig = advgbDefaultConfig['advgb-list-item'];
-
-                // No override attributes of blocks inserted before
-                if (attributes.changed !== true) {
-                    if ((typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
-                        Object.keys(currentBlockConfig).map(function (attribute) {
-                            if (typeof attributes[attribute] === 'boolean') {
-                                attributes[attribute] = !!currentBlockConfig[attribute];
-                            } else {
-                                attributes[attribute] = currentBlockConfig[attribute];
-                            }
-                        });
-                    }
-
-                    // Finally set changed attribute to true, so we don't modify anything again
-                    setAttributes({ changed: true });
-                }
+                console.log('attributes', this.props.attributes);
             }
         }, {
             key: 'componentDidMount',
@@ -11014,10 +11047,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this2 = this;
 
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes,
-                    clientId = _props2.clientId;
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes,
+                    clientId = _props.clientId;
                 var isPreview = attributes.isPreview,
                     content = attributes.content;
 
@@ -11112,11 +11145,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var blockAttrs = {
         content: {
             type: 'string',
+            source: 'html',
+            selector: 'li',
             default: ''
-        },
-        changed: {
-            type: 'boolean',
-            default: false
         },
         isPreview: {
             type: 'boolean',

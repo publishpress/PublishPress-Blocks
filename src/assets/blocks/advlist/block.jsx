@@ -34,6 +34,8 @@
                 // Finally set changed attribute to true, so we don't modify anything again
                 setAttributes({changed: true});
             }
+
+            //this.migrateToInnerBlocks();
         }
 
         componentDidMount() {
@@ -50,6 +52,60 @@
             setAttributes({
                 id: 'advgblist-' + clientId
             });
+        }
+
+        // Migrate <li> to advgb/list-item innerBlocks
+        migrateToInnerBlocks() {
+            const { values } = this.props.attributes;
+
+            console.log('values', values);
+
+            if( typeof values !== undefined && values.length ) {
+
+                /*const listValues = values.map( el => {
+                    if ( typeof( el ) === 'object') {
+                        return el.props.children[0];
+                    }
+
+                    return el;
+                });
+
+                listValues.forEach( item => {
+                    console.log(item);
+                } );*/
+
+                /*let listItem = '';
+
+                values.map( ( item ) => {
+                    item.props.children.forEach( ( child ) => {
+
+                        if ( typeof child === 'string' ) {
+                            listItem += child;
+                        } else if ( child.type === 'br' ) {
+                            listItem += '<br>';
+                        } else if ( child.type === 'br' ) {
+                            listItem += '<br>';
+                        } else if ( child.type === 'br' ) {
+                            listItem += '<br>';
+                        } else {
+                            listItem += child;
+                        }
+
+                        console.log( listItem );
+
+                    } );
+                } );
+                console.log('---------------');*/
+
+                values.forEach( ( item ) => {
+                    console.log(<RichText
+                        tagName="li"
+                        value={ item }
+                    />);
+                } );
+
+                this.props.setAttributes( { values: [] } );
+            }
         }
 
         render() {
@@ -280,12 +336,6 @@
             type: 'number',
             default: 2,
         },
-        values: {
-            type: 'array',
-            source: 'children',
-            selector: 'ul',
-            default: [],
-        },
         changed: {
             type: 'boolean',
             default: false,
@@ -293,6 +343,13 @@
         isPreview: {
             type: 'boolean',
             default: false,
+        },
+        // Not in use since 3.1.3
+        values: {
+            type: 'array',
+            source: 'children',
+            selector: 'ul',
+            default: [],
         },
     };
 
