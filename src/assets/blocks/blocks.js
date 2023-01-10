@@ -10497,11 +10497,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var __ = wpI18n.__;
     var Component = wpElement.Component,
-        Fragment = wpElement.Fragment;
+        Fragment = wpElement.Fragment,
+        renderToString = wpElement.renderToString,
+        createElement = wpElement.createElement;
     var registerBlockType = wpBlocks.registerBlockType,
         createBlock = wpBlocks.createBlock;
     var _wpBlockEditor = wpBlockEditor,
@@ -10509,14 +10511,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         RichText = _wpBlockEditor.RichText,
         ColorPalette = _wpBlockEditor.ColorPalette,
         BlockControls = _wpBlockEditor.BlockControls,
-        InnerBlocks = _wpBlockEditor.InnerBlocks,
-        insertBlock = _wpBlockEditor.insertBlock;
+        InnerBlocks = _wpBlockEditor.InnerBlocks;
     var BaseControl = wpComponents.BaseControl,
         RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         Dashicon = wpComponents.Dashicon,
         ToolbarGroup = wpComponents.ToolbarGroup,
         ToolbarButton = wpComponents.ToolbarButton;
+    var dispatch = wpData.dispatch;
 
 
     var parse = __webpack_require__(/*! html-react-parser */ "./node_modules/html-react-parser/index.js");
@@ -10556,95 +10558,127 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     // Finally set changed attribute to true, so we don't modify anything again
                     setAttributes({ changed: true });
                 }
-
-                //this.migrateToInnerBlocks();
             }
         }, {
             key: 'componentDidMount',
             value: function componentDidMount() {
                 var _props2 = this.props,
-                    attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes,
                     clientId = _props2.clientId;
 
-
-                if (typeof attributes.values[0] !== 'undefined') {
-                    if (typeof attributes.values[0] === 'string' && attributes.values[0] !== '') {
-                        setAttributes({
-                            values: parse(attributes.values[0])
-                        });
-                    }
-                }
 
                 setAttributes({
                     id: 'advgblist-' + clientId
                 });
             }
+        }, {
+            key: 'componentDidUpdate',
+            value: function componentDidUpdate(prevProps) {
+                var values = this.props.attributes.values;
+                var prevValues = prevProps.attributes.values;
 
-            // Migrate <li> to advgb/list-item innerBlocks
+
+                if (values !== null && values.length > 1) {
+                    this.migrateToInnerBlocks();
+                }
+            }
+
+            /**
+             * Migrate static content from <li> tags to advgb/list-item innerBlocks
+             *
+             * @since 3.1.3
+             *
+             * @return {void}
+             */
 
         }, {
             key: 'migrateToInnerBlocks',
             value: function migrateToInnerBlocks() {
-                var values = this.props.attributes.values;
+                var _props3 = this.props,
+                    setAttributes = _props3.setAttributes,
+                    attributes = _props3.attributes,
+                    clientId = _props3.clientId;
+                var values = attributes.values;
+
+                var _dispatch = dispatch('core/block-editor'),
+                    insertBlock = _dispatch.insertBlock;
+
+                /* Convert from objects to HTML strings
+                 *
+                 * From:
+                 * {
+                 *   "type": "li",
+                 *   "props": {
+                 *     "children": [
+                 *       "Lorem ",
+                 *       {
+                 *         "type": "strong",
+                 *         "props": {
+                 *           "children": [
+                 *             "ipsum"
+                 *           ]
+                 *         }
+                 *       },
+                 *       " dolor"
+                 *     ]
+                 *   }
+                 * }
+                 *
+                 * To:
+                 * "Lorem <strong>ipsum</strong> dolor"
+                 */
 
 
-                console.log('values', values);
-
-                if ((typeof values === 'undefined' ? 'undefined' : _typeof(values)) !== undefined && values.length) {
-
-                    /*const listValues = values.map( el => {
-                        if ( typeof( el ) === 'object') {
-                            return el.props.children[0];
+                var parsedValues = values.map(function (item) {
+                    return item.props.children.map(function (child) {
+                        if (typeof child === 'string') {
+                            return child;
+                        } else {
+                            return renderToString(createElement(child.type, child.props, child.props.children));
                         }
-                         return el;
                     });
-                     listValues.forEach( item => {
-                        console.log(item);
-                    } );*/
+                });
 
-                    /*let listItem = '';
-                     values.map( ( item ) => {
-                        item.props.children.forEach( ( child ) => {
-                             if ( typeof child === 'string' ) {
-                                listItem += child;
-                            } else if ( child.type === 'br' ) {
-                                listItem += '<br>';
-                            } else if ( child.type === 'br' ) {
-                                listItem += '<br>';
-                            } else if ( child.type === 'br' ) {
-                                listItem += '<br>';
-                            } else {
-                                listItem += child;
-                            }
-                             console.log( listItem );
-                         } );
-                    } );
-                    console.log('---------------');*/
+                /* Convert each array value into a merged string
+                 *
+                 * From:
+                 * [
+                 *   "Lorem ",
+                 *   "<strong>ipsum</strong>",
+                 *   " dolor"
+                 * ]
+                 *
+                 * To:
+                 * "Lorem <strong>ipsum</strong> dolor"
+                 */
+                var stringValues = parsedValues.map(function (item) {
+                    return item.join('');
+                });
 
-                    values.forEach(function (item) {
-                        console.log(React.createElement(RichText, {
-                            tagName: 'li',
-                            value: item
-                        }));
-                    });
+                // Insert content as advgb/list-item blocks
+                stringValues.forEach(function (item, index) {
 
-                    this.props.setAttributes({ values: [] });
-                }
+                    insertBlock(createBlock('advgb/list-item', {
+                        content: item
+                    }), index, clientId);
+                });
+
+                // Set values attribute as null to avoid ininite loop on migrateToInnerBlocks()
+                setAttributes({ values: null });
             }
         }, {
             key: 'render',
             value: function render() {
                 var listIcons = [{ label: __('None', 'advanced-gutenberg'), value: '' }, { label: __('Pushpin', 'advanced-gutenberg'), value: 'admin-post' }, { label: __('Configuration', 'advanced-gutenberg'), value: 'admin-generic' }, { label: __('Flag', 'advanced-gutenberg'), value: 'flag' }, { label: __('Star', 'advanced-gutenberg'), value: 'star-filled' }, { label: __('Checkmark', 'advanced-gutenberg'), value: 'yes' }, { label: __('Checkmark 2', 'advanced-gutenberg'), value: 'yes-alt' }, { label: __('Checkmark 3', 'advanced-gutenberg'), value: 'saved' }, { label: __('Minus', 'advanced-gutenberg'), value: 'minus' }, { label: __('Minus 2', 'advanced-gutenberg'), value: 'remove' }, { label: __('Plus', 'advanced-gutenberg'), value: 'plus' }, { label: __('Plus 2', 'advanced-gutenberg'), value: 'insert' }, { label: __('Play', 'advanced-gutenberg'), value: 'controls-play' }, { label: __('Arrow right', 'advanced-gutenberg'), value: 'arrow-right-alt' }, { label: __('Arrow right 2', 'advanced-gutenberg'), value: 'arrow-right-alt2' }, { label: __('X Cross 2', 'advanced-gutenberg'), value: 'no' }, { label: __('X Cross', 'advanced-gutenberg'), value: 'dismiss' }, { label: __('Warning', 'advanced-gutenberg'), value: 'warning' }, { label: __('Help', 'advanced-gutenberg'), value: 'editor-help' }, { label: __('Info', 'advanced-gutenberg'), value: 'info' }, { label: __('Info 2', 'advanced-gutenberg'), value: 'info-outline' }, { label: __('Circle', 'advanced-gutenberg'), value: 'marker' }];
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    isSelected = _props3.isSelected,
-                    insertBlocksAfter = _props3.insertBlocksAfter,
-                    mergeBlocks = _props3.mergeBlocks,
-                    setAttributes = _props3.setAttributes,
-                    onReplace = _props3.onReplace,
-                    className = _props3.className,
-                    blockID = _props3.clientId;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    isSelected = _props4.isSelected,
+                    insertBlocksAfter = _props4.insertBlocksAfter,
+                    mergeBlocks = _props4.mergeBlocks,
+                    setAttributes = _props4.setAttributes,
+                    onReplace = _props4.onReplace,
+                    className = _props4.className,
+                    blockID = _props4.clientId;
                 var id = attributes.id,
                     values = attributes.values,
                     icon = attributes.icon,
@@ -10861,12 +10895,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'boolean',
             default: false
         },
-        // Not in use since 3.1.3
+        // Deprecated since 3.1.3
         values: {
-            type: 'array',
-            source: 'children',
-            selector: 'ul',
-            default: []
+            type: 'boolean',
+            default: null
         }
     };
 
@@ -10948,7 +10980,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             );
         },
         deprecated: [{
-            attributes: _extends({}, listBlockAttrs),
+            attributes: _extends({}, listBlockAttrs, {
+                values: {
+                    type: 'array',
+                    source: 'children',
+                    selector: 'ul',
+                    default: []
+                }
+            }),
             supports: {
                 anchor: true
             },
@@ -10972,7 +11011,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }]
     });
-})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data);
 
 /***/ }),
 
@@ -11003,8 +11042,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         createBlock = wpBlocks.createBlock;
     var _wpBlockEditor = wpBlockEditor,
         RichText = _wpBlockEditor.RichText;
-    var insertBlock = wpData.insertBlock,
-        select = wpData.select,
+    var select = wpData.select,
         dispatch = wpData.dispatch;
 
 
@@ -11019,25 +11057,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             return _possibleConstructorReturn(this, (itemEdit.__proto__ || Object.getPrototypeOf(itemEdit)).apply(this, arguments));
         }
 
+        /**
+         * Remove empty spaces and breaklines
+         *
+         * @since 3.1.3
+         * @param {string} content The string to check
+         *
+         * @return {string}
+         */
+
+
         _createClass(itemEdit, [{
-            key: 'componentWillMount',
-            value: function componentWillMount() {
-                console.log('attributes', this.props.attributes);
-            }
-        }, {
-            key: 'componentDidMount',
-            value: function componentDidMount() {}
-
-            /**
-             * Remove empty spaces and breaklines
-             *
-             * @since 3.1.3
-             * @param {string} content The string to check
-             *
-             * @return {string}
-             */
-
-        }, {
             key: 'cleanContent',
             value: function cleanContent(content) {
                 return content.replace('<br>', '').trim();

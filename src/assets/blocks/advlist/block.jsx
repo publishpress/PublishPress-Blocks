@@ -1,10 +1,11 @@
-(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const {__} = wpI18n;
-    const {Component, Fragment} = wpElement;
-    const {registerBlockType, createBlock} = wpBlocks;
-    const {InspectorControls, RichText, ColorPalette, BlockControls, InnerBlocks, insertBlock} = wpBlockEditor;
-    const {BaseControl, RangeControl, PanelBody, Dashicon, ToolbarGroup, ToolbarButton} = wpComponents;
+    const { Component, Fragment, renderToString, createElement } = wpElement;
+    const { registerBlockType, createBlock } = wpBlocks;
+    const { InspectorControls, RichText, ColorPalette, BlockControls, InnerBlocks } = wpBlockEditor;
+    const { BaseControl, RangeControl, PanelBody, Dashicon, ToolbarGroup, ToolbarButton } = wpComponents;
+    const { dispatch } = wpData;
 
     var parse = require('html-react-parser');
 
@@ -34,78 +35,104 @@
                 // Finally set changed attribute to true, so we don't modify anything again
                 setAttributes({changed: true});
             }
-
-            //this.migrateToInnerBlocks();
         }
 
         componentDidMount() {
-            const {attributes, setAttributes, clientId} = this.props;
-
-            if (typeof attributes.values[0] !== 'undefined') {
-                if (typeof attributes.values[0] === 'string' && attributes.values[0] !== '') {
-                    setAttributes({
-                        values: parse(attributes.values[0])
-                    })
-                }
-            }
+            const { setAttributes, clientId } = this.props;
 
             setAttributes({
                 id: 'advgblist-' + clientId
             });
         }
 
-        // Migrate <li> to advgb/list-item innerBlocks
-        migrateToInnerBlocks() {
+        componentDidUpdate( prevProps ) {
             const { values } = this.props.attributes;
+            const { values: prevValues } = prevProps.attributes;
 
-            console.log('values', values);
-
-            if( typeof values !== undefined && values.length ) {
-
-                /*const listValues = values.map( el => {
-                    if ( typeof( el ) === 'object') {
-                        return el.props.children[0];
-                    }
-
-                    return el;
-                });
-
-                listValues.forEach( item => {
-                    console.log(item);
-                } );*/
-
-                /*let listItem = '';
-
-                values.map( ( item ) => {
-                    item.props.children.forEach( ( child ) => {
-
-                        if ( typeof child === 'string' ) {
-                            listItem += child;
-                        } else if ( child.type === 'br' ) {
-                            listItem += '<br>';
-                        } else if ( child.type === 'br' ) {
-                            listItem += '<br>';
-                        } else if ( child.type === 'br' ) {
-                            listItem += '<br>';
-                        } else {
-                            listItem += child;
-                        }
-
-                        console.log( listItem );
-
-                    } );
-                } );
-                console.log('---------------');*/
-
-                values.forEach( ( item ) => {
-                    console.log(<RichText
-                        tagName="li"
-                        value={ item }
-                    />);
-                } );
-
-                this.props.setAttributes( { values: [] } );
+            if( values !== null && values.length > 1 ) {
+                this.migrateToInnerBlocks();
             }
+        }
+
+        /**
+         * Migrate static content from <li> tags to advgb/list-item innerBlocks
+         *
+         * @since 3.1.3
+         *
+         * @return {void}
+         */
+        migrateToInnerBlocks() {
+            const { setAttributes, attributes, clientId } = this.props;
+            const { values } = attributes;
+            const { insertBlock } = dispatch( 'core/block-editor' );
+
+            /* Convert from objects to HTML strings
+             *
+             * From:
+             * {
+             *   "type": "li",
+             *   "props": {
+             *     "children": [
+             *       "Lorem ",
+             *       {
+             *         "type": "strong",
+             *         "props": {
+             *           "children": [
+             *             "ipsum"
+             *           ]
+             *         }
+             *       },
+             *       " dolor"
+             *     ]
+             *   }
+             * }
+             *
+             * To:
+             * "Lorem <strong>ipsum</strong> dolor"
+             */
+            const parsedValues = values.map( ( item ) => {
+                return(
+                    item.props.children.map( ( child ) => {
+                        if ( typeof child === 'string' ) {
+                            return child;
+                        } else {
+                            return renderToString( createElement( child.type, child.props, child.props.children ) );
+                        }
+                    } )
+                );
+            } );
+
+            /* Convert each array value into a merged string
+             *
+             * From:
+             * [
+             *   "Lorem ",
+             *   "<strong>ipsum</strong>",
+             *   " dolor"
+             * ]
+             *
+             * To:
+             * "Lorem <strong>ipsum</strong> dolor"
+             */
+            const stringValues = parsedValues.map( ( item ) => {
+                return item.join( '' );
+            } );
+
+            // Insert content as advgb/list-item blocks
+            stringValues.forEach( ( item, index ) => {
+
+                insertBlock(
+                    createBlock( 'advgb/list-item', {
+                        content: item
+                    } ),
+                    index,
+                    clientId
+                );
+
+            } );
+
+            // Set values attribute as null to avoid ininite loop on migrateToInnerBlocks()
+            setAttributes( { values: null } );
         }
 
         render() {
@@ -344,12 +371,10 @@
             type: 'boolean',
             default: false,
         },
-        // Not in use since 3.1.3
+        // Deprecated since 3.1.3
         values: {
-            type: 'array',
-            source: 'children',
-            selector: 'ul',
-            default: [],
+            type: 'boolean',
+            default: null,
         },
     };
 
@@ -436,7 +461,13 @@
         deprecated: [
             {
                 attributes: {
-                    ...listBlockAttrs
+                    ...listBlockAttrs,
+                    values: {
+                        type: 'array',
+                        source: 'children',
+                        selector: 'ul',
+                        default: [],
+                    }
                 },
                 supports: {
                     anchor: true
@@ -462,4 +493,4 @@
             }
         ]
     });
-})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data);
