@@ -409,25 +409,42 @@
             from: [
                 {
                     type: 'block',
-                    blocks: ['core/list'],
-                    transform: ({values}) => {
-                        return createBlock('advgb/list', {
-                            values: values,
-                            icon: 'controls-play',
-                            iconColor: '#ff0000',
-                        })
+                    blocks: [ 'core/list' ],
+                    transform: ( attributes, innerBlocks ) => {
+
+                        const list = innerBlocks.map( ( item, index ) => {
+                            return createBlock(
+                                'advgb/list-item',
+                                { ...attributes, content: innerBlocks[index].attributes.content }
+                            );
+                        } );
+
+                        return createBlock(
+                            'advgb/list',
+                            { ...attributes, changed: false },
+                            list,
+                        )
                     }
                 }
             ],
             to: [
                 {
                     type: 'block',
-                    blocks: ['core/list'],
-                    transform: ({values}) => {
-                        return createBlock('core/list', {
-                            nodeName: 'UL',
-                            values: values,
-                        })
+                    blocks: [ 'core/list' ],
+                    transform: ( attributes, innerBlocks ) => {
+
+                        const list = innerBlocks.map( ( item, index ) => {
+                            return createBlock(
+                                'core/list-item',
+                                { ...attributes, content: innerBlocks[index].attributes.content }
+                            );
+                        } );
+
+                        return createBlock(
+                            'core/list',
+                            attributes,
+                            list,
+                        )
                     }
                 }
             ]

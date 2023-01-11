@@ -10932,26 +10932,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             from: [{
                 type: 'block',
                 blocks: ['core/list'],
-                transform: function transform(_ref) {
-                    var values = _ref.values;
+                transform: function transform(attributes, innerBlocks) {
 
-                    return createBlock('advgb/list', {
-                        values: values,
-                        icon: 'controls-play',
-                        iconColor: '#ff0000'
+                    var list = innerBlocks.map(function (item, index) {
+                        return createBlock('advgb/list-item', _extends({}, attributes, { content: innerBlocks[index].attributes.content }));
                     });
+
+                    return createBlock('advgb/list', _extends({}, attributes, { changed: false }), list);
                 }
             }],
             to: [{
                 type: 'block',
                 blocks: ['core/list'],
-                transform: function transform(_ref2) {
-                    var values = _ref2.values;
+                transform: function transform(attributes, innerBlocks) {
 
-                    return createBlock('core/list', {
-                        nodeName: 'UL',
-                        values: values
+                    var list = innerBlocks.map(function (item, index) {
+                        return createBlock('core/list-item', _extends({}, attributes, { content: innerBlocks[index].attributes.content }));
                     });
+
+                    return createBlock('core/list', attributes, list);
                 }
             }]
         },
@@ -10959,8 +10958,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             anchor: true
         },
         edit: AdvList,
-        save: function save(_ref3) {
-            var attributes = _ref3.attributes;
+        save: function save(_ref) {
+            var attributes = _ref.attributes;
             var id = attributes.id,
                 values = attributes.values,
                 icon = attributes.icon;
@@ -10989,8 +10988,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             supports: {
                 anchor: true
             },
-            save: function save(_ref4) {
-                var attributes = _ref4.attributes;
+            save: function save(_ref2) {
+                var attributes = _ref2.attributes;
                 var id = attributes.id,
                     values = attributes.values,
                     icon = attributes.icon;
