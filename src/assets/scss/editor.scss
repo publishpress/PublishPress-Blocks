@@ -148,6 +148,14 @@
       padding: 0;
     }
   }
+
+  // List view icon color contrast when selected
+  tr.block-editor-list-view-leaf.is-selected {
+
+    td[aria-label*="PublishPress"] .components-button svg {
+      fill: #fff !important;
+    }
+  }
 }
 
 body:not(.advgb-editor-width-default) {

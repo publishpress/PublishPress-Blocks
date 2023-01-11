@@ -268,6 +268,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Add: List item block
   * Add: Reordering items support to List block
   * Fix: Transforms for List block
+  * Fix: Selected PublishPress block icon contrast in List view
 
 = 3.1.2 - 4 Jan 2022 =
   * Add: Days of the week and time range settings to Schedule control
