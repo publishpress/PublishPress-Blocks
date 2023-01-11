@@ -5,7 +5,7 @@
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, RichText, ColorPalette, BlockControls, InnerBlocks } = wpBlockEditor;
     const { BaseControl, RangeControl, PanelBody, Dashicon, ToolbarGroup, ToolbarButton } = wpComponents;
-    const { dispatch } = wpData;
+    const { select, dispatch } = wpData;
 
     var parse = require('html-react-parser');
 
@@ -46,11 +46,27 @@
         }
 
         componentDidUpdate( prevProps ) {
-            const { values } = this.props.attributes;
+            const { clientId, attributes } = this.props;
+            const { values } = attributes;
             const { values: prevValues } = prevProps.attributes;
+            const { getBlockOrder } = select( 'core/block-editor' );
 
+            const innerBlocks = getBlockOrder( clientId );
+
+            // Migrate static HTML <li> elements to innerBlocks - since 3.1.3
             if( values !== null && values.length > 1 ) {
                 this.migrateToInnerBlocks();
+            }
+
+            // If no inner blocks, we add one
+            if( ! innerBlocks.length ) {
+                const { insertBlock } = dispatch( 'core/block-editor' );
+
+                insertBlock(
+                    createBlock( 'advgb/list-item' ),
+                    0,
+                    clientId
+                );
             }
         }
 

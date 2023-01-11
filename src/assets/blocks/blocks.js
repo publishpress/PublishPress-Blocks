@@ -10516,7 +10516,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Dashicon = wpComponents.Dashicon,
         ToolbarGroup = wpComponents.ToolbarGroup,
         ToolbarButton = wpComponents.ToolbarButton;
-    var dispatch = wpData.dispatch;
+    var select = wpData.select,
+        dispatch = wpData.dispatch;
 
 
     var parse = __webpack_require__(/*! html-react-parser */ "./node_modules/html-react-parser/index.js");
@@ -10572,12 +10573,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'componentDidUpdate',
             value: function componentDidUpdate(prevProps) {
-                var values = this.props.attributes.values;
+                var _props3 = this.props,
+                    clientId = _props3.clientId,
+                    attributes = _props3.attributes;
+                var values = attributes.values;
                 var prevValues = prevProps.attributes.values;
 
+                var _select = select('core/block-editor'),
+                    getBlockOrder = _select.getBlockOrder;
 
+                var innerBlocks = getBlockOrder(clientId);
+
+                // Migrate static HTML <li> elements to innerBlocks - since 3.1.3
                 if (values !== null && values.length > 1) {
                     this.migrateToInnerBlocks();
+                }
+
+                // If no inner blocks, we add one
+                if (!innerBlocks.length) {
+                    var _dispatch = dispatch('core/block-editor'),
+                        insertBlock = _dispatch.insertBlock;
+
+                    insertBlock(createBlock('advgb/list-item'), 0, clientId);
                 }
             }
 
@@ -10592,14 +10609,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'migrateToInnerBlocks',
             value: function migrateToInnerBlocks() {
-                var _props3 = this.props,
-                    setAttributes = _props3.setAttributes,
-                    attributes = _props3.attributes,
-                    clientId = _props3.clientId;
+                var _props4 = this.props,
+                    setAttributes = _props4.setAttributes,
+                    attributes = _props4.attributes,
+                    clientId = _props4.clientId;
                 var values = attributes.values;
 
-                var _dispatch = dispatch('core/block-editor'),
-                    insertBlock = _dispatch.insertBlock;
+                var _dispatch2 = dispatch('core/block-editor'),
+                    insertBlock = _dispatch2.insertBlock;
 
                 /* Convert from objects to HTML strings
                  *
@@ -10668,11 +10685,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: 'render',
             value: function render() {
                 var listIcons = [{ label: __('None', 'advanced-gutenberg'), value: '' }, { label: __('Pushpin', 'advanced-gutenberg'), value: 'admin-post' }, { label: __('Configuration', 'advanced-gutenberg'), value: 'admin-generic' }, { label: __('Flag', 'advanced-gutenberg'), value: 'flag' }, { label: __('Star', 'advanced-gutenberg'), value: 'star-filled' }, { label: __('Checkmark', 'advanced-gutenberg'), value: 'yes' }, { label: __('Checkmark 2', 'advanced-gutenberg'), value: 'yes-alt' }, { label: __('Checkmark 3', 'advanced-gutenberg'), value: 'saved' }, { label: __('Minus', 'advanced-gutenberg'), value: 'minus' }, { label: __('Minus 2', 'advanced-gutenberg'), value: 'remove' }, { label: __('Plus', 'advanced-gutenberg'), value: 'plus' }, { label: __('Plus 2', 'advanced-gutenberg'), value: 'insert' }, { label: __('Play', 'advanced-gutenberg'), value: 'controls-play' }, { label: __('Arrow right', 'advanced-gutenberg'), value: 'arrow-right-alt' }, { label: __('Arrow right 2', 'advanced-gutenberg'), value: 'arrow-right-alt2' }, { label: __('X Cross 2', 'advanced-gutenberg'), value: 'no' }, { label: __('X Cross', 'advanced-gutenberg'), value: 'dismiss' }, { label: __('Warning', 'advanced-gutenberg'), value: 'warning' }, { label: __('Help', 'advanced-gutenberg'), value: 'editor-help' }, { label: __('Info', 'advanced-gutenberg'), value: 'info' }, { label: __('Info 2', 'advanced-gutenberg'), value: 'info-outline' }, { label: __('Circle', 'advanced-gutenberg'), value: 'marker' }];
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes,
-                    className = _props4.className,
-                    blockID = _props4.clientId;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes,
+                    className = _props5.className,
+                    blockID = _props5.clientId;
                 var id = attributes.id,
                     values = attributes.values,
                     icon = attributes.icon,
