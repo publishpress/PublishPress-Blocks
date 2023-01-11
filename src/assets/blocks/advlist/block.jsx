@@ -1,10 +1,11 @@
-(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const {__} = wpI18n;
-    const {Component, Fragment} = wpElement;
-    const {registerBlockType, createBlock} = wpBlocks;
-    const {InspectorControls, RichText, ColorPalette, BlockControls} = wpBlockEditor;
-    const {BaseControl, RangeControl, PanelBody, Dashicon, ToolbarGroup, ToolbarButton} = wpComponents;
+    const { Component, Fragment, renderToString, createElement } = wpElement;
+    const { registerBlockType, createBlock } = wpBlocks;
+    const { InspectorControls, RichText, ColorPalette, BlockControls, InnerBlocks } = wpBlockEditor;
+    const { BaseControl, RangeControl, PanelBody, Dashicon, ToolbarGroup, ToolbarButton } = wpComponents;
+    const { select, dispatch } = wpData;
 
     var parse = require('html-react-parser');
 
@@ -37,19 +38,117 @@
         }
 
         componentDidMount() {
-            const {attributes, setAttributes, clientId} = this.props;
-
-            if (typeof attributes.values[0] !== 'undefined') {
-                if (typeof attributes.values[0] === 'string' && attributes.values[0] !== '') {
-                    setAttributes({
-                        values: parse(attributes.values[0])
-                    })
-                }
-            }
+            const { setAttributes, clientId } = this.props;
 
             setAttributes({
                 id: 'advgblist-' + clientId
             });
+        }
+
+        componentDidUpdate( prevProps ) {
+            const { clientId, attributes } = this.props;
+            const { values } = attributes;
+            const { values: prevValues } = prevProps.attributes;
+            const { getBlockOrder } = select( 'core/block-editor' );
+
+            const innerBlocks = getBlockOrder( clientId );
+
+            // Migrate static HTML <li> elements to innerBlocks - since 3.1.3
+            if( values !== null && values.length > 1 ) {
+                this.migrateToInnerBlocks();
+            }
+
+            // If no inner blocks, we add one
+            if( ! innerBlocks.length ) {
+                const { insertBlock } = dispatch( 'core/block-editor' );
+
+                insertBlock(
+                    createBlock( 'advgb/list-item' ),
+                    0,
+                    clientId
+                );
+            }
+        }
+
+        /**
+         * Migrate static content from <li> tags to advgb/list-item innerBlocks
+         *
+         * @since 3.1.3
+         *
+         * @return {void}
+         */
+        migrateToInnerBlocks() {
+            const { setAttributes, attributes, clientId } = this.props;
+            const { values } = attributes;
+            const { insertBlock } = dispatch( 'core/block-editor' );
+
+            /* Convert from objects to HTML strings
+             *
+             * From:
+             * {
+             *   "type": "li",
+             *   "props": {
+             *     "children": [
+             *       "Lorem ",
+             *       {
+             *         "type": "strong",
+             *         "props": {
+             *           "children": [
+             *             "ipsum"
+             *           ]
+             *         }
+             *       },
+             *       " dolor"
+             *     ]
+             *   }
+             * }
+             *
+             * To:
+             * "Lorem <strong>ipsum</strong> dolor"
+             */
+            const parsedValues = values.map( ( item ) => {
+                return(
+                    item.props.children.map( ( child ) => {
+                        if ( typeof child === 'string' ) {
+                            return child;
+                        } else {
+                            return renderToString( createElement( child.type, child.props, child.props.children ) );
+                        }
+                    } )
+                );
+            } );
+
+            /* Convert each array value into a merged string
+             *
+             * From:
+             * [
+             *   "Lorem ",
+             *   "<strong>ipsum</strong>",
+             *   " dolor"
+             * ]
+             *
+             * To:
+             * "Lorem <strong>ipsum</strong> dolor"
+             */
+            const stringValues = parsedValues.map( ( item ) => {
+                return item.join( '' );
+            } );
+
+            // Insert content as advgb/list-item blocks
+            stringValues.forEach( ( item, index ) => {
+
+                insertBlock(
+                    createBlock( 'advgb/list-item', {
+                        content: item
+                    } ),
+                    index,
+                    clientId
+                );
+
+            } );
+
+            // Set values attribute as null to avoid ininite loop on migrateToInnerBlocks()
+            setAttributes( { values: null } );
         }
 
         render() {
@@ -79,11 +178,7 @@
             ];
             const {
                 attributes,
-                isSelected,
-                insertBlocksAfter,
-                mergeBlocks,
                 setAttributes,
-                onReplace,
                 className,
                 clientId: blockID,
             } = this.props;
@@ -108,6 +203,7 @@
             const size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
             const marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
             const padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
+
             return (
                 isPreview ?
                     <img alt={__('Advanced List', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
@@ -203,37 +299,18 @@
                                 )}
                             </PanelBody>
                         </InspectorControls>
-                        <RichText
-                            multiline="li"
-                            tagName="ul"
-                            onChange={(value) => setAttributes({values: value})}
-                            value={values}
-                            className={listClassName}
-                            placeholder={__('Write advanced list…', 'advanced-gutenberg')}
-                            onMerge={mergeBlocks}
-                            unstableOnSplit={
-                                insertBlocksAfter ?
-                                    (before, after, ...blocks) => {
-                                        if (!blocks.length) {
-                                            blocks.push(createBlock('core/paragraph'));
-                                        }
-
-                                        if (after.length) {
-                                            blocks.push(createBlock('advgb/list', {
-                                                ...attributes,
-                                                values: after,
-                                                id: undefined,
-                                            }));
-                                        }
-
-                                        setAttributes({values: before});
-                                        insertBlocksAfter(blocks);
-                                    } :
-                                    undefined
-                            }
-                            onRemove={() => onReplace([])}
-                            isSelected={isSelected}
-                        />
+                        <ul className={ listClassName }>
+                            <InnerBlocks
+                                template={ [
+                                    [ 'advgb/list-item' ]
+                                ] }
+                                templateLock={ false }
+                                allowedBlocks={ [
+                                    'advgb/list-item',
+                                ] }
+                                className={ listClassName }
+                            />
+                        </ul>
                         <div>
                             <style>
                                 {`.${id} li { font-size: ${fontSize}px; }`}
@@ -298,12 +375,6 @@
             type: 'number',
             default: 2,
         },
-        values: {
-            type: 'array',
-            source: 'children',
-            selector: 'ul',
-            default: [],
-        },
         changed: {
             type: 'boolean',
             default: false,
@@ -311,6 +382,11 @@
         isPreview: {
             type: 'boolean',
             default: false,
+        },
+        // Deprecated since 3.1.3
+        values: {
+            type: 'boolean',
+            default: null,
         },
     };
 
@@ -333,44 +409,45 @@
             from: [
                 {
                     type: 'block',
-                    blocks: ['core/list'],
-                    transform: ({values}) => {
-                        return createBlock('advgb/list', {
-                            values: values,
-                            icon: 'controls-play',
-                            iconColor: '#ff0000',
-                        })
+                    blocks: [ 'core/list' ],
+                    transform: ( attributes, innerBlocks ) => {
+
+                        const list = innerBlocks.map( ( item, index ) => {
+                            return createBlock(
+                                'advgb/list-item',
+                                { ...attributes, content: innerBlocks[index].attributes.content }
+                            );
+                        } );
+
+                        return createBlock(
+                            'advgb/list',
+                            { ...attributes, changed: false },
+                            list,
+                        )
                     }
                 }
             ],
             to: [
                 {
                     type: 'block',
-                    blocks: ['core/list'],
-                    transform: ({values}) => {
-                        return createBlock('core/list', {
-                            nodeName: 'UL',
-                            values: values,
-                        })
+                    blocks: [ 'core/list' ],
+                    transform: ( attributes, innerBlocks ) => {
+
+                        const list = innerBlocks.map( ( item, index ) => {
+                            return createBlock(
+                                'core/list-item',
+                                { ...attributes, content: innerBlocks[index].attributes.content }
+                            );
+                        } );
+
+                        return createBlock(
+                            'core/list',
+                            attributes,
+                            list,
+                        )
                     }
                 }
             ]
-        },
-        merge(attributes, attributesToMerge) {
-            const valuesToMerge = attributesToMerge.values || [];
-
-            // Standard text-like block attribute.
-            if (attributesToMerge.content) {
-                valuesToMerge.push(attributesToMerge.content);
-            }
-
-            return {
-                ...attributes,
-                values: [
-                    ...attributes.values,
-                    ...valuesToMerge,
-                ],
-            };
         },
         supports: {
             anchor: true,
@@ -389,10 +466,44 @@
             ].filter(Boolean).join(' ');
 
             return <div>
-                <ul className={listClassName}>
-                    {values}
+                <ul className={ listClassName }>
+                    <InnerBlocks.Content />
                 </ul>
             </div>
         },
+        deprecated: [
+            {
+                attributes: {
+                    ...listBlockAttrs,
+                    values: {
+                        type: 'array',
+                        source: 'children',
+                        selector: 'ul',
+                        default: [],
+                    }
+                },
+                supports: {
+                    anchor: true
+                },
+                save: ( { attributes } ) => {
+                    const {
+                        id,
+                        values,
+                        icon,
+                    } = attributes;
+                    const listClassName = [
+                        id,
+                        icon && 'advgb-list',
+                        icon && `advgb-list-${icon}`
+                    ].filter(Boolean).join(' ');
+
+                    return <div>
+                        <ul className={listClassName}>
+                            {values}
+                        </ul>
+                    </div>
+                }
+            }
+        ]
     });
-})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data);
