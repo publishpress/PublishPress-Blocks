@@ -10489,8 +10489,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -10672,11 +10670,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var listIcons = [{ label: __('None', 'advanced-gutenberg'), value: '' }, { label: __('Pushpin', 'advanced-gutenberg'), value: 'admin-post' }, { label: __('Configuration', 'advanced-gutenberg'), value: 'admin-generic' }, { label: __('Flag', 'advanced-gutenberg'), value: 'flag' }, { label: __('Star', 'advanced-gutenberg'), value: 'star-filled' }, { label: __('Checkmark', 'advanced-gutenberg'), value: 'yes' }, { label: __('Checkmark 2', 'advanced-gutenberg'), value: 'yes-alt' }, { label: __('Checkmark 3', 'advanced-gutenberg'), value: 'saved' }, { label: __('Minus', 'advanced-gutenberg'), value: 'minus' }, { label: __('Minus 2', 'advanced-gutenberg'), value: 'remove' }, { label: __('Plus', 'advanced-gutenberg'), value: 'plus' }, { label: __('Plus 2', 'advanced-gutenberg'), value: 'insert' }, { label: __('Play', 'advanced-gutenberg'), value: 'controls-play' }, { label: __('Arrow right', 'advanced-gutenberg'), value: 'arrow-right-alt' }, { label: __('Arrow right 2', 'advanced-gutenberg'), value: 'arrow-right-alt2' }, { label: __('X Cross 2', 'advanced-gutenberg'), value: 'no' }, { label: __('X Cross', 'advanced-gutenberg'), value: 'dismiss' }, { label: __('Warning', 'advanced-gutenberg'), value: 'warning' }, { label: __('Help', 'advanced-gutenberg'), value: 'editor-help' }, { label: __('Info', 'advanced-gutenberg'), value: 'info' }, { label: __('Info 2', 'advanced-gutenberg'), value: 'info-outline' }, { label: __('Circle', 'advanced-gutenberg'), value: 'marker' }];
                 var _props4 = this.props,
                     attributes = _props4.attributes,
-                    isSelected = _props4.isSelected,
-                    insertBlocksAfter = _props4.insertBlocksAfter,
-                    mergeBlocks = _props4.mergeBlocks,
                     setAttributes = _props4.setAttributes,
-                    onReplace = _props4.onReplace,
                     className = _props4.className,
                     blockID = _props4.clientId;
                 var id = attributes.id,
@@ -10944,19 +10938,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }]
         },
-        merge: function merge(attributes, attributesToMerge) {
-            var valuesToMerge = attributesToMerge.values || [];
-
-            // Standard text-like block attribute.
-            if (attributesToMerge.content) {
-                valuesToMerge.push(attributesToMerge.content);
-            }
-
-            return _extends({}, attributes, {
-                values: [].concat(_toConsumableArray(attributes.values), _toConsumableArray(valuesToMerge))
-            });
-        },
-
         supports: {
             anchor: true
         },

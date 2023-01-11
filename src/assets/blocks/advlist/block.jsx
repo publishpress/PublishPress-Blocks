@@ -162,11 +162,7 @@
             ];
             const {
                 attributes,
-                isSelected,
-                insertBlocksAfter,
-                mergeBlocks,
                 setAttributes,
-                onReplace,
                 className,
                 clientId: blockID,
             } = this.props;
@@ -419,22 +415,6 @@
                     }
                 }
             ]
-        },
-        merge(attributes, attributesToMerge) {
-            const valuesToMerge = attributesToMerge.values || [];
-
-            // Standard text-like block attribute.
-            if (attributesToMerge.content) {
-                valuesToMerge.push(attributesToMerge.content);
-            }
-
-            return {
-                ...attributes,
-                values: [
-                    ...attributes.values,
-                    ...valuesToMerge,
-                ],
-            };
         },
         supports: {
             anchor: true,
