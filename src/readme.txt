@@ -264,9 +264,10 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.3 - 11 Jan 2022 =
+= 3.1.3 - 12 Jan 2022 =
   * Add: List item block
   * Add: Reordering items support to List block
+  * Add: Submenu for Reusable blocks
   * Fix: Transforms for List block
   * Fix: Selected PublishPress block icon contrast in List view
 

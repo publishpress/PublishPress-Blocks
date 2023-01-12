@@ -1778,10 +1778,17 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'enabled' => $this->settingIsEnabled( 'block_controls' )
                 ],
                 [
+                    'slug' => 'edit.php?post_type=wp_block',
+                    'title' => esc_html__( 'Reusable Blocks', 'advanced-gutenberg' ),
+                    'callback' => '',
+                    'order' => 7,
+                    'enabled' => true
+                ],
+                [
                     'slug' => 'advgb_settings',
                     'title' => esc_html__( 'Settings', 'advanced-gutenberg' ),
                     'callback' => 'loadSettingsPage',
-                    'order' => 7,
+                    'order' => 8,
                     'enabled' => true
                 ]
             ];
@@ -1821,9 +1828,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         $page['title'],
                         'manage_options',
                         $page['slug'], // slug should use underscores, not hyphen due we generate automatic function names based on it
-                        [
-                            $this, $page['callback']
-                        ],
+                        ! empty( $page['callback'] ) ? [ $this, $page['callback'] ] : '',
                         $page['order']
                     );
 
@@ -1838,7 +1843,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         add_action( 'load-' . $hook, [$this, $function_name] );
                     }
                 }
-
 
                 /* Add CSS classes to these submenus to dynamically show/hide them
                  * through main page enable/disable features
