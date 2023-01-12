@@ -284,6 +284,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Set autoload to 'no' for bigger size options
   * Fix: Load dashicons in frontend if blocks are using it
   * Fix: Optimize PublishPress blocks code to enqueue assets
+  * Fix: All tabs content displayed at once
 
 = 3.1.1 - 16 Nov 2022 =
   * Add: Base path constant
