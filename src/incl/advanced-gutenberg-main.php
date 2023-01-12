@@ -4805,7 +4805,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             if ($blockName === 'advgb/column') {
                 $childColID = esc_html($blockAttrs['colId']);
-                $childColWidth = esc_html($blockAttrs['width']);
+                $childColWidth = isset( $blockAttrs['width'] ) ? intval( $blockAttrs['width'] ) : 0;
                 if ($childColWidth !== 0) {
                     $style_html .= '#' . $childColID . '{width: ' . $childColWidth . '%;}';
                 }

@@ -270,6 +270,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Add: Submenu for Reusable blocks
   * Fix: Transforms for List block
   * Fix: Selected PublishPress block icon contrast in List view
+  * Fix: Default undefined "width" for single Column block
 
 = 3.1.2 - 4 Jan 2022 =
   * Add: Days of the week and time range settings to Schedule control
