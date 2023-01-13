@@ -679,7 +679,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_enqueue_style(
                     'advgb_blocks_styles',
                     plugins_url('assets/css/blocks.css', dirname(__FILE__)),
-                    array(),
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
+                );
+
+                wp_enqueue_style(
+                    'advgb_columns_editor_styles',
+                    plugins_url('assets/css/columns-editor.css', dirname(__FILE__)),
+                    ['advgb_blocks_styles'],
                     ADVANCED_GUTENBERG_VERSION
                 );
 
