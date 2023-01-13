@@ -1,0 +1,77 @@
+@import "mixins";
+
+// Base modifier selector
+$base-selector: '> .block-editor-inner-blocks > .block-editor-block-list__layout';
+
+.block-editor-block-list__block {
+
+  .advgb-columns-spacing {
+    height: 10px;
+    width: 100%;
+    display: block;
+    position: relative;
+    z-index: 999;
+    top: -8px;
+  }
+
+  .advgb-columns-wrapper {
+
+    // Columns wrapper
+    .advgb-columns {
+
+      #{$base-selector} {
+        display: flex;
+        margin: 0 auto;
+      }
+
+      // Spacing between columns
+      &.gutter-10 #{$base-selector} > div:not(:first-child) {
+          margin-left: 10px;
+      }
+
+      &.gutter-20 #{$base-selector} > div:not(:first-child) {
+          margin-left: 20px;
+      }
+
+      &.gutter-30 #{$base-selector} > div:not(:first-child) {
+          margin-left: 30px;
+      }
+
+      &.gutter-40 #{$base-selector} > div:not(:first-child) {
+          margin-left: 40px;
+      }
+
+      &.gutter-50 #{$base-selector} > div:not(:first-child) {
+          margin-left: 50px;
+      }
+
+      &.gutter-70 #{$base-selector} > div:not(:first-child) {
+          margin-left: 70px;
+      }
+
+      &.gutter-90 #{$base-selector} > div:not(:first-child) {
+          margin-left: 90px;
+      }
+
+      // Columns
+      &.advgb-columns-1,
+      &.advgb-columns-2,
+      &.advgb-columns-3,
+      &.advgb-columns-4,
+      &.advgb-columns-5,
+      &.advgb-columns-6 {
+
+          #{$base-selector} > div {
+              flex-grow: 1;
+              min-width: 0;
+              flex-basis: 0;
+          }
+      }
+
+      // Desktop
+      @media (min-width: 1024px) {
+          @include colums-width-variants( '', '#{$base-selector} > div' );
+      }
+    }
+  }
+}

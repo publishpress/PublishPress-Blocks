@@ -390,6 +390,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if($this->settingIsEnabled('enable_advgb_blocks') && $pagenow === 'site-editor.php') {
                 add_editor_style(site_url('/wp-includes/css/dashicons.css')); // 'dashicons'
                 add_editor_style(plugins_url('assets/css/blocks.css', dirname(__FILE__))); // 'advgb_blocks_styles'
+                add_editor_style(plugins_url('assets/css/columns-editor.css', dirname(__FILE__))); // 'advgb_blocks_editor_styles'
                 add_editor_style(plugins_url('assets/css/recent-posts.css', dirname(__FILE__))); // 'advgb_recent_posts_styles'
                 add_editor_style(plugins_url('assets/css/editor.css', dirname(__FILE__))); // 'advgb_editor_styles'
                 add_editor_style(plugins_url('assets/css/site-editor.css', dirname(__FILE__))); // Site editor iframe styles only
@@ -679,7 +680,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_enqueue_style(
                     'advgb_blocks_styles',
                     plugins_url('assets/css/blocks.css', dirname(__FILE__)),
-                    array(),
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
+                );
+
+                wp_enqueue_style(
+                    'advgb_columns_editor_styles',
+                    plugins_url('assets/css/columns-editor.css', dirname(__FILE__)),
+                    ['advgb_blocks_styles'],
                     ADVANCED_GUTENBERG_VERSION
                 );
 
