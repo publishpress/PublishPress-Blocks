@@ -10,6 +10,10 @@
                 display: flex;
                 margin: 0 auto;
 
+                &.columns-valign-full .advgb-column-inner {
+                  height: 100%;
+                }
+
                 .advgb-column {
                    flex-basis: 0;
                    z-index: unset;
@@ -60,12 +64,52 @@
 
                 // Desktop
                 @media (min-width: 1024px) {
+
                     @include colums-width-variants();
+                }
+
+                @media (max-width: 1023px) {
+
+                  // Mobile
+                  &.mbl-layout-stacked > .advgb-column {
+                      margin-right: 0 !important;
+                  }
+
+                  // Tablet
+                  &.tbl-layout-stacked {
+
+                    &.vgutter-10 > .advgb-column {
+                        margin-bottom: 10px;
+                    }
+
+                    &.vgutter-20 > .advgb-column {
+                        margin-bottom: 20px;
+                    }
+
+                    &.vgutter-30 > .advgb-column {
+                        margin-bottom: 30px;
+                    }
+
+                    &.vgutter-40 > .advgb-column {
+                        margin-bottom: 40px;
+                    }
+
+                    &.vgutter-50 > .advgb-column {
+                        margin-bottom: 50px;
+                    }
+
+                    &.vgutter-70 > .advgb-column {
+                        margin-bottom: 70px;
+                    }
+
+                    &.vgutter-90 > .advgb-column {
+                        margin-bottom: 90px;
+                    }
+                  }
                 }
 
                 // Tablet
                 @media (min-width: 768px) and (max-width: 1023px) {
-
                     @include colums-width-variants('tbl-');
                 }
 
@@ -78,6 +122,37 @@
                     &.order-rtl {
                        flex-wrap: wrap-reverse;
                        -moz-flex-wrap: wrap-reverse;
+                    }
+
+                    &.mbl-layout-stacked {
+
+                        &.vgutter-10 > .advgb-column {
+                          margin-bottom: 10px;
+                        }
+
+                        &.vgutter-20 > .advgb-column {
+                          margin-bottom: 20px;
+                        }
+
+                        &.vgutter-30 > .advgb-column {
+                          margin-bottom: 30px;
+                        }
+
+                        &.vgutter-40 > .advgb-column {
+                          margin-bottom: 40px;
+                        }
+
+                        &.vgutter-50 > .advgb-column {
+                          margin-bottom: 50px;
+                        }
+
+                        &.vgutter-70 > .advgb-column {
+                          margin-bottom: 70px;
+                        }
+
+                        &.vgutter-90 > .advgb-column {
+                          margin-bottom: 90px;
+                        }
                     }
                 }
             }
