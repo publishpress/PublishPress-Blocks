@@ -1,5 +1,8 @@
 @import "mixins";
 
+// Base modifier selector
+$base-selector: '> .block-editor-inner-blocks > .block-editor-block-list__layout';
+
 .block-editor-block-list__block {
 
   .advgb-columns-spacing {
@@ -16,42 +19,37 @@
     // Columns wrapper
     .advgb-columns {
 
-      .block-editor-inner-blocks > .block-editor-block-list__layout {
+      #{$base-selector} {
         display: flex;
         margin: 0 auto;
-
-        // Column
-        > .wp-block {
-          z-index: unset;
-        }
       }
 
       // Spacing between columns
-      &.gutter-10 .block-editor-block-list__layout > div:not(:first-child) {
+      &.gutter-10 #{$base-selector} > div:not(:first-child) {
           margin-left: 10px;
       }
 
-      &.gutter-20 .block-editor-block-list__layout > div:not(:first-child) {
+      &.gutter-20 #{$base-selector} > div:not(:first-child) {
           margin-left: 20px;
       }
 
-      &.gutter-30 .block-editor-block-list__layout > div:not(:first-child) {
+      &.gutter-30 #{$base-selector} > div:not(:first-child) {
           margin-left: 30px;
       }
 
-      &.gutter-40 .block-editor-block-list__layout > div:not(:first-child) {
+      &.gutter-40 #{$base-selector} > div:not(:first-child) {
           margin-left: 40px;
       }
 
-      &.gutter-50 .block-editor-block-list__layout > div:not(:first-child) {
+      &.gutter-50 #{$base-selector} > div:not(:first-child) {
           margin-left: 50px;
       }
 
-      &.gutter-70 .block-editor-block-list__layout > div:not(:first-child) {
+      &.gutter-70 #{$base-selector} > div:not(:first-child) {
           margin-left: 70px;
       }
 
-      &.gutter-90 .block-editor-block-list__layout > div:not(:first-child) {
+      &.gutter-90 #{$base-selector} > div:not(:first-child) {
           margin-left: 90px;
       }
 
@@ -63,33 +61,16 @@
       &.advgb-columns-5,
       &.advgb-columns-6 {
 
-          > .block-editor-inner-blocks > .block-editor-block-list__layout .advgb-column {
+          #{$base-selector} > div {
               flex-grow: 1;
               min-width: 0;
+              flex-basis: 0;
           }
       }
 
       // Desktop
       @media (min-width: 1024px) {
-          @include colums-width-variants( '', '.block-editor-block-list__layout > div' );
-      }
-
-      // Tablet
-      @media (min-width: 768px) and (max-width: 1023px) {
-
-          @include colums-width-variants( 'tbl-', '.block-editor-block-list__layout > div' );
-      }
-
-      // Mobile
-      @media (max-width: 767px) {
-
-          @include colums-width-variants( 'mbl-', '.block-editor-block-list__layout > div' );
-
-          // Collapsed Order RTL
-          &.order-rtl {
-             flex-wrap: wrap-reverse;
-             -moz-flex-wrap: wrap-reverse;
-          }
+          @include colums-width-variants( '', '#{$base-selector} > div' );
       }
     }
   }
