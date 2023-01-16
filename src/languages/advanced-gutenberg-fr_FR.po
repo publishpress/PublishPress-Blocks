@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - Gutenberg Blocks &#8211; PublishPress Blocks "
 "Gutenberg Editor Plugin - Stable (latest release)\n"
 "POT-Creation-Date: 2023-01-03 14:12-0600\n"
-"PO-Revision-Date: 2023-01-03 14:21-0600\n"
+"PO-Revision-Date: 2023-01-16 12:28-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -32,52 +32,52 @@ msgstr "Réglages du fuseau horaire de WordPress"
 #: assets/blocks/block-controls.js:351 assets/blocks/blocks.js:5269
 msgctxt "Sunday first letter"
 msgid "S"
-msgstr ""
+msgstr "D"
 
 #: assets/blocks/block-controls.js:352 assets/blocks/blocks.js:5270
 msgid "M"
-msgstr ""
+msgstr "L"
 
 #: assets/blocks/block-controls.js:353 assets/blocks/blocks.js:5271
 msgctxt "Tuesday first letter"
 msgid "T"
-msgstr ""
+msgstr "M"
 
 #: assets/blocks/block-controls.js:354 assets/blocks/blocks.js:5272
 msgid "W"
-msgstr ""
+msgstr "M"
 
 #: assets/blocks/block-controls.js:355 assets/blocks/blocks.js:5273
 msgctxt "Thursday first letter"
 msgid "T"
-msgstr ""
+msgstr "J"
 
 #: assets/blocks/block-controls.js:356 assets/blocks/blocks.js:5274
 msgid "F"
-msgstr ""
+msgstr "V"
 
 #: assets/blocks/block-controls.js:357 assets/blocks/blocks.js:5275
 msgctxt "Saturday first letter"
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: assets/blocks/block-controls.js:684 assets/blocks/blocks.js:5602
 msgid "AM"
-msgstr ""
+msgstr "AM"
 
 #: assets/blocks/block-controls.js:697 assets/blocks/blocks.js:5615
 msgid "PM"
-msgstr ""
+msgstr "PM"
 
 #: assets/blocks/block-controls.js:1574 assets/blocks/block-controls.js:1617
 #, javascript-format
 msgid "All %s terms"
-msgstr ""
+msgstr "Tous les termes %s"
 
 #: assets/blocks/block-controls.js:1617
 #, javascript-format
 msgid "Selected %s terms"
-msgstr ""
+msgstr "Termes %s sélectionnés"
 
 #: assets/blocks/block-controls.js:1754 incl/advanced-gutenberg-main.php:1775
 #: incl/pages/block-controls.php:30 incl/pages/main.php:50
@@ -87,7 +87,7 @@ msgstr "Contrôles des blocs"
 #: assets/blocks/block-controls.js:1763
 #: incl/pages/block-controls/controls.php:14
 msgid "Schedule"
-msgstr ""
+msgstr "Planifier"
 
 #: assets/blocks/block-controls.js:1764
 msgid "Choose when to start showing and/or stop showing this block."
@@ -130,32 +130,32 @@ msgstr ""
 
 #: assets/blocks/block-controls.js:1827
 msgid "On these days (optional)"
-msgstr ""
+msgstr "Pendant ces jours (facultatif)"
 
 #: assets/blocks/block-controls.js:1836
 msgid "Between these times (optional)"
-msgstr ""
+msgstr "Entre ces heures (facultatif)"
 
 #: assets/blocks/block-controls.js:1839
 msgid "From"
-msgstr ""
+msgstr "De"
 
 #: assets/blocks/block-controls.js:1849
 msgid "To"
-msgstr ""
+msgstr "À"
 
 #: assets/blocks/block-controls.js:1867
 msgid "\"To\" time should be after \"From\" time!"
-msgstr ""
+msgstr "L’heure « À » devrait être postérieure à l’heure « De » !"
 
 #: assets/blocks/block-controls.js:1876
 msgid "Please choose \"From\" time and \"To\" time."
-msgstr ""
+msgstr "Veuillez choisir l’heure « De » et « À »."
 
 #: assets/blocks/block-controls.js:1894
 #: incl/pages/block-controls/controls.php:33
 msgid "User roles"
-msgstr ""
+msgstr "Rôles des utilisateur·ice·s"
 
 #: assets/blocks/block-controls.js:1895
 msgid "Choose which users can see this block."
@@ -167,7 +167,7 @@ msgstr "Afficher à tous"
 
 #: assets/blocks/block-controls.js:1914
 msgid "Hide from everyone"
-msgstr ""
+msgstr "Masquer à tous"
 
 #: assets/blocks/block-controls.js:1917
 msgid "Show to logged in users"
@@ -196,17 +196,19 @@ msgstr "Rechercher"
 
 #: assets/blocks/block-controls.js:1956
 msgid "Please select at least one user role."
-msgstr ""
+msgstr "Veuillez sélectionner au moins un rôle d’utilisateur·ice."
 
 #: assets/blocks/block-controls.js:1970
 msgid ""
 "Term archives & Pages controls are available in Widgets and FSE screens."
 msgstr ""
+"Les archives de termes et les contrôles de pages sont disponibles dans les "
+"écrans Widgets et FSE."
 
 #: assets/blocks/block-controls.js:1981
 #: incl/pages/block-controls/controls.php:52
 msgid "Term archives"
-msgstr ""
+msgstr "Archives de termes"
 
 #: assets/blocks/block-controls.js:1982
 #: incl/pages/block-controls/controls.php:62
@@ -214,55 +216,57 @@ msgid ""
 "Choose on which taxonomies and terms archive pages your blocks can be "
 "displayed."
 msgstr ""
+"Choisissez sur quelles taxonomies et pages d’archives de termes vos blocs "
+"peuvent être affichés."
 
 #: assets/blocks/block-controls.js:1998
 msgid "Show for selected terms"
-msgstr ""
+msgstr "Afficher pour les termes sélectionnés"
 
 #: assets/blocks/block-controls.js:2001
 msgid "Hide for selected terms"
-msgstr ""
+msgstr "Masquer pour les termes sélectionnés"
 
 #: assets/blocks/block-controls.js:2010
 msgid "Select taxonomies"
-msgstr ""
+msgstr "Sélectionner les taxonomies"
 
 #: assets/blocks/block-controls.js:2011
 msgid "Search taxonomies"
-msgstr ""
+msgstr "Rechercher les taxonomies"
 
 #: assets/blocks/block-controls.js:2025
 msgid "Filter terms"
-msgstr ""
+msgstr "Termes du filtre"
 
 #: assets/blocks/block-controls.js:2026
 msgid "Search terms"
-msgstr ""
+msgstr "Rechercher des termes"
 
 #: assets/blocks/block-controls.js:2047
 msgid "Use this filter to apply only to some terms."
-msgstr ""
+msgstr "Utilisez ce filtre pour appliquer uniquement à certains termes."
 
 #: assets/blocks/block-controls.js:2056
 #: incl/pages/block-controls/controls.php:71
 msgid "Pages"
-msgstr ""
+msgstr "Pages"
 
 #: assets/blocks/block-controls.js:2057
 msgid "Choose in which pages this block can be displayed."
-msgstr ""
+msgstr "Choisissez dans quelles pages ce bloc peut être affiché."
 
 #: assets/blocks/block-controls.js:2073
 msgid "Show on the selected pages"
-msgstr ""
+msgstr "Afficher sur les pages sélectionnées"
 
 #: assets/blocks/block-controls.js:2076
 msgid "Hide on the selected pages"
-msgstr ""
+msgstr "Masquer sur les pages sélectionnées"
 
 #: assets/blocks/block-controls.js:2085
 msgid "Select pages"
-msgstr ""
+msgstr "Sélectionner les pages"
 
 #: assets/blocks/blocks.js:5749
 msgid "Icon List"
@@ -851,7 +855,7 @@ msgstr "Nombre d’icônes"
 
 #: assets/blocks/blocks.js:9211
 msgid "Icon "
-msgstr ""
+msgstr "Icône "
 
 #: assets/blocks/blocks.js:9235 assets/blocks/blocks.js:14945
 msgid "Icon Style"
@@ -2802,6 +2806,9 @@ msgid ""
 "Key and refresh the page to start using Map Block. This is a requirement "
 "enforced by Google."
 msgstr ""
+"Opps ! Il semble que vous n’ayez pas encore configuré votre clé API Google. "
+"Ajoutez une clé API et rafraîchissez la page pour commencer à utiliser le "
+"bloc de cartes. Il s’agit d’une exigence imposée par Google."
 
 #: assets/blocks/blocks.js:23899
 msgid "Add Google API Key in Settings"
@@ -4062,19 +4069,19 @@ msgstr "Mis à jour"
 
 #: assets/js/main.js:93
 msgid "Changes saved!"
-msgstr ""
+msgstr "Modifications enregistrées !"
 
 #: assets/js/main.js:94
 msgid " Error: changes can't be saved."
-msgstr ""
+msgstr " Erreur : les modifications ne peuvent pas être enregistrées."
 
 #: assets/js/settings.js:95
 msgid "Edit block"
-msgstr ""
+msgstr "Modifier le bloc"
 
 #: assets/js/settings.js:95
 msgid "default config"
-msgstr ""
+msgstr "Configuration par défaut"
 
 #. Plugin Name of the plugin/theme
 #: incl/advanced-gutenberg-main.php:253 incl/advanced-gutenberg-main.php:1761
@@ -4188,16 +4195,13 @@ msgstr "Réglages"
 
 #: incl/advanced-gutenberg-main.php:2001 incl/advanced-gutenberg-main.php:2046
 #: incl/advanced-gutenberg-main.php:2080 incl/advanced-gutenberg-main.php:2126
-#, fuzzy, php-format
-#| msgid ""
-#| "This feature is disabled. In order to use, please enable back through "
-#| "%sDashboard%s."
+#, php-format
 msgid ""
 "This feature is disabled. In order to use, please enable back through "
 "%sDashboard%s."
 msgstr ""
-"Cette fonctionnalité est désactivée. Afin del’utiliser, veuillez la "
-"réactiver via le tableau de bord."
+"Cette fonctionnalité est désactivée. Afin de l’utiliser, veuillez la "
+"réactiver via le %sTableau de bord%s."
 
 #: incl/advanced-gutenberg-main.php:2189
 #, php-format
@@ -4297,15 +4301,15 @@ msgstr "L’identifiant ou le mot de passe est incorrect !"
 
 #: incl/block-controls-main.php:980
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 #: incl/block-controls-main.php:984
 msgid "Archive"
-msgstr ""
+msgstr "Archive"
 
 #: incl/block-controls-main.php:992
 msgid "404"
-msgstr ""
+msgstr "404"
 
 #: incl/block-settings-main.php:47
 msgid "Header Icon"
@@ -4849,7 +4853,7 @@ msgstr "Choisissez les utilisateur·ice·s qui peuvent voir vos blocs."
 
 #: incl/pages/block-controls/controls.php:81
 msgid "Choose in which pages your blocks can be displayed."
-msgstr ""
+msgstr "Choisissez dans quelles pages vos blocs peuvent être affichés."
 
 #: incl/pages/block-controls/controls.php:95
 msgid "Save Controls"
@@ -5342,6 +5346,8 @@ msgid ""
 "This plugin is outdated. You already have a more recent version installed. "
 "Please remove this version."
 msgstr ""
+"Cette extension est obsolète. Vous avez déjà installé une version plus "
+"récente. Veuillez supprimer cette version."
 
 #: vendor/publishpress/publishpress-instance-protection/core/InstanceChecker.php:243
 #, php-format
@@ -5349,6 +5355,8 @@ msgid ""
 "This plugin is not installed in the standard folder. The current path is "
 "%1$s but it is expected to be %2$s."
 msgstr ""
+"Cette extension n’est pas installée dans le dossier standard. Le chemin "
+"actuel est %1$s mais il devrait être %2$s."
 
 #: vendor/publishpress/publishpress-instance-protection/core/InstanceChecker.php:269
 #, php-format
@@ -5356,11 +5364,13 @@ msgid ""
 "You have activated multiple instances of %s. Please keep only one activated "
 "and remove the others."
 msgstr ""
+"Vous avez activé plusieurs instances de %s. Veuillez n’en garder qu’une "
+"seule activée et supprimer les autres."
 
 #: vendor/publishpress/publishpress-instance-protection/core/InstanceChecker.php:289
 #, php-format
 msgid "Please deactivate %1$s when %2$s is activated."
-msgstr ""
+msgstr "Veuillez désactiver %1$s lorsque %2$s est activé."
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:332
 #, php-format
@@ -5369,35 +5379,39 @@ msgid ""
 "been useful. Please could you quickly leave a 5-star rating on WordPress."
 "org? It really does help to keep %1$s growing."
 msgstr ""
+"Bonjour, vous avez utilisé %1$s pour %2$s sur votre site. Nous espérons que "
+"l’extension vous a été utile. Pourriez-vous rapidement laisser une note de 5 "
+"étoiles sur WordPress.org ? Cela nous aide vraiment à maintenir la "
+"croissance de %1$s."
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:342
 msgid "1 week"
-msgstr ""
+msgstr "1 semaine"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:350
 msgid "1 month"
-msgstr ""
+msgstr "1 mois"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:361
 msgid "3 months"
-msgstr ""
+msgstr "3 mois"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:615
 #, php-format
 msgid "Click here to add your rating for %s"
-msgstr ""
+msgstr "Cliquez ici pour ajouter votre note pour %s"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:621
 msgid "Maybe later"
-msgstr ""
+msgstr "Peut-être plus tard"
 
 #: vendor/publishpress/wordpress-reviews/ReviewsController.php:626
 msgid "I already did"
-msgstr ""
+msgstr "Je l’ai déjà fait"
 
 #: vendor/publishpress/wordpress-version-notices/src/Module/MenuLink/Module.php:129
 msgid "Amazing! We are redirecting you to our site..."
-msgstr ""
+msgstr "Formidable ! Nous vous redirigeons vers notre site…"
 
 #. Plugin URI of the plugin/theme
 msgid "https://publishpress.com/blocks/"
