@@ -199,7 +199,7 @@ body.advgb-editor-width-full:not(.advgb-editor-width-default) #editor {
     border-color: transparent;
 }
 
-.advgb-editor-col-guide-enable .advgb-columns > .block-editor-inner-blocks > .block-editor-block-list__layout>.wp-block:not(.is-selected) >.advgb-column {
+.advgb-editor-col-guide-enable .advgb-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block:not(.is-selected) {
     border: 1px dashed #999;
 }
 

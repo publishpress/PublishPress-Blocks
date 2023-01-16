@@ -1,60 +1,61 @@
 /*
- * Columns Manager
+ * Columns
  * $prefix: 'tbl-' for tablet, 'mbl-' for mobile
+ * $mod: '> .advgb-column' for frontend, '.block-editor-block-list__layout > div' for admin
  */
-@mixin colums-width-variants($prefix: '') {
+@mixin colums-width-variants($prefix: '', $mod: '> .advgb-column') {
 
     // 2 Columns layout variants
-    &.#{$prefix}layout-23-13 > .advgb-column:nth-of-type(1) {
+    &.#{$prefix}layout-23-13 #{$mod}:nth-of-type(1) {
         flex-grow: 2;
     }
 
-    &.#{$prefix}layout-13-23 > .advgb-column:nth-of-type(2) {
+    &.#{$prefix}layout-13-23 #{$mod}:nth-of-type(2) {
         flex-grow: 2;
     }
 
-    &.#{$prefix}layout-14-34 > .advgb-column:nth-of-type(2) {
+    &.#{$prefix}layout-14-34 #{$mod}:nth-of-type(2) {
         flex-grow: 3;
     }
 
-    &.#{$prefix}layout-34-14 > .advgb-column:nth-of-type(1) {
+    &.#{$prefix}layout-34-14 #{$mod}:nth-of-type(1) {
         flex-grow: 3;
     }
 
-    &.#{$prefix}layout-15-45 > .advgb-column:nth-of-type(2) {
+    &.#{$prefix}layout-15-45 #{$mod}:nth-of-type(2) {
         flex-grow: 4;
     }
 
-    &.#{$prefix}layout-45-15 > .advgb-column:nth-of-type(1) {
+    &.#{$prefix}layout-45-15 #{$mod}:nth-of-type(1) {
         flex-grow: 4;
     }
 
     // 3 Columns layout variants
-    &.#{$prefix}layout-12-14-14 > .advgb-column:nth-of-type(1) {
+    &.#{$prefix}layout-12-14-14 #{$mod}:nth-of-type(1) {
         flex-grow: 2;
     }
 
-    &.#{$prefix}layout-14-14-12 > .advgb-column:nth-of-type(3) {
+    &.#{$prefix}layout-14-14-12 #{$mod}:nth-of-type(3) {
         flex-grow: 2;
     }
 
-    &.#{$prefix}layout-14-12-14 > .advgb-column:nth-of-type(2) {
+    &.#{$prefix}layout-14-12-14 #{$mod}:nth-of-type(2) {
         flex-grow: 2;
     }
 
-    &.#{$prefix}layout-15-35-15 > .advgb-column:nth-of-type(2) {
+    &.#{$prefix}layout-15-35-15 #{$mod}:nth-of-type(2) {
         flex-grow: 3;
     }
 
-    &.#{$prefix}layout-35-15-15 > .advgb-column:nth-of-type(1) {
+    &.#{$prefix}layout-35-15-15 #{$mod}:nth-of-type(1) {
         flex-grow: 3;
     }
 
-    &.#{$prefix}layout-15-15-35 > .advgb-column:nth-of-type(3) {
+    &.#{$prefix}layout-15-15-35 #{$mod}:nth-of-type(3) {
         flex-grow: 3;
     }
 
-    &.#{$prefix}layout-16-46-16 > .advgb-column:nth-of-type(2) {
+    &.#{$prefix}layout-16-46-16 #{$mod}:nth-of-type(2) {
         flex-grow: 4;
     }
 
@@ -62,7 +63,7 @@
     &.#{$prefix}layout-1-12-12 {
         flex-wrap: wrap;
 
-        > .advgb-column {
+        #{$mod} {
 
             &:nth-of-type(1) {
                 width: 100%;
@@ -83,7 +84,7 @@
     &.#{$prefix}layout-12-12-1 {
         flex-wrap: wrap;
 
-        > .advgb-column {
+        #{$mod} {
 
             &:nth-of-type(1) {
                 margin-left: 0;
@@ -103,19 +104,19 @@
     }
 
     // 4 Columns layout variants
-    &.#{$prefix}layout-36-16-16-16 > .advgb-column:nth-of-type(1) {
+    &.#{$prefix}layout-36-16-16-16 #{$mod}:nth-of-type(1) {
         flex-grow: 3;
     }
 
-    &.#{$prefix}layout-16-16-16-36 > .advgb-column:nth-of-type(4) {
+    &.#{$prefix}layout-16-16-16-36 #{$mod}:nth-of-type(4) {
         flex-grow: 3;
     }
 
-    &.#{$prefix}layout-15-15-15-25 > .advgb-column:nth-of-type(4) {
+    &.#{$prefix}layout-15-15-15-25 #{$mod}:nth-of-type(4) {
         flex-grow: 2;
     }
 
-    &.#{$prefix}layout-25-15-15-15 > .advgb-column:nth-of-type(1) {
+    &.#{$prefix}layout-25-15-15-15 #{$mod}:nth-of-type(1) {
         flex-grow: 2;
     }
 
@@ -126,7 +127,7 @@
         flex-direction: row;
         flex-wrap: wrap;
 
-        > .advgb-column {
+        #{$mod} {
             flex-basis: 50% !important;
             margin-left: unset !important;
         }
@@ -138,7 +139,7 @@
         flex-direction: row;
         flex-wrap: wrap;
 
-        > .advgb-column {
+        #{$mod} {
             flex-basis: 33.33% !important;
             margin-left: unset !important;
         }
@@ -147,7 +148,7 @@
     // Stacked columns
     &.#{$prefix}layout-stacked {
 
-        > .advgb-column {
+        #{$mod} {
             width: 100%;
             flex-basis: unset !important;
             margin-left: 0 !important;

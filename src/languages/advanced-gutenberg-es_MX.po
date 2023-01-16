@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - Gutenberg Blocks &#8211; PublishPress Blocks "
 "Gutenberg Editor Plugin - Stable (latest release)\n"
 "POT-Creation-Date: 2023-01-03 14:12-0600\n"
-"PO-Revision-Date: 2023-01-03 14:21-0600\n"
+"PO-Revision-Date: 2023-01-16 12:29-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_MX\n"
@@ -133,7 +133,7 @@ msgstr "En estos días (opcional)"
 
 #: assets/blocks/block-controls.js:1836
 msgid "Between these times (optional)"
-msgstr "Entre estos horarios (opcional)"
+msgstr "Entre estas horas (opcional)"
 
 #: assets/blocks/block-controls.js:1839
 msgid "From"

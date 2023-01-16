@@ -390,6 +390,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if($this->settingIsEnabled('enable_advgb_blocks') && $pagenow === 'site-editor.php') {
                 add_editor_style(site_url('/wp-includes/css/dashicons.css')); // 'dashicons'
                 add_editor_style(plugins_url('assets/css/blocks.css', dirname(__FILE__))); // 'advgb_blocks_styles'
+                add_editor_style(plugins_url('assets/css/columns-editor.css', dirname(__FILE__))); // 'advgb_blocks_editor_styles'
                 add_editor_style(plugins_url('assets/css/recent-posts.css', dirname(__FILE__))); // 'advgb_recent_posts_styles'
                 add_editor_style(plugins_url('assets/css/editor.css', dirname(__FILE__))); // 'advgb_editor_styles'
                 add_editor_style(plugins_url('assets/css/site-editor.css', dirname(__FILE__))); // Site editor iframe styles only
@@ -679,7 +680,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 wp_enqueue_style(
                     'advgb_blocks_styles',
                     plugins_url('assets/css/blocks.css', dirname(__FILE__)),
-                    array(),
+                    [],
+                    ADVANCED_GUTENBERG_VERSION
+                );
+
+                wp_enqueue_style(
+                    'advgb_columns_editor_styles',
+                    plugins_url('assets/css/columns-editor.css', dirname(__FILE__)),
+                    ['advgb_blocks_styles'],
                     ADVANCED_GUTENBERG_VERSION
                 );
 
@@ -1778,10 +1786,17 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'enabled' => $this->settingIsEnabled( 'block_controls' )
                 ],
                 [
+                    'slug' => 'edit.php?post_type=wp_block',
+                    'title' => esc_html__( 'Reusable Blocks', 'advanced-gutenberg' ),
+                    'callback' => '',
+                    'order' => 7,
+                    'enabled' => true
+                ],
+                [
                     'slug' => 'advgb_settings',
                     'title' => esc_html__( 'Settings', 'advanced-gutenberg' ),
                     'callback' => 'loadSettingsPage',
-                    'order' => 7,
+                    'order' => 8,
                     'enabled' => true
                 ]
             ];
@@ -1821,9 +1836,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         $page['title'],
                         'manage_options',
                         $page['slug'], // slug should use underscores, not hyphen due we generate automatic function names based on it
-                        [
-                            $this, $page['callback']
-                        ],
+                        ! empty( $page['callback'] ) ? [ $this, $page['callback'] ] : '',
                         $page['order']
                     );
 
@@ -1838,7 +1851,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         add_action( 'load-' . $hook, [$this, $function_name] );
                     }
                 }
-
 
                 /* Add CSS classes to these submenus to dynamically show/hide them
                  * through main page enable/disable features
@@ -4801,7 +4813,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             if ($blockName === 'advgb/column') {
                 $childColID = esc_html($blockAttrs['colId']);
-                $childColWidth = esc_html($blockAttrs['width']);
+                $childColWidth = isset( $blockAttrs['width'] ) ? intval( $blockAttrs['width'] ) : 0;
                 if ($childColWidth !== 0) {
                     $style_html .= '#' . $childColID . '{width: ' . $childColWidth . '%;}';
                 }
