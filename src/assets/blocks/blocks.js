@@ -13378,10 +13378,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     // Finally set changed attribute to true, so we don't modify anything again
                     setAttributes({ changed: true });
                 }
-
-                /*if ( ! attributes.newActiveTab ) {
-                    setAttributes( { newActiveTab: '' } );
-                }*/
             }
         }, {
             key: "componentDidUpdate",
@@ -13400,15 +13396,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     this.props.updateTabActive(0);
                 }
 
-                /* Fix when block is inserted (empty innerBlocks array), the 3 default tabs are displayed at once
-                 * https://github.com/publishpress/PublishPress-Blocks/issues/1117
-                 */
+                // Add consecutive id attributes to each child block, starting from 0
                 if (!prevProps.innerBlocks.length) {
-                    times(innerBlocks.length, function (n) {
-                        wp.data.dispatch('core/block-editor').updateBlockAttributes(innerBlocks[n].clientId, {
-                            id: n
-                        });
+                    this.updateTabIds(innerBlocks);
+                } else if (advgbBlocks.advgb_pro === '1') {
+
+                    // Be sure ids are consecutive, starting from 0
+                    var ids = innerBlocks.map(function (item) {
+                        return item.attributes.id;
                     });
+                    var consecutive = ids.every(function (val, i) {
+                        return i === 0 || val - 1 === ids[i - 1];
+                    });
+
+                    if (!consecutive) {
+                        this.updateTabIds(innerBlocks);
+                    }
+                } else {
+                    // Nothing to do here
                 }
             }
         }, {
@@ -13433,6 +13438,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.updateTabHeaders();
                 this.updateTabAnchors();
                 this.props.resetOrder();
+            }
+
+            /**
+             * Update id attributes for child blocks, so right content is displayed
+             * matching its active header
+             * https://github.com/publishpress/PublishPress-Blocks/issues/1117
+             *
+             * @since 3.1.3
+             *
+             * @param {array} innerBlocks Array of inner blocks objects
+             *
+             * @return {void}
+             */
+
+        }, {
+            key: "updateTabIds",
+            value: function updateTabIds(innerBlocks) {
+                var _dispatch = dispatch('core/block-editor'),
+                    updateBlockAttributes = _dispatch.updateBlockAttributes;
+
+                times(innerBlocks.length, function (n) {
+                    updateBlockAttributes(innerBlocks[n].clientId, {
+                        id: n
+                    });
+                });
             }
         }, {
             key: "updateTabsAttr",
@@ -13666,15 +13696,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var childBlocks = getBlockOrder(clientId);
 
-                console.log('index', index);
-                console.log('newIndex', newIndex);
-                console.log('headers', headers);
-                console.log('header', header);
-                console.log('anchors', anchors);
-                console.log('anchor', anchor);
-
-                console.log('childBlocks[index]', childBlocks[index]);
-
                 headers.splice(newIndex, 0, header[0]);
                 this.updateTabsHeader(attributes.tabHeaders[index], newIndex);
                 this.updateTabsHeader(attributes.tabHeaders[newIndex], newIndex);
@@ -13684,20 +13705,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 this.updateTabHeaders();
                 this.updateTabAnchors();
-                this.updateTabAnchors();
-                //this.props.resetOrder();
+                this.props.resetOrder();
                 this.props.updateTabActive(newIndex);
-
-                /*console.log(event);
-                console.log(event.target.parentElement);
-                console.log(event.target.parentElement.parentElement);
-                console.log(event.target.parentElement.parentElement.querySelector( 'a' ));
-                 // Simulate a click event to adjust active content tab
-                event.target
-                    .parentElement
-                        .parentElement
-                            .querySelector( 'a' )
-                                .dispatchEvent( new Event( 'click' ) );*/
             }
         }, {
             key: "translatableText",
@@ -14207,8 +14216,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 innerBlocks = _ref18.innerBlocks;
             var select = _ref19.select;
 
-            var _dispatch = dispatch('core/block-editor'),
-                updateBlockAttributes = _dispatch.updateBlockAttributes;
+            var _dispatch2 = dispatch('core/block-editor'),
+                updateBlockAttributes = _dispatch2.updateBlockAttributes;
 
             return {
                 resetOrder: function resetOrder() {
