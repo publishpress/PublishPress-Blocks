@@ -599,6 +599,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $block_controls         = $this->settingIsEnabled( 'block_controls' ) ? 1 : 0;
             $block_extend           = $this->settingIsEnabled( 'block_extend' ) ? 1 : 0;
             $timezone               = function_exists( 'wp_timezone_string' ) ? wp_timezone_string() : '';
+            $reusable_blocks        = $this->settingIsEnabled( 'reusable_blocks' ) ? 1 : 0;
             global $wp_version;
             $blocks_widget_support = ( $wp_version >= 5.8 ) ? 1 : 0;
 
@@ -624,6 +625,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'pp_series_slug' => $pp_series_slug,
                 'pp_series_post_types' => $pp_series_post_types,
                 'block_controls' => $block_controls,
+                'reusable_blocks' => $reusable_blocks,
                 'block_extend' => $block_extend,
                 'timezone' => $timezone
             ));
@@ -1191,7 +1193,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'enable_block_access',
                 'block_extend',
                 'enable_custom_styles',
-                'enable_advgb_blocks'
+                'enable_advgb_blocks',
+                'reusable_blocks'
             ];
 
             // Pro features
@@ -1790,7 +1793,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'title' => esc_html__( 'Reusable Blocks', 'advanced-gutenberg' ),
                     'callback' => '',
                     'order' => 7,
-                    'enabled' => true
+                    'enabled' => $this->settingIsEnabled( 'reusable_blocks' )
                 ],
                 [
                     'slug' => 'advgb_settings',
