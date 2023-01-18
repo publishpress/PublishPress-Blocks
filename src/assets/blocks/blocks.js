@@ -13300,6 +13300,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         TextControl = wpComponents.TextControl;
     var _wp$data = wp.data,
         withDispatch = _wp$data.withDispatch,
+        withSelect = _wp$data.withSelect,
         select = _wp$data.select,
         dispatch = _wp$data.dispatch;
     var compose = wpCompose.compose;
@@ -13380,10 +13381,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             key: "componentDidUpdate",
-            value: function componentDidUpdate() {
+            value: function componentDidUpdate(prevProps) {
                 var _props2 = this.props,
                     attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                    setAttributes = _props2.setAttributes,
+                    innerBlocks = _props2.innerBlocks;
                 var isTransform = attributes.isTransform;
 
 
@@ -13392,6 +13394,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         isTransform: false
                     });
                     this.props.updateTabActive(0);
+                }
+
+                // Add consecutive id attributes to each child block, starting from 0
+                if (!prevProps.innerBlocks.length) {
+                    this.updateTabIds(innerBlocks);
+                } else if (advgbBlocks.advgb_pro === '1') {
+
+                    // Be sure ids are consecutive, starting from 0
+                    var ids = innerBlocks.map(function (item) {
+                        return item.attributes.id;
+                    });
+                    var consecutive = ids.every(function (val, i) {
+                        return i === 0 || val - 1 === ids[i - 1];
+                    });
+
+                    if (!consecutive) {
+                        this.updateTabIds(innerBlocks);
+                    }
+                } else {
+                    // Nothing to do here
                 }
             }
         }, {
@@ -13416,6 +13438,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.updateTabHeaders();
                 this.updateTabAnchors();
                 this.props.resetOrder();
+            }
+
+            /**
+             * Update id attributes for child blocks, so right content is displayed
+             * matching its active header
+             * https://github.com/publishpress/PublishPress-Blocks/issues/1117
+             *
+             * @since 3.1.3
+             *
+             * @param {array} innerBlocks Array of inner blocks objects
+             *
+             * @return {void}
+             */
+
+        }, {
+            key: "updateTabIds",
+            value: function updateTabIds(innerBlocks) {
+                var _dispatch = dispatch('core/block-editor'),
+                    updateBlockAttributes = _dispatch.updateBlockAttributes;
+
+                times(innerBlocks.length, function (n) {
+                    updateBlockAttributes(innerBlocks[n].clientId, {
+                        id: n
+                    });
+                });
             }
         }, {
             key: "updateTabsAttr",
@@ -13653,6 +13700,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.updateTabsHeader(attributes.tabHeaders[index], newIndex);
                 this.updateTabsHeader(attributes.tabHeaders[newIndex], newIndex);
                 anchors.splice(newIndex, 0, anchor[0]);
+
                 moveBlockToPosition(childBlocks[index], clientId, clientId, newIndex);
 
                 this.updateTabHeaders();
@@ -14154,31 +14202,37 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         supports: {
             anchor: true
         },
-        edit: compose(withDispatch(function (dispatch, _ref18, _ref19) {
-            var clientId = _ref18.clientId;
-            var select = _ref19.select;
+        edit: compose(withSelect(function (select, ownProps) {
+            var clientId = ownProps.clientId;
 
             var _select = select('core/block-editor'),
                 getBlock = _select.getBlock;
 
-            var _dispatch = dispatch('core/block-editor'),
-                updateBlockAttributes = _dispatch.updateBlockAttributes;
+            return {
+                innerBlocks: getBlock(clientId).innerBlocks
+            };
+        }), withDispatch(function (dispatch, _ref18, _ref19) {
+            var clientId = _ref18.clientId,
+                innerBlocks = _ref18.innerBlocks;
+            var select = _ref19.select;
 
-            var block = getBlock(clientId);
+            var _dispatch2 = dispatch('core/block-editor'),
+                updateBlockAttributes = _dispatch2.updateBlockAttributes;
+
             return {
                 resetOrder: function resetOrder() {
-                    times(block.innerBlocks.length, function (n) {
-                        updateBlockAttributes(block.innerBlocks[n].clientId, {
+                    times(innerBlocks.length, function (n) {
+                        updateBlockAttributes(innerBlocks[n].clientId, {
                             id: n
                         });
                     });
                 },
                 updateTabActive: function updateTabActive(tabActive) {
-                    updateBlockAttributes(block.clientId, {
+                    updateBlockAttributes(clientId, {
                         tabActive: tabActive
                     });
-                    times(block.innerBlocks.length, function (n) {
-                        updateBlockAttributes(block.innerBlocks[n].clientId, {
+                    times(innerBlocks.length, function (n) {
+                        updateBlockAttributes(innerBlocks[n].clientId, {
                             tabActive: tabActive
                         });
                     });

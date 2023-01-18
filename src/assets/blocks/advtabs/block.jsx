@@ -5,7 +5,7 @@
     const { registerBlockType, createBlock, cloneBlock } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpBlockEditor;
     const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl, Button, TextControl } = wpComponents;
-    const { withDispatch, select, dispatch } = wp.data;
+    const { withDispatch, withSelect, select, dispatch } = wp.data;
     const { compose } = wpCompose;
     const { times } = lodash;
 
@@ -73,8 +73,8 @@
             }
         }
 
-        componentDidUpdate() {
-            const { attributes, setAttributes } = this.props;
+        componentDidUpdate( prevProps ) {
+            const { attributes, setAttributes, innerBlocks } = this.props;
             const { isTransform } = attributes;
 
             if(isTransform) {
@@ -82,6 +82,22 @@
                     isTransform: false
                 } );
                 this.props.updateTabActive( 0 );
+            }
+
+            // Add consecutive id attributes to each child block, starting from 0
+            if( ! prevProps.innerBlocks.length ) {
+                this.updateTabIds( innerBlocks );
+            } else if( advgbBlocks.advgb_pro === '1' ) {
+
+                // Be sure ids are consecutive, starting from 0
+                const ids = innerBlocks.map( ( item ) => item.attributes.id );
+                const consecutive = ids.every( ( val, i ) => i === 0 || val - 1 === ids[i - 1] );
+
+                if( ! consecutive ) {
+                    this.updateTabIds( innerBlocks );
+                }
+            } else {
+                // Nothing to do here
             }
         }
 
@@ -105,6 +121,27 @@
             this.updateTabHeaders();
             this.updateTabAnchors();
             this.props.resetOrder();
+        }
+
+        /**
+         * Update id attributes for child blocks, so right content is displayed
+         * matching its active header
+         * https://github.com/publishpress/PublishPress-Blocks/issues/1117
+         *
+         * @since 3.1.3
+         *
+         * @param {array} innerBlocks Array of inner blocks objects
+         *
+         * @return {void}
+         */
+        updateTabIds( innerBlocks ) {
+            const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+
+            times( innerBlocks.length, n => {
+                updateBlockAttributes( innerBlocks[ n ].clientId, {
+                    id: n,
+                } );
+            } );
         }
 
         updateTabsAttr( attrs ) {
@@ -265,6 +302,7 @@
             this.updateTabsHeader(attributes.tabHeaders[index], newIndex);
             this.updateTabsHeader(attributes.tabHeaders[newIndex], newIndex);
             anchors.splice( newIndex, 0, anchor[0] );
+
             moveBlockToPosition(
                 childBlocks[index],
                 clientId,
@@ -275,7 +313,7 @@
             this.updateTabHeaders();
             this.updateTabAnchors();
             this.props.resetOrder();
-            this.props.updateTabActive(newIndex)
+            this.props.updateTabActive( newIndex );
         }
 
         translatableText(text) {
@@ -711,28 +749,31 @@
             anchor: true
         },
         edit: compose(
-            withDispatch( (dispatch, { clientId }, { select }) => {
-                const {
-                    getBlock,
-                } = select( 'core/block-editor' );
-                const {
-                    updateBlockAttributes,
-                } = dispatch( 'core/block-editor' );
-                const block = getBlock( clientId );
+            withSelect( (select, ownProps ) => {
+                const { clientId } = ownProps;
+                const { getBlock } = select( 'core/block-editor' );
+
+                return {
+                    innerBlocks: getBlock( clientId ).innerBlocks
+                };
+            } ),
+            withDispatch( (dispatch, { clientId, innerBlocks }, { select } ) => {
+                const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+
                 return {
                     resetOrder() {
-                        times( block.innerBlocks.length, n => {
-                            updateBlockAttributes( block.innerBlocks[ n ].clientId, {
+                        times( innerBlocks.length, n => {
+                            updateBlockAttributes( innerBlocks[ n ].clientId, {
                                 id: n,
                             } );
                         } );
                     },
                     updateTabActive(tabActive) {
-                        updateBlockAttributes( block.clientId, {
+                        updateBlockAttributes( clientId, {
                             tabActive: tabActive,
                         } );
-                        times( block.innerBlocks.length, n => {
-                            updateBlockAttributes( block.innerBlocks[ n ].clientId, {
+                        times( innerBlocks.length, n => {
+                            updateBlockAttributes( innerBlocks[ n ].clientId, {
                                 tabActive: tabActive,
                             } );
                         } );
