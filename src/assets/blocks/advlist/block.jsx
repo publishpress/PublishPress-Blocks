@@ -73,14 +73,10 @@
             }
         }
 
-        componentDidUpdate( prevProps, prevState ) {
-            const { clientId, attributes } = this.props;
-            const { values } = attributes;
-            const { migrateStatus } = this.state;
-            const { migrateStatus: prevMigrated } = prevState;
+        componentDidUpdate( prevProps ) {
+            const { clientId } = this.props;
 
             const { getBlockOrder } = select( 'core/block-editor' );
-
             const innerBlocks = getBlockOrder( clientId );
 
             if( this.state.migrateStatus === true
