@@ -61,11 +61,11 @@
         componentDidMount() {
             const { setAttributes, clientId } = this.props;
 
-            // Update id and empty values (prepare to be migrated to innerBlocks)
             setAttributes({
                 id: 'advgblist-' + clientId
             });
 
+            // Reset values attribute to default
             if( this.state.migrateStatus === true ) {
                 setAttributes( {
                     values: []
