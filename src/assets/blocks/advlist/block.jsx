@@ -1,22 +1,30 @@
-(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const {__} = wpI18n;
-    const {Component, Fragment} = wpElement;
-    const {registerBlockType, createBlock} = wpBlocks;
-    const {InspectorControls, RichText, ColorPalette, BlockControls} = wpBlockEditor;
-    const {BaseControl, RangeControl, PanelBody, Dashicon, ToolbarGroup, ToolbarButton} = wpComponents;
+    const { Component, Fragment, renderToString, createElement } = wpElement;
+    const { registerBlockType, createBlock } = wpBlocks;
+    const { InspectorControls, RichText, ColorPalette, BlockControls, InnerBlocks } = wpBlockEditor;
+    const { BaseControl, RangeControl, PanelBody, Dashicon, ToolbarGroup, ToolbarButton } = wpComponents;
+    const { select, dispatch } = wpData;
 
     var parse = require('html-react-parser');
 
     const previewImageData = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAADzCAYAAACv4wv1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAACRpJREFUeNrs3b+LFP0dwPGZ3b1f/qqexERUsDEBUZsUIUgiERP/AbG3EZQUgZBAqhRp0uQHBnwsIsFOsVUCD0kRCLHQVkQ5G6+IJEI89Lw7d3ey38vuPeM8M3P7Y+5ud329YHK6PrlbHN77+c7s7BhFAAAAAAAAAEBPXNU3ajQa2/J94ROVhP9pNpu7H3oq7ng7X0TgU4w8+9go0ccjRB4XfK+45PuLH8qjTnIeT0YNPh4i8LyY45zYY4HDwLGnQ0/K4h8k+MYIkWejjnOiFzv0H3o28t4W57wYxAVL/NEmek7kRVutZMoD5dO8aGsXTfl+Jnujgshr6a+3b9/++qlTp47Mzs7ub7fbUZIkcWfb/Ap8qVarJXEcRysrK28fP368dPXq1X9nom7nTPp2aqL3NdnjPkMvi3xju3v37jcvXLjwy07g3+08+SOdJ7/PboQ+x3qSvGu1Wi/X1tYe3rlz5zdXrlz5Vzfo7JY73bea6nEfkUclS/R6+Lq4uPjjw4cP/y4EbpfBaDrBLz1//vxnJ0+e/KIbdSsVeisv9k7opVO9NsRx/EeT/OHDhyePHDnyucihGvV6/fDx48f/+ODBg5PdYVpPN5czdLMXrA0WeuaCmDjzw+rnzp2b77zq/LqzTP/M7oFKj90/O3PmzK9Onz69EP3/XFo29lo0wLtatSGew2b0169f/8HMzMwZuwWqNz8//70bN258PzXV61H+u1pbHoLX+og6Kjg+rx08ePB8Z5rP2iVQvdDWsWPHfrjF8j1vBT7SMXp26V6bm5v7tt0B22dhYeFbOaHnXaA20kSPcpYH6ak+Y1fAtpqJPr5WJS/0LS9KG/QY/aOLZFwAAzuiljk+z1u6j3wybqtLXYFtEq4ozYS9LSfjtooe2H5lny3pe0mQq+Tz5ulXG7sAdjb2odf+w/zAKDLRYScjjwqOyys56x5v8RXY2diLgq98okeD/ABg99VEDhO1dN/x0IFPYKIDQgeEDggdEDogdEDoIHRA6IDQAaEDQgeEDggdEDoIHRA6IHRA6IDQAaEDQgeEDggdhA4IHRA6IHRA6IDQAaEDQgehA0IHhA4IHRA6IHRA6IDQQeiA0AGhA0IHhA4IHRA6IHRA6CB0QOiA0AGhA0IHhA4IHfhSY5Kf/Pv37zc2GGcHDhyIGo3dTc1EB0t3QOiA0IHxMFYn48KJtbW1tShJkmhmZiZaWFiI6vW6vQTTMtFXVlY2Qm+32xuhr6+vR8vLyxu/B6Yg9BD26upq348DExh6q9Ua6s+ACQq9Vit+Go7RYYpCn5+f/8rjcRznPg4MZmzOuu/Zs2cj7HBM3jvrHh4rm/bAhIUehLfTwgZM4dIdEDowTUt3S30w0QGhA0IHx+iTya2kmARuJQUIHZjC0MOlr81m0yfWYFqP0cOdZcLNJ0LsQfjUWji2Cde/A1Mw0cMUf/fu3WbkQZjq4Q4zwJSEHqZ5nhC7ZTxMSehl94VLT3lggkMPnz3PE47Pd/v9RxB6Rebm5nJvGRVuPAGMbizGZZjc4Qx7OFYPJ+bCXWVmZ2dNc5im0Huxuz8cTPHSHRA6IHRgYo7Rh+FWUmCiA0IHoQOO0cdDuLjmw4cP9iJjLVz5udv/tNhEhx4id884xl34LMduh27pDpbuOytc6977yOo4LHdA6BV7+/ZttL6+vvn78M8n7927d+PDLcAULN3DJE9HHoQbToTbSwFTEnrRmfPeXWGBKQi97E6v7gILUxJ60a2kwsm4vDvPABMYejjhlr3pRIh8//799hBUYGzOuof7w4XYe2+vuY0UTGHovSnuvXOY0qU7IHRA6MBEHaMPquhtORiraToG550mOvRwZt7ZebB0ByZ9ooebTrjxBOMu/HNju73yNNHB0h2wdK9Q+Ehq+Fx6+MhqOEsZ7jDjRBtMUegh8uXl5ajVam0+FqIPd5gJwQNTsHQPUacj71lZWdl4EQCmIPSyO8zkvQAAExh62ZVDPs0GUxJ60XH4ONz4HoRekXB2PZx4S98fLkS+b98+ewiqaGxcnkiY6mELd311AwqY0tDT0x2YwqU7IHRA6MDEHaMPYmFhYWMDTHQQur8CEDogdEDogNABoQNCB4QOCB2EDggdEDogdEDogNABoQNCB6EDQgeEDggdEDogdEDogNBB6IDQAaEDQgeEDggdEDogdEDoIHRA6IDQAaEDQgeEDggdEDoIHRA6IHRA6IDQAaEDQgeEDkIHhA4IHRA6IHRA6MCuh57464MdkYzaXK2iJwBM8EQvfSVptVr/9VcI2+fDhw9v+hiqyaih533Dze3Vq1f/sCtg+7x8+fKfRf2ltpEmerLVq8b9+/f/1mw2X9odUL319fWle/fu/X2QoIvEZX/YaDTi7otBb6uHh7vbTNgWFxd/cvTo0Z/bLVCtZ8+e/f7EiROfd37ZDKv47tZMfW11t3Z3SzqDNxl26Z6UbZcuXfrTmzdv/mK3QHVev379xcWLF//c7ay9VYdVH6NHqR+8sT169Oj9+fPnf/rixYvf2j0wuqdPn/7h7Nmzv3jy5MlqKvJ2enLnBJ6MunTvbb2lez21hJ9JLeUb165d+8bly5d/dOjQoe/Mzs5+rZ+fAUTR6urqf5aWlh7fvHnzr7du3XrVDbq3PG+mtsJle3fpPnLocSryWk7ovfjTx/Tp/y9QvEqOciZ3Kyf0Zir0dr+hN/p8Ar0Xhd4TiVNPJBtyPbWsEDr0F3qvtbzQW5kJnnt8XhR5P6HnPZl07K1UxOk/N9GhutALJ3jU58m40tDDK0Rn+Z63tIhSAbdylh9loYsevnoiLTtI2wXTPBt63vcbaqInmamdDb73+3om8lomcrHDYKG3U4G3yqZ52bK9r9BzpnqUiTzKWbLnTXNxQ3n06ffM2yXbQNN8kGP03lTPiz39KpQXudBhsMneLog+GWaaDxRfd6rHmePz7CZyGG2iRwVRtzP/3eavKw19i9iL4s/7GaKH/CV3khNz3tn1gSIfKrqc2PPiz35vccNgUz3v60fL/H4jHzrATOxFvzbJYbipXhR/1D0mH/gjqyPFlxO8wKH64Aee4NF2RVgQfSR66DvuqMq4dzS87gsAUKKqoAEAgIn2PwEGAH9ZFbruawVFAAAAAElFTkSuQmCC';
 
+    let INNER_BLOCKS_TEMPLATE = [ [ 'advgb/list-item' ] ];
+
     class AdvList extends Component {
         constructor() {
             super(...arguments);
+
+            this.state = {
+                migrateValues: [],
+                migrateStatus: null // Status to migrate from <li> to innerBlocks. true: initialized, false: finished
+            }
         }
 
         componentWillMount() {
-            const {attributes, setAttributes} = this.props;
+            const { attributes, setAttributes } = this.props;
             const currentBlockConfig = advgbDefaultConfig['advgb-list'];
 
             // No override attributes of blocks inserted before
@@ -34,22 +42,160 @@
                 // Finally set changed attribute to true, so we don't modify anything again
                 setAttributes({changed: true});
             }
+
+            // Copy values into a state to migrate to innerBlocks
+            if( attributes.values.length
+                && attributes.values[0].hasOwnProperty( 'type' )
+                && attributes.values[0].type === 'li'
+            ) {
+                this.setState( {
+                    migrateValues: attributes.values,
+                    migrateStatus: true
+                } );
+
+                // Empty template to avoid adding an empty List item at the end of each migrated List
+                INNER_BLOCKS_TEMPLATE = [];
+            }
         }
 
         componentDidMount() {
-            const {attributes, setAttributes, clientId} = this.props;
-
-            if (typeof attributes.values[0] !== 'undefined') {
-                if (typeof attributes.values[0] === 'string' && attributes.values[0] !== '') {
-                    setAttributes({
-                        values: parse(attributes.values[0])
-                    })
-                }
-            }
+            const { setAttributes, clientId } = this.props;
 
             setAttributes({
                 id: 'advgblist-' + clientId
             });
+
+            // Reset values attribute to default
+            if( this.state.migrateStatus === true ) {
+                setAttributes( {
+                    values: []
+                } );
+            }
+        }
+
+        componentDidUpdate( prevProps ) {
+            const { clientId } = this.props;
+
+            const { getBlockOrder } = select( 'core/block-editor' );
+            const innerBlocks = getBlockOrder( clientId );
+
+            if( this.state.migrateStatus === true
+                && ! prevProps.attributes.values.length
+                && this.state.migrateValues.length
+            ) {
+
+                // Migrate static HTML <li> elements to innerBlocks - since 3.1.3
+                this.migrateToInnerBlocks( this.state.migrateValues );
+
+            } else if( ! innerBlocks.length ) {
+
+                // If no inner blocks, we add one
+                const { insertBlock } = dispatch( 'core/block-editor' );
+
+                insertBlock(
+                    createBlock( 'advgb/list-item' ),
+                    0,
+                    clientId
+                );
+
+            } else {
+                // Nothing to do here
+            }
+        }
+
+        /**
+         * Migrate static content from <li> tags to advgb/list-item innerBlocks
+         *
+         * @since 3.1.3
+         *
+         * @param {array} values Array of objects with list values
+         *
+         * @return {bool}
+         */
+        migrateToInnerBlocks( values ) {
+            const { setAttributes, attributes, clientId } = this.props;
+            const { insertBlock } = dispatch( 'core/block-editor' );
+
+            let cancel = false;
+
+            /* Convert from objects to HTML strings
+             *
+             * From:
+             * {
+             *   "type": "li",
+             *   "props": {
+             *     "children": [
+             *       "Lorem ",
+             *       {
+             *         "type": "strong",
+             *         "props": {
+             *           "children": [
+             *             "ipsum"
+             *           ]
+             *         }
+             *       },
+             *       " dolor"
+             *     ]
+             *   }
+             * }
+             *
+             * To:
+             * "Lorem <strong>ipsum</strong> dolor"
+             */
+            const parsedValues = values.map( ( item, n ) => {
+
+                // Check if migration to innerBlocks was done before
+                if( item.props === undefined ) {
+                    cancel = true;
+                    return;
+                }
+
+                return(
+                    item.props.children.map( ( child ) => {
+                        if ( typeof child === 'string' ) {
+                            return child;
+                        } else {
+                            return renderToString( createElement( child.type, child.props, child.props.children ) );
+                        }
+                    } )
+                );
+            } );
+
+            // Don't continue. Migration to innerBlocks was done before
+            if( cancel === true ) {
+                return;
+            }
+
+            /* Convert each array value into a merged string
+             *
+             * From:
+             * [
+             *   "Lorem ",
+             *   "<strong>ipsum</strong>",
+             *   " dolor"
+             * ]
+             *
+             * To:
+             * "Lorem <strong>ipsum</strong> dolor"
+             */
+            const stringValues = parsedValues.map( ( item ) => {
+                return item.join( '' );
+            } );
+
+            // Insert content as advgb/list-item blocks
+            stringValues.forEach( ( item, index ) => {
+
+                insertBlock(
+                    createBlock( 'advgb/list-item', {
+                        content: item
+                    } ),
+                    index,
+                    clientId
+                );
+
+            } );
+
+            this.setState( { migrateStatus: false } );
         }
 
         render() {
@@ -79,11 +225,7 @@
             ];
             const {
                 attributes,
-                isSelected,
-                insertBlocksAfter,
-                mergeBlocks,
                 setAttributes,
-                onReplace,
                 className,
                 clientId: blockID,
             } = this.props;
@@ -108,6 +250,7 @@
             const size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
             const marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
             const padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
+
             return (
                 isPreview ?
                     <img alt={__('Advanced List', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
@@ -203,37 +346,16 @@
                                 )}
                             </PanelBody>
                         </InspectorControls>
-                        <RichText
-                            multiline="li"
-                            tagName="ul"
-                            onChange={(value) => setAttributes({values: value})}
-                            value={values}
-                            className={listClassName}
-                            placeholder={__('Write advanced list…', 'advanced-gutenberg')}
-                            onMerge={mergeBlocks}
-                            unstableOnSplit={
-                                insertBlocksAfter ?
-                                    (before, after, ...blocks) => {
-                                        if (!blocks.length) {
-                                            blocks.push(createBlock('core/paragraph'));
-                                        }
-
-                                        if (after.length) {
-                                            blocks.push(createBlock('advgb/list', {
-                                                ...attributes,
-                                                values: after,
-                                                id: undefined,
-                                            }));
-                                        }
-
-                                        setAttributes({values: before});
-                                        insertBlocksAfter(blocks);
-                                    } :
-                                    undefined
-                            }
-                            onRemove={() => onReplace([])}
-                            isSelected={isSelected}
-                        />
+                        <ul className={ listClassName }>
+                            <InnerBlocks
+                                template={ INNER_BLOCKS_TEMPLATE }
+                                templateLock={ false }
+                                allowedBlocks={ [
+                                    'advgb/list-item',
+                                ] }
+                                className={ listClassName }
+                            />
+                        </ul>
                         <div>
                             <style>
                                 {`.${id} li { font-size: ${fontSize}px; }`}
@@ -298,12 +420,6 @@
             type: 'number',
             default: 2,
         },
-        values: {
-            type: 'array',
-            source: 'children',
-            selector: 'ul',
-            default: [],
-        },
         changed: {
             type: 'boolean',
             default: false,
@@ -311,6 +427,13 @@
         isPreview: {
             type: 'boolean',
             default: false,
+        },
+        // Deprecated since 3.1.3
+        values: {
+            type: 'array',
+            source: 'children',
+            selector: 'ul',
+            default: [],
         },
     };
 
@@ -333,44 +456,45 @@
             from: [
                 {
                     type: 'block',
-                    blocks: ['core/list'],
-                    transform: ({values}) => {
-                        return createBlock('advgb/list', {
-                            values: values,
-                            icon: 'controls-play',
-                            iconColor: '#ff0000',
-                        })
+                    blocks: [ 'core/list' ],
+                    transform: ( attributes, innerBlocks ) => {
+
+                        const list = innerBlocks.map( ( item, index ) => {
+                            return createBlock(
+                                'advgb/list-item',
+                                { ...attributes, content: innerBlocks[index].attributes.content }
+                            );
+                        } );
+
+                        return createBlock(
+                            'advgb/list',
+                            { ...attributes, changed: false },
+                            list,
+                        )
                     }
                 }
             ],
             to: [
                 {
                     type: 'block',
-                    blocks: ['core/list'],
-                    transform: ({values}) => {
-                        return createBlock('core/list', {
-                            nodeName: 'UL',
-                            values: values,
-                        })
+                    blocks: [ 'core/list' ],
+                    transform: ( attributes, innerBlocks ) => {
+
+                        const list = innerBlocks.map( ( item, index ) => {
+                            return createBlock(
+                                'core/list-item',
+                                { ...attributes, content: innerBlocks[index].attributes.content }
+                            );
+                        } );
+
+                        return createBlock(
+                            'core/list',
+                            { attributes },
+                            list,
+                        )
                     }
                 }
             ]
-        },
-        merge(attributes, attributesToMerge) {
-            const valuesToMerge = attributesToMerge.values || [];
-
-            // Standard text-like block attribute.
-            if (attributesToMerge.content) {
-                valuesToMerge.push(attributesToMerge.content);
-            }
-
-            return {
-                ...attributes,
-                values: [
-                    ...attributes.values,
-                    ...valuesToMerge,
-                ],
-            };
         },
         supports: {
             anchor: true,
@@ -389,10 +513,36 @@
             ].filter(Boolean).join(' ');
 
             return <div>
-                <ul className={listClassName}>
-                    {values}
+                <ul className={ listClassName }>
+                    <InnerBlocks.Content />
                 </ul>
             </div>
         },
+        deprecated: [
+            {
+                attributes: listBlockAttrs,
+                supports: {
+                    anchor: true
+                },
+                save: ( { attributes } ) => {
+                    const {
+                        id,
+                        values,
+                        icon,
+                    } = attributes;
+                    const listClassName = [
+                        id,
+                        icon && 'advgb-list',
+                        icon && `advgb-list-${icon}`
+                    ].filter(Boolean).join(' ');
+
+                    return <div>
+                        <ul className={listClassName}>
+                            {values}
+                        </ul>
+                    </div>
+                }
+            }
+        ]
     });
-})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data);

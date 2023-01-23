@@ -71,6 +71,13 @@
                                 newState
                             );
                         break;
+                        case 'reusable_blocks':
+                            advgbDynamicSubmenu(
+                                '[class*="wp_block"]', // For 'edit.php?post_type=wp_block' class
+                                newState,
+                                true
+                            );
+                        break;
                     }
 
                     statusMsgNotification = advgbTimerStatus();
@@ -105,12 +112,17 @@
     /**
      * Dynamically show/hide admin submenu
      *
-     * @param {string}  slug        Page slug
-     * @param {string}  newState    New feature state
+     * @since 3.1.3 - Added attrSelector param
+     *
+     * @param {string}  slug            Page slug
+     * @param {string}  newState        New feature state
+     * @param {string}  attrSelector    When the <li> class requires to use an attribute selector. e.g. class 'edit.php?post_type=wp_block' => [class*="wp_block"]
      */
-    function advgbDynamicSubmenu( slug, newState ) {
+    function advgbDynamicSubmenu( slug, newState, attrSelector = false ) {
         var pMenu       = $('#toplevel_page_advgb_main');
-        var cSubmenu    = $(pMenu).find('li.' + slug + '-menu-item');
+        var cSubmenu    = ! attrSelector
+                            ? $(pMenu).find('li.' + slug + '-menu-item')
+                            : $(pMenu).find('li' + slug);
 
         // Check if submenu exists and show/hide
         if(cSubmenu.length) {
