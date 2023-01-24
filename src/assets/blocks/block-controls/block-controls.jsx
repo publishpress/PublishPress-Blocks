@@ -817,16 +817,29 @@ import {
             }
 
             /**
-             * Get the timezone from site settings stored in advgbBlocks object
+             * Get the timezone label from site settings stored in advgbBlocks object
              *
              * @since 3.1.4
              *
              * @return {bool}
              */
-            getTimezone() {
+            getTimezoneLabel() {
                 return typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length
                     ? `${advgbBlocks.timezone.replace(/_/g, ' ')} ${__( 'time', 'advanced-gutenberg' )}`
                     : __( 'WordPress settings timezone', 'advanced-gutenberg' )
+            }
+
+            /**
+             * Get the timezone slug from site settings stored in advgbBlocks object
+             *
+             * @since 3.1.4
+             *
+             * @return {bool}
+             */
+            getTimezoneSlug() {
+                return typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length
+                    ? advgbBlocks.timezone
+                    : ''
             }
 
             componentDidMount() {
@@ -1026,11 +1039,11 @@ import {
                                                 }
                                                 <AdvTimezoneControl
                                                     label={ __( 'Timezone', 'advanced-gutenberg' ) }
-                                                    defaultTimezone={ this.getTimezone()  }
+                                                    defaultTimezone={ this.getTimezoneLabel()  }
                                                     value={
                                                         currentControlKey( advgbBlockControls, 'schedule', 'timezone' )
                                                             ? currentControlKey( advgbBlockControls, 'schedule', 'timezone' )
-                                                            : null
+                                                            : this.getTimezoneSlug()
                                                     }
                                                     onChangeTimezone={ ( value ) => this.changeControlKey( 'schedule', 'timezone', value ) }
                                                 />
