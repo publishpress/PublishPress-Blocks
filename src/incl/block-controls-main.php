@@ -120,16 +120,29 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     $days       = isset( $bControl['days'] ) && is_array( $bControl['days'] ) && count( $bControl['days'] )
                                     ? $bControl['days'] : [];
 
+                    // Pro - Check if the schedule uses a timezone different to General settings
+                    if( defined( 'ADVANCED_GUTENBERG_PRO' )
+                        && isset( $bControl['timezone'] )
+                        && ! empty( $bControl['timezone'] )
+                        && method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_set_timezone' )
+                    ) {
+                        $timezone = \PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_set_timezone(
+                            esc_html( $bControl['timezone'] )
+                        );
+                    } else {
+                        $timezone = wp_timezone();
+                    }
+
                     // Start showing
                     if ( ! empty( $bControl['dateFrom'] ) ) {
-                        $dateFrom = \DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateFrom'] );
+                        $dateFrom = \DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateFrom'], $timezone );
                         // Reset seconds to zero to enable proper comparison
                         $dateFrom->setTime( $dateFrom->format('H'), $dateFrom->format('i'), 0 );
                     }
 
                     // Stop showing
                     if ( ! empty( $bControl['dateTo'] ) ) {
-                        $dateTo	= \DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateTo'] );
+                        $dateTo	= \DateTime::createFromFormat( 'Y-m-d\TH:i:s', $bControl['dateTo'], $timezone );
                         // Reset seconds to zero to enable proper comparison
                         $dateTo->setTime( $dateTo->format('H'), $dateTo->format('i'), 0 );
 
@@ -154,8 +167,9 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                         && strtotime( $bControl['timeFrom'] ) !== false
                         && strtotime( $bControl['timeTo'] ) !== false
                     ) {
-                        // Get current datetime
-                        $timeNow    = \DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
+                        // Get current datetime with timezone
+                        $timeNow = new \DateTime( 'now', $timezone );
+                        $timeNow->format( 'Y-m-d\TH:i:s' );
                         $timeFrom   = clone $timeNow;
                         $timeTo     = clone $timeNow;
 
@@ -166,7 +180,8 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
 
                     if ( $dateFrom || $dateTo || $days || ( $timeFrom && $timeTo ) ) {
                         // Fetch current time keeping in mind the timezone
-                        $now = \DateTime::createFromFormat( 'U', date_i18n( 'U', true ) );
+                        $now = new \DateTime( 'now', $timezone );
+                        $now->format( 'Y-m-d\TH:i:s' );
 
                         /* Reset seconds to zero to enable proper comparison
                          * as the from and to dates have those as 0
@@ -175,9 +190,6 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                          */
                         $nowFrom = clone $now;
                         $nowFrom->setTime( $now->format('H'), $now->format('i'), 0 );
-
-                        // Timezone object
-                        //$timezone = wp_timezone();
 
                         // Decide if block is displayed or not
                         if( $recurring ) {

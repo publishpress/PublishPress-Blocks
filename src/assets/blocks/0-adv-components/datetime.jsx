@@ -1,8 +1,9 @@
 import hourConvert from 'hour-convert';
 
-const { ButtonGroup, Button, DateTimePicker, TextControl, CheckboxControl, Popover, Tooltip } = wp.components;
+const { ButtonGroup, Button, DateTimePicker, TextControl, CheckboxControl, Popover, Tooltip, Notice } = wp.components;
 const { Component, Fragment, useState } = wp.element;
 const { __, _x } = wp.i18n;
+const { applyFilters } = wp.hooks;
 
 export function AdvDateTimeControl(props) {
     const [popupState, setPopupState] = useState( false );
@@ -59,11 +60,6 @@ export function AdvDateTimeControl(props) {
         					onClick={ () => setPopupState( togglePopup ) }
         				/>
                     </label>
-                    <div className="advgb-advcalendar-popover-timezone">
-                        { typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length
-                            ? `${advgbBlocks.timezone.replace(/_/g, ' ')} ${__( 'time', 'advanced-gutenberg' )}`
-                            : __( 'WordPress settings timezone', 'advanced-gutenberg' ) }
-                    </div>
                     <DateTimePicker
                         currentDate={ date }
                         onChange={ onChangeDate }
@@ -408,4 +404,23 @@ export function AdvTimeControl(props) {
             onTimeClear={ onTimeClear }
         />
     );
+}
+
+export function AdvTimezoneControl(props) {
+    const { defaultTimezone } = props;
+
+    return (
+        <Fragment>
+            { applyFilters( 'advgb.timezoneControl',
+                <Notice
+                    className="advgb-notice-sidebar"
+                    status="info"
+                    isDismissible={ false }
+                >
+                    { defaultTimezone }
+                </Notice>,
+                props
+            ) }
+        </Fragment>
+    )
 }

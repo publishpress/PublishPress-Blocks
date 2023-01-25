@@ -627,7 +627,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'block_controls' => $block_controls,
                 'reusable_blocks' => $reusable_blocks,
                 'block_extend' => $block_extend,
-                'timezone' => $timezone
+                'timezone' => $timezone,
+                'timezones' => defined( 'ADVANCED_GUTENBERG_PRO' ) ? timezone_identifiers_list() : []
             ));
 
             // Setup default config data for blocks
