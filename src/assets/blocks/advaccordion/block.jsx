@@ -88,7 +88,8 @@
         componentDidMount() {
             const { setAttributes, clientId } = this.props;
             setAttributes({
-                rootBlockId: clientId
+                rootBlockId: clientId,
+                id: 'advgb-accordions-' + clientId
             });
             this.props.updateAccordionAttributes( {rootBlockId: clientId} );
         }
@@ -127,6 +128,7 @@
         render() {
             const { attributes, setAttributes } = this.props;
             const {
+                id,
                 headerBgColor,
                 headerTextColor,
                 headerIcon,
@@ -141,6 +143,11 @@
                 collapsedAll,
                 isPreview,
             } = attributes;
+
+            const accordionsClassName = [
+                id,
+                'advgb-accordions-wrapper'
+            ].filter(Boolean).join(' ');
 
             return (
                 isPreview ?
@@ -267,7 +274,7 @@
                             />
                         </PanelBody>
                     </InspectorControls>
-                    <div className="advgb-accordions-wrapper">
+                    <div className={ accordionsClassName }>
                         <InnerBlocks
                             template={ [ ['advgb/accordion-item'] ] }
                             templateLock={ false }
@@ -287,6 +294,9 @@
     );
 
     const blockAttrs = {
+        id: {
+            type: 'string',
+        },
         headerBgColor: {
             type: 'string',
             default: '#000',
@@ -384,15 +394,94 @@
             })
         )(AccordionsEdit),
         save: function ( { attributes } ) {
-            const { collapsedAll } = attributes;
+            const { collapsedAll, id } = attributes;
+
+            const accordionsClassName = [
+                id,
+                'advgb-accordion-wrapper'
+            ].filter(Boolean).join(' ');
 
             return (
-                <div className="advgb-accordion-wrapper" data-collapsed={ collapsedAll ? collapsedAll : undefined }>
+                <div className={ accordionsClassName } data-collapsed={ collapsedAll ? collapsedAll : undefined }>
                     <InnerBlocks.Content />
                 </div>
             );
         },
         deprecated: [
+            {
+                attributes: {
+                    headerBgColor: {
+                        type: 'string',
+                        default: '#000',
+                    },
+                    headerTextColor: {
+                        type: 'string',
+                        default: '#eee',
+                    },
+                    headerIcon: {
+                        type: 'string',
+                        default: 'unfold',
+                    },
+                    headerIconColor: {
+                        type: 'string',
+                        default: '#fff',
+                    },
+                    bodyBgColor: {
+                        type: 'string',
+                    },
+                    bodyTextColor: {
+                        type: 'string',
+                    },
+                    borderStyle: {
+                        type: 'string',
+                        default: 'solid',
+                    },
+                    borderWidth: {
+                        type: 'number',
+                        default: 1,
+                    },
+                    borderColor: {
+                        type: 'string',
+                    },
+                    borderRadius: {
+                        type: 'number',
+                        default: 2,
+                    },
+                    marginBottom: {
+                        type: 'number',
+                        default: 15,
+                    },
+                    collapsedAll: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    changed: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    needUpdate: {
+                        type: 'boolean',
+                        default: true,
+                    },
+                    isPreview: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    rootBlockId: {
+                        type: 'string',
+                        default: ''
+                    }
+                },
+                save: function ( { attributes } ) {
+                    const { collapsedAll } = attributes;
+
+                    return (
+                        <div className="advgb-accordion-wrapper" data-collapsed={ collapsedAll ? collapsedAll : undefined }>
+                            <InnerBlocks.Content />
+                        </div>
+                    );
+                }
+            },
             {
                 attributes: {
                     ...blockAttrs,

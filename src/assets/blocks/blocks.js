@@ -7506,7 +7506,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     clientId = _props2.clientId;
 
                 setAttributes({
-                    rootBlockId: clientId
+                    rootBlockId: clientId,
+                    id: 'advgb-accordions-' + clientId
                 });
                 this.props.updateAccordionAttributes({ rootBlockId: clientId });
             }
@@ -7575,7 +7576,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props5 = this.props,
                     attributes = _props5.attributes,
                     setAttributes = _props5.setAttributes;
-                var headerBgColor = attributes.headerBgColor,
+                var id = attributes.id,
+                    headerBgColor = attributes.headerBgColor,
                     headerTextColor = attributes.headerTextColor,
                     headerIcon = attributes.headerIcon,
                     headerIconColor = attributes.headerIconColor,
@@ -7589,6 +7591,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     collapsedAll = attributes.collapsedAll,
                     isPreview = attributes.isPreview;
 
+
+                var accordionsClassName = [id, 'advgb-accordions-wrapper'].filter(Boolean).join(' ');
 
                 return isPreview ? React.createElement("img", { alt: __('Advanced Accordion', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
                     Fragment,
@@ -7748,7 +7752,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         "div",
-                        { className: "advgb-accordions-wrapper" },
+                        { className: accordionsClassName },
                         React.createElement(InnerBlocks, {
                             template: [['advgb/accordion-item']],
                             templateLock: false,
@@ -7770,6 +7774,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     );
 
     var blockAttrs = {
+        id: {
+            type: 'string'
+        },
         headerBgColor: {
             type: 'string',
             default: '#000'
@@ -7869,24 +7876,102 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }))(AccordionsEdit),
         save: function save(_ref9) {
             var attributes = _ref9.attributes;
-            var collapsedAll = attributes.collapsedAll;
+            var collapsedAll = attributes.collapsedAll,
+                id = attributes.id;
 
+
+            var accordionsClassName = [id, 'advgb-accordion-wrapper'].filter(Boolean).join(' ');
 
             return React.createElement(
                 "div",
-                { className: "advgb-accordion-wrapper", "data-collapsed": collapsedAll ? collapsedAll : undefined },
+                { className: accordionsClassName, "data-collapsed": collapsedAll ? collapsedAll : undefined },
                 React.createElement(InnerBlocks.Content, null)
             );
         },
         deprecated: [{
+            attributes: {
+                headerBgColor: {
+                    type: 'string',
+                    default: '#000'
+                },
+                headerTextColor: {
+                    type: 'string',
+                    default: '#eee'
+                },
+                headerIcon: {
+                    type: 'string',
+                    default: 'unfold'
+                },
+                headerIconColor: {
+                    type: 'string',
+                    default: '#fff'
+                },
+                bodyBgColor: {
+                    type: 'string'
+                },
+                bodyTextColor: {
+                    type: 'string'
+                },
+                borderStyle: {
+                    type: 'string',
+                    default: 'solid'
+                },
+                borderWidth: {
+                    type: 'number',
+                    default: 1
+                },
+                borderColor: {
+                    type: 'string'
+                },
+                borderRadius: {
+                    type: 'number',
+                    default: 2
+                },
+                marginBottom: {
+                    type: 'number',
+                    default: 15
+                },
+                collapsedAll: {
+                    type: 'boolean',
+                    default: false
+                },
+                changed: {
+                    type: 'boolean',
+                    default: false
+                },
+                needUpdate: {
+                    type: 'boolean',
+                    default: true
+                },
+                isPreview: {
+                    type: 'boolean',
+                    default: false
+                },
+                rootBlockId: {
+                    type: 'string',
+                    default: ''
+                }
+            },
+            save: function save(_ref10) {
+                var attributes = _ref10.attributes;
+                var collapsedAll = attributes.collapsedAll;
+
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-accordion-wrapper", "data-collapsed": collapsedAll ? collapsedAll : undefined },
+                    React.createElement(InnerBlocks.Content, null)
+                );
+            }
+        }, {
             attributes: _extends({}, blockAttrs, {
                 borderWidth: {
                     type: 'number',
                     default: 0
                 }
             }),
-            save: function save(_ref10) {
-                var attributes = _ref10.attributes;
+            save: function save(_ref11) {
+                var attributes = _ref11.attributes;
                 var collapsedAll = attributes.collapsedAll;
 
 
@@ -7903,8 +7988,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     default: ''
                 }
             }),
-            save: function save(_ref11) {
-                var attributes = _ref11.attributes;
+            save: function save(_ref12) {
+                var attributes = _ref12.attributes;
                 var collapsedAll = attributes.collapsedAll;
 
 
