@@ -60,11 +60,6 @@ export function AdvDateTimeControl(props) {
         					onClick={ () => setPopupState( togglePopup ) }
         				/>
                     </label>
-                    <div className="advgb-advcalendar-popover-timezone">
-                        { typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length
-                            ? `${advgbBlocks.timezone.replace(/_/g, ' ')} ${__( 'time', 'advanced-gutenberg' )}`
-                            : __( 'WordPress settings timezone', 'advanced-gutenberg' ) }
-                    </div>
                     <DateTimePicker
                         currentDate={ date }
                         onChange={ onChangeDate }
