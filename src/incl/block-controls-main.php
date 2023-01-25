@@ -124,12 +124,11 @@ if( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
                     if( defined( 'ADVANCED_GUTENBERG_PRO' )
                         && isset( $bControl['timezone'] )
                         && ! empty( $bControl['timezone'] )
+                        && method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_set_timezone' )
                     ) {
-                        if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_set_timezone' ) ) {
-                            $timezone = \PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_set_timezone(
-                                esc_html( $bControl['timezone'] )
-                            );
-                        }
+                        $timezone = \PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_set_timezone(
+                            esc_html( $bControl['timezone'] )
+                        );
                     } else {
                         $timezone = wp_timezone();
                     }
