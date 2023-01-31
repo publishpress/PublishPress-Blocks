@@ -522,6 +522,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             // Pro
             if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_styles_editor' ) ) {
+                    PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_styles_editor();
+                }
+
                 if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_enqueue_scripts_editor' ) ) {
                     PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_scripts_editor();
                 }

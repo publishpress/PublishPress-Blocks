@@ -5701,6 +5701,7 @@ var _wp$element = wp.element,
 var _wp$components = wp.components,
     SelectControl = _wp$components.SelectControl,
     TextControl = _wp$components.TextControl;
+var applyFilters = wp.hooks.applyFilters;
 
 var IconListPopup = function (_Component) {
     _inherits(IconListPopup, _Component);
@@ -5714,7 +5715,8 @@ var IconListPopup = function (_Component) {
         _this.state = {
             searchedText: '',
             selectedIcon: '',
-            selectedIconTheme: 'outlined'
+            selectedIconTheme: 'outlined',
+            iconSetOptions: [{ label: __('Filled', 'advanced-gutenberg'), value: '' }, { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' }, { label: __('Rounded', 'advanced-gutenberg'), value: 'round' }, { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' }, { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' }]
         };
         return _this;
     }
@@ -5737,6 +5739,13 @@ var IconListPopup = function (_Component) {
                 });
             }
             document.addEventListener('click', this.handleClick);
+
+            // Optionally add more icon sets
+            var mergedIconSetOptions = applyFilters('advgb.iconFontSetOptions', this.state.iconSetOptions);
+
+            this.setState({
+                iconSetOptions: mergedIconSetOptions
+            });
         }
     }, {
         key: 'componentWillUnmount',
@@ -5821,7 +5830,7 @@ var IconListPopup = function (_Component) {
                                     label: __('Style', 'advanced-gutenberg'),
                                     value: selectedIconTheme,
                                     className: 'advgb-icon-style-select',
-                                    options: [{ label: __('Filled', 'advanced-gutenberg'), value: '' }, { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' }, { label: __('Rounded', 'advanced-gutenberg'), value: 'round' }, { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' }, { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' }],
+                                    options: this.state.iconSetOptions,
                                     onChange: function onChange(value) {
                                         _this2.setState({
                                             selectedIconTheme: value

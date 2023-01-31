@@ -1,6 +1,7 @@
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { SelectControl, TextControl } = wp.components;
+const { applyFilters } = wp.hooks;
 
 class IconListPopup extends Component {
 
@@ -11,6 +12,13 @@ class IconListPopup extends Component {
             searchedText: '',
             selectedIcon: '',
             selectedIconTheme: 'outlined',
+            iconSetOptions: [
+                { label: __('Filled', 'advanced-gutenberg'), value: '' },
+                { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' },
+                { label: __('Rounded', 'advanced-gutenberg'), value: 'round' },
+                { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' },
+                { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' },
+            ]
         }
     }
 
@@ -27,6 +35,15 @@ class IconListPopup extends Component {
             });
         }
         document.addEventListener('click', this.handleClick)
+
+        // Optionally add more icon sets
+        const mergedIconSetOptions = applyFilters( 'advgb.iconFontSetOptions',
+            this.state.iconSetOptions
+        );
+
+        this.setState( {
+            iconSetOptions: mergedIconSetOptions
+        } );
     }
 
     componentWillUnmount() {
@@ -86,13 +103,7 @@ class IconListPopup extends Component {
                                     label={ __('Style', 'advanced-gutenberg') }
                                     value={ selectedIconTheme }
                                     className="advgb-icon-style-select"
-                                    options={ [
-                                        { label: __('Filled', 'advanced-gutenberg'), value: '' },
-                                        { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' },
-                                        { label: __('Rounded', 'advanced-gutenberg'), value: 'round' },
-                                        { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' },
-                                        { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' },
-                                    ] }
+                                    options={ this.state.iconSetOptions }
                                     onChange={ ( value ) => {
                                         this.setState({
                                             selectedIconTheme: value,
