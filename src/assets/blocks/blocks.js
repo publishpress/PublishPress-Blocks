@@ -5703,6 +5703,9 @@ var _wp$components = wp.components,
     TextControl = _wp$components.TextControl;
 var applyFilters = wp.hooks.applyFilters;
 
+
+var DEFAULT_ICON_OPTIONS = [{ label: __('Filled', 'advanced-gutenberg'), value: '' }, { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' }, { label: __('Rounded', 'advanced-gutenberg'), value: 'round' }, { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' }, { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' }];
+
 var IconListPopup = function (_Component) {
     _inherits(IconListPopup, _Component);
 
@@ -5716,7 +5719,9 @@ var IconListPopup = function (_Component) {
             searchedText: '',
             selectedIcon: '',
             selectedIconTheme: 'outlined',
-            iconSetOptions: [{ label: __('Filled', 'advanced-gutenberg'), value: '' }, { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' }, { label: __('Rounded', 'advanced-gutenberg'), value: 'round' }, { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' }, { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' }]
+            iconType: 'material',
+            iconsObject: Object.keys(advgbBlocks.iconList['material']),
+            iconSetOptions: DEFAULT_ICON_OPTIONS
         };
         return _this;
     }
@@ -5733,25 +5738,95 @@ var IconListPopup = function (_Component) {
                     selectedIcon: this.props.selectedIcon
                 });
             }
+
             if (this.props.selectedIconTheme !== selectedIconTheme) {
                 this.setState({
                     selectedIconTheme: this.props.selectedIconTheme
                 });
             }
+
             document.addEventListener('click', this.handleClick);
 
-            // Optionally add more icon sets
-            var mergedIconSetOptions = applyFilters('advgb.iconFontSetOptions', this.state.iconSetOptions);
-
-            this.setState({
-                iconSetOptions: mergedIconSetOptions
-            });
+            /*console.log('will mount');
+            console.log(this.state)
+            console.log(this.props);*/
         }
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             // important
             document.removeEventListener('click', this.handleClick);
+
+            /*this.setState( {
+                iconSetOptions: DEFAULT_ICON_OPTIONS
+            } );*/
+
+            /*console.log('unmounting...');
+            console.log(this.state)
+            console.log(this.props);
+            console.log('-----------------------');*/
+
+            /*this.setState({
+                selectedIconTheme: 'outlined',
+                iconType: 'material',
+                iconsObject: null
+            });*/
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+
+            // Get current icons set (from selected icon or default)
+            this.setState({
+                iconsObject: applyFilters('advgb.iconFontObject', this.state.iconsObject, this.state.iconType, this.state.selectedIconTheme)
+            });
+
+            // Optionally add more icon sets to <select>
+            var mergedOptions = applyFilters('advgb.iconFontSetOptions', this.state.iconSetOptions);
+
+            this.setState({
+                iconSetOptions: mergedOptions
+            });
+
+            /*console.log('did mount');
+            console.log(this.state)
+            console.log(this.props);*/
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            var _state2 = this.state,
+                iconType = _state2.iconType,
+                selectedIconTheme = _state2.selectedIconTheme,
+                iconsObject = _state2.iconsObject;
+
+            /* Update iconType and iconsObject when selected icon style changes.
+             * selectedIconTheme examples: 'two-tone', 'fa-solid'
+             * iconType examples: 'fontawesome', 'material'
+             * iconObjects examples: advgbBlocks.iconList['material'] or ...
+             */
+
+            if (prevState.selectedIconTheme !== selectedIconTheme) {
+
+                var newIconType = applyFilters('advgb.iconFontType', iconType, selectedIconTheme);
+
+                var newIconsObject = applyFilters('advgb.iconFontObject', iconsObject, newIconType, selectedIconTheme);
+
+                this.setState({
+                    iconType: newIconType,
+                    iconsObject: newIconsObject
+                });
+
+                /*console.log(
+                    //prevState.selectedIconTheme,
+                    selectedIconTheme,
+                    iconType,
+                    iconsObject
+                );*/
+                /*console.log('did update');
+                console.log(this.state)
+                console.log(this.props);*/
+            }
         }
     }, {
         key: 'handleClick',
@@ -5767,13 +5842,14 @@ var IconListPopup = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            var _state2 = this.state,
-                searchedText = _state2.searchedText,
-                selectedIcon = _state2.selectedIcon,
-                selectedIconTheme = _state2.selectedIconTheme;
+            var _state3 = this.state,
+                searchedText = _state3.searchedText,
+                selectedIcon = _state3.selectedIcon,
+                selectedIconTheme = _state3.selectedIconTheme,
+                iconType = _state3.iconType,
+                iconsObject = _state3.iconsObject;
 
             var popUpTitle = __('Icon List', 'advanced-gutenberg');
-            var iconType = 'material';
 
             var applyIconButtonClass = ['apply-btn', 'components-button', 'button button-large', 'advgb-icon-apply-btn', 'is-primary'].filter(Boolean).join(' ');
 
@@ -5835,16 +5911,17 @@ var IconListPopup = function (_Component) {
                                         _this2.setState({
                                             selectedIconTheme: value
                                         });
+                                        console.log(value, _this2.state.selectedIconTheme);
                                     }
                                 }),
                                 React.createElement(
                                     'div',
                                     { className: 'advgb-icon-items-wrapper button-icons-list', style: { maxHeight: 300, overflowY: 'auto', overflowX: 'hidden' } },
-                                    Object.keys(advgbBlocks.iconList[iconType]).filter(function (icon) {
+                                    iconsObject.filter(function (icon) {
                                         return icon.indexOf(searchedText.trim().split(' ').join('_')) > -1;
                                     }).map(function (icon, index) {
 
-                                        var iconClass = [iconType === 'material' && 'material-icons', selectedIconTheme !== '' && '-' + selectedIconTheme].filter(Boolean).join('');
+                                        var iconClass = [iconType === 'material' && 'material-icons', iconType === 'material' && selectedIconTheme !== '' && '-' + selectedIconTheme].filter(Boolean).join('');
 
                                         return React.createElement(
                                             'div',
@@ -5860,11 +5937,11 @@ var IconListPopup = function (_Component) {
                                                     className: icon === selectedIcon && 'active',
                                                     title: icon
                                                 },
-                                                React.createElement(
+                                                applyFilters('advgb.iconFontRender', React.createElement(
                                                     'i',
                                                     { className: iconClass },
                                                     icon
-                                                )
+                                                ), icon, iconClass, iconType, selectedIconTheme)
                                             )
                                         );
                                     })
@@ -8040,7 +8117,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpHooks) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var __ = wpI18n.__;
     var Component = wpElement.Component,
@@ -8058,6 +8135,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         ToggleControl = wpComponents.ToggleControl,
         SelectControl = wpComponents.SelectControl,
         Button = wpComponents.Button;
+    var applyFilters = wpHooks.applyFilters;
 
     // Preview style images
 
@@ -8285,7 +8363,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     previewImageData = previewImageDataDefault;
                 }
 
-                var iconClass = ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join('');
+                /*const iconClass = [
+                    'material-icons',
+                    iconTheme !== '' && `-${iconTheme}`
+                ].filter( Boolean ).join('');*/
+
+                var iconClass = applyFilters('advgb.iconFontClasses', ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join(''), icon, iconTheme);
 
                 return isPreview ? React.createElement("img", { alt: __('Advanced Button', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
                     Fragment,
@@ -8894,8 +8977,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 noreferrer = attributes.noreferrer,
                 nofollow = attributes.nofollow;
 
+            /*const iconClass = [
+                'material-icons',
+                iconTheme !== '' && `-${iconTheme}`
+            ].filter( Boolean ).join('');*/
 
-            var iconClass = ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join('');
+            var iconClass = applyFilters('advgb.iconFontClasses', ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join(''), icon, iconTheme);
 
             return React.createElement(
                 "div",
@@ -9010,7 +9097,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }]
     });
-})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.hooks);
 
 /***/ }),
 

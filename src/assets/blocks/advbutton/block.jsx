@@ -1,13 +1,14 @@
 import {AdvColorControl} from "../0-adv-components/components.jsx";
 import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
 
-(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpHooks ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, URLInput } = wpBlockEditor;
     const { BaseControl, RangeControl, PanelBody, ToggleControl, SelectControl, Button } = wpComponents;
+    const { applyFilters } = wpHooks;
 
     // Preview style images
     let previewImageData = '';
@@ -183,10 +184,20 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 previewImageData = previewImageDataDefault;
             }
 
-            const iconClass = [
+            /*const iconClass = [
                 'material-icons',
                 iconTheme !== '' && `-${iconTheme}`
-            ].filter( Boolean ).join('');
+            ].filter( Boolean ).join('');*/
+
+            const iconClass = applyFilters(
+                'advgb.iconFontClasses',
+                [
+                    'material-icons',
+                    iconTheme !== '' && `-${iconTheme}`
+                ].filter( Boolean ).join(''),
+                icon,
+                iconTheme
+            );
 
             return (
                 isPreview ?
@@ -772,11 +783,20 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 nofollow
             } = attributes;
 
-            const iconClass = [
+            /*const iconClass = [
                 'material-icons',
                 iconTheme !== '' && `-${iconTheme}`
-            ].filter( Boolean ).join('');
+            ].filter( Boolean ).join('');*/
 
+            const iconClass = applyFilters(
+                'advgb.iconFontClasses',
+                [
+                    'material-icons',
+                    iconTheme !== '' && `-${iconTheme}`
+                ].filter( Boolean ).join(''),
+                icon,
+                iconTheme
+            );
 
             return (
                 <div className={ `align${align}` }>
@@ -893,4 +913,4 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
             },
         ],
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.hooks );
