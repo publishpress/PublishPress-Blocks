@@ -5688,6 +5688,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 exports.IconListPopupHook = IconListPopupHook;
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -5720,8 +5722,9 @@ var IconListPopup = function (_Component) {
             selectedIcon: '',
             selectedIconTheme: 'outlined',
             iconType: 'material',
-            iconsObject: Object.keys(advgbBlocks.iconList['material']),
-            iconSetOptions: DEFAULT_ICON_OPTIONS
+            iconsObject: null,
+            iconSetOptions: DEFAULT_ICON_OPTIONS,
+            loading: true
         };
         return _this;
     }
@@ -5746,59 +5749,68 @@ var IconListPopup = function (_Component) {
             }
 
             document.addEventListener('click', this.handleClick);
-
-            /*console.log('will mount');
-            console.log(this.state)
-            console.log(this.props);*/
         }
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             // important
             document.removeEventListener('click', this.handleClick);
-
-            /*this.setState( {
-                iconSetOptions: DEFAULT_ICON_OPTIONS
-            } );*/
-
-            /*console.log('unmounting...');
-            console.log(this.state)
-            console.log(this.props);
-            console.log('-----------------------');*/
-
-            /*this.setState({
-                selectedIconTheme: 'outlined',
-                iconType: 'material',
-                iconsObject: null
-            });*/
         }
     }, {
         key: 'componentDidMount',
-        value: function componentDidMount() {
+        value: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                var _state2, iconSetOptions, selectedIconTheme, iconType, iconsObject, newIconSetOptions, newIconsObject;
 
-            // Get current icons set (from selected icon or default)
-            this.setState({
-                iconsObject: applyFilters('advgb.iconFontObject', this.state.iconsObject, this.state.iconType, this.state.selectedIconTheme)
-            });
+                return regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                _state2 = this.state, iconSetOptions = _state2.iconSetOptions, selectedIconTheme = _state2.selectedIconTheme, iconType = _state2.iconType, iconsObject = _state2.iconsObject;
 
-            // Optionally add more icon sets to <select>
-            var mergedOptions = applyFilters('advgb.iconFontSetOptions', this.state.iconSetOptions);
+                                /* Change defaults if selectedIconTheme and/or iconType are different.
+                                 * and o add more icon sets to <select>
+                                 */
 
-            this.setState({
-                iconSetOptions: mergedOptions
-            });
+                                _context.next = 3;
+                                return applyFilters('advgb.iconFontSetOptions', iconSetOptions);
 
-            /*console.log('did mount');
-            console.log(this.state)
-            console.log(this.props);*/
-        }
+                            case 3:
+                                newIconSetOptions = _context.sent;
+                                _context.next = 6;
+                                return applyFilters('advgb.iconFontObject', Object.keys(advgbBlocks.iconList['material']), iconType, selectedIconTheme);
+
+                            case 6:
+                                newIconsObject = _context.sent;
+
+
+                                this.setState({
+                                    iconSetOptions: newIconSetOptions,
+                                    iconsObject: newIconsObject,
+                                    loading: false
+                                });
+
+                            case 8:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function componentDidMount() {
+                return _ref.apply(this, arguments);
+            }
+
+            return componentDidMount;
+        }()
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps, prevState) {
-            var _state2 = this.state,
-                iconType = _state2.iconType,
-                selectedIconTheme = _state2.selectedIconTheme,
-                iconsObject = _state2.iconsObject;
+            var _state3 = this.state,
+                iconType = _state3.iconType,
+                selectedIconTheme = _state3.selectedIconTheme,
+                iconsObject = _state3.iconsObject;
 
             /* Update iconType and iconsObject when selected icon style changes.
              * selectedIconTheme examples: 'two-tone', 'fa-solid'
@@ -5816,16 +5828,6 @@ var IconListPopup = function (_Component) {
                     iconType: newIconType,
                     iconsObject: newIconsObject
                 });
-
-                /*console.log(
-                    //prevState.selectedIconTheme,
-                    selectedIconTheme,
-                    iconType,
-                    iconsObject
-                );*/
-                /*console.log('did update');
-                console.log(this.state)
-                console.log(this.props);*/
             }
         }
     }, {
@@ -5842,12 +5844,13 @@ var IconListPopup = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            var _state3 = this.state,
-                searchedText = _state3.searchedText,
-                selectedIcon = _state3.selectedIcon,
-                selectedIconTheme = _state3.selectedIconTheme,
-                iconType = _state3.iconType,
-                iconsObject = _state3.iconsObject;
+            var _state4 = this.state,
+                searchedText = _state4.searchedText,
+                selectedIcon = _state4.selectedIcon,
+                selectedIconTheme = _state4.selectedIconTheme,
+                iconType = _state4.iconType,
+                iconsObject = _state4.iconsObject,
+                loading = _state4.loading;
 
             var popUpTitle = __('Icon List', 'advanced-gutenberg');
 
@@ -5911,13 +5914,17 @@ var IconListPopup = function (_Component) {
                                         _this2.setState({
                                             selectedIconTheme: value
                                         });
-                                        console.log(value, _this2.state.selectedIconTheme);
                                     }
                                 }),
                                 React.createElement(
                                     'div',
                                     { className: 'advgb-icon-items-wrapper button-icons-list', style: { maxHeight: 300, overflowY: 'auto', overflowX: 'hidden' } },
-                                    iconsObject.filter(function (icon) {
+                                    loading && React.createElement(
+                                        'div',
+                                        null,
+                                        __('Loading...', 'advanced-gutenberg')
+                                    ),
+                                    !loading && iconsObject.filter(function (icon) {
                                         return icon.indexOf(searchedText.trim().split(' ').join('_')) > -1;
                                     }).map(function (icon, index) {
 
@@ -5937,7 +5944,7 @@ var IconListPopup = function (_Component) {
                                                     className: icon === selectedIcon && 'active',
                                                     title: icon
                                                 },
-                                                applyFilters('advgb.iconFontRender', React.createElement(
+                                                applyFilters('advgb.iconFontRenderPreview', React.createElement(
                                                     'i',
                                                     { className: iconClass },
                                                     icon
@@ -8381,11 +8388,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             "span",
                             { className: "wp-block-advgb-button_link " + id, rel: advgb_relAttribute(attributes) },
-                            iconDisplay && React.createElement(
+                            iconDisplay && applyFilters('advgb.iconFontRenderInsert', React.createElement(
                                 "i",
                                 { className: iconClass },
                                 icon
-                            ),
+                            ), icon, iconClass),
                             React.createElement(RichText, {
                                 tagName: "span",
                                 placeholder: __('Add text…', 'advanced-gutenberg'),
@@ -8994,11 +9001,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         title: title,
                         target: !urlOpenNewTab ? '_self' : '_blank',
                         rel: 'noopener ' + advgb_relAttribute(attributes) },
-                    iconDisplay && React.createElement(
+                    iconDisplay && applyFilters('advgb.iconFontRenderInsert', React.createElement(
                         "i",
                         { className: iconClass },
                         icon
-                    ),
+                    ), icon, iconClass),
                     React.createElement(RichText.Content, {
                         tagName: "span",
                         value: text

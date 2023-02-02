@@ -209,9 +209,12 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                     >
                         <span className={ `wp-block-advgb-button_link ${id}` } rel={ advgb_relAttribute(attributes) }>
                             { iconDisplay && (
-                                <i className={iconClass}>
-                                    {icon}
-                                </i>
+                                applyFilters(
+                                    'advgb.iconFontRenderInsert',
+                                    <i className={ iconClass }>{ icon }</i>,
+                                    icon,
+                                    iconClass
+                                )
                             ) }
                             <RichText
                                 tagName="span"
@@ -673,7 +676,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
         },
         icon: {
             type: 'string',
-            default: 'insert_link'
+            default: 'insert_link',
         },
         iconSize: {
             type: 'number',
@@ -806,9 +809,12 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                         target={ !urlOpenNewTab ? '_self' : '_blank' }
                         rel={ 'noopener ' + advgb_relAttribute(attributes) }>
                         { iconDisplay && (
-                            <i className={iconClass}>
-                                {icon}
-                            </i>
+                            applyFilters(
+                                'advgb.iconFontRenderInsert',
+                                <i className={ iconClass }>{ icon }</i>,
+                                icon,
+                                iconClass
+                            )
                         ) }
                         <RichText.Content
                         tagName="span"

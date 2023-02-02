@@ -21,8 +21,9 @@ class IconListPopup extends Component {
             selectedIcon: '',
             selectedIconTheme: 'outlined',
             iconType: 'material',
-            iconsObject: Object.keys( advgbBlocks.iconList['material'] ),
+            iconsObject: null,
             iconSetOptions: DEFAULT_ICON_OPTIONS,
+            loading: true
         }
     }
 
@@ -41,57 +42,36 @@ class IconListPopup extends Component {
         }
 
         document.addEventListener('click', this.handleClick)
-
-        /*console.log('will mount');
-        console.log(this.state)
-        console.log(this.props);*/
     }
 
     componentWillUnmount() {
         // important
         document.removeEventListener('click', this.handleClick);
-
-        /*this.setState( {
-            iconSetOptions: DEFAULT_ICON_OPTIONS
-        } );*/
-
-        /*console.log('unmounting...');
-        console.log(this.state)
-        console.log(this.props);
-        console.log('-----------------------');*/
-
-        /*this.setState({
-            selectedIconTheme: 'outlined',
-            iconType: 'material',
-            iconsObject: null
-        });*/
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        const { iconSetOptions, selectedIconTheme, iconType, iconsObject } = this.state;
 
-        // Get current icons set (from selected icon or default)
-        this.setState({
-            iconsObject: applyFilters(
-                'advgb.iconFontObject',
-                this.state.iconsObject,
-                this.state.iconType,
-                this.state.selectedIconTheme
-            )
-        });
-
-        // Optionally add more icon sets to <select>
-        const mergedOptions = applyFilters(
+        /* Change defaults if selectedIconTheme and/or iconType are different.
+         * and o add more icon sets to <select>
+         */
+        const newIconSetOptions = await applyFilters(
             'advgb.iconFontSetOptions',
-            this.state.iconSetOptions
+            iconSetOptions
+        );
+
+        const newIconsObject = await applyFilters(
+            'advgb.iconFontObject',
+            Object.keys( advgbBlocks.iconList['material'] ),
+            iconType,
+            selectedIconTheme
         );
 
         this.setState( {
-            iconSetOptions: mergedOptions
+            iconSetOptions: newIconSetOptions,
+            iconsObject: newIconsObject,
+            loading: false
         } );
-
-        /*console.log('did mount');
-        console.log(this.state)
-        console.log(this.props);*/
     }
 
     componentDidUpdate( prevProps, prevState ) {
@@ -121,16 +101,6 @@ class IconListPopup extends Component {
                 iconType: newIconType,
                 iconsObject: newIconsObject
             } );
-
-            /*console.log(
-                //prevState.selectedIconTheme,
-                selectedIconTheme,
-                iconType,
-                iconsObject
-            );*/
-            /*console.log('did update');
-            console.log(this.state)
-            console.log(this.props);*/
         }
     }
 
@@ -144,7 +114,7 @@ class IconListPopup extends Component {
 
 
     render() {
-        const { searchedText, selectedIcon, selectedIconTheme, iconType, iconsObject } = this.state;
+        const { searchedText, selectedIcon, selectedIconTheme, iconType, iconsObject, loading } = this.state;
         const popUpTitle = __('Icon List', 'advanced-gutenberg');
 
         const applyIconButtonClass = [
@@ -190,12 +160,17 @@ class IconListPopup extends Component {
                                         this.setState({
                                             selectedIconTheme: value,
                                         });
-                                        console.log(value,this.state.selectedIconTheme);
                                     } }
                                 />
                                 <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflowY: 'auto', overflowX: 'hidden'} }>
 
-                                    { iconsObject
+                                    { loading &&
+                                        <div>
+                                            { __('Loading...', 'advanced-gutenberg') }
+                                        </div>
+                                    }
+                                    { ! loading &&
+                                        iconsObject
                                         .filter((icon) => icon.indexOf(searchedText.trim().split(' ').join('_')) > -1)
                                         .map( (icon, index) => {
 
@@ -216,7 +191,7 @@ class IconListPopup extends Component {
                                                             title={ icon }
                                                         >
                                                             { applyFilters(
-                                                                'advgb.iconFontRender',
+                                                                'advgb.iconFontRenderPreview',
                                                                 <i className={ iconClass }>{ icon }</i>,
                                                                 icon,
                                                                 iconClass,
@@ -235,7 +210,7 @@ class IconListPopup extends Component {
                                     disabled={selectedIcon === ''}
                                     className={applyIconButtonClass}
                                     onClick={() => {
-                                        this.props.onSelectIcon( selectedIcon );
+                                        this.props.onSelectIcon(selectedIcon);
                                         this.props.onSelectIconTheme(selectedIconTheme);
                                         this.props.closePopup();
                                     }}>
