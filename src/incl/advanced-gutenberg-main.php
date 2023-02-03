@@ -595,6 +595,17 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $icons                  = array();
             $icons['material']      = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
             $icons['material']      = json_decode($icons['material'], true);
+
+            // Pro
+            if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_icon_fonts' ) ) {
+                    $icons = array_merge(
+                        $icons,
+                        PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_icon_fonts()
+                    );
+                }
+            }
+
             $enable_advgb_blocks    = !isset($saved_settings['enable_advgb_blocks']) || $saved_settings['enable_advgb_blocks'] ? 1 : 0;
             $pp_series_active       = is_plugin_active('organize-series/orgSeries.php') || is_plugin_active('publishpress-series-pro/publishpress-series-pro.php') ? 1 : 0;
             $pp_series_options      = get_option('org_series_options');

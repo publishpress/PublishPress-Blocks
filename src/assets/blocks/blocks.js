@@ -5687,8 +5687,7 @@ Object.defineProperty(exports, "__esModule", {
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 exports.IconListPopupHook = IconListPopupHook;
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+exports.AdvIcon = AdvIcon;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -5758,52 +5757,27 @@ var IconListPopup = function (_Component) {
         }
     }, {
         key: 'componentDidMount',
-        value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-                var _state2, iconSetOptions, selectedIconTheme, iconType, iconsObject, newIconSetOptions, newIconsObject;
+        value: function componentDidMount() {
+            var _state2 = this.state,
+                iconSetOptions = _state2.iconSetOptions,
+                selectedIconTheme = _state2.selectedIconTheme,
+                iconType = _state2.iconType,
+                iconsObject = _state2.iconsObject;
 
-                return regeneratorRuntime.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                _state2 = this.state, iconSetOptions = _state2.iconSetOptions, selectedIconTheme = _state2.selectedIconTheme, iconType = _state2.iconType, iconsObject = _state2.iconsObject;
+            /* Change defaults if selectedIconTheme and/or iconType are different.
+             * and o add more icon sets to <select>
+             */
 
-                                /* Change defaults if selectedIconTheme and/or iconType are different.
-                                 * and o add more icon sets to <select>
-                                 */
+            var newIconSetOptions = applyFilters('advgb.iconFontSetOptions', iconSetOptions);
 
-                                _context.next = 3;
-                                return applyFilters('advgb.iconFontSetOptions', iconSetOptions);
+            var newIconsObject = applyFilters('advgb.iconFontObject', Object.keys(advgbBlocks.iconList['material']), iconType, selectedIconTheme);
 
-                            case 3:
-                                newIconSetOptions = _context.sent;
-                                _context.next = 6;
-                                return applyFilters('advgb.iconFontObject', Object.keys(advgbBlocks.iconList['material']), iconType, selectedIconTheme);
-
-                            case 6:
-                                newIconsObject = _context.sent;
-
-
-                                this.setState({
-                                    iconSetOptions: newIconSetOptions,
-                                    iconsObject: newIconsObject,
-                                    loading: false
-                                });
-
-                            case 8:
-                            case 'end':
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
-
-            function componentDidMount() {
-                return _ref.apply(this, arguments);
-            }
-
-            return componentDidMount;
-        }()
+            this.setState({
+                iconSetOptions: newIconSetOptions,
+                iconsObject: newIconsObject,
+                loading: false
+            });
+        }
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps, prevState) {
@@ -5995,6 +5969,30 @@ function IconListPopupHook(props) {
         selectedIcon: selectedIcon,
         selectedIconTheme: selectedIconTheme
     });
+}
+
+function AdvIcon(props) {
+    var icon = props.icon,
+        iconClass = props.iconClass,
+        iconTheme = props.iconTheme,
+        _props$filter = props.filter,
+        filter = _props$filter === undefined ? props.filter || true : _props$filter;
+
+    // Don't apply filters on save function
+
+    if (!filter) {
+        return React.createElement(
+            'span',
+            { className: iconClass },
+            icon
+        );
+    }
+
+    return applyFilters('advgb.iconFontRenderInsert', React.createElement(
+        'span',
+        { className: iconClass },
+        icon
+    ), icon, iconClass, iconTheme);
 }
 
 /***/ }),
@@ -8370,11 +8368,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     previewImageData = previewImageDataDefault;
                 }
 
-                /*const iconClass = [
-                    'material-icons',
-                    iconTheme !== '' && `-${iconTheme}`
-                ].filter( Boolean ).join('');*/
-
                 var iconClass = applyFilters('advgb.iconFontClasses', ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join(''), icon, iconTheme);
 
                 return isPreview ? React.createElement("img", { alt: __('Advanced Button', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
@@ -8388,11 +8381,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             "span",
                             { className: "wp-block-advgb-button_link " + id, rel: advgb_relAttribute(attributes) },
-                            iconDisplay && applyFilters('advgb.iconFontRenderInsert', React.createElement(
-                                "i",
-                                { className: iconClass },
-                                icon
-                            ), icon, iconClass),
+                            iconDisplay && React.createElement(_iconClass.AdvIcon, {
+                                icon: icon,
+                                iconClass: iconClass,
+                                iconTheme: iconTheme
+                            }),
                             React.createElement(RichText, {
                                 tagName: "span",
                                 placeholder: __('Add text…', 'advanced-gutenberg'),
@@ -8886,7 +8879,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         icon: {
             type: 'string',
-            default: 'insert_link'
+            default: 'insert_link',
+            source: 'html',
+            selector: 'span'
         },
         iconSize: {
             type: 'number',
@@ -8984,10 +8979,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 noreferrer = attributes.noreferrer,
                 nofollow = attributes.nofollow;
 
-            /*const iconClass = [
-                'material-icons',
-                iconTheme !== '' && `-${iconTheme}`
-            ].filter( Boolean ).join('');*/
 
             var iconClass = applyFilters('advgb.iconFontClasses', ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join(''), icon, iconTheme);
 
@@ -9001,11 +8992,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         title: title,
                         target: !urlOpenNewTab ? '_self' : '_blank',
                         rel: 'noopener ' + advgb_relAttribute(attributes) },
-                    iconDisplay && applyFilters('advgb.iconFontRenderInsert', React.createElement(
-                        "i",
-                        { className: iconClass },
-                        icon
-                    ), icon, iconClass),
+                    iconDisplay && React.createElement(_iconClass.AdvIcon, {
+                        icon: icon,
+                        iconClass: iconClass,
+                        iconTheme: iconTheme,
+                        filter: false
+                    }),
                     React.createElement(RichText.Content, {
                         tagName: "span",
                         value: text
@@ -9027,6 +9019,60 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         deprecated: [{
             attributes: _extends({}, blockAttrs, {
+                icon: {
+                    type: 'string',
+                    default: 'insert_link'
+                }
+            }),
+            supports: {
+                anchor: true,
+                align: ['right', 'left', 'center', 'full']
+            },
+            save: function save(_ref2) {
+                var attributes = _ref2.attributes;
+                var id = attributes.id,
+                    align = attributes.align,
+                    url = attributes.url,
+                    urlOpenNewTab = attributes.urlOpenNewTab,
+                    title = attributes.title,
+                    text = attributes.text,
+                    iconDisplay = attributes.iconDisplay,
+                    icon = attributes.icon,
+                    iconSize = attributes.iconSize,
+                    iconColor = attributes.iconColor,
+                    iconTheme = attributes.iconTheme,
+                    iconPosition = attributes.iconPosition,
+                    iconSpacing = attributes.iconSpacing,
+                    noreferrer = attributes.noreferrer,
+                    nofollow = attributes.nofollow;
+
+
+                var iconClass = ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join('');
+
+                return React.createElement(
+                    "div",
+                    { className: "align" + align },
+                    React.createElement(
+                        "a",
+                        { className: "wp-block-advgb-button_link " + id,
+                            href: url || '#',
+                            title: title,
+                            target: !urlOpenNewTab ? '_self' : '_blank',
+                            rel: 'noopener ' + advgb_relAttribute(attributes) },
+                        iconDisplay && React.createElement(
+                            "i",
+                            { className: iconClass },
+                            icon
+                        ),
+                        React.createElement(RichText.Content, {
+                            tagName: "span",
+                            value: text
+                        })
+                    )
+                );
+            }
+        }, {
+            attributes: _extends({}, blockAttrs, {
                 text: {
                     source: 'children',
                     selector: 'a',
@@ -9037,8 +9083,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 anchor: true,
                 align: ['right', 'left', 'center', 'full']
             },
-            save: function save(_ref2) {
-                var attributes = _ref2.attributes;
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
                 var id = attributes.id,
                     align = attributes.align,
                     url = attributes.url,
@@ -9078,8 +9124,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     transitionSpeed: transitionSpeed
                 });
             },
-            save: function save(_ref3) {
-                var attributes = _ref3.attributes;
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
                 var id = attributes.id,
                     align = attributes.align,
                     url = attributes.url,

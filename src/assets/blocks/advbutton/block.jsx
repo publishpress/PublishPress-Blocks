@@ -1,5 +1,5 @@
-import {AdvColorControl} from "../0-adv-components/components.jsx";
-import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
+import { AdvColorControl } from "../0-adv-components/components.jsx";
+import { IconListPopupHook, AdvIcon } from "../0-adv-components/icon-class.jsx";
 
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpHooks ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
@@ -184,11 +184,6 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 previewImageData = previewImageDataDefault;
             }
 
-            /*const iconClass = [
-                'material-icons',
-                iconTheme !== '' && `-${iconTheme}`
-            ].filter( Boolean ).join('');*/
-
             const iconClass = applyFilters(
                 'advgb.iconFontClasses',
                 [
@@ -209,12 +204,11 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                     >
                         <span className={ `wp-block-advgb-button_link ${id}` } rel={ advgb_relAttribute(attributes) }>
                             { iconDisplay && (
-                                applyFilters(
-                                    'advgb.iconFontRenderInsert',
-                                    <i className={ iconClass }>{ icon }</i>,
-                                    icon,
-                                    iconClass
-                                )
+                                <AdvIcon
+                                    icon={ icon }
+                                    iconClass={ iconClass }
+                                    iconTheme={ iconTheme }
+                                />
                             ) }
                             <RichText
                                 tagName="span"
@@ -677,6 +671,8 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
         icon: {
             type: 'string',
             default: 'insert_link',
+            source: 'html',
+            selector: 'span'
         },
         iconSize: {
             type: 'number',
@@ -786,11 +782,6 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 nofollow
             } = attributes;
 
-            /*const iconClass = [
-                'material-icons',
-                iconTheme !== '' && `-${iconTheme}`
-            ].filter( Boolean ).join('');*/
-
             const iconClass = applyFilters(
                 'advgb.iconFontClasses',
                 [
@@ -809,12 +800,12 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                         target={ !urlOpenNewTab ? '_self' : '_blank' }
                         rel={ 'noopener ' + advgb_relAttribute(attributes) }>
                         { iconDisplay && (
-                            applyFilters(
-                                'advgb.iconFontRenderInsert',
-                                <i className={ iconClass }>{ icon }</i>,
-                                icon,
-                                iconClass
-                            )
+                            <AdvIcon
+                                icon={ icon }
+                                iconClass={ iconClass }
+                                iconTheme={ iconTheme }
+                                filter={ false }
+                            />
                         ) }
                         <RichText.Content
                         tagName="span"
@@ -835,6 +826,64 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
             return props;
         },
         deprecated: [
+            {
+                attributes: {
+                    ...blockAttrs,
+                    icon: {
+                        type: 'string',
+                        default: 'insert_link',
+                    }
+                },
+                supports: {
+                    anchor: true,
+                    align: ['right', 'left', 'center', 'full'],
+                },
+                save: function ( { attributes } ) {
+                    const {
+                        id,
+                        align,
+                        url,
+                        urlOpenNewTab,
+                        title,
+                        text,
+                        iconDisplay,
+                        icon,
+                        iconSize,
+                        iconColor,
+                        iconTheme,
+                        iconPosition,
+                        iconSpacing,
+                        noreferrer,
+                        nofollow
+                    } = attributes;
+
+                    const iconClass = [
+                        'material-icons',
+                        iconTheme !== '' && `-${iconTheme}`
+                    ].filter( Boolean ).join('');
+
+
+                    return (
+                        <div className={ `align${align}` }>
+                            <a className={ `wp-block-advgb-button_link ${id}` }
+                                href={ url || '#' }
+                                title={ title }
+                                target={ !urlOpenNewTab ? '_self' : '_blank' }
+                                rel={ 'noopener ' + advgb_relAttribute(attributes) }>
+                                { iconDisplay && (
+                                    <i className={iconClass}>
+                                        {icon}
+                                    </i>
+                                ) }
+                                <RichText.Content
+                                tagName="span"
+                                value={ text }
+                                />
+                            </a>
+                        </div>
+                    );
+                },
+            },
             {
                 attributes: {
                     ...blockAttrs,

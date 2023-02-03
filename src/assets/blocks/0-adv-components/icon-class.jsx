@@ -49,18 +49,18 @@ class IconListPopup extends Component {
         document.removeEventListener('click', this.handleClick);
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         const { iconSetOptions, selectedIconTheme, iconType, iconsObject } = this.state;
 
         /* Change defaults if selectedIconTheme and/or iconType are different.
          * and o add more icon sets to <select>
          */
-        const newIconSetOptions = await applyFilters(
+        const newIconSetOptions = applyFilters(
             'advgb.iconFontSetOptions',
             iconSetOptions
         );
 
-        const newIconsObject = await applyFilters(
+        const newIconsObject = applyFilters(
             'advgb.iconFontObject',
             Object.keys( advgbBlocks.iconList['material'] ),
             iconType,
@@ -237,4 +237,28 @@ export function IconListPopupHook(props) {
             selectedIconTheme={ selectedIconTheme }
         />
     );
+}
+
+export function AdvIcon( props ) {
+    const {
+        icon,
+        iconClass,
+        iconTheme,
+        filter = props.filter || true
+    } = props;
+
+    // Don't apply filters on save function
+    if( ! filter ) {
+        return( <span className={ iconClass }>{ icon }</span> );
+    }
+
+    return (
+        applyFilters(
+            'advgb.iconFontRenderInsert',
+            <span className={ iconClass }>{ icon }</span>,
+            icon,
+            iconClass,
+            iconTheme
+        )
+    )
 }
