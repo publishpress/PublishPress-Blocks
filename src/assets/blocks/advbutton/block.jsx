@@ -240,27 +240,43 @@ import { IconListPopupHook, AdvIcon } from "../0-adv-components/icon-class.jsx";
                         transition: all ${transitionSpeed}s ease;
                         opacity: ${hoverOpacity/100}
                     }
-                    .${id} i {
+                    .${id} .advgb-icon-wrapper {
+                        font-size: ${iconSize}px;
+                        float: ${iconPosition};
+                    }
+                    .${id} [class*="material-icons-"] {
                         font-size: ${iconSize}px;
                         float: ${iconPosition};
                     }`}
                     { iconColor && (
-                        `.${id} i {
+                        `.${id} .advgb-icon-wrapper {
+                            color: ${iconColor};
+                        }
+                        .${id} [class*="material-icons-"] {
                             color: ${iconColor};
                         }`
                     ) }
                     { iconPosition === 'left' && (
-                        `.${id} i {
+                        `.${id} .advgb-icon-wrapper {
+                            margin-right: ${iconSpacing}px;
+                        }
+                        .${id} [class*="material-icons-"] {
                             margin-right: ${iconSpacing}px;
                         }`
                     ) }
                     { iconPosition === 'right' && (
-                        `.${id} i {
+                        `.${id} .advgb-icon-wrapper {
+                            margin-left: ${iconSpacing}px;
+                        }
+                        .${id} [class*="material-icons-"] {
                             margin-left: ${iconSpacing}px;
                         }`
                     ) }
                     { advgbBlocks.advgb_pro !== '1' && (
-                        `.${id} i {
+                        `.${id} [class*="material-icons-"] {
+                            display: none !important;
+                        }
+                        .${id} .advgb-icon-wrapper {
                             display: none !important;
                         }`
                     ) }
@@ -511,6 +527,7 @@ import { IconListPopupHook, AdvIcon } from "../0-adv-components/icon-class.jsx";
                                                 min={1}
                                                 max={200}
                                                 onChange={( value ) => setAttributes( { iconSize: value } )}
+                                                allowReset
                                             />
                                             <AdvColorControl
                                                 label={ __( 'Icon Color', 'advanced-gutenberg' ) }
