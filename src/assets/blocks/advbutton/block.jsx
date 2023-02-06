@@ -1,5 +1,5 @@
 import { AdvColorControl } from "../0-adv-components/components.jsx";
-import { IconListPopupHook, AdvIcon } from "../0-adv-components/icon-class.jsx";
+import { AdvIcon } from "../0-adv-components/icon-class.jsx";
 
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpHooks ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
@@ -7,7 +7,7 @@ import { IconListPopupHook, AdvIcon } from "../0-adv-components/icon-class.jsx";
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, URLInput } = wpBlockEditor;
-    const { BaseControl, RangeControl, PanelBody, ToggleControl, SelectControl, Button } = wpComponents;
+    const { BaseControl, RangeControl, PanelBody, ToggleControl, SelectControl } = wpComponents;
     const { applyFilters } = wpHooks;
 
     // Preview style images
@@ -29,16 +29,6 @@ import { IconListPopupHook, AdvIcon } from "../0-adv-components/icon-class.jsx";
     class AdvButton extends Component {
         constructor() {
             super( ...arguments );
-            this.state = {
-                showPopup: false,
-                iconSelected: '',
-                selectedIcon: false,
-                iconThemeSelected: 'outlined',
-                selectedIconTheme: false,
-            };
-            this.togglePopup = this.togglePopup.bind(this);
-            this.handleIcon = this.handleIcon.bind(this);
-            this.handleIconTheme = this.handleIconTheme.bind(this);
         }
 
         componentWillMount() {
@@ -75,52 +65,6 @@ import { IconListPopupHook, AdvIcon } from "../0-adv-components/icon-class.jsx";
             }
         }
 
-        componentDidUpdate() {
-            const {iconSelected, selectedIcon, iconThemeSelected, selectedIconTheme} = this.state;
-            const {attributes, setAttributes} = this.props;
-            if(selectedIcon) {
-
-                this.setState({
-                    selectedIcon: false
-                });
-                setAttributes({
-                    icon: iconSelected,
-                    iconTheme: iconThemeSelected
-                });
-            }
-
-            if(selectedIconTheme) {
-                this.setState({
-                    selectedIconTheme: false
-                });
-                setAttributes({
-                    iconTheme: iconThemeSelected
-                });
-            }
-        }
-
-        togglePopup() {
-            const {showPopup} = this.state;
-
-            this.setState( {
-                showPopup: !showPopup
-            } );
-        }
-
-        handleIcon(iconValue) {
-            this.setState({
-                iconSelected: iconValue,
-                selectedIcon: true,
-            });
-        }
-
-        handleIconTheme(iconThemeValue) {
-            this.setState({
-                iconThemeSelected: iconThemeValue,
-                selectedIconTheme: true,
-            });
-        }
-
         render() {
             const listBorderStyles = [
                 { label: __( 'None', 'advanced-gutenberg' ), value: 'none' },
@@ -140,7 +84,6 @@ import { IconListPopupHook, AdvIcon } from "../0-adv-components/icon-class.jsx";
                 className,
                 clientId: blockID,
             } = this.props;
-            const {showPopup} = this.state;
             const {
                 id, align, url, urlOpenNewTab, title, text, bgColor, textColor, textSize,
                 marginTop, marginRight, marginBottom, marginLeft,
@@ -239,66 +182,14 @@ import { IconListPopupHook, AdvIcon } from "../0-adv-components/icon-class.jsx";
                         box-shadow: ${hoverShadowH}px ${hoverShadowV}px ${hoverShadowBlur}px ${hoverShadowSpread}px ${hoverShadowColor};
                         transition: all ${transitionSpeed}s ease;
                         opacity: ${hoverOpacity/100}
-                    }
-                    .${id} .advgb-icon-wrapper {
-                        font-size: ${iconSize}px;
-                        float: ${iconPosition};
-                    }
-                    .${id} [class*="material-icons-"] {
-                        font-size: ${iconSize}px;
-                        float: ${iconPosition};
                     }`}
-                    { iconColor && (
-                        `.${id} .advgb-icon-wrapper {
-                            color: ${iconColor};
-                        }
-                        .${id} [class*="material-icons-"] {
-                            color: ${iconColor};
-                        }`
-                    ) }
-                    { iconPosition === 'left' && (
-                        `.${id} .advgb-icon-wrapper {
-                            margin-right: ${iconSpacing}px;
-                        }
-                        .${id} [class*="material-icons-"] {
-                            margin-right: ${iconSpacing}px;
-                        }`
-                    ) }
-                    { iconPosition === 'right' && (
-                        `.${id} .advgb-icon-wrapper {
-                            margin-left: ${iconSpacing}px;
-                        }
-                        .${id} [class*="material-icons-"] {
-                            margin-left: ${iconSpacing}px;
-                        }`
-                    ) }
                     { advgbBlocks.advgb_pro !== '1' && (
-                        `.${id} [class*="material-icons-"] {
-                            display: none !important;
-                        }
+                        `.${id} [class*="material-icons-"],
                         .${id} .advgb-icon-wrapper {
                             display: none !important;
                         }`
                     ) }
                     </style>
-                    {
-                        showPopup ?
-                            <IconListPopupHook
-                                content='iconpopup'
-                                closePopup={ () => {
-                                    if(showPopup) {
-                                        this.togglePopup();
-                                    }
-                                }
-                                }
-                                onSelectIcon={ this.handleIcon }
-                                onSelectIconTheme={ this.handleIconTheme }
-                                selectedIcon={icon}
-                                selectedIconTheme={iconTheme}
-                            />
-                            :
-                            null
-                    }
                     <InspectorControls>
                         <PanelBody title={ __( 'Button link', 'advanced-gutenberg' ) }>
                             <BaseControl
@@ -496,66 +387,6 @@ import { IconListPopupHook, AdvIcon } from "../0-adv-components/icon-class.jsx";
                                 />
                             </PanelBody>
                         </PanelBody>
-                        {advgbBlocks.advgb_pro === '1' && (
-                            <Fragment>
-                                <PanelBody title={ __( 'Icon', 'advanced-gutenberg' ) } initialOpen={ false } className="advgb-pro-icon">
-                                    <ToggleControl
-                                        label={ __( 'Display icon', 'advanced-gutenberg' ) }
-                                        checked={ iconDisplay }
-                                        onChange={ () => setAttributes( { iconDisplay: !iconDisplay } ) }
-                                        className="advgb-child-toggle"
-                                    />
-                                    { iconDisplay && (
-                                        <Fragment>
-                                            <BaseControl
-                                                label={ __( 'Icon Library (Material Icon)', 'advanced-gutenberg' )}
-                                            >
-                                                <Button
-                                                    className="button button-large advgb-browse-icon-btn"
-                                                    onClick={ () => {
-                                                        if(!showPopup) {
-                                                            this.togglePopup();
-                                                        }
-                                                    } }
-                                                >
-                                                    { __( 'Icon Selection', 'advanced-gutenberg' ) }
-                                                </Button>
-                                            </BaseControl>
-                                            <RangeControl
-                                                label={ __( 'Icon Size (px)', 'advanced-gutenberg' ) }
-                                                value={iconSize}
-                                                min={1}
-                                                max={200}
-                                                onChange={( value ) => setAttributes( { iconSize: value } )}
-                                                allowReset
-                                            />
-                                            <AdvColorControl
-                                                label={ __( 'Icon Color', 'advanced-gutenberg' ) }
-                                                value={ iconColor }
-                                                onChange={ (value) => setAttributes( {iconColor: value} ) }
-                                            />
-                                            <SelectControl
-                                                label={ __( 'Icon Position', 'advanced-gutenberg' ) }
-                                                value={iconPosition}
-                                                options={[
-                                                    { label: __( 'Left', 'advanced-gutenberg' ), value: 'left' },
-                                                    { label: __( 'Right', 'advanced-gutenberg' ), value: 'right' },
-                                                ]}
-                                                onChange={ ( value ) => setAttributes( { iconPosition: value } ) }
-                                            />
-                                            <RangeControl
-                                                label={ __( 'Icon Spacing (px)', 'advanced-gutenberg' ) }
-                                                value={iconSpacing}
-                                                min={0}
-                                                max={100}
-                                                help={ __( 'Spacing between icon and text', 'advanced-gutenberg' ) }
-                                                onChange={( value ) => setAttributes( { iconSpacing: value } )}
-                                            />
-                                        </Fragment>
-                                    ) }
-                                </PanelBody>
-                            </Fragment>
-                        ) }
                     </InspectorControls>
                 </Fragment>
             )

@@ -5808,9 +5808,12 @@ var IconListPopup = function (_Component) {
         key: 'handleClick',
         value: function handleClick(e) {
             // ignore clicks inside the popup and the click that launched the popup
-            if (this.node.contains(e.target) || e.target.className.includes('advgb-browse-image-btn') || e.target.className.includes('advgb-browse-icon-btn')) {
-                return;
-            }
+            if (this.node.contains(e.target) || e.target.className.includes('advgb-browse-image-btn') || e.target.className.includes('advgb-browse-icon-btn')
+            //|| e.target.className.includes( 'advgb-browse-button-btn' )
+            ) {
+                    console.log('return!', this.node.contains(e.target), this.node, e.target);
+                    return null;
+                }
             this.props.closePopup();
         }
     }, {
@@ -5975,6 +5978,8 @@ function AdvIcon(props) {
     var icon = props.icon,
         iconClass = props.iconClass,
         iconTheme = props.iconTheme,
+        _props$iconDisplay = props.iconDisplay,
+        iconDisplay = _props$iconDisplay === undefined ? props.iconDisplay || false : _props$iconDisplay,
         _props$filter = props.filter,
         filter = _props$filter === undefined ? props.filter || true : _props$filter;
 
@@ -5992,7 +5997,7 @@ function AdvIcon(props) {
         'span',
         { className: iconClass },
         icon
-    ), icon, iconClass, iconTheme);
+    ), icon, iconClass, iconTheme, iconDisplay);
 }
 
 /***/ }),
@@ -8138,8 +8143,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         ToggleControl = wpComponents.ToggleControl,
-        SelectControl = wpComponents.SelectControl,
-        Button = wpComponents.Button;
+        SelectControl = wpComponents.SelectControl;
     var applyFilters = wpHooks.applyFilters;
 
     // Preview style images
@@ -8162,19 +8166,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         function AdvButton() {
             _classCallCheck(this, AdvButton);
 
-            var _this = _possibleConstructorReturn(this, (AdvButton.__proto__ || Object.getPrototypeOf(AdvButton)).apply(this, arguments));
-
-            _this.state = {
-                showPopup: false,
-                iconSelected: '',
-                selectedIcon: false,
-                iconThemeSelected: 'outlined',
-                selectedIconTheme: false
-            };
-            _this.togglePopup = _this.togglePopup.bind(_this);
-            _this.handleIcon = _this.handleIcon.bind(_this);
-            _this.handleIconTheme = _this.handleIconTheme.bind(_this);
-            return _this;
+            return _possibleConstructorReturn(this, (AdvButton.__proto__ || Object.getPrototypeOf(AdvButton)).apply(this, arguments));
         }
 
         _createClass(AdvButton, [{
@@ -8221,76 +8213,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: "componentDidUpdate",
-            value: function componentDidUpdate() {
-                var _state = this.state,
-                    iconSelected = _state.iconSelected,
-                    selectedIcon = _state.selectedIcon,
-                    iconThemeSelected = _state.iconThemeSelected,
-                    selectedIconTheme = _state.selectedIconTheme;
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes;
-
-                if (selectedIcon) {
-
-                    this.setState({
-                        selectedIcon: false
-                    });
-                    setAttributes({
-                        icon: iconSelected,
-                        iconTheme: iconThemeSelected
-                    });
-                }
-
-                if (selectedIconTheme) {
-                    this.setState({
-                        selectedIconTheme: false
-                    });
-                    setAttributes({
-                        iconTheme: iconThemeSelected
-                    });
-                }
-            }
-        }, {
-            key: "togglePopup",
-            value: function togglePopup() {
-                var showPopup = this.state.showPopup;
-
-
-                this.setState({
-                    showPopup: !showPopup
-                });
-            }
-        }, {
-            key: "handleIcon",
-            value: function handleIcon(iconValue) {
-                this.setState({
-                    iconSelected: iconValue,
-                    selectedIcon: true
-                });
-            }
-        }, {
-            key: "handleIconTheme",
-            value: function handleIconTheme(iconThemeValue) {
-                this.setState({
-                    iconThemeSelected: iconThemeValue,
-                    selectedIconTheme: true
-                });
-            }
-        }, {
             key: "render",
             value: function render() {
-                var _this2 = this;
-
                 var listBorderStyles = [{ label: __('None', 'advanced-gutenberg'), value: 'none' }, { label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Double', 'advanced-gutenberg'), value: 'double' }, { label: __('Groove', 'advanced-gutenberg'), value: 'groove' }, { label: __('Ridge', 'advanced-gutenberg'), value: 'ridge' }, { label: __('Inset', 'advanced-gutenberg'), value: 'inset' }, { label: __('Outset', 'advanced-gutenberg'), value: 'outset' }];
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes,
-                    isSelected = _props4.isSelected,
-                    className = _props4.className,
-                    blockID = _props4.clientId;
-                var showPopup = this.state.showPopup;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes,
+                    isSelected = _props3.isSelected,
+                    className = _props3.className,
+                    blockID = _props3.clientId;
                 var id = attributes.id,
                     align = attributes.align,
                     url = attributes.url,
@@ -8402,24 +8333,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "style",
                         null,
-                        "." + id + " {\n                        font-size: " + textSize + "px;\n                        color: " + textColor + " !important;\n                        background-color: " + bgColor + " !important;\n                        margin: " + marginTop + "px " + marginRight + "px " + marginBottom + "px " + marginLeft + "px;\n                        padding: " + paddingTop + "px " + paddingRight + "px " + paddingBottom + "px " + paddingLeft + "px;\n                        border-width: " + borderWidth + "px !important;\n                        border-color: " + borderColor + " !important;\n                        border-radius: " + borderRadius + "px !important;\n                        border-style: " + borderStyle + " " + (borderStyle !== 'none' && '!important') + ";\n                    }\n                    ." + id + ":hover {\n                        color: " + hoverTextColor + " !important;\n                        background-color: " + hoverBgColor + " !important;\n                        box-shadow: " + hoverShadowH + "px " + hoverShadowV + "px " + hoverShadowBlur + "px " + hoverShadowSpread + "px " + hoverShadowColor + ";\n                        transition: all " + transitionSpeed + "s ease;\n                        opacity: " + hoverOpacity / 100 + "\n                    }\n                    ." + id + " .advgb-icon-wrapper {\n                        font-size: " + iconSize + "px;\n                        float: " + iconPosition + ";\n                    }\n                    ." + id + " [class*=\"material-icons-\"] {\n                        font-size: " + iconSize + "px;\n                        float: " + iconPosition + ";\n                    }",
-                        iconColor && "." + id + " .advgb-icon-wrapper {\n                            color: " + iconColor + ";\n                        }\n                        ." + id + " [class*=\"material-icons-\"] {\n                            color: " + iconColor + ";\n                        }",
-                        iconPosition === 'left' && "." + id + " .advgb-icon-wrapper {\n                            margin-right: " + iconSpacing + "px;\n                        }\n                        ." + id + " [class*=\"material-icons-\"] {\n                            margin-right: " + iconSpacing + "px;\n                        }",
-                        iconPosition === 'right' && "." + id + " .advgb-icon-wrapper {\n                            margin-left: " + iconSpacing + "px;\n                        }\n                        ." + id + " [class*=\"material-icons-\"] {\n                            margin-left: " + iconSpacing + "px;\n                        }",
-                        advgbBlocks.advgb_pro !== '1' && "." + id + " [class*=\"material-icons-\"] {\n                            display: none !important;\n                        }\n                        ." + id + " .advgb-icon-wrapper {\n                            display: none !important;\n                        }"
+                        "." + id + " {\n                        font-size: " + textSize + "px;\n                        color: " + textColor + " !important;\n                        background-color: " + bgColor + " !important;\n                        margin: " + marginTop + "px " + marginRight + "px " + marginBottom + "px " + marginLeft + "px;\n                        padding: " + paddingTop + "px " + paddingRight + "px " + paddingBottom + "px " + paddingLeft + "px;\n                        border-width: " + borderWidth + "px !important;\n                        border-color: " + borderColor + " !important;\n                        border-radius: " + borderRadius + "px !important;\n                        border-style: " + borderStyle + " " + (borderStyle !== 'none' && '!important') + ";\n                    }\n                    ." + id + ":hover {\n                        color: " + hoverTextColor + " !important;\n                        background-color: " + hoverBgColor + " !important;\n                        box-shadow: " + hoverShadowH + "px " + hoverShadowV + "px " + hoverShadowBlur + "px " + hoverShadowSpread + "px " + hoverShadowColor + ";\n                        transition: all " + transitionSpeed + "s ease;\n                        opacity: " + hoverOpacity / 100 + "\n                    }",
+                        advgbBlocks.advgb_pro !== '1' && "." + id + " [class*=\"material-icons-\"],\n                        ." + id + " .advgb-icon-wrapper {\n                            display: none !important;\n                        }"
                     ),
-                    showPopup ? React.createElement(_iconClass.IconListPopupHook, {
-                        content: "iconpopup",
-                        closePopup: function closePopup() {
-                            if (showPopup) {
-                                _this2.togglePopup();
-                            }
-                        },
-                        onSelectIcon: this.handleIcon,
-                        onSelectIconTheme: this.handleIconTheme,
-                        selectedIcon: icon,
-                        selectedIconTheme: iconTheme
-                    }) : null,
                     React.createElement(
                         InspectorControls,
                         null,
@@ -8672,79 +8588,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     min: 0,
                                     max: 50
                                 })
-                            )
-                        ),
-                        advgbBlocks.advgb_pro === '1' && React.createElement(
-                            Fragment,
-                            null,
-                            React.createElement(
-                                PanelBody,
-                                { title: __('Icon', 'advanced-gutenberg'), initialOpen: false, className: "advgb-pro-icon" },
-                                React.createElement(ToggleControl, {
-                                    label: __('Display icon', 'advanced-gutenberg'),
-                                    checked: iconDisplay,
-                                    onChange: function onChange() {
-                                        return setAttributes({ iconDisplay: !iconDisplay });
-                                    },
-                                    className: "advgb-child-toggle"
-                                }),
-                                iconDisplay && React.createElement(
-                                    Fragment,
-                                    null,
-                                    React.createElement(
-                                        BaseControl,
-                                        {
-                                            label: __('Icon Library (Material Icon)', 'advanced-gutenberg')
-                                        },
-                                        React.createElement(
-                                            Button,
-                                            {
-                                                className: "button button-large advgb-browse-icon-btn",
-                                                onClick: function onClick() {
-                                                    if (!showPopup) {
-                                                        _this2.togglePopup();
-                                                    }
-                                                }
-                                            },
-                                            __('Icon Selection', 'advanced-gutenberg')
-                                        )
-                                    ),
-                                    React.createElement(RangeControl, {
-                                        label: __('Icon Size (px)', 'advanced-gutenberg'),
-                                        value: iconSize,
-                                        min: 1,
-                                        max: 200,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ iconSize: value });
-                                        },
-                                        allowReset: true
-                                    }),
-                                    React.createElement(_components.AdvColorControl, {
-                                        label: __('Icon Color', 'advanced-gutenberg'),
-                                        value: iconColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ iconColor: value });
-                                        }
-                                    }),
-                                    React.createElement(SelectControl, {
-                                        label: __('Icon Position', 'advanced-gutenberg'),
-                                        value: iconPosition,
-                                        options: [{ label: __('Left', 'advanced-gutenberg'), value: 'left' }, { label: __('Right', 'advanced-gutenberg'), value: 'right' }],
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ iconPosition: value });
-                                        }
-                                    }),
-                                    React.createElement(RangeControl, {
-                                        label: __('Icon Spacing (px)', 'advanced-gutenberg'),
-                                        value: iconSpacing,
-                                        min: 0,
-                                        max: 100,
-                                        help: __('Spacing between icon and text', 'advanced-gutenberg'),
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ iconSpacing: value });
-                                        }
-                                    })
-                                )
                             )
                         )
                     )
