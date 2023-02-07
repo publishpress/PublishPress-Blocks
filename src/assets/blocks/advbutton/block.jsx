@@ -148,7 +148,7 @@ import { AdvIcon } from "../0-adv-components/icon-class.jsx";
                         <span className={ `wp-block-advgb-button_link ${id}` } rel={ advgb_relAttribute(attributes) }>
                             { iconDisplay && (
                                 <AdvIcon
-                                    icon={ icon }
+                                    icon={ icon || 'insert_link' }
                                     iconClass={ iconClass }
                                     iconTheme={ iconTheme }
                                 />
@@ -414,8 +414,8 @@ import { AdvIcon } from "../0-adv-components/icon-class.jsx";
             type: 'string',
         },
         text: {
-            selector: '.advgb-icon-text',
-            default: 'PUSH THE BUTTON',
+            selector: 'span',
+            default: 'PUSH THE BUTTON'
         },
         bgColor: {
             type: 'string',
@@ -518,9 +518,8 @@ import { AdvIcon } from "../0-adv-components/icon-class.jsx";
         },
         icon: {
             type: 'string',
-            default: 'insert_link',
             source: 'html',
-            selector: 'span'
+            selector: 'i'
         },
         iconSizeMode: {
             enum: [
@@ -656,7 +655,7 @@ import { AdvIcon } from "../0-adv-components/icon-class.jsx";
                         rel={ 'noopener ' + advgb_relAttribute(attributes) }>
                         { iconDisplay && (
                             <AdvIcon
-                                icon={ icon }
+                                icon={ icon || 'insert_link' }
                                 iconClass={ iconClass }
                                 iconTheme={ iconTheme }
                                 filter={ false }
@@ -664,7 +663,6 @@ import { AdvIcon } from "../0-adv-components/icon-class.jsx";
                         ) }
                         <RichText.Content
                         tagName="span"
-                        className="advgb-icon-text"
                         value={ text }
                         />
                     </a>

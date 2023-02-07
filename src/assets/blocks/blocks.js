@@ -5984,14 +5984,14 @@ function AdvIcon(props) {
 
     if (!filter) {
         return React.createElement(
-            'span',
+            'i',
             { className: iconClass },
             icon
         );
     }
 
     return applyFilters('advgb.iconFontRenderInsert', React.createElement(
-        'span',
+        'i',
         { className: iconClass },
         icon
     ), icon, iconClass, iconTheme, iconDisplay);
@@ -8310,7 +8310,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             "span",
                             { className: "wp-block-advgb-button_link " + id, rel: advgb_relAttribute(attributes) },
                             iconDisplay && React.createElement(_iconClass.AdvIcon, {
-                                icon: icon,
+                                icon: icon || 'insert_link',
                                 iconClass: iconClass,
                                 iconTheme: iconTheme
                             }),
@@ -8616,7 +8616,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string'
         },
         text: {
-            selector: '.advgb-icon-text',
+            selector: 'span',
             default: 'PUSH THE BUTTON'
         },
         bgColor: {
@@ -8720,9 +8720,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         icon: {
             type: 'string',
-            default: 'insert_link',
             source: 'html',
-            selector: 'span'
+            selector: 'i'
         },
         iconSizeMode: {
             enum: ['inherit', 'custom'],
@@ -8838,14 +8837,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         target: !urlOpenNewTab ? '_self' : '_blank',
                         rel: 'noopener ' + advgb_relAttribute(attributes) },
                     iconDisplay && React.createElement(_iconClass.AdvIcon, {
-                        icon: icon,
+                        icon: icon || 'insert_link',
                         iconClass: iconClass,
                         iconTheme: iconTheme,
                         filter: false
                     }),
                     React.createElement(RichText.Content, {
                         tagName: "span",
-                        className: "advgb-icon-text",
                         value: text
                     })
                 )

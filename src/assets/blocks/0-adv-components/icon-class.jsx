@@ -253,13 +253,13 @@ export function AdvIcon( props ) {
 
     // Don't apply filters on save function
     if( ! filter ) {
-        return( <span className={ iconClass }>{ icon }</span> );
+        return( <i className={ iconClass }>{ icon }</i> );
     }
 
     return (
         applyFilters(
             'advgb.iconFontRenderInsert',
-            <span className={ iconClass }>{ icon }</span>,
+            <i className={ iconClass }>{ icon }</i>,
             icon,
             iconClass,
             iconTheme,
