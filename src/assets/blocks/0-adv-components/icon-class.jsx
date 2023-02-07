@@ -109,15 +109,8 @@ class IconListPopup extends Component {
         if ( this.node.contains(e.target )
             || e.target.className.includes( 'advgb-browse-image-btn' )
             || e.target.className.includes( 'advgb-browse-icon-btn' )
-            //|| e.target.className.includes( 'advgb-browse-button-btn' )
         ) {
-            console.log(
-                'return!',
-                this.node.contains(e.target ),
-                this.node,
-                e.target
-            );
-            return null;
+            return;
         }
         this.props.closePopup();
     }
