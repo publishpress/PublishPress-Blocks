@@ -202,6 +202,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 // Front-end
                 add_filter('render_block_data', array($this, 'contentPreRender'));
                 add_filter('render_block', array($this, 'addNonceToFormBlocks'));
+                add_filter('render_block', array($this, 'renderSvgIcons'));
                 add_filter('render_block', ['PublishPress\Blocks\Controls', 'checkBlockControls'], 10, 2);
                 add_filter('widget_display_callback', ['PublishPress\Blocks\Controls', 'checkBlockControlsWidget']);
                 add_filter('the_content', array($this, 'addFrontendContentAssets'), 9);
@@ -595,6 +596,28 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $icons                  = array();
             $icons['material']      = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
             $icons['material']      = json_decode($icons['material'], true);
+            $icon_options           = [
+                                        [
+                                            'label' => __( 'Filled', 'advanced-gutenberg' ),
+                                            'value' => ''
+                                        ],
+                                        [
+                                            'label' => __( 'Outlined', 'advanced-gutenberg' ),
+                                            'value' => 'outlined'
+                                        ],
+                                        [
+                                            'label' => __( 'Rounded', 'advanced-gutenberg' ),
+                                            'value' => 'round'
+                                        ],
+                                        [
+                                            'label' => __( 'Two-Tone', 'advanced-gutenberg' ),
+                                            'value' => 'two-tone'
+                                        ],
+                                        [
+                                            'label' => __( 'Sharp', 'advanced-gutenberg' ),
+                                            'value' => 'sharp'
+                                        ]
+                                    ];
 
             // Pro
             if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
@@ -602,6 +625,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $icons = array_merge(
                         $icons,
                         PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_icon_fonts()
+                    );
+                }
+
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_icon_options' ) ) {
+                    $icon_options = array_merge(
+                        $icon_options,
+                        PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_icon_options()
                     );
                 }
             }
@@ -631,6 +661,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'customStyles' => !$custom_styles_data ? array() : $custom_styles_data,
                 'captchaEnabled' => $recaptcha_config['recaptcha_enable'],
                 'pluginUrl' => plugins_url('', ADVANCED_GUTENBERG_PLUGIN),
+                'iconOptions' => $icon_options,
                 'iconList' => $icons,
                 'registerEnabled' => get_option('users_can_register'),
                 'blocks_widget_support' => $blocks_widget_support,
@@ -3671,6 +3702,25 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 '<input type="hidden" name="advgb_blockform_nonce_field" value="' . wp_create_nonce('advgb_blockform_nonce_field') . '"><div class="advgb-form-submit-wrapper"',
                 $block
             );
+
+            return $block;
+        }
+
+        /**
+         * Replace icon name with svg
+         *
+         * @param string $content Post content
+         *
+         * @return string
+         */
+        public function renderSvgIcons($block)
+        {
+            // Pro
+            if( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_render_icon_svg' ) ) {
+                    $block = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_render_icon_svg( $block );
+                }
+            }
 
             return $block;
         }
