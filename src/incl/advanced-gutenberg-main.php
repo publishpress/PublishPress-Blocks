@@ -4805,7 +4805,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $style_html .= '}';
 
             if(!defined('ADVANCED_GUTENBERG_PRO')) {
-                $style_html  .= '.'. $block_class . ' > i {';
+                $style_html  .= '.'. $block_class . ' > .advgb-icon-wrapper,';
+                $style_html  .= '.'. $block_class . ' > [class*="material-icons-"] {';
                 $style_html .= 'display: none !important;';
                 $style_html .= '}';
             }

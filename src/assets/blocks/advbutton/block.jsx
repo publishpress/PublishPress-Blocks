@@ -414,7 +414,7 @@ import { AdvIcon } from "../0-adv-components/icon-class.jsx";
             type: 'string',
         },
         text: {
-            selector: 'a',
+            selector: '.advgb-icon-text',
             default: 'PUSH THE BUTTON',
         },
         bgColor: {
@@ -522,9 +522,16 @@ import { AdvIcon } from "../0-adv-components/icon-class.jsx";
             source: 'html',
             selector: 'span'
         },
+        iconSizeMode: {
+            enum: [
+                'inherit',
+                'custom'
+            ],
+            default: 'inherit',
+        },
         iconSize: {
             type: 'number',
-            default: 30
+            default: 18,
         },
         iconColor: {
             type: 'string',
@@ -657,6 +664,7 @@ import { AdvIcon } from "../0-adv-components/icon-class.jsx";
                         ) }
                         <RichText.Content
                         tagName="span"
+                        className="advgb-icon-text"
                         value={ text }
                         />
                     </a>
@@ -676,11 +684,161 @@ import { AdvIcon } from "../0-adv-components/icon-class.jsx";
         deprecated: [
             {
                 attributes: {
-                    ...blockAttrs,
+                    id: {
+                        type: 'string',
+                    },
+                    url: {
+                        type: 'string',
+                    },
+                    urlOpenNewTab: {
+                        type: 'boolean',
+                        default: true,
+                    },
+                    title: {
+                        type: 'string',
+                    },
+                    text: {
+                        selector: 'a',
+                        default: 'PUSH THE BUTTON',
+                    },
+                    bgColor: {
+                        type: 'string',
+                    },
+                    textColor: {
+                        type: 'string',
+                    },
+                    textSize: {
+                        type: 'number',
+                        default: 18,
+                    },
+                    marginTop: {
+                        type: 'number',
+                        default: 0,
+                    },
+                    marginRight: {
+                        type: 'number',
+                        default: 0,
+                    },
+                    marginBottom: {
+                        type: 'number',
+                        default: 0,
+                    },
+                    marginLeft: {
+                        type: 'number',
+                        default: 0,
+                    },
+                    paddingTop: {
+                        type: 'number',
+                        default: 10,
+                    },
+                    paddingRight: {
+                        type: 'number',
+                        default: 30,
+                    },
+                    paddingBottom: {
+                        type: 'number',
+                        default: 10,
+                    },
+                    paddingLeft: {
+                        type: 'number',
+                        default: 30,
+                    },
+                    borderWidth: {
+                        type: 'number',
+                        default: 1,
+                    },
+                    borderColor: {
+                        type: 'string',
+                    },
+                    borderStyle: {
+                        type: 'string',
+                        default: 'none',
+                    },
+                    borderRadius: {
+                        type: 'number',
+                        default: 50
+                    },
+                    hoverTextColor: {
+                        type: 'string',
+                    },
+                    hoverBgColor: {
+                        type: 'string',
+                    },
+                    hoverShadowColor: {
+                        type: 'string',
+                        default: '#ccc'
+                    },
+                    hoverShadowH: {
+                        type: 'number',
+                        default: 1,
+                    },
+                    hoverShadowV: {
+                        type: 'number',
+                        default: 1,
+                    },
+                    hoverShadowBlur: {
+                        type: 'number',
+                        default: 12,
+                    },
+                    hoverShadowSpread: {
+                        type: 'number',
+                        default: 0,
+                    },
+                    hoverOpacity: {
+                        type: 'number',
+                        default: 100,
+                    },
+                    transitionSpeed: {
+                        type: 'number',
+                        default: 200,
+                    },
+                    align: {
+                        type: 'string',
+                        default: 'none',
+                    },
+                    iconDisplay: {
+                        type: 'boolean',
+                        default: false,
+                    },
                     icon: {
                         type: 'string',
                         default: 'insert_link',
-                    }
+                    },
+                    iconSize: {
+                        type: 'number',
+                        default: 30,
+                    },
+                    iconColor: {
+                        type: 'string',
+                    },
+                    iconTheme: {
+                        type: 'string',
+                        default: 'outlined'
+                    },
+                    iconPosition: {
+                        type: 'string',
+                        default: 'left',
+                    },
+                    iconSpacing: {
+                        type: 'number',
+                        default: 7,
+                    },
+                    noreferrer: {
+                        type: 'boolean',
+                        default: true,
+                    },
+                    nofollow: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    changed: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    isPreview: {
+                        type: 'boolean',
+                        default: false,
+                    },
                 },
                 supports: {
                     anchor: true,

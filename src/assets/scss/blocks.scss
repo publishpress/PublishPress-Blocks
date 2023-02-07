@@ -187,7 +187,8 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
 
 #editor [data-type="advgb/button"][data-align="full"] {
 
-  span {
+  .wp-block > span,
+  .wp-block > span > span {
     width: 100%;
     text-align: center;
     box-sizing: border-box;
@@ -204,7 +205,9 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
 }
 
 .wp-block-advgb-button .wp-block-advgb-button_link {
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     text-decoration: none !important;
     background-color: #2196f3;
     color: #fff;
