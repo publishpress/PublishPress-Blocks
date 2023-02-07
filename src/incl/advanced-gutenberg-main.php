@@ -596,28 +596,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $icons                  = array();
             $icons['material']      = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
             $icons['material']      = json_decode($icons['material'], true);
-            $icon_options           = [
-                                        [
-                                            'label' => __( 'Filled', 'advanced-gutenberg' ),
-                                            'value' => ''
-                                        ],
-                                        [
-                                            'label' => __( 'Outlined', 'advanced-gutenberg' ),
-                                            'value' => 'outlined'
-                                        ],
-                                        [
-                                            'label' => __( 'Rounded', 'advanced-gutenberg' ),
-                                            'value' => 'round'
-                                        ],
-                                        [
-                                            'label' => __( 'Two-Tone', 'advanced-gutenberg' ),
-                                            'value' => 'two-tone'
-                                        ],
-                                        [
-                                            'label' => __( 'Sharp', 'advanced-gutenberg' ),
-                                            'value' => 'sharp'
-                                        ]
-                                    ];
 
             // Pro
             if( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
@@ -625,13 +603,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $icons = array_merge(
                         $icons,
                         PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_icon_fonts()
-                    );
-                }
-
-                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_icon_options' ) ) {
-                    $icon_options = array_merge(
-                        $icon_options,
-                        PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_icon_options()
                     );
                 }
             }
@@ -661,7 +632,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'customStyles' => !$custom_styles_data ? array() : $custom_styles_data,
                 'captchaEnabled' => $recaptcha_config['recaptcha_enable'],
                 'pluginUrl' => plugins_url('', ADVANCED_GUTENBERG_PLUGIN),
-                'iconOptions' => $icon_options,
                 'iconList' => $icons,
                 'registerEnabled' => get_option('users_can_register'),
                 'blocks_widget_support' => $blocks_widget_support,
