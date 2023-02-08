@@ -20,8 +20,6 @@ class IconListPopup extends Component {
             searchedText: '',
             selectedIcon: '',
             selectedIconTheme: 'outlined',
-            iconType: 'material',
-            iconsObject: null,
             iconSetOptions: DEFAULT_ICON_OPTIONS,
             loading: true
         }
@@ -50,58 +48,17 @@ class IconListPopup extends Component {
     }
 
     componentDidMount() {
-        const { iconSetOptions, selectedIconTheme, iconType, iconsObject } = this.state;
+        const { iconSetOptions } = this.state;
 
-        /* Change defaults if selectedIconTheme and/or iconType are different.
-         * and o add more icon sets to <select>
-         */
         const newIconSetOptions = applyFilters(
             'advgb.iconFontSetOptions',
             iconSetOptions
         );
 
-        const newIconsObject = applyFilters(
-            'advgb.iconFontObject',
-            Object.keys( advgbBlocks.iconList['material'] ),
-            iconType,
-            selectedIconTheme
-        );
-
         this.setState( {
             iconSetOptions: newIconSetOptions,
-            iconsObject: newIconsObject,
             loading: false
         } );
-    }
-
-    componentDidUpdate( prevProps, prevState ) {
-        const { iconType, selectedIconTheme, iconsObject } = this.state;
-
-        /* Update iconType and iconsObject when selected icon style changes.
-         * selectedIconTheme examples: 'two-tone', 'fa-solid'
-         * iconType examples: 'fontawesome', 'material'
-         * iconObjects examples: advgbBlocks.iconList['material'] or ...
-         */
-        if( prevState.selectedIconTheme !== selectedIconTheme ) {
-
-            const newIconType = applyFilters(
-                'advgb.iconFontType',
-                iconType,
-                selectedIconTheme
-            );
-
-            const newIconsObject = applyFilters(
-                'advgb.iconFontObject',
-                iconsObject,
-                newIconType,
-                selectedIconTheme
-            );
-
-            this.setState( {
-                iconType: newIconType,
-                iconsObject: newIconsObject
-            } );
-        }
     }
 
     handleClick(e) {
@@ -115,9 +72,24 @@ class IconListPopup extends Component {
         this.props.closePopup();
     }
 
+    /**
+     * Let's decide which icon set to use from advgbBlocks.iconList
+     * e.g. 'material', 'fa_r', 'fa_s', 'fa_b'
+     *
+     * @since 3.1.4
+     *
+     * @return array
+     */
+    getIconSet() {
+        const { selectedIconTheme } = this.state;
+
+        return typeof advgbBlocks.iconList[selectedIconTheme] !== 'undefined'
+            ? selectedIconTheme
+            : 'material'
+    }
 
     render() {
-        const { searchedText, selectedIcon, selectedIconTheme, iconType, iconsObject, loading } = this.state;
+        const { searchedText, selectedIcon, selectedIconTheme, loading } = this.state;
         const popUpTitle = __('Icon List', 'advanced-gutenberg');
 
         const applyIconButtonClass = [
@@ -172,15 +144,22 @@ class IconListPopup extends Component {
                                             { __( 'Loading...', 'advanced-gutenberg' ) }
                                         </div>
                                     }
+
+                                    { (() => {
+                                        //console.log('state',this.state)
+                                    })() }
+
                                     { ! loading &&
-                                        iconsObject
+                                        advgbBlocks.iconList[this.getIconSet()]
                                         .filter((icon) => icon.indexOf(searchedText.trim().split(' ').join('_')) > -1)
                                         .map( (icon, index) => {
 
                                             const iconClass = [
-                                                iconType === 'material' && 'material-icons',
-                                                iconType === 'material' && selectedIconTheme !== '' && `-${selectedIconTheme}`
+                                                this.getIconSet() === 'material' && 'material-icons',
+                                                this.getIconSet() === 'material' && selectedIconTheme !== '' && `-${selectedIconTheme}`
                                             ].filter( Boolean ).join('');
+
+                                            //console.log('state',this.state);
 
                                             return (
                                                 <div className="advgb-icon-item" key={ index }>
@@ -198,7 +177,6 @@ class IconListPopup extends Component {
                                                                 <i className={ iconClass }>{ icon }</i>,
                                                                 icon,
                                                                 iconClass,
-                                                                iconType,
                                                                 selectedIconTheme
                                                             ) }
                                                         </span>
@@ -247,10 +225,11 @@ export function AdvIcon( props ) {
         icon,
         iconClass,
         iconTheme,
-        iconDisplay = props.iconDisplay || false,
         filter = props.filter || true
     } = props;
 
+    console.log(props);
+    
     // Don't apply filters on save function
     if( ! filter ) {
         return( <i className={ iconClass }>{ icon }</i> );
@@ -262,8 +241,7 @@ export function AdvIcon( props ) {
             <i className={ iconClass }>{ icon }</i>,
             icon,
             iconClass,
-            iconTheme,
-            iconDisplay
+            iconTheme
         )
     )
 }

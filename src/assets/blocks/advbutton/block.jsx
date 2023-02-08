@@ -154,7 +154,7 @@ import { AdvIcon } from "../0-adv-components/icon-class.jsx";
                         <span className={ `wp-block-advgb-button_link ${id}` } rel={ relAttribute }>
                             { iconDisplay && (
                                 <AdvIcon
-                                    icon={ icon || 'insert_link' }
+                                    icon={ icon }
                                     iconClass={ iconClass }
                                     iconTheme={ iconTheme }
                                 />
@@ -524,8 +524,9 @@ import { AdvIcon } from "../0-adv-components/icon-class.jsx";
         },
         icon: {
             type: 'string',
-            source: 'html',
-            selector: 'i'
+            default: 'insert_link',
+            //source: 'html',
+            //selector: 'i'
         },
         iconSizeMode: {
             enum: [
@@ -666,7 +667,7 @@ import { AdvIcon } from "../0-adv-components/icon-class.jsx";
                         rel={ 'noopener ' + relAttribute }>
                         { iconDisplay && (
                             <AdvIcon
-                                icon={ icon || 'insert_link' }
+                                icon={ icon }
                                 iconClass={ iconClass }
                                 iconTheme={ iconTheme }
                                 filter={ false }
