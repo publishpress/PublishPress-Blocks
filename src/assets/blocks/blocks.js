@@ -5959,25 +5959,25 @@ function AdvIcon(props) {
         iconClass = props.iconClass,
         iconTheme = props.iconTheme,
         _props$filter = props.filter,
-        filter = _props$filter === undefined ? props.filter || true : _props$filter;
-
-
-    console.log(props);
+        filter = _props$filter === undefined ? props.filter || true : _props$filter,
+        _props$iconCss = props.iconCss,
+        iconCss = _props$iconCss === undefined ? props.iconCss || {} : _props$iconCss;
 
     // Don't apply filters on save function
+
     if (!filter) {
         return React.createElement(
             'i',
-            { className: iconClass },
+            { className: iconClass, style: iconCss },
             icon
         );
     }
 
     return applyFilters('advgb.iconFontRenderInsert', React.createElement(
         'i',
-        { className: iconClass },
+        { className: iconClass, style: iconCss },
         icon
-    ), icon, iconClass, iconTheme);
+    ), icon, iconClass, iconTheme, iconCss);
 }
 
 /***/ }),
@@ -9166,7 +9166,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpHooks) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var __ = wpI18n.__;
     var Component = wpElement.Component,
@@ -9183,6 +9183,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         SelectControl = wpComponents.SelectControl,
         TextControl = wpComponents.TextControl,
         Button = wpComponents.Button;
+    var applyFilters = wpHooks.applyFilters;
     var _lodash = lodash,
         times = _lodash.times;
 
@@ -9673,7 +9674,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                                 var iconWrapClass = ['advgb-icon', "advgb-icon-" + item.icon].filter(Boolean).join(' ');
 
-                                var iconClass = [item.iconType === 'material' && 'material-icons', item.iconTheme !== '' && "-" + item.iconTheme].filter(Boolean).join('');
+                                var iconClass = applyFilters('advgb.iconFontClasses', [item.iconType === 'material' && 'material-icons', item.iconTheme !== '' && "-" + item.iconTheme].filter(Boolean).join(''), item.icon, item.iconTheme);
 
                                 var iconWrapStyles = {
                                     display: 'flex',
@@ -9693,11 +9694,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     borderRadius: item.borderRadius + '%'
                                 };
 
-                                var iconStyles = {
-                                    fontSize: item.size + 'px',
-                                    color: item.color
-                                };
-
                                 return React.createElement(
                                     Fragment,
                                     null,
@@ -9707,11 +9703,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             "div",
                                             { className: iconWrapClass, style: iconWrapStyles },
-                                            React.createElement(
-                                                "i",
-                                                { className: iconClass, style: iconStyles },
-                                                item.icon
-                                            )
+                                            React.createElement(_iconClass.AdvIcon, {
+                                                icon: item.icon,
+                                                iconClass: iconClass,
+                                                iconTheme: item.iconTheme,
+                                                iconCss: { fontSize: item.size, color: item.color }
+                                            })
                                         )
                                     )
                                 );
@@ -9729,6 +9726,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             selectedIcon: this.getItemData(currentItem, 'icon'),
                             selectedIconTheme: this.getItemData(currentItem, 'iconTheme')
                         }) : null
+                    ),
+                    React.createElement(
+                        "style",
+                        null,
+                        "." + blockClass + " {\n                                width: 100%;\n                            }"
                     )
                 );
             }
@@ -9842,7 +9844,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                             var iconWrapClass = ['advgb-icon', "advgb-icon-" + item.icon].filter(Boolean).join(' ');
 
-                            var iconClass = [item.iconType === 'material' && 'material-icons', item.iconTheme !== '' && "-" + item.iconTheme].filter(Boolean).join('');
+                            var iconClass = applyFilters('advgb.iconFontClasses', [item.iconType === 'material' && 'material-icons', item.iconTheme !== '' && "-" + item.iconTheme].filter(Boolean).join(''), item.icon, item.iconTheme);
 
                             return React.createElement(
                                 Fragment,
@@ -9856,11 +9858,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             "span",
                                             { className: iconWrapClass },
-                                            React.createElement(
-                                                "i",
-                                                { className: iconClass },
-                                                item.icon
-                                            )
+                                            React.createElement(_iconClass.AdvIcon, {
+                                                icon: item.icon,
+                                                iconClass: iconClass,
+                                                iconTheme: item.iconTheme,
+                                                filter: false
+                                            })
                                         )
                                     ),
                                     item.link === '' && React.createElement(
@@ -9883,6 +9886,82 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: blockAttrs,
             save: function save(_ref2) {
                 var attributes = _ref2.attributes;
+                var blockIDX = attributes.blockIDX,
+                    className = attributes.className,
+                    items = attributes.items,
+                    numberItem = attributes.numberItem;
+
+
+                var blockWrapClass = ['wp-block-advgb-icon', 'icon-wrapper', className, blockIDX].filter(Boolean).join(' ');
+
+                var blockClass = ['advgb-icons'].filter(Boolean).join(' ');
+
+                var i = 0;
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        "div",
+                        { className: blockWrapClass },
+                        React.createElement(
+                            "div",
+                            { className: blockClass },
+                            items.map(function (item, idx) {
+                                i++;
+                                if (i > numberItem) return false;
+
+                                var itemLink = item.link;
+                                if (!item.link.match(/^[a-zA-Z]+:\/\//)) {
+                                    itemLink = 'http://' + item.link;
+                                }
+                                var advgbIconClass = ["advgb-icon-style-" + item.style, 'advgb-icon-wrap', "advgb-item-" + idx].filter(Boolean).join(' ');
+
+                                var iconWrapClass = ['advgb-icon', "advgb-icon-" + item.icon].filter(Boolean).join(' ');
+
+                                var iconClass = [item.iconType === 'material' && 'material-icons', item.iconTheme !== '' && "-" + item.iconTheme].filter(Boolean).join('');
+
+                                return React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(
+                                        "div",
+                                        { className: advgbIconClass },
+                                        item.link !== '' && React.createElement(
+                                            "a",
+                                            { href: itemLink, target: item.linkTarget, title: item.title, rel: "noopener noreferrer" },
+                                            React.createElement(
+                                                "span",
+                                                { className: iconWrapClass },
+                                                React.createElement(
+                                                    "i",
+                                                    { className: iconClass },
+                                                    item.icon
+                                                )
+                                            )
+                                        ),
+                                        item.link === '' && React.createElement(
+                                            "span",
+                                            { className: iconWrapClass },
+                                            React.createElement(
+                                                "i",
+                                                { className: iconClass },
+                                                item.icon
+                                            )
+                                        )
+                                    )
+                                );
+                            })
+                        )
+                    )
+                );
+            },
+            supports: {
+                align: ["left", "center", "right"]
+            }
+        }, {
+            attributes: blockAttrs,
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
                 var blockIDX = attributes.blockIDX,
                     items = attributes.items,
                     numberItem = attributes.numberItem;
@@ -9948,8 +10027,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             attributes: blockAttrs,
-            save: function save(_ref3) {
-                var attributes = _ref3.attributes;
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
                 var blockIDX = attributes.blockIDX,
                     items = attributes.items,
                     numberItem = attributes.numberItem;
@@ -10015,7 +10094,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }]
     });
-})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.hooks);
 
 /***/ }),
 
@@ -21630,6 +21709,66 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: blockAttrs,
             save: function save(_ref3) {
                 var attributes = _ref3.attributes;
+                var blockIDX = attributes.blockIDX,
+                    className = attributes.className,
+                    title = attributes.title,
+                    titleHtmlTag = attributes.titleHtmlTag,
+                    text = attributes.text,
+                    icon = attributes.icon,
+                    iconTheme = attributes.iconTheme,
+                    align = attributes.align;
+
+
+                var blockWrapClass = ['wp-block-advgb-infobox', 'advgb-infobox-wrapper', "has-text-align-" + align, className, blockIDX].filter(Boolean).join(' ');
+
+                var blockClass = ['advgb-infobox-wrap'].filter(Boolean).join(' ');
+
+                var iconClass = ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join('');
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        "div",
+                        { className: blockWrapClass },
+                        React.createElement(
+                            "div",
+                            { className: blockClass },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-infobox-icon-container" },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-infobox-icon-inner-container" },
+                                    React.createElement(
+                                        "i",
+                                        { className: iconClass },
+                                        icon
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-infobox-textcontent" },
+                                React.createElement(RichText.Content, {
+                                    tagName: titleHtmlTag,
+                                    className: "advgb-infobox-title",
+                                    value: title
+                                }),
+                                React.createElement(RichText.Content, {
+                                    tagName: "p",
+                                    className: "advgb-infobox-text",
+                                    value: text
+                                })
+                            )
+                        )
+                    )
+                );
+            }
+        }, {
+            attributes: blockAttrs,
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
                 var blockIDX = attributes.blockIDX,
                     title = attributes.title,
                     titleHtmlTag = attributes.titleHtmlTag,

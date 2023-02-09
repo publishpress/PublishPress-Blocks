@@ -1135,6 +1135,64 @@ import { AdvIcon } from "../0-adv-components/icon-class.jsx";
                             </div>
                         </Fragment>
                     )
+                },
+            },
+            {
+                attributes: blockAttrs,
+                save: ( { attributes } ) => {
+                    const {
+                        blockIDX,
+                        className,
+                        title,
+                        titleHtmlTag,
+                        text,
+                        icon,
+                        iconTheme,
+                        align,
+                    } = attributes;
+
+                    const blockWrapClass = [
+                        'wp-block-advgb-infobox',
+                        'advgb-infobox-wrapper',
+                        `has-text-align-${align}`,
+                        className,
+                        blockIDX
+                    ].filter( Boolean ).join( ' ' );
+
+                    const blockClass = [
+                        'advgb-infobox-wrap',
+                    ].filter( Boolean ).join( ' ' );
+
+                    const iconClass = [
+                        'material-icons',
+                        iconTheme !== '' && `-${iconTheme}`
+                    ].filter( Boolean ).join('');
+
+                    return (
+                        <Fragment>
+                            <div className={blockWrapClass}>
+                                <div className={ blockClass }>
+                                    <div className="advgb-infobox-icon-container">
+                                        <div className="advgb-infobox-icon-inner-container">
+                                            <i className={iconClass}>{icon}</i>
+                                        </div>
+                                    </div>
+                                    <div className="advgb-infobox-textcontent">
+                                        <RichText.Content
+                                            tagName={titleHtmlTag}
+                                            className="advgb-infobox-title"
+                                            value={ title }
+                                        />
+                                        <RichText.Content
+                                            tagName="p"
+                                            className="advgb-infobox-text"
+                                            value={ text }
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </Fragment>
+                    )
                 }
             },
             {
