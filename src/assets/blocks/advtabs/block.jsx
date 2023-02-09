@@ -402,7 +402,7 @@
                                 ) ) }
                                 {viewport === 'mobile' && (
                                     <Tooltip text={ __( 'Stacked', 'advanced-gutenberg' ) }>
-                                        <Button className="advgb-tabs-style"
+                                        <Button className={ 'advgb-tabs-style' + (tabsStyleM === 'stack' ? ' is-style-selected' : '') }
                                                 isToggled={ tabsStyleM === 'stack' }
                                                 onClick={ () => setAttributes( { tabsStyleM: 'stack' } ) }
                                         >

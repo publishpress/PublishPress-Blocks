@@ -264,8 +264,9 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.4 - 25 Jan 2022 =
+= 3.1.4 - 9 Feb 2022 =
   * Add: Unique class to Accordions block
+  * Fix: Stacked is selected but visually is not indicated in Tabs block
 
 = 3.1.3 - 23 Jan 2022 =
   * Add: List item block

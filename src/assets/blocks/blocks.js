@@ -13943,7 +13943,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { text: __('Stacked', 'advanced-gutenberg') },
                                     React.createElement(
                                         Button,
-                                        { className: "advgb-tabs-style",
+                                        { className: 'advgb-tabs-style' + (tabsStyleM === 'stack' ? ' is-style-selected' : ''),
                                             isToggled: tabsStyleM === 'stack',
                                             onClick: function onClick() {
                                                 return setAttributes({ tabsStyleM: 'stack' });
