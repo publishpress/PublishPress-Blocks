@@ -8602,7 +8602,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string'
         },
         text: {
-            selector: 'span',
+            type: 'string',
+            //selector: 'span',
             default: 'PUSH THE BUTTON'
         },
         bgColor: {

@@ -420,7 +420,8 @@ import { AdvIcon } from "../0-adv-components/icon-class.jsx";
             type: 'string',
         },
         text: {
-            selector: 'span',
+            type: 'string',
+            //selector: 'span',
             default: 'PUSH THE BUTTON'
         },
         bgColor: {
