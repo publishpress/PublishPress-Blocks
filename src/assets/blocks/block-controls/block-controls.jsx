@@ -825,7 +825,7 @@ import {
              */
             getTimezoneLabel() {
                 return typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length
-                    ? `${advgbBlocks.timezone.replace(/_/g, ' ')} ${__( 'time', 'advanced-gutenberg' )}`
+                    ? advgbBlocks.timezone.replace(/_/g, ' ')
                     : __( 'WordPress settings timezone', 'advanced-gutenberg' )
             }
 

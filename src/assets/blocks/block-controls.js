@@ -246,7 +246,8 @@ var _wp$components = wp.components,
     CheckboxControl = _wp$components.CheckboxControl,
     Popover = _wp$components.Popover,
     Tooltip = _wp$components.Tooltip,
-    Notice = _wp$components.Notice;
+    SelectControl = _wp$components.SelectControl,
+    Icon = _wp$components.Icon;
 var _wp$element = wp.element,
     Component = _wp$element.Component,
     Fragment = _wp$element.Fragment,
@@ -732,20 +733,45 @@ function AdvTimeControl(props) {
 }
 
 function AdvTimezoneControl(props) {
-    var defaultTimezone = props.defaultTimezone;
+    var label = props.label,
+        defaultTimezone = props.defaultTimezone;
 
 
     return React.createElement(
         Fragment,
         null,
         applyFilters('advgb.timezoneControl', React.createElement(
-            Notice,
-            {
-                className: "advgb-notice-sidebar",
-                status: "info",
-                isDismissible: false
-            },
-            defaultTimezone
+            Fragment,
+            null,
+            React.createElement(
+                "div",
+                { style: { marginTop: 10, marginBottom: 30 } },
+                React.createElement(
+                    "div",
+                    { style: { marginBottom: 6 } },
+                    label,
+                    React.createElement(
+                        "span",
+                        { style: { float: 'right', marginRight: 5 } },
+                        React.createElement(Icon, { icon: "lock" }),
+                        React.createElement(
+                            "a",
+                            { href: "https://publishpress.com/links/blocks",
+                                "class": "advgb-pro-ad-btn",
+                                target: "_blank" },
+                            __('Upgrade to Pro', 'advanced-gutenberg')
+                        )
+                    )
+                ),
+                React.createElement(SelectControl, {
+                    value: defaultTimezone,
+                    options: [{
+                        label: defaultTimezone,
+                        value: defaultTimezone
+                    }],
+                    disabled: true
+                })
+            )
         ), props)
     );
 }
@@ -1724,7 +1750,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             }, {
                 key: "getTimezoneLabel",
                 value: function getTimezoneLabel() {
-                    return typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length ? advgbBlocks.timezone.replace(/_/g, ' ') + " " + __('time', 'advanced-gutenberg') : __('WordPress settings timezone', 'advanced-gutenberg');
+                    return typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length ? advgbBlocks.timezone.replace(/_/g, ' ') : __('WordPress settings timezone', 'advanced-gutenberg');
                 }
 
                 /**

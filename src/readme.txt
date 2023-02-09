@@ -266,6 +266,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 = 3.1.4 - 9 Feb 2022 =
   * Add: Unique class to Accordions block
+  * Add: Ad "Upgrade to Pro" in Schedule Timezone setting Block control
   * Fix: Stacked is selected but visually is not indicated in Tabs block
 
 = 3.1.3 - 23 Jan 2022 =

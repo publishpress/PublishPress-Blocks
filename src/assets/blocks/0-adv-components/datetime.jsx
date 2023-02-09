@@ -1,6 +1,6 @@
 import hourConvert from 'hour-convert';
 
-const { ButtonGroup, Button, DateTimePicker, TextControl, CheckboxControl, Popover, Tooltip, Notice } = wp.components;
+const { ButtonGroup, Button, DateTimePicker, TextControl, CheckboxControl, Popover, Tooltip, SelectControl, Icon } = wp.components;
 const { Component, Fragment, useState } = wp.element;
 const { __, _x } = wp.i18n;
 const { applyFilters } = wp.hooks;
@@ -407,18 +407,35 @@ export function AdvTimeControl(props) {
 }
 
 export function AdvTimezoneControl(props) {
-    const { defaultTimezone } = props;
+    const { label, defaultTimezone } = props;
 
     return (
         <Fragment>
             { applyFilters( 'advgb.timezoneControl',
-                <Notice
-                    className="advgb-notice-sidebar"
-                    status="info"
-                    isDismissible={ false }
-                >
-                    { defaultTimezone }
-                </Notice>,
+                <Fragment>
+                    <div style={{ marginTop: 10, marginBottom: 30 }}>
+                        <div style={{ marginBottom: 6 }}>
+                            { label }
+                            <span style={{ float: 'right', marginRight: 5 }}>
+                                <Icon icon="lock" />
+                                <a href="https://publishpress.com/links/blocks"
+                                    class="advgb-pro-ad-btn"
+                                    target="_blank">
+                                    { __( 'Upgrade to Pro', 'advanced-gutenberg' ) }
+                                </a>
+                            </span>
+                        </div>
+                        <SelectControl
+                            value={ defaultTimezone }
+                            options={ [ {
+                                    label: defaultTimezone,
+                                    value: defaultTimezone
+                                }
+                            ] }
+                            disabled={ true }
+                        />
+                    </div>
+                </Fragment>,
                 props
             ) }
         </Fragment>
