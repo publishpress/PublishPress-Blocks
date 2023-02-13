@@ -1,8 +1,9 @@
 import hourConvert from 'hour-convert';
 
-const { ButtonGroup, Button, DateTimePicker, TextControl, CheckboxControl, Popover, Tooltip } = wp.components;
+const { ButtonGroup, Button, DateTimePicker, TextControl, CheckboxControl, Popover, Tooltip, SelectControl, Icon } = wp.components;
 const { Component, Fragment, useState } = wp.element;
 const { __, _x } = wp.i18n;
+const { applyFilters } = wp.hooks;
 
 export function AdvDateTimeControl(props) {
     const [popupState, setPopupState] = useState( false );
@@ -59,11 +60,6 @@ export function AdvDateTimeControl(props) {
         					onClick={ () => setPopupState( togglePopup ) }
         				/>
                     </label>
-                    <div className="advgb-advcalendar-popover-timezone">
-                        { typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length
-                            ? `${advgbBlocks.timezone.replace(/_/g, ' ')} ${__( 'time', 'advanced-gutenberg' )}`
-                            : __( 'WordPress settings timezone', 'advanced-gutenberg' ) }
-                    </div>
                     <DateTimePicker
                         currentDate={ date }
                         onChange={ onChangeDate }
@@ -408,4 +404,40 @@ export function AdvTimeControl(props) {
             onTimeClear={ onTimeClear }
         />
     );
+}
+
+export function AdvTimezoneControl(props) {
+    const { label, defaultTimezone } = props;
+
+    return (
+        <Fragment>
+            { applyFilters( 'advgb.timezoneControl',
+                <Fragment>
+                    <div style={{ marginTop: 10, marginBottom: 30 }}>
+                        <div style={{ marginBottom: 6 }}>
+                            { label }
+                            <span style={{ float: 'right', marginRight: 5 }}>
+                                <Icon icon="lock" />
+                                <a href="https://publishpress.com/links/blocks"
+                                    class="advgb-pro-ad-btn"
+                                    target="_blank">
+                                    { __( 'Upgrade to Pro', 'advanced-gutenberg' ) }
+                                </a>
+                            </span>
+                        </div>
+                        <SelectControl
+                            value={ defaultTimezone }
+                            options={ [ {
+                                    label: defaultTimezone,
+                                    value: defaultTimezone
+                                }
+                            ] }
+                            disabled={ true }
+                        />
+                    </div>
+                </Fragment>,
+                props
+            ) }
+        </Fragment>
+    )
 }

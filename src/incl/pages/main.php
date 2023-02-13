@@ -58,7 +58,7 @@ defined( 'ABSPATH' ) || die;
                             'name' => 'reusable_blocks',
                             'title' => __( 'Reusable Blocks', 'advanced-gutenberg' ),
                             'description' => __(
-                                'This feature enable a submenu to manage Reusable Blocks.', 'advanced-gutenberg'
+                                'This feature enables a submenu to manage Reusable Blocks.', 'advanced-gutenberg'
                             ),
                             'default' => 1,
                             'access' => true

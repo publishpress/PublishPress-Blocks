@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { AdvDateTimeControl, AdvDaysControl, AdvTimeControl } from "../0-adv-components/datetime.jsx";
+import { AdvDateTimeControl, AdvDaysControl, AdvTimeControl, AdvTimezoneControl } from "../0-adv-components/datetime.jsx";
 import {
     getOptionSuggestions,
     getOptionTitles,
@@ -816,6 +816,32 @@ import {
                 return wp.data.select('core/editor') && wp.data.select('core/editor').getCurrentPostId();
             }
 
+            /**
+             * Get the timezone label from site settings stored in advgbBlocks object
+             *
+             * @since 3.1.4
+             *
+             * @return {bool}
+             */
+            getTimezoneLabel() {
+                return typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length
+                    ? advgbBlocks.timezone.replace(/_/g, ' ')
+                    : __( 'WordPress settings timezone', 'advanced-gutenberg' )
+            }
+
+            /**
+             * Get the timezone slug from site settings stored in advgbBlocks object
+             *
+             * @since 3.1.4
+             *
+             * @return {bool}
+             */
+            getTimezoneSlug() {
+                return typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length
+                    ? advgbBlocks.timezone
+                    : 'UTC'
+            }
+
             componentDidMount() {
                 this.setState( {
                     taxModOptions: this.iniTaxLabels()
@@ -1011,16 +1037,16 @@ import {
                                                         { __( 'Please choose "From" time and "To" time.', 'advanced-gutenberg' ) }
                                                     </Notice>
                                                 }
-
-                                                <Notice
-                                                    className="advgb-notice-sidebar"
-                                                    status="info"
-                                                    isDismissible={ false }
-                                                >
-                                                    { typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length
-                                                        ? `${advgbBlocks.timezone.replace(/_/g, ' ')} ${__( 'time', 'advanced-gutenberg' )}`
-                                                        : __( 'WordPress settings timezone', 'advanced-gutenberg' ) }
-                                                </Notice>
+                                                <AdvTimezoneControl
+                                                    label={ __( 'Timezone', 'advanced-gutenberg' ) }
+                                                    defaultTimezone={ this.getTimezoneLabel()  }
+                                                    value={
+                                                        currentControlKey( advgbBlockControls, 'schedule', 'timezone' )
+                                                            ? currentControlKey( advgbBlockControls, 'schedule', 'timezone' )
+                                                            : this.getTimezoneSlug()
+                                                    }
+                                                    onChangeTimezone={ ( value ) => this.changeControlKey( 'schedule', 'timezone', value ) }
+                                                />
                                             </div>
                                         </Fragment>
                                     ) }
