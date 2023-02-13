@@ -839,7 +839,7 @@ import {
             getTimezoneSlug() {
                 return typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length
                     ? advgbBlocks.timezone
-                    : ''
+                    : 'UTC'
             }
 
             componentDidMount() {

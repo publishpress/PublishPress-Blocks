@@ -1764,7 +1764,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             }, {
                 key: "getTimezoneSlug",
                 value: function getTimezoneSlug() {
-                    return typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length ? advgbBlocks.timezone : '';
+                    return typeof advgbBlocks.timezone !== 'undefined' && advgbBlocks.timezone.length ? advgbBlocks.timezone : 'UTC';
                 }
             }, {
                 key: "componentDidMount",
