@@ -598,10 +598,18 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $pp_series_post_types   = isset($pp_series_options['post_types_for_series']) && !empty($pp_series_options['post_types_for_series']) ? $pp_series_options['post_types_for_series'] : ['post'];
             $block_controls         = $this->settingIsEnabled( 'block_controls' ) ? 1 : 0;
             $block_extend           = $this->settingIsEnabled( 'block_extend' ) ? 1 : 0;
-            $timezone               = function_exists( 'wp_timezone_string' ) ? wp_timezone_string() : '';
+            $timezone               = function_exists( 'wp_timezone_string' ) ? wp_timezone_string() : 'UTC';
+            $timezones              = [];
             $reusable_blocks        = $this->settingIsEnabled( 'reusable_blocks' ) ? 1 : 0;
             global $wp_version;
             $blocks_widget_support = ( $wp_version >= 5.8 ) ? 1 : 0;
+
+            // Pro
+            if(defined('ADVANCED_GUTENBERG_PRO')) {
+                if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_timezones_list' ) ) {
+                    $timezones = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_timezones_list();
+                }
+            }
 
             wp_localize_script('wp-blocks', 'advgbBlocks', array(
                 'color' => $blocks_icon_color,
@@ -628,7 +636,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'reusable_blocks' => $reusable_blocks,
                 'block_extend' => $block_extend,
                 'timezone' => $timezone,
-                'timezones' => defined( 'ADVANCED_GUTENBERG_PRO' ) ? timezone_identifiers_list() : []
+                'timezones' => $timezones
             ));
 
             // Setup default config data for blocks
