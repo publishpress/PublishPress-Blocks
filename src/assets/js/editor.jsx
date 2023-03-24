@@ -176,7 +176,11 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                         'core/comments-pagination-previous',
                         'core/post-comments-form',
                         'core/home-link',
-                        'core/post-author-biography'
+                        'core/post-author-biography',
+                        'core/page-list-item',
+                        'core/post-author-name',
+                        'core/legacy-widget',
+                        'core/widget-group'
                     ];
 
                     core_blocks.forEach( function( element ) {
