@@ -453,7 +453,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $wp_editor_dep = 'wp-editor';
                 }
 
-                PublishPress\Blocks\Controls::editorAssets( 'wp-editor' );
+                PublishPress\Blocks\Controls::editorAssets( $wp_editor_dep );
 
                 if( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
                     wp_enqueue_script(
