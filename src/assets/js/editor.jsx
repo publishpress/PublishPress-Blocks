@@ -72,21 +72,27 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                     } else {
                         // This block is not in our database yet, but by default we allow the usage
                         granted_blocks.push(blocks[block].name);
+                        console.log(blocks[block].name);
                         missing_block = true;
                     }
                 }
 
                 //console.log('missing_block: ' + missing_block);
 
+                // Block is not saved in our database yet; let's allow through client side
                 if (missing_block) {
                     if (console !== undefined && console.error !== undefined) {
                         // Let's output as log instead of error
                         console.log('Reloading editor by PublishPress Blocks plugin');
                     }
-                    // Replace original allowed block settings by our modified list
-                    let new_settings = advgb_blocks_vars.original_settings;
 
-                    // Unregister core blocks to avoid registering twice later through wp.editPost.initializeEditor
+                    console.log('granted_blocks',granted_blocks);
+
+                    // Replace original allowed block settings by our modified list
+                    // @TODO maybe move to wp.data.select('core/editor').getEditorSettings() ?
+                    //let new_settings = advgb_blocks_vars.original_settings;
+
+                    /*/ Unregister core blocks to avoid registering twice later through wp.editPost.initializeEditor
                     const core_blocks = [
                         'core/paragraph',
                         'core/image',
@@ -190,10 +196,13 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                     });
 
                     new_settings.allowedBlockTypes = granted_blocks;
-                    const target = document.getElementById('editor');
+                    const target = document.getElementById('editor');*/
+
+                    //console.log(new_settings);
 
                     // Initialize again the editor
-                    wp.editPost.initializeEditor('editor', advgb_blocks_vars.post_type, advgb_blocks_vars.post_id, new_settings, []);
+                    //wp.editPost.initializeEditor('editor', advgb_blocks_vars.post_type, advgb_blocks_vars.post_id, new_settings, []);
+                    wp.data.dispatch('core/edit-post').showBlockTypes(granted_blocks);
 
                     var list_categories = wp.blocks.getCategories();
 
