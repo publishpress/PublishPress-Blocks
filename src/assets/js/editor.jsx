@@ -76,15 +76,15 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                     }
                 }
 
-                //console.log('missing_block: ' + missing_block);
-
                 if (missing_block) {
                     if (console !== undefined && console.error !== undefined) {
                         // Let's output as log instead of error
                         console.log('Reloading editor by PublishPress Blocks plugin');
                     }
-                    // Replace original allowed block settings by our modified list
-                    let new_settings = advgb_blocks_vars.original_settings;
+
+                    /*/ Replace original allowed block settings by our modified list
+                    let new_settings = advgb_blocks_vars.modified_settings;
+                    //let new_settings = wp.data.select('core/editor').getEditorSettings();
 
                     // Unregister core blocks to avoid registering twice later through wp.editPost.initializeEditor
                     const core_blocks = [
@@ -190,10 +190,15 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                     });
 
                     new_settings.allowedBlockTypes = granted_blocks;
-                    const target = document.getElementById('editor');
+                    const target = document.getElementById('editor'); // Do we need this?
 
-                    // Initialize again the editor
-                    wp.editPost.initializeEditor('editor', advgb_blocks_vars.post_type, advgb_blocks_vars.post_id, new_settings, []);
+                    // Initialize again the editor - Doesn't work - Cause inserter blink since WP 6.2
+                    wp.editPost.initializeEditor('editor', advgb_blocks_vars.post_type, parseInt(advgb_blocks_vars.post_id), new_settings, []);
+
+                    // It seems the best approach to update editor settings, however is overriden
+                    // https://github.com/WordPress/gutenberg/issues/15993#issuecomment-1487007071
+                    wp.data.dispatch('core/editor').updateEditorSettings({ allowedBlockTypes: granted_blocks })
+                    .then((a) => console.log('end',a,wp.data.select('core/editor').getEditorSettings()));;*/
 
                     var list_categories = wp.blocks.getCategories();
 
