@@ -182,7 +182,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                     }
 
                     /*/ Replace original allowed block settings by our modified list
-                    let new_settings = advgb_blocks_vars.modified_settings;
+                    let new_settings = advgb_blocks_vars.original_settings;
                     //let new_settings = wp.data.select('core/editor').getEditorSettings();
                      // Unregister core blocks to avoid registering twice later through wp.editPost.initializeEditor
                     const core_blocks = [
