@@ -171,135 +171,34 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                     } else {
                         // This block is not in our database yet, but by default we allow the usage
                         granted_blocks.push(blocks[block].name);
-                        console.log(blocks[block].name);
                         missing_block = true;
                     }
                 }
 
                 //console.log('missing_block: ' + missing_block);
 
-                // Block is not saved in our database yet; let's allow through client side
                 if (missing_block) {
                     if (console !== undefined && console.error !== undefined) {
                         // Let's output as log instead of error
                         console.log('Reloading editor by PublishPress Blocks plugin');
                     }
-
-                    console.log('granted_blocks', granted_blocks);
-
                     // Replace original allowed block settings by our modified list
-                    // @TODO maybe move to wp.data.select('core/editor').getEditorSettings() ?
-                    //let new_settings = advgb_blocks_vars.original_settings;
+                    var new_settings = advgb_blocks_vars.original_settings;
 
-                    /*/ Unregister core blocks to avoid registering twice later through wp.editPost.initializeEditor
-                    const core_blocks = [
-                        'core/paragraph',
-                        'core/image',
-                        'core/heading',
-                        'core/list',
-                        'core/quote',
-                        'core/archives',
-                        'core/audio',
-                        'core/button',
-                        'core/buttons',
-                        'core/calendar',
-                        'core/categories',
-                        'core/code',
-                        'core/columns',
-                        'core/column',
-                        'core/cover',
-                        'core/embed',
-                        'core/group',
-                        'core/freeform',
-                        'core/html',
-                        'core/media-text',
-                        'core/latest-comments',
-                        'core/latest-posts',
-                        'core/list-item',
-                        'core/missing',
-                        'core/more',
-                        'core/nextpage',
-                        'core/page-list',
-                        'core/preformatted',
-                        'core/pullquote',
-                        'core/rss',
-                        'core/search',
-                        'core/separator',
-                        'core/block',
-                        'core/social-links',
-                        'core/social-link',
-                        'core/spacer',
-                        'core/table',
-                        'core/tag-cloud',
-                        'core/text-columns',
-                        'core/verse',
-                        'core/video',
-                        'core/site-logo',
-                        'core/site-tagline',
-                        'core/site-title',
-                        'core/query',
-                        'core/post-template',
-                        'core/query-title',
-                        'core/query-pagination',
-                        'core/query-pagination-next',
-                        'core/query-pagination-numbers',
-                        'core/query-pagination-previous',
-                        'core/post-title',
-                        'core/post-content',
-                        'core/post-date',
-                        'core/post-excerpt',
-                        'core/post-featured-image',
-                        'core/post-terms',
-                        'core/loginout',
-                        'core/gallery',
-                        'core/shortcode',
-                        'core/file',
-                        'core/pattern',
-                        'core/navigation',
-                        'core/navigation-link',
-                        'core/navigation-submenu',
-                        'core/template-part',
-                        'core/post-author',
-                        'core/post-navigation-link',
-                        'core/post-comments',
-                        'core/term-description',
-                        'core/avatar',
-                        'core/query-no-results',
-                        'core/read-more',
-                        'core/comment-author-name',
-                        'core/comment-content',
-                        'core/comment-date',
-                        'core/comment-edit-link',
-                        'core/comment-reply-link',
-                        'core/comment-template',
-                        'core/comments',
-                        'core/comments-title',
-                        'core/comments-query-loop',
-                        'core/comments-pagination',
-                        'core/comments-pagination-next',
-                        'core/comments-pagination-numbers',
-                        'core/comments-pagination-previous',
-                        'core/post-comments-form',
-                        'core/home-link',
-                        'core/post-author-biography',
-                        'core/page-list-item',
-                        'core/post-author-name',
-                        'core/legacy-widget',
-                        'core/widget-group'
-                    ];
-                     core_blocks.forEach( function( element ) {
-                        if ( wp.data.select( 'core/blocks' ).getBlockType( element ) ) {
-                            wp.blocks.unregisterBlockType( element );
+                    // Unregister core blocks to avoid registering twice later through wp.editPost.initializeEditor
+                    var core_blocks = ['core/paragraph', 'core/image', 'core/heading', 'core/list', 'core/quote', 'core/archives', 'core/audio', 'core/button', 'core/buttons', 'core/calendar', 'core/categories', 'core/code', 'core/columns', 'core/column', 'core/cover', 'core/embed', 'core/group', 'core/freeform', 'core/html', 'core/media-text', 'core/latest-comments', 'core/latest-posts', 'core/list-item', 'core/missing', 'core/more', 'core/nextpage', 'core/page-list', 'core/preformatted', 'core/pullquote', 'core/rss', 'core/search', 'core/separator', 'core/block', 'core/social-links', 'core/social-link', 'core/spacer', 'core/table', 'core/tag-cloud', 'core/text-columns', 'core/verse', 'core/video', 'core/site-logo', 'core/site-tagline', 'core/site-title', 'core/query', 'core/post-template', 'core/query-title', 'core/query-pagination', 'core/query-pagination-next', 'core/query-pagination-numbers', 'core/query-pagination-previous', 'core/post-title', 'core/post-content', 'core/post-date', 'core/post-excerpt', 'core/post-featured-image', 'core/post-terms', 'core/loginout', 'core/gallery', 'core/shortcode', 'core/file', 'core/pattern', 'core/navigation', 'core/navigation-link', 'core/navigation-submenu', 'core/template-part', 'core/post-author', 'core/post-navigation-link', 'core/post-comments', 'core/term-description', 'core/avatar', 'core/query-no-results', 'core/read-more', 'core/comment-author-name', 'core/comment-content', 'core/comment-date', 'core/comment-edit-link', 'core/comment-reply-link', 'core/comment-template', 'core/comments', 'core/comments-title', 'core/comments-query-loop', 'core/comments-pagination', 'core/comments-pagination-next', 'core/comments-pagination-numbers', 'core/comments-pagination-previous', 'core/post-comments-form', 'core/home-link', 'core/post-author-biography', 'core/page-list-item', 'core/post-author-name', 'core/legacy-widget', 'core/widget-group'];
+
+                    core_blocks.forEach(function (element) {
+                        if (wp.data.select('core/blocks').getBlockType(element)) {
+                            wp.blocks.unregisterBlockType(element);
                         }
                     });
-                     new_settings.allowedBlockTypes = granted_blocks;
-                    const target = document.getElementById('editor');*/
 
-                    //console.log(new_settings);
+                    new_settings.allowedBlockTypes = granted_blocks;
+                    var target = document.getElementById('editor');
 
                     // Initialize again the editor
-                    //wp.editPost.initializeEditor('editor', advgb_blocks_vars.post_type, advgb_blocks_vars.post_id, new_settings, []);
-                    wp.data.dispatch('core/edit-post').showBlockTypes(granted_blocks);
+                    wp.editPost.initializeEditor('editor', advgb_blocks_vars.post_type, advgb_blocks_vars.post_id, new_settings, []);
 
                     var list_categories = wp.blocks.getCategories();
 
