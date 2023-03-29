@@ -5181,9 +5181,7 @@ function AdvDateTimeControl(props) {
         setPopupState = _useState2[1];
 
     var togglePopup = function togglePopup() {
-        setPopupState(function (state) {
-            return !state;
-        });
+        setPopupState(!popupState);
     };
 
     var buttonLabel = props.buttonLabel,
@@ -5213,9 +5211,7 @@ function AdvDateTimeControl(props) {
                     {
                         isLink: true,
                         icon: "calendar",
-                        onClick: function onClick() {
-                            return setPopupState(togglePopup);
-                        }
+                        onClick: togglePopup
                     },
                     React.createElement(
                         Tooltip,
@@ -5249,9 +5245,7 @@ function AdvDateTimeControl(props) {
                 React.createElement(Button, {
                     icon: "no-alt",
                     className: "advgb-advcalendar-remove-icon",
-                    onClick: function onClick() {
-                        return setPopupState(togglePopup);
-                    }
+                    onClick: togglePopup
                 })
             ),
             React.createElement(DateTimePicker, {

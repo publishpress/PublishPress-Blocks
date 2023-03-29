@@ -272,6 +272,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 = 3.1.4.1 - 29 Mar 2023 =
   * Fix: Blinking block inserter in WordPress 6.2
+  * Fix: Toggle to open calendar popup in Block controls
 
 = 3.1.4 - 13 Feb 2023 =
   * Add: Unique class to Accordions block
