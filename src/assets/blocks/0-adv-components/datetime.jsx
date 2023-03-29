@@ -51,6 +51,7 @@ export function AdvDateTimeControl(props) {
                 <Popover
                     className="advgb-advcalendar-popover"
                     onClose={ setPopupState.bind( null, false ) }
+                    resize={ false }
                 >
                     <label className="advgb-advcalendar-popover-label">
                         { dateLabel }
