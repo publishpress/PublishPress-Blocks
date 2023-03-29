@@ -276,6 +276,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Calendar popup UI in Block controls
   * Fix: Days of the week and between times UI elements from Schedule's Block controls missing CSS in Customizing > Widgets
   * Fix: Woo Products columns are incorrect in editor preview
+  * Fix: Slider view in editor for Woo products block
 
 = 3.1.4 - 13 Feb 2023 =
   * Add: Unique class to Accordions block
