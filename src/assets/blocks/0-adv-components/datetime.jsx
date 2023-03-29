@@ -8,7 +8,7 @@ const { applyFilters } = wp.hooks;
 export function AdvDateTimeControl(props) {
     const [popupState, setPopupState] = useState( false );
     const togglePopup = () => {
-        setPopupState( ( state ) => ! state );
+        setPopupState( ! popupState );
     };
 
     const {
@@ -30,7 +30,7 @@ export function AdvDateTimeControl(props) {
                     <Button
                         isLink
                         icon="calendar"
-                        onClick={ () => setPopupState( togglePopup ) }
+                        onClick={ togglePopup }
                     >
                         <Tooltip text={ __( 'Change date', 'advanced-gutenberg' ) }>
                             <span>
@@ -51,13 +51,14 @@ export function AdvDateTimeControl(props) {
                 <Popover
                     className="advgb-advcalendar-popover"
                     onClose={ setPopupState.bind( null, false ) }
+                    resize={ false }
                 >
                     <label className="advgb-advcalendar-popover-label">
                         { dateLabel }
                         <Button
         					icon="no-alt"
                             className="advgb-advcalendar-remove-icon"
-        					onClick={ () => setPopupState( togglePopup ) }
+        					onClick={ togglePopup }
         				/>
                     </label>
                     <DateTimePicker
