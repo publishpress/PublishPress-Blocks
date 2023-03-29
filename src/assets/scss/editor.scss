@@ -1,8 +1,11 @@
 // Editor
+// @TODO - Split the CSS for Customizing > Widgets and "Show more settings"
+// due some CSS is in use in one case and other portion of CSS in the other
 #site-editor,
 #widgets-editor,
 #editor,
-.customize-control-sidebar_block_editor {
+.customize-control-sidebar_block_editor, // Customizing > Widgets
+.customize-widgets-layout__inspector { // "Show more settings"
 
   .advgb-tabs-block,
   .advgb-tabs-wrapper {

@@ -274,6 +274,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
   * Fix: Blinking block inserter in WordPress 6.2
   * Fix: Toggle to open calendar popup in Block controls
   * Fix: Calendar popup UI in Block controls
+  * Fix: Days of the week and between times UI elements from Schedule's Block controls missing CSS in Customizing > Widgets
 
 = 3.1.4 - 13 Feb 2023 =
   * Add: Unique class to Accordions block
