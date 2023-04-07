@@ -6,18 +6,10 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
             return;
         }
 
-        let gutenberg_init_function = null;
-        if (typeof window._wpLoadBlockEditor !== 'undefined') {
-            gutenberg_init_function = window._wpLoadBlockEditor;
+        if (advgb_blocks_vars.original_settings.allowedBlockTypes !== true) {
+            // allowed_block_types filter has been used, in this case we do nothing as we don't know why blocks have been filtered
+            return;
         }
-
-        if (gutenberg_init_function !== null) {
-            // Wait for Gutenberg editor to be ready
-            gutenberg_init_function.then(() => {
-                if (advgb_blocks_vars.original_settings.allowedBlockTypes !== true) {
-                    // allowed_block_types filter has been used, in this case we do nothing as we don't know why blocks have been filtered
-                    return;
-                }
 
                 let list_blocks = [];
                 let granted_blocks = [];
@@ -72,6 +64,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                     } else {
                         // This block is not in our database yet, but by default we allow the usage
                         granted_blocks.push(blocks[block].name);
+                        console.log(blocks[block].name);
                         missing_block = true;
                     }
                 }
@@ -82,127 +75,17 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                         console.log('Reloading editor by PublishPress Blocks plugin');
                     }
 
-                    /*/ Replace original allowed block settings by our modified list
-                    let new_settings = advgb_blocks_vars.original_settings;
-                    //let new_settings = wp.data.select('core/editor').getEditorSettings();
-
-                    // Unregister core blocks to avoid registering twice later through wp.editPost.initializeEditor
-                    const core_blocks = [
-                        'core/paragraph',
-                        'core/image',
-                        'core/heading',
-                        'core/list',
-                        'core/quote',
-                        'core/archives',
-                        'core/audio',
-                        'core/button',
-                        'core/buttons',
-                        'core/calendar',
-                        'core/categories',
-                        'core/code',
-                        'core/columns',
-                        'core/column',
-                        'core/cover',
-                        'core/embed',
-                        'core/group',
-                        'core/freeform',
-                        'core/html',
-                        'core/media-text',
-                        'core/latest-comments',
-                        'core/latest-posts',
-                        'core/list-item',
-                        'core/missing',
-                        'core/more',
-                        'core/nextpage',
-                        'core/page-list',
-                        'core/preformatted',
-                        'core/pullquote',
-                        'core/rss',
-                        'core/search',
-                        'core/separator',
-                        'core/block',
-                        'core/social-links',
-                        'core/social-link',
-                        'core/spacer',
-                        'core/table',
-                        'core/tag-cloud',
-                        'core/text-columns',
-                        'core/verse',
-                        'core/video',
-                        'core/site-logo',
-                        'core/site-tagline',
-                        'core/site-title',
-                        'core/query',
-                        'core/post-template',
-                        'core/query-title',
-                        'core/query-pagination',
-                        'core/query-pagination-next',
-                        'core/query-pagination-numbers',
-                        'core/query-pagination-previous',
-                        'core/post-title',
-                        'core/post-content',
-                        'core/post-date',
-                        'core/post-excerpt',
-                        'core/post-featured-image',
-                        'core/post-terms',
-                        'core/loginout',
-                        'core/gallery',
-                        'core/shortcode',
-                        'core/file',
-                        'core/pattern',
-                        'core/navigation',
-                        'core/navigation-link',
-                        'core/navigation-submenu',
-                        'core/template-part',
-                        'core/post-author',
-                        'core/post-navigation-link',
-                        'core/post-comments',
-                        'core/term-description',
-                        'core/avatar',
-                        'core/query-no-results',
-                        'core/read-more',
-                        'core/comment-author-name',
-                        'core/comment-content',
-                        'core/comment-date',
-                        'core/comment-edit-link',
-                        'core/comment-reply-link',
-                        'core/comment-template',
-                        'core/comments',
-                        'core/comments-title',
-                        'core/comments-query-loop',
-                        'core/comments-pagination',
-                        'core/comments-pagination-next',
-                        'core/comments-pagination-numbers',
-                        'core/comments-pagination-previous',
-                        'core/post-comments-form',
-                        'core/home-link',
-                        'core/post-author-biography',
-                        'core/page-list-item',
-                        'core/post-author-name',
-                        'core/legacy-widget',
-                        'core/widget-group'
-                    ];
-
-                    core_blocks.forEach( function( element ) {
-                        if ( wp.data.select( 'core/blocks' ).getBlockType( element ) ) {
-                            wp.blocks.unregisterBlockType( element );
-                        }
-                    });
-
-                    new_settings.allowedBlockTypes = granted_blocks;
-                    const target = document.getElementById('editor'); // Do we need this?
-
-                    // Initialize again the editor - Doesn't work - Cause inserter blink since WP 6.2
-                    wp.editPost.initializeEditor('editor', advgb_blocks_vars.post_type, parseInt(advgb_blocks_vars.post_id), new_settings, []);
-
-                    // It seems the best approach to update editor settings, however is overriden
-                    // https://github.com/WordPress/gutenberg/issues/15993#issuecomment-1487007071
-                    wp.data.dispatch('core/editor').updateEditorSettings({ allowedBlockTypes: granted_blocks })
-                    .then((a) => console.log('end',a,wp.data.select('core/editor').getEditorSettings()));;*/
+                    /* It seems the best approach to update editor settings, however is overriden
+                     * https://github.com/WordPress/gutenberg/issues/15993#issuecomment-1487007071
+                     * We're using a 1 second delay to bypass the override */
+                    setTimeout( function() {
+                        wp.data.dispatch('core/editor').updateEditorSettings({ allowedBlockTypes: granted_blocks });
+                    }, 1000 );
 
                     var list_categories = wp.blocks.getCategories();
 
                     try {
+                        console.log('ajax starts...');
                         // Use this ajax query to update the block list in db
                         jQuery.ajax({
                             url: advgb_blocks_vars.ajaxurl,
@@ -221,8 +104,6 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                         //console.log(e);
                     }
                 }
-            });
-        }
     });
 
 }
