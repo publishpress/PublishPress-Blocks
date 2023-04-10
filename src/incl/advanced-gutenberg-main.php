@@ -173,6 +173,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_filter('admin_body_class', array($this, 'setAdvgEditorBodyClassses'));
                 add_filter( 'admin_footer_text', [$this, 'adminFooter'] );
                 add_action( 'admin_enqueue_scripts', [$this, 'adminMenuStyles'] );
+                add_action( 'activated_plugin', [$this, 'anotherPluginHasBeenActivated'], 10, 2 );
 
                 if($wp_version >= 5.8) {
                     add_action('admin_enqueue_scripts', array($this, 'addEditorAssetsWidgets'), 9999);
@@ -748,12 +749,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
         /**
          * Update the blocks list for first time install
+         * @TODO - It seems the blocks declared under block.json are not detected in this trigger ($block_type_registry)
          *
          * @return void
          */
         public function initBlocksList()
         {
             if (get_option('advgb_blocks_list') === false
+                || (bool) get_option( 'advgb_maybe_new_blocks' )
                 || (defined('GUTENBERG_VERSION') && version_compare(get_option('advgb_gutenberg_version'), GUTENBERG_VERSION, '<'))) {
                 $advgb_nonce = wp_create_nonce('advgb_update_blocks_list');
                 wp_enqueue_script('wp-blocks');
@@ -783,7 +786,18 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'after'
                 );
 
+                // Block types scripts
+                $block_type_registry = \WP_Block_Type_Registry::get_instance();
+                foreach ( $block_type_registry->get_all_registered() as $block_name => $block_type ) {
+                    if ( ! empty( $block_type->editor_script ) ) {
+                        wp_enqueue_script( $block_type->editor_script );
+                    }
+                }
+
                 wp_localize_script('advgb_update_list', 'updateListNonce', array('nonce' => $advgb_nonce));
+
+                // Disable trigger
+                update_option( 'advgb_maybe_new_blocks', intval(false), false );
             }
         }
 
@@ -2302,6 +2316,20 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function adminMenuStyles()
         {
             wp_enqueue_style( 'advgb_admin_menu_styles' );
+        }
+
+        /**
+         * Let's save a trigger option when a new plugin has been activated
+         * We use the boolean value of advgb_maybe_new_blocks option
+         * to trigger an update for advgb_blocks_list option through initBlocksList()
+         *
+         * @since 3.1.5
+         *
+         * @return void
+         */
+        public function anotherPluginHasBeenActivated( $plugin, $network_activation )
+        {
+            update_option( 'advgb_maybe_new_blocks', intval(true), false );
         }
 
         /**
