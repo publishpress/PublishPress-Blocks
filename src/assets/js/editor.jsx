@@ -94,15 +94,15 @@ wp.domReady( function() {
                 /* It seems the best approach to update editor settings, however is overriden
                  * https://github.com/WordPress/gutenberg/issues/15993#issuecomment-1487007071
                  * We're adding 1 second delay to bypass the override */
-                setTimeout( function() {
+                /*setTimeout( function() {
                     wp.data.dispatch('core/editor').updateEditorSettings({
                         allowedBlockTypes: granted_blocks
                     });
                     console.log('updated!');
-                }, 1000 );
+                }, 1000 );*/
 
                 // Update block list in database
-                updateBlocksListOption( list_blocks, list_categories );
+                //updateBlocksListOption( list_blocks, list_categories );
             });
         } else if( wp.data.select('core/edit-site') ) {
             /* Site editor
@@ -110,11 +110,12 @@ wp.domReady( function() {
              * and update block list in database
              * without excluding the ones not loading in Site editor screen either core blocks.
              * Likely due wp.blocks.getBlockTypes() not getting all the registered blocks
-             * when is executed in first lines */
+             * when is executed in first lines
+             * due we require an equivalent of window._wpLoadBlockEditor for Site Editor screen */
 
             console.log('Site editor');
 
-            /*/ We're adding 1 second delay to bypass the override
+            // We're adding 1 second delay to bypass the override
             setTimeout( function() {
                 wp.data.dispatch('core/edit-site').updateSettings({
                     allowedBlockTypes: granted_blocks,
@@ -123,14 +124,15 @@ wp.domReady( function() {
             }, 1000 );
 
             // Update block list in database
-            updateBlocksListOption( list_blocks, list_categories );*/
+            updateBlocksListOption( list_blocks, list_categories );
         } else {
             /* Widgets - Customizer
              * @TODO - Include block types not stored in advgb_blocks_list option
              * and update block list in database
              * without excluding the ones not loading in Widgets screen.
              * Likely due wp.blocks.getBlockTypes() not getting all the registered blocks
-             * when is executed in first lines */
+             * when is executed in first lines
+             * due we require an equivalent of window._wpLoadBlockEditor for Widgets screen */
 
              console.log('Widgets');
         }
