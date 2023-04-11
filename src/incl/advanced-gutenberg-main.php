@@ -3384,7 +3384,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         }
                     }
 
-                    // Make sure core/legacy-widget is included as active - Since 2.11.6
+                    /* Make sure core/legacy-widget is included as active - Since 2.11.6
+                     * If there is an scenario where core/widget-group is not saved as active block,
+                     * let's add to active_blocks here */
                     if(!in_array('core/legacy-widget', $advgb_blocks_user_roles['active_blocks'])) {
                         /* Remove from inactive blocks if is saved for the current user role.
                          * The lines below won't save nothing in db, is just for execution on editor. */
@@ -3415,12 +3417,21 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 }
             }
 
-            // Make sure core/legacy-widget is included as active - Since 2.11.6
-            if(!in_array('core/legacy-widget', $all_blocks)) {
-                array_push(
-                    $all_blocks,
-                    'core/legacy-widget'
-                );
+            /* Make sure core/legacy-widget is included as active - Since 2.11.6
+             * core/widget-group added - Since 3.1.4.2
+             */
+            $include_blocks = [
+                'core/legacy-widget',
+                'core/widget-group'
+            ];
+
+            foreach( $include_blocks as $item ) {
+                if( ! in_array( $item, $all_blocks ) ) {
+                    array_push(
+                        $all_blocks,
+                        $item
+                    );
+                }
             }
 
             return array(

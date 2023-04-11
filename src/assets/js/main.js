@@ -195,7 +195,13 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
               'icon': 'block-default',
               'title': 'Legacy Widget',
               'category': 'widgets'
-            }
+             },
+             {
+               'name': 'core/widget-group',
+               'icon': 'block-default',
+               'title': 'Widget Group',
+               'category': 'widgets'
+             },
         ];
 
         // Include force_activate_blocks in the blocks list
