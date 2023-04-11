@@ -171,6 +171,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                     } else {
                         // This block is not in our database yet, but by default we allow the usage
                         granted_blocks.push(blocks[block].name);
+                        console.log(blocks[block].name);
                         missing_block = true;
                     }
                 }
@@ -181,9 +182,14 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                         console.log('Reloading editor by PublishPress Blocks plugin');
                     }
 
-                    wp.data.dispatch('core/editor').updateEditorSettings({
-                        allowedBlockTypes: granted_blocks
-                    });
+                    /* It seems the best approach to update editor settings, however is overriden
+                     * https://github.com/WordPress/gutenberg/issues/15993#issuecomment-1487007071
+                     * We're adding 3 seconds delay to bypass the override */
+                    setTimeout(function () {
+                        wp.data.dispatch('core/editor').updateEditorSettings({
+                            allowedBlockTypes: granted_blocks
+                        });
+                    }, 3000);
 
                     var list_categories = wp.blocks.getCategories();
 
