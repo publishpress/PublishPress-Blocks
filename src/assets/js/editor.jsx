@@ -72,7 +72,6 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                     } else {
                         // This block is not in our database yet, but by default we allow the usage
                         granted_blocks.push(blocks[block].name);
-                        console.log(blocks[block].name);
                         missing_block = true;
                     }
                 }
