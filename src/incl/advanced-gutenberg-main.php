@@ -2325,7 +2325,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          * We use the boolean value of advgb_maybe_new_blocks option
          * to trigger an update for advgb_blocks_list option through initBlocksList()
          *
-         * @since 3.1.5
+         * @since 3.1.4.2
          *
          * @return void
          */
