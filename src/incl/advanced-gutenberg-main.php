@@ -748,7 +748,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Update the blocks list for first time install
+         * Update the blocks list for first time install or when a new block is installed
          * @TODO - Blocks with block.json metadata are not detected in this trigger
          *
          * @return void
