@@ -173,7 +173,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_filter('admin_body_class', array($this, 'setAdvgEditorBodyClassses'));
                 add_filter( 'admin_footer_text', [$this, 'adminFooter'] );
                 add_action( 'admin_enqueue_scripts', [$this, 'adminMenuStyles'] );
-                add_action( 'activated_plugin', [$this, 'anotherPluginHasBeenActivated'], 10, 2 );
+                add_action( 'activated_plugin', [$this, 'maybeNewBlocks'], 9999, 2 );
 
                 if($wp_version >= 5.8) {
                     add_action('admin_enqueue_scripts', array($this, 'addEditorAssetsWidgets'), 9999);
@@ -749,7 +749,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
         /**
          * Update the blocks list for first time install
-         * @TODO - It seems the blocks declared under block.json are not detected in this trigger ($block_type_registry)
+         * @TODO - Blocks with block.json metadata are not detected in this trigger
          *
          * @return void
          */
@@ -2327,7 +2327,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
          *
          * @return void
          */
-        public function anotherPluginHasBeenActivated( $plugin, $network_activation )
+        public function maybeNewBlocks( $plugin, $network_activation )
         {
             update_option( 'advgb_maybe_new_blocks', intval(true), false );
         }
