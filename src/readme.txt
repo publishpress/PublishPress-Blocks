@@ -273,6 +273,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 = 3.1.4.2 - 11 Apr 2023 =
   * Fix: Allowed block types for non-saved block types in post edit
   * Fix: Widget Group block type not saved as active
+  * Add: PHP 7.2.5 as minimum PHP version
 
 = 3.1.4.1 - 29 Mar 2023 =
   * Fix: Blinking block inserter in WordPress 6.2
