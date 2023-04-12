@@ -4,7 +4,7 @@ Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks, accord
 Requires at least: 5.0
 Tested up to: 6.2
 Stable tag: 3.1.4.2b1
-Requires PHP: 5.6
+Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
