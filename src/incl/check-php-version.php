@@ -8,7 +8,7 @@
  * @package     PublishPress Blocks
  */
 
-namespace PublishPressBlocks {
+namespace PublishPressBlocksPhpCheck {
 
     use function __;
     use function add_action;
