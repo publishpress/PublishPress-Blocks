@@ -24,7 +24,7 @@ namespace PublishPressBlocksPhpCheck {
         'min_php_version' => '7.2.5',
         'message_format' => __(
             '%s requires PHP %s or later. Please upgrade PHP to a compatible version. Your current version is %s.',
-            'post-expirator'
+            'advanced-gutenberg'
         ),
     ];
 
