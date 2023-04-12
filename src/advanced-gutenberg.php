@@ -38,6 +38,11 @@
 
 defined('ABSPATH') || die;
 
+// If the PHP version is not compatible, terminate the plugin execution.
+if ( ! include_once __DIR__ . '/incl/check-php-version.php' ) {
+    return;
+}
+
 $includeFilebRelativePath = '/publishpress/publishpress-instance-protection/include.php';
 if (file_exists(__DIR__ . '/vendor' . $includeFilebRelativePath)) {
     require_once __DIR__ . '/vendor' . $includeFilebRelativePath;

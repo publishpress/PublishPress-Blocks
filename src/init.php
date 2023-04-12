@@ -1,43 +1,6 @@
 <?php
 defined('ABSPATH') || die;
 
-//Check plugin requirements
-if (version_compare(PHP_VERSION, '5.6.20', '<')) {
-    if (! function_exists('advgb_disable_plugin')) {
-        /**
-         * Disable plugin
-         *
-         * @return void
-         */
-        function advgb_disable_plugin()
-        {
-            if (current_user_can('activate_plugins') && is_plugin_active(plugin_basename(__FILE__))) {
-                deactivate_plugins(__FILE__);
-                unset($_GET['activate']); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No action, nonce is not required
-            }
-        }
-    }
-
-    if (! function_exists('advgb_show_error')) {
-        /**
-         * Show error
-         *
-         * @return void
-         */
-        function advgb_show_error()
-        {
-            echo '<div class="error"><p><strong>PublishPress Blocks</strong> needs at least PHP 5.6.20 version, please update php before installing the plugin.</p></div>';
-        }
-    }
-
-    //Add actions
-    add_action('admin_init', 'advgb_disable_plugin');
-    add_action('admin_notices', 'advgb_show_error');
-
-    //Do not load anything more
-    return;
-}
-
 if (!defined('GUTENBERG_VERSION_REQUIRED')) {
     define('GUTENBERG_VERSION_REQUIRED', '5.7.0');
 }
