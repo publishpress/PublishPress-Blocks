@@ -187,15 +187,12 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
         // Array of block names already available through wp.blocks.getBlockTypes()
         var force_deactivate_blocks = []; // 'advgb/container'
 
-        // Array of objects not available through wp.blocks.getBlockTypes()
-        // As example: the ones that loads only in Appearance > Widget
+        /* Array of objects not available through wp.blocks.getBlockTypes()
+         * As example: the ones that loads only in Appearance > Widget
+         *
+         * Removed 'core/legacy-widget' as forced active block - Since 3.1.4.3
+         */
         var force_activate_blocks = [
-            {
-              'name': 'core/legacy-widget',
-              'icon': 'block-default',
-              'title': 'Legacy Widget',
-              'category': 'widgets'
-             },
              {
                'name': 'core/widget-group',
                'icon': 'block-default',
@@ -206,6 +203,24 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
 
         // Include force_activate_blocks in the blocks list
         force_activate_blocks.forEach(function (block) {
+            allBlocks.push(block);
+        });
+
+        /* Array of objects not available through wp.blocks.getBlockTypes()
+         * As example: the ones that loads only in Appearance > Widget 
+         * and we allow to enable/disable (different to force_activate_blocks var)
+         */
+        var include_blocks = [
+            {
+                'name': 'core/legacy-widget',
+                'icon': 'block-default',
+                'title': 'Legacy Widget',
+                'category': 'widgets'
+            }
+        ];
+
+        // Include include_blocks in the blocks list
+        include_blocks.forEach(function (block) {
             allBlocks.push(block);
         });
 
