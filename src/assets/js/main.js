@@ -293,6 +293,26 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
 
         var list_blocks_names = [];
 
+        console.log(listBlocks.length);
+
+        /* Remove duplicated blocks by block name, just in case - Since 3.1.4.3
+         * e.g. when Extended supported block is enabled, Legacy Widget and Widget Group are duplicated.
+         */
+        var uniqueNames = [];
+        var i = listBlocks.length;
+        while ( i-- ) {
+            var name = listBlocks[i].name;
+            if( uniqueNames.includes( name ) ) {
+                console.log(name);
+                listBlocks.splice( i, 1 );
+            } else {
+                uniqueNames.push( name );
+            }
+        }
+
+        console.log(listBlocks.length);
+        console.log(uniqueNames);
+
         // Update blocks
         listBlocks.forEach(function (block) {
 
@@ -540,6 +560,8 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
         });
 
         var list_blocks_names = [];
+
+        // @TODO - Maybe remove duplicated blocks by block name? - See advgbGetBlocksFeature()
 
         // Update blocks
         listBlocks.forEach(function (block) {

@@ -3417,10 +3417,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $all_blocks[$block_key] = $all_blocks[$block_key]['name'];
                 }
 
-                // Include Legacy Widget
+                // Include Legacy Widget for execution; this is not saved in db
                 array_push( $all_blocks, 'core/legacy-widget' );
 
-                // Remove duplicated (e.g. when 'core/legacy-widget' already exists but was added again)
+                // Remove duplicated just in case
                 $all_blocks = array_unique( $all_blocks );
 
                 /*echo '<pre>';
