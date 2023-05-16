@@ -187,8 +187,9 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
         // Array of block names already available through wp.blocks.getBlockTypes()
         var force_deactivate_blocks = []; // 'advgb/container'
 
-        /* Array of objects not available through wp.blocks.getBlockTypes()
+        /* Blocks not available through wp.blocks.getBlockTypes()
          * As example: the ones that loads only in Appearance > Widget
+         * and we don't allow to disable
          *
          * Removed 'core/legacy-widget' as forced active block - Since 3.1.4.3
          */
@@ -200,13 +201,11 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
                'category': 'widgets'
              },
         ];
-
-        // Include force_activate_blocks in the blocks list
         force_activate_blocks.forEach(function (block) {
             allBlocks.push(block);
         });
 
-        /* Array of objects not available through wp.blocks.getBlockTypes()
+        /* Blocks not available through wp.blocks.getBlockTypes() - Since 3.1.4.3
          * As example: the ones that loads only in Appearance > Widget 
          * and we allow to enable/disable (different to force_activate_blocks var)
          */
@@ -218,8 +217,6 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
                 'category': 'widgets'
             }
         ];
-
-        // Include include_blocks in the blocks list
         include_blocks.forEach(function (block) {
             allBlocks.push(block);
         });
@@ -296,7 +293,8 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
         console.log(listBlocks.length);
 
         /* Remove duplicated blocks by block name, just in case - Since 3.1.4.3
-         * e.g. when Extended supported block is enabled, Legacy Widget and Widget Group are duplicated.
+         * e.g. when Extended supported block is enabled, 'core/legacy-widget' 
+         * and 'core/widget-group' are duplicated.
          */
         var uniqueNames = [];
         var i = listBlocks.length;
@@ -561,7 +559,7 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
 
         var list_blocks_names = [];
 
-        // @TODO - Maybe remove duplicated blocks by block name? - See advgbGetBlocksFeature()
+        // @TODO - Maybe remove duplicated blocks by block name? - Same as in advgbGetBlocksFeature()
 
         // Update blocks
         listBlocks.forEach(function (block) {
