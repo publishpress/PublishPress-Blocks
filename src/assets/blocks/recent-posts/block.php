@@ -1113,7 +1113,7 @@ function advgbGetImageCaption( $post ) {
 }
 
 /**
- * Returns the Series order
+ * Returns the Series order for each post
  *
  * @return int
  */
@@ -1126,7 +1126,7 @@ function advgbGetSeriesOrder( $post ) {
         // Get the terms array from a post so later we can get the term id
         $terms = wp_get_post_terms( $post['id'], 'series' );
 
-        if( $terms[0]->term_id ) {
+        if( count( $terms ) && $terms[0]->term_id ) {
             return get_post_meta( $post['id'], '_series_part_' . (int) $terms[0]->term_id, true );
         }
     } else {
