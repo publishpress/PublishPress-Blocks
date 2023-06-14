@@ -1127,7 +1127,7 @@ function advgbGetSeriesOrder( $post ) {
         $terms = wp_get_post_terms( $post['id'], 'series' );
 
         if( count( $terms ) && $terms[0]->term_id ) {
-            return get_post_meta( $post['id'], '_series_part_' . (int) $terms[0]->term_id, true );
+            return (int) get_post_meta( $post['id'], '_series_part_' . $terms[0]->term_id, true );
         }
     } else {
         // Series Pro 2.11.3- and Series Free 2.11.2-
@@ -1311,7 +1311,8 @@ function advgbSetSeriesOrderREST( $args, $request ) {
         // Series 2.11.4+ meta_key now uses _series_part_${id}
         if ( function_exists( 'publishpress_multi_series_supported' ) 
             && publishpress_multi_series_supported() ) {
-            $ids = array_map( 'int', $request['series'] );
+            
+            $ids = array_map( 'intval', $request['series'] );
             foreach( $ids as $id ) {
                 $args['meta_key'][] = '_series_part_' . $id;
             }
