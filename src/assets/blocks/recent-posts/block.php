@@ -1134,7 +1134,7 @@ function advgbGetSeriesOrder( $post ) {
         return get_post_meta( $post['id'], '_series_part', true );
     }
 
-    return false;
+    return null;
 }
 
 /**
