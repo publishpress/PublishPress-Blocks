@@ -1305,7 +1305,7 @@ add_filter( 'rest_page_query', 'advgbGetAuthorFilterREST', 10, 2 );
 function advgbSetSeriesOrderREST( $args, $request ) {
     $orderby = esc_html( $request['orderby'] );
 
-    if ( isset( $orderby ) && $orderby === 'series_order' ) {
+    if ( isset( $orderby ) && $orderby === 'series_order' && isset( $request['series'] ) ) {
         $args['orderby'] = 'meta_value_num';
 
         // Series 2.11.4+ meta_key now uses _series_part_${id}
