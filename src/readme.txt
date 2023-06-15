@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks, accordion block, gallery block, slider block, tabs block, maps block, block controls
 Requires at least: 5.0
 Tested up to: 6.2.2
-Stable tag: 3.1.4.3b1
+Stable tag: 3.1.4.3
 Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -270,7 +270,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.4.3 - 14 May 2023 =
+= 3.1.4.3 - 15 May 2023 =
   * Add: Support for new dynamic meta_key for Series in Content Display block
 
 = 3.1.4.2 - 12 Apr 2023 =
