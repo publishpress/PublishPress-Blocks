@@ -270,7 +270,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.4.3 - 13 May 2023 =
+= 3.1.4.3 - 14 May 2023 =
   * Add: Support for new dynamic meta_key for Series in Content Display block
 
 = 3.1.4.2 - 12 Apr 2023 =
