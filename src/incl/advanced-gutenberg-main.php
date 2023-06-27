@@ -510,9 +510,33 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 );
             }
 
-            // Don't load post-sidebar.js in widgets.php, Theme Customizer > Widgets and Site Editor
-            if( $currentScreen->id !== 'site-editor' && $currentScreen->id !== 'widgets' && is_customize_preview() === false ) {
-                wp_enqueue_script(
+            // Only load post-sidebar.js in post type 'post' and 'page'
+            if( $currentScreen->base === 'post' 
+                && ( $currentScreen->id == 'post' || $currentScreen->id == 'page' ) ) {
+                    
+                    // Get global settings
+                    $saved_settings = get_option( 'advgb_settings' );
+
+                    // Get post settings
+                    $editorWidthGlobal = isset( $saved_settings['editor_width'] )
+                        && ! empty( $saved_settings['editor_width'] )
+                        ? $this->getAdvgbEditorWidth( $saved_settings['editor_width'] ) 
+                        : 'default';
+                    $editorColsVGGlobal = $this->getAdvgbColsVisualGuideGlobal( 
+                        $saved_settings['enable_columns_visual_guide'] 
+                    );
+    
+                    // Settings as javascript variables
+                    wp_localize_script(
+                        'wp-blocks',
+                        'advg_settings',
+                        [
+                            'editor_width_global'                   => $editorWidthGlobal,
+                            'enable_columns_visual_guide_global'    => $editorColsVGGlobal,
+                        ]
+                    );
+                    
+                    wp_enqueue_script(
                     'advgb_post_sidebar',
                     plugins_url('assets/blocks/post-sidebar.js', dirname(__FILE__)),
                     array( 'wp-blocks' ),
@@ -2442,10 +2466,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 global $post;
                 $editorWidth        = get_post_meta($post->ID, 'advgb_blocks_editor_width', true);
                 $editorColsVG       = get_post_meta($post->ID, 'advgb_blocks_columns_visual_guide', true);
-                $editorWidthGlobal  = (
-                        isset($saved_settings['editor_width'])
-                        && !empty($saved_settings['editor_width'])
-                    )
+                $editorWidthGlobal  = isset( $saved_settings['editor_width'] )
+                    && ! empty( $saved_settings['editor_width'] )
                     ? $this->getAdvgbEditorWidth( $saved_settings['editor_width'] )
                     : 'default';
                 $editorColsVGGlobal = $this->getAdvgbColsVisualGuideGlobal( $saved_settings['enable_columns_visual_guide'] );
@@ -2467,16 +2489,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     // Columns visual guide - Global configuration
                     $classes .= ' advgb-editor-col-guide-' . $editorColsVGGlobal . ' ';
                 }
-
-                // Global settings as javascript variables
-                wp_localize_script(
-                    'wp-blocks',
-                    'advg_settings',
-                    [
-                        'editor_width_global'                   => $editorWidthGlobal,
-                        'enable_columns_visual_guide_global'    => $editorColsVGGlobal,
-                    ]
-                );
 
                 return $classes;
             } elseif ( 'widgets' === get_current_screen()->id ) {
