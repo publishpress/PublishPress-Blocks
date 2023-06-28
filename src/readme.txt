@@ -270,8 +270,9 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.5 - 27 Jun 2023 =
+= 3.1.5 - 28 Jun 2023 =
   * Fix: post-sidebar.js enqueue in post and page edit only
+  * Fix: lightbox should apply to galleries when "Link to" is "media file"
 
 = 3.1.4.3 - 15 May 2023 =
   * Add: Support for new dynamic meta_key for Series in Content Display block
