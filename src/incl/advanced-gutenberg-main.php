@@ -3414,9 +3414,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $active_r_ = array_unique( $active_r_ );
                 $inactive_r_ = array_unique( $inactive_r_ );
 
-                /* Remove active blocks if also exists as active in any of the assigned roles.
-                 * aka only blocks activated in all the assigned roles 
-                 * will remain as active.
+                /* Remove active blocks if also exists as inactive in any of the assigned roles;
+                 * only blocks activated in all the assigned roles will remain as active.
                  * 
                  * Example:
                  * 
