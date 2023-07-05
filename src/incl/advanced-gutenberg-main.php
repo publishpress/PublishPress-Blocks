@@ -3414,8 +3414,21 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $active_r_ = array_unique( $active_r_ );
                 $inactive_r_ = array_unique( $inactive_r_ );
 
-                // Remove inactive blocks that are also active
-                $inactive_r_ = array_diff( $inactive_r_, $active_r_ );
+                /* Remove active blocks if also exists as active in any of the assigned roles.
+                 * aka only blocks activated in all the assigned roles 
+                 * will remain as active.
+                 * 
+                 * Example:
+                 * 
+                 * User has "Lorem" and "Ipsum" roles  assigned
+                 * 
+                 * "Dolor block" is enabled for "Lorem" role but disabled for "Ipsum" role,
+                 * then "Dolor block" is set as inactive [X].
+                 *
+                 * "Dolor block" is enabled for "Lorem" and also for "Ipsum" role,
+                 * then "Dolor block" is set as active [✓].
+                 * */
+                $active_r_ = array_diff( $active_r_, $inactive_r_ );
 
                 $advgb_blocks_user_roles = [
                     'active_blocks' => array_values( $active_r_ ),
