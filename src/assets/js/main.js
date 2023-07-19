@@ -290,8 +290,6 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
 
         var list_blocks_names = [];
 
-        console.log(listBlocks.length);
-
         /* Remove duplicated blocks by block name, just in case - Since 3.1.5
          * e.g. when Extended supported block is enabled, 'core/legacy-widget' 
          * and 'core/widget-group' are duplicated.
@@ -301,15 +299,11 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
         while ( i-- ) {
             var name = listBlocks[i].name;
             if( uniqueNames.includes( name ) ) {
-                console.log(name);
                 listBlocks.splice( i, 1 );
             } else {
                 uniqueNames.push( name );
             }
         }
-
-        console.log(listBlocks.length);
-        console.log(uniqueNames);
 
         // Update blocks
         listBlocks.forEach(function (block) {

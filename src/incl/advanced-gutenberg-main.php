@@ -3453,26 +3453,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             array_push($advgb_blocks_user_roles['active_blocks'], $one_block['name']);
                         }
                     }
-
-                    /*/ Make sure core/legacy-widget is included as active - Since 2.11.6
-                    // If there is an scenario where core/widget-group is not saved as active block,
-                    // let's add to active_blocks here
-                    if(!in_array('core/legacy-widget', $advgb_blocks_user_roles['active_blocks'])) {
-                        // Remove from inactive blocks if is saved for the current user role.
-                        // The lines below won't save nothing in db, is just for execution on editor.
-                        foreach ($advgb_blocks_user_roles['inactive_blocks'] as $key => $type) {
-                            // Fix by @igrginov - https://github.com/publishpress/PublishPress-Blocks/issues/1084
-                            if ($type === 'core/legacy-widget') {
-                                unset($advgb_blocks_user_roles['inactive_blocks'][$key]);
-                            }
-                        }
-                        // Add to active blocks.
-                        // The lines below won't save nothing in db, is just for execution on editor.
-                        array_push(
-                            $advgb_blocks_user_roles['active_blocks'],
-                            'core/legacy-widget'
-                        );
-                    }*/
                 }
 
                 return $advgb_blocks_user_roles;
@@ -3492,10 +3472,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 // Remove duplicated just in case
                 $all_blocks = array_unique( $all_blocks );
-
-                /*echo '<pre>';
-                var_dump($all_blocks);
-                echo '</pre>';*/
             }
 
             /* Make sure specific blocks are included as active - Since 2.11.6
