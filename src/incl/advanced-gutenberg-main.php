@@ -3373,9 +3373,11 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 if( count( $current_user->roles ) === 1 ) {
                     // User has 1 user role
                     $current_user_role = $current_user->roles[0]; // string
-                } else {
+                } elseif( count( $current_user->roles ) > 1 ) {
                     // User has 2 roles or more
                     $current_user_role = $current_user->roles; // array
+                } else {
+                    // Nothing to do here - no user roles
                 }
             }
 
