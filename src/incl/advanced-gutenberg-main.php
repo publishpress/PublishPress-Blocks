@@ -3378,6 +3378,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     $current_user_role = $current_user->roles; // array
                 } else {
                     // Nothing to do here - no user roles
+                    return false;
                 }
             }
 
