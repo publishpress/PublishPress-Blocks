@@ -3453,45 +3453,32 @@ if(!class_exists('AdvancedGutenbergMain')) {
                             array_push($advgb_blocks_user_roles['active_blocks'], $one_block['name']);
                         }
                     }
-
-                    /* Make sure core/legacy-widget is included as active - Since 2.11.6
-                     * If there is an scenario where core/widget-group is not saved as active block,
-                     * let's add to active_blocks here */
-                    if(!in_array('core/legacy-widget', $advgb_blocks_user_roles['active_blocks'])) {
-                        /* Remove from inactive blocks if is saved for the current user role.
-                         * The lines below won't save nothing in db, is just for execution on editor. */
-                        foreach ($advgb_blocks_user_roles['inactive_blocks'] as $key => $type) {
-                            // Fix by @igrginov - https://github.com/publishpress/PublishPress-Blocks/issues/1084
-                            if ($type === 'core/legacy-widget') {
-                                unset($advgb_blocks_user_roles['inactive_blocks'][$key]);
-                            }
-                        }
-                        /* Add to active blocks.
-                         * The lines below won't save nothing in db, is just for execution on editor. */
-                        array_push(
-                            $advgb_blocks_user_roles['active_blocks'],
-                            'core/legacy-widget'
-                        );
-                    }
                 }
 
                 return $advgb_blocks_user_roles;
             }
 
             // If advgb_blocks_user_roles option doesn't exists, then allow all blocks
-            if (!is_array($all_blocks)) {
+            if ( ! is_array( $all_blocks ) ) {
                 $all_blocks = array();
             } else {
-                foreach ($all_blocks as $block_key => $block_value) {
+                // Extract block name only and skip the other properties (title, icon, category)
+                foreach ( $all_blocks as $block_key => $block_value ) {
                     $all_blocks[$block_key] = $all_blocks[$block_key]['name'];
                 }
+
+                // Include Legacy Widget for execution; this is not saved in db
+                array_push( $all_blocks, 'core/legacy-widget' );
+
+                // Remove duplicated just in case
+                $all_blocks = array_unique( $all_blocks );
             }
 
-            /* Make sure core/legacy-widget is included as active - Since 2.11.6
-             * core/widget-group added - Since 3.1.4.2
+            /* Make sure specific blocks are included as active - Since 2.11.6
+             * core/widget-group added since 3.1.4.2
+             * core/legacy-widget removed since 3.1.5
              */
             $include_blocks = [
-                'core/legacy-widget',
                 'core/widget-group'
             ];
 

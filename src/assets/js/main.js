@@ -187,15 +187,13 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
         // Array of block names already available through wp.blocks.getBlockTypes()
         var force_deactivate_blocks = []; // 'advgb/container'
 
-        // Array of objects not available through wp.blocks.getBlockTypes()
-        // As example: the ones that loads only in Appearance > Widget
+        /* Blocks not available through wp.blocks.getBlockTypes()
+         * As example: the ones that loads only in Appearance > Widget
+         * and we don't allow to disable
+         *
+         * Removed 'core/legacy-widget' as forced active block - Since 3.1.5
+         */
         var force_activate_blocks = [
-            {
-              'name': 'core/legacy-widget',
-              'icon': 'block-default',
-              'title': 'Legacy Widget',
-              'category': 'widgets'
-             },
              {
                'name': 'core/widget-group',
                'icon': 'block-default',
@@ -203,9 +201,23 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
                'category': 'widgets'
              },
         ];
-
-        // Include force_activate_blocks in the blocks list
         force_activate_blocks.forEach(function (block) {
+            allBlocks.push(block);
+        });
+
+        /* Blocks not available through wp.blocks.getBlockTypes() - Since 3.1.5
+         * As example: the ones that loads only in Appearance > Widget 
+         * and we allow to enable/disable (different to force_activate_blocks var)
+         */
+        var include_blocks = [
+            {
+                'name': 'core/legacy-widget',
+                'icon': 'block-default',
+                'title': 'Legacy Widget',
+                'category': 'widgets'
+            }
+        ];
+        include_blocks.forEach(function (block) {
             allBlocks.push(block);
         });
 
@@ -277,6 +289,21 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
         });
 
         var list_blocks_names = [];
+
+        /* Remove duplicated blocks by block name, just in case - Since 3.1.5
+         * e.g. when Extended supported block is enabled, 'core/legacy-widget' 
+         * and 'core/widget-group' are duplicated.
+         */
+        var uniqueNames = [];
+        var i = listBlocks.length;
+        while ( i-- ) {
+            var name = listBlocks[i].name;
+            if( uniqueNames.includes( name ) ) {
+                listBlocks.splice( i, 1 );
+            } else {
+                uniqueNames.push( name );
+            }
+        }
 
         // Update blocks
         listBlocks.forEach(function (block) {
@@ -525,6 +552,8 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
         });
 
         var list_blocks_names = [];
+
+        // @TODO - Maybe remove duplicated blocks by block name? - Same as in advgbGetBlocksFeature()
 
         // Update blocks
         listBlocks.forEach(function (block) {
