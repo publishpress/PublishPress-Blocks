@@ -3368,16 +3368,75 @@ if(!class_exists('AdvancedGutenbergMain')) {
                  * so we set 'administrator' as role */
                 $current_user_role = 'administrator';
             } else {
-                $current_user      = wp_get_current_user();
-                $current_user_role = $current_user->roles[0];
+                $current_user = wp_get_current_user();
+                
+                if( count( $current_user->roles ) === 1 ) {
+                    // User has 1 user role
+                    $current_user_role = $current_user->roles[0]; // string
+                } elseif( count( $current_user->roles ) > 1 ) {
+                    // User has 2 roles or more
+                    $current_user_role = $current_user->roles; // array
+                } else {
+                    // Nothing to do here - no user roles
+                    return false;
+                }
             }
 
-            // All saved blocks (even the ones not detected by Block Access)
+            // All saved blocks (even the ones possibly not detected by Block Permissions)
             $all_blocks = get_option( 'advgb_blocks_list' );
 
-            // Get the array from advgb_blocks_user_roles option that match current user role
-            $advgb_blocks_user_roles = !empty( get_option('advgb_blocks_user_roles') ) ? get_option( 'advgb_blocks_user_roles' ) : [];
-            $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array)$advgb_blocks_user_roles[$current_user_role] : [];
+            // Get the array from advgb_blocks_user_roles with all the Block permissions roles
+            $advgb_blocks_user_roles = ! empty( get_option( 'advgb_blocks_user_roles' ) ) ? get_option( 'advgb_blocks_user_roles' ) : [];
+
+            // User has 1 user role - string
+            if( gettype( $current_user_role ) === 'string' ) {
+
+                // Get the array from advgb_blocks_user_roles option that match current user role
+                $advgb_blocks_user_roles = array_key_exists( $current_user_role, $advgb_blocks_user_roles ) ? (array) $advgb_blocks_user_roles[$current_user_role] : [];
+            } else {
+                
+                // User has 2 roles or more - array
+                $active_r_ = $inactive_r_ = [];
+                foreach( $current_user_role as $cur_ ) {
+                    
+                    // Get the array from advgb_blocks_user_roles option that match current user role
+                    if( array_key_exists( $cur_, $advgb_blocks_user_roles ) ) {
+
+                        $active_r_ = array_merge( 
+                            $active_r_, 
+                            (array) $advgb_blocks_user_roles[$cur_]['active_blocks'] 
+                        );
+                        $inactive_r_ = array_merge( 
+                            $inactive_r_, 
+                            (array) $advgb_blocks_user_roles[$cur_]['inactive_blocks'] 
+                        );
+                    }
+                }
+
+                // Remove duplicates
+                $active_r_ = array_unique( $active_r_ );
+                $inactive_r_ = array_unique( $inactive_r_ );
+
+                /* Remove active blocks if also exists as inactive in any of the assigned roles;
+                 * only blocks activated in all the assigned roles will remain as active.
+                 * 
+                 * Example:
+                 * 
+                 * User has "Lorem" and "Ipsum" roles  assigned
+                 * 
+                 * "Dolor block" is enabled for "Lorem" role but disabled for "Ipsum" role,
+                 * then "Dolor block" is set as inactive [X].
+                 *
+                 * "Dolor block" is enabled for "Lorem" and also for "Ipsum" role,
+                 * then "Dolor block" is set as active [✓].
+                 * */
+                $active_r_ = array_diff( $active_r_, $inactive_r_ );
+
+                $advgb_blocks_user_roles = [
+                    'active_blocks' => array_values( $active_r_ ),
+                    'inactive_blocks' => array_values( $inactive_r_ )
+                ];
+            }
 
             if(is_array($advgb_blocks_user_roles) && count($advgb_blocks_user_roles) > 0) {
 
@@ -3385,7 +3444,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     is_array($advgb_blocks_user_roles['active_blocks']) &&
                     is_array($advgb_blocks_user_roles['inactive_blocks'])
                 ) {
-
                     // Include the blocks stored in advgb_blocks_list option but not detected by Block Access
                     foreach($all_blocks as $one_block) {
                         if(
