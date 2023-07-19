@@ -3499,10 +3499,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             /* Make sure specific blocks are included as active - Since 2.11.6
-             * core/widget-group added - Since 3.1.4.2
+             * core/widget-group added since 3.1.4.2
+             * core/legacy-widget removed since 3.1.5
              */
             $include_blocks = [
-                //'core/legacy-widget', // Removed in 3.1.5
                 'core/widget-group'
             ];
 
