@@ -191,7 +191,7 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
          * As example: the ones that loads only in Appearance > Widget
          * and we don't allow to disable
          *
-         * Removed 'core/legacy-widget' as forced active block - Since 3.1.4.3
+         * Removed 'core/legacy-widget' as forced active block - Since 3.1.5
          */
         var force_activate_blocks = [
              {
@@ -205,7 +205,7 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
             allBlocks.push(block);
         });
 
-        /* Blocks not available through wp.blocks.getBlockTypes() - Since 3.1.4.3
+        /* Blocks not available through wp.blocks.getBlockTypes() - Since 3.1.5
          * As example: the ones that loads only in Appearance > Widget 
          * and we allow to enable/disable (different to force_activate_blocks var)
          */
@@ -292,7 +292,7 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
 
         console.log(listBlocks.length);
 
-        /* Remove duplicated blocks by block name, just in case - Since 3.1.4.3
+        /* Remove duplicated blocks by block name, just in case - Since 3.1.5
          * e.g. when Extended supported block is enabled, 'core/legacy-widget' 
          * and 'core/widget-group' are duplicated.
          */
