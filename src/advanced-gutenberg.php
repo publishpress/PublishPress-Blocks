@@ -3,13 +3,14 @@
  * Plugin Name: PublishPress Blocks
  * Plugin URI: https://publishpress.com/blocks/
  * Description: PublishPress Blocks has everything you need to build professional websites with the Gutenberg editor.
- * Version: 3.1.4.3
- * Tested up to: 6.2.2
+ * Version: 3.1.5
  * Author: PublishPress
  * Author URI: https://publishpress.com/
- * License: GPL2
  * Text Domain: advanced-gutenberg
  * Domain Path: /languages
+ * Requires at least: 5.5
+ * Requires PHP: 7.2.5
+ * License: GPL2
  */
 
 /**
@@ -38,8 +39,16 @@
 
 defined('ABSPATH') || die;
 
-// If the PHP version is not compatible, terminate the plugin execution.
-if ( ! include_once __DIR__ . '/incl/check-php-version.php' ) {
+global $wp_version;
+
+$min_php_version = '7.2.5';
+$min_wp_version  = '5.5';
+
+// If the PHP or WP version is not compatible, terminate the plugin execution.
+$invalid_php_version    = version_compare(phpversion(), $min_php_version, '<');
+$invalid_wp_version     = version_compare($wp_version, $min_wp_version, '<');
+
+if ($invalid_php_version || $invalid_wp_version) {
     return;
 }
 
@@ -61,7 +70,7 @@ if (class_exists('PublishPressInstanceProtection\\Config')) {
 if (! defined('ADVANCED_GUTENBERG_LOADED')) {
 
     if (! defined('ADVANCED_GUTENBERG_VERSION')) {
-        define('ADVANCED_GUTENBERG_VERSION', '3.1.4.3');
+        define('ADVANCED_GUTENBERG_VERSION', '3.1.5');
     }
 
     if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {

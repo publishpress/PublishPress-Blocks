@@ -1,9 +1,9 @@
 === Gutenberg Blocks - PublishPress Blocks Gutenberg Editor Plugin ===
 Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks, accordion block, gallery block, slider block, tabs block, maps block, block controls
-Requires at least: 5.0
+Requires at least: 5.5
 Tested up to: 6.2.2
-Stable tag: 3.1.4.3
+Stable tag: 3.1.5
 Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -270,7 +270,15 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.4.3 - 15 May 2023 =
+= 3.1.5 - 25 Jul 2023 =
+  * Fix: post-sidebar.js enqueue in post and page edit only
+  * Fix: lightbox should apply to galleries when "Link to" is "media file"
+  * Fix: Block permissions when user has more than one role bug
+  * Add: Allow to enable/disable Legacy Widget through Block permissions
+  * Change: Set WordPress 5.5 as minimum version
+  * Change: PHP and WP Minimum Version Configuration
+
+= 3.1.4.3 - 16 May 2023 =
   * Add: Support for new dynamic meta_key for Series in Content Display block
 
 = 3.1.4.2 - 12 Apr 2023 =
