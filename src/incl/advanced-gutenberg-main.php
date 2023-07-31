@@ -5032,12 +5032,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgb_AdvancedImageStyles($blockAttrs)
         {
+            $style_html = '';
+
             if (array_key_exists('blockIDX', $blockAttrs)) {
                 $block_class     = esc_html($blockAttrs['blockIDX']);
                 $default_opacity = isset($blockAttrs['defaultOpacity']) ? esc_html($blockAttrs['defaultOpacity']) : 40;
                 $hover_opacity   = isset($blockAttrs['overlayOpacity']) ? esc_html($blockAttrs['overlayOpacity']) : 20;
 
-                $style_html  = '.' . $block_class . '.advgb-image-block .advgb-image-overlay{';
+                $style_html .= '.' . $block_class . '.advgb-image-block .advgb-image-overlay{';
                 $style_html .= 'opacity:' . ($default_opacity / 100) . ' !important;';
                 $style_html .= '}';
 
@@ -5058,11 +5060,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgb_AdvancedTestimonialStyles($blockAttrs)
         {
+            $style_html = '';
+
             if (array_key_exists('pid', $blockAttrs)) {
                 $block_id   = $blockAttrs['pid'];
                 $dots_color = isset($blockAttrs['sliderDotsColor']) ? $blockAttrs['sliderDotsColor'] : '#000';
 
-                $style_html  = '#' . $block_id . ' .slick-dots li button:before{';
+                $style_html .= '#' . $block_id . ' .slick-dots li button:before{';
                 $style_html .= 'color:' . $dots_color . ' !important;';
                 $style_html .= '}';
             }
