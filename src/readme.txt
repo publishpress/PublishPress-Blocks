@@ -270,6 +270,9 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
+= 3.1.6 - 1 Aug 2023 =
+  * Fix: Undeclared $style_html variable
+  
 = 3.1.5 - 25 Jul 2023 =
   * Fix: post-sidebar.js enqueue in post and page edit only
   * Fix: lightbox should apply to galleries when "Link to" is "media file"
