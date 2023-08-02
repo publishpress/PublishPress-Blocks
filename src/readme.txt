@@ -270,8 +270,9 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.1.6 - 1 Aug 2023 =
+= 3.1.6 - 2 Aug 2023 =
   * Fix: Undeclared $style_html variable
+  * Change: "Reusable Blocks" admin submenu to "Patterns"
   
 = 3.1.5 - 25 Jul 2023 =
   * Fix: post-sidebar.js enqueue in post and page edit only
