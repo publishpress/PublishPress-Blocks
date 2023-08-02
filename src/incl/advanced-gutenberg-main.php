@@ -4375,7 +4375,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         wp_enqueue_script(
                             'advgb_testimonial_frontend',
                             plugins_url( 'assets/blocks/testimonial/frontend.js', dirname( __FILE__ ) ),
-                            [],
+                            ['jquery'],
                             ADVANCED_GUTENBERG_VERSION
                         );
 
