@@ -1839,7 +1839,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 ],
                 [
                     'slug' => 'edit.php?post_type=wp_block',
-                    'title' => esc_html__( 'Patterns', 'advanced-gutenberg' ),
+                    'title' => esc_html__( 'Synced Patterns', 'advanced-gutenberg' ),
                     'callback' => '',
                     'order' => 7,
                     'enabled' => $this->settingIsEnabled( 'reusable_blocks' )

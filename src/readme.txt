@@ -273,7 +273,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 = 3.1.6 - 10 Aug 2023 =
   * Fix: Undeclared $style_html variable
   * Fix: Add jQuery as dependency when enqueueing frontend.js in frontend for Testimonial block
-  * Change: "Reusable Blocks" admin submenu to "Patterns"
+  * Change: "Reusable Blocks" admin submenu to "Synced Patterns"
   
 = 3.1.5 - 25 Jul 2023 =
   * Fix: post-sidebar.js enqueue in post and page edit only
