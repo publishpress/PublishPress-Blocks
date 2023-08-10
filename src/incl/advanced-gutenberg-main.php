@@ -1839,7 +1839,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 ],
                 [
                     'slug' => 'edit.php?post_type=wp_block',
-                    'title' => esc_html__( 'Reusable Blocks', 'advanced-gutenberg' ),
+                    'title' => esc_html__( 'Synced Patterns', 'advanced-gutenberg' ),
                     'callback' => '',
                     'order' => 7,
                     'enabled' => $this->settingIsEnabled( 'reusable_blocks' )
@@ -4375,7 +4375,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                         wp_enqueue_script(
                             'advgb_testimonial_frontend',
                             plugins_url( 'assets/blocks/testimonial/frontend.js', dirname( __FILE__ ) ),
-                            [],
+                            ['jquery'],
                             ADVANCED_GUTENBERG_VERSION
                         );
 
@@ -5032,12 +5032,14 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgb_AdvancedImageStyles($blockAttrs)
         {
+            $style_html = '';
+
             if (array_key_exists('blockIDX', $blockAttrs)) {
                 $block_class     = esc_html($blockAttrs['blockIDX']);
                 $default_opacity = isset($blockAttrs['defaultOpacity']) ? esc_html($blockAttrs['defaultOpacity']) : 40;
                 $hover_opacity   = isset($blockAttrs['overlayOpacity']) ? esc_html($blockAttrs['overlayOpacity']) : 20;
 
-                $style_html  = '.' . $block_class . '.advgb-image-block .advgb-image-overlay{';
+                $style_html .= '.' . $block_class . '.advgb-image-block .advgb-image-overlay{';
                 $style_html .= 'opacity:' . ($default_opacity / 100) . ' !important;';
                 $style_html .= '}';
 
@@ -5058,11 +5060,13 @@ if(!class_exists('AdvancedGutenbergMain')) {
          */
         public function advgb_AdvancedTestimonialStyles($blockAttrs)
         {
+            $style_html = '';
+
             if (array_key_exists('pid', $blockAttrs)) {
                 $block_id   = $blockAttrs['pid'];
                 $dots_color = isset($blockAttrs['sliderDotsColor']) ? $blockAttrs['sliderDotsColor'] : '#000';
 
-                $style_html  = '#' . $block_id . ' .slick-dots li button:before{';
+                $style_html .= '#' . $block_id . ' .slick-dots li button:before{';
                 $style_html .= 'color:' . $dots_color . ' !important;';
                 $style_html .= '}';
             }
