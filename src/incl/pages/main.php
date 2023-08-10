@@ -56,9 +56,9 @@ defined( 'ABSPATH' ) || die;
                         ],
                         [
                             'name' => 'reusable_blocks',
-                            'title' => __( 'Patterns', 'advanced-gutenberg' ),
+                            'title' => __( 'Synced Patterns', 'advanced-gutenberg' ),
                             'description' => __(
-                                'This feature enables a submenu to manage your Patterns.', 'advanced-gutenberg'
+                                'This feature enables a submenu to manage your Synced Patterns.', 'advanced-gutenberg'
                             ),
                             'default' => 1,
                             'access' => true
