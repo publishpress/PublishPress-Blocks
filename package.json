@@ -5,9 +5,9 @@
   "scripts": {
     "build_react_dev": "webpack --mode development --watch",
     "build_react_prod": "webpack --mode production",
-    "compile_css": "node-sass --output-style compressed src/assets/scss/ --output=src/assets/css/ --watch",
-    "minify_js_main": "uglifyjs src/assets/js/main.js --output src/assets/js/main.min.js",
-    "minify_js_settings": "uglifyjs src/assets/js/settings.js --output src/assets/js/settings.min.js",
+    "compile_css": "node-sass --output-style compressed assets/scss/ --output=assets/css/ --watch",
+    "minify_js_main": "uglifyjs assets/js/main.js --output assets/js/main.min.js",
+    "minify_js_settings": "uglifyjs assets/js/settings.js --output assets/js/settings.min.js",
     "json_translations": "./json_translations.sh"
   },
   "devDependencies": {

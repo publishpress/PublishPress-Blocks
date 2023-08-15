@@ -3,7 +3,7 @@ const zip   = require("gulp-zip");
 
 function bundle() {
     return gulp.src([
-        "src/**",
+        "**",
         "!.git/**",
         "!.idea/**",
         "!bundled/**",
@@ -17,12 +17,12 @@ function bundle() {
         "!package.json",
         "!README.md",
         "!webpack.config.js",
-        "!src/composer.json",
-        "!src/composer.lock",
-        "!src/assets/**/*.jsx",
-        "!src/assets/scss/**",
-        "!src/assets/js/main.js",
-        "!src/assets/js/settings.js",
+        "!composer.json",
+        "!composer.lock",
+        "!assets/**/*.jsx",
+        "!assets/scss/**",
+        "!assets/js/main.js",
+        "!assets/js/settings.js",
     ])
     .pipe(zip('advanced-gutenberg.zip'))
     .pipe(gulp.dest("bundled"));

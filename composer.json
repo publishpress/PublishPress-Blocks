@@ -1,4 +1,25 @@
 {
+    "name": "publishpress/publishpress-blocks",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "description": "",
+    "homepage": "https://publishpress.com/",
+    "authors": [
+        {
+            "name": "PublishPress",
+            "email": "help@publishpress.com"
+        }
+    ],
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=7.2.5"
+    },
     "require-dev": {
         "automattic/vipwpcs": "^2.3",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
