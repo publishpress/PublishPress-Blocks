@@ -7,15 +7,17 @@ namespace Composer\Autoload;
 class ComposerStaticInitPPBlocks
 {
     public static $files = array (
+        '3b1e1688e889525de91ac2456aba9efd' => __DIR__ . '/..' . '/publishpress/psr-container/lib/include.php',
+        '24b27b1b9a32bf58eda571c3e5ae3480' => __DIR__ . '/..' . '/publishpress/pimple-pimple/lib/include.php',
         '0078757fbd019a5f202f2be6585c3626' => __DIR__ . '/..' . '/publishpress/wordpress-banners/BannersMain.php',
         '41c664bd04a95c2d6a2f2a3e00f06593' => __DIR__ . '/..' . '/publishpress/wordpress-reviews/ReviewsController.php',
+        'a61bc28a742b9f9f2fd5ef4d2d1e2037' => __DIR__ . '/..' . '/publishpress/wordpress-version-notices/src/include.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (
             'Psr\\Container\\' => 14,
-            'PPVersionNotices\\' => 17,
         ),
     );
 
@@ -23,20 +25,6 @@ class ComposerStaticInitPPBlocks
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
-        ),
-        'PPVersionNotices\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/publishpress/wordpress-version-notices/src',
-        ),
-    );
-
-    public static $prefixesPsr0 = array (
-        'P' => 
-        array (
-            'Pimple' => 
-            array (
-                0 => __DIR__ . '/..' . '/pimple/pimple/src',
-            ),
         ),
     );
 
@@ -49,7 +37,6 @@ class ComposerStaticInitPPBlocks
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitPPBlocks::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitPPBlocks::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitPPBlocks::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitPPBlocks::$classMap;
 
         }, null, ClassLoader::class);
