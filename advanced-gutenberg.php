@@ -120,27 +120,6 @@ if (! defined('ADVANCED_GUTENBERG_LOADED')) {
             }
         }
     }
-    
-    /*if(
-        file_exists(__DIR__ . '/lib/vendor/autoload.php')
-        && !defined('ADVANCED_GUTENBERG_LIB_VENDOR_LOADED')
-        && is_admin()
-        && !class_exists('PublishPress\WordPressReviews\ReviewsController')
-    ) {
-        require_once __DIR__ . '/lib/vendor/autoload.php';
-        // Ask for review
-        if( file_exists( __DIR__ . '/review/review-request.php' ) ) {
-            require_once __DIR__ . '/review/review-request.php';
-        }
-
-        // Display ads for Pro version
-        if ( ! defined( 'PP_VERSION_NOTICES_LOADED' ) ) {
-            $noticesPath = __DIR__ . '/lib/vendor/publishpress/wordpress-version-notices/includes.php';
-            if ( file_exists( $noticesPath ) ) {
-                require_once $noticesPath;
-            }
-        }
-    }*/
 
     // Code shared with Pro version
     require_once __DIR__ . '/init.php';
