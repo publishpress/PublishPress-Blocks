@@ -19,15 +19,6 @@
             'reference' => NULL,
             'dev_requirement' => false,
         ),
-        'psr/container' => array(
-            'pretty_version' => '2.0.0',
-            'version' => '2.0.0.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../psr/container',
-            'aliases' => array(),
-            'reference' => '68f5200c33f18c018db17eb869d4b0f97da17cad',
-            'dev_requirement' => false,
-        ),
         'publishpress/instance-protection' => array(
             'pretty_version' => '2.0.1',
             'version' => '2.0.1.0',

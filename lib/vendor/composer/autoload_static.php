@@ -14,20 +14,6 @@ class ComposerStaticInitPPBlocks
         'a61bc28a742b9f9f2fd5ef4d2d1e2037' => __DIR__ . '/..' . '/publishpress/wordpress-version-notices/src/include.php',
     );
 
-    public static $prefixLengthsPsr4 = array (
-        'P' => 
-        array (
-            'Psr\\Container\\' => 14,
-        ),
-    );
-
-    public static $prefixDirsPsr4 = array (
-        'Psr\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/container/src',
-        ),
-    );
-
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
@@ -35,8 +21,6 @@ class ComposerStaticInitPPBlocks
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitPPBlocks::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitPPBlocks::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInitPPBlocks::$classMap;
 
         }, null, ClassLoader::class);
