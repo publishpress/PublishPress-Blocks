@@ -16,6 +16,7 @@ function bundle() {
         "!package-lock.json",
         "!package.json",
         "!README.md",
+        "!report.csv",
         "!webpack.config.js",
         "!composer.json",
         "!composer.lock",
@@ -23,6 +24,8 @@ function bundle() {
         "!assets/scss/**",
         "!assets/js/main.js",
         "!assets/js/settings.js",
+        "!json_translations.sh",
+        "!json_translations.sh.dist"
     ])
     .pipe(zip('advanced-gutenberg.zip'))
     .pipe(gulp.dest("bundled"));
