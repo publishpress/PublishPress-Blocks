@@ -67,14 +67,15 @@ if (class_exists('PublishPressInstanceProtection\\Config')) {
     $pluginChecker = new PublishPressInstanceProtection\InstanceChecker($pluginCheckerConfig);
 }
 
-if (! defined('ADVANCED_GUTENBERG_LOADED')) {
+if ( ! defined( 'ADVANCED_GUTENBERG_LOADED' ) ) {
+    define( 'ADVANCED_GUTENBERG_LOADED', true );
 
-    if (! defined('ADVANCED_GUTENBERG_VERSION')) {
-        define('ADVANCED_GUTENBERG_VERSION', '3.1.6');
+    if ( ! defined( 'ADVANCED_GUTENBERG_VERSION' ) ) {
+        define( 'ADVANCED_GUTENBERG_VERSION', '3.1.6' );
     }
 
-    if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
-        define('ADVANCED_GUTENBERG_PLUGIN', __FILE__);
+    if ( ! defined( 'ADVANCED_GUTENBERG_PLUGIN' ) ) {
+        define( 'ADVANCED_GUTENBERG_PLUGIN', __FILE__ );
     }
 
     if ( ! defined( 'ADVANCED_GUTENBERG_BASE_PATH' ) ) {
@@ -97,32 +98,34 @@ if (! defined('ADVANCED_GUTENBERG_LOADED')) {
 
     // Internal Vendor and Ask-for-Review
     $autoloadFilePath = ADVANCED_GUTENBERG_LIB_VENDOR_PATH . '/autoload.php';
-    if ( ! class_exists('ComposerAutoloaderInitPPBlocks' )
+    if ( ! defined( 'ADVANCED_GUTENBERG_LIB_VENDOR_LOADED' )
+        && ! class_exists('ComposerAutoloaderInitPPBlocks' )
         && is_file( $autoloadFilePath )
         && is_readable( $autoloadFilePath )
-        && ! defined( 'ADVANCED_GUTENBERG_LIB_VENDOR_LOADED' )
-        && is_admin()
-        && ! class_exists( 'PublishPress\WordPressReviews\ReviewsController' )
     ) {
         require_once $autoloadFilePath;
         define( 'ADVANCED_GUTENBERG_LIB_VENDOR_LOADED', true );
-
-        // Ask for review
-        if( file_exists( __DIR__ . '/review/review-request.php' ) ) {
-            require_once __DIR__ . '/review/review-request.php';
-        }
-
-        // Display ads for Pro version
-        if ( ! defined( 'PP_VERSION_NOTICES_LOADED' ) ) {
-            $noticesPath = __DIR__ . '/lib/vendor/publishpress/wordpress-version-notices/includes.php';
-            if ( file_exists( $noticesPath ) ) {
-                require_once $noticesPath;
-            }
-        }
     }
 
-    // Code shared with Pro version
-    require_once __DIR__ . '/init.php';
+    add_action( 'plugins_loaded', function () {
+        if ( is_admin()
+            && ! class_exists( 'PublishPress\WordPressReviews\ReviewsController' )
+        ) {
+            // Ask for review
+            if ( file_exists( __DIR__ . '/review/review-request.php' ) ) {
+                require_once __DIR__ . '/review/review-request.php';
+            }
 
-    define('ADVANCED_GUTENBERG_LOADED', true);
+            // Display ads for Pro version
+            if ( ! defined( 'PP_VERSION_NOTICES_LOADED' ) ) {
+                $noticesPath = __DIR__ . '/lib/vendor/publishpress/wordpress-version-notices/includes.php';
+                if ( file_exists( $noticesPath ) ) {
+                    require_once $noticesPath;
+                }
+            }
+        }
+
+        // Code shared with Pro version
+        require_once __DIR__ . '/init.php';
+    }, -10 );
 }

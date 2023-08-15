@@ -147,7 +147,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             add_filter('rest_pre_dispatch', ['PublishPress\Blocks\Controls', 'removeAttributes'], 10, 3);
             add_action('wp_enqueue_scripts', array($this, 'registerStylesScriptsFrontend'));
             add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
-            add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
+            add_action('plugins_loaded', array($this, 'advgbBlockLoader'), 10);
             add_action('rest_api_init', array($this, 'registerRestAPI'));
             add_action('admin_print_scripts', array($this, 'disableAllAdminNotices')); // Disable all admin notice for page belong to plugin
             add_action('wp_login_failed', array($this, 'handleLoginFailed'));
@@ -166,7 +166,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_action('admin_footer', array($this, 'initBlocksList'));
                 add_action('admin_menu', array($this, 'registerMainMenu'));
                 add_action('admin_menu', array($this, 'registerBlockConfigPage'));
-                add_action( 'plugins_loaded', [$this, 'upgradeProNotices'] );
+                add_action( 'plugins_loaded', [$this, 'upgradeProNotices'], 10 );
                 add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
                 add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
                 add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));

@@ -41,5 +41,5 @@ if( !class_exists('AdvancedGutenberg_Reviews') ) {
 	    $review = new AdvancedGutenberg_Reviews;
 	    $review->init();
 	}
-	add_action('plugins_loaded', 'advanced_gutenberg_ask_for_review');
+	add_action('plugins_loaded', 'advanced_gutenberg_ask_for_review', 10);
 }
