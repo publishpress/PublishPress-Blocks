@@ -1,6 +1,7 @@
 .idea/
-bundled/
-vendor/
+/bundled
+/vendor
+/lib/**/.git
 node_modules/
 .DS_Store*
 report.csv
