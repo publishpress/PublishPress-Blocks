@@ -97,14 +97,14 @@ if ( ! defined( 'ADVANCED_GUTENBERG_LOADED' ) ) {
     }
 
     // Internal Vendor and Ask-for-Review
-    $autoloadFilePath = ADVANCED_GUTENBERG_LIB_VENDOR_PATH . '/autoload.php';
-    if ( ! defined( 'ADVANCED_GUTENBERG_LIB_VENDOR_LOADED' )
-        && ! class_exists('ComposerAutoloaderInitPPBlocks' )
-        && is_file( $autoloadFilePath )
-        && is_readable( $autoloadFilePath )
-    ) {
-        require_once $autoloadFilePath;
-        define( 'ADVANCED_GUTENBERG_LIB_VENDOR_LOADED', true );
+    if ( ! defined( 'ADVANCED_GUTENBERG_PRO_LIB_VENDOR_PATH' ) ) {
+        $autoloadFilePath = ADVANCED_GUTENBERG_LIB_VENDOR_PATH . '/autoload.php';
+        if ( ! class_exists('ComposerAutoloaderInitPPBlocks' )
+            && is_file( $autoloadFilePath )
+            && is_readable( $autoloadFilePath )
+        ) {
+            require_once $autoloadFilePath;
+        }
     }
 
     add_action( 'plugins_loaded', function () {
