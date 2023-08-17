@@ -63,4 +63,5 @@
 - webpack.config.js
 - webpack.mix.js
 - gulpfile.js
+- json_translations.sh
 - json_translations.sh.dist
