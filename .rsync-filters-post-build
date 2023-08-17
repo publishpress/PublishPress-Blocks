@@ -1,0 +1,5 @@
+- /**/composer.json
+- /**/composer.lock
+- /vendor
+- .rsync-filters-pre-build
+- .rsync-filters-pro-build
