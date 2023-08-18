@@ -32,6 +32,7 @@
         "build": "ppbuild build",
         "build:dir": "ppbuild build-dir",
         "build:clean": "ppbuild clean",
+        "build:js-translations": "json_translations.sh",
         "get-version": "ppbuild version",
         "check:longpath": "longpath .",
         "pre-autoload-dump": "composer dumpautoload --working-dir=./lib",
