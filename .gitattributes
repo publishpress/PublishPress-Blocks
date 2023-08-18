@@ -40,6 +40,7 @@ builder.yml export-ignore
 circle.yml export-ignore
 codeception.yml export-ignore
 docker-compose.yml export-ignore
+gulpfile.js export-ignore
 jest.config.js export-ignore
 jest.config.ts export-ignore
 jsconfig.json export-ignore
@@ -55,8 +56,8 @@ phpmd.xml export-ignore
 phpunit.xml export-ignore
 phpunit.xml.dist export-ignore
 psalm.xml export-ignore
-webpack.config.js export-ignore
-wp-cli.local.yml export-ignore
 webpack.common.js export-ignore
+webpack.config.js export-ignore
 webpack.dev.js export-ignore
 webpack.prod.js export-ignore
+wp-cli.local.yml export-ignore
