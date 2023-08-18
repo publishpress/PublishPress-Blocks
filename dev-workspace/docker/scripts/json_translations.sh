@@ -1,6 +1,4 @@
-# 1. Duplicate this file
-# 2. Change filename to: json_translations.sh
-# 3. Add permissions to the file: chmod +x ./json_translations.sh
+#!/usr/bin/env bash
 
 locales=( es_MX es_ES it_IT fr_FR nb_NO da_DK de_DE ja pl_PL ro_RO zh_CN )
 
