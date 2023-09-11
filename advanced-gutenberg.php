@@ -37,7 +37,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-defined('ABSPATH') || die;
+defined( 'ABSPATH' ) || die;
 
 global $wp_version;
 
@@ -45,87 +45,87 @@ $min_php_version = '7.2.5';
 $min_wp_version  = '5.5';
 
 // If the PHP or WP version is not compatible, terminate the plugin execution.
-$invalid_php_version    = version_compare(phpversion(), $min_php_version, '<');
-$invalid_wp_version     = version_compare($wp_version, $min_wp_version, '<');
+$invalid_php_version = version_compare( phpversion(), $min_php_version, '<' );
+$invalid_wp_version  = version_compare( $wp_version, $min_wp_version, '<' );
 
-if ($invalid_php_version || $invalid_wp_version) {
-    return;
+if ( $invalid_php_version || $invalid_wp_version ) {
+	return;
 }
 
 $includeFilebRelativePath = '/publishpress/instance-protection/include.php';
-if (file_exists(__DIR__ . '/lib/vendor' . $includeFilebRelativePath)) {
-    require_once __DIR__ . '/lib/vendor' . $includeFilebRelativePath;
-} else if (defined('ADVANCED_GUTENBERG_LIB_VENDOR_PATH') && file_exists(ADVANCED_GUTENBERG_LIB_VENDOR_PATH . $includeFilebRelativePath)) {
-    require_once ADVANCED_GUTENBERG_LIB_VENDOR_PATH . $includeFilebRelativePath;
+if ( file_exists( __DIR__ . '/lib/vendor' . $includeFilebRelativePath ) ) {
+	require_once __DIR__ . '/lib/vendor' . $includeFilebRelativePath;
+} elseif ( defined( 'ADVANCED_GUTENBERG_LIB_VENDOR_PATH' ) && file_exists( ADVANCED_GUTENBERG_LIB_VENDOR_PATH . $includeFilebRelativePath ) ) {
+	require_once ADVANCED_GUTENBERG_LIB_VENDOR_PATH . $includeFilebRelativePath;
 }
 
-if (class_exists('PublishPressInstanceProtection\\Config')) {
-    $pluginCheckerConfig = new PublishPressInstanceProtection\Config();
-    $pluginCheckerConfig->pluginSlug = 'advanced-gutenberg';
-    $pluginCheckerConfig->pluginName = 'PublishPress Blocks';
+if ( class_exists( 'PublishPressInstanceProtection\\Config' ) ) {
+	$pluginCheckerConfig             = new PublishPressInstanceProtection\Config();
+	$pluginCheckerConfig->pluginSlug = 'advanced-gutenberg';
+	$pluginCheckerConfig->pluginName = 'PublishPress Blocks';
 
-    $pluginChecker = new PublishPressInstanceProtection\InstanceChecker($pluginCheckerConfig);
+	$pluginChecker = new PublishPressInstanceProtection\InstanceChecker( $pluginCheckerConfig );
 }
 
 if ( ! defined( 'ADVANCED_GUTENBERG_LOADED' ) ) {
-    define( 'ADVANCED_GUTENBERG_LOADED', true );
+	define( 'ADVANCED_GUTENBERG_LOADED', true );
 
-    if ( ! defined( 'ADVANCED_GUTENBERG_VERSION' ) ) {
-        define( 'ADVANCED_GUTENBERG_VERSION', '3.1.6' );
-    }
+	if ( ! defined( 'ADVANCED_GUTENBERG_VERSION' ) ) {
+		define( 'ADVANCED_GUTENBERG_VERSION', '3.1.6' );
+	}
 
-    if ( ! defined( 'ADVANCED_GUTENBERG_PLUGIN' ) ) {
-        define( 'ADVANCED_GUTENBERG_PLUGIN', __FILE__ );
-    }
+	if ( ! defined( 'ADVANCED_GUTENBERG_PLUGIN' ) ) {
+		define( 'ADVANCED_GUTENBERG_PLUGIN', __FILE__ );
+	}
 
-    if ( ! defined( 'ADVANCED_GUTENBERG_BASE_PATH' ) ) {
-        define( 'ADVANCED_GUTENBERG_BASE_PATH', __DIR__ );
-    }
+	if ( ! defined( 'ADVANCED_GUTENBERG_BASE_PATH' ) ) {
+		define( 'ADVANCED_GUTENBERG_BASE_PATH', __DIR__ );
+	}
 
-    /**
-     * @since 3.2.0
-     */
-    if ( ! defined( 'ADVANCED_GUTENBERG_LIB_VENDOR_PATH' ) ) {
-        define( 'ADVANCED_GUTENBERG_LIB_VENDOR_PATH', ADVANCED_GUTENBERG_BASE_PATH . '/lib/vendor' );
-    }
+	/**
+	 * @since 3.2.0
+	 */
+	if ( ! defined( 'ADVANCED_GUTENBERG_LIB_VENDOR_PATH' ) ) {
+		define( 'ADVANCED_GUTENBERG_LIB_VENDOR_PATH', ADVANCED_GUTENBERG_BASE_PATH . '/lib/vendor' );
+	}
 
-    /**
-     * @deprecated 3.2.0 Use ADVANCED_GUTENBERG_LIB_VENDOR_PATH instead.
-     */
-    if ( ! defined( 'ADVANCED_GUTENBERG_VENDOR_PATH' ) ) {
-        define( 'ADVANCED_GUTENBERG_VENDOR_PATH', ADVANCED_GUTENBERG_LIB_VENDOR_PATH );
-    }
+	/**
+	 * @deprecated 3.2.0 Use ADVANCED_GUTENBERG_LIB_VENDOR_PATH instead.
+	 */
+	if ( ! defined( 'ADVANCED_GUTENBERG_VENDOR_PATH' ) ) {
+		define( 'ADVANCED_GUTENBERG_VENDOR_PATH', ADVANCED_GUTENBERG_LIB_VENDOR_PATH );
+	}
 
-    // Internal Vendor and Ask-for-Review
-    if ( ! defined( 'ADVANCED_GUTENBERG_PRO_LIB_VENDOR_PATH' ) ) {
-        $autoloadFilePath = ADVANCED_GUTENBERG_LIB_VENDOR_PATH . '/autoload.php';
-        if ( ! class_exists('ComposerAutoloaderInitPPBlocks' )
-            && is_file( $autoloadFilePath )
-            && is_readable( $autoloadFilePath )
-        ) {
-            require_once $autoloadFilePath;
-        }
-    }
+	// Internal Vendor and Ask-for-Review
+	if ( ! defined( 'ADVANCED_GUTENBERG_PRO_LIB_VENDOR_PATH' ) ) {
+		$autoloadFilePath = ADVANCED_GUTENBERG_LIB_VENDOR_PATH . '/autoload.php';
+		if ( ! class_exists( 'ComposerAutoloaderInitPPBlocks' )
+		     && is_file( $autoloadFilePath )
+		     && is_readable( $autoloadFilePath )
+		) {
+			require_once $autoloadFilePath;
+		}
+	}
 
-    add_action( 'plugins_loaded', function () {
-        if ( is_admin()
-            && ! class_exists( 'PublishPress\WordPressReviews\ReviewsController' )
-        ) {
-            // Ask for review
-            if ( file_exists( __DIR__ . '/review/review-request.php' ) ) {
-                require_once __DIR__ . '/review/review-request.php';
-            }
+	add_action( 'plugins_loaded', function () {
+		if ( is_admin()
+		     && ! class_exists( 'PublishPress\WordPressReviews\ReviewsController' )
+		) {
+			// Ask for review
+			if ( file_exists( __DIR__ . '/review/review-request.php' ) ) {
+				require_once __DIR__ . '/review/review-request.php';
+			}
 
-            // Display ads for Pro version
-            if ( ! defined( 'PP_VERSION_NOTICES_LOADED' ) ) {
-                $noticesPath = __DIR__ . '/lib/vendor/publishpress/wordpress-version-notices/includes.php';
-                if ( file_exists( $noticesPath ) ) {
-                    require_once $noticesPath;
-                }
-            }
-        }
+			// Display ads for Pro version
+			if ( ! defined( 'PP_VERSION_NOTICES_LOADED' ) ) {
+				$noticesPath = __DIR__ . '/lib/vendor/publishpress/wordpress-version-notices/includes.php';
+				if ( file_exists( $noticesPath ) ) {
+					require_once $noticesPath;
+				}
+			}
+		}
 
-        // Code shared with Pro version
-        require_once __DIR__ . '/init.php';
-    }, -10 );
+		// Code shared with Pro version
+		require_once __DIR__ . '/init.php';
+	}, - 10 );
 }
