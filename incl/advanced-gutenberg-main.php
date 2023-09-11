@@ -4094,7 +4094,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				if ( isset( $recaptcha_config['recaptcha_site_key'] ) && $recaptcha_config['recaptcha_site_key'] ) {
 					wp_enqueue_script(
 						'advgb_recaptcha_init_js',
-						ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/recaptcha.j)
+						ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/recaptcha.js'
 					);
 
 					wp_localize_script( 'advgb_recaptcha_init_js', 'advgbGRC', array(
