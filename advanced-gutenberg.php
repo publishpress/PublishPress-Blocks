@@ -52,11 +52,11 @@ if ( $invalid_php_version || $invalid_wp_version ) {
 	return;
 }
 
-$includeFilebRelativePath = '/publishpress/instance-protection/include.php';
-if ( file_exists( __DIR__ . '/lib/vendor' . $includeFilebRelativePath ) ) {
-	require_once __DIR__ . '/lib/vendor' . $includeFilebRelativePath;
-} elseif ( defined( 'ADVANCED_GUTENBERG_LIB_VENDOR_PATH' ) && file_exists( ADVANCED_GUTENBERG_LIB_VENDOR_PATH . $includeFilebRelativePath ) ) {
-	require_once ADVANCED_GUTENBERG_LIB_VENDOR_PATH . $includeFilebRelativePath;
+$includeFileRelativePath = '/publishpress/instance-protection/include.php';
+if ( file_exists( __DIR__ . '/lib/vendor' . $includeFileRelativePath ) ) {
+	require_once __DIR__ . '/lib/vendor' . $includeFileRelativePath;
+} elseif ( defined( 'ADVANCED_GUTENBERG_LIB_VENDOR_PATH' ) && file_exists( ADVANCED_GUTENBERG_LIB_VENDOR_PATH . $includeFileRelativePath ) ) {
+	require_once ADVANCED_GUTENBERG_LIB_VENDOR_PATH . $includeFileRelativePath;
 }
 
 if ( class_exists( 'PublishPressInstanceProtection\\Config' ) ) {
