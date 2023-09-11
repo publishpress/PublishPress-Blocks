@@ -5,10 +5,8 @@ defined( 'ABSPATH' ) || die;
 wp_enqueue_media(); // We require this for "Default thumbnail" setting
 
 $settings         = get_option( 'advgb_settings' );
-$default_thumb    = plugins_url(
-	'assets/blocks/recent-posts/recent-post-default.png',
-	ADVANCED_GUTENBERG_PLUGIN
-);
+$default_thumb    = ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/recent-posts/recent-post-default.png';
+
 $rp_default_thumb = isset( $settings['rp_default_thumb'] )
 	? $settings['rp_default_thumb']
 	: [ 'url' => $default_thumb, 'id' => 0 ];

@@ -170,7 +170,7 @@ function advgbRenderBlockRecentPosts($attributes)
     $recent_posts = wp_get_recent_posts( apply_filters( 'advgb_get_recent_posts_args', $args, $attributes, $post_type ), OBJECT );
 
     $saved_settings    = get_option('advgb_settings');
-    $default_thumb     = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
+    $default_thumb     = ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/recent-posts/recent-post-default.png';
     $rp_default_thumb  = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
 
     $postHtml = '';

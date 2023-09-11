@@ -390,23 +390,15 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 
 			if ( $this->settingIsEnabled( 'enable_advgb_blocks' ) && $pagenow === 'site-editor.php' ) {
 				add_editor_style( site_url( '/wp-includes/css/dashicons.css' ) ); // 'dashicons'
-				add_editor_style( plugins_url( 'assets/css/blocks.css',
-					dirname( __FILE__ ) ) ); // 'advgb_blocks_styles'
-				add_editor_style( plugins_url( 'assets/css/columns-editor.css',
-					dirname( __FILE__ ) ) ); // 'advgb_blocks_editor_styles'
-				add_editor_style( plugins_url( 'assets/css/recent-posts.css',
-					dirname( __FILE__ ) ) ); // 'advgb_recent_posts_styles'
-				add_editor_style( plugins_url( 'assets/css/editor.css',
-					dirname( __FILE__ ) ) ); // 'advgb_editor_styles'
-				add_editor_style( plugins_url( 'assets/css/site-editor.css',
-					dirname( __FILE__ ) ) ); // Site editor iframe styles only
-				add_editor_style( plugins_url( 'assets/css/fonts/material-icons.min.css',
-					dirname( __FILE__ ) ) ); // 'material_icon_font'
-				add_editor_style( plugins_url( 'assets/css/fonts/material-icons-custom.min.css',
-					dirname( __FILE__ ) ) ); // 'material_icon_font_custom'
-				add_editor_style( plugins_url( 'assets/css/slick.css', dirname( __FILE__ ) ) ); // 'slick_style'
-				add_editor_style( plugins_url( 'assets/css/slick-theme.css',
-					dirname( __FILE__ ) ) ); // 'slick_theme_style'
+				add_editor_style( ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/blocks.css' );
+				add_editor_style( ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/columns-editor.css' );
+				add_editor_style( ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/recent-posts.css' );
+				add_editor_style( ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/editor.css' );
+				add_editor_style( ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/site-editor.css' );
+				add_editor_style( ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/fonts/material-icons.min.css' );
+				add_editor_style( ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/fonts/material-icons-custom.min.css' );
+				add_editor_style( ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/slick.css' );
+				add_editor_style( ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/slick-theme.css');
 
 				// Pro
 				if ( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
@@ -466,7 +458,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				if ( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
 					wp_enqueue_script(
 						'advgb_blocks',
-						plugins_url( 'assets/blocks/blocks.js', dirname( __FILE__ ) ),
+						ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/blocks.js',
 						array(
 							'wp-blocks',
 							'wp-i18n',
@@ -484,14 +476,14 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					if ( ! defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
 						wp_enqueue_script(
 							'advgb_pro_ad_js',
-							plugins_url( 'assets/blocks/pro-ad.js', dirname( __FILE__ ) ),
+							ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/pro-ad.js',
 							[ 'advgb_blocks' ],
 							ADVANCED_GUTENBERG_VERSION,
 							true
 						);
 						wp_enqueue_style(
 							'advgb_pro_ad_css',
-							plugins_url( 'assets/css/pro-ad.css', dirname( __FILE__ ) ),
+							ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/pro-ad.css',
 							[],
 							ADVANCED_GUTENBERG_VERSION
 						);
@@ -501,7 +493,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				if ( $this->settingIsEnabled( 'enable_block_access' ) ) {
 					wp_enqueue_script(
 						'advgb_blocks_editor',
-						plugins_url( 'assets/blocks/editor.js', dirname( __FILE__ ) ),
+						ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/editor.js',
 						array(
 							'wp-blocks',
 							'wp-i18n',
@@ -526,7 +518,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			) {
 				wp_enqueue_script(
 					'advgb_custom_styles_script',
-					plugins_url( 'assets/blocks/custom-styles.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/custom-styles.js',
 					array( 'wp-blocks' ),
 					ADVANCED_GUTENBERG_VERSION,
 					true
@@ -560,7 +552,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 
 				wp_enqueue_script(
 					'advgb_post_sidebar',
-					plugins_url( 'assets/blocks/post-sidebar.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/post-sidebar.js',
 					array( 'wp-blocks' ),
 					ADVANCED_GUTENBERG_VERSION,
 					true
@@ -625,13 +617,11 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			wp_localize_script( 'wp-blocks', 'advgb_blocks_vars', $advgb_blocks_vars );
 
 			// Set variable needed by blocks editor
-			$avatarHolder         = plugins_url( 'assets/blocks/testimonial/avatar-placeholder.png',
-				ADVANCED_GUTENBERG_PLUGIN );
-			$default_thumb        = plugins_url( 'assets/blocks/recent-posts/recent-post-default.png',
-				ADVANCED_GUTENBERG_PLUGIN );
-			$image_holder         = plugins_url( 'assets/blocks/advimage/imageholder.svg', ADVANCED_GUTENBERG_PLUGIN );
-			$login_logo           = plugins_url( 'assets/blocks/login-form/login.svg', ADVANCED_GUTENBERG_PLUGIN );
-			$reg_logo             = plugins_url( 'assets/blocks/login-form/reg.svg', ADVANCED_GUTENBERG_PLUGIN );
+			$avatarHolder         = ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/testimonial/avatar-placeholder.png';
+			$default_thumb        = ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/recent-posts/recent-post-default.png';
+			$image_holder         = ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/advimage/imageholder.svg';
+			$login_logo           = ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/login-form/login.svg';
+			$reg_logo             = ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/login-form/reg.svg';
 			$saved_settings       = get_option( 'advgb_settings' );
 			$custom_styles_data   = get_option( 'advgb_custom_styles' );
 			$recaptcha_config     = get_option( 'advgb_recaptcha_config' );
@@ -676,7 +666,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				'config_url'            => admin_url( 'admin.php?page=advgb_settings' ),
 				'customStyles'          => ! $custom_styles_data ? array() : $custom_styles_data,
 				'captchaEnabled'        => $recaptcha_config['recaptcha_enable'],
-				'pluginUrl'             => plugins_url( '', ADVANCED_GUTENBERG_PLUGIN ),
+				'pluginUrl'             => ADVANCED_GUTENBERG_PLUGIN_URL,
 				'iconList'              => $icons,
 				'registerEnabled'       => get_option( 'users_can_register' ),
 				'blocks_widget_support' => $blocks_widget_support,
@@ -733,7 +723,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				wp_enqueue_style( 'dashicons' );
 				wp_enqueue_style(
 					'advgb_recent_posts_styles',
-					plugins_url( 'assets/css/recent-posts.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/recent-posts.css',
 					array(),
 					ADVANCED_GUTENBERG_VERSION
 				);
@@ -742,14 +732,14 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			if ( is_admin() && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
 				wp_enqueue_style(
 					'advgb_blocks_styles',
-					plugins_url( 'assets/css/blocks.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/blocks.css',
 					[],
 					ADVANCED_GUTENBERG_VERSION
 				);
 
 				wp_enqueue_style(
 					'advgb_columns_editor_styles',
-					plugins_url( 'assets/css/columns-editor.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/columns-editor.css',
 					[ 'advgb_blocks_styles' ],
 					ADVANCED_GUTENBERG_VERSION
 				);
@@ -766,7 +756,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			if ( is_admin() ) {
 				wp_enqueue_style(
 					'advgb_editor_styles',
-					plugins_url( 'assets/css/editor.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/editor.css',
 					array(),
 					ADVANCED_GUTENBERG_VERSION
 				);
@@ -823,7 +813,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				do_action( 'enqueue_block_editor_assets' );
 				wp_enqueue_script(
 					'advgb_update_list',
-					plugins_url( 'assets/js/update-block-list.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/update-block-list.js',
 					array( 'jquery' ),
 					ADVANCED_GUTENBERG_VERSION
 				);
@@ -865,7 +855,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			if ( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
 				wp_enqueue_script(
 					'advgb_disable_blocks_js',
-					plugins_url( 'assets/js/disable-blocks.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/disable-blocks.js',
 					array( 'advgb_blocks' ),
 					ADVANCED_GUTENBERG_VERSION
 				);
@@ -1573,61 +1563,61 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				// Register CSS
 				wp_register_style(
 					'advgb_admin_styles',
-					plugins_url( 'assets/css/style.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/style.css',
 					[],
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_style(
 					'advgb_admin_menu_styles',
-					plugins_url( 'assets/css/admin-menu.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/admin-menu.css',
 					[],
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_style(
 					'advgb_qtip_style',
-					plugins_url( 'assets/css/jquery.qtip.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/jquery.qtip.css',
 					[],
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_style(
 					'codemirror_css',
-					plugins_url( 'assets/js/codemirror/lib/codemirror.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/codemirror/lib/codemirror.css',
 					[],
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_style(
 					'codemirror_hint_style',
-					plugins_url( 'assets/js/codemirror/addon/hint/show-hint.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/codemirror/addon/hint/show-hint.css',
 					[],
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_style(
 					'minicolors_css',
-					plugins_url( 'assets/css/jquery.minicolors.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/jquery.minicolors.css',
 					[],
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_style(
 					'material_icon_font',
-					plugins_url( 'assets/css/fonts/material-icons.min.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/fonts/material-icons.min.css',
 					[],
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_style(
 					'material_icon_font_custom',
-					plugins_url( 'assets/css/fonts/material-icons-custom.min.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/fonts/material-icons-custom.min.css',
 					[],
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_style(
 					'slick_style',
-					plugins_url( 'assets/css/slick.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/slick.css',
 					[],
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_style(
 					'slick_theme_style',
-					plugins_url( 'assets/css/slick-theme.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/slick-theme.css',
 					[],
 					ADVANCED_GUTENBERG_VERSION
 				);
@@ -1636,7 +1626,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				// @TODO - Check if we really need all the dependencies from 'advgb_main_js'
 				wp_register_script(
 					'advgb_main_js',
-					plugins_url( 'assets/js/main.min.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/main.min.js',
 					array(
 						'jquery',
 						'wp-block-editor',
@@ -1654,73 +1644,73 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				);
 				wp_register_script(
 					'advgb_update_list',
-					plugins_url( 'assets/js/update-block-list.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/update-block-list.js',
 					array( 'jquery' ),
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_script(
 					'advgb_settings_js',
-					plugins_url( 'assets/js/settings.min.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/settings.min.js',
 					array( 'wp-i18n' ),
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_script(
 					'advgb_custom_styles_js',
-					plugins_url( 'assets/js/custom-styles.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/custom-styles.js',
 					array(),
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_script(
 					'qtip_js',
-					plugins_url( 'assets/js/jquery.qtip.min.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/jquery.qtip.min.js',
 					array(),
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_script(
 					'advgb_codemirror_js',
-					plugins_url( 'assets/js/codemirror/lib/codemirror.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/codemirror/lib/codemirror.js',
 					array(),
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_script(
 					'codemirror_hint',
-					plugins_url( 'assets/js/codemirror/addon/hint/show-hint.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/codemirror/addon/hint/show-hint.js',
 					array(),
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_script(
 					'codemirror_mode_css',
-					plugins_url( 'assets/js/codemirror/mode/css/css.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/codemirror/mode/css/css.js',
 					array(),
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_script(
 					'codemirror_hint_css',
-					plugins_url( 'assets/js/codemirror/addon/hint/css-hint.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/codemirror/addon/hint/css-hint.js',
 					array(),
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_script(
 					'less_js',
-					plugins_url( 'assets/js/less.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/less.js',
 					array(),
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_script(
 					'minicolors_js',
-					plugins_url( 'assets/js/jquery.minicolors.min.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/jquery.minicolors.min.js',
 					array(),
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_script(
 					'slick_js',
-					plugins_url( 'assets/js/slick.min.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/slick.min.js',
 					array( 'jquery' ),
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_script(
 					'advgb_masonry_js',
-					plugins_url( 'assets/js/isotope.pkgd.min.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/isotope.pkgd.min.js',
 					array( 'jquery' ),
 					ADVANCED_GUTENBERG_VERSION
 				);
@@ -1744,7 +1734,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			if ( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
 				wp_register_script(
 					'advgb_blocks_frontend_scripts',
-					plugins_url( 'assets/blocks/frontend.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/frontend.js',
 					array(),
 					ADVANCED_GUTENBERG_VERSION
 				);
@@ -1760,39 +1750,39 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 
 			wp_register_style(
 				'colorbox_style',
-				plugins_url( 'assets/css/colorbox.css', dirname( __FILE__ ) ),
+				ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/colorbox.css',
 				array(),
 				ADVANCED_GUTENBERG_VERSION
 			);
 			wp_register_style(
 				'slick_style',
-				plugins_url( 'assets/css/slick.css', dirname( __FILE__ ) )
+				ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/slick.css'
 			);
 			wp_register_style(
 				'slick_theme_style',
-				plugins_url( 'assets/css/slick-theme.css', dirname( __FILE__ ) ),
+				ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/slick-theme.css',
 				[ 'dashicons' ],
 				ADVANCED_GUTENBERG_VERSION
 			);
 			wp_register_style(
 				'material_icon_font',
-				plugins_url( 'assets/css/fonts/material-icons.min.css', dirname( __FILE__ ) )
+				ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/fonts/material-icons.min.css'
 			);
 			wp_register_style(
 				'material_icon_font_custom',
-				plugins_url( 'assets/css/fonts/material-icons-custom.min.css', dirname( __FILE__ ) )
+				ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/fonts/material-icons-custom.min.css'
 			);
 
 			if ( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
 				wp_register_style(
 					'advgb_columns_styles',
-					plugins_url( 'assets/css/columns.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/columns.css',
 					array(),
 					ADVANCED_GUTENBERG_VERSION
 				);
 				wp_register_style(
 					'advgb_recent_posts_styles',
-					plugins_url( 'assets/css/recent-posts.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/recent-posts.css',
 					array(),
 					ADVANCED_GUTENBERG_VERSION
 				);
@@ -1800,19 +1790,19 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 
 			wp_register_script(
 				'colorbox_js',
-				plugins_url( 'assets/js/jquery.colorbox.min.js', dirname( __FILE__ ) ),
+				ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/jquery.colorbox.min.js',
 				array( 'jquery' ),
 				ADVANCED_GUTENBERG_VERSION
 			);
 			wp_register_script(
 				'slick_js',
-				plugins_url( 'assets/js/slick.min.js', dirname( __FILE__ ) ),
+				ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/slick.min.js',
 				array( 'jquery' ),
 				ADVANCED_GUTENBERG_VERSION
 			);
 			wp_register_script(
 				'advgb_masonry_js',
-				plugins_url( 'assets/js/isotope.pkgd.min.js', dirname( __FILE__ ) ),
+				ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/isotope.pkgd.min.js',
 				array( 'jquery' ),
 				ADVANCED_GUTENBERG_VERSION
 			);
@@ -2349,8 +2339,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
                         </nav>
                         <div class="advgb-pressshack-logo">
                             <a href="https://publishpress.com" target="_blank" rel="noopener noreferrer">
-                                <img src="' . esc_url( plugins_url( 'assets/images/publishpress-logo.png',
-						dirname( __FILE__ ) ) ) . '"
+                                <img src="' . esc_url( ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/images/publishpress-logo.png' ) . '"
                                  alt="' . esc_attr__( 'PublishPress Blocks logo', 'advanced-gutenberg' ) . '">
                             </a>
                         </div>
@@ -3587,25 +3576,25 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 
 			wp_enqueue_style(
 				'minicolors_css',
-				plugins_url( 'assets/css/jquery.minicolors.css', ADVANCED_GUTENBERG_PLUGIN )
+				ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/jquery.minicolors.css'
 			);
 			wp_enqueue_style(
 				'block_config_css',
-				plugins_url( 'assets/css/block-config.css', ADVANCED_GUTENBERG_PLUGIN )
+				ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/block-config.css'
 			);
-			$loadingImage = plugins_url( 'assets/images/loading.gif', ADVANCED_GUTENBERG_PLUGIN );
+			$loadingImage = ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/images/loading.gif';
 			wp_add_inline_style( 'block_config_css',
 				'#advgb-loading-screen-image {background-image: url(' . $loadingImage . ')}' );
 
 			wp_enqueue_script(
 				'minicolors_js',
-				plugins_url( 'assets/js/jquery.minicolors.min.js', ADVANCED_GUTENBERG_PLUGIN ),
+				ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/jquery.minicolors.min.js',
 				array(),
 				ADVANCED_GUTENBERG_VERSION
 			);
 			wp_enqueue_script(
 				'block_config_js',
-				plugins_url( 'assets/js/block-config.js', ADVANCED_GUTENBERG_PLUGIN ),
+				ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/block-config.js',
 				array( 'jquery' ),
 				ADVANCED_GUTENBERG_VERSION
 			);
@@ -3858,7 +3847,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 
 				wp_enqueue_script(
 					'advgb_widgets_customizer_js',
-					plugins_url( 'assets/js/widgets-customizer.js', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/widgets-customizer.js',
 					array(
 						'colorbox_js',
 						'slick_js',
@@ -4105,7 +4094,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				if ( isset( $recaptcha_config['recaptcha_site_key'] ) && $recaptcha_config['recaptcha_site_key'] ) {
 					wp_enqueue_script(
 						'advgb_recaptcha_init_js',
-						plugins_url( 'assets/js/recaptcha.js', dirname( __FILE__ ) )
+						ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/recaptcha.j)
 					);
 
 					wp_localize_script( 'advgb_recaptcha_init_js', 'advgbGRC', array(
@@ -4250,7 +4239,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			if ( in_array( $blockName, $availableBlocks ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
 				wp_enqueue_style(
 					'advgb_blocks_styles',
-					plugins_url( 'assets/css/blocks.css', dirname( __FILE__ ) ),
+					ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/css/blocks.css',
 					array(),
 					ADVANCED_GUTENBERG_VERSION
 				);
@@ -4324,7 +4313,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					wp_enqueue_script( 'jquery-effects-slide' );
 					wp_enqueue_script(
 						'advgb_lores_js',
-						plugins_url( 'assets/blocks/login-form/frontend.js', dirname( __FILE__ ) ),
+						ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/login-form/frontend.js',
 						[ 'jquery' ],
 						ADVANCED_GUTENBERG_VERSION
 					);
@@ -4369,7 +4358,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 							wp_enqueue_script( 'colorbox_js' );
 							wp_enqueue_script(
 								'advgbImageLightbox_js',
-								plugins_url( 'assets/blocks/advimage/lightbox.js', dirname( __FILE__ ) ),
+								ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/advimage/lightbox.js',
 								[ 'jquery' ],
 								ADVANCED_GUTENBERG_VERSION
 							);
@@ -4377,7 +4366,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 							// Custom URL
 							wp_enqueue_script(
 								'advgbImageCustomURL_js',
-								plugins_url( 'assets/blocks/advimage/url.js', dirname( __FILE__ ) ),
+								ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/advimage/url.js',
 								[ 'jquery' ],
 								ADVANCED_GUTENBERG_VERSION
 							);
@@ -4402,7 +4391,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 						wp_enqueue_script( 'slick_js' );
 						wp_enqueue_script(
 							'advgb_testimonial_frontend',
-							plugins_url( 'assets/blocks/testimonial/frontend.js', dirname( __FILE__ ) ),
+							ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/testimonial/frontend.js',
 							[ 'jquery' ],
 							ADVANCED_GUTENBERG_VERSION
 						);
@@ -4421,7 +4410,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					wp_enqueue_script( 'jquery-ui-tabs' );
 					wp_enqueue_script(
 						'advgb_tabs_js',
-						plugins_url( 'assets/blocks/advtabs/frontend.js', dirname( __FILE__ ) ),
+						ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/advtabs/frontend.js',
 						array( 'jquery' ),
 						ADVANCED_GUTENBERG_VERSION
 					);
@@ -4475,7 +4464,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 						wp_enqueue_script( 'colorbox_js' );
 						wp_enqueue_script(
 							'advgbVideoLightbox_js',
-							plugins_url( 'assets/blocks/advvideo/lightbox.js', dirname( __FILE__ ) ),
+							ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/advvideo/lightbox.js',
 							[ 'jquery' ],
 							ADVANCED_GUTENBERG_VERSION
 						);
@@ -4488,7 +4477,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					// Assets
 					wp_enqueue_script(
 						'advgb_gmap_js',
-						plugins_url( 'assets/blocks/map/frontend.js', dirname( __FILE__ ) ),
+						ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/map/frontend.js',
 						[],
 						ADVANCED_GUTENBERG_VERSION
 					);
@@ -4501,7 +4490,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					// Assets
 					wp_enqueue_script(
 						'summary_minimized',
-						plugins_url( 'assets/blocks/summary/summaryMinimized.js', dirname( __FILE__ ) ),
+						ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/summary/summaryMinimized.js',
 						[ 'jquery' ],
 						ADVANCED_GUTENBERG_VERSION
 					);
@@ -4514,7 +4503,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					wp_enqueue_script( 'jquery-ui-accordion' );
 					wp_enqueue_script(
 						'adv_accordion_js',
-						plugins_url( 'assets/blocks/advaccordion/frontend.js', dirname( __FILE__ ) ),
+						ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/advaccordion/frontend.js',
 						[
 							'jquery',
 							'jquery-ui-accordion'
@@ -4543,7 +4532,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 						wp_enqueue_script( 'slick_js' );
 						wp_enqueue_script(
 							'advgb_woo_products_js',
-							plugins_url( 'assets/blocks/woo-products/slider.js', dirname( __FILE__ ) ),
+							ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/woo-products/slider.js',
 							[ 'jquery' ],
 							ADVANCED_GUTENBERG_VERSION
 						);
@@ -4562,7 +4551,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					wp_enqueue_script( 'slick_js' );
 					wp_enqueue_script(
 						'advgbImageSliderLightbox_frontent_js',
-						plugins_url( 'assets/blocks/images-slider/frontend.js', dirname( __FILE__ ) ),
+						ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/images-slider/frontend.js',
 						[ 'jquery' ],
 						ADVANCED_GUTENBERG_VERSION
 					);
@@ -4594,7 +4583,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 						wp_enqueue_script( 'colorbox_js' );
 						wp_enqueue_script(
 							'advgbImageSliderLightbox_js',
-							plugins_url( 'assets/blocks/images-slider/lightbox.js', dirname( __FILE__ ) ),
+							ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/images-slider/lightbox.js',
 							[],
 							ADVANCED_GUTENBERG_VERSION
 						);
@@ -4624,7 +4613,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					// Assets
 					wp_enqueue_script(
 						'advgbContactForm_js',
-						plugins_url( 'assets/blocks/contact-form/frontend.js', dirname( __FILE__ ) ),
+						ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/contact-form/frontend.js',
 						[ 'jquery' ],
 						ADVANCED_GUTENBERG_VERSION
 					);
@@ -4644,7 +4633,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					// Assets
 					wp_enqueue_script(
 						'advgbNewsletter_js',
-						plugins_url( 'assets/blocks/newsletter/frontend.js', dirname( __FILE__ ) ),
+						ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/newsletter/frontend.js',
 						[
 							'jquery',
 							'wp-i18n'
@@ -4680,7 +4669,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 						wp_enqueue_script( 'slick_js' );
 						wp_enqueue_script(
 							'advgb_recent_posts_slider_js',
-							plugins_url( 'assets/blocks/recent-posts/slider.js', dirname( __FILE__ ) ),
+							ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/recent-posts/slider.js',
 							[ 'jquery' ],
 							ADVANCED_GUTENBERG_VERSION
 						);
@@ -4714,7 +4703,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 						wp_enqueue_script( 'advgb_masonry_js' );
 						wp_enqueue_script(
 							'advgb_recent_posts_masonry_js',
-							plugins_url( 'assets/blocks/recent-posts/masonry.js', dirname( __FILE__ ) ),
+							ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/blocks/recent-posts/masonry.js',
 							[
 								'jquery',
 								'advgb_masonry_js'
@@ -4761,7 +4750,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 						wp_enqueue_script( 'colorbox_js' );
 						wp_enqueue_script(
 							'gallery_lightbox_js',
-							plugins_url( 'assets/js/gallery.colorbox.init.js', dirname( __FILE__ ) ),
+							ADVANCED_GUTENBERG_PLUGIN_URL . '/assets/js/gallery.colorbox.init.js',
 							[ 'jquery' ],
 							ADVANCED_GUTENBERG_VERSION
 						);

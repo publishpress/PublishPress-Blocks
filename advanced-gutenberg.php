@@ -96,6 +96,10 @@ if ( ! defined( 'ADVANCED_GUTENBERG_LOADED' ) ) {
 		define( 'ADVANCED_GUTENBERG_VENDOR_PATH', ADVANCED_GUTENBERG_LIB_VENDOR_PATH );
 	}
 
+	if ( ! defined( 'ADVANCED_GUTENBERG_PLUGIN_URL' ) ) {
+		define( 'ADVANCED_GUTENBERG_PLUGIN_URL', plugins_url( __FILE__ ) );
+	}
+
 	// Internal Vendor and Ask-for-Review
 	if ( ! defined( 'ADVANCED_GUTENBERG_PRO_LIB_VENDOR_PATH' ) ) {
 		$autoloadFilePath = ADVANCED_GUTENBERG_LIB_VENDOR_PATH . '/autoload.php';
