@@ -27,8 +27,6 @@
 - /dev-workspace
 - /dist
 - /gulpfile.js
-- /json_translations.sh
-- /json_translations.sh.dist
 - /node_modules
 - /package-lock.json
 - /package.json
@@ -39,6 +37,7 @@
 - /version.txt
 - /webpack.config.js
 - /yarn.lock
+- /screenshot-*.png
 - CONTRIBUTING.md
 - Gruntfile.js
 - README-build.md
@@ -55,7 +54,6 @@
 - jest.config.js
 - jest.config.ts
 - jsconfig.json
-- json_translations.sh.dist
 - mix-manifest.json
 - node_modules
 - package-lock.json
@@ -65,7 +63,6 @@
 - psalm.xml
 - ray-dist.php
 - ray.php
-- screenshot-*.png
 - tailwind.config.js
 - tests
 - webpack.config.js
