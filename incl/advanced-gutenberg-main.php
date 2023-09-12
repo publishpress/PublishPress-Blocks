@@ -3985,7 +3985,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 		 * @return array
 		 */
 		public function addTinyMceExternal( array $plgs ) {
-			$plgs['customstyles'] = plugin_dir_url( dirname( __FILE__ ) ) . 'assets/blocks/customstyles/plugin.js';
+			$plgs['customstyles'] = ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/customstyles/plugin.js';
 
 			return $plgs;
 		}
