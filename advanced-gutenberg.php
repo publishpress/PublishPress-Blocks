@@ -97,7 +97,7 @@ if ( ! defined( 'ADVANCED_GUTENBERG_LOADED' ) ) {
 	}
 
 	if ( ! defined( 'ADVANCED_GUTENBERG_PLUGIN_URL' ) ) {
-		define( 'ADVANCED_GUTENBERG_PLUGIN_URL', plugins_url( __FILE__ ) );
+		define( 'ADVANCED_GUTENBERG_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 	}
 
 	// Internal Vendor and Ask-for-Review
