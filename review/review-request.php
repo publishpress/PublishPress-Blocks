@@ -13,7 +13,7 @@ if ( ! class_exists( 'AdvancedGutenberg_Reviews' ) ) {
 			$this->reviewController = new ReviewsController(
 				'advanced-gutenberg',
 				'PublishPress Blocks',
-				esc_url( ADVANCED_GUTENBERG_PLUGIN_DIR_URL . '/assets/images/logo-notice.png' )
+				esc_url( ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/images/logo-notice.png' )
 			);
 		}
 

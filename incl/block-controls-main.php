@@ -774,7 +774,7 @@ if ( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
 			if ( Utilities::settingIsEnabled( 'block_controls' ) ) {
 				wp_enqueue_script(
 					'advgb_block_controls',
-					ADVANCED_GUTENBERG_PLUGIN_DIR_URL . '/assets/blocks/block-controls.js',
+					ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/block-controls.js',
 					[
 						'wp-blocks',
 						'wp-i18n',
