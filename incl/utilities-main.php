@@ -17,11 +17,16 @@ if ( ! class_exists( '\\PublishPress\\Blocks\\Utilities' ) ) {
 		 */
 		public static function settingIsEnabled( $setting ) {
 			$saved_settings = get_option( 'advgb_settings' );
-			if ( ! isset( $saved_settings[ $setting ] ) || $saved_settings[ $setting ] ) {
-				return true;
-			} else {
+
+			if ( isset( $saved_settings[ $setting ] ) && ! $saved_settings[ $setting ] ) {
 				return false;
 			}
+
+			if ( ! isset( $saved_settings[ $setting ] ) || $saved_settings[ $setting ] ) {
+				return true;
+			}
+
+			return false;
 		}
 	}
 }

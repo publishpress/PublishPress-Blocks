@@ -1,5 +1,7 @@
 <?php
 
+use PublishPress\Blocks\Utilities;
+
 defined( 'ABSPATH' ) || die;
 
 /**
@@ -179,13 +181,13 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					add_action( 'admin_enqueue_scripts', array( $this, 'addEditorAssetsWidgets' ), 9999 );
 					add_filter( 'block_editor_settings_all', array( $this, 'replaceEditorSettings' ), 9999 );
 
-					if ( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+					if ( Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 						add_filter( 'block_categories_all', array( $this, 'addAdvBlocksCategory' ) );
 					}
 				} else {
 					add_filter( 'block_editor_settings', array( $this, 'replaceEditorSettings' ), 9999 );
 
-					if ( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+					if ( Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 						add_filter( 'block_categories', array( $this, 'addAdvBlocksCategory' ) );
 					}
 				}
@@ -317,7 +319,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 
 			$advgb_blocks_vars = array();
 
-			if ( $this->settingIsEnabled( 'enable_block_access' ) ) {
+			if ( Utilities::settingIsEnabled( 'enable_block_access' ) ) {
 				$advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
 			}
 
@@ -388,7 +390,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 		public function addEditorAssetsSiteEditor() {
 			global $pagenow;
 
-			if ( $this->settingIsEnabled( 'enable_advgb_blocks' ) && $pagenow === 'site-editor.php' ) {
+			if ( Utilities::settingIsEnabled( 'enable_advgb_blocks' ) && $pagenow === 'site-editor.php' ) {
 				add_editor_style( site_url( '/wp-includes/css/dashicons.css' ) ); // 'dashicons'
 				add_editor_style( ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/blocks.css' );
 				add_editor_style( ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/columns-editor.css' );
@@ -437,9 +439,9 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 		public function enqueueEditorAssets() {
 			$currentScreen = get_current_screen();
 
-			if ( $this->settingIsEnabled( 'enable_advgb_blocks' )
-			     || $this->settingIsEnabled( 'enable_block_access' )
-			     || $this->settingIsEnabled( 'block_controls' )
+			if ( Utilities::settingIsEnabled( 'enable_advgb_blocks' )
+			     || Utilities::settingIsEnabled( 'enable_block_access' )
+			     || Utilities::settingIsEnabled( 'block_controls' )
 			) {
 				// Define the dependency for the editor based on current screen
 				if ( $currentScreen->id === 'customize' ) {
@@ -455,7 +457,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 
 				PublishPress\Blocks\Controls::editorAssets( $wp_editor_dep );
 
-				if ( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+				if ( Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 					wp_enqueue_script(
 						'advgb_blocks',
 						ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/blocks.js',
@@ -490,7 +492,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					}
 				}
 
-				if ( $this->settingIsEnabled( 'enable_block_access' ) ) {
+				if ( Utilities::settingIsEnabled( 'enable_block_access' ) ) {
 					wp_enqueue_script(
 						'advgb_blocks_editor',
 						ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/editor.js',
@@ -511,7 +513,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 
 			// Don't load custom-styles.js in widgets.php, Theme Customizer > Widgets and Site Editor
 			if (
-				$this->settingIsEnabled( 'enable_custom_styles' )
+				Utilities::settingIsEnabled( 'enable_custom_styles' )
 				&& $currentScreen->id !== 'widgets'
 				&& is_customize_preview() === false
 				&& $currentScreen->id !== 'site-editor'
@@ -595,7 +597,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 		public function advgbBlocksVariables( $post = true ) {
 			$advgb_blocks_vars = array();
 
-			if ( $this->settingIsEnabled( 'enable_block_access' ) ) {
+			if ( Utilities::settingIsEnabled( 'enable_block_access' ) ) {
 				$advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
 			}
 
@@ -639,11 +641,11 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			$pp_series_options    = get_option( 'org_series_options' );
 			$pp_series_slug       = isset( $pp_series_options['series_taxonomy_slug'] ) && ! empty( $pp_series_options['series_taxonomy_slug'] ) ? $pp_series_options['series_taxonomy_slug'] : 'series';
 			$pp_series_post_types = isset( $pp_series_options['post_types_for_series'] ) && ! empty( $pp_series_options['post_types_for_series'] ) ? $pp_series_options['post_types_for_series'] : [ 'post' ];
-			$block_controls       = $this->settingIsEnabled( 'block_controls' ) ? 1 : 0;
-			$block_extend         = $this->settingIsEnabled( 'block_extend' ) ? 1 : 0;
+			$block_controls       = Utilities::settingIsEnabled( 'block_controls' ) ? 1 : 0;
+			$block_extend         = Utilities::settingIsEnabled( 'block_extend' ) ? 1 : 0;
 			$timezone             = function_exists( 'wp_timezone_string' ) ? wp_timezone_string() : 'UTC';
 			$timezones            = [];
-			$reusable_blocks      = $this->settingIsEnabled( 'reusable_blocks' ) ? 1 : 0;
+			$reusable_blocks      = Utilities::settingIsEnabled( 'reusable_blocks' ) ? 1 : 0;
 			global $wp_version;
 			$blocks_widget_support = ( $wp_version >= 5.8 ) ? 1 : 0;
 
@@ -688,7 +690,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			wp_localize_script( 'wp-blocks', 'advgbDefaultConfig', $blocks_config_saved );
 
 			// Block controls
-			if ( $this->settingIsEnabled( 'block_controls' ) ) {
+			if ( Utilities::settingIsEnabled( 'block_controls' ) ) {
 				PublishPress\Blocks\Controls::editorData();
 			}
 
@@ -707,7 +709,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 		 */
 		public function addEditorAndFrontendStyles() {
 			// Load custom styles in the <head>
-			if ( $this->settingIsEnabled( 'enable_custom_styles' ) ) {
+			if ( Utilities::settingIsEnabled( 'enable_custom_styles' ) ) {
 				add_action( 'wp_head', array( $this, 'loadCustomStylesFrontend' ) );
 				add_action( 'admin_head', array( $this, 'loadCustomStylesAdmin' ) );
 			}
@@ -717,7 +719,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			global $pagenow;
 
 			if ( is_admin()
-			     && $this->settingIsEnabled( 'enable_advgb_blocks' )
+			     && Utilities::settingIsEnabled( 'enable_advgb_blocks' )
 			     && $pagenow !== 'site-editor.php'
 			) {
 				wp_enqueue_style( 'dashicons' );
@@ -729,7 +731,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				);
 			}
 
-			if ( is_admin() && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+			if ( is_admin() && Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 				wp_enqueue_style(
 					'advgb_blocks_styles',
 					ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/blocks.css',
@@ -852,7 +854,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 		 * @return void
 		 */
 		public function advgbDisableBlocks() {
-			if ( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+			if ( Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 				wp_enqueue_script(
 					'advgb_disable_blocks_js',
 					ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/js/disable-blocks.js',
@@ -958,7 +960,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			}
 
 			// Register custom routes for Block controls
-			if ( $this->settingIsEnabled( 'block_controls' )
+			if ( Utilities::settingIsEnabled( 'block_controls' )
 			     && method_exists( 'PublishPress\Blocks\Controls', 'registerCustomRoutes' )
 			) {
 				PublishPress\Blocks\Controls::registerCustomRoutes();
@@ -1353,7 +1355,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 		 */
 		public function saveContactFormData() {
 			// Don't save if Settings > PublishPress Blocks are disabled
-			if ( ! $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+			if ( ! Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 				return false;
 			}
 
@@ -1444,7 +1446,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 		 */
 		public function saveNewsletterData() {
 			// Don't save if Settings > PublishPress Blocks are disabled
-			if ( ! $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+			if ( ! Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 				return false;
 			}
 
@@ -1731,7 +1733,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 		 * @return void
 		 */
 		public function registerStylesScriptsFrontend() {
-			if ( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+			if ( Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 				wp_register_script(
 					'advgb_blocks_frontend_scripts',
 					ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/frontend.js',
@@ -1773,7 +1775,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/fonts/material-icons-custom.min.css'
 			);
 
-			if ( $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+			if ( Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 				wp_register_style(
 					'advgb_columns_styles',
 					ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/columns.css',
@@ -1841,35 +1843,35 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					'title'    => esc_html__( 'Block Permissions', 'advanced-gutenberg' ),
 					'callback' => 'loadBlockAccessPage',
 					'order'    => 2,
-					'enabled'  => $this->settingIsEnabled( 'enable_block_access' )
+					'enabled'  => Utilities::settingIsEnabled( 'enable_block_access' )
 				],
 				[
 					'slug'     => 'advgb_block_settings',
 					'title'    => esc_html__( 'PublishPress Blocks', 'advanced-gutenberg' ),
 					'callback' => 'loadBlockSettingsPage',
 					'order'    => 3,
-					'enabled'  => $this->settingIsEnabled( 'enable_advgb_blocks' )
+					'enabled'  => Utilities::settingIsEnabled( 'enable_advgb_blocks' )
 				],
 				[
 					'slug'     => 'advgb_custom_styles',
 					'title'    => esc_html__( 'Block Styles', 'advanced-gutenberg' ),
 					'callback' => 'loadCustomStylesPage',
 					'order'    => 5,
-					'enabled'  => $this->settingIsEnabled( 'enable_custom_styles' )
+					'enabled'  => Utilities::settingIsEnabled( 'enable_custom_styles' )
 				],
 				[
 					'slug'     => 'advgb_block_controls',
 					'title'    => esc_html__( 'Block Controls', 'advanced-gutenberg' ),
 					'callback' => 'loadBlockControlsPage',
 					'order'    => 6,
-					'enabled'  => $this->settingIsEnabled( 'block_controls' )
+					'enabled'  => Utilities::settingIsEnabled( 'block_controls' )
 				],
 				[
 					'slug'     => 'edit.php?post_type=wp_block',
 					'title'    => esc_html__( 'Synced Patterns', 'advanced-gutenberg' ),
 					'callback' => '',
 					'order'    => 7,
-					'enabled'  => $this->settingIsEnabled( 'reusable_blocks' )
+					'enabled'  => Utilities::settingIsEnabled( 'reusable_blocks' )
 				],
 				[
 					'slug'     => 'advgb_settings',
@@ -2086,7 +2088,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			}
 
 			// Block access is disabled
-			if ( ! $this->settingIsEnabled( 'enable_block_access' ) ) {
+			if ( ! Utilities::settingIsEnabled( 'enable_block_access' ) ) {
 				wp_die(
 					sprintf(
 						esc_html__(
@@ -2131,7 +2133,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			}
 
 			// Block controls is disabled
-			if ( ! $this->settingIsEnabled( 'block_controls' ) ) {
+			if ( ! Utilities::settingIsEnabled( 'block_controls' ) ) {
 				wp_die(
 					sprintf(
 						esc_html__(
@@ -2164,7 +2166,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			}
 
 			// PublishPress blocks is disabled
-			if ( ! $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+			if ( ! Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 				wp_die(
 					sprintf(
 						esc_html__(
@@ -2208,7 +2210,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			}
 
 			// Custom styles is disabled
-			if ( ! $this->settingIsEnabled( 'enable_custom_styles' ) ) {
+			if ( ! Utilities::settingIsEnabled( 'enable_custom_styles' ) ) {
 				wp_die(
 					sprintf(
 						esc_html__(
@@ -2263,7 +2265,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			}
 
 			$html = '';
-			if ( ! defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) || $this->settingIsEnabled( 'enable_pp_branding' ) ) {
+			if ( ! defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) || Utilities::settingIsEnabled( 'enable_pp_branding' ) ) {
 				$html .= '<div class="advgb-footer">
                     <footer>
                         <div class="advgb-rating">
@@ -3058,7 +3060,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
              * as result of javascript method wp.blocks.getBlockTypes()
              * e.g. blocks registered only via PHP
              */
-			if ( $this->settingIsEnabled( 'block_extend' ) ) {
+			if ( Utilities::settingIsEnabled( 'block_extend' ) ) {
 				$advgb_blocks_list = get_option( 'advgb_blocks_list' );
 				if ( $advgb_blocks_list && is_array( $advgb_blocks_list ) ) {
 					$saved_blocks = $advgb_blocks_list;
@@ -3857,7 +3859,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				);
 
 				// Pro
-				if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+				if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 					if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions',
 						'advgb_pro_widgets_customizer_frontend' ) ) {
 						PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_widgets_customizer_frontend();
@@ -4150,16 +4152,12 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 		 * Check if a setting is enabled
 		 *
 		 * @param string $setting The setting from advgb_settings option field
-		 *
+		 * @deprecated 3.2.0 Use Utilities::settingIsEnabled() instead
+         *
 		 * @return boolean
 		 */
 		public function settingIsEnabled( $setting ) {
-			$saved_settings = get_option( 'advgb_settings' );
-			if ( ! isset( $saved_settings[ $setting ] ) || $saved_settings[ $setting ] ) {
-				return true;
-			} else {
-				return false;
-			}
+			return Utilities::settingIsEnabled( $setting );
 		}
 
 		/**
@@ -4236,7 +4234,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			}
 
 			// Load common CSS
-			if ( in_array( $blockName, $availableBlocks ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+			if ( in_array( $blockName, $availableBlocks ) && Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 				wp_enqueue_style(
 					'advgb_blocks_styles',
 					ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/blocks.css',
@@ -4271,7 +4269,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					$html_style = $this->advgb_AdvancedButtonStyles( $blockAttrs );
 
 					// Pro - Assets
-					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 						if ( isset( $blockAttrs['iconDisplay'] )
 						     && method_exists(
 							     'PPB_AdvancedGutenbergPro\Utils\Definitions',
@@ -4590,7 +4588,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					}
 
 					// Pro
-					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 						if ( method_exists(
 							'PPB_AdvancedGutenbergPro\Utils\Definitions',
 							'advgb_pro_enqueue_font_styles_frontend'
@@ -4713,7 +4711,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					}
 
 					// Pro
-					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 						if ( method_exists(
 							'PPB_AdvancedGutenbergPro\Utils\Definitions',
 							'advgb_pro_enqueue_font_styles_frontend'
@@ -4730,7 +4728,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				case 'advgb/countdown':
 
 					// Assets - Pro
-					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && Utilities::settingIsEnabled( 'enable_advgb_blocks' ) ) {
 						if ( method_exists(
 							'PPB_AdvancedGutenbergPro\Utils\Definitions',
 							'advgb_pro_enqueue_scripts_frontend_countdown'
