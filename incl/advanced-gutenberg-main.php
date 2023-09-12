@@ -401,7 +401,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				add_editor_style( ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/slick-theme.css');
 
 				// Pro
-				if ( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+				if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ) {
 					if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions',
 						'advgb_pro_enqueue_main_styles_inline' ) ) {
 						PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_main_styles_inline();
@@ -473,7 +473,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					);
 
 					// Pro Ads in some blocks for free version
-					if ( ! defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+					if ( ! defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ) {
 						wp_enqueue_script(
 							'advgb_pro_ad_js',
 							ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/pro-ad.js',
@@ -560,7 +560,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			}
 
 			// Pro
-			if ( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+			if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ) {
 				if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions',
 					'advgb_pro_enqueue_scripts_editor' ) ) {
 					PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_scripts_editor();
@@ -648,7 +648,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			$blocks_widget_support = ( $wp_version >= 5.8 ) ? 1 : 0;
 
 			// Pro
-			if ( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+			if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ) {
 				if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_timezones_list' ) ) {
 					$timezones = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_timezones_list();
 				}
@@ -671,7 +671,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				'registerEnabled'       => get_option( 'users_can_register' ),
 				'blocks_widget_support' => $blocks_widget_support,
 				'enable_advgb_blocks'   => $enable_advgb_blocks,
-				'advgb_pro'             => defined( 'ADVANCED_GUTENBERG_PRO' ) ? 1 : 0,
+				'advgb_pro'             => defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ? 1 : 0,
 				'pp_series_active'      => $pp_series_active,
 				'pp_series_slug'        => $pp_series_slug,
 				'pp_series_post_types'  => $pp_series_post_types,
@@ -693,7 +693,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			}
 
 			// Pro
-			if ( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+			if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ) {
 				if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_fonts_list' ) ) {
 					PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_fonts_list();
 				}
@@ -745,7 +745,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				);
 
 				// Pro
-				if ( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+				if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ) {
 					if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions',
 						'advgb_pro_enqueue_main_styles' ) ) {
 						PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_main_styles();
@@ -880,7 +880,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 		public function upgradeProNotices() {
 			if (
 				current_user_can( 'install_plugins' )
-				&& ! defined( 'ADVANCED_GUTENBERG_PRO' )
+				&& ! defined( 'ADVANCED_GUTENBERG_PRO_LOADED' )
 				&& class_exists( 'PPVersionNotices\Module\TopNotice\Module' )
 				&& class_exists( 'PPVersionNotices\Module\MenuLink\Module' )
 			) {
@@ -1265,7 +1265,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			];
 
 			// Pro features
-			if ( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+			if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ) {
 				array_push(
 					$all_features,
 					'enable_core_blocks_features'
@@ -1740,7 +1740,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				);
 
 				// Pro
-				if ( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+				if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ) {
 					if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions',
 						'advgb_pro_register_scripts_frontend' ) ) {
 						PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_register_scripts_frontend();
@@ -1971,7 +1971,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 		public function featuresBoxes( $features ) {
 			?>
             <div class="advgb-features-boxes advgb-features-boxes--<?php
-			echo( defined( 'ADVANCED_GUTENBERG_PRO' ) ? 'ispro' : 'isfree' ) ?>">
+			echo( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ? 'ispro' : 'isfree' ) ?>">
 				<?php
 				foreach ( $features as $feature ) : ?>
                     <div class="advgb-feature-box<?php
@@ -2263,7 +2263,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			}
 
 			$html = '';
-			if ( ! defined( 'ADVANCED_GUTENBERG_PRO' ) || $this->settingIsEnabled( 'enable_pp_branding' ) ) {
+			if ( ! defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) || $this->settingIsEnabled( 'enable_pp_branding' ) ) {
 				$html .= '<div class="advgb-footer">
                     <footer>
                         <div class="advgb-rating">
@@ -2552,7 +2552,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				$advgb_settings['editor_width']                = sanitize_text_field( $_POST['editor_width'] );
 
 				// Pro
-				if ( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+				if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ) {
 					if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions',
 						'advgb_pro_setting_set_value' ) ) {
 						$advgb_settings['enable_pp_branding'] = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_setting_set_value( 'enable_pp_branding' );
@@ -3857,7 +3857,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				);
 
 				// Pro
-				if ( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+				if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
 					if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions',
 						'advgb_pro_widgets_customizer_frontend' ) ) {
 						PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_widgets_customizer_frontend();
@@ -4223,7 +4223,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			);
 
 			// Pro
-			if ( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+			if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ) {
 				if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_get_blocks' ) ) {
 					$availableProBlocks = PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_get_blocks();
 					foreach ( $availableProBlocks as $availableProBlock ) {
@@ -4245,7 +4245,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				);
 
 				// Pro
-				if ( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+				if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ) {
 					if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions',
 						'advgb_pro_enqueue_main_styles' ) ) {
 						PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_enqueue_main_styles();
@@ -4271,7 +4271,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					$html_style = $this->advgb_AdvancedButtonStyles( $blockAttrs );
 
 					// Pro - Assets
-					if ( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
 						if ( isset( $blockAttrs['iconDisplay'] )
 						     && method_exists(
 							     'PPB_AdvancedGutenbergPro\Utils\Definitions',
@@ -4416,7 +4416,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					);
 
 					// Pro
-					if ( defined( 'ADVANCED_GUTENBERG_PRO' )
+					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' )
 					     && method_exists(
 						     'PPB_AdvancedGutenbergPro\Utils\Definitions',
 						     'advgb_pro_inline_scripts_frontend'
@@ -4512,7 +4512,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					);
 
 					// Pro
-					if ( defined( 'ADVANCED_GUTENBERG_PRO' )
+					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' )
 					     && method_exists(
 						     'PPB_AdvancedGutenbergPro\Utils\Definitions',
 						     'advgb_pro_inline_scripts_frontend'
@@ -4556,7 +4556,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 						ADVANCED_GUTENBERG_VERSION
 					);
 
-					if ( defined( 'ADVANCED_GUTENBERG_PRO' )
+					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' )
 					     && method_exists(
 						     'PPB_AdvancedGutenbergPro\Utils\Definitions',
 						     'advgb_pro_inline_scripts_frontend'
@@ -4590,7 +4590,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					}
 
 					// Pro
-					if ( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
 						if ( method_exists(
 							'PPB_AdvancedGutenbergPro\Utils\Definitions',
 							'advgb_pro_enqueue_font_styles_frontend'
@@ -4675,7 +4675,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 						);
 
 						// Pro
-						if ( defined( 'ADVANCED_GUTENBERG_PRO' )
+						if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' )
 						     && method_exists(
 							     'PPB_AdvancedGutenbergPro\Utils\Definitions',
 							     'advgb_pro_inline_scripts_frontend'
@@ -4713,7 +4713,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					}
 
 					// Pro
-					if ( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
 						if ( method_exists(
 							'PPB_AdvancedGutenbergPro\Utils\Definitions',
 							'advgb_pro_enqueue_font_styles_frontend'
@@ -4730,7 +4730,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				case 'advgb/countdown':
 
 					// Assets - Pro
-					if ( defined( 'ADVANCED_GUTENBERG_PRO' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
+					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) && $this->settingIsEnabled( 'enable_advgb_blocks' ) ) {
 						if ( method_exists(
 							'PPB_AdvancedGutenbergPro\Utils\Definitions',
 							'advgb_pro_enqueue_scripts_frontend_countdown'
@@ -4773,7 +4773,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			}
 
 			// Styles and assets from Pro blocks
-			if ( defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+			if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ) {
 				if ( method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions',
 					'advgb_pro_set_styles_for_blocks' ) ) {
 					$html_style .= PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_set_styles_for_blocks(
@@ -4900,7 +4900,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			$style_html .= 'transition:all ' . $transition_spd . 's ease;';
 			$style_html .= '}';
 
-			if ( ! defined( 'ADVANCED_GUTENBERG_PRO' ) ) {
+			if ( ! defined( 'ADVANCED_GUTENBERG_PRO_LOADED' ) ) {
 				$style_html .= '.' . $block_class . ' > i {';
 				$style_html .= 'display: none !important;';
 				$style_html .= '}';

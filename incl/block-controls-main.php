@@ -114,7 +114,7 @@ if ( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
 						? $bControl['days'] : [];
 
 					// Pro - Check if the schedule uses a timezone different to General settings
-					if ( defined( 'ADVANCED_GUTENBERG_PRO' )
+					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' )
 					     && isset( $bControl['timezone'] )
 					     && ! empty( $bControl['timezone'] )
 					     && method_exists( 'PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_set_timezone' )

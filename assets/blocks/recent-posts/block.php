@@ -123,7 +123,7 @@ function advgbRenderBlockRecentPosts($attributes)
     }
 
     if(
-        defined('ADVANCED_GUTENBERG_PRO')
+        defined('ADVANCED_GUTENBERG_PRO_LOADED')
         && isset( $attributes['includePosts'] )
         && ! empty( $attributes['includePosts'] )
     ) {
@@ -459,7 +459,7 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass = 'masonry-view columns-' . esc_html($attributes['columns']) . ' tbl-columns-' . esc_html($attributes['columnsT']) . ' mbl-columns-' . esc_html($attributes['columnsM']) . ' gap-' . esc_html($attributes['gap']);
     }
 
-    if (defined('ADVANCED_GUTENBERG_PRO') && isset($attributes['orderSections'])) {
+    if (defined('ADVANCED_GUTENBERG_PRO_LOADED') && isset($attributes['orderSections'])) {
         $blockClass .= ' sections-' . esc_html($attributes['orderSections']);
     }
 
@@ -1524,7 +1524,7 @@ function getDisplayImageVsOrder( $attributes, $key )  {
                     )
                 )
             )
-        ) || !defined('ADVANCED_GUTENBERG_PRO')
+        ) || !defined('ADVANCED_GUTENBERG_PRO_LOADED')
     ) {
         return 'ignore-order';
     } else {

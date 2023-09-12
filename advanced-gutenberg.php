@@ -101,7 +101,7 @@ if ( ! defined( 'ADVANCED_GUTENBERG_LOADED' ) ) {
 	}
 
 	// Internal Vendor and Ask-for-Review
-	if ( ! defined( 'ADVANCED_GUTENBERG_PRO_LIB_VENDOR_PATH' ) ) {
+	if ( ! defined( 'ADVANCED_GUTENBERG_PRO_LOADED_LIB_VENDOR_PATH' ) ) {
 		$autoloadFilePath = ADVANCED_GUTENBERG_LIB_VENDOR_PATH . '/autoload.php';
 		if ( ! class_exists( 'ComposerAutoloaderInitPPBlocks' )
 		     && is_file( $autoloadFilePath )
