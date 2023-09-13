@@ -32,10 +32,6 @@ if ( ! class_exists( 'AdvancedGutenberg_Reviews' ) ) {
 		}
 	}
 
-	function advanced_gutenberg_ask_for_review() {
-		$review = new AdvancedGutenberg_Reviews;
-		$review->init();
-	}
-
-	add_action( 'plugins_loaded', 'advanced_gutenberg_ask_for_review', 10 );
+	$review = new AdvancedGutenberg_Reviews;
+	$review->init();
 }
