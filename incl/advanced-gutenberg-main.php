@@ -3667,6 +3667,11 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 		public function loadPageTab( $page, $tab, $default = 'general' ) {
 			if ( file_exists( plugin_dir_path( __FILE__ ) . 'pages/' . $page . '/' . $tab . '.php' ) ) {
 				include_once( plugin_dir_path( __FILE__ ) . 'pages/' . $page . '/' . $tab . '.php' );
+			} else if( defined( 'ADVANCED_GUTENBERG_BASE_PRO_PATH' ) 
+				&& file_exists( ADVANCED_GUTENBERG_BASE_PRO_PATH . '/incl/pages/' . $page . '/' . $tab . '.php' ) 
+			) {
+				// Maybe is a pro page? Look in another location
+				include_once( ADVANCED_GUTENBERG_BASE_PRO_PATH . '/incl/pages/' . $page . '/' . $tab . '.php' );
 			} else {
 				wp_add_inline_style(
 					'advgb_admin_styles',
