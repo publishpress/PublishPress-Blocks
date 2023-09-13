@@ -26,12 +26,15 @@
     "require-dev": {
         "automattic/vipwpcs": "^2.3",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
-        "squizlabs/php_codesniffer": "^3.6"
+        "squizlabs/php_codesniffer": "^3.6",
+        "wp-cli/i18n-command": "^2.4"
     },
     "scripts": {
         "build": "ppbuild build",
         "build:dir": "ppbuild build-dir",
         "build:clean": "ppbuild clean",
+        "build:make-pot": "wp i18n make-pot --exclude=/dev-workspace --exclude=/.wordpress-org --exclude=/.github --exclude=/dist --exclude=/vendor --exclude=/lib . ./languages/advanced-gutenberg.pot --allow-root",
+        "build:js-translations": "json_translations.sh",
         "get-version": "ppbuild version",
         "check:longpath": "longpath .",
         "pre-autoload-dump": "composer dumpautoload --working-dir=./lib",
