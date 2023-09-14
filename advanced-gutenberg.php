@@ -111,6 +111,9 @@ if ( ! defined( 'ADVANCED_GUTENBERG_LOADED' ) ) {
 		}
 	}
 
+	// Activation
+	require_once __DIR__ . '/install.php';
+
 	add_action( 'plugins_loaded', function () {
 		if ( is_admin() 
 			&& class_exists( 'PublishPress\WordPressReviews\ReviewsController' ) 

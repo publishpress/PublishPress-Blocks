@@ -6,7 +6,6 @@ if ( ! defined( 'GUTENBERG_VERSION_REQUIRED' ) ) {
 	define( 'GUTENBERG_VERSION_REQUIRED', '5.7.0' );
 }
 
-require_once( plugin_dir_path( __FILE__ ) . '/install.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/incl/utilities-main.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/incl/block-settings-main.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/incl/block-controls-main.php' );
@@ -99,3 +98,71 @@ if ( ! function_exists( 'advg_check_legacy_widget_block_init' ) ) {
 	}
 }
 add_action( 'admin_init', 'advg_check_legacy_widget_block_init' );
+
+// @todo - Remove this in 4.0
+if ( ! function_exists( 'advgb_some_specific_updates' ) ) {
+	function advgb_some_specific_updates() {
+		// Run the updates from here
+		$advgb_current_version = get_option( 'advgb_version', '0.0.0' );
+		global $wpdb;
+
+		// Migrate to Block Access by User Roles
+		if ( version_compare( $advgb_current_version, '2.10.2', 'lt' ) && ! get_option( 'advgb_blocks_user_roles' ) ) {
+			// Migrate Block Access Profiles to Block Access by Roles
+			global $wpdb;
+			$profiles = $wpdb->get_results(
+				'SELECT * FROM ' . $wpdb->prefix . 'posts
+                WHERE post_type="advgb_profiles" AND post_status="publish" ORDER BY post_date_gmt DESC'
+			);
+
+			if ( ! empty( $profiles ) ) {
+				// Let's extract the user roles associated to Block Access profiles (we can't get all the user roles with regular WP way)
+				$user_role_accesses = array();
+				foreach ( $profiles as $profile ) {
+					$postID               = $profile->ID;
+					$user_role_accesses[] = get_post_meta( $postID, 'roles_access', true );
+				}
+
+				$user_role_accesses = call_user_func_array( 'array_merge', $user_role_accesses );
+				$user_role_accesses = array_unique( $user_role_accesses );
+
+				// Find the most recent profile of each user role
+				$blocks_by_role_access = array();
+				foreach ( $user_role_accesses as $user_role_access ) {
+					$profiles = $wpdb->get_results(
+						'SELECT * FROM ' . $wpdb->prefix . 'posts
+                        WHERE post_type="advgb_profiles" AND post_status="publish" ORDER BY post_date_gmt DESC'
+					);
+
+					if ( ! empty( $profiles ) ) {
+						$centinel[ $user_role_access ] = false; // A boolean to get the first profile (newest) and skip the rest
+						foreach ( $profiles as $profile ) {
+							if ( $centinel[ $user_role_access ] === false ) {
+								$postID       = $profile->ID;
+								$roles_access = get_post_meta( $postID, 'roles_access', true );
+								$blocks       = get_post_meta( $postID, 'blocks', true );
+
+								if ( in_array( $user_role_access, $roles_access ) ) {
+									$blocks_by_role_access[ $user_role_access ] = $blocks;
+									$centinel[ $user_role_access ]              = true;
+								}
+							}
+						}
+					}
+				}
+
+				// Migrate Block Access by Profile to Block Access by Role
+				if ( $blocks_by_role_access ) {
+					update_option( 'advgb_blocks_user_roles', $blocks_by_role_access, false );
+				}
+			}
+		}
+
+		// Set version if needed
+		if ( $advgb_current_version !== ADVANCED_GUTENBERG_VERSION ) {
+			update_option( 'advgb_version', ADVANCED_GUTENBERG_VERSION );
+		}
+	}
+
+	add_action( 'init', 'advgb_some_specific_updates' );
+}
