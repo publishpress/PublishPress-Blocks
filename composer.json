@@ -37,6 +37,7 @@
         "build:js-translations": "json_translations.sh",
         "get-version": "ppbuild version",
         "check:longpath": "longpath .",
+        "check:phpcs": "vendor/bin/phpcs --standard=WordPress-VIP-Go ./ --severity=6 --ignore=vendor,dist,node_modules || true",
         "pre-autoload-dump": "composer dumpautoload --working-dir=./lib",
         "pre-update-cmd": "composer update --working-dir=./lib",
         "pre-install-cmd": "composer install --working-dir=./lib"
