@@ -270,6 +270,12 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
+= 3.2.0 - 18 Sep 2023 =
+  * Fix: register_activation_hook not executed, #1325;
+  * Fix: Login to check if a setting is enabled, #1319;
+  * Fix: Undefined array key "enable_columns_visual_guide", #1321; 
+  * Change: Internal vendor and new file structure, #1299, #1312;
+
 = 3.1.6 - 10 Aug 2023 =
   * Fix: Undeclared $style_html variable
   * Fix: Add jQuery as dependency when enqueueing frontend.js in frontend for Testimonial block
