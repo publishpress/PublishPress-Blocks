@@ -272,7 +272,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 = 3.2.0 - 18 Sep 2023 =
   * FIX: register_activation_hook not executed, #1325;
-  * FIX: Login to check if a setting is enabled, #1319;
+  * FIX: Logic to check if a setting is enabled, #1319;
   * FIX: Undefined array key "enable_columns_visual_guide", #1321; 
   * CHANGE: Internal vendor and new file structure, #1299, #1312;
 
