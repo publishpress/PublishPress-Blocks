@@ -4,19 +4,19 @@ var path = require("path");
 module.exports = [
     {
         entry: glob.sync(
-            "./src/assets/**/*.jsx",
+            "./assets/**/*.jsx",
             {ignore: [
-                "./src/assets/blocks/customstyles/*.jsx",
-                "./src/assets/blocks/block-controls/*.jsx",
-                "./src/assets/blocks/pro-ad/*.jsx",
-                "./src/assets/blocks/editor-sidebar/*.jsx",
-                "./src/assets/blocks/**/*.frontend.jsx",
-                "./src/assets/js/editor.jsx"
+                "./assets/blocks/customstyles/*.jsx",
+                "./assets/blocks/block-controls/*.jsx",
+                "./assets/blocks/pro-ad/*.jsx",
+                "./assets/blocks/editor-sidebar/*.jsx",
+                "./assets/blocks/**/*.frontend.jsx",
+                "./assets/js/editor.jsx"
             ]}
             ),
         devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "src", "assets", "blocks"),
+            path: path.join(__dirname, "assets", "blocks"),
             filename: "blocks.js"
         },
         module: {
@@ -33,11 +33,11 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./src/assets/blocks/customstyles/custom-styles.jsx",
+            "./assets/blocks/customstyles/custom-styles.jsx",
             ),
         devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "src", "assets", "blocks"),
+            path: path.join(__dirname, "assets", "blocks"),
             filename: "custom-styles.js"
         },
         module: {
@@ -54,11 +54,11 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./src/assets/blocks/pro-ad/pro-ad.jsx",
+            "./assets/blocks/pro-ad/pro-ad.jsx",
             ),
         devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "src", "assets", "blocks"),
+            path: path.join(__dirname, "assets", "blocks"),
             filename: "pro-ad.js"
         },
         module: {
@@ -75,11 +75,11 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./src/assets/blocks/editor-sidebar/post-sidebar.jsx",
+            "./assets/blocks/editor-sidebar/post-sidebar.jsx",
             ),
         devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "src", "assets", "blocks"),
+            path: path.join(__dirname, "assets", "blocks"),
             filename: "post-sidebar.js"
         },
         module: {
@@ -96,11 +96,11 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./src/assets/blocks/block-controls/block-controls.jsx",
+            "./assets/blocks/block-controls/block-controls.jsx",
             ),
         devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "src", "assets", "blocks"),
+            path: path.join(__dirname, "assets", "blocks"),
             filename: "block-controls.js"
         },
         module: {
@@ -116,10 +116,10 @@ module.exports = [
         }
     },
     {
-        entry: glob.sync("./src/assets/**/*.frontend.jsx"),
+        entry: glob.sync("./assets/**/*.frontend.jsx"),
         devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "src", "assets", "blocks"),
+            path: path.join(__dirname, "assets", "blocks"),
             filename: "frontend.js"
         },
         module: {
@@ -134,11 +134,11 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./src/assets/js/editor.jsx",
+            "./assets/js/editor.jsx",
             ),
         devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "src", "assets", "blocks"),
+            path: path.join(__dirname, "assets", "blocks"),
             filename: "editor.js"
         },
         module: {
