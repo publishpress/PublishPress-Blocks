@@ -1,7 +1,7 @@
 import {AdvColorControl} from "../0-adv-components/components.jsx";
 import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
 
-(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, lodash ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
@@ -732,4 +732,4 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
             }
         ]
     });
-}) ( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
+}) ( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, lodash );

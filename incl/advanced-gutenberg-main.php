@@ -462,6 +462,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 						'advgb_blocks',
 						ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/blocks.js',
 						array(
+							'lodash',
 							'wp-blocks',
 							'wp-i18n',
 							'wp-element',

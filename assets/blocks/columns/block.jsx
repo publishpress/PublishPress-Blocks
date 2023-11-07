@@ -1,4 +1,5 @@
-(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
+
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, lodash ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
@@ -1033,4 +1034,4 @@
             }
         ]
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, lodash );

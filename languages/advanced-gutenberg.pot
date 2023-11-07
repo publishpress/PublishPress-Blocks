@@ -2,21 +2,21 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Blocks 3.2.0-beta.2\n"
+"Project-Id-Version: PublishPress Blocks 3.2.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-09-13T18:33:25+00:00\n"
+"POT-Creation-Date: 2023-11-07T23:17:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.8.1\n"
+"X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: advanced-gutenberg\n"
 
 #. Plugin Name of the plugin
 #: incl/advanced-gutenberg-main.php:256
-#: incl/advanced-gutenberg-main.php:1848
+#: incl/advanced-gutenberg-main.php:1849
 #: incl/pages/block-settings.php:90
 #: incl/pages/main.php:8
 #: incl/pages/main.php:32
@@ -74,232 +74,232 @@ msgstr ""
 msgid "Read More"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:892
+#: incl/advanced-gutenberg-main.php:893
 msgid "You're using PublishPress Blocks Free. The Pro version has more features and support. %sUpgrade to Pro%s"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:915
+#: incl/advanced-gutenberg-main.php:916
 #: incl/pages/main.php:121
 #: assets/blocks/0-adv-components/datetime.jsx:425
 #: assets/blocks/pro-ad/pro-ad.jsx:80
 msgid "Upgrade to Pro"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1113
-#: incl/advanced-gutenberg-main.php:1237
-#: incl/advanced-gutenberg-main.php:1296
+#: incl/advanced-gutenberg-main.php:1114
+#: incl/advanced-gutenberg-main.php:1238
+#: incl/advanced-gutenberg-main.php:1297
 msgid "No permission!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1120
-#: incl/advanced-gutenberg-main.php:1248
-#: incl/advanced-gutenberg-main.php:1302
-#: incl/advanced-gutenberg-main.php:1361
-#: incl/advanced-gutenberg-main.php:1452
+#: incl/advanced-gutenberg-main.php:1121
+#: incl/advanced-gutenberg-main.php:1249
+#: incl/advanced-gutenberg-main.php:1303
+#: incl/advanced-gutenberg-main.php:1362
+#: incl/advanced-gutenberg-main.php:1453
 msgid "Invalid nonce token!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1137
+#: incl/advanced-gutenberg-main.php:1138
 #: incl/pages/custom-styles.php:49
 msgid "Style title"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1171
+#: incl/advanced-gutenberg-main.php:1172
 #: assets/blocks/advtabs/block.jsx:228
 msgid "copy"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1252
+#: incl/advanced-gutenberg-main.php:1253
 msgid "Error: wrong data"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1282
+#: incl/advanced-gutenberg-main.php:1283
 msgid "Error: can't edit this feature"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1366
-#: incl/advanced-gutenberg-main.php:1457
-#: incl/advanced-gutenberg-main.php:1509
+#: incl/advanced-gutenberg-main.php:1367
+#: incl/advanced-gutenberg-main.php:1458
+#: incl/advanced-gutenberg-main.php:1510
 msgid "Bad Request!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1374
-#: incl/advanced-gutenberg-main.php:1465
-#: incl/advanced-gutenberg-main.php:1517
+#: incl/advanced-gutenberg-main.php:1375
+#: incl/advanced-gutenberg-main.php:1466
+#: incl/advanced-gutenberg-main.php:1518
 msgid "Server error. Try again later!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1382
-#: incl/advanced-gutenberg-main.php:1473
-#: incl/advanced-gutenberg-main.php:1525
+#: incl/advanced-gutenberg-main.php:1383
+#: incl/advanced-gutenberg-main.php:1474
+#: incl/advanced-gutenberg-main.php:1526
 msgid "Cannot validate captcha"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1387
-#: incl/advanced-gutenberg-main.php:1478
-#: incl/advanced-gutenberg-main.php:1530
+#: incl/advanced-gutenberg-main.php:1388
+#: incl/advanced-gutenberg-main.php:1479
+#: incl/advanced-gutenberg-main.php:1531
 msgid "Captcha validation error"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1412
+#: incl/advanced-gutenberg-main.php:1413
 #: incl/pages/settings/forms.php:20
 msgid "Website Contact"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1418
+#: incl/advanced-gutenberg-main.php:1419
 msgid "You have received a contact from your website."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1421
+#: incl/advanced-gutenberg-main.php:1422
 msgid "Name"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1423
+#: incl/advanced-gutenberg-main.php:1424
 #: incl/block-settings-main.php:801
 #: incl/block-settings-main.php:842
 #: incl/block-settings-main.php:883
 msgid "Email"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1425
+#: incl/advanced-gutenberg-main.php:1426
 msgid "Date"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1427
+#: incl/advanced-gutenberg-main.php:1428
 msgid "Message"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1435
+#: incl/advanced-gutenberg-main.php:1436
 msgid "Error while sending the form. Please try again."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1533
+#: incl/advanced-gutenberg-main.php:1534
 msgid "Captcha validated"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1536
+#: incl/advanced-gutenberg-main.php:1537
 msgid "Captcha is empty"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1834
+#: incl/advanced-gutenberg-main.php:1835
 #: assets/blocks/login-form/block.jsx:512
 msgid "Dashboard"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1841
-#: incl/advanced-gutenberg-main.php:2117
+#: incl/advanced-gutenberg-main.php:1842
+#: incl/advanced-gutenberg-main.php:2118
 #: incl/pages/main.php:23
 msgid "Block Permissions"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1855
+#: incl/advanced-gutenberg-main.php:1856
 #: incl/pages/custom-styles.php:19
 #: incl/pages/main.php:41
 msgid "Block Styles"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1862
+#: incl/advanced-gutenberg-main.php:1863
 #: incl/pages/block-controls.php:30
 #: incl/pages/main.php:50
 #: assets/blocks/block-controls/block-controls.jsx:898
 msgid "Block Controls"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1869
+#: incl/advanced-gutenberg-main.php:1870
 #: incl/pages/main.php:59
 msgid "Synced Patterns"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1876
+#: incl/advanced-gutenberg-main.php:1877
 #: incl/pages/settings.php:22
 msgid "Settings"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2092
-#: incl/advanced-gutenberg-main.php:2137
-#: incl/advanced-gutenberg-main.php:2170
-#: incl/advanced-gutenberg-main.php:2214
+#: incl/advanced-gutenberg-main.php:2093
+#: incl/advanced-gutenberg-main.php:2138
+#: incl/advanced-gutenberg-main.php:2171
+#: incl/advanced-gutenberg-main.php:2215
 msgid "This feature is disabled. In order to use, please enable back through %sDashboard%s."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2276
+#: incl/advanced-gutenberg-main.php:2277
 msgid "If you like %sPublishPress Blocks%s please leave us a %s rating. Thank you!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2293
+#: incl/advanced-gutenberg-main.php:2294
 msgid "About PublishPress Blocks"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2296
+#: incl/advanced-gutenberg-main.php:2297
 msgid "About"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2303
-#: incl/advanced-gutenberg-main.php:2306
+#: incl/advanced-gutenberg-main.php:2304
+#: incl/advanced-gutenberg-main.php:2307
 msgid "Documentation"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2314
+#: incl/advanced-gutenberg-main.php:2315
 msgid "Contact the PublishPress team"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2317
+#: incl/advanced-gutenberg-main.php:2318
 msgid "Contact"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2343
+#: incl/advanced-gutenberg-main.php:2344
 msgid "PublishPress Blocks logo"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3148
+#: incl/advanced-gutenberg-main.php:3149
 msgid "%s saved successfully!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3158
+#: incl/advanced-gutenberg-main.php:3159
 msgid "%s can't be saved. Please try again."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3214
+#: incl/advanced-gutenberg-main.php:3215
 #: incl/pages/block-controls/blocks.php:13
 #: incl/pages/block-settings.php:97
 msgid "Search blocks"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3219
+#: incl/advanced-gutenberg-main.php:3220
 msgid "Enable or disable all blocks"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3232
-#: incl/advanced-gutenberg-main.php:3282
+#: incl/advanced-gutenberg-main.php:3233
+#: incl/advanced-gutenberg-main.php:3283
 #: incl/pages/block-controls/blocks.php:31
 #: incl/pages/block-controls/blocks.php:79
 msgid "To save this configuration, enable at least one block."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3248
-#: incl/advanced-gutenberg-main.php:3274
+#: incl/advanced-gutenberg-main.php:3249
+#: incl/advanced-gutenberg-main.php:3275
 msgid "Save %s"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3258
+#: incl/advanced-gutenberg-main.php:3259
 #: incl/pages/block-controls/blocks.php:56
 msgid "Loading..."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3569
 #: incl/advanced-gutenberg-main.php:3570
+#: incl/advanced-gutenberg-main.php:3571
 msgid "Block Config"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3626
+#: incl/advanced-gutenberg-main.php:3627
 msgid "Default configuration for this block is not available."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3681
+#: incl/advanced-gutenberg-main.php:3682
 msgid "Page not found. Go to %sDashboard%s"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4072
+#: incl/advanced-gutenberg-main.php:4073
 #: incl/pages/settings/general.php:133
 #: assets/blocks/advbutton/block.jsx:746
 #: assets/blocks/advicon/block.jsx:226
@@ -311,19 +311,19 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4086
+#: incl/advanced-gutenberg-main.php:4087
 msgid "Type field not defined"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4350
+#: incl/advanced-gutenberg-main.php:4351
 msgid "User registration is currently not allowed."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4352
+#: incl/advanced-gutenberg-main.php:4353
 msgid "Captcha must be checked!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4353
+#: incl/advanced-gutenberg-main.php:4354
 msgid "Username or password is incorrect!"
 msgstr ""
 
@@ -352,28 +352,28 @@ msgstr ""
 
 #: incl/block-settings-main.php:14
 #: assets/blocks/accordion/block.jsx:114
-#: assets/blocks/advaccordion/accordion.jsx:114
+#: assets/blocks/advaccordion/accordion.jsx:115
 #: assets/blocks/advaccordion/block.jsx:167
 msgid "Accordion Settings"
 msgstr ""
 
 #: incl/block-settings-main.php:17
 #: assets/blocks/accordion/block.jsx:116
-#: assets/blocks/advaccordion/accordion.jsx:116
+#: assets/blocks/advaccordion/accordion.jsx:117
 #: assets/blocks/advaccordion/block.jsx:169
 msgid "Bottom spacing"
 msgstr ""
 
 #: incl/block-settings-main.php:24
 #: assets/blocks/accordion/block.jsx:216
-#: assets/blocks/advaccordion/accordion.jsx:124
+#: assets/blocks/advaccordion/accordion.jsx:125
 #: assets/blocks/advaccordion/block.jsx:177
 msgid "Initial Collapsed"
 msgstr ""
 
 #: incl/block-settings-main.php:31
 #: assets/blocks/accordion/block.jsx:124
-#: assets/blocks/advaccordion/accordion.jsx:136
+#: assets/blocks/advaccordion/accordion.jsx:137
 #: assets/blocks/advaccordion/block.jsx:186
 msgid "Header Settings"
 msgstr ""
@@ -394,8 +394,8 @@ msgstr ""
 #: incl/block-settings-main.php:1873
 #: assets/blocks/accordion/block.jsx:144
 #: assets/blocks/accordion/block.jsx:166
-#: assets/blocks/advaccordion/accordion.jsx:156
-#: assets/blocks/advaccordion/accordion.jsx:178
+#: assets/blocks/advaccordion/accordion.jsx:157
+#: assets/blocks/advaccordion/accordion.jsx:179
 #: assets/blocks/advaccordion/block.jsx:206
 #: assets/blocks/advaccordion/block.jsx:228
 #: assets/blocks/advbutton/block.jsx:158
@@ -421,8 +421,8 @@ msgstr ""
 #: incl/block-settings-main.php:1489
 #: assets/blocks/accordion/block.jsx:149
 #: assets/blocks/accordion/block.jsx:171
-#: assets/blocks/advaccordion/accordion.jsx:161
-#: assets/blocks/advaccordion/accordion.jsx:183
+#: assets/blocks/advaccordion/accordion.jsx:162
+#: assets/blocks/advaccordion/accordion.jsx:184
 #: assets/blocks/advaccordion/block.jsx:211
 #: assets/blocks/advaccordion/block.jsx:233
 #: assets/blocks/advbutton/block.jsx:163
@@ -486,7 +486,7 @@ msgstr ""
 #: incl/block-settings-main.php:1367
 #: incl/block-settings-main.php:1713
 #: assets/blocks/accordion/block.jsx:177
-#: assets/blocks/advaccordion/accordion.jsx:189
+#: assets/blocks/advaccordion/accordion.jsx:190
 #: assets/blocks/advaccordion/block.jsx:239
 #: assets/blocks/advtabs/block.jsx:471
 #: assets/blocks/columns/column.jsx:120
@@ -503,7 +503,7 @@ msgstr ""
 #: incl/block-settings-main.php:1219
 #: incl/block-settings-main.php:1375
 #: assets/blocks/accordion/block.jsx:179
-#: assets/blocks/advaccordion/accordion.jsx:191
+#: assets/blocks/advaccordion/accordion.jsx:192
 #: assets/blocks/advaccordion/block.jsx:241
 #: assets/blocks/advtable/block.jsx:1264
 #: assets/blocks/advtabs/block.jsx:473
@@ -521,7 +521,7 @@ msgstr ""
 #: incl/block-settings-main.php:1380
 #: incl/block-settings-main.php:1725
 #: assets/blocks/accordion/block.jsx:182
-#: assets/blocks/advaccordion/accordion.jsx:194
+#: assets/blocks/advaccordion/accordion.jsx:195
 #: assets/blocks/advaccordion/block.jsx:244
 #: assets/blocks/advbutton/block.jsx:126
 #: assets/blocks/advtable/block.jsx:1267
@@ -541,7 +541,7 @@ msgstr ""
 #: incl/block-settings-main.php:1384
 #: incl/block-settings-main.php:1733
 #: assets/blocks/accordion/block.jsx:183
-#: assets/blocks/advaccordion/accordion.jsx:195
+#: assets/blocks/advaccordion/accordion.jsx:196
 #: assets/blocks/advaccordion/block.jsx:245
 #: assets/blocks/advbutton/block.jsx:128
 #: assets/blocks/advtable/block.jsx:1268
@@ -561,7 +561,7 @@ msgstr ""
 #: incl/block-settings-main.php:1388
 #: incl/block-settings-main.php:1729
 #: assets/blocks/accordion/block.jsx:184
-#: assets/blocks/advaccordion/accordion.jsx:196
+#: assets/blocks/advaccordion/accordion.jsx:197
 #: assets/blocks/advaccordion/block.jsx:246
 #: assets/blocks/advbutton/block.jsx:127
 #: assets/blocks/advtable/block.jsx:1269
@@ -584,7 +584,7 @@ msgstr ""
 #: incl/block-settings-main.php:1809
 #: incl/block-settings-main.php:1878
 #: assets/blocks/accordion/block.jsx:193
-#: assets/blocks/advaccordion/accordion.jsx:205
+#: assets/blocks/advaccordion/accordion.jsx:206
 #: assets/blocks/advaccordion/block.jsx:255
 #: assets/blocks/advbutton/block.jsx:344
 #: assets/blocks/advbutton/block.jsx:348
@@ -762,7 +762,7 @@ msgstr ""
 #: assets/blocks/advtable/block.jsx:1270
 #: assets/blocks/advtabs/block.jsx:476
 #: assets/blocks/advvideo/block.jsx:315
-#: assets/blocks/columns/block.jsx:47
+#: assets/blocks/columns/block.jsx:48
 #: assets/blocks/columns/column.jsx:17
 #: assets/blocks/images-slider/block.jsx:252
 #: assets/blocks/recent-posts/block.jsx:67
@@ -1037,7 +1037,7 @@ msgstr ""
 #: assets/blocks/advbutton/block.jsx:364
 #: assets/blocks/advicon/block.jsx:341
 #: assets/blocks/advlist/block.jsx:330
-#: assets/blocks/columns/block.jsx:561
+#: assets/blocks/columns/block.jsx:562
 #: assets/blocks/columns/column.jsx:201
 #: assets/blocks/infobox/block.jsx:376
 #: assets/blocks/infobox/block.jsx:503
@@ -1050,7 +1050,7 @@ msgstr ""
 #: assets/blocks/advicon/block.jsx:307
 #: assets/blocks/advlist/block.jsx:338
 #: assets/blocks/advtable/block.jsx:1292
-#: assets/blocks/columns/block.jsx:535
+#: assets/blocks/columns/block.jsx:536
 #: assets/blocks/columns/column.jsx:186
 #: assets/blocks/infobox/block.jsx:259
 #: assets/blocks/infobox/block.jsx:345
@@ -1146,8 +1146,8 @@ msgstr ""
 #: incl/block-settings-main.php:1476
 #: assets/blocks/accordion/block.jsx:140
 #: assets/blocks/accordion/block.jsx:189
-#: assets/blocks/advaccordion/accordion.jsx:152
-#: assets/blocks/advaccordion/accordion.jsx:201
+#: assets/blocks/advaccordion/accordion.jsx:153
+#: assets/blocks/advaccordion/accordion.jsx:202
 #: assets/blocks/advaccordion/block.jsx:202
 #: assets/blocks/advaccordion/block.jsx:251
 #: assets/blocks/advbutton/block.jsx:426
@@ -1360,7 +1360,7 @@ msgstr ""
 #: incl/block-settings-main.php:899
 #: incl/block-settings-main.php:1861
 #: assets/blocks/accordion/block.jsx:154
-#: assets/blocks/advaccordion/accordion.jsx:166
+#: assets/blocks/advaccordion/accordion.jsx:167
 #: assets/blocks/advaccordion/block.jsx:216
 #: assets/blocks/advbutton/block.jsx:508
 #: assets/blocks/advicon/block.jsx:239
@@ -1592,7 +1592,7 @@ msgid "Hover Color"
 msgstr ""
 
 #: incl/block-settings-main.php:1541
-#: assets/blocks/columns/block.jsx:442
+#: assets/blocks/columns/block.jsx:443
 msgid "Columns Settings"
 msgstr ""
 
@@ -1636,7 +1636,7 @@ msgid "90px"
 msgstr ""
 
 #: incl/block-settings-main.php:1583
-#: assets/blocks/columns/block.jsx:523
+#: assets/blocks/columns/block.jsx:524
 msgid "Vertical space when collapsed"
 msgstr ""
 
@@ -1645,7 +1645,7 @@ msgid "Collapsed order RTL"
 msgstr ""
 
 #: incl/block-settings-main.php:1629
-#: assets/blocks/columns/block.jsx:588
+#: assets/blocks/columns/block.jsx:589
 msgid "Row Settings"
 msgstr ""
 
@@ -1663,12 +1663,12 @@ msgid "Full Height"
 msgstr ""
 
 #: incl/block-settings-main.php:1655
-#: assets/blocks/columns/block.jsx:590
+#: assets/blocks/columns/block.jsx:591
 msgid "Columns Wrapped"
 msgstr ""
 
 #: incl/block-settings-main.php:1660
-#: assets/blocks/columns/block.jsx:596
+#: assets/blocks/columns/block.jsx:597
 #: assets/blocks/container/block.jsx:66
 msgid "Wrapper Tag"
 msgstr ""
@@ -1702,12 +1702,12 @@ msgid "Footer"
 msgstr ""
 
 #: incl/block-settings-main.php:1695
-#: assets/blocks/columns/block.jsx:611
+#: assets/blocks/columns/block.jsx:612
 msgid "Content Max Width"
 msgstr ""
 
 #: incl/block-settings-main.php:1702
-#: assets/blocks/columns/block.jsx:629
+#: assets/blocks/columns/block.jsx:630
 msgid "Content Min Height"
 msgstr ""
 
@@ -1924,7 +1924,7 @@ msgid "Video - PublishPress"
 msgstr ""
 
 #: incl/pages/block-settings.php:60
-#: assets/blocks/columns/block.jsx:864
+#: assets/blocks/columns/block.jsx:865
 msgid "Columns - PublishPress"
 msgstr ""
 
@@ -2405,19 +2405,19 @@ msgstr ""
 msgid "Save reCAPTCHA Settings"
 msgstr ""
 
-#: install.php:21
+#: install.php:23
 msgid "Gutenberg is not detected! Activate it or"
 msgstr ""
 
-#: install.php:22
+#: install.php:24
 msgid "Install Gutenberg Now!"
 msgstr ""
 
-#: install.php:31
+#: install.php:33
 msgid "We require at least Gutenberg version "
 msgstr ""
 
-#: install.php:33
+#: install.php:35
 msgid "Please update Gutenberg then comeback later!"
 msgstr ""
 
@@ -2524,19 +2524,19 @@ msgid "Define space to next block. This will override Block spacing option (Fron
 msgstr ""
 
 #: assets/blocks/accordion/block.jsx:125
-#: assets/blocks/advaccordion/accordion.jsx:137
+#: assets/blocks/advaccordion/accordion.jsx:138
 #: assets/blocks/advaccordion/block.jsx:187
 msgid "Header Icon Style"
 msgstr ""
 
 #: assets/blocks/accordion/block.jsx:162
-#: assets/blocks/advaccordion/accordion.jsx:174
+#: assets/blocks/advaccordion/accordion.jsx:175
 #: assets/blocks/advaccordion/block.jsx:224
 msgid "Body Color Settings"
 msgstr ""
 
 #: assets/blocks/accordion/block.jsx:200
-#: assets/blocks/advaccordion/accordion.jsx:212
+#: assets/blocks/advaccordion/accordion.jsx:213
 #: assets/blocks/advaccordion/block.jsx:262
 #: assets/blocks/advbutton/block.jsx:355
 #: assets/blocks/advtable/block.jsx:1275
@@ -2548,7 +2548,7 @@ msgid "Border width"
 msgstr ""
 
 #: assets/blocks/accordion/block.jsx:207
-#: assets/blocks/advaccordion/accordion.jsx:219
+#: assets/blocks/advaccordion/accordion.jsx:220
 #: assets/blocks/advaccordion/block.jsx:269
 #: assets/blocks/advbutton/block.jsx:328
 #: assets/blocks/advtabs/block.jsx:502
@@ -2565,7 +2565,7 @@ msgid "Make all accordions collapsed by default, enable this setting to apply to
 msgstr ""
 
 #: assets/blocks/accordion/block.jsx:245
-#: assets/blocks/advaccordion/accordion.jsx:249
+#: assets/blocks/advaccordion/accordion.jsx:250
 #: assets/blocks/summary/block.jsx:321
 msgid "Enter header…"
 msgstr ""
@@ -2575,13 +2575,13 @@ msgid "Accordion (deprecated) - PublishPress"
 msgstr ""
 
 #: assets/blocks/accordion/block.jsx:333
-#: assets/blocks/advaccordion/accordion.jsx:283
+#: assets/blocks/advaccordion/accordion.jsx:284
 #: assets/blocks/advaccordion/block.jsx:365
 msgid "Create a sliding accordion display for your content."
 msgstr ""
 
 #: assets/blocks/accordion/block.jsx:339
-#: assets/blocks/advaccordion/accordion.jsx:290
+#: assets/blocks/advaccordion/accordion.jsx:291
 #: assets/blocks/advaccordion/block.jsx:371
 #: assets/blocks/login-form/block.jsx:983
 #: assets/blocks/search-bar/block.jsx:431
@@ -2589,7 +2589,7 @@ msgid "accordion"
 msgstr ""
 
 #: assets/blocks/accordion/block.jsx:339
-#: assets/blocks/advaccordion/accordion.jsx:290
+#: assets/blocks/advaccordion/accordion.jsx:291
 #: assets/blocks/advaccordion/block.jsx:371
 #: assets/blocks/advlist/block.jsx:448
 #: assets/blocks/login-form/block.jsx:983
@@ -2599,32 +2599,32 @@ msgid "list"
 msgstr ""
 
 #: assets/blocks/accordion/block.jsx:339
-#: assets/blocks/advaccordion/accordion.jsx:290
+#: assets/blocks/advaccordion/accordion.jsx:291
 #: assets/blocks/advaccordion/block.jsx:371
 #: assets/blocks/login-form/block.jsx:983
 #: assets/blocks/search-bar/block.jsx:431
 msgid "faq"
 msgstr ""
 
-#: assets/blocks/advaccordion/accordion.jsx:118
+#: assets/blocks/advaccordion/accordion.jsx:119
 #: assets/blocks/advaccordion/block.jsx:171
 msgid "Define space between each accordion (Frontend view only)"
 msgstr ""
 
-#: assets/blocks/advaccordion/accordion.jsx:125
+#: assets/blocks/advaccordion/accordion.jsx:126
 #: assets/blocks/advaccordion/block.jsx:178
 msgid "Make all accordions collapsed by default."
 msgstr ""
 
-#: assets/blocks/advaccordion/accordion.jsx:130
+#: assets/blocks/advaccordion/accordion.jsx:131
 msgid "Header Tag"
 msgstr ""
 
-#: assets/blocks/advaccordion/accordion.jsx:282
+#: assets/blocks/advaccordion/accordion.jsx:283
 msgid "Accordion Item - PublishPress"
 msgstr ""
 
-#: assets/blocks/advaccordion/accordion.jsx:294
+#: assets/blocks/advaccordion/accordion.jsx:295
 msgid "Header text"
 msgstr ""
 
@@ -2856,7 +2856,7 @@ msgstr ""
 
 #: assets/blocks/advicon/block.jsx:227
 #: assets/blocks/advtabs/block.jsx:404
-#: assets/blocks/columns/block.jsx:44
+#: assets/blocks/columns/block.jsx:45
 #: assets/blocks/recent-posts/block.jsx:40
 #: assets/blocks/recent-posts/block.jsx:53
 #: assets/blocks/recent-posts/block.jsx:62
@@ -2899,8 +2899,8 @@ msgstr ""
 
 #: assets/blocks/advicon/block.jsx:311
 #: assets/blocks/advicon/block.jsx:345
-#: assets/blocks/columns/block.jsx:539
-#: assets/blocks/columns/block.jsx:565
+#: assets/blocks/columns/block.jsx:540
+#: assets/blocks/columns/block.jsx:566
 #: assets/blocks/infobox/block.jsx:263
 #: assets/blocks/infobox/block.jsx:349
 #: assets/blocks/infobox/block.jsx:380
@@ -3271,19 +3271,19 @@ msgid "Tab Header"
 msgstr ""
 
 #: assets/blocks/advtabs/block.jsx:322
-#: assets/blocks/columns/block.jsx:136
+#: assets/blocks/columns/block.jsx:137
 #: assets/blocks/recent-posts/block.jsx:368
 msgid "desktop"
 msgstr ""
 
 #: assets/blocks/advtabs/block.jsx:325
-#: assets/blocks/columns/block.jsx:139
+#: assets/blocks/columns/block.jsx:140
 #: assets/blocks/recent-posts/block.jsx:371
 msgid "tablet"
 msgstr ""
 
 #: assets/blocks/advtabs/block.jsx:328
-#: assets/blocks/columns/block.jsx:142
+#: assets/blocks/columns/block.jsx:143
 #: assets/blocks/recent-posts/block.jsx:374
 msgid "mobile"
 msgstr ""
@@ -3676,288 +3676,288 @@ msgstr ""
 msgid "Select pages"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:12
+#: assets/blocks/columns/block.jsx:13
 msgid "One column"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:12
+#: assets/blocks/columns/block.jsx:13
 msgid "100"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:13
+#: assets/blocks/columns/block.jsx:14
 msgid "Two columns; equal split"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:13
+#: assets/blocks/columns/block.jsx:14
 msgid "50 / 50"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:14
+#: assets/blocks/columns/block.jsx:15
 msgid "Two columns; two-thirds, one-third split"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:14
+#: assets/blocks/columns/block.jsx:15
 msgid "66 / 33"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:15
+#: assets/blocks/columns/block.jsx:16
 msgid "Two columns; one-third, two-thirds split"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:15
+#: assets/blocks/columns/block.jsx:16
 msgid "33 / 66"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:16
+#: assets/blocks/columns/block.jsx:17
 msgid "Two columns; one-quarter, three-quarters split"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:16
+#: assets/blocks/columns/block.jsx:17
 msgid "25 / 75"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:17
+#: assets/blocks/columns/block.jsx:18
 msgid "Two columns; three-quarters, one-quarter split"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:17
+#: assets/blocks/columns/block.jsx:18
 msgid "75 / 25"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:18
+#: assets/blocks/columns/block.jsx:19
 msgid "Two columns; one-fifth, four-fifths split"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:18
+#: assets/blocks/columns/block.jsx:19
 msgid "20 / 80"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:19
+#: assets/blocks/columns/block.jsx:20
 msgid "Two columns; four-fifths, one-fifth split"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:19
+#: assets/blocks/columns/block.jsx:20
 msgid "80 / 20"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:20
+#: assets/blocks/columns/block.jsx:21
 msgid "Three columns; equal split"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:20
+#: assets/blocks/columns/block.jsx:21
 msgid "33 / 33 / 33"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:21
+#: assets/blocks/columns/block.jsx:22
 msgid "Three columns; wider one-half left column"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:21
+#: assets/blocks/columns/block.jsx:22
 msgid "50 / 25 / 25"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:22
+#: assets/blocks/columns/block.jsx:23
 msgid "Three columns; wider one-half right column"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:22
+#: assets/blocks/columns/block.jsx:23
 msgid "25 / 25 / 50"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:23
+#: assets/blocks/columns/block.jsx:24
 msgid "Three columns; wider one-half center column"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:23
+#: assets/blocks/columns/block.jsx:24
 msgid "25 / 50 / 25"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:24
+#: assets/blocks/columns/block.jsx:25
 msgid "Three columns; wider three-fifths center column"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:24
+#: assets/blocks/columns/block.jsx:25
 msgid "20 / 60 / 20"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:25
+#: assets/blocks/columns/block.jsx:26
 msgid "Three columns; wider three-fifths left column"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:25
+#: assets/blocks/columns/block.jsx:26
 msgid "60 / 20 / 20"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:26
+#: assets/blocks/columns/block.jsx:27
 msgid "Three columns; wider three-fifths right column"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:26
+#: assets/blocks/columns/block.jsx:27
 msgid "20 / 20 / 60"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:27
+#: assets/blocks/columns/block.jsx:28
 msgid "Three columns; wider four-sixths center column"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:27
+#: assets/blocks/columns/block.jsx:28
 msgid "16.6 / 66.6 / 16.6"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:28
+#: assets/blocks/columns/block.jsx:29
 msgid "Four columns; equal split"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:28
+#: assets/blocks/columns/block.jsx:29
 msgid "25 / 25 / 25 / 25"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:29
+#: assets/blocks/columns/block.jsx:30
 msgid "Four columns; wider one-half left column"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:29
+#: assets/blocks/columns/block.jsx:30
 msgid "50 / 16.6 / 16.6 / 16.6"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:30
+#: assets/blocks/columns/block.jsx:31
 msgid "Four columns; wider one-half right column"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:30
+#: assets/blocks/columns/block.jsx:31
 msgid "16.6 / 16.6 / 16.6 / 50"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:31
+#: assets/blocks/columns/block.jsx:32
 msgid "Four columns; wider two-fifths right column"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:31
+#: assets/blocks/columns/block.jsx:32
 msgid "20 / 20 / 20 / 40"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:32
+#: assets/blocks/columns/block.jsx:33
 msgid "Four columns; wider two-fifths left column"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:32
+#: assets/blocks/columns/block.jsx:33
 msgid "40 / 20 / 20 / 20"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:33
+#: assets/blocks/columns/block.jsx:34
 msgid "Five columns; equal split"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:33
+#: assets/blocks/columns/block.jsx:34
 msgid "20 / 20 / 20 / 20 / 20"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:34
+#: assets/blocks/columns/block.jsx:35
 msgid "Six columns; equal split"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:34
+#: assets/blocks/columns/block.jsx:35
 msgid "16.6 / 16.6 / 16.6 / 16.6 / 16.6 / 16.6"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:37
+#: assets/blocks/columns/block.jsx:38
 msgid "Three: 100 - 1/2 - 1/2"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:38
+#: assets/blocks/columns/block.jsx:39
 msgid "Three: 1/2 - 1/2 - 100"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:39
+#: assets/blocks/columns/block.jsx:40
 msgid "Four: Two Columns"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:40
+#: assets/blocks/columns/block.jsx:41
 msgid "Six: Two Columns"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:41
+#: assets/blocks/columns/block.jsx:42
 msgid "Six: Three Columns"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:342
+#: assets/blocks/columns/block.jsx:343
 msgid "Columns Manager"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:346
+#: assets/blocks/columns/block.jsx:347
 msgid "Choose a columns layout"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:384
+#: assets/blocks/columns/block.jsx:385
 msgid "Vertical Align Top"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:395
+#: assets/blocks/columns/block.jsx:396
 msgid "Vertical Align Middle"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:406
+#: assets/blocks/columns/block.jsx:407
 msgid "Vertical Align Bottom"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:417
+#: assets/blocks/columns/block.jsx:418
 msgid "Inner Columns Full Height"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:435
+#: assets/blocks/columns/block.jsx:436
 msgid "Columns Manager "
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:443
+#: assets/blocks/columns/block.jsx:444
 msgid "Responsive Settings"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:514
+#: assets/blocks/columns/block.jsx:515
 msgid "Space between columns"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:529
+#: assets/blocks/columns/block.jsx:530
 msgid "Collapsed Order RTL"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:535
+#: assets/blocks/columns/block.jsx:536
 #: assets/blocks/columns/column.jsx:186
 msgid " Padding"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:561
+#: assets/blocks/columns/block.jsx:562
 #: assets/blocks/columns/column.jsx:201
 msgid " Margin"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:591
+#: assets/blocks/columns/block.jsx:592
 msgid "If your columns overflow they available space, they will be placed on a new line."
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:647
+#: assets/blocks/columns/block.jsx:648
 msgid "Content Max Height"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:865
+#: assets/blocks/columns/block.jsx:866
 msgid "Create flexible layouts for your content with advanced options and styles."
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:871
+#: assets/blocks/columns/block.jsx:872
 #: assets/blocks/columns/column.jsx:361
 msgid "columns"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:871
+#: assets/blocks/columns/block.jsx:872
 msgid "columns manager"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:871
+#: assets/blocks/columns/block.jsx:872
 #: assets/blocks/columns/column.jsx:361
 #: assets/blocks/container/block.jsx:24
 msgid "row"
 msgstr ""
 
-#: assets/blocks/columns/block.jsx:871
+#: assets/blocks/columns/block.jsx:872
 #: assets/blocks/columns/column.jsx:361
 msgid "layout"
 msgstr ""
@@ -4916,13 +4916,13 @@ msgid "Show content with these "
 msgstr ""
 
 #: assets/blocks/recent-posts/block.jsx:714
-#: assets/blocks/recent-posts/query-controls.jsx:121
-#: assets/blocks/recent-posts/query-controls.jsx:125
+#: assets/blocks/recent-posts/query-controls.jsx:120
+#: assets/blocks/recent-posts/query-controls.jsx:124
 msgid "Author"
 msgstr ""
 
 #: assets/blocks/recent-posts/block.jsx:715
-#: assets/blocks/recent-posts/query-controls.jsx:206
+#: assets/blocks/recent-posts/query-controls.jsx:205
 #: assets/blocks/woo-products/block.jsx:245
 #: assets/blocks/woo-products/block.jsx:255
 msgid "All"
@@ -5187,68 +5187,68 @@ msgstr ""
 msgid "pages"
 msgstr ""
 
-#: assets/blocks/recent-posts/query-controls.jsx:103
+#: assets/blocks/recent-posts/query-controls.jsx:102
 msgid "Created: Newest to oldest"
 msgstr ""
 
-#: assets/blocks/recent-posts/query-controls.jsx:107
+#: assets/blocks/recent-posts/query-controls.jsx:106
 msgid "Created: Oldest to newest"
 msgstr ""
 
 #. translators: label for ordering posts by title in ascending order
-#: assets/blocks/recent-posts/query-controls.jsx:112
-#: assets/blocks/recent-posts/query-controls.jsx:121
+#: assets/blocks/recent-posts/query-controls.jsx:111
+#: assets/blocks/recent-posts/query-controls.jsx:120
 msgid "A → Z"
 msgstr ""
 
 #. translators: label for ordering posts by title in descending order
-#: assets/blocks/recent-posts/query-controls.jsx:117
-#: assets/blocks/recent-posts/query-controls.jsx:125
+#: assets/blocks/recent-posts/query-controls.jsx:116
+#: assets/blocks/recent-posts/query-controls.jsx:124
 msgid "Z → A"
 msgstr ""
 
-#: assets/blocks/recent-posts/query-controls.jsx:129
+#: assets/blocks/recent-posts/query-controls.jsx:128
 msgid "Modified: Newest to oldest"
 msgstr ""
 
-#: assets/blocks/recent-posts/query-controls.jsx:133
+#: assets/blocks/recent-posts/query-controls.jsx:132
 msgid "Modified: Oldest to newest"
 msgstr ""
 
-#: assets/blocks/recent-posts/query-controls.jsx:137
+#: assets/blocks/recent-posts/query-controls.jsx:136
 msgid "Post ID Descending"
 msgstr ""
 
-#: assets/blocks/recent-posts/query-controls.jsx:141
+#: assets/blocks/recent-posts/query-controls.jsx:140
 msgid "Post ID Ascending"
 msgstr ""
 
-#: assets/blocks/recent-posts/query-controls.jsx:150
+#: assets/blocks/recent-posts/query-controls.jsx:149
 msgid "Randomize"
 msgstr ""
 
-#: assets/blocks/recent-posts/query-controls.jsx:160
+#: assets/blocks/recent-posts/query-controls.jsx:159
 msgid "Comments, decreasing order"
 msgstr ""
 
-#: assets/blocks/recent-posts/query-controls.jsx:164
+#: assets/blocks/recent-posts/query-controls.jsx:163
 msgid "Comments, increasing order"
 msgstr ""
 
-#: assets/blocks/recent-posts/query-controls.jsx:177
+#: assets/blocks/recent-posts/query-controls.jsx:176
 msgid "Series order"
 msgstr ""
 
-#: assets/blocks/recent-posts/query-controls.jsx:187
+#: assets/blocks/recent-posts/query-controls.jsx:186
 msgid "Order by"
 msgstr ""
 
-#: assets/blocks/recent-posts/query-controls.jsx:205
+#: assets/blocks/recent-posts/query-controls.jsx:204
 #: assets/blocks/woo-products/block.jsx:252
 msgid "Category"
 msgstr ""
 
-#: assets/blocks/recent-posts/query-controls.jsx:214
+#: assets/blocks/recent-posts/query-controls.jsx:213
 #: assets/blocks/testimonial/block.jsx:237
 msgid "Number of items"
 msgstr ""

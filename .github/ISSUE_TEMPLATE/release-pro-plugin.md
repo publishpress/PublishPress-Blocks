@@ -20,7 +20,8 @@ To release the Pro plugin, ensure you complete all the tasks below.
 - [ ] Inspect GitHub's Dependabot warnings or Pull Requests for relevant issues. Resolve any false positives first, then fix and commit the remaining issues.
 - [ ] If necessary, build JS files for production using `composer build:js` and commit the changes.
 - [ ] Run a WP VIP scan with `composer check:phpcs` to ensure no warnings or errors greater than 5 exist.
-- [ ] Update the `.pot` file executing `composer gen:pot` and include a note in the changelog.
+- [ ] Update the `.pot` file executing `composer build:make-pot` and include a note in the changelog.
+- [ ] Update the JavaScript translations by executing `composer build:js-translations`.
 - [ ] Especially for minor and patch releases, maintain backward compatibility for changes like renamed or moved classes, namespaces, functions, etc. Include deprecation comments and mention this in the changelog. Major releases may remove deprecated code, but always note this in the changelog.
 - [ ] Revise the changelog to include all changes with user-friendly descriptions and ensure the release date is accurate.
 -- [ ] Update the version number in the main plugin file and `readme.txt`, adhering to specifications from our [tech documentation](https://rambleventures.slab.com/posts/version-numbers-58nmrk4b), and commit to the release branch.
