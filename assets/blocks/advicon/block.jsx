@@ -1,5 +1,6 @@
 import {AdvColorControl} from "../0-adv-components/components.jsx";
 import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
+import lodash from 'lodash';
 
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     wpBlockEditor = wp.blockEditor || wp.editor;

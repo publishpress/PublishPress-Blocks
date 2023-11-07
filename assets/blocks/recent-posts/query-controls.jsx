@@ -1,3 +1,5 @@
+import lodash from 'lodash';
+
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { TreeSelect, SelectControl, FormTokenField, RangeControl } = wp.components;
