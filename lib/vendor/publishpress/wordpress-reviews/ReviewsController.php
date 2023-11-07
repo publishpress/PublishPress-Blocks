@@ -39,10 +39,6 @@ namespace PublishPress\WordPressReviews;
 
 use Exception;
 
-if (class_exists('PublishPress\\WordPressReviews\\ReviewsController')) {
-    return;
-}
-
 /**
  * Class ReviewsController
  *
