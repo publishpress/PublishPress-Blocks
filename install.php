@@ -2,6 +2,10 @@
 
 defined( 'ABSPATH' ) || die;
 
+if ( ! defined( 'GUTENBERG_VERSION_REQUIRED' ) ) {
+	define( 'GUTENBERG_VERSION_REQUIRED', '5.7.0' );
+}
+
 // Check if Gutenberg is activated
 if ( ! function_exists( 'register_block_type' ) ) {
 	$gutenbergInstallUrl = wp_nonce_url(
