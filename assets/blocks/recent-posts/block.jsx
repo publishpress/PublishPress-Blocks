@@ -1,7 +1,6 @@
 import AdvQueryControls from './query-controls.jsx';
 import { AuthorSelect } from './query-controls.jsx';
 import { AdvColorControl } from "../0-adv-components/components.jsx";
-import lodash from 'lodash';
 
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate ) {
     wpBlockEditor = wp.blockEditor || wp.editor;

@@ -1,10 +1,7 @@
-import lodash from 'lodash';
-
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { TreeSelect, SelectControl, FormTokenField, RangeControl } = wp.components;
-const { pickBy, isUndefined } = lodash;
-const { groupBy } = lodash;
+const { pickBy, isUndefined, groupBy } = lodash;
 
 /**
  * Returns terms in a tree form.

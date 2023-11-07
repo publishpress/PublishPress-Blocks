@@ -1,6 +1,4 @@
-import lodash from 'lodash';
-
-(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpCompose ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpCompose, lodash ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
@@ -1061,4 +1059,4 @@ import lodash from 'lodash';
             }
         ]
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.compose );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.compose, lodash );
