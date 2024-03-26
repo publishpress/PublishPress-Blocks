@@ -2,14 +2,6 @@
   "name": "advanced-gutenberg",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "build_react_dev": "webpack --mode development --watch",
-    "build_react_prod": "webpack --mode production",
-    "compile_css": "node-sass --output-style compressed assets/scss/ --output=assets/css/ --watch",
-    "minify_js_main": "uglifyjs assets/js/main.js --output assets/js/main.min.js",
-    "minify_js_settings": "uglifyjs assets/js/settings.js --output assets/js/settings.min.js",
-    "json_translations": "./json_translations.sh"
-  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -25,8 +17,7 @@
     "counterup2": "^1.0.4",
     "elliptic": "^6.5.4",
     "glob-parent": "^5.1.2",
-    "gulp": "^4.0.2",
-    "gulp-zip": "^5.1.0",
+    "hasown": "^2.0.2",
     "hour-convert": "^1.0.1",
     "html-react-parser": "^0.10.5",
     "ini": "^2.0.0",
