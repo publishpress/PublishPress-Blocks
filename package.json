@@ -23,7 +23,7 @@
     "ini": "^2.0.0",
     "jquery": "^3.6.0",
     "latinize": "^0.4.1",
-    "node-sass": "^5.0.0",
+    "sass": "^1.72.0",
     "set-value": "^4.0.1",
     "string-replace-loader": "^2.3.0",
     "trim-newlines": "^3.0.1",
