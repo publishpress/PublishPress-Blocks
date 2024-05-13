@@ -270,6 +270,10 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
+= 3.2.2 - 13 May 2024 =
+  * FIX: Tab titles, #1372;
+  * FIX: Cannot use object of type WP_Error as array, #1354;
+
 = 3.2.1 - 07 Nov 2023 =
   * FIX: Call to lodash methods, #1342, #1346;
   * FIX: Can't activate Blocks if Gutenberg plugin is active, #1345;
