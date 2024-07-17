@@ -17,7 +17,9 @@ export function AdvDateTimeControl(props) {
         date,
         onChangeDate,
         onDateClear,
-        onInvalidDate
+        onInvalidDate,
+        placement,
+        offset
     } = props;
 
     return (
@@ -52,6 +54,8 @@ export function AdvDateTimeControl(props) {
                     className="advgb-advcalendar-popover"
                     onClose={ setPopupState.bind( null, false ) }
                     resize={ false }
+                    placement={ placement }
+                    offset={ offset }
                 >
                     <label className="advgb-advcalendar-popover-label">
                         { dateLabel }
@@ -72,6 +76,11 @@ export function AdvDateTimeControl(props) {
         </Fragment>
 
     )
+}
+
+AdvDateTimeControl.defaultProps = {
+    placement: 'left',
+    offset: 40
 }
 
 export function AdvDaysControl(props) {
