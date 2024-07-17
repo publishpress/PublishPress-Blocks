@@ -80,16 +80,15 @@
       margin-right: 12px;
       margin-bottom: 0;
 
-      .components-base-control__field {
-        display: grid;
-        grid-template-columns: 1fr;
+      .components-base-control__field .components-flex {
+        flex-direction: column;
 
         .components-checkbox-control__input-container {
           margin-right: 0;
         }
 
         .components-checkbox-control__label {
-          text-align: center;
+          margin: 0 auto;
           margin-bottom: 0;
         }
       }
