@@ -49,7 +49,7 @@
   }
 
   // Hide inserter for Adv Tab item to avoid inserting tabs inside tabs
-  .advgb-tab-body-wrapper .block-editor-inner-blocks .block-list-appender {
+  .advgb-tab-body-wrapper .block-editor-inner-blocks .wp-block[data-type="advgb/tab"] + .block-list-appender {
     display: none !important;
   }
 
