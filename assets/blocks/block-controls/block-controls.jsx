@@ -170,7 +170,7 @@ import {
         return class BlockControlsEdit extends Component {
 
             constructor(props) {
-              super(...props);
+              super(props);
 
               this.state = {
                   taxModOptions: [], // Store modified taxonomy options to decide if selected tax is for "all terms" or "selected terms"
