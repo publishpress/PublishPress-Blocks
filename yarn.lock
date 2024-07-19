@@ -313,6 +313,14 @@
     "@babel/helper-environment-visitor" "^7.24.7"
     "@babel/helper-plugin-utils" "^7.24.7"
 
+"@babel/plugin-proposal-function-bind@^7.0.0":
+  version "7.24.7"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-function-bind/-/plugin-proposal-function-bind-7.24.7.tgz#8b4fcef3fd90bd5671a940693683c76ab0984df8"
+  integrity sha512-cq2mwxcvNAWWL+IiqiSiVhCeqTQs532Ktl3N2FMuW0bQVF/N0W6QNyywO+KkM3Yr/jwYmjeSS+yKQQUh79VOxQ==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.24.7"
+    "@babel/plugin-syntax-function-bind" "^7.24.7"
+
 "@babel/plugin-proposal-private-property-in-object@7.21.0-placeholder-for-preset-env.2":
   version "7.21.0-placeholder-for-preset-env.2"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-private-property-in-object/-/plugin-proposal-private-property-in-object-7.21.0-placeholder-for-preset-env.2.tgz#7844f9289546efa9febac2de4cfe358a050bd703"
@@ -352,6 +360,13 @@
   integrity sha512-MXf5laXo6c1IbEbegDmzGPwGNTsHZmEy6QGznu5Sh2UCWvueywb2ee+CCE4zQiZstxU9BMoQO9i6zUFSY0Kj0Q==
   dependencies:
     "@babel/helper-plugin-utils" "^7.8.3"
+
+"@babel/plugin-syntax-function-bind@^7.24.7":
+  version "7.24.7"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-function-bind/-/plugin-syntax-function-bind-7.24.7.tgz#60103187663fb121976d972b23bfb097d9d0234a"
+  integrity sha512-dqm7VhgJ2sXCEc0WDJV+q8OI1Qzwn4OFbqsHTVtYoc4L7jJYtF6pEQYcbmlMMWBZjw0tJYuXeyiTQVboWIwAKg==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.24.7"
 
 "@babel/plugin-syntax-import-assertions@^7.24.7":
   version "7.24.7"
