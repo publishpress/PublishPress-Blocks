@@ -9,11 +9,11 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
-    "babel-loader": "^8.0.0",
     "@babel/plugin-transform-object-assign": "^7.0.0",
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.0",
     "braces": "^3.0.3",
     "classnames": "^2.3.1",
     "counterup2": "^1.0.4",
