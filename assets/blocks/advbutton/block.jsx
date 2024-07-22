@@ -38,6 +38,11 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
             this.togglePopup = this.togglePopup.bind(this);
             this.handleIcon = this.handleIcon.bind(this);
             this.handleIconTheme = this.handleIconTheme.bind(this);
+
+            const { attributes, setAttributes, clientId } = this.props;
+            if (!attributes.id) {
+                setAttributes( { id: 'advgbbtn-' + clientId } );
+            }
         }
 
         componentWillMount() {
@@ -62,8 +67,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
         }
 
         componentDidMount() {
-            const { attributes, setAttributes, clientId } = this.props;
-            setAttributes( { id: 'advgbbtn-' + clientId } );
+            const { setAttributes } = this.props;
 
             // Reset attributes when Pro is not available
             if( advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1' ) {
