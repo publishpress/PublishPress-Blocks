@@ -53,7 +53,9 @@
         componentDidMount() {
             const {attributes, setAttributes, clientId} = this.props;
 
-            setAttributes( { id: 'advg-images-slider-' + clientId } );
+            if (!attributes.id) {
+                setAttributes( { id: 'advg-images-slider-' + clientId } );
+            }
 
             if (attributes.images.length) {
                 this.initSlider();

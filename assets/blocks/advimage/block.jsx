@@ -38,10 +38,11 @@
 
         componentDidMount() {
             const { attributes, setAttributes, clientId } = this.props;
-            const { blockIDX } = attributes;
 
-            setAttributes({blockIDX: `advgb-img-${clientId}`});
-
+            if (!attributes.blockIDX) {
+                setAttributes({blockIDX: `advgb-img-${clientId}`});
+            }
+            
             // Reset attributes when Pro is not available
             if( advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1' ) {
                 setAttributes( {

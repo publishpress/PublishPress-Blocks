@@ -59,12 +59,12 @@
         }
 
         componentDidMount() {
-            const { setAttributes, clientId } = this.props;
+            const { setAttributes, attributes, clientId } = this.props;
 
-            setAttributes({
-                id: 'advgblist-' + clientId
-            });
-
+            if (!attributes.id) {
+                setAttributes({ id: 'advgblist-' + clientId });
+            }
+            
             // Reset values attribute to default
             if( this.state.migrateStatus === true ) {
                 setAttributes( {

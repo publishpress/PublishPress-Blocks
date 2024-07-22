@@ -102,6 +102,8 @@
         }
 
         componentDidMount() {
+            const { setAttributes, attributes } = this.props;
+            
             if ( ! this.props.attributes.uniqueID ) {
                 this.props.setAttributes( {
                     uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
@@ -115,9 +117,13 @@
             } else {
                 advgbTabsUniqueIDs.push( this.props.attributes.uniqueID );
             }
-            this.props.setAttributes( {
-                pid: `advgb-tabs-${this.props.clientId}`,
-            } );
+
+            if (!attributes.pid) {
+                setAttributes( {
+                    pid: `advgb-tabs-${this.props.clientId}`,
+                } );
+            }
+            
             this.updateTabHeaders();
             this.updateTabAnchors();
             this.props.resetOrder();

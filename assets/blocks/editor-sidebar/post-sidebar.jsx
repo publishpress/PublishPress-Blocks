@@ -1,10 +1,10 @@
-(function ( wpI18n, wpPlugins, wpElement, wpData, wpComponents, wpEditPost ) {
+(function ( wpI18n, wpPlugins, wpElement, wpData, wpComponents, wpEditor ) {
     const { __ } = wpI18n;
     const { registerPlugin } = wpPlugins;
     const { Component, Fragment } = wpElement;
     const { select, withSelect, withDispatch } = wpData;
     const { PanelBody, ButtonGroup, Button } = wpComponents;
-    const { PluginSidebar, PluginSidebarMoreMenuItem } = wpEditPost;
+    const { PluginSidebar, PluginSidebarMoreMenuItem } = wpEditor;
     const { compose } = wp.compose;
 
     const sidebarName  = "advgb-editor-sidebar";
@@ -162,4 +162,4 @@
             )
         }
     } );
-})( wp.i18n, wp.plugins, wp.element, wp.data, wp.components, wp.editPost );
+})( wp.i18n, wp.plugins, wp.element, wp.data, wp.components, wp.editor );

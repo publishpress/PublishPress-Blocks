@@ -62,21 +62,23 @@
             this.calculateRealColIndex('head');
         }
 
-        componentDidUpdate() {
-            const {isSelected} = this.props;
-            const {selectedCell, updated} = this.state;
-
-            if (!isSelected && selectedCell) {
+        componentDidUpdate(prevProps, prevState) {
+            const { isSelected } = this.props;
+            const { selectedCell, updated } = this.state;
+        
+            // Check if isSelected has changed and if selectedCell was true before
+            if (!isSelected && prevProps.isSelected && selectedCell) {
                 this.setState({
                     selectedCell: null,
                     rangeSelected: null,
                     multiSelected: null,
                 });
             }
-
-            if (updated) {
+        
+            // Check if updated has changed from false to true
+            if (updated && !prevState.updated) {
                 this.calculateRealColIndex();
-                this.setState({updated: false});
+                this.setState({ updated: false });
             }
         }
 
