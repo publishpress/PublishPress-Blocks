@@ -93,10 +93,8 @@
                     rootBlockId: clientId,
                     id: 'advgb-accordions-' + clientId
                 });
+                this.props.updateAccordionAttributes( {rootBlockId: clientId} );
             }
-
-            // This needs more work to runs just once
-            //this.props.updateAccordionAttributes( {rootBlockId: clientId} );
         }
 
         componentDidUpdate() {

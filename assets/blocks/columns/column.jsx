@@ -60,10 +60,14 @@
             }
         }
 
-        componentDidMount() {
+        componentDidMount() {}
+
+        componentDidUpdate() {
             const { attributes, setAttributes, clientId } = this.props;
 
-            if ( !attributes.id ) {
+            // @since 3.2.3 - Moved here due in componentDidMount() colId never is defined 
+            // causing an infinite loop when inserting the block as pattern
+            if ( !attributes.colId ) {
                 setAttributes( { colId: 'advgb-col-' + clientId, } )
             }
         }

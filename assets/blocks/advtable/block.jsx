@@ -58,14 +58,20 @@
             }
         }
 
-        componentDidMount() {
-            this.calculateRealColIndex('head');
-        }
+        componentDidMount() {}
 
         componentDidUpdate(prevProps, prevState) {
-            const { isSelected } = this.props;
+            const { isSelected, attributes, setAttributes, clientId } = this.props;
+            const { blockIDX } = attributes;
             const { selectedCell, updated } = this.state;
         
+            // @since 3.2.3 - Moved here due in componentDidMount() blockIDX never is defined 
+            // causing an infinite loop when inserting the block as pattern
+            if (!blockIDX) {
+                setAttributes({ blockIDX: `advgb-table-${clientId}` });
+                this.calculateRealColIndex('head');
+            }
+
             // Check if isSelected has changed and if selectedCell was true before
             if (!isSelected && prevProps.isSelected && selectedCell) {
                 this.setState({
@@ -1508,6 +1514,9 @@
                 type: 'boolean',
                 default: false,
             },
+            blockIDX: {
+                type: 'string',
+            }
         },
         example: {
             attributes: {
@@ -1578,6 +1587,178 @@
             ],
         },
         deprecated: [
+            {
+                attributes: {
+                    head: {
+                        type: 'array',
+                        default: [],
+                        source: 'query',
+                        selector: 'thead tr',
+                        query: {
+                            cells: {
+                                type: 'array',
+                                default: [],
+                                source: 'query',
+                                selector: 'td, th',
+                                query: {
+                                    content: {
+                                        source: 'html',
+                                    },
+                                    styles: {
+                                        type: 'string',
+                                        source: 'attribute',
+                                        attribute: 'style',
+                                    },
+                                    colSpan: {
+                                        type: 'string',
+                                        source: 'attribute',
+                                        attribute: 'colspan',
+                                    },
+                                    borderColorSaved: {
+                                        type: 'string',
+                                        source: 'attribute',
+                                        attribute: 'data-border-color',
+                                    }
+                                },
+                            },
+                        },
+                    },
+                    body: {
+                        type: 'array',
+                        default: [],
+                        source: 'query',
+                        selector: 'tbody tr',
+                        query: {
+                            cells: {
+                                type: 'array',
+                                default: [],
+                                source: 'query',
+                                selector: 'td',
+                                query: {
+                                    content: {
+                                        source: 'html',
+                                    },
+                                    styles: {
+                                        type: 'string',
+                                        source: 'attribute',
+                                        attribute: 'style',
+                                    },
+                                    colSpan: {
+                                        type: 'string',
+                                        source: 'attribute',
+                                        attribute: 'colspan',
+                                    },
+                                    rowSpan: {
+                                        type: 'string',
+                                        source: 'attribute',
+                                        attribute: 'rowspan',
+                                    },
+                                    borderColorSaved: {
+                                        type: 'string',
+                                        source: 'attribute',
+                                        attribute: 'data-border-color',
+                                    }
+                                },
+                            },
+                        },
+                    },
+                    foot: {
+                        type: 'array',
+                        default: [],
+                        source: 'query',
+                        selector: 'tfoot tr',
+                        query: {
+                            cells: {
+                                type: 'array',
+                                default: [],
+                                source: 'query',
+                                selector: 'td, th',
+                                query: {
+                                    content: {
+                                        source: 'html',
+                                    },
+                                    styles: {
+                                        type: 'string',
+                                        source: 'attribute',
+                                        attribute: 'style',
+                                    },
+                                    colSpan: {
+                                        type: 'string',
+                                        source: 'attribute',
+                                        attribute: 'colspan',
+                                    },
+                                    borderColorSaved: {
+                                        type: 'string',
+                                        source: 'attribute',
+                                        attribute: 'data-border-color',
+                                    }
+                                },
+                            },
+                        },
+                    },
+                    maxWidth: {
+                        type: 'number',
+                        default: 0
+                    },
+                    hasFixedLayout: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    tableCollapsed: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    changed: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    isPreview: {
+                        type: 'boolean',
+                        default: false,
+                    }
+                },
+                save: function ({attributes}) {
+                        const {head, body, foot, maxWidth, tableCollapsed, hasFixedLayout} = attributes;
+                        const maxWidthVal = !!maxWidth ? maxWidth : undefined;
+            
+                        function renderSection(section) {
+                            let sectionTagName = section === 'head' ? 'th' : 'td';
+                            return attributes[section].map(({cells}, rowIndex) => (
+                                <tr key={rowIndex}>
+                                    {cells.map(({content, styles, colSpan, rowSpan, borderColorSaved}, colIndex) => (
+                                        <RichText.Content
+                                            tagName={sectionTagName}
+                                            value={content}
+                                            key={colIndex}
+                                            style={styles}
+                                            colSpan={colSpan}
+                                            rowSpan={rowSpan}
+                                            data-border-color={borderColorSaved}
+                                        />
+                                    ))}
+                                </tr>
+                            ))
+                        }
+            
+                        return (
+                            <table className="advgb-table-frontend"
+                                   style={{
+                                       maxWidth: maxWidthVal,
+                                       borderCollapse: tableCollapsed ? 'collapse' : undefined,
+                                       tableLayout: hasFixedLayout ? 'fixed' : undefined,
+                                   }}
+                            >
+                                {!!head.length && (
+                                    <thead>{renderSection('head')}</thead>
+                                )}
+                                <tbody>{renderSection('body')}</tbody>
+                                {!!foot.length && (
+                                    <tfoot>{renderSection('foot')}</tfoot>
+                                )}
+                            </table>
+                        );
+                }
+            },
             {
                 attributes: {
                     head: {

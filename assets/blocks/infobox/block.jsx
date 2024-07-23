@@ -73,7 +73,6 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
 
         componentDidMount() {
             const { attributes, setAttributes, clientId } = this.props;
-            const { blockIDX } = attributes;
 
             if (!attributes.blockIDX) {
                 setAttributes( { blockIDX: `advgb-infobox-${clientId}` } );

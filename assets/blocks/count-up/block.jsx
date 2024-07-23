@@ -42,7 +42,6 @@
             
             if (!attributes.id) {
                 setAttributes( { id: 'count-up-' + clientId } );
-                console.log('test',attributes);
             }
         }
 

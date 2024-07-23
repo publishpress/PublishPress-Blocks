@@ -104,8 +104,17 @@ import latinize from "latinize";
             }
         }
 
-        componentDidMount() {
-            this.updateSummary();
+        componentDidMount() {}
+
+        componentDidUpdate() {
+            const { attributes, setAttributes, clientId } = this.props;
+
+            // @since 3.2.3 - Moved here due in componentDidMount() blockIDX never is defined 
+            // causing an infinite loop when inserting the block as pattern
+            if (!attributes.blockIDX) {
+                setAttributes({ blockIDX: `advgb-summary-${clientId}` });
+                this.updateSummary();
+            }
         };
 
 
@@ -371,6 +380,9 @@ import latinize from "latinize";
             type: 'boolean',
             default: false,
         },
+        blockIDX: {
+            type: 'string',
+        },
     };
 
     registerBlockType( 'advgb/summary', {
@@ -443,6 +455,78 @@ import latinize from "latinize";
             return props;
         },
         deprecated: [
+            {
+                attributes: {
+                    headings: {
+                        type: 'array',
+                        default: [],
+                    },
+                    loadMinimized: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    anchorColor: {
+                        type: 'string',
+                    },
+                    align: {
+                        type: 'string',
+                        default: 'none',
+                    },
+                    postTitle: {
+                        type: 'string',
+                    },
+                    headerTitle: {
+                        type: 'string',
+                    },
+                    changed: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    isPreview: {
+                        type: 'boolean',
+                        default: false,
+                    }
+                },
+                save: ( { attributes } ) => {
+                    const { headings, loadMinimized, anchorColor, align = 'none', postTitle, headerTitle } = attributes;
+                    // No heading blocks
+                    if (headings.length < 1) {
+                        return null;
+                    }
+        
+                    let blockStyle = undefined;
+                    if (loadMinimized) blockStyle = { display: 'none' };
+        
+                    const summary = (
+                        <ul className={`advgb-toc align${align}`} style={ blockStyle }>
+                            {headings.map( ( heading, index ) => {
+                                return (
+                                    <li className={'toc-level-' + heading.level}
+                                        key={`summary-save-${index}`}
+                                    >
+                                        <a href={'#' + heading.anchor}
+                                           style={ { color: anchorColor } }
+                                        >
+                                            {heading.content}
+                                        </a>
+                                    </li>
+                                )
+                            } ) }
+                        </ul>
+                    );
+        
+                    if ( loadMinimized ) {
+                        return (
+                            <div className={`align${align}`}>
+                                <div className={'advgb-toc-header collapsed'}>{ headerTitle || postTitle }</div>
+                                {summary}
+                            </div>
+                        );
+                    }
+        
+                    return summary;
+                }
+            },
             {
                 attributes: blockAttrs,
                 save: function ( { attributes } ) {
