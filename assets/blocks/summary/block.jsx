@@ -79,6 +79,9 @@ import latinize from "latinize";
     class SummaryBlock extends Component {
         constructor() {
             super( ...arguments );
+            this.state = {
+                isBlockIdSet: false // @since 3.2.3
+            };
             this.updateSummary = this.updateSummary.bind( this );
             this.latinise = this.latinise.bind(this);
         }
@@ -107,13 +110,13 @@ import latinize from "latinize";
         componentDidMount() {}
 
         componentDidUpdate() {
-            const { attributes, setAttributes, clientId } = this.props;
+            const { setAttributes, clientId } = this.props;
 
-            // @since 3.2.3 - Moved here due in componentDidMount() blockIDX never is defined 
-            // causing an infinite loop when inserting the block as pattern
-            if (!attributes.blockIDX) {
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
                 setAttributes({ blockIDX: `advgb-summary-${clientId}` });
                 this.updateSummary();
+                this.setState({ isBlockIdSet: true });
             }
         };
 

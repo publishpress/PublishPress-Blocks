@@ -13,6 +13,7 @@
             super(...arguments);
             this.state = {
                 currentEdit: '',
+                isBlockIdSet: false // @since 3.2.3
             };
         }
 
@@ -37,11 +38,14 @@
             }
         }
 
-        componentDidMount() {
-            const { attributes, setAttributes, clientId } = this.props;
+        componentDidMount() {}
+        componentDidUpdate() {
+            const { setAttributes, clientId } = this.props;
             
-            if (!attributes.id) {
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
                 setAttributes( { id: 'count-up-' + clientId } );
+                this.setState({ isBlockIdSet: true });
             }
         }
 

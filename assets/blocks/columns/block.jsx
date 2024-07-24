@@ -62,6 +62,7 @@
             super( ...arguments );
             this.state = {
                 tabSelected: 'desktop',
+                isBlockIdSet: false // @since 3.2.3
             }
         }
 
@@ -106,10 +107,10 @@
             const extraClassT = '-tablet';
             const extraClassM = '-mobile';
 
-            // @since 3.2.3 - Moved here due in componentDidMount() colId never is defined 
-            // causing an infinite loop when inserting the block as pattern
-            if ( !attributes.colId ) {
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
                 setAttributes( { colId: 'advgb-cols-' + clientId, } );
+                this.setState({ isBlockIdSet: true });
             }
 
             if (prevLayout !== columnsLayout

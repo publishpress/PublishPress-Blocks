@@ -50,6 +50,7 @@
             super( ...arguments );
             this.state = {
                 viewport: 'desktop',
+                isBlockIdSet: false // @since 3.2.3
             };
         }
 
@@ -76,6 +77,33 @@
         componentDidUpdate( prevProps ) {
             const { attributes, setAttributes, innerBlocks } = this.props;
             const { isTransform } = attributes;
+            
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
+                if (!attributes.uniqueID) {
+                    this.props.setAttributes( {
+                        uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
+                    } );
+                    advgbTabsUniqueIDs.push( '_' + this.props.clientId.substr( 2, 9 ) );
+                } else if ( advgbTabsUniqueIDs.includes( this.props.attributes.uniqueID ) ) {
+                    this.props.setAttributes( {
+                        uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
+                    } );
+                    advgbTabsUniqueIDs.push( '_' + this.props.clientId.substr( 2, 9 ) );
+                } else {
+                    advgbTabsUniqueIDs.push( this.props.attributes.uniqueID );
+                }
+
+                setAttributes( {
+                    pid: `advgb-tabs-${this.props.clientId}`,
+                } );
+
+                this.updateTabHeaders();
+                this.updateTabAnchors();
+                this.props.resetOrder();
+
+                this.setState({ isBlockIdSet: true });
+            }
 
             if(isTransform) {
                 setAttributes( {
@@ -102,31 +130,7 @@
         }
 
         componentDidMount() {
-            const { setAttributes, attributes } = this.props;
             
-            if (!attributes.pid || !attributes.uniqueID) {
-                if (!attributes.uniqueID) {
-                    this.props.setAttributes( {
-                        uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
-                    } );
-                    advgbTabsUniqueIDs.push( '_' + this.props.clientId.substr( 2, 9 ) );
-                } else if ( advgbTabsUniqueIDs.includes( this.props.attributes.uniqueID ) ) {
-                    this.props.setAttributes( {
-                        uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
-                    } );
-                    advgbTabsUniqueIDs.push( '_' + this.props.clientId.substr( 2, 9 ) );
-                } else {
-                    advgbTabsUniqueIDs.push( this.props.attributes.uniqueID );
-                }
-
-                setAttributes( {
-                    pid: `advgb-tabs-${this.props.clientId}`,
-                } );
-
-                this.updateTabHeaders();
-                this.updateTabAnchors();
-                this.props.resetOrder();
-            }
         }
 
         /**

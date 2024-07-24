@@ -30,6 +30,7 @@
                 multiSelected: null,
                 sectionSelected: null,
                 updated: false,
+                isBlockIdSet: false // @since 3.2.3
             };
 
             this.calculateRealColIndex = this.calculateRealColIndex.bind(this);
@@ -61,15 +62,14 @@
         componentDidMount() {}
 
         componentDidUpdate(prevProps, prevState) {
-            const { isSelected, attributes, setAttributes, clientId } = this.props;
-            const { blockIDX } = attributes;
+            const { isSelected, setAttributes, clientId } = this.props;
             const { selectedCell, updated } = this.state;
         
-            // @since 3.2.3 - Moved here due in componentDidMount() blockIDX never is defined 
-            // causing an infinite loop when inserting the block as pattern
-            if (!blockIDX) {
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
                 setAttributes({ blockIDX: `advgb-table-${clientId}` });
                 this.calculateRealColIndex('head');
+                this.setState({ isBlockIdSet: true });
             }
 
             // Check if isSelected has changed and if selectedCell was true before

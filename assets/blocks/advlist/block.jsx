@@ -19,7 +19,8 @@
 
             this.state = {
                 migrateValues: [],
-                migrateStatus: null // Status to migrate from <li> to innerBlocks. true: initialized, false: finished
+                migrateStatus: null, // Status to migrate from <li> to innerBlocks. true: initialized, false: finished
+                isBlockIdSet: false // @since 3.2.3
             }
         }
 
@@ -59,11 +60,7 @@
         }
 
         componentDidMount() {
-            const { setAttributes, attributes, clientId } = this.props;
-
-            if (!attributes.id) {
-                setAttributes({ id: 'advgblist-' + clientId });
-            }
+            const { setAttributes } = this.props;
             
             // Reset values attribute to default
             if( this.state.migrateStatus === true ) {
@@ -74,10 +71,15 @@
         }
 
         componentDidUpdate( prevProps ) {
-            const { clientId } = this.props;
-
+            const { setAttributes, attributes, clientId } = this.props;
             const { getBlockOrder } = select( 'core/block-editor' );
             const innerBlocks = getBlockOrder( clientId );
+
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
+                setAttributes({ id: 'advgblist-' + clientId });
+                this.setState({ isBlockIdSet: true });
+            }
 
             if( this.state.migrateStatus === true
                 && ! prevProps.attributes.values.length

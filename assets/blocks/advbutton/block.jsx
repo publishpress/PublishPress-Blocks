@@ -34,15 +34,11 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                 selectedIcon: false,
                 iconThemeSelected: 'outlined',
                 selectedIconTheme: false,
+                isBlockIdSet: false // @since 3.2.3
             };
             this.togglePopup = this.togglePopup.bind(this);
             this.handleIcon = this.handleIcon.bind(this);
             this.handleIconTheme = this.handleIconTheme.bind(this);
-
-            const { attributes, setAttributes, clientId } = this.props;
-            if (!attributes.id) {
-                setAttributes( { id: 'advgbbtn-' + clientId } );
-            }
         }
 
         componentWillMount() {
@@ -80,7 +76,14 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
 
         componentDidUpdate() {
             const {iconSelected, selectedIcon, iconThemeSelected, selectedIconTheme} = this.state;
-            const {attributes, setAttributes} = this.props;
+            const {setAttributes, clientId} = this.props;
+
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
+                setAttributes({ id: 'advgbbtn-' + clientId });
+                this.setState({ isBlockIdSet: true });
+            }
+
             if(selectedIcon) {
 
                 this.setState({

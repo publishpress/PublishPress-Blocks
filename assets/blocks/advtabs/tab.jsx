@@ -22,6 +22,9 @@
     class TabItemEdit extends Component {
         constructor() {
             super( ...arguments );
+            this.state = {
+                isBlockIdSet: false // @since 3.2.3
+            }
         }
 
         componentWillMount() {
@@ -46,9 +49,22 @@
 
         componentDidMount() {
             const { attributes, setAttributes } = this.props;
-            const {id, tabHeaders, tabAnchors} = attributes;
+            const { id, tabAnchors } = attributes;
 
-            if (!attributes.header || !attributes.uniqueID) {
+            if(typeof tabAnchors !== 'undefined'){
+                setAttributes({
+                    anchor: tabAnchors[id]
+                });
+            }
+
+        }
+
+        componentDidUpdate() {
+            const { attributes, setAttributes } = this.props;
+            const { id, tabHeaders } = attributes;
+
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
                 if ( ! this.props.attributes.uniqueID ) {
                     this.props.setAttributes( {
                         uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
@@ -66,15 +82,9 @@
                 setAttributes({
                     header: tabHeaders[id]
                 });
-            }
-            
 
-            if(typeof tabAnchors !== 'undefined'){
-                setAttributes({
-                    anchor: tabAnchors[id]
-                });
+                this.setState({ isBlockIdSet: true });
             }
-
         }
 
         render() {

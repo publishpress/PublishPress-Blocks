@@ -60,7 +60,9 @@
     class AccordionsEdit extends Component {
         constructor() {
             super( ...arguments );
-
+            this.state = {
+                isBlockIdSet: false // @since 3.2.3
+            }
             this.updateAccordionAttrs = this.updateAccordionAttrs.bind( this );
         }
 
@@ -86,22 +88,27 @@
         }
 
         componentDidMount() {
-            const { setAttributes, attributes, clientId } = this.props;
+            const { attributes, clientId } = this.props;
 
             if (!attributes.id || !attributes.rootBlockId) {
-                setAttributes({
-                    rootBlockId: clientId,
-                    id: 'advgb-accordions-' + clientId
-                });
                 this.props.updateAccordionAttributes( {rootBlockId: clientId} );
             }
         }
 
         componentDidUpdate() {
-            const { clientId } = this.props;
+            const { setAttributes, clientId } = this.props;
             const { removeBlock } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
             const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
             const childBlocks = getBlockOrder(clientId);
+
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
+                setAttributes({
+                    rootBlockId: clientId,
+                    id: 'advgb-accordions-' + clientId
+                });
+                this.setState({ isBlockIdSet: true });
+            }
 
             if (childBlocks.length < 1) {
                 // No accordion left, we will remove this block

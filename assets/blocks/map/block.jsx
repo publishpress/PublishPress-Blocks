@@ -983,6 +983,8 @@
                 currentInfo: null,
                 fetching: false,
                 invalidStyle: false,
+                isBlockIdSet: false, // @since 3.2.3
+                isMapInit: false // @since 3.2.3
             };
 
             this.initMap = this.initMap.bind(this);
@@ -1011,18 +1013,23 @@
         }
 
         componentDidMount() {
-            const { attributes, setAttributes, clientId } = this.props;
-
-            if (!attributes.mapID) {
-                setAttributes( { mapID: 'advgbmap-' + clientId } );
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isMapInit) {
+                this.initMap();
+                this.setState({ isMapInit: true });
             }
-
-            this.initMap();
         }
 
         componentDidUpdate( prevProps, prevState ) {
             const { address: prevAddr, useLatLng: prevUseLatLng } = prevProps.attributes;
             const { address, useLatLng } = this.props.attributes;
+            const { setAttributes, clientId } = this.props;
+
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
+                setAttributes( { mapID: 'advgbmap-' + clientId } );
+                this.setState({ isBlockIdSet: true });
+            }
 
             if (prevAddr !== address || prevUseLatLng !== useLatLng || prevState !== this.state)
                 return null;

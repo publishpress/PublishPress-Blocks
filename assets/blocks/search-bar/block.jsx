@@ -54,6 +54,9 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
     class SearchBarEdit extends Component {
         constructor() {
             super( ...arguments );
+            this.state = {
+                isBlockIdSet: false // @since 3.2.3
+            };
         }
 
         componentWillMount() {
@@ -77,12 +80,15 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             }
         }
 
-        componentDidMount() {
-            const { clientId, attributes, setAttributes } = this.props;
-            const { searchBtnId } = attributes;
+        componentDidMount() {}
 
-            if (!searchBtnId) {
-                setAttributes( { searchBtnId: `advgb-search-btn-${clientId}` } );
+        componentDidUpdate() {
+            const { clientId, attributes, setAttributes } = this.props;
+
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
+                setAttributes({ searchBtnId: `advgb-search-btn-${clientId}` });
+                this.setState({ isBlockIdSet: true });
             }
         }
 
