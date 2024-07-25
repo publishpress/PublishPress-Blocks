@@ -983,8 +983,7 @@
                 currentInfo: null,
                 fetching: false,
                 invalidStyle: false,
-                isBlockIdSet: false, // @since 3.2.3
-                isMapInit: false // @since 3.2.3
+                isBlockIdSet: false // @since 3.2.3
             };
 
             this.initMap = this.initMap.bind(this);
@@ -1013,10 +1012,10 @@
         }
 
         componentDidMount() {
-            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
-            if (!this.state.isMapInit) {
+            const { attributes } = this.props;
+
+            if (attributes.mapID) {
                 this.initMap();
-                this.setState({ isMapInit: true });
             }
         }
 
