@@ -87,13 +87,7 @@
             }
         }
 
-        componentDidMount() {
-            const { attributes, clientId } = this.props;
-
-            if (!attributes.id || !attributes.rootBlockId) {
-                this.props.updateAccordionAttributes( {rootBlockId: clientId} );
-            }
-        }
+        componentDidMount() {}
 
         componentDidUpdate() {
             const { setAttributes, clientId } = this.props;
@@ -107,6 +101,7 @@
                     rootBlockId: clientId,
                     id: 'advgb-accordions-' + clientId
                 });
+                this.props.updateAccordionAttributes({rootBlockId: clientId});
                 this.setState({ isBlockIdSet: true });
             }
 
