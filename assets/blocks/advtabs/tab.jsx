@@ -22,6 +22,9 @@
     class TabItemEdit extends Component {
         constructor() {
             super( ...arguments );
+            this.state = {
+                isBlockIdSet: false // @since 3.2.3
+            }
         }
 
         componentWillMount() {
@@ -46,25 +49,7 @@
 
         componentDidMount() {
             const { attributes, setAttributes } = this.props;
-            const {id, tabHeaders, tabAnchors} = attributes;
-
-            if ( ! this.props.attributes.uniqueID ) {
-                this.props.setAttributes( {
-                    uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
-                } );
-                advgbTabsUniqueIDs.push( '_' + this.props.clientId.substr( 2, 9 ) );
-            } else if ( advgbTabsUniqueIDs.includes( this.props.attributes.uniqueID ) ) {
-                this.props.setAttributes( {
-                    uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
-                } );
-                advgbTabsUniqueIDs.push( '_' + this.props.clientId.substr( 2, 9 ) );
-            } else {
-                advgbTabsUniqueIDs.push( this.props.attributes.uniqueID );
-            }
-
-            setAttributes({
-                header: tabHeaders[id]
-            })
+            const { id, tabAnchors } = attributes;
 
             if(typeof tabAnchors !== 'undefined'){
                 setAttributes({
@@ -72,6 +57,34 @@
                 });
             }
 
+        }
+
+        componentDidUpdate() {
+            const { attributes, setAttributes } = this.props;
+            const { id, tabHeaders } = attributes;
+
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
+                if ( ! this.props.attributes.uniqueID ) {
+                    this.props.setAttributes( {
+                        uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
+                    } );
+                    advgbTabsUniqueIDs.push( '_' + this.props.clientId.substr( 2, 9 ) );
+                } else if ( advgbTabsUniqueIDs.includes( this.props.attributes.uniqueID ) ) {
+                    this.props.setAttributes( {
+                        uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
+                    } );
+                    advgbTabsUniqueIDs.push( '_' + this.props.clientId.substr( 2, 9 ) );
+                } else {
+                    advgbTabsUniqueIDs.push( this.props.attributes.uniqueID );
+                }
+
+                setAttributes({
+                    header: tabHeaders[id]
+                });
+
+                this.setState({ isBlockIdSet: true });
+            }
         }
 
         render() {

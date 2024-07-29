@@ -36,6 +36,7 @@
             super( ...arguments );
             this.state = {
                 tabSelected: 'desktop',
+                isBlockIdSet: false // @since 3.2.3
             };
         }
 
@@ -60,11 +61,15 @@
             }
         }
 
-        componentDidMount() {
-            const { attributes, setAttributes, clientId } = this.props;
+        componentDidMount() {}
 
-            if ( !attributes.id ) {
-                setAttributes( { colId: 'advgb-col-' + clientId, } )
+        componentDidUpdate() {
+            const { setAttributes, clientId } = this.props;
+
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
+                setAttributes( { colId: 'advgb-col-' + clientId, } );
+                this.setState({ isBlockIdSet: true });
             }
         }
 

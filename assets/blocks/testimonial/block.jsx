@@ -58,8 +58,6 @@
                 sliderDotsShown, sliderSpeed, sliderArrowShown, sliderItemsToScroll,
             } = attributes;
 
-            setAttributes( { pid: `advgb-testimonial-${clientId}` } );
-
             if (sliderView) {
                 jQuery(`#block-${clientId} .advgb-testimonial.slider-view`).slick({
                     infinite: sliderInfiniteLoop,
@@ -92,7 +90,7 @@
         }
 
         componentDidUpdate(prevProps) {
-            const { attributes, clientId } = this.props;
+            const { setAttributes, attributes, clientId } = this.props;
             const { sliderView, sliderColumn, sliderCenterMode, sliderPauseOnHover, sliderInfiniteLoop,
                 sliderDotsShown, sliderSpeed, sliderArrowShown, sliderItemsToScroll,
             } = attributes;
@@ -101,6 +99,12 @@
             const slider = jQuery(`#block-${clientId} .advgb-testimonial.slider-view`);
             const prevElm = jQuery(`#block-${clientId} .advgb-slider-prev`);
             const nextElm = jQuery(`#block-${clientId} .advgb-slider-next`);
+
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
+                setAttributes({ pid: `advgb-testimonial-${clientId}` });
+                this.setState({ isBlockIdSet: true });
+            }
 
             if (needReload) {
                 if (sliderView) {
