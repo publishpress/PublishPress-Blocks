@@ -1,11 +1,12 @@
-(function ( wpI18n, wpPlugins, wpElement, wpData, wpComponents, wpEditPost ) {
+(function ( wpI18n, wpPlugins, wpElement, wpData, wpComponents ) {
     const { __ } = wpI18n;
     const { registerPlugin } = wpPlugins;
     const { Component, Fragment } = wpElement;
     const { select, withSelect, withDispatch } = wpData;
     const { PanelBody, ButtonGroup, Button } = wpComponents;
-    const { PluginSidebar, PluginSidebarMoreMenuItem } = wpEditPost;
     const { compose } = wp.compose;
+    const PluginSidebar = wp.editor.PluginSidebar || wp.editPost.PluginSidebar;
+    const PluginSidebarMoreMenuItem = wp.editor.PluginSidebarMoreMenuItem || wp.editPost.PluginSidebarMoreMenuItem;
 
     const sidebarName  = "advgb-editor-sidebar";
     const sidebarTitle = __( 'PublishPress Blocks Settings', 'advanced-gutenberg' );
@@ -162,4 +163,4 @@
             )
         }
     } );
-})( wp.i18n, wp.plugins, wp.element, wp.data, wp.components, wp.editPost );
+})( wp.i18n, wp.plugins, wp.element, wp.data, wp.components );

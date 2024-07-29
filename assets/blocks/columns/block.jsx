@@ -62,6 +62,7 @@
             super( ...arguments );
             this.state = {
                 tabSelected: 'desktop',
+                isBlockIdSet: false // @since 3.2.3
             }
         }
 
@@ -86,13 +87,7 @@
             }
         }
 
-        componentDidMount() {
-            const { attributes, setAttributes, clientId } = this.props;
-
-            if ( !attributes.id ) {
-                setAttributes( { colId: 'advgb-cols-' + clientId, } )
-            }
-        }
+        componentDidMount() {}
 
         componentDidUpdate( prevProps ) {
             const {
@@ -100,7 +95,7 @@
                 columnsLayoutT: prevLayoutT,
                 columnsLayoutM: prevLayoutM,
             } = prevProps.attributes;
-            const { attributes, clientId } = this.props;
+            const { attributes, setAttributes, clientId } = this.props;
             const { columns, columnsLayout, columnsLayoutT, columnsLayoutM } = attributes;
             const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
             const { updateBlockAttributes } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
@@ -111,6 +106,12 @@
             const extraClassD = !!columnsLayoutT ? '-desktop' : '-tablet';
             const extraClassT = '-tablet';
             const extraClassM = '-mobile';
+
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
+                setAttributes( { colId: 'advgb-cols-' + clientId, } );
+                this.setState({ isBlockIdSet: true });
+            }
 
             if (prevLayout !== columnsLayout
                 || prevLayoutT !== columnsLayoutT

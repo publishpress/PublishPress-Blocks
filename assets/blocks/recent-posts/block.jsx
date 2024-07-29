@@ -128,6 +128,7 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
                 tabSelected: 'desktop',
                 updatePostSuggestions: true, // Backward compatibility 2.13.2 and lower
                 authorList: [],
+                isBlockIdSet: false // @since 3.2.3
             }
 
             this.selectCategories = this.selectCategories.bind(this);
@@ -137,7 +138,7 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
             this.selectPostByTitle = this.selectPostByTitle.bind(this); // Backward compatibility 2.13.1 and lower
             this.updatePostType = this.updatePostType.bind(this);
             this.getPostIds = this.getPostIds.bind(this);
-            this.getPostTitles = this.getPostTitles.bind(this);
+            this.getPostTitles = this.getPostTitles.bind(this); 
         }
 
         componentWillMount() {
@@ -165,7 +166,8 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
                 setAttributes( { changed: true } );
             }
 
-            if ( !attributes.searchString ) {
+            // Do we need this?
+            if (!!attributes.searchString) {
                 setAttributes( { searchString: '' } );
             }
 
@@ -282,8 +284,7 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
         }
 
         componentDidMount() {
-            const { attributes, setAttributes, clientId } = this.props;
-            setAttributes( { id: 'recent-posts-' + clientId } );
+            const { setAttributes } = this.props;
 
             // Reset attributes when Pro is not available
             if( !this.isPro() && this.checkIncludeEnabled() ) {
@@ -293,9 +294,15 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
 
         componentDidUpdate( prevProps ) {
             const that = this;
-            const { attributes, clientId, postList } = this.props;
+            const { attributes, clientId, setAttributes, postList } = this.props;
             const { postView, sliderAutoplay, sliderAutoplaySpeed } = attributes;
             const $ = jQuery;
+
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
+                setAttributes({ id: 'recent-posts-' + clientId });
+                this.setState({ isBlockIdSet: true });
+            }
 
             if (postView === 'slider') {
 

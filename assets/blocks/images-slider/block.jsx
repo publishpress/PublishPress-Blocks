@@ -24,6 +24,7 @@
             this.state = {
                 currentSelected: 0,
                 imageLoaded: false,
+                isBlockIdSet: false // @since 3.2.3
             };
 
             this.initSlider = this.initSlider.bind(this);
@@ -52,8 +53,6 @@
 
         componentDidMount() {
             const {attributes, setAttributes, clientId} = this.props;
-
-            setAttributes( { id: 'advg-images-slider-' + clientId } );
 
             if (attributes.images.length) {
                 this.initSlider();
@@ -85,9 +84,15 @@
         }
 
         componentDidUpdate(prevProps) {
-            const {attributes, clientId} = this.props;
+            const {attributes, setAttributes, clientId} = this.props;
             const {images, autoplay, autoplaySpeed} = attributes;
             const {images: prevImages} = prevProps.attributes;
+
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
+                setAttributes( { id: 'advg-images-slider-' + clientId } );
+                this.setState({ isBlockIdSet: true });
+            }
 
             if (images.length !== prevImages.length) {
                 if (images.length) {
