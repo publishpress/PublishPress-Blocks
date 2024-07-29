@@ -5,7 +5,8 @@
     const { select, withSelect, withDispatch } = wpData;
     const { PanelBody, ButtonGroup, Button } = wpComponents;
     const { compose } = wp.compose;
-    const { PluginSidebar, PluginSidebarMoreMenuItem } = wp.editPost || wp.editor;
+    const PluginSidebar = wp.editor.PluginSidebar || wp.editPost.PluginSidebar;
+    const PluginSidebarMoreMenuItem = wp.editor.PluginSidebarMoreMenuItem || wp.editPost.PluginSidebarMoreMenuItem;
 
     const sidebarName  = "advgb-editor-sidebar";
     const sidebarTitle = __( 'PublishPress Blocks Settings', 'advanced-gutenberg' );
