@@ -2,8 +2,8 @@
 Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks, accordion block, gallery block, slider block, tabs block, maps block, block controls
 Requires at least: 5.5
-Tested up to: 6.6
-Stable tag: 3.2.3-lorem
+Tested up to: 6.6.1
+Stable tag: 3.2.3
 Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -269,6 +269,9 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 16. Block Styles: You create custom CSS styles for blocks and make them available to end users.
 
 == Changelog ==
+
+= 3.2.3 - 29 Jul 2024 =
+  * FIX: Blocks inserted as synced patterns freezes the Gutenberg editor, #1389;
 
 = 3.2.2 - 13 May 2024 =
   * FIX: Tab titles, #1372;
