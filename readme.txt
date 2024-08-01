@@ -270,6 +270,17 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
+= 3.2.4 - 01 Aug 2024 =
+  * FIX: Calendar popup odd behavior in Block controls, #1261;
+  * FIX: Weekdays design is wrong, #1388;
+  * FIX: Columns inside tabs looks flat, #1264;
+  * FIX: Stripes thumbnail doesn't have stripes design in Table block, #212;
+  * ADD: Bahasa translation, #1340;
+  * CHANGE: Remove social icons in footer, #1358;
+  * CHANGE: Update to Babel 7, #1330;
+  * CHANGE:  Update to Webpack 5, #1393;
+  * CHANGE: Translations for Spanish, French and Italian, #1400;
+
 = 3.2.3 - 29 Jul 2024 =
   * FIX: Blocks inserted as synced patterns freezes the Gutenberg editor, #1389;
 
