@@ -28,7 +28,6 @@
 /bundled/** export-ignore
 /dev-workspace export-ignore
 /dist export-ignore
-/gulpfile.js export-ignore
 /json_translations.sh export-ignore
 /json_translations.sh.dist export-ignore
 /node_modules export-ignore

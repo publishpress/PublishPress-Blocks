@@ -31,7 +31,6 @@
 /bundled/**
 /dev-workspace
 /dist
-/gulpfile.js
 /json_translations.sh
 /json_translations.sh.dist
 /node_modules
@@ -60,7 +59,6 @@ composer.lock
 cs
 cypress
 cypress.json
-gulpfile.js
 jest.config.js
 jsconfig.json
 json_translations.sh.dist
