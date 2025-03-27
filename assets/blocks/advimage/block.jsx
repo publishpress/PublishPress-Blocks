@@ -12,6 +12,7 @@
             super(...arguments);
             this.state = {
                 currentEdit: '',
+                isBlockIdSet: false // @since 3.2.3
             }
         }
 
@@ -37,17 +38,24 @@
         }
 
         componentDidMount() {
-            const { attributes, setAttributes, clientId } = this.props;
-            const { blockIDX } = attributes;
-
-            setAttributes({blockIDX: `advgb-img-${clientId}`});
-
+            const { setAttributes } = this.props;
+            
             // Reset attributes when Pro is not available
             if( advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1' ) {
                 setAttributes( {
                     titleTag: 'h4',
                     subtitleTag: 'p'
                 } );
+            }
+        }
+
+        componentDidUpdate() {
+            const { setAttributes, clientId } = this.props;
+
+            // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
+            if (!this.state.isBlockIdSet) {
+                setAttributes({blockIDX: `advgb-img-${clientId}`});
+                this.setState({ isBlockIdSet: true });
             }
         }
 

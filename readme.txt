@@ -2,8 +2,8 @@
 Contributors: publishpress, stevejburge, htmgarcia
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks, accordion block, gallery block, slider block, tabs block, maps block, block controls
 Requires at least: 5.5
-Tested up to: 6.3.1
-Stable tag: 3.2.0
+Tested up to: 6.6.1
+Stable tag: 3.2.4
 Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -118,7 +118,7 @@ Join PublishPress and you'll get access to these nine Pro plugins:
 * [PublishPress Blocks Pro](https://publishpress.com/blocks) has everything you need to build professional websites with the WordPress block editor.
 * [PublishPress Capabilities Pro](https://publishpress.com/capabilities) is the plugin to manage your WordPress user roles, permissions, and capabilities.
 * [PublishPress Checklists Pro](https://publishpress.com/checklists) enables you to define tasks that must be completed before content is published.
-* [PublishPress Future Pro](https://publishpress.com/future) is the plugin for scheduling changes to your posts.
+* [PublishPress Future Pro](https://publishpress.com/future) allows you to schedule changes to WordPress Posts.
 * [PublishPress Permissions Pro](https://publishpress.com/permissions) is the plugin for advanced WordPress permissions.
 * [PublishPress Planner Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
 * [PublishPress Revisions Pro](https://publishpress.com/revisions) allows you to update your published pages with teamwork and precision.
@@ -270,7 +270,30 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.2.0 - 18 Sep 2023 =
+= 3.2.4 - 05 Aug 2024 =
+  * FIX: Calendar popup odd behavior in Block controls, #1261;
+  * FIX: Weekdays design is wrong, #1388;
+  * FIX: Empty columns inside tabs looks flat, #1264;
+  * FIX: Stripes thumbnail doesn't have stripes design in Table block, #212;
+  * ADD: Bahasa translation, #1340;
+  * CHANGE: Remove social icons in footer, #1358;
+  * CHANGE: Update to Babel 7, #1330;
+  * CHANGE:  Update to Webpack 5, #1393;
+  * CHANGE: Translations for Spanish, French and Italian, #1400;
+
+= 3.2.3 - 29 Jul 2024 =
+  * FIX: Blocks inserted as synced patterns freezes the Gutenberg editor, #1389;
+
+= 3.2.2 - 13 May 2024 =
+  * FIX: Tab titles, #1372;
+  * FIX: Cannot use object of type WP_Error as array, #1354;
+
+= 3.2.1 - 07 Nov 2023 =
+  * FIX: Call to lodash methods, #1342, #1346;
+  * FIX: Can't activate Blocks if Gutenberg plugin is active, #1345;
+  * FIX: Series order when no series is selected error, #1335;
+
+= 3.2.0 - 20 Sep 2023 =
   * FIX: register_activation_hook not executed, #1325;
   * FIX: Logic to check if a setting is enabled, #1319;
   * FIX: Undefined array key "enable_columns_visual_guide", #1321; 

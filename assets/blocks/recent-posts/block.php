@@ -1126,7 +1126,7 @@ function advgbGetSeriesOrder( $post ) {
         // Get the terms array from a post so later we can get the term id
         $terms = wp_get_post_terms( $post['id'], 'series' );
 
-        if( count( $terms ) && $terms[0]->term_id ) {
+        if( is_array( $terms ) && count( $terms ) && $terms[0]->term_id ) {
             return (int) get_post_meta( $post['id'], '_series_part_' . $terms[0]->term_id, true );
         }
     } else {
@@ -1395,18 +1395,21 @@ function advgbSeriesOrderSort() {
 			if ( function_exists( 'publishpress_multi_series_supported' ) 
 			    && publishpress_multi_series_supported() ) {
                 
-			    // We get the terms titles. The same stored in block's taxonomies->series attribute
-			    // @TODO - Store and use term ids instead as attributes
-			    $terms = $query->query_vars['tax_query'][0]['terms'];
-			    $metakeys = [];
-			    if( count( $terms ) ) {
-			        foreach( $terms as $term ) {
-			            // Get the term object and then use the id to get the meta_key 
-			            $term_obj = get_term_by( 'name', $term, 'series' );
-			            $metakeys[] = '_series_part_' . (int) $term_obj->term_id;
-			        }
-			        $query->set( 'meta_key', $metakeys );
-			    }
+			    // Make sure series are selected
+                if( isset( $query->query_vars['tax_query'][0]['terms'] ) 
+                    && count( $query->query_vars['tax_query'][0]['terms'] ) 
+                ) {
+                    // We get the terms titles. The same stored in block's taxonomies->series attribute
+                    // @TODO - Store and use term ids instead as attributes
+                    $terms = $query->query_vars['tax_query'][0]['terms'];
+                    $metakeys = [];
+                    foreach( $terms as $term ) {
+                        // Get the term object and then use the id to get the meta_key 
+                        $term_obj = get_term_by( 'name', $term, 'series' );
+                        $metakeys[] = '_series_part_' . (int) $term_obj->term_id;
+                    }
+                    $query->set( 'meta_key', $metakeys );
+                }
 			} else {
 			    // Series Pro 2.11.3- and Series Free 2.11.2-
 			    $query->set( 'meta_key', '_series_part' );

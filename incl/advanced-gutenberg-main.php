@@ -462,6 +462,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 						'advgb_blocks',
 						ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/blocks.js',
 						array(
+							'lodash',
 							'wp-blocks',
 							'wp-i18n',
 							'wp-element',
@@ -2317,24 +2318,6 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				         __( 'Contact', 'advanced-gutenberg' )
 				         . '</a>
                                 </li>
-                                <li>
-                                    <a href="https://twitter.com/publishpresscom"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="ag-footer-link"
-                                    >
-                                        <span class="dashicons dashicons-twitter"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="https://facebook.com/publishpress"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="ag-footer-link"
-                                    >
-                                        <span class="dashicons dashicons-facebook"></span>
-                                    </a>
-                                </li>
                             </ul>
                         </nav>
                         <div class="advgb-pressshack-logo">
@@ -3704,7 +3687,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			foreach ( $tabs as $tab ) {
 				$html .= '<li class="nav-tab' . ( $tab['slug'] === $active ? ' nav-tab-active' : '' ) . '">
                     <a href="' . admin_url( 'admin.php?page=' . $page . '&tab=' . $tab['slug'] ) . '">
-                        ' . $tab['title'] . '
+                        ' . esc_html( $tab['title'] ) . '
                     </a>
                 </li>';
 			}

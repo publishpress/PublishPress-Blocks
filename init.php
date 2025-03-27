@@ -2,10 +2,6 @@
 
 defined( 'ABSPATH' ) || die;
 
-if ( ! defined( 'GUTENBERG_VERSION_REQUIRED' ) ) {
-	define( 'GUTENBERG_VERSION_REQUIRED', '5.7.0' );
-}
-
 require_once( plugin_dir_path( __FILE__ ) . '/incl/utilities-main.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/incl/block-settings-main.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/incl/block-controls-main.php' );

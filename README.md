@@ -42,6 +42,11 @@ We will review and contact you as soon as possible.
 
 ## Development
 
+Be sure to initialize Docker first.
+
+1. `cd dev-workspace`
+2. `./run`
+
 ### React JS and JSX Files
 
 We use [React](https://facebook.github.io/react/) to build part of the user interface.
@@ -53,19 +58,21 @@ Please check the requirements at [our documentation page](https://publishpress.g
 
 #### Compiling JSX files to JS
 
-Run the command `npm run build_react_dev` just once.
+Inside Docker run `composer build:js` or `composer build:js-dev`
 
 #### Compiling SCSS files to CSS
 
-Run the command `npm run compile_css` every time after you make changes to any SCSS file in order to compile to CSS.
+Inside Docker run `composer build:css` or `composer build:css-dev`
 
-Please note there are other commands related to CSS compilation that involves specific files from admin. For more details check all the scripts in package.json.
+Please note there are other commands related to CSS compilation that involves specific files from admin. For more details check all the scripts in composer.json.
+
+#### Minify JS files
+
+Check the commands related to JS minification in composer.json scripts. All of them uses uglifyjs.
 
 #### Creating a zip installer
 
-You need to have `gulp-cli` installed globally and `gulp` and `gulp-zip` in local. [Click here](https://gulpjs.com/docs/en/getting-started/quick-start/) for more details.
-
-Through command line run `gulp bundle`. A zip ready to install as plugin should be generated inside bundled/ folder. This zip will exclude non required files in WordPress, like JSX and SCSS.
+Inside Docker run `composer build`.
 
 ## License
 
