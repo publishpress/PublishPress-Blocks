@@ -110,8 +110,15 @@ if ( ! class_exists( '\\PublishPress\\Blocks\\Controls' ) ) {
 				case 'schedule':
 					$bControl = $block['attrs']['advgbBlockControls'][ $key ];
 					$dateFrom = $dateTo = $recurring = $timeFrom = $timeTo = null;
-					$days     = isset( $bControl['days'] ) && is_array( $bControl['days'] ) && count( $bControl['days'] )
+					$days = isset( $bControl['days'] ) && is_array( $bControl['days'] ) && count( $bControl['days'] )
 						? $bControl['days'] : [];
+					if ( count( $days ) ) {
+						// Convert JavaScript days (0=Sun) to PHP 'N' format (7=Sun)
+						$days = array_map( function($day) {
+							$day = intval($day);
+							return $day === 0 ? 7 : $day;
+						}, $days );
+					}
 
 					// Pro - Check if the schedule uses a timezone different to General settings
 					if ( defined( 'ADVANCED_GUTENBERG_PRO_LOADED' )
