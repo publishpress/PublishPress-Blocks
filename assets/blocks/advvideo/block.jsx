@@ -179,6 +179,7 @@
                 videoTitle,
                 videoFullWidth,
                 videoWidth,
+                useCustomHeight,
                 videoHeight,
                 playButtonIcon,
                 playButtonSize,
@@ -333,13 +334,21 @@
                                     onChange={ (value) => setAttributes( { videoWidth: value } ) }
                                 />
                                 }
-                                <RangeControl
+
+                                <ToggleControl
                                     label={ __( 'Video height', 'advanced-gutenberg' ) }
-                                    value={ videoHeight }
-                                    min={ 300 }
-                                    max={ 700 }
-                                    onChange={ (value) => setAttributes( { videoHeight: value } ) }
+                                    checked={ useCustomHeight }
+                                    onChange={ () => setAttributes( { useCustomHeight: !useCustomHeight } ) }
                                 />
+                                {useCustomHeight &&
+                                    <RangeControl
+                                        label={ __( 'Custom height', 'advanced-gutenberg' ) }
+                                        value={ videoHeight }
+                                        min={ 300 }
+                                        max={ 700 }
+                                        onChange={ (value) => setAttributes( { videoHeight: value } ) }
+                                    />
+                                }
                                 {!!openInLightbox &&
                                 <Fragment>
                                     <PanelColorSettings
@@ -423,13 +432,13 @@
                                         <iframe src={videoURL}
                                                 frameBorder="0"
                                                 allowFullScreen
-                                                style={ { width: videoWidth, height: videoHeight } }
+                                                style={ { width: videoWidth, height: useCustomHeight ? videoHeight : undefined } }
                                         />
                                     )
                                     || (videoSourceType === 'local' && (
                                         <Disabled>
                                             <video width={videoWidth}
-                                                   height={videoHeight}
+                                                   height={useCustomHeight ? videoHeight : undefined}
                                                    poster={poster}
                                                    controls={playback}
                                                    muted={muted}
@@ -439,7 +448,7 @@
                                             </video>
                                         </Disabled>
                                     ))
-                                    || !videoSourceType && <div style={ { width: videoWidth, height: videoHeight } } />}
+                                    || !videoSourceType && <div style={ { width: videoWidth, height: useCustomHeight ? videoHeight : undefined } } />}
                                 </div>
                             ) }
                             {isSelected &&
@@ -533,6 +542,10 @@
         },
         videoWidth: {
             type: 'number',
+        },
+        useCustomHeight: {
+            type: 'boolean',
+            default: true,
         },
         videoHeight: {
             type: 'number',
@@ -629,6 +642,7 @@
                 videoTitle,
                 videoFullWidth,
                 videoWidth,
+                useCustomHeight,
                 videoHeight,
                 playButtonIcon,
                 playButtonSize,
@@ -675,7 +689,7 @@
                             {( (videoSourceType === 'youtube' || videoSourceType === 'vimeo') &&
                                 <iframe src={videoURL}
                                         width={videoWidth}
-                                        height={videoHeight}
+                                        height={useCustomHeight ? videoHeight : undefined}
                                         frameBorder="0"
                                         allowFullScreen
                                 />
@@ -683,7 +697,7 @@
                             || (videoSourceType === 'local' &&
                                 <video className={ videoFullWidth && 'full-width' }
                                        width={videoWidth}
-                                       height={videoHeight}
+                                       height={useCustomHeight ? videoHeight : undefined}
                                        poster={poster}
                                        controls={playback}
                                        loop={loop}
@@ -696,7 +710,7 @@
                                     { 'Your browser does not support HTML5 video.' }
                                 </video>
                             )
-                            || !videoSourceType && <div style={ { width: videoWidth, height: videoHeight } } />}
+                            || !videoSourceType && <div style={ { width: videoWidth, height: useCustomHeight ? videoHeight : undefined } } />}
                         </div>
                     ) }
                     {!!openInLightbox &&
@@ -728,6 +742,7 @@
                         videoTitle,
                         videoFullWidth,
                         videoWidth,
+                        useCustomHeight,
                         videoHeight,
                         playButtonIcon,
                         playButtonSize,
@@ -759,7 +774,7 @@
                                     {( (videoSourceType === 'youtube' || videoSourceType === 'vimeo') &&
                                         <iframe src={videoURL}
                                                 width={videoWidth}
-                                                height={videoHeight}
+                                                height={useCustomHeight ? videoHeight : undefined}
                                                 frameBorder="0"
                                                 allowFullScreen
                                         />
@@ -767,7 +782,7 @@
                                     || (videoSourceType === 'local' &&
                                         <video className={ videoFullWidth && 'full-width' }
                                                width={videoWidth}
-                                               height={videoHeight}
+                                               height={useCustomHeight ? videoHeight : undefined}
                                                poster={poster}
                                                controls
                                         >
@@ -775,7 +790,7 @@
                                             { 'Your browser does not support HTML5 video.' }
                                         </video>
                                     )
-                                    || !videoSourceType && <div style={ { width: videoWidth, height: videoHeight } } />}
+                                    || !videoSourceType && <div style={ { width: videoWidth, height: useCustomHeight ? videoHeight : undefined } } />}
                                 </div>
                             ) }
                             {!!openInLightbox &&

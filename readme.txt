@@ -1,9 +1,9 @@
 === Gutenberg Blocks - PublishPress Blocks Gutenberg Editor Plugin ===
-Contributors: publishpress, stevejburge, htmgarcia
+Contributors: publishpress, stevejburge, htmgarcia, olatechpro
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks, accordion block, gallery block, slider block, tabs block, maps block, block controls
 Requires at least: 5.5
-Tested up to: 6.6.1
-Stable tag: 3.2.4
+Tested up to: 6.7
+Stable tag: 3.2.5
 Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -112,7 +112,7 @@ PublishPress Blocks allows you to create flexible and beautiful page builder lay
 
 The Pro versions of the PublishPress plugins are well worth your investment. The Pro versions have extra features and faster support. [Click here to join PublishPress](https://publishpress.com/pricing/).
 
-Join PublishPress and you'll get access to these nine Pro plugins:
+Join PublishPress and you'll get access to these ten Pro plugins:
 
 * [PublishPress Authors Pro](https://publishpress.com/authors) allows you to add multiple authors and guest authors to WordPress posts.
 * [PublishPress Blocks Pro](https://publishpress.com/blocks) has everything you need to build professional websites with the WordPress block editor.
@@ -123,6 +123,7 @@ Join PublishPress and you'll get access to these nine Pro plugins:
 * [PublishPress Planner Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
 * [PublishPress Revisions Pro](https://publishpress.com/revisions) allows you to update your published pages with teamwork and precision.
 * [PublishPress Series Pro](https://publishpress.com/series) enables you to group content together into a series.
+* [PublishPress Statuses Pro](https://publishpress.com/series) enables you to create additional publishing steps for your posts.
 
 Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more... then you should try PublishPress.
 
@@ -269,6 +270,17 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 16. Block Styles: You create custom CSS styles for blocks and make them available to end users.
 
 == Changelog ==
+
+= 3.2.5 - 09 April 2025 =
+  * FIX: Block Control Does not Work on Sunday, #1411
+  * FIX: Slick css override rule bug, #1428
+  * UPDATE: Make Video Height optional in Video Block for Auto Height, #1379
+  * FIX: Content Display Bug, #1370
+  * FIX: Accessiblity for Accordion block, #66
+  * UPDATE: Reach accordion items with tab key, #776
+  * FIX: Lightbox not working with webp images, #1309
+  * UPDATE: Update WordPress Reviews library to 1.1.20, #1338
+  * UPDATE: Brazil Translation,  #1421
 
 = 3.2.4 - 05 Aug 2024 =
   * FIX: Calendar popup odd behavior in Block controls, #1261;

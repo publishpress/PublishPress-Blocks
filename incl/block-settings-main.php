@@ -603,6 +603,11 @@ if ( ! class_exists( '\\PublishPress\\Blocks\\Configuration' ) ) {
 							),
 							array(
 								'title' => __( 'Video Height', 'advanced-gutenberg' ),
+								'type'  => 'checkbox',
+								'name'  => 'useCustomHeight'
+							),
+							array(
+								'title' => __( 'Custom Height', 'advanced-gutenberg' ),
 								'type'  => 'number',
 								'name'  => 'videoHeight',
 								'min'   => 300,

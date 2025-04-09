@@ -276,16 +276,16 @@
         },
         {
             "name": "gettext/languages",
-            "version": "2.10.0",
+            "version": "2.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-gettext/Languages.git",
-                "reference": "4d61d67fe83a2ad85959fe6133d6d9ba7dddd1ab"
+                "reference": "0b0b0851c55168e1dfb14305735c64019732b5f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-gettext/Languages/zipball/4d61d67fe83a2ad85959fe6133d6d9ba7dddd1ab",
-                "reference": "4d61d67fe83a2ad85959fe6133d6d9ba7dddd1ab",
+                "url": "https://api.github.com/repos/php-gettext/Languages/zipball/0b0b0851c55168e1dfb14305735c64019732b5f1",
+                "reference": "0b0b0851c55168e1dfb14305735c64019732b5f1",
                 "shasum": ""
             },
             "require": {
@@ -295,7 +295,8 @@
                 "phpunit/phpunit": "^4.8 || ^5.7 || ^6.5 || ^7.5 || ^8.4"
             },
             "bin": [
-                "bin/export-plural-rules"
+                "bin/export-plural-rules",
+                "bin/import-cldr-data"
             ],
             "type": "library",
             "autoload": {
@@ -334,7 +335,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-gettext/Languages/issues",
-                "source": "https://github.com/php-gettext/Languages/tree/2.10.0"
+                "source": "https://github.com/php-gettext/Languages/tree/2.12.1"
             },
             "funding": [
                 {
@@ -346,20 +347,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-10-18T15:00:10+00:00"
+            "time": "2025-03-19T11:14:02+00:00"
         },
         {
             "name": "mck89/peast",
-            "version": "v1.16.3",
+            "version": "v1.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mck89/peast.git",
-                "reference": "645ec21b650bc2aced18285c85f220d22afc1430"
+                "reference": "3a752d39bd7d8dc1e19bcf424f3d5ac1a1ca6ad5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mck89/peast/zipball/645ec21b650bc2aced18285c85f220d22afc1430",
-                "reference": "645ec21b650bc2aced18285c85f220d22afc1430",
+                "url": "https://api.github.com/repos/mck89/peast/zipball/3a752d39bd7d8dc1e19bcf424f3d5ac1a1ca6ad5",
+                "reference": "3a752d39bd7d8dc1e19bcf424f3d5ac1a1ca6ad5",
                 "shasum": ""
             },
             "require": {
@@ -372,7 +373,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.16.3-dev"
+                    "dev-master": "1.17.0-dev"
                 }
             },
             "autoload": {
@@ -393,9 +394,9 @@
             "description": "Peast is PHP library that generates AST for JavaScript code",
             "support": {
                 "issues": "https://github.com/mck89/peast/issues",
-                "source": "https://github.com/mck89/peast/tree/v1.16.3"
+                "source": "https://github.com/mck89/peast/tree/v1.17.0"
             },
-            "time": "2024-07-23T14:00:32+00:00"
+            "time": "2025-03-07T19:44:14+00:00"
         },
         {
             "name": "mustache/mustache",
@@ -449,16 +450,16 @@
         },
         {
             "name": "sirbrillig/phpcs-variable-analysis",
-            "version": "v2.11.19",
+            "version": "v2.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sirbrillig/phpcs-variable-analysis.git",
-                "reference": "bc8d7e30e2005bce5c59018b7cdb08e9fb45c0d1"
+                "reference": "4debf5383d9ade705e0a25121f16c3fecaf433a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/bc8d7e30e2005bce5c59018b7cdb08e9fb45c0d1",
-                "reference": "bc8d7e30e2005bce5c59018b7cdb08e9fb45c0d1",
+                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/4debf5383d9ade705e0a25121f16c3fecaf433a7",
+                "reference": "4debf5383d9ade705e0a25121f16c3fecaf433a7",
                 "shasum": ""
             },
             "require": {
@@ -469,9 +470,8 @@
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.7 || ^1.0",
                 "phpcsstandards/phpcsdevcs": "^1.1",
                 "phpstan/phpstan": "^1.7",
-                "phpunit/phpunit": "^4.8.36 || ^5.7.21 || ^6.5 || ^7.0 || ^8.0 || ^9.0",
-                "sirbrillig/phpcs-import-detection": "^1.1",
-                "vimeo/psalm": "^0.2 || ^0.3 || ^1.1 || ^4.24 || ^5.0@beta"
+                "phpunit/phpunit": "^4.8.36 || ^5.7.21 || ^6.5 || ^7.0 || ^8.0 || ^9.0 || ^10.5.32 || ^11.3.3",
+                "vimeo/psalm": "^0.2 || ^0.3 || ^1.1 || ^4.24 || ^5.0"
             },
             "type": "phpcodesniffer-standard",
             "autoload": {
@@ -503,20 +503,20 @@
                 "source": "https://github.com/sirbrillig/phpcs-variable-analysis",
                 "wiki": "https://github.com/sirbrillig/phpcs-variable-analysis/wiki"
             },
-            "time": "2024-06-26T20:08:34+00:00"
+            "time": "2025-03-17T16:17:38+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.10.2",
+            "version": "3.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "86e5f5dd9a840c46810ebe5ff1885581c42a3017"
+                "reference": "ea16a1f3719783345febd3aab41beb55c8c84bfd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/86e5f5dd9a840c46810ebe5ff1885581c42a3017",
-                "reference": "86e5f5dd9a840c46810ebe5ff1885581c42a3017",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/ea16a1f3719783345febd3aab41beb55c8c84bfd",
+                "reference": "ea16a1f3719783345febd3aab41beb55c8c84bfd",
                 "shasum": ""
             },
             "require": {
@@ -581,9 +581,13 @@
                 {
                     "url": "https://opencollective.com/php_codesniffer",
                     "type": "open_collective"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/phpcsstandards",
+                    "type": "thanks_dev"
                 }
             ],
-            "time": "2024-07-21T23:26:44+00:00"
+            "time": "2025-04-04T12:57:55+00:00"
         },
         {
             "name": "symfony/finder",
@@ -648,16 +652,16 @@
         },
         {
             "name": "wp-cli/i18n-command",
-            "version": "v2.6.2",
+            "version": "v2.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/i18n-command.git",
-                "reference": "53518a11f314119e320597c7a8274f11b1295bdc"
+                "reference": "065bb3758fcbff922f1b7a01ab702aab0da79803"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/i18n-command/zipball/53518a11f314119e320597c7a8274f11b1295bdc",
-                "reference": "53518a11f314119e320597c7a8274f11b1295bdc",
+                "url": "https://api.github.com/repos/wp-cli/i18n-command/zipball/065bb3758fcbff922f1b7a01ab702aab0da79803",
+                "reference": "065bb3758fcbff922f1b7a01ab702aab0da79803",
                 "shasum": ""
             },
             "require": {
@@ -676,9 +680,6 @@
             },
             "type": "wp-cli-package",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "2.x-dev"
-                },
                 "bundled": true,
                 "commands": [
                     "i18n",
@@ -687,7 +688,10 @@
                     "i18n make-mo",
                     "i18n make-php",
                     "i18n update-po"
-                ]
+                ],
+                "branch-alias": {
+                    "dev-main": "2.x-dev"
+                }
             },
             "autoload": {
                 "files": [
@@ -711,9 +715,9 @@
             "homepage": "https://github.com/wp-cli/i18n-command",
             "support": {
                 "issues": "https://github.com/wp-cli/i18n-command/issues",
-                "source": "https://github.com/wp-cli/i18n-command/tree/v2.6.2"
+                "source": "https://github.com/wp-cli/i18n-command/tree/v2.6.3"
             },
-            "time": "2024-07-03T12:50:00+00:00"
+            "time": "2024-10-01T11:16:25+00:00"
         },
         {
             "name": "wp-cli/mustangostang-spyc",
@@ -831,16 +835,16 @@
         },
         {
             "name": "wp-cli/wp-cli",
-            "version": "v2.10.0",
+            "version": "v2.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli.git",
-                "reference": "a339dca576df73c31af4b4d8054efc2dab9a0685"
+                "reference": "53f0df112901fcf95099d0f501912a209429b6a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/a339dca576df73c31af4b4d8054efc2dab9a0685",
-                "reference": "a339dca576df73c31af4b4d8054efc2dab9a0685",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/53f0df112901fcf95099d0f501912a209429b6a9",
+                "reference": "53f0df112901fcf95099d0f501912a209429b6a9",
                 "shasum": ""
             },
             "require": {
@@ -870,7 +874,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "2.10.x-dev"
+                    "dev-main": "2.11.x-dev"
                 }
             },
             "autoload": {
@@ -897,7 +901,7 @@
                 "issues": "https://github.com/wp-cli/wp-cli/issues",
                 "source": "https://github.com/wp-cli/wp-cli"
             },
-            "time": "2024-02-08T16:52:43+00:00"
+            "time": "2024-08-08T03:04:55+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
