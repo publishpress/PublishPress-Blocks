@@ -1,5 +1,5 @@
 === Gutenberg Blocks - PublishPress Blocks Gutenberg Editor Plugin ===
-Contributors: publishpress, stevejburge, htmgarcia
+Contributors: publishpress, stevejburge, htmgarcia, olatechpro
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks, accordion block, gallery block, slider block, tabs block, maps block, block controls
 Requires at least: 5.5
 Tested up to: 6.7
