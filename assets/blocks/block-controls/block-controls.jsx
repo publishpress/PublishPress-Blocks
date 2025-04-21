@@ -12,7 +12,8 @@ import {
     const { sprintf, __ } = wpI18n;
     const { hasBlockSupport } = wpBlocks;
     const { InspectorControls, BlockControls } = wpBlockEditor;
-    const { DateTimePicker, ToggleControl, PanelBody, Notice, FormTokenField, SelectControl } = wpComponents;
+    const { DateTimePicker, ToggleControl, PanelBody, Notice, FormTokenField, SelectControl, TextControl, RadioControl } = wpComponents;
+
     const { createHigherOrderComponent } = wpCompose;
     const { Component, Fragment } = wpElement;
 
@@ -31,9 +32,9 @@ import {
 
     const getGlobalControls = function () {
         return typeof advgb_block_controls_vars.controls !== 'undefined'
-                            && Object.keys(advgb_block_controls_vars.controls).length > 0
-                                ? advgb_block_controls_vars.controls
-                                : [];
+                        && Object.keys(advgb_block_controls_vars.controls).length > 0
+                            ? advgb_block_controls_vars.controls
+                            : [];
     }
 
     /**
@@ -316,6 +317,18 @@ import {
                     pages: [],
                     approach: 'exclude'
                 };
+                const deviceTypeControl = {
+                    control: 'device_type',
+                    enabled: true,
+                    devices: []
+                };
+
+                const deviceWidthControl = {
+                    control: 'device_width',
+                    enabled: true,
+                    min_width: '',
+                    max_width: ''
+                };
 
                 // Check if advgbBlockControls attribute exists
                 const controlsAdded = typeof advgbBlockControls !== 'undefined' && advgbBlockControls.length
@@ -384,6 +397,24 @@ import {
                                 ]
                             } );
                         break;
+
+                        case 'device_type':
+                            setAttributes( {
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    deviceTypeControl
+                                ]
+                            } );
+                        break;
+
+                        case 'device_width':
+                            setAttributes( {
+                                advgbBlockControls: [
+                                    ...advgbBlockControls,
+                                    deviceWidthControl
+                                ]
+                            } );
+                        break;
                     }
                 } else {
                     // Add the first control object attribute
@@ -409,6 +440,18 @@ import {
                         case 'page':
                             setAttributes( {
                                 advgbBlockControls: [ pageControl ]
+                            } );
+                        break;
+
+                        case 'device_type':
+                            setAttributes( {
+                                advgbBlockControls: [ deviceTypeControl ]
+                            } );
+                        break;
+
+                        case 'device_width':
+                            setAttributes( {
+                                advgbBlockControls: [ deviceWidthControl ]
                             } );
                         break;
                     }
@@ -1145,6 +1188,88 @@ import {
                                         </Fragment>
                                     ) }
                                 </Fragment>
+                                ) }
+                                { isControlEnabled( advgb_block_controls_vars.controls.device_type ) && (
+                                    <Fragment>
+                                        <ToggleControl
+                                            label={ __( 'Device Type', 'advanced-gutenberg' ) }
+                                            help={ currentControlKey( advgbBlockControls, 'device_type', 'enabled' )
+                                                ? __( 'Choose which devices this block should be visible on.', 'advanced-gutenberg' )
+                                                : ''
+                                            }
+                                            checked={ currentControlKey( advgbBlockControls, 'device_type', 'enabled' ) }
+                                            onChange={ () => this.changeControlKey( 'device_type', 'enabled' ) }
+                                        />
+                                        { currentControlKey( advgbBlockControls, 'device_type', 'enabled' ) && (
+                                            <Fragment>
+                                                <ToggleControl
+                                                    label={ __( 'Desktop', 'advanced-gutenberg' ) }
+                                                    checked={ currentControlKey( advgbBlockControls, 'device_type', 'devices' ).includes('desktop') }
+                                                    onChange={ () => {
+                                                        const devices = currentControlKey( advgbBlockControls, 'device_type', 'devices' );
+                                                        const newDevices = devices.includes('desktop')
+                                                            ? devices.filter(d => d !== 'desktop')
+                                                            : [...devices, 'desktop'];
+                                                        this.changeControlKey( 'device_type', 'devices', newDevices );
+                                                    } }
+                                                />
+                                                <ToggleControl
+                                                    label={ __( 'Tablet', 'advanced-gutenberg' ) }
+                                                    checked={ currentControlKey( advgbBlockControls, 'device_type', 'devices' ).includes('tablet') }
+                                                    onChange={ () => {
+                                                        const devices = currentControlKey( advgbBlockControls, 'device_type', 'devices' );
+                                                        const newDevices = devices.includes('tablet')
+                                                            ? devices.filter(d => d !== 'tablet')
+                                                            : [...devices, 'tablet'];
+                                                        this.changeControlKey( 'device_type', 'devices', newDevices );
+                                                    } }
+                                                />
+                                                <ToggleControl
+                                                    label={ __( 'Mobile', 'advanced-gutenberg' ) }
+                                                    checked={ currentControlKey( advgbBlockControls, 'device_type', 'devices' ).includes('mobile') }
+                                                    onChange={ () => {
+                                                        const devices = currentControlKey( advgbBlockControls, 'device_type', 'devices' );
+                                                        const newDevices = devices.includes('mobile')
+                                                            ? devices.filter(d => d !== 'mobile')
+                                                            : [...devices, 'mobile'];
+                                                        this.changeControlKey( 'device_type', 'devices', newDevices );
+                                                    } }
+                                                />
+                                            </Fragment>
+                                        ) }
+                                    </Fragment>
+                                ) }
+
+                                { isControlEnabled( advgb_block_controls_vars.controls.device_width ) && (
+                                    <Fragment>
+                                        <ToggleControl
+                                            label={ __( 'Device Width', 'advanced-gutenberg' ) }
+                                            help={ currentControlKey( advgbBlockControls, 'device_width', 'enabled' )
+                                                ? __( 'Set minimum and maximum screen widths for this block.', 'advanced-gutenberg' )
+                                                : ''
+                                            }
+                                            checked={ currentControlKey( advgbBlockControls, 'device_width', 'enabled' ) }
+                                            onChange={ () => this.changeControlKey( 'device_width', 'enabled' ) }
+                                        />
+                                        { currentControlKey( advgbBlockControls, 'device_width', 'enabled' ) && (
+                                            <Fragment>
+                                                <TextControl
+                                                    type="number"
+                                                    label={ __( 'Minimum width (px)', 'advanced-gutenberg' ) }
+                                                    value={ currentControlKey( advgbBlockControls, 'device_width', 'min_width' ) || '' }
+                                                    onChange={ ( value ) => this.changeControlKey( 'device_width', 'min_width', value ) }
+                                                    placeholder={ __( 'No minimum', 'advanced-gutenberg' ) }
+                                                />
+                                                <TextControl
+                                                    type="number"
+                                                    label={ __( 'Maximum width (px)', 'advanced-gutenberg' ) }
+                                                    value={ currentControlKey( advgbBlockControls, 'device_width', 'max_width' ) || '' }
+                                                    onChange={ ( value ) => this.changeControlKey( 'device_width', 'max_width', value ) }
+                                                    placeholder={ __( 'No maximum', 'advanced-gutenberg' ) }
+                                                />
+                                            </Fragment>
+                                        ) }
+                                    </Fragment>
                                 ) }
                                 { ! this.isPost() && ( // Disabled in post edit
                                     <Fragment>

@@ -4,6 +4,8 @@ defined( 'ABSPATH' ) || die;
 
 $schedule_control  = PublishPress\Blocks\Controls::getControlValue( 'schedule', 1 );
 $user_role_control = PublishPress\Blocks\Controls::getControlValue( 'user_role', 1 );
+$device_type_control = PublishPress\Blocks\Controls::getControlValue( 'device_type', 1 );
+$device_width_control = PublishPress\Blocks\Controls::getControlValue( 'device_width', 1 );
 $archive_control   = PublishPress\Blocks\Controls::getControlValue( 'archive', 1 );
 $page_control      = PublishPress\Blocks\Controls::getControlValue( 'page', 1 );
 ?>
@@ -60,6 +62,72 @@ $page_control      = PublishPress\Blocks\Controls::getControlValue( 'page', 1 );
 						<?php
 						_e(
 							'Choose which users can see your blocks.',
+							'advanced-gutenberg'
+						)
+						?>
+                    </label><br>
+                    <p class="description advgb-control-desc">
+						<?php
+						_e( 'This block control is available on:', 'advanced-gutenberg' ) ?>
+                        <code><?php
+							_e( 'Post', 'advanced-gutenberg' ) ?></code>
+                        <code><?php
+							_e( 'Widgets', 'advanced-gutenberg' ) ?></code>
+                        <code><?php
+							_e( 'Site Editor', 'advanced-gutenberg' ) ?></code>
+                    </p>
+                </fieldset>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+				<?php
+				_e( 'Device Type', 'advanced-gutenberg' ) ?>
+            </th>
+            <td>
+                <fieldset>
+                    <label>
+                        <input type="checkbox" name="device_type_control"
+                               value="1"
+							<?php
+							echo $device_type_control ? ' checked' : '' ?>
+                        />
+						<?php
+						_e(
+							'Choose the device type to show your blocks on.',
+							'advanced-gutenberg'
+						)
+						?>
+                    </label><br>
+                    <p class="description advgb-control-desc">
+						<?php
+						_e( 'This block control is available on:', 'advanced-gutenberg' ) ?>
+                        <code><?php
+							_e( 'Post', 'advanced-gutenberg' ) ?></code>
+                        <code><?php
+							_e( 'Widgets', 'advanced-gutenberg' ) ?></code>
+                        <code><?php
+							_e( 'Site Editor', 'advanced-gutenberg' ) ?></code>
+                    </p>
+                </fieldset>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+				<?php
+				_e( 'Device Width', 'advanced-gutenberg' ) ?>
+            </th>
+            <td>
+                <fieldset>
+                    <label>
+                        <input type="checkbox" name="device_width_control"
+                               value="1"
+							<?php
+							echo $device_width_control ? ' checked' : '' ?>
+                        />
+						<?php
+						_e(
+							'Choose the device width to show your blocks on.',
 							'advanced-gutenberg'
 						)
 						?>
