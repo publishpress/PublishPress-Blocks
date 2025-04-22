@@ -98,7 +98,7 @@
 
     // Apply custom styles on front-end
     addFilter( 'blocks.getSaveContent.extraProps', 'advgb/loadFrontendCustomStyles', function ( extraProps, blockType, attributes ) {
-        if (hasBlockSupport( blockType, 'customStyle', true ) && attributes.customStyle) {
+        if (hasBlockSupport( blockType, 'customStyle', true ) && attributes.customStyle && typeof attributes.customStyle !== 'undefined') {
             if (typeof extraProps.className === 'undefined') {
                 extraProps.className = attributes.customStyle;
             } else {
@@ -121,7 +121,11 @@
                 customStyle,
             } = props.attributes;
 
-            return <BlockListBlock { ...props } className={ `${ customStyle }` } />;
+            if (customStyle && typeof customStyle !== 'undefined') {
+                return <BlockListBlock { ...props } className={ `${ customStyle }` } />;
+            } else {
+                return <BlockListBlock { ...props } />
+            }
         };
     }, 'withStyleClasses' );
 
