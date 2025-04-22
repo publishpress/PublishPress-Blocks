@@ -143,115 +143,141 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
 				default:
 				case 'schedule':
 					$bControl = $block['attrs']['advgbBlockControls'][$key];
-					$dateFrom = $dateTo = $recurring = $timeFrom = $timeTo = null;
-					$days = isset($bControl['days']) && is_array($bControl['days']) && count($bControl['days'])
-						? $bControl['days'] : [];
-					if (count($days)) {
-						// Convert JavaScript days (0=Sun) to PHP 'N' format (7=Sun)
-						$days = array_map(function ($day) {
-							$day = intval($day);
-							return $day === 0 ? 7 : $day;
-						}, $days);
-					}
 
-					// Pro - Check if the schedule uses a timezone different to General settings
-					if (
-						defined('ADVANCED_GUTENBERG_PRO_LOADED')
-						&& isset($bControl['timezone'])
-						&& !empty($bControl['timezone'])
-						&& method_exists('PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_set_timezone')
-					) {
-						$timezone = \PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_set_timezone(
-							esc_html($bControl['timezone'])
-						);
+					// Backward compatibility - check if we have the old single schedule format
+					if (isset($bControl['schedules'])) {
+						// New format with multiple schedules
+						$schedules = $bControl['schedules'];
 					} else {
-						$timezone = wp_timezone();
+						// Legacy format - convert to array
+						$schedules = [[
+							'dateFrom' => $bControl['dateFrom'] ?? null,
+							'dateTo' => $bControl['dateTo'] ?? null,
+							'recurring' => $bControl['recurring'] ?? false,
+							'days' => $bControl['days'] ?? [],
+							'timeFrom' => $bControl['timeFrom'] ?? null,
+							'timeTo' => $bControl['timeTo'] ?? null,
+							'timezone' => $bControl['timezone'] ?? null
+						]];
 					}
 
-					// Start showing
-					if (!empty($bControl['dateFrom'])) {
-						$dateFrom = \DateTime::createFromFormat('Y-m-d\TH:i:s', $bControl['dateFrom'], $timezone);
-						// Reset seconds to zero to enable proper comparison
-						$dateFrom->setTime($dateFrom->format('H'), $dateFrom->format('i'), 0);
-					}
+					$shouldShow = false;
 
-					// Stop showing
-					if (!empty($bControl['dateTo'])) {
-						$dateTo = \DateTime::createFromFormat('Y-m-d\TH:i:s', $bControl['dateTo'], $timezone);
-						// Reset seconds to zero to enable proper comparison
-						$dateTo->setTime($dateTo->format('H'), $dateTo->format('i'), 0);
-
-						if ($dateFrom) {
-							// Recurring is only relevant when both dateFrom and dateTo are defined
-							$recurring = isset($bControl['recurring']) ? $bControl['recurring'] : false;
-						}
-					}
-
-					// Days
-					if (count($days)) {
-						$days = array_map('intval', $days);
-					}
-
-					/*
-					 * Time from and Time to exists and are valid.
-					 * Valid times: "02:00:00", "19:35:00"
-					 * Invalid times: "-06:00:00", "25:00:00"
-					 */
-					if (
-						!empty($bControl['timeFrom'])
-						&& !empty($bControl['timeTo'])
-						&& strtotime($bControl['timeFrom']) !== false
-						&& strtotime($bControl['timeTo']) !== false
-					) {
-						// Get current datetime with timezone
-						$timeNow = new \DateTime('now', $timezone);
-						$timeNow->format('Y-m-d\TH:i:s');
-						$timeFrom = clone $timeNow;
-						$timeTo = clone $timeNow;
-
-						// Replace with our time attributes in previously generated datetime
-						$timeFrom->modify($bControl['timeFrom']);
-						$timeTo->modify($bControl['timeTo']);
-					}
-
-					if ($dateFrom || $dateTo || $days || ($timeFrom && $timeTo)) {
-						// Fetch current time keeping in mind the timezone
-						$now = new \DateTime('now', $timezone);
-						$now->format('Y-m-d\TH:i:s');
-
-						/* Reset seconds to zero to enable proper comparison
-						 * as the from and to dates have those as 0
-						 * but do this only for the from comparison
-						 * as we need the block to stop showing at the right time and not 1 minute extra
-						 */
-						$nowFrom = clone $now;
-						$nowFrom->setTime($now->format('H'), $now->format('i'), 0);
-
-						// Decide if block is displayed or not
-						if ($recurring) {
-							// Make the year same as today's
-							$dateFrom->setDate(
-								$nowFrom->format('Y'),
-								$dateFrom->format('m'),
-								$dateFrom->format('j')
-							);
-							$dateTo->setDate($nowFrom->format('Y'), $dateTo->format('m'), $dateTo->format('j'));
+					foreach ($schedules as $schedule) {
+						// Skip if schedule is empty
+						if (empty($schedule['dateFrom']) && empty($schedule['dateTo']) &&
+							empty($schedule['timeFrom']) && empty($schedule['timeTo']) &&
+							empty($schedule['days'])) {
+							continue;
 						}
 
+						$dateFrom = $dateTo = $recurring = $timeFrom = $timeTo = null;
+						$days = isset($schedule['days']) && is_array($schedule['days']) && count($schedule['days'])
+							? $schedule['days'] : [];
+						if (count($days)) {
+							// Convert JavaScript days (0=Sun) to PHP 'N' format (7=Sun)
+							$days = array_map(function ($day) {
+								$day = intval($day);
+								return $day === 0 ? 7 : $day;
+							}, $days);
+						}
+
+						// Timezone handling
 						if (
-							!(
-								(!$dateFrom || $dateFrom->getTimestamp() <= $nowFrom->getTimestamp()) // No "Start showing", or "Start showing" <= Now
-								&& (!$dateTo || $now->getTimestamp() < $dateTo->getTimestamp()) // No "Stop showing", or now < "Stop showing"
-								&& (!count($days) || in_array($nowFrom->format('N'), $days)) // "These days"
-								&& (!$timeFrom || $timeFrom->getTimestamp() <= $nowFrom->getTimestamp()) // No "Time from", or "Time from" <= Now
-								&& (!$timeTo || $now->getTimestamp() < $timeTo->getTimestamp()) // No "Time to", or now < "Time To"
-							)
+							defined('ADVANCED_GUTENBERG_PRO_LOADED')
+							&& isset($schedule['timezone'])
+							&& !empty($schedule['timezone'])
+							&& method_exists('PPB_AdvancedGutenbergPro\Utils\Definitions', 'advgb_pro_set_timezone')
 						) {
-							// No visible block
-							return false;
+							$timezone = \PPB_AdvancedGutenbergPro\Utils\Definitions::advgb_pro_set_timezone(
+								esc_html($schedule['timezone'])
+							);
+						} else {
+							$timezone = wp_timezone();
+						}
+
+						// Start showing
+						if (!empty($schedule['dateFrom'])) {
+							$dateFrom = \DateTime::createFromFormat('Y-m-d\TH:i:s', $schedule['dateFrom'], $timezone);
+							// Reset seconds to zero to enable proper comparison
+							$dateFrom->setTime($dateFrom->format('H'), $dateFrom->format('i'), 0);
+						}
+
+						// Stop showing
+						if (!empty($schedule['dateTo'])) {
+							$dateTo = \DateTime::createFromFormat('Y-m-d\TH:i:s', $schedule['dateTo'], $timezone);
+							// Reset seconds to zero to enable proper comparison
+							$dateTo->setTime($dateTo->format('H'), $dateTo->format('i'), 0);
+
+							if ($dateFrom) {
+								// Recurring is only relevant when both dateFrom and dateTo are defined
+								$recurring = isset($schedule['recurring']) ? $schedule['recurring'] : false;
+							}
+						}
+
+						/**
+						 * Time handling
+						 * Time from and Time to exists and are valid.
+						 * Valid times: "02:00:00", "19:35:00"
+						 * Invalid times: "-06:00:00", "25:00:00"
+						 *
+						 */
+						if (
+							!empty($schedule['timeFrom'])
+							&& !empty($schedule['timeTo'])
+							&& strtotime($schedule['timeFrom']) !== false
+							&& strtotime($schedule['timeTo']) !== false
+						) {
+							// Get current datetime with timezone
+							$timeNow = new \DateTime('now', $timezone);
+							$timeNow->format('Y-m-d\TH:i:s');
+							$timeFrom = clone $timeNow;
+							$timeTo = clone $timeNow;
+
+							// Replace with our time attributes in previously generated datetime
+							$timeFrom->modify($schedule['timeFrom']);
+							$timeTo->modify($schedule['timeTo']);
+						}
+
+						if ($dateFrom || $dateTo || $days || ($timeFrom && $timeTo)) {
+							// Fetch current time keeping in mind the timezone
+							$now = new \DateTime('now', $timezone);
+							$now->format('Y-m-d\TH:i:s');
+
+							/* Reset seconds to zero to enable proper comparison
+							* as the from and to dates have those as 0
+							* but do this only for the from comparison
+							* as we need the block to stop showing at the right time and not 1 minute extra
+							*/
+							$nowFrom = clone $now;
+							$nowFrom->setTime($now->format('H'), $now->format('i'), 0);
+
+							// Decide if block is displayed or not
+							if ($recurring) {
+								// Make the year same as today's
+								$dateFrom->setDate(
+									$nowFrom->format('Y'),
+									$dateFrom->format('m'),
+									$dateFrom->format('j')
+								);
+								$dateTo->setDate($nowFrom->format('Y'), $dateTo->format('m'), $dateTo->format('j'));
+							}
+
+							if (
+								(!$schedule['dateFrom'] || $dateFrom->getTimestamp() <= $nowFrom->getTimestamp()) // No "Start showing", or "Start showing" <= Now
+								&& (!$schedule['dateTo'] || $now->getTimestamp() < $dateTo->getTimestamp()) // No "Stop showing", or now < "Stop showing" &&
+								&& (!count($days) || in_array($nowFrom->format('N'), $days)) // "These days"
+								&& (!$schedule['timeFrom'] || $timeFrom->getTimestamp() <= $nowFrom->getTimestamp()) // No "Time from", or "Time
+								&& (!$schedule['timeTo'] || $now->getTimestamp() < $timeTo->getTimestamp()) // No "Time to", or now
+							) {
+								// If any schedule matches, show the block
+								$shouldShow = true;
+								return $shouldShow;
+							}
 						}
 					}
 
+					return $shouldShow;
 					break;
 
 				// User role control
