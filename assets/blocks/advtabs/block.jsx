@@ -77,7 +77,7 @@
         componentDidUpdate( prevProps ) {
             const { attributes, setAttributes, innerBlocks } = this.props;
             const { isTransform } = attributes;
-            
+
             // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
             if (!this.state.isBlockIdSet) {
                 if (!attributes.uniqueID) {
@@ -130,7 +130,7 @@
         }
 
         componentDidMount() {
-            
+
         }
 
         /**
@@ -810,55 +810,143 @@
                 borderColor,
                 borderRadius,
                 pid,
+                uniqueID
             } = attributes;
+
             const blockClass = [
                 `advgb-tabs-wrapper`,
                 `advgb-tab-${tabsStyleD}-desktop`,
                 `advgb-tab-${tabsStyleT}-tablet`,
                 `advgb-tab-${tabsStyleM}-mobile`,
                 pid
-            ].filter( Boolean ).join( ' ' );
+            ].filter(Boolean).join(' ');
 
             return (
                 <div className={blockClass} data-tab-active={tabActiveFrontend}>
-                    <ul className="advgb-tabs-panel">
-                        {tabHeaders.map( ( header, index ) => (
-                            <li key={ index } className="advgb-tab"
-                                style={ {
+                    <ul className="advgb-tabs-panel" role="tablist">
+                        {tabHeaders.map( (header, index) => (
+                            <li key={index}
+                                className={`advgb-tab ${index === tabActiveFrontend ? 'advgb-tab-active' : ''}`}
+                                role="presentation"
+                                style={{
                                     backgroundColor: headerBgColor,
                                     borderStyle: borderStyle,
                                     borderWidth: borderWidth + 'px',
                                     borderColor: borderColor,
                                     borderRadius: borderRadius + 'px',
-                                } }
-                            >
-                                <a id={tabAnchors[index]} href={`#advgb-tabs-tab${index}`}
-                                   style={ { color: headerTextColor } }
-                                >
+                                }}>
+                                <button
+                                    className="advgb-tab-button"
+                                    id={`advgb-tab-${uniqueID}-${index}`}
+                                    aria-controls={`advgb-tab-panel-${uniqueID}-${index}`}
+                                    role="tab"
+                                    aria-selected={index === tabActiveFrontend}
+                                    tabIndex="0"
+                                    style={{
+                                        color: headerTextColor,
+                                        background: 'none',
+                                        border: 'none',
+                                        width: '100%',
+                                        textAlign: 'inherit',
+                                        cursor: 'pointer',
+                                        padding: '8px 16px',
+                                        font: 'inherit'
+                                    }}>
                                     <RichText.Content
                                         tagName="span"
-                                        value={ header }
+                                        value={header}
                                     />
-                                </a>
+                                </button>
                             </li>
-                        ) ) }
+                        ))}
                     </ul>
                     <div className="advgb-tab-body-wrapper"
-                         style={ {
-                             backgroundColor: bodyBgColor,
-                             color: bodyTextColor,
-                             borderStyle: borderStyle,
-                             borderWidth: borderWidth + 'px',
-                             borderColor: borderColor,
-                             borderRadius: borderRadius + 'px',
-                         } }
-                    >
+                        style={{
+                            backgroundColor: bodyBgColor,
+                            color: bodyTextColor,
+                            borderStyle: borderStyle,
+                            borderWidth: borderWidth + 'px',
+                            borderColor: borderColor,
+                            borderRadius: borderRadius + 'px',
+                        }}>
                         <InnerBlocks.Content />
                     </div>
                 </div>
             );
         },
         deprecated: [
+            {
+                attributes: {
+                    ...tabBlockAttrs,
+                },
+                save: function ( { attributes } ) {
+                    const {
+                        tabHeaders,
+                        tabAnchors,
+                        tabActiveFrontend,
+                        tabsStyleD,
+                        tabsStyleT,
+                        tabsStyleM,
+                        headerBgColor,
+                        headerTextColor,
+                        bodyBgColor,
+                        bodyTextColor,
+                        borderStyle,
+                        borderWidth,
+                        borderColor,
+                        borderRadius,
+                        pid,
+                        uniqueID,
+                    } = attributes;
+                    const blockClass = [
+                        `advgb-tabs-wrapper`,
+                        `advgb-tab-${tabsStyleD}-desktop`,
+                        `advgb-tab-${tabsStyleT}-tablet`,
+                        `advgb-tab-${tabsStyleM}-mobile`,
+                        pid
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <div className={blockClass} data-tab-active={tabActiveFrontend}>
+                            <ul className="advgb-tabs-panel">
+                                {tabHeaders.map( ( header, index ) => (
+                                    <li key={ index } className="advgb-tab"
+                                        style={ {
+                                            backgroundColor: headerBgColor,
+                                            borderStyle: borderStyle,
+                                            borderWidth: borderWidth + 'px',
+                                            borderColor: borderColor,
+                                            borderRadius: borderRadius + 'px',
+                                        } }
+                                    >
+                                        <a id={`advgb-tabs-tab${index}`} href={`#advgb-tab-header-${uniqueID}-${index}`}
+                                           style={ { color: headerTextColor } }
+                                           aria-controls={`advgb-tab-header-${uniqueID}-${index}`}
+                                        >
+                                            <RichText.Content
+                                                tagName="span"
+                                                value={ header }
+                                            />
+                                        </a>
+                                    </li>
+                                ) ) }
+                            </ul>
+                            <div className="advgb-tab-body-wrapper"
+                                 style={ {
+                                     backgroundColor: bodyBgColor,
+                                     color: bodyTextColor,
+                                     borderStyle: borderStyle,
+                                     borderWidth: borderWidth + 'px',
+                                     borderColor: borderColor,
+                                     borderRadius: borderRadius + 'px',
+                                 } }
+                            >
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+                }
+            },
             {
                 attributes: {
                     ...tabBlockAttrs,

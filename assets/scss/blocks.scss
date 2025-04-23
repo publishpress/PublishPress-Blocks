@@ -972,7 +972,6 @@ div.advgb-tab-body {
   padding: 10px 10px 10px 15px;
   border: 1px solid #e0e0e0;
   background: none;
-  display: none;
 }
 
 #editor div.advgb-tab-body {
@@ -1019,6 +1018,10 @@ div.advgb-tab-body {
 .advgb-tabs-wrapper.advgb-tab-vert-desktop .advgb-tab-body-wrapper {
   flex-grow: 3;
   max-width: 75%;
+}
+
+.advgb-tab-body-container[hidden] {
+    display: none !important;
 }
 
 #editor [data-type="advgb/tab"] > .editor-block-list__block-edit > .editor-block-mover,
