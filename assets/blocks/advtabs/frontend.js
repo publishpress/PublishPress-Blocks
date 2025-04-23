@@ -3,68 +3,94 @@ jQuery(document).ready(function ($) {
     $(".advgb-tabs-block").tabs();
 
     $('.advgb-tabs-wrapper').each(function () {
-        var activeTab = $(this).data('tab-active');
-        var tabPanel = $(this).find('.advgb-tab-panel');
+        var $wrapper = $(this);
+        var activeTab = parseInt($wrapper.data('tab-active')) || 0;
+        var tabs = $wrapper.find('.advgb-tab');
+        var tabControls = $wrapper.find('.advgb-tab a, .advgb-tab button');
+        var bodyHeaders = $wrapper.find('.advgb-tab-body-header');
+        var bodyContainers = $wrapper.find('.advgb-tab-body-container');
 
-        var tab = $(this).find('li.advgb-tab:not(".advgb-tab-active")');
-        if($(this).prop('id') !== '') {
-            tab = $(this).find('li.advgb-tab:not(".ui-state-active")');
-        }
-        var tabs = $(this).find('.advgb-tab');
-        var bodyHeaders = $(this).find('.advgb-tab-body-header');
-        var bodyContainers = $(this).find('.advgb-tab-body-container');
-        var bgColor = tab.css('background-color');
-        var borderColor = tab.css('border-color');
-        var borderWidth = tab.css('border-width');
-        var borderStyle = tab.css('border-style');
-        var borderRadius = tab.css('border-radius');
-        var textColor = tab.find('a').css('color');
+        // Get styles from first tab
+        var $firstTab = tabs.first();
+        var tabStyles = {
+            bgColor: $firstTab.css('background-color'),
+            borderColor: $firstTab.css('border-color'),
+            borderWidth: $firstTab.css('border-width'),
+            borderStyle: $firstTab.css('border-style'),
+            borderRadius: $firstTab.css('border-radius'),
+            textColor: $firstTab.find('a, button').css('color')
+        };
 
-        $( this ).find( ".advgb-tab a:not(.advgb-tabs-anchor)" ).unbind( "click" );
-
-        tabs.on( 'click', function ( event ) {
+        // Unified click handler for both <a> and <button> tabs
+        tabs.on('click', 'a, button', function(event) {
             event.preventDefault();
-            var currentTabActive = $( event.target ).closest( '.advgb-tab' );
-            var href = currentTabActive.find( 'a' ).attr( 'href' );
-            var currentContentActive = bodyContainers.find( '.advgb-tab-body[aria-labelledby="' + href.replace( /^#/, "" ) + '"]' );
+            var $control = $(this);
+            var $currentTab = $control.closest('.advgb-tab');
+            var panelId = $control.attr('aria-controls') || $control.attr('href').replace('#', '');
 
-            tabs.removeClass( 'advgb-tab-active' );
-            currentTabActive.addClass( 'advgb-tab-active' );
-            bodyContainers.find( '.advgb-tab-body' ).hide();
-            currentContentActive.show();
-            // Check if Images Slider is present in the current active tab's content
-            if( currentContentActive.find('.advgb-images-slider-block').length && $.fn.slick ) {
-                currentContentActive.find('.advgb-images-slider-block > .slick-initialized').slick(
-                    'slickSetOption',
-                    'refresh',
-                    true,
-                    true
-                );
+            tabs.removeClass('advgb-tab-active');
+            $currentTab.addClass('advgb-tab-active');
+            bodyContainers.hide();
+
+            // Find target panel (supports multiple formats for legacy purpose)
+            var $targetPanel = $wrapper.find(
+                '#' + panelId + ', ' +
+                '[aria-labelledby="' + panelId + '"], ' +
+                '[id="' + panelId + '"]'
+            ).closest('.advgb-tab-body-container');
+
+            if ($targetPanel.length) {
+                $targetPanel.show();
+
+                // IMAGE SLIDER REFRESH
+                if ($targetPanel.find('.advgb-images-slider-block').length && $.fn.slick) {
+                    $targetPanel.find('.advgb-images-slider-block > .slick-initialized').slick(
+                        'slickSetOption',
+                        'refresh',
+                        true,
+                        true
+                    );
+                }
+            } else {
+                // Fallback to index-based activation
+                bodyContainers.eq(tabs.index($currentTab)).show();
             }
-        } );
 
-        tabs.eq( activeTab ).trigger( 'click' ); // Default
+            // Update headers
+            bodyHeaders.removeClass('header-active');
+            bodyHeaders.eq(tabs.index($currentTab)).addClass('header-active');
+        });
 
-        bodyHeaders.eq(activeTab).addClass('header-active');
-        bodyHeaders.css({
-            backgroundColor: bgColor,
-            color: textColor,
-            borderColor: borderColor,
-            borderWidth: borderWidth,
-            borderStyle: borderStyle,
-            borderRadius: borderRadius
-        })
+        // Initialize active tab
+        if (tabs.length > 0) {
+            var $initialTab = tabs.eq(activeTab);
+            var $initialControl = $initialTab.find('a, button').first();
+
+            if ($initialControl.length) {
+                $initialControl.trigger('click');
+            }
+
+            // Apply header styles
+            bodyHeaders.css({
+                backgroundColor: tabStyles.bgColor,
+                color: tabStyles.textColor,
+                borderColor: tabStyles.borderColor,
+                borderWidth: tabStyles.borderWidth,
+                borderStyle: tabStyles.borderStyle,
+                borderRadius: tabStyles.borderRadius
+            });
+        }
     });
 
-    $('.advgb-tab-body-header').click(function () {
-        var bodyContainer = $(this).closest('.advgb-tab-body-container');
-        var bodyWrapper = $(this).closest('.advgb-tab-body-wrapper');
-        var tabsWrapper = $(this).closest('.advgb-tabs-wrapper');
-        var tabsPanel = tabsWrapper.find('.advgb-tabs-panel');
-        var idx = bodyContainer.index();
+    $('.advgb-tab-body-header').click(function() {
+        var $header = $(this);
+        var bodyContainer = $header.closest('.advgb-tab-body-container');
+        var tabsWrapper = $header.closest('.advgb-tabs-wrapper');
+        var tabs = tabsWrapper.find('.advgb-tab');
+        var idx = tabsWrapper.find('.advgb-tab-body-container').index(bodyContainer);
 
-        bodyWrapper.find('.advgb-tab-body-header').removeClass('header-active');
-        $(this).addClass('header-active');
-        tabsPanel.find('.advgb-tab').eq(idx).find('a').trigger('click');
+        tabsWrapper.find('.advgb-tab-body-header').removeClass('header-active');
+        $header.addClass('header-active');
+        tabs.eq(idx).find('a, button').first().trigger('click');
     });
 });

@@ -60,11 +60,30 @@
         }
 
         componentDidUpdate() {
-            const { attributes, setAttributes } = this.props;
+            const { attributes, setAttributes, clientId } = this.props;
             const { id, tabHeaders } = attributes;
 
             // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
             if (!this.state.isBlockIdSet) {
+                const { getBlockRootClientId, getBlockAttributes } = !wpBlockEditor ? select('core/editor') : select('core/block-editor');
+                const rootBlockId = getBlockRootClientId(clientId);
+                const rootBlockAttrs = getBlockAttributes(rootBlockId);
+
+                if (rootBlockAttrs && rootBlockAttrs.uniqueID) {
+                    // Use parent's unique ID as base
+                    this.props.setAttributes({
+                        uniqueID: rootBlockAttrs.uniqueID
+                    });
+                } else {
+                    // fallback if no root uniqueID
+                    this.props.setAttributes({
+                        uniqueID: '_' + clientId.substr(2, 9),
+                    });
+                }
+
+                /*
+                //This seems to be resulting in non unique id for other tabs except first tab.
+                // I'll be removing it totally after user test the above solution instead
                 if ( ! this.props.attributes.uniqueID ) {
                     this.props.setAttributes( {
                         uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
@@ -77,7 +96,7 @@
                     advgbTabsUniqueIDs.push( '_' + this.props.clientId.substr( 2, 9 ) );
                 } else {
                     advgbTabsUniqueIDs.push( this.props.attributes.uniqueID );
-                }
+                }*/
 
                 setAttributes({
                     header: tabHeaders[id]
@@ -174,7 +193,7 @@
         keywords: [ __( 'tab', 'advanced-gutenberg' ) ],
         edit: TabItemEdit,
         save: function( { attributes } ) {
-            const {id, uniqueID, header, anchor } = attributes;
+            const {id, uniqueID, header, anchor, tabActive } = attributes;
 
             const tabClassName = [
                 `advgb-tab-${uniqueID}`,
@@ -182,15 +201,88 @@
             ].filter(Boolean).join(' ');
 
             return (
-                <div className="advgb-tab-body-container">
-                    <div className={`advgb-tab-body-header advgb-tab-class-${anchor}`}>{header}</div>
-                    <div className={tabClassName} aria-labelledby={`advgb-tabs-tab${id}`}>
+                <div className="advgb-tab-body-container" style={{ display: id === tabActive ? 'block' : 'none' }}>
+                    <div
+                        className={`advgb-tab-body-header advgb-tab-class-${anchor}`}
+                        id={`advgb-tab-panel-${uniqueID}-${id}`}
+                        role="tabpanel"
+                        aria-labelledby={`advgb-tab-${uniqueID}-${id}`}
+                        tabIndex="0"
+                    >
+                        {header}
+                    </div>
+                    <div
+                        className={tabClassName}
+                        aria-labelledby={`advgb-tab-panel-${uniqueID}-${id}`}
+                    >
                         <InnerBlocks.Content />
                     </div>
                 </div>
             );
         },
         deprecated: [
+            {
+                attributes: {
+                    id: {
+                        type: 'number',
+                        default: 0
+                    },
+                    pid: {
+                        type: 'string',
+                    },
+                    header: {
+                        type: 'html',
+                    },
+                    anchor: {
+                        type: 'string',
+                    },
+                    tabActive: {
+                        type: 'number',
+                        default: 0,
+                    },
+                    changed: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    tabHeaders: {
+                        type: 'array',
+                        default: [
+                            __( 'Tab 1', 'advanced-gutenberg' ),
+                            __( 'Tab 2', 'advanced-gutenberg' ),
+                            __( 'Tab 3', 'advanced-gutenberg' ),
+                        ]
+                    },
+                    tabAnchors: {
+                        type: 'array',
+                        default: [
+                            '',
+                            '',
+                            ''
+                        ]
+                    },
+                    uniqueID: {
+                        type: 'string',
+                        default: '',
+                    }
+                },
+                save: function( { attributes } ) {
+                    const {id, uniqueID, header, anchor } = attributes;
+
+                    const tabClassName = [
+                        `advgb-tab-${uniqueID}`,
+                        'advgb-tab-body'
+                    ].filter(Boolean).join(' ');
+
+                    return (
+                        <div className="advgb-tab-body-container">
+                            <div className={`advgb-tab-body-header advgb-tab-class-${anchor}`}>{header}</div>
+                            <div className={tabClassName} aria-labelledby={`advgb-tabs-tab${id}`}>
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+                }
+            },
             {
                 attributes: {
                     id: {
