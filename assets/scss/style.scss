@@ -228,6 +228,11 @@ body[class*="_page_advgb_"] #wpcontent {
     }
   }
 
+  .hidden-element {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
   .advgb-form-buttons-bottom {
     margin-top: 30px;
   }

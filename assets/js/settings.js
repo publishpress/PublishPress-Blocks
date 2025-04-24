@@ -79,6 +79,21 @@ jQuery(document).ready(function ($) {
         })
     });
 
+
+    //   Settings sub tab change
+    $(document).on('change', '.pp-blocks-settings-role-select', function (e) {
+        e.preventDefault();
+
+        var selectedOption = $(this).find(':selected');
+        var current_content = selectedOption.data('content');
+
+        $('.pp-blocks-settings-tab-content').addClass('hidden-element');
+
+        if (current_content) {
+            $(current_content).removeClass('hidden-element');
+        }
+    });
+
     initBlockConfigButton();
 });
 
