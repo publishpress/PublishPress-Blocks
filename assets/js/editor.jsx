@@ -1,9 +1,16 @@
 if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
     wp.domReady(()=>{
+        let block_acess_restricted = false;
+        let user_block_features = false;
 
         if(advgb_blocks_vars.blocks.active_blocks === 'undefined' || advgb_blocks_vars.blocks.active_blocks.length === 0) {
-            // No Block Access defined for this role, so we stop the process here
-            return;
+            // No Block Access defined for this role
+            block_acess_restricted = true;
+        }
+
+        if(advgb_blocks_vars.user_block_features !== 'undefined' && advgb_blocks_vars.user_block_features) {
+            // No Block Access defined for this role
+            user_block_features = advgb_blocks_vars.user_block_features;
         }
 
         let gutenberg_init_function = null;
@@ -14,11 +21,81 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
         if (gutenberg_init_function !== null) {
             // Wait for Gutenberg editor to be ready
             gutenberg_init_function.then(() => {
-                if (advgb_blocks_vars.original_settings.allowedBlockTypes !== true) {
-                    // allowed_block_types filter has been used, in this case we do nothing as we don't know why blocks have been filtered
-                    return;
+
+                if (user_block_features) {
+                    let custom_style = document.createElement('style');
+                    let custom_css = '';
+                    // Handle block adding restriction
+                    if (typeof user_block_features.disable_block_adding !== 'undefined' && user_block_features.disable_block_adding) {
+                        setTimeout( function() {
+                            // Remove the block inserter completely
+                            wp.data.dispatch('core/editor').setIsInserterOpened(false);
+                            wp.data.dispatch('core/editor').removeEditorPanel('inserter');
+                            // Remove the ability to insert blocks
+                            wp.data.dispatch('core/editor').updateEditorSettings({
+                                hasInserter: false,
+                                allowedBlockTypes: false,
+                            });
+                        }, 3000 );
+                        // no need to process custom block permission since we removed all before
+                        block_acess_restricted = false;
+
+
+                        // Add CSS to hide all block insertion UI elements incase any still remain
+                        custom_css += `
+                            .editor-document-tools__left button.components-toolbar-button editor-document-tools__inserter-toggle,
+                            .editor-document-tools__left button[aria-label="Block Inserter"],
+                            .edit-post-header-toolbar__inserter-toggle,
+                            .block-editor-inserter,
+                            .block-editor-block-list__insertion-point-inserter,
+                            .block-editor-default-block-appender {
+                                display: none !important;
+                            }
+                        `;
+                    }
+
+                    // Handle pattern directory restriction
+                    if (typeof user_block_features.disable_pattern_directory !== 'undefined' && user_block_features.disable_pattern_directory) {
+                        custom_css += `
+                            .editor-inserter-sidebar button[id*="-patterns-view"],
+                            .editor-inserter-sidebar button[aria-controls*="-patterns-view"],
+                            .block-editor-inserter__block-patterns-tabs-container,
+                            .block-editor-tabbed-sidebar__tabpanel[id*="-patterns-view"],
+                            .block-editor-tabbed-sidebar__tab[id*="-patterns-view"],
+                            .block-editor-block-patterns-list,
+                            .block-editor-tabbed-sidebar__tabpanel[aria-labelledby*="-patterns"],
+                            .block-editor-tabbed-sidebar__tab[aria-labelledby*="-patterns"] {
+                                display: none !important;
+                            }
+                        `;
+                    }
+
+                    // Handle Openverse restriction
+                    if (typeof user_block_features.disable_openverse !== 'undefined' && user_block_features.disable_openverse) {
+                        custom_css += `
+                            .block-editor-inserter__media-tabs-container button[id*="-openverse"],
+                            .block-editor-inserter__media-tabs-container button[aria-controls*="-openverse-view"] {
+                                display: none !important;
+                            }
+                        `;
+                    }
+
+                    if ( custom_css ) {
+                        custom_style.innerHTML = custom_css;
+                        document.head.appendChild( custom_style );
+                    }
+
                 }
 
+                if (advgb_blocks_vars.original_settings.allowedBlockTypes !== true) {
+                    // allowed_block_types filter has been used, in this case we do nothing as we don't know why blocks have been filtered
+                    block_acess_restricted = false;
+                }
+
+                if (!block_acess_restricted) {
+                    // TODO: Write description
+                    return;
+                }
                 let list_blocks = [];
                 let granted_blocks = [];
                 let missing_block = false;
