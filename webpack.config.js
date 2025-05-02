@@ -8,6 +8,7 @@ module.exports = [
             {ignore: [
                 "./assets/blocks/customstyles/*.jsx",
                 "./assets/blocks/block-controls/*.jsx",
+                "./assets/blocks/block-usage/*.jsx",
                 "./assets/blocks/pro-ad/*.jsx",
                 "./assets/blocks/editor-sidebar/*.jsx",
                 "./assets/blocks/**/*.frontend.jsx",
@@ -102,6 +103,27 @@ module.exports = [
         output: {
             path: path.join(__dirname, "assets", "blocks"),
             filename: "block-controls.js"
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
+                    use: { loader: "babel-loader" }, // Babel loader to transpile modern JavaScript.
+                    exclude: [
+                        /(node_modules|bower_components)/,
+                    ]// JavaScript files to be ignored.
+                }
+            ]
+        }
+    },
+    {
+        entry: glob.sync(
+            "./assets/blocks/block-usage/block-usage.jsx",
+            ),
+        devtool: 'source-map',
+        output: {
+            path: path.join(__dirname, "assets", "blocks"),
+            filename: "block-usage.js"
         },
         module: {
             rules: [

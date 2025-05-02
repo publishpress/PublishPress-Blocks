@@ -201,6 +201,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				add_action( 'wp_ajax_advgb_custom_styles_ajax', array( $this, 'customStylesAjax' ) );
 				add_action( 'wp_ajax_advgb_block_config_save', array( $this, 'saveBlockConfig' ) );
 				add_action( 'wp_ajax_advgb_feature_save', [ $this, 'saveFeature' ] );
+				add_action( 'wp_ajax_pp_blocks-usage_scan_batch', [ $this, 'scan_block_usage' ] );
 			} else {
 				// Front-end
 				add_filter( 'render_block_data', array( $this, 'contentPreRender' ) );
@@ -903,6 +904,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 							'screens' => [
 								[ 'base' => 'toplevel_page_advgb_main' ],
 								[ 'base' => 'blocks_page_advgb_block_access' ],
+								[ 'base' => 'blocks_page_advgb_block_usage' ],
 								[ 'base' => 'blocks_page_advgb_block_settings' ],
 								[ 'base' => 'blocks_page_advgb_custom_styles' ],
 								[ 'base' => 'blocks_page_advgb_settings' ],
@@ -1235,6 +1237,114 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			}
 		}
 
+		public function scan_block_usage() {
+			check_ajax_referer('block_usage_nonce', 'nonce');
+
+			if ( ! current_user_can( 'administrator' ) ) {
+				wp_send_json( __( 'No permission!', 'advanced-gutenberg' ), 403 );
+				return false;
+			}
+
+			$offset = (int) ($_POST['offset'] ?? 0);
+			$batch_size = 30;
+			$current_time = current_time('mysql');
+
+			// Get post types that support the editor
+			$post_types = get_post_types_by_support('editor');
+
+			$query = new WP_Query([
+				'post_type' => $post_types,
+				'posts_per_page' => $batch_size,
+				'offset' => $offset,
+				'post_status' => 'any',
+				'orderby' => 'ID',
+				'order' => 'ASC'
+			]);
+
+			$usage = [];
+			$posts = [];
+			$processed = 0;
+
+			foreach ($query->posts as $post) {
+				$post_id = $post->ID;
+				// Skip if no content
+				if (empty($post->post_content)) {
+					continue;
+				}
+				$blocks = parse_blocks($post->post_content);
+
+				// skip if block is empty
+				if (empty($blocks)) {
+					continue;
+				}
+
+				$can_edit = current_user_can('edit_post', $post_id);
+
+				$post_data = [
+					'post_id' => $post_id,
+					'post_title' => $post->post_title ?: "Post ID: $post_id",
+					'edit_link' => $can_edit ? get_edit_post_link($post_id, '') : '',
+					'view_link' => get_permalink($post_id),
+					'post_type' => $post->post_type,
+					'extra' => [],
+					'blocks' => []
+				];
+
+				$block_counts = [];
+
+				foreach ($blocks as $b) {
+					if (empty($b['blockName']))
+					{
+						continue;
+					}
+					$name = $b['blockName'];
+
+					// Store complete block data
+					$post_data['blocks'][] = [
+						'name' => $name,
+						'clientId' => $b['clientId'] ?? '',
+						'innerBlocks' => array_map(function($inner) {
+							return [
+								'name' => $inner['blockName'] ?? '',
+								'clientId' => $inner['clientId'] ?? '',
+								'innerBlocks' => $inner['innerBlocks'] ?? []
+							];
+						}, $b['innerBlocks'] ?? [])
+					];
+
+					// Count blocks
+					$block_counts[$name] = ($block_counts[$name] ?? 0) + 1;
+				}
+
+				$posts[] = $post_data;
+
+				foreach ($block_counts as $name => $count) {
+					if (!isset($usage[$name])) {
+						$usage[$name] = [
+							'posts' => [],
+							'total' => 0
+						];
+					}
+
+					$usage[$name]['posts'][$post_id] = [
+						'count' => $count,
+						'scanned' => $current_time
+					];
+					$usage[$name]['total'] += $count;
+				}
+
+				$processed++;
+			}
+
+			wp_send_json_success([
+				'usage' => $usage,
+				'posts' => $posts,
+				'lastScanDate' => $current_time,
+				'processed' => $processed,
+				'total' => $query->found_posts,
+			]);
+		}
+
 		/**
 		 * Ajax for saving a feature from main page
 		 *
@@ -1266,6 +1376,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			$all_features = [
 				'block_controls',
 				'enable_block_access',
+				'enable_block_usage',
 				'block_extend',
 				'enable_custom_styles',
 				'enable_advgb_blocks',
@@ -1846,17 +1957,24 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					'enabled'  => true
 				],
 				[
+					'slug'     => 'advgb_block_usage',
+					'title'    => esc_html__( 'Block Usage', 'advanced-gutenberg' ),
+					'callback' => 'loadBlockUsagePage',
+					'order'    => 2,
+					'enabled'  => Utilities::settingIsEnabled( 'enable_block_usage' )
+				],
+				[
 					'slug'     => 'advgb_block_access',
 					'title'    => esc_html__( 'Block Permissions', 'advanced-gutenberg' ),
 					'callback' => 'loadBlockAccessPage',
-					'order'    => 2,
+					'order'    => 3,
 					'enabled'  => Utilities::settingIsEnabled( 'enable_block_access' )
 				],
 				[
 					'slug'     => 'advgb_block_settings',
 					'title'    => esc_html__( 'PublishPress Blocks', 'advanced-gutenberg' ),
 					'callback' => 'loadBlockSettingsPage',
-					'order'    => 3,
+					'order'    => 4,
 					'enabled'  => Utilities::settingIsEnabled( 'enable_advgb_blocks' )
 				],
 				[
@@ -2128,6 +2246,39 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 		}
 
 		/**
+		 * Block usage page
+		 *
+		 * @return void
+		 * @since 3.0.0
+		 */
+		public function loadBlockUsagePage() {
+			// Check users permissions
+			if ( ! current_user_can( 'administrator' ) ) {
+				return false;
+			}
+
+			// Block usage is disabled
+			if ( ! Utilities::settingIsEnabled( 'enable_block_usage' ) ) {
+				wp_die(
+					sprintf(
+						esc_html__(
+							'This feature is disabled. In order to use, please enable back through %sDashboard%s.',
+							'advanced-gutenberg'
+						),
+						'<a href="' . admin_url( 'admin.php?page=advgb_main' ) . '">',
+						'</a>'
+					)
+				);
+			}
+
+			$this->commonAdminPagesAssets();
+
+			$this->blocksUsageData();
+
+			$this->blocksUsagePage();
+		}
+
+		/**
 		 * Block controls page
 		 *
 		 * @return void
@@ -2262,6 +2413,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			$pages = [
 				'toplevel_page_advgb_main',
 				'blocks_page_advgb_block_access',
+				'blocks_page_advgb_block_usage',
 				'blocks_page_advgb_block_settings',
 				'blocks_page_advgb_custom_styles',
 				'blocks_page_advgb_settings',
@@ -3041,6 +3193,84 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			}
 		}
 
+		public function blocksUsageData( ) {
+
+			// Block categories
+			$blockCategories = array();
+			if ( function_exists( 'get_block_categories' ) ) {
+				$blockCategories = get_block_categories( get_post() );
+			} elseif ( function_exists( 'gutenberg_get_block_categories' ) ) {
+				$blockCategories = gutenberg_get_block_categories( get_post() );
+			}
+
+			// Block types
+			$block_type_registry = \WP_Block_Type_Registry::get_instance();
+			foreach ( $block_type_registry->get_all_registered() as $block_name => $block_type ) {
+				if ( ! empty( $block_type->editor_script ) ) {
+					wp_enqueue_script( $block_type->editor_script );
+				}
+			}
+
+			/* Get blocks saved in advgb_blocks_list option to include the ones that are missing
+             * as result of javascript method wp.blocks.getBlockTypes()
+             * e.g. blocks registered only via PHP
+             */
+			$saved_blocks = [];
+			if ( Utilities::settingIsEnabled( 'block_extend' ) ) {
+				$advgb_blocks_list = get_option( 'advgb_blocks_list' );
+				if ( $advgb_blocks_list && is_array( $advgb_blocks_list ) ) {
+					$saved_blocks = $advgb_blocks_list;
+				} else {
+					$saved_blocks = [];
+				}
+				wp_localize_script(
+					'advgb_main_js',
+					'advgb_blocks_list',
+					$saved_blocks
+				);
+			}
+
+			wp_enqueue_style('wp-components');
+
+			wp_enqueue_style(
+				'advgb_block_usage_styles',
+				ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/css/block-usage.css',
+				['wp-components'],
+				ADVANCED_GUTENBERG_VERSION
+			);
+
+			wp_enqueue_script(
+				'advgb_block_usage',
+				ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/block-usage.js',
+				['wp-element', 'wp-components', 'wp-api-fetch', 'wp-i18n'],
+				ADVANCED_GUTENBERG_VERSION,
+				true
+			);
+
+
+			$localize_data = [
+				'ajaxUrl' => admin_url('admin-ajax.php'),
+				'nonce' => wp_create_nonce('block_usage_nonce'),
+				'blockCategories' => $blockCategories,
+				'saved_blocks' => $saved_blocks,
+				'initialData' => [
+					'usage' => [],
+					'lastScanDate' => '',
+					'lastSelectedBlock' => '',
+					'posts' => []
+				],
+				'currentUser' => [
+					'canEditPosts' => current_user_can('edit_posts')
+				]
+			];
+
+			wp_localize_script(
+				'advgb_block_usage',
+				'advgb_block_usage_data',
+				$localize_data
+			);
+		}
+
 		/**
 		 * Access current user blocks and saved blocks to build 2 javascript objects.
 		 * 'advgbCUserRole' object for current user role from form dropdown
@@ -3306,6 +3536,29 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
                             </span>
                         </div>
                     </form>
+                </div>
+            </div>
+			<?php
+		}
+
+		/**
+		 * Block Usage page
+		 */
+		public function blocksUsagePage() {
+			?>
+            <div class="publishpress-admin wrap">
+                <header>
+                    <h1 class="wp-heading-inline">
+						<?php esc_html_e( 'Block Usage', 'advanced-gutenberg' ); ?>
+                    </h1>
+                </header>
+                <div class="wrap">
+                        <div class="tab-content block-list-tab" id="advgb-block-usage-app">
+                            <div class="advgb-block-feature-loading-msg" style="display: block;">
+								<?php
+								_e( 'Loading...', 'advanced-gutenberg' ) ?>
+                            </div>
+                        </div>
                 </div>
             </div>
 			<?php

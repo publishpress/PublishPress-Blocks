@@ -28,6 +28,15 @@ defined( 'ABSPATH' ) || die;
                             'access' => true
                         ],
                         [
+                            'name' => 'enable_block_usage',
+                            'title' => __( 'Block Usage', 'advanced-gutenberg' ),
+                            'description' => __(
+                                'You can scan the posts on your website for blocks usage.', 'advanced-gutenberg'
+                            ),
+                            'default' => 1,
+                            'access' => true
+                        ],
+                        [
                             'name' => 'enable_advgb_blocks',
                             'title' => __( 'PublishPress Blocks', 'advanced-gutenberg' ),
                             'description' => __(

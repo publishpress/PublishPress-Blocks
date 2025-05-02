@@ -78,6 +78,12 @@
                                 true
                             );
                         break;
+                        case 'enable_block_usage':
+                            advgbDynamicSubmenu(
+                                'advgb_block_usage',
+                                newState
+                            );
+                        break;
                     }
 
                     statusMsgNotification = advgbTimerStatus();
@@ -206,7 +212,7 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
         });
 
         /* Blocks not available through wp.blocks.getBlockTypes() - Since 3.1.5
-         * As example: the ones that loads only in Appearance > Widget 
+         * As example: the ones that loads only in Appearance > Widget
          * and we allow to enable/disable (different to force_activate_blocks var)
          */
         var include_blocks = [
@@ -291,7 +297,7 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
         var list_blocks_names = [];
 
         /* Remove duplicated blocks by block name, just in case - Since 3.1.5
-         * e.g. when Extended supported block is enabled, 'core/legacy-widget' 
+         * e.g. when Extended supported block is enabled, 'core/legacy-widget'
          * and 'core/widget-group' are duplicated.
          */
         var uniqueNames = [];
