@@ -2,8 +2,8 @@
 Contributors: publishpress, stevejburge, htmgarcia, olatechpro
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks, accordion block, gallery block, slider block, tabs block, maps block, block controls
 Requires at least: 5.5
-Tested up to: 6.7
-Stable tag: 3.2.5
+Tested up to: 6.8
+Stable tag: 3.2.6
 Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -270,6 +270,18 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 16. Block Styles: You create custom CSS styles for blocks and make them available to end users.
 
 == Changelog ==
+
+= 3.2.6 - 05 May 2025 =
+  * Feature: Add new Block Usage Screen to scan posts where blocks is currently in use, #1245
+  * Update: Add Block controls by device type (Desktop, Tablet, Mobile), #1238
+  * Update: Add Block controls by device width (screen size), #1442
+  * Feature: Add multiple schedules option for Block Controls, #1367
+  * Fixed: Fixed Tabs Block adds undefined class and breaks some Gutenberg blocks, #1435
+  * Fixed: Tabs Block Lack Accessibility, #1427
+  * Feature: Add settings that allow users to disable all block adding for roles, #1425
+  * Feature: Allow users to remove more block editor features(Pattern, Blocks and Openverse), #1424
+  * Fixed: Issues with block controls when user has more than one role,  #1288
+  * Update: Blocks Translation Updates v3.2.5, #1441
 
 = 3.2.5 - 09 April 2025 =
   * FIX: Block Control Does not Work on Sunday, #1411
