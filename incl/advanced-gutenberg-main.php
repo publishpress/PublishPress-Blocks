@@ -2273,6 +2273,16 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 
 			$this->commonAdminPagesAssets();
 
+			/* Access current user blocks and saved blocks to build 2 javascript objects.
+             * 'advgbCUserRole' object for current user role from form dropdown
+             * 'advgb_blocks_list' object with all the saved blocks in 'advgb_blocks_list' option
+             */
+			$this->blocksFeatureData(
+				'access',
+				// The object name to store the active/inactive blocks. To see it in browser console: advgbCUserRole.access
+				'advgb_blocks_user_roles' // Database option to check current user role's active/inactive blocks
+			);
+
 			$this->blocksUsageData();
 
 			$this->blocksUsagePage();
@@ -3229,6 +3239,12 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					$saved_blocks
 				);
 			}
+
+			$saved_blocks   = array_merge(
+				$saved_blocks,
+				(array) get_option( 'advgb_blocks_list' )
+			);
+
 
 			wp_enqueue_style('wp-components');
 
