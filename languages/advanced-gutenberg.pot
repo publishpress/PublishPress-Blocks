@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-02T13:16:10+00:00\n"
+"POT-Creation-Date: 2025-05-03T23:55:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: advanced-gutenberg\n"
@@ -17,10 +17,10 @@ msgstr ""
 #. Plugin Name of the plugin
 #: advanced-gutenberg.php
 #: incl/advanced-gutenberg-main.php:257
-#: incl/advanced-gutenberg-main.php:1975
+#: incl/advanced-gutenberg-main.php:1981
 #: incl/pages/block-settings.php:90
 #: incl/pages/main.php:8
-#: incl/pages/main.php:41
+#: incl/pages/main.php:32
 msgid "PublishPress Blocks"
 msgstr ""
 
@@ -97,16 +97,16 @@ msgstr ""
 
 #: incl/advanced-gutenberg-main.php:1123
 #: incl/advanced-gutenberg-main.php:1244
-#: incl/advanced-gutenberg-main.php:1355
-#: incl/advanced-gutenberg-main.php:1415
+#: incl/advanced-gutenberg-main.php:1368
+#: incl/advanced-gutenberg-main.php:1428
 msgid "No permission!"
 msgstr ""
 
 #: incl/advanced-gutenberg-main.php:1130
-#: incl/advanced-gutenberg-main.php:1366
-#: incl/advanced-gutenberg-main.php:1421
-#: incl/advanced-gutenberg-main.php:1480
-#: incl/advanced-gutenberg-main.php:1571
+#: incl/advanced-gutenberg-main.php:1379
+#: incl/advanced-gutenberg-main.php:1434
+#: incl/advanced-gutenberg-main.php:1493
+#: incl/advanced-gutenberg-main.php:1584
 msgid "Invalid nonce token!"
 msgstr ""
 
@@ -121,209 +121,209 @@ msgstr ""
 msgid "copy"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1370
+#: incl/advanced-gutenberg-main.php:1383
 msgid "Error: wrong data"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1401
+#: incl/advanced-gutenberg-main.php:1414
 msgid "Error: can't edit this feature"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1485
-#: incl/advanced-gutenberg-main.php:1576
-#: incl/advanced-gutenberg-main.php:1628
+#: incl/advanced-gutenberg-main.php:1498
+#: incl/advanced-gutenberg-main.php:1589
+#: incl/advanced-gutenberg-main.php:1641
 msgid "Bad Request!"
-msgstr ""
-
-#: incl/advanced-gutenberg-main.php:1493
-#: incl/advanced-gutenberg-main.php:1584
-#: incl/advanced-gutenberg-main.php:1636
-msgid "Server error. Try again later!"
-msgstr ""
-
-#: incl/advanced-gutenberg-main.php:1501
-#: incl/advanced-gutenberg-main.php:1592
-#: incl/advanced-gutenberg-main.php:1644
-msgid "Cannot validate captcha"
 msgstr ""
 
 #: incl/advanced-gutenberg-main.php:1506
 #: incl/advanced-gutenberg-main.php:1597
 #: incl/advanced-gutenberg-main.php:1649
+msgid "Server error. Try again later!"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:1514
+#: incl/advanced-gutenberg-main.php:1605
+#: incl/advanced-gutenberg-main.php:1657
+msgid "Cannot validate captcha"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:1519
+#: incl/advanced-gutenberg-main.php:1610
+#: incl/advanced-gutenberg-main.php:1662
 msgid "Captcha validation error"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1531
+#: incl/advanced-gutenberg-main.php:1544
 #: incl/pages/settings/forms.php:20
 msgid "Website Contact"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1537
+#: incl/advanced-gutenberg-main.php:1550
 msgid "You have received a contact from your website."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1540
+#: incl/advanced-gutenberg-main.php:1553
 msgid "Name"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1542
+#: incl/advanced-gutenberg-main.php:1555
 #: incl/block-settings-main.php:806
 #: incl/block-settings-main.php:847
 #: incl/block-settings-main.php:888
 msgid "Email"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1544
+#: incl/advanced-gutenberg-main.php:1557
 msgid "Date"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1546
+#: incl/advanced-gutenberg-main.php:1559
 msgid "Message"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1554
+#: incl/advanced-gutenberg-main.php:1567
 msgid "Error while sending the form. Please try again."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1652
+#: incl/advanced-gutenberg-main.php:1665
 msgid "Captcha validated"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1655
+#: incl/advanced-gutenberg-main.php:1668
 msgid "Captcha is empty"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1954
+#: incl/advanced-gutenberg-main.php:1967
 #: assets/blocks/login-form/block.jsx:512
 #: assets/blocks/blocks.js:14910
 msgid "Dashboard"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1961
-#: incl/advanced-gutenberg-main.php:3552
-#: incl/pages/main.php:32
-msgid "Block Usage"
-msgstr ""
-
-#: incl/advanced-gutenberg-main.php:1968
-#: incl/advanced-gutenberg-main.php:2244
+#: incl/advanced-gutenberg-main.php:1974
+#: incl/advanced-gutenberg-main.php:2257
 #: incl/pages/main.php:23
 msgid "Block Permissions"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1982
+#: incl/advanced-gutenberg-main.php:1988
 #: incl/pages/custom-styles.php:19
-#: incl/pages/main.php:50
+#: incl/pages/main.php:41
 msgid "Block Styles"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1989
+#: incl/advanced-gutenberg-main.php:1995
 #: incl/pages/block-controls.php:30
-#: incl/pages/main.php:59
+#: incl/pages/main.php:50
 #: assets/blocks/block-controls/block-controls.jsx:1170
 #: assets/blocks/block-controls.js:1844
 msgid "Block Controls"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:1996
+#: incl/advanced-gutenberg-main.php:2002
+#: incl/advanced-gutenberg-main.php:3595
+#: incl/pages/main.php:59
+msgid "Block Usage"
+msgstr ""
+
+#: incl/advanced-gutenberg-main.php:2009
 #: incl/pages/main.php:68
 msgid "Synced Patterns"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2003
+#: incl/advanced-gutenberg-main.php:2016
 #: incl/pages/settings.php:22
 msgid "Settings"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2219
-#: incl/advanced-gutenberg-main.php:2264
-#: incl/advanced-gutenberg-main.php:2297
-#: incl/advanced-gutenberg-main.php:2330
-#: incl/advanced-gutenberg-main.php:2374
+#: incl/advanced-gutenberg-main.php:2232
+#: incl/advanced-gutenberg-main.php:2277
+#: incl/advanced-gutenberg-main.php:2320
+#: incl/advanced-gutenberg-main.php:2353
+#: incl/advanced-gutenberg-main.php:2397
 msgid "This feature is disabled. In order to use, please enable back through %sDashboard%s."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2437
+#: incl/advanced-gutenberg-main.php:2460
 msgid "If you like %sPublishPress Blocks%s please leave us a %s rating. Thank you!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2454
+#: incl/advanced-gutenberg-main.php:2477
 msgid "About PublishPress Blocks"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2457
+#: incl/advanced-gutenberg-main.php:2480
 msgid "About"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2464
-#: incl/advanced-gutenberg-main.php:2467
+#: incl/advanced-gutenberg-main.php:2487
+#: incl/advanced-gutenberg-main.php:2490
 msgid "Documentation"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2475
+#: incl/advanced-gutenberg-main.php:2498
 msgid "Contact the PublishPress team"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2478
+#: incl/advanced-gutenberg-main.php:2501
 msgid "Contact"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:2486
+#: incl/advanced-gutenberg-main.php:2509
 msgid "PublishPress Blocks logo"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3395
+#: incl/advanced-gutenberg-main.php:3438
 msgid "%s saved successfully!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3405
+#: incl/advanced-gutenberg-main.php:3448
 msgid "%s can't be saved. Please try again."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3461
+#: incl/advanced-gutenberg-main.php:3504
 #: incl/pages/block-controls/blocks.php:13
 #: incl/pages/block-settings.php:97
 msgid "Search blocks"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3466
+#: incl/advanced-gutenberg-main.php:3509
 msgid "Enable or disable all blocks"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3479
-#: incl/advanced-gutenberg-main.php:3529
+#: incl/advanced-gutenberg-main.php:3522
+#: incl/advanced-gutenberg-main.php:3572
 #: incl/pages/block-controls/blocks.php:31
 #: incl/pages/block-controls/blocks.php:79
 msgid "To save this configuration, enable at least one block."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3495
-#: incl/advanced-gutenberg-main.php:3521
+#: incl/advanced-gutenberg-main.php:3538
+#: incl/advanced-gutenberg-main.php:3564
 msgid "Save %s"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3505
-#: incl/advanced-gutenberg-main.php:3559
+#: incl/advanced-gutenberg-main.php:3548
+#: incl/advanced-gutenberg-main.php:3602
 #: incl/pages/block-controls/blocks.php:56
-#: assets/blocks/block-usage/block-usage.jsx:701
-#: assets/blocks/block-usage.js:701
+#: assets/blocks/block-usage/block-usage.jsx:723
+#: assets/blocks/block-usage.js:723
 msgid "Loading..."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3882
-#: incl/advanced-gutenberg-main.php:3883
+#: incl/advanced-gutenberg-main.php:3925
+#: incl/advanced-gutenberg-main.php:3926
 msgid "Block Config"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3939
+#: incl/advanced-gutenberg-main.php:3982
 msgid "Default configuration for this block is not available."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:3994
+#: incl/advanced-gutenberg-main.php:4037
 msgid "Page not found. Go to %sDashboard%s"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4385
+#: incl/advanced-gutenberg-main.php:4428
 #: incl/pages/settings/general.php:133
 #: assets/blocks/advbutton/block.jsx:753
 #: assets/blocks/advicon/block.jsx:232
@@ -342,19 +342,19 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4399
+#: incl/advanced-gutenberg-main.php:4442
 msgid "Type field not defined"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4663
+#: incl/advanced-gutenberg-main.php:4706
 msgid "User registration is currently not allowed."
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4665
+#: incl/advanced-gutenberg-main.php:4708
 msgid "Captcha must be checked!"
 msgstr ""
 
-#: incl/advanced-gutenberg-main.php:4666
+#: incl/advanced-gutenberg-main.php:4709
 msgid "Username or password is incorrect!"
 msgstr ""
 
@@ -2468,19 +2468,19 @@ msgid "You can control who can use each block, including default WordPress block
 msgstr ""
 
 #: incl/pages/main.php:33
-msgid "You can scan the posts on your website for blocks usage."
-msgstr ""
-
-#: incl/pages/main.php:42
 msgid "Enable extra blocks including content displays, sliders, buttons, icons, tabs, accordions, and more."
 msgstr ""
 
-#: incl/pages/main.php:51
+#: incl/pages/main.php:42
 msgid "You can add your own CSS styles for your blocks. Anyone editing posts can quickly add the styles to blocks."
 msgstr ""
 
-#: incl/pages/main.php:60
+#: incl/pages/main.php:51
 msgid "This feature adds display controls for blocks. You can schedule when blocks are shown, and add user role restrictions."
+msgstr ""
+
+#: incl/pages/main.php:60
+msgid "You can scan the posts on your website for blocks usage."
 msgstr ""
 
 #: incl/pages/main.php:69
@@ -4521,7 +4521,7 @@ msgstr ""
 
 #: assets/blocks/block-controls/block-controls.jsx:1388
 #: assets/blocks/block-controls.js:2062
-msgid "Set minimum and maximum screen widths for this block."
+msgid "Set minimum and maximum screen widths for this block to display."
 msgstr ""
 
 #: assets/blocks/block-controls/block-controls.jsx:1398
@@ -4599,172 +4599,177 @@ msgstr ""
 msgid "Select pages"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:299
-#: assets/blocks/block-usage.js:299
+#: assets/blocks/block-usage/block-usage.jsx:304
+#: assets/blocks/block-usage.js:304
 msgid "locations"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:299
-#: assets/blocks/block-usage.js:299
+#: assets/blocks/block-usage/block-usage.jsx:304
+#: assets/blocks/block-usage.js:304
 msgid "instances"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:305
-#: assets/blocks/block-usage.js:305
+#: assets/blocks/block-usage/block-usage.jsx:310
+#: assets/blocks/block-usage.js:310
 msgid "Name:"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:306
-#: assets/blocks/block-usage.js:306
+#: assets/blocks/block-usage/block-usage.jsx:311
+#: assets/blocks/block-usage.js:311
 msgid "Description:"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:307
-#: assets/blocks/block-usage.js:307
+#: assets/blocks/block-usage/block-usage.jsx:312
+#: assets/blocks/block-usage.js:312
 msgid "Category:"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:313
-#: assets/blocks/block-usage/block-usage.jsx:814
-#: assets/blocks/block-usage.js:313
-#: assets/blocks/block-usage.js:814
+#: assets/blocks/block-usage/block-usage.jsx:318
+#: assets/blocks/block-usage/block-usage.jsx:853
+#: assets/blocks/block-usage.js:318
+#: assets/blocks/block-usage.js:853
 msgid "Locations:"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:314
-#: assets/blocks/block-usage.js:314
+#: assets/blocks/block-usage/block-usage.jsx:319
+#: assets/blocks/block-usage.js:319
 msgid "Total instances:"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:349
-#: assets/blocks/block-usage.js:349
+#: assets/blocks/block-usage/block-usage.jsx:351
+#: assets/blocks/block-usage.js:351
 msgid "Blocks in this post:"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:353
-#: assets/blocks/block-usage.js:353
+#: assets/blocks/block-usage/block-usage.jsx:355
+#: assets/blocks/block-usage.js:355
 msgid "No blocks found in this post."
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:364
-#: assets/blocks/block-usage.js:364
+#: assets/blocks/block-usage/block-usage.jsx:366
+#: assets/blocks/block-usage.js:366
 msgid "Edit Post"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:373
-#: assets/blocks/block-usage.js:373
+#: assets/blocks/block-usage/block-usage.jsx:375
+#: assets/blocks/block-usage.js:375
 msgid "View Post"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:387
-#: assets/blocks/block-usage.js:387
+#: assets/blocks/block-usage/block-usage.jsx:389
+#: assets/blocks/block-usage.js:389
 msgid "This block was not found in any posts."
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:388
-#: assets/blocks/block-usage/block-usage.jsx:758
-#: assets/blocks/block-usage.js:388
-#: assets/blocks/block-usage.js:758
+#: assets/blocks/block-usage/block-usage.jsx:390
+#: assets/blocks/block-usage/block-usage.jsx:797
+#: assets/blocks/block-usage.js:390
+#: assets/blocks/block-usage.js:797
 msgid "Last scan:"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:392
-#: assets/blocks/block-usage.js:392
+#: assets/blocks/block-usage/block-usage.jsx:394
+#: assets/blocks/block-usage.js:394
 msgid "No scan history available for this block."
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:393
-#: assets/blocks/block-usage.js:393
+#: assets/blocks/block-usage/block-usage.jsx:395
+#: assets/blocks/block-usage.js:395
 msgid "Click the Scan button to check for usage."
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:450
-#: assets/blocks/block-usage.js:450
+#: assets/blocks/block-usage/block-usage.jsx:457
+#: assets/blocks/block-usage.js:457
 msgid "Failed to load data from local storage. Please refresh the page."
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:550
-#: assets/blocks/block-usage.js:550
+#: assets/blocks/block-usage/block-usage.jsx:571
+#: assets/blocks/block-usage.js:571
 msgid "Initializing scan..."
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:569
-#: assets/blocks/block-usage.js:569
+#: assets/blocks/block-usage/block-usage.jsx:590
+#: assets/blocks/block-usage.js:590
 msgid "Processing posts (%1$d/%2$d)"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:581
-#: assets/blocks/block-usage.js:581
+#: assets/blocks/block-usage/block-usage.jsx:603
+#: assets/blocks/block-usage.js:603
 msgid "Batch scan failed"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:634
-#: assets/blocks/block-usage.js:634
+#: assets/blocks/block-usage/block-usage.jsx:656
+#: assets/blocks/block-usage.js:656
 msgid "Scan completed successfully!"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:640
-#: assets/blocks/block-usage.js:640
+#: assets/blocks/block-usage/block-usage.jsx:662
+#: assets/blocks/block-usage.js:662
 msgid "Scan failed: "
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:674
-#: assets/blocks/block-usage.js:674
+#: assets/blocks/block-usage/block-usage.jsx:696
+#: assets/blocks/block-usage.js:696
 msgid "Failed to clear data. Please try again."
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:719
-#: assets/blocks/block-usage.js:719
+#: assets/blocks/block-usage/block-usage.jsx:744
+#: assets/blocks/block-usage.js:744
+msgid "Limit Scan to Post Types:"
+msgstr ""
+
+#: assets/blocks/block-usage/block-usage.jsx:757
+#: assets/blocks/block-usage.js:757
 msgid "Scan Block Usage"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:724
-#: assets/blocks/block-usage.js:724
-msgid "Show empty blocks"
+#: assets/blocks/block-usage/block-usage.jsx:763
+#: assets/blocks/block-usage.js:763
+msgid "Show Empty Blocks"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:750
-#: assets/blocks/block-usage.js:750
+#: assets/blocks/block-usage/block-usage.jsx:789
+#: assets/blocks/block-usage.js:789
 msgid "Processed:"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:770
-#: assets/blocks/block-usage.js:770
+#: assets/blocks/block-usage/block-usage.jsx:809
+#: assets/blocks/block-usage.js:809
 msgid "Clear All Data"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:774
-#: assets/blocks/block-usage.js:774
-msgid "Scan data is stored in your browser's IndexedDB storage to improve performance and handle large datasets. This keeps your WordPress database clean. Click to permanently delete all scan data."
+#: assets/blocks/block-usage/block-usage.jsx:813
+#: assets/blocks/block-usage.js:813
+msgid "Scan data is stored in your browser to improve performance and handle large datasets. This keeps your WordPress database clean. Click to permanently delete all stored data."
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:815
-#: assets/blocks/block-usage.js:815
+#: assets/blocks/block-usage/block-usage.jsx:854
+#: assets/blocks/block-usage.js:854
 msgid "Instances:"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:818
-#: assets/blocks/block-usage.js:818
+#: assets/blocks/block-usage/block-usage.jsx:857
+#: assets/blocks/block-usage.js:857
 msgid "Last:"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:826
-#: assets/blocks/block-usage.js:826
+#: assets/blocks/block-usage/block-usage.jsx:865
+#: assets/blocks/block-usage.js:865
 msgid "Not found in any posts"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:827
-#: assets/blocks/block-usage.js:827
+#: assets/blocks/block-usage/block-usage.jsx:866
+#: assets/blocks/block-usage.js:866
 msgid "No scan history"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:836
-#: assets/blocks/block-usage.js:836
+#: assets/blocks/block-usage/block-usage.jsx:875
+#: assets/blocks/block-usage.js:875
 msgid "Details"
 msgstr ""
 
-#: assets/blocks/block-usage/block-usage.jsx:867
-#: assets/blocks/block-usage.js:867
+#: assets/blocks/block-usage/block-usage.jsx:906
+#: assets/blocks/block-usage.js:906
 msgid "Error Loading blocks data..."
 msgstr ""
 

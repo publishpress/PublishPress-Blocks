@@ -1249,8 +1249,21 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			$batch_size = 30;
 			$current_time = current_time('mysql');
 
-			// Get post types that support the editor
-			$post_types = get_post_types_by_support('editor');
+			$post_types = [];
+			if (isset($_POST['post_types'])) {
+				if (is_array($_POST['post_types'])) {
+					$post_types = map_deep($_POST['post_types'], 'sanitize_text_field');
+				} else {
+					$post_types = array_filter(
+						explode(',', sanitize_text_field($_POST['post_types'])),
+						function($type) { return !empty(trim($type)); }
+					);
+				}
+			}
+
+			if (empty($post_types)) {
+				$post_types = array_keys(get_post_types(['show_in_rest' => true]));
+			}
 
 			$query = new WP_Query([
 				'post_type' => $post_types,
@@ -1957,39 +1970,39 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 					'enabled'  => true
 				],
 				[
-					'slug'     => 'advgb_block_usage',
-					'title'    => esc_html__( 'Block Usage', 'advanced-gutenberg' ),
-					'callback' => 'loadBlockUsagePage',
-					'order'    => 2,
-					'enabled'  => Utilities::settingIsEnabled( 'enable_block_usage' )
-				],
-				[
 					'slug'     => 'advgb_block_access',
 					'title'    => esc_html__( 'Block Permissions', 'advanced-gutenberg' ),
 					'callback' => 'loadBlockAccessPage',
-					'order'    => 3,
+					'order'    => 2,
 					'enabled'  => Utilities::settingIsEnabled( 'enable_block_access' )
 				],
 				[
 					'slug'     => 'advgb_block_settings',
 					'title'    => esc_html__( 'PublishPress Blocks', 'advanced-gutenberg' ),
 					'callback' => 'loadBlockSettingsPage',
-					'order'    => 4,
+					'order'    => 3,
 					'enabled'  => Utilities::settingIsEnabled( 'enable_advgb_blocks' )
 				],
 				[
 					'slug'     => 'advgb_custom_styles',
 					'title'    => esc_html__( 'Block Styles', 'advanced-gutenberg' ),
 					'callback' => 'loadCustomStylesPage',
-					'order'    => 5,
+					'order'    => 4,
 					'enabled'  => Utilities::settingIsEnabled( 'enable_custom_styles' )
 				],
 				[
 					'slug'     => 'advgb_block_controls',
 					'title'    => esc_html__( 'Block Controls', 'advanced-gutenberg' ),
 					'callback' => 'loadBlockControlsPage',
-					'order'    => 6,
+					'order'    => 5,
 					'enabled'  => Utilities::settingIsEnabled( 'block_controls' )
+				],
+				[
+					'slug'     => 'advgb_block_usage',
+					'title'    => esc_html__( 'Block Usage', 'advanced-gutenberg' ),
+					'callback' => 'loadBlockUsagePage',
+					'order'    => 6,
+					'enabled'  => Utilities::settingIsEnabled( 'enable_block_usage' )
 				],
 				[
 					'slug'     => 'edit.php?post_type=wp_block',
@@ -3269,6 +3282,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				'nonce' => wp_create_nonce('block_usage_nonce'),
 				'blockCategories' => $blockCategories,
 				'saved_blocks' => $saved_blocks,
+				'postTypes' => $this->get_editor_post_types(),
 				'initialData' => [
 					'usage' => [],
 					'lastScanDate' => '',
@@ -3285,6 +3299,19 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				'advgb_block_usage_data',
 				$localize_data
 			);
+		}
+
+		public function get_editor_post_types() {
+			$post_types = get_post_types(['show_in_rest' => true], 'objects');
+			$result = [];
+
+			foreach ($post_types as $post_type) {
+				if (post_type_supports($post_type->name, 'editor')) {
+					$result[$post_type->name] = $post_type->labels->singular_name;
+				}
+			}
+
+			return $result;
 		}
 
 		/**

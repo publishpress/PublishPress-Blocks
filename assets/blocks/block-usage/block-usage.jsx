@@ -1,12 +1,13 @@
 (function (wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents, wpCompose, wpElement) {
     const { render, useState, useEffect, useRef, useMemo } = wpElement;
-    const { PanelBody, Button, Card, Spinner, Flex, FlexItem, ProgressBar, Notice } = wpComponents;
+    const { PanelBody, Button, Card, Spinner, Flex, FlexItem, ProgressBar, Notice, FormTokenField } = wpComponents;
     const { __, sprintf } = wpI18n;
 
     // IndexedDB setup
     const DB_NAME = 'publishpress_blocks';
     const STORE_NAME = 'block_usage_data';
     const DB_VERSION = 1;
+    const EXCLUDED_BLOCKS = ['advgb/accordion'];
 
     const openDatabase = () => {
         return new Promise((resolve, reject) => {
@@ -136,6 +137,10 @@
 
         // Process all blocks to standardize the format
         allBlocks.forEach(function (block) {
+            // Skip excluded blocks
+            if (EXCLUDED_BLOCKS.includes(block.name)) {
+                return;
+            }
             var blockItemIcon = '';
             const blockItem = {
                 name: block.name,
@@ -327,9 +332,6 @@
                                             >
                                                 <div className="pp-blocks-usage-post-title">
                                                     {post.post_title}
-                                                    <span className="pp-blocks-usage-post-count">
-                                                        {selected.name}
-                                                    </span>
                                                 </div>
                                                 <div className="pp-blocks-usage-post-meta">
                                                     <span className="pp-blocks-usage-post-type">
@@ -413,7 +415,8 @@
         const [loadingAll, setLoadingAll] = useState(false);
         const [loadingClearAll, setLoadingClearAll] = useState(false);
         const [selected, setSelected] = useState(null);
-        const [showEmptyBlocks, setShowEmptyBlocks] = useState(true);
+        const [showEmptyBlocks, setShowEmptyBlocks] = useState(false);
+        const [selectedPostTypes, setSelectedPostTypes] = useState(['post', 'page']);
         const [scanProgress, setScanProgress] = useState({
             current: 0,
             total: 0,
@@ -443,6 +446,10 @@
                                 setSelected(lastSelected);
                             }
                         }
+
+                        if (cachedSettings.selectedPostTypes) {
+                            setSelectedPostTypes(cachedSettings.selectedPostTypes);
+                        }
                     }
                     setInitialLoadComplete(true);
                 } catch (error) {
@@ -469,10 +476,24 @@
             try {
                 await saveToCache('block_usage_settings', {
                     showEmptyBlocks: value,
-                    lastSelectedBlock: selected?.name || ''
+                    lastSelectedBlock: selected?.name || '',
+                    selectedPostTypes: selectedPostTypes
                 });
             } catch (error) {
                 console.error('Failed to save showEmptyBlocks setting:', error);
+            }
+        };
+
+        const handlePostTypeChange = async (newPostTypes) => {
+            setSelectedPostTypes(newPostTypes);
+            try {
+                await saveToCache('block_usage_settings', {
+                    showEmptyBlocks,
+                    lastSelectedBlock: selected?.name || '',
+                    selectedPostTypes: newPostTypes
+                });
+            } catch (error) {
+                console.error('Failed to save post types:', error);
             }
         };
 
@@ -574,7 +595,8 @@
 
                     const batchResponse = await postAjax('pp_blocks-usage_scan_batch', {
                         offset,
-                        batch_size: batchSize
+                        batch_size: batchSize,
+                        post_types: selectedPostTypes
                     });
 
                     if (!batchResponse.success) {
@@ -661,12 +683,12 @@
                     posts: [],
                     lastScanDate: ''
                 });
-                setShowEmptyBlocks(true);
+                setShowEmptyBlocks(false);
                 setSelected(null);
 
                 // Clear settings as well
                 await saveToCache('block_usage_settings', {
-                    showEmptyBlocks: true,
+                    showEmptyBlocks: false,
                     lastSelectedBlock: ''
                 });
             } catch (error) {
@@ -715,13 +737,30 @@
                 <div className="pp-blocks-usage-header">
                     <Flex justify="space-between" align="center">
                         <FlexItem>
-                            <Button variant="primary" onClick={scanAll} disabled={loadingAll}>
-                                {loadingAll ? <Spinner /> : __('Scan Block Usage', 'advanced-gutenberg')}
-                            </Button>
+                            <div className="pp-blocks-usage-controls">
+                                {window.advgb_block_usage_data?.postTypes && (
+                                    <div className="pp-blocks-usage-post-type-selector">
+                                        <FormTokenField
+                                            label={__('Limit Scan to Post Types:', 'advanced-gutenberg')}
+                                            value={selectedPostTypes}
+                                            suggestions={Object.keys(window.advgb_block_usage_data.postTypes)}
+                                            onChange={(newPostTypes) => handlePostTypeChange(newPostTypes)}
+                                            displayTransform={(postType) => window.advgb_block_usage_data.postTypes[postType] || postType}
+                                            tokenizeOnSpace={false}
+                                            __experimentalExpandOnFocus={true}
+                                            __experimentalShowHowTo={false}
+                                            style={{ minWidth: '300px' }}
+                                        />
+                                    </div>
+                                )}
+                                <Button variant="primary" onClick={scanAll} disabled={loadingAll}>
+                                    {loadingAll ? <Spinner /> : __('Scan Block Usage', 'advanced-gutenberg')}
+                                </Button>
+                            </div>
                         </FlexItem>
                         <FlexItem>
                             <div className="advgb-toggle-wrapper">
-                                {__('Show empty blocks', 'advanced-gutenberg')}
+                                {__('Show Empty Blocks', 'advanced-gutenberg')}
                                 <div className="advgb-switch-button">
                                     <label className="switch">
                                         <input
@@ -771,7 +810,7 @@
                             </Button>
                             {!loadingClearAll &&
                                 <span className="tooltip-text">
-                                    <span>{__('Scan data is stored in your browser\'s IndexedDB storage to improve performance and handle large datasets. This keeps your WordPress database clean. Click to permanently delete all scan data.', 'advanced-gutenberg')}</span>
+                                    <span>{__('Scan data is stored in your browser to improve performance and handle large datasets. This keeps your WordPress database clean. Click to permanently delete all stored data.', 'advanced-gutenberg')}</span>
                                     <i></i>
                                 </span>
                             }
