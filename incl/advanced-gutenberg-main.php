@@ -3268,10 +3268,25 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				ADVANCED_GUTENBERG_VERSION
 			);
 
+			wp_enqueue_style(
+				'pp-tooltips-css',
+				ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/lib/pp-tooltips/css/tooltip.min.css',
+				[],
+				ADVANCED_GUTENBERG_VERSION
+			);
+
 			wp_enqueue_script(
 				'advgb_block_usage',
 				ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/blocks/block-usage.js',
 				['wp-element', 'wp-components', 'wp-api-fetch', 'wp-i18n'],
+				ADVANCED_GUTENBERG_VERSION,
+				true
+			);
+
+			wp_enqueue_script(
+				'pp-tooltips-js',
+				ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/lib/pp-tooltips/css/tooltip.min.js',
+				[],
 				ADVANCED_GUTENBERG_VERSION,
 				true
 			);
