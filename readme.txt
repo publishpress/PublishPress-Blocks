@@ -271,7 +271,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.2.6 - 05 May 2025 =
+= 3.2.6 - 06 May 2025 =
   * Feature: Add new Block Usage Screen to scan posts where blocks is currently in use, #1245
   * Update: Add Block controls by device type (Desktop, Tablet, Mobile), #1238
   * Update: Add Block controls by device width (screen size), #1442
@@ -320,14 +320,14 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 = 3.2.0 - 20 Sep 2023 =
   * FIX: register_activation_hook not executed, #1325;
   * FIX: Logic to check if a setting is enabled, #1319;
-  * FIX: Undefined array key "enable_columns_visual_guide", #1321; 
+  * FIX: Undefined array key "enable_columns_visual_guide", #1321;
   * CHANGE: Internal vendor and new file structure, #1299, #1312;
 
 = 3.1.6 - 10 Aug 2023 =
   * FIX: Undeclared $style_html variable
   * FIX: Add jQuery as dependency when enqueueing frontend.js in frontend for Testimonial block
   * CHANGE: "Reusable Blocks" admin submenu to "Synced Patterns"
-  
+
 = 3.1.5 - 25 Jul 2023 =
   * FIX: post-sidebar.js enqueue in post and page edit only
   * FIX: lightbox should apply to galleries when "Link to" is "media file"
