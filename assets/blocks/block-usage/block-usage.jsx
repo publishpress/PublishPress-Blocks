@@ -347,14 +347,6 @@
 
                                             {isExpanded && (
                                                 <div className="pp-blocks-usage-post-content">
-                                                    <div className="pp-blocks-usage-post-blocks">
-                                                        <h4>{__('Blocks in this post:', 'advanced-gutenberg')}</h4>
-                                                        {post.blocks?.length > 0 ? (
-                                                            post.blocks.map(block => renderBlockItem(block))
-                                                        ) : (
-                                                            <p>{__('No blocks found in this post.', 'advanced-gutenberg')}</p>
-                                                        )}
-                                                    </div>
                                                     <div className="pp-blocks-usage-post-actions">
                                                         {post.edit_link && canEditPosts && (
                                                             <Button
@@ -374,6 +366,14 @@
                                                         >
                                                             {__('View Post', 'advanced-gutenberg')}
                                                         </Button>
+                                                    </div>
+                                                    <div className="pp-blocks-usage-post-blocks">
+                                                        <h4>{__('Blocks in this post:', 'advanced-gutenberg')}</h4>
+                                                        {post.blocks?.length > 0 ? (
+                                                            post.blocks.map(block => renderBlockItem(block))
+                                                        ) : (
+                                                            <p>{__('No blocks found in this post.', 'advanced-gutenberg')}</p>
+                                                        )}
                                                     </div>
                                                 </div>
                                             )}
@@ -587,9 +587,9 @@
                     setScanProgress(prev => ({
                         ...prev,
                         status: sprintf(
-                            __('Processing posts (%1$d/%2$d)', 'advanced-gutenberg'),
-                            offset,
-                            totalPosts
+                            __('Processing posts (%1$s/%2$s)', 'advanced-gutenberg'),
+                            offset.toLocaleString(),
+                            totalPosts.toLocaleString()
                         )
                     }));
 
@@ -785,9 +785,6 @@
                             <div className="progress-wrap"><ProgressBar
                                 value={scanProgress.total > 0 ? (scanProgress.current / scanProgress.total) * 100 : 0}
                             /></div>
-                            {scanProgress.total > 0 && (
-                                <p>{__('Processed:', 'advanced-gutenberg')} {scanProgress.current} / {scanProgress.total}</p>
-                            )}
                         </div>
                     </div>
                 )}
@@ -852,11 +849,6 @@
                                                     <div className="pp-blocks-usage-tile-counts">
                                                         <div>{__('Locations:', 'advanced-gutenberg')} {postCount}</div>
                                                         <div>{__('Instances:', 'advanced-gutenberg')} {useCount}</div>
-                                                        {lastScanned && (
-                                                            <div className="scan-date">
-                                                                {__('Last:', 'advanced-gutenberg')} {new Date(lastScanned).toLocaleString()}
-                                                            </div>
-                                                        )}
                                                     </div>
                                                 ) : (
                                                     <div className="pp-blocks-usage-tile-counts">

@@ -3285,7 +3285,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 
 			wp_enqueue_script(
 				'pp-tooltips-js',
-				ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/lib/pp-tooltips/css/tooltip.min.js',
+				ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/lib/pp-tooltips/js/tooltip.min.js',
 				[],
 				ADVANCED_GUTENBERG_VERSION,
 				true
