@@ -28,15 +28,6 @@ defined( 'ABSPATH' ) || die;
                             'access' => true
                         ],
                         [
-                            'name' => 'enable_block_usage',
-                            'title' => __( 'Block Usage', 'advanced-gutenberg' ),
-                            'description' => __(
-                                'You can scan the posts on your website for blocks usage.', 'advanced-gutenberg'
-                            ),
-                            'default' => 1,
-                            'access' => true
-                        ],
-                        [
                             'name' => 'enable_advgb_blocks',
                             'title' => __( 'PublishPress Blocks', 'advanced-gutenberg' ),
                             'description' => __(
@@ -59,6 +50,15 @@ defined( 'ABSPATH' ) || die;
                             'title' => __( 'Block Controls', 'advanced-gutenberg' ),
                             'description' => __(
                                 'This feature adds display controls for blocks. You can schedule when blocks are shown, and add user role restrictions.', 'advanced-gutenberg'
+                            ),
+                            'default' => 1,
+                            'access' => true
+                        ],
+                        [
+                            'name' => 'enable_block_usage',
+                            'title' => __( 'Block Usage', 'advanced-gutenberg' ),
+                            'description' => __(
+                                'You can scan the posts on your website for blocks usage.', 'advanced-gutenberg'
                             ),
                             'default' => 1,
                             'access' => true

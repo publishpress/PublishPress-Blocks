@@ -1385,7 +1385,7 @@ import {
                                     <ToggleControl
                                         label={__('Device Width', 'advanced-gutenberg')}
                                         help={currentControlKey(advgbBlockControls, 'device_width', 'enabled')
-                                            ? __('Set minimum and maximum screen widths for this block.', 'advanced-gutenberg')
+                                            ? __('Set minimum and maximum screen widths for this block to display.', 'advanced-gutenberg')
                                             : ''
                                         }
                                         checked={currentControlKey(advgbBlockControls, 'device_width', 'enabled')}
