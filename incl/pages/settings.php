@@ -7,7 +7,7 @@ $current_tab = isset( $_GET['tab'] ) && ! empty( $_GET['tab'] )
                 : 'general';
 ?>
 
-<div class="publishpress-admin wrap">
+<div class="publishpress-admin pp-blocks-settings wrap">
 
     <?php if ( isset( $_GET['save'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display message, no action ?>
         <div id="message" class="updated fade">
@@ -28,6 +28,10 @@ $current_tab = isset( $_GET['tab'] ) && ! empty( $_GET['tab'] )
         [
             'title' => esc_html__( 'General', 'advanced-gutenberg' ),
             'slug' => 'general'
+        ],
+        [
+            'title' => esc_html__( 'Block Features', 'advanced-gutenberg' ),
+            'slug' => 'block-features'
         ]
     ];
 
