@@ -1022,6 +1022,10 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				wp_send_json( '', 400 );
 			}
 
+			if (empty($_POST['nonce'])) {
+				wp_send_json( '', 400 );
+			}
+
 			if ( ! wp_verify_nonce( sanitize_text_field( $_POST['nonce'] ), 'advgb_update_blocks_list' )
 			     && ! wp_verify_nonce( sanitize_text_field( $_POST['nonce'] ), 'advgb_nonce' )
 			) {
