@@ -271,7 +271,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.2.6 - 06 May 2025 =
+= 3.2.6 - 07 May 2025 =
   * Feature: Add new Block Usage Screen to scan posts where blocks is currently in use, #1245
   * Update: Add Block controls by device type (Desktop, Tablet, Mobile), #1238
   * Update: Add Block controls by device width (screen size), #1442
