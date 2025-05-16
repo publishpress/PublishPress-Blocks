@@ -193,7 +193,7 @@
         keywords: [ __( 'tab', 'advanced-gutenberg' ) ],
         edit: TabItemEdit,
         save: function( { attributes } ) {
-            const {id, uniqueID, header, anchor, tabActive } = attributes;
+            const { id, tabActive, header, uniqueID, anchor } = attributes;
 
             const tabClassName = [
                 `advgb-tab-${uniqueID}`,
@@ -201,9 +201,9 @@
             ].filter(Boolean).join(' ');
 
             return (
-                <div className="advgb-tab-body-container" style={{ display: id === tabActive ? 'block' : 'none' }}>
+                <div className="advgb-tab-body-container">
                     <div
-                        className={`advgb-tab-body-header advgb-tab-class-${anchor}`}
+                        className={`advgb-tab-body-header advgb-tab-class-${anchor} ${id === tabActive ? 'header-active' : ''}`}
                         id={`advgb-tab-panel-${uniqueID}-${id}`}
                         role="tabpanel"
                         aria-labelledby={`advgb-tab-${uniqueID}-${id}`}
@@ -214,6 +214,7 @@
                     <div
                         className={tabClassName}
                         aria-labelledby={`advgb-tab-panel-${uniqueID}-${id}`}
+                        style={{ display: id === tabActive ? 'block' : 'none' }}
                     >
                         <InnerBlocks.Content />
                     </div>
@@ -373,6 +374,72 @@
                         <div className="advgb-tab-body-container">
                             <div className="advgb-tab-body-header">{header}</div>
                             <div className="advgb-tab-body" id={pid}>
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+                }
+            },
+            {
+                attributes: {
+                    id: {
+                        type: 'number',
+                        default: 0
+                    },
+                    pid: {
+                        type: 'string',
+                    },
+                    header: {
+                        type: 'html',
+                    },
+                    tabActive: {
+                        type: 'number',
+                        default: 0,
+                    },
+                    changed: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    tabHeaders: {
+                        type: 'array',
+                        default: [
+                            __( 'Tab 1', 'advanced-gutenberg' ),
+                            __( 'Tab 2', 'advanced-gutenberg' ),
+                            __( 'Tab 3', 'advanced-gutenberg' ),
+                        ]
+                    },
+                    uniqueID: {
+                        type: 'string',
+                        default: '',
+                    },
+                    anchor: {
+                        type: 'string',
+                        default: '',
+                    }
+                },
+                save: function( { attributes } ) {
+                    const { id, tabActive, header, uniqueID, anchor } = attributes;
+
+                    const tabClassName = [
+                        `advgb-tab-${uniqueID}`,
+                        'advgb-tab-body'
+                    ].filter(Boolean).join(' ');
+
+                    return (
+                        <div className="advgb-tab-body-container" style={{ display: id === tabActive ? 'block' : 'none' }}>
+                            <div
+                                className={`advgb-tab-body-header advgb-tab-class-${anchor}`}
+                                id={`advgb-tab-panel-${uniqueID}-${id}`}
+                                role="tabpanel"
+                                aria-labelledby={`advgb-tab-${uniqueID}-${id}`}
+                                tabIndex="0"
+                            >
+                                {header}
+                            </div>
+                            <div
+                                className={tabClassName}
+                                aria-labelledby={`advgb-tab-panel-${uniqueID}-${id}`}
+                            >
                                 <InnerBlocks.Content />
                             </div>
                         </div>
