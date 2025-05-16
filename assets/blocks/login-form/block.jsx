@@ -510,6 +510,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 options={ [
                                     { label: __( 'Home', 'advanced-gutenberg' ), value: 'home' },
                                     { label: __( 'Dashboard', 'advanced-gutenberg' ), value: 'dashboard' },
+                                    { label: __( 'Current Page', 'advanced-gutenberg' ), value: 'currentpage' },
                                     { label: __( 'Custom', 'advanced-gutenberg' ), value: 'custom' },
                                 ] }
                                 onChange={ (value) => setAttributes( { redirect: value } ) }
