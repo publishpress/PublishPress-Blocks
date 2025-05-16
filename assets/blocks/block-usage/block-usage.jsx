@@ -289,15 +289,6 @@
                 <div className="pp-blocks-usage-sidebar-header">
                     <h2>
                         <div className="pp-blocks-usage-tile-main">
-                            {selected.icon && (
-                                <span className="block-icon" style={selected.iconColor ? { color: selected.iconColor } : {}}>
-                                    {typeof selected.icon === 'string' && !selected.icon.includes('<') ? (
-                                        <span className={`dashicons dashicons-${selected.icon}`}></span>
-                                    ) : (
-                                        <span dangerouslySetInnerHTML={{ __html: selected.icon }} />
-                                    )}
-                                </span>
-                            )}
                             <span>{selected.title}</span>
                         </div>
                         <span className="pp-blocks-usage-panel-subtitle">
