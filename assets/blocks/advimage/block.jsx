@@ -241,7 +241,7 @@
                                 {imageUrl ? (
                                     <img
                                         src={imageUrl}
-                                        alt={title || ''}
+                                        alt={attributes.imageAlt || title || ''}
                                         className="advgb-image"
                                         style={{
                                             width: fullWidth ? '100%' : width,
@@ -258,7 +258,7 @@
                                         <MediaUpload
                                             allowedTypes={['image']}
                                             value={imageID}
-                                            onSelect={(image) => setAttributes({ imageUrl: image.url, imageID: image.id, focalPoint: { "x": "0.50", "y": "0.50" } })}
+                                            onSelect={(image) => setAttributes({ imageUrl: image.url, imageID: image.id, imageAlt: image.alt, focalPoint: { "x": "0.50", "y": "0.50" } })}
                                             render={({ open }) => (
                                                 <Button
                                                     className="button button-large advgb-browse-image-btn"
@@ -327,6 +327,9 @@
             type: 'string',
         },
         imageUrl: {
+            type: 'string',
+        },
+        imageAlt: {
             type: 'string',
         },
         imageID: {
@@ -459,7 +462,7 @@
                         {imageUrl && (
                             <img
                                 src={imageUrl}
-                                alt={title || ''}
+                                alt={attributes.imageAlt || title || ''}
                                 className="advgb-image"
                                 style={{
                                     width: fullWidth ? '100%' : width,
