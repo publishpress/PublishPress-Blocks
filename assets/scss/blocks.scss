@@ -308,6 +308,78 @@ div.advgb-image-block .advgb-browse-image-btn {
   cursor: pointer;
 }
 
+/* Advanced Image block styles for div to img transition */
+.advgb-image-block.image-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: #CCCCCC;
+    margin: 10px auto;
+    padding: 0;
+}
+
+.advgb-image-block.image-wrap.full-width {
+    width: 100% !important;
+}
+
+.advgb-image-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.advgb-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.advgb-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    opacity: 0.4;
+}
+
+.advgb-image-block.image-wrap .button,
+#editor .advgb-image-block.image-wrap > div {
+    z-index: 3;
+}
+
+div.advgb-image-block.image-wrap .advgb-browse-image-btn {
+    background-color: #227eb7;
+    border-color: #227eb7;
+    outline: none;
+    color: #fff;
+    box-shadow: none;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
+div.advgb-image-block.image-wrap .advgb-image-caption-wrap {
+    position: absolute;
+    z-index: 3;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    display: grid;
+    gap: 30px;
+}
+
+div.advgb-image-block.image-wrap .advgb-image-title {
+    margin-bottom: 0;
+}
+
 /*Advanced List block styles*/
 #editor .wp-block-advgb-list {
     margin-left: 15px;

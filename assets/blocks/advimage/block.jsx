@@ -1,4 +1,4 @@
-(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
@@ -33,19 +33,19 @@
                 }
 
                 // Finally set changed attribute to true, so we don't modify anything again
-                setAttributes( { changed: true } );
+                setAttributes({ changed: true });
             }
         }
 
         componentDidMount() {
             const { setAttributes } = this.props;
-            
+
             // Reset attributes when Pro is not available
-            if( advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1' ) {
-                setAttributes( {
+            if (advgbBlocks.advgb_pro !== 'undefined' && advgbBlocks.advgb_pro !== '1') {
+                setAttributes({
                     titleTag: 'h4',
                     subtitleTag: 'p'
-                } );
+                });
             }
         }
 
@@ -54,7 +54,7 @@
 
             // @since 3.2.3 - https://github.com/publishpress/PublishPress-Blocks/issues/1389
             if (!this.state.isBlockIdSet) {
-                setAttributes({blockIDX: `advgb-img-${clientId}`});
+                setAttributes({ blockIDX: `advgb-img-${clientId}` });
                 this.setState({ isBlockIdSet: true });
             }
         }
@@ -69,225 +69,245 @@
                 isPreview, titleTag, subtitleTag
             } = attributes;
             const blockClassName = [
-                'advgb-image-block',
+                'advgb-image-block image-wrap',
                 fullWidth && 'full-width',
+                openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox',
                 blockIDX,
-            ].filter( Boolean ).join( ' ' );
+            ].filter(Boolean).join(' ');
 
             return (
                 isPreview ?
-                    <img alt={__('Advanced Image', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
+                    <img alt={__('Advanced Image', 'advanced-gutenberg')} width='100%' src={previewImageData} />
                     :
-                <Fragment>
-                    {imageID && (
-                        <BlockControls>
-                            <ToolbarGroup>
-                                <MediaUpload
-                                    allowedTypes={ ['image'] }
-                                    value={ imageID }
-                                    onSelect={ (image) => setAttributes( { imageUrl: image.url, imageID: image.id } ) }
-                                    render={ ( { open } ) => (
-                                        <ToolbarButton
-                                            label={ __( 'Change image', 'advanced-gutenberg' ) }
-                                            icon="edit"
-                                            onClick={ open }
-                                        />
-                                    ) }
-                                />
-                                <ToolbarButton
-                                    label={ __( 'Remove image', 'advanced-gutenberg' ) }
-                                    icon="no"
-                                    onClick={ () => setAttributes( { imageUrl: undefined, imageID: undefined } ) }
-                                />
-                            </ToolbarGroup>
-                        </BlockControls>
-                    ) }
-                    <InspectorControls>
-                        <PanelBody title={ __( 'Advanced Image', 'advanced-gutenberg' ) }>
-                            <SelectControl
-                                label={ __( 'Action on click', 'advanced-gutenberg' ) }
-                                value={ openOnClick }
-                                options={ [
-                                    { label: __( 'None', 'advanced-gutenberg' ), value: 'none' },
-                                    { label: __( 'Open image in lightbox', 'advanced-gutenberg' ), value: 'lightbox' },
-                                    { label: __( 'Open custom URL', 'advanced-gutenberg' ), value: 'url' },
-                                ] }
-                                onChange={ (value) => setAttributes( { openOnClick: value } ) }
-                            />
-                            {openOnClick === 'url' &&
-                            <Fragment>
-                                <TextControl
-                                    label={ [
-                                        __( 'Link URL', 'advanced-gutenberg' ),
-                                        (openUrl && <a href={ openUrl || '#' } key="advgb_image_link_url" target="_blank" style={ { float: 'right' } }>
-                                            { __( 'Preview', 'advanced-gutenberg' ) }
-                                        </a>)
-                                    ] }
-                                    value={ openUrl }
-                                    placeholder={ __( 'Enter URL…', 'advanced-gutenberg' ) }
-                                    onChange={ ( text ) => setAttributes( { openUrl: text } ) }
-                                />
-                                <ToggleControl
-                                    label={ __( 'Open link in new tab', 'advanced-gutenberg' ) }
-                                    checked={ linkInNewTab }
-                                    onChange={ () => setAttributes( { linkInNewTab: !linkInNewTab } ) }
-                                />
-                            </Fragment>
-                            }
-                            <PanelBody title={ __( 'Image Size', 'advanced-gutenberg' ) }>
-                                <ToggleControl
-                                    label={ __( 'Full width', 'advanced-gutenberg' ) }
-                                    checked={ fullWidth }
-                                    onChange={ () => setAttributes( { fullWidth: !fullWidth } ) }
-                                />
-                                <RangeControl
-                                    label={ __( 'Height', 'advanced-gutenberg' ) }
-                                    value={ height }
-                                    min={ 100 }
-                                    max={ 1000 }
-                                    onChange={ (value) => setAttributes( { height: value } ) }
-                                />
-                                {!fullWidth &&
-                                <RangeControl
-                                    label={ __( 'Width', 'advanced-gutenberg' ) }
-                                    value={ width }
-                                    min={ 200 }
-                                    max={ 1300 }
-                                    onChange={ (value) => setAttributes( { width: value } ) }
-                                />}
-                                {imageUrl && (
-                                    <FocalPointPicker
-                                        label={ __( 'Focal Point Picker', 'advanced-gutenberg' ) }
-                                        url={ imageUrl }
-                                        value={ focalPoint }
-                                        onChange={ ( value ) => setAttributes( { focalPoint: value } ) }
+                    <Fragment>
+                        {imageID && (
+                            <BlockControls>
+                                <ToolbarGroup>
+                                    <MediaUpload
+                                        allowedTypes={['image']}
+                                        value={imageID}
+                                        onSelect={(image) => setAttributes({ imageUrl: image.url, imageID: image.id })}
+                                        render={({ open }) => (
+                                            <ToolbarButton
+                                                label={__('Change image', 'advanced-gutenberg')}
+                                                icon="edit"
+                                                onClick={open}
+                                            />
+                                        )}
                                     />
-                                ) }
-                                <RangeControl
-                                    label={ __( 'Overlay opacity default', 'advanced-gutenberg' ) }
-                                    value={ defaultOpacity }
-                                    min={ 0 }
-                                    max={ 100 }
-                                    onChange={ (value) => setAttributes( { defaultOpacity: value } ) }
-                                />
-                                <RangeControl
-                                    label={ __( 'Overlay opacity hover', 'advanced-gutenberg' ) }
-                                    value={ overlayOpacity }
-                                    min={ 0 }
-                                    max={ 100 }
-                                    onChange={ (value) => setAttributes( { overlayOpacity: value } ) }
-                                />
-                            </PanelBody>
-                            <PanelColorSettings
-                                title={ __( 'Color Settings', 'advanced-gutenberg' ) }
-                                initialOpen={ false }
-                                colorSettings={ [
-                                    {
-                                        label: __( 'Title Color', 'advanced-gutenberg' ),
-                                        value: titleColor,
-                                        onChange: ( value ) => setAttributes( { titleColor: value === undefined ? '#fff' : value } ),
-                                    },
-                                    {
-                                        label: __( 'Subtitle Color', 'advanced-gutenberg' ),
-                                        value: subtitleColor,
-                                        onChange: ( value ) => setAttributes( { subtitleColor: value === undefined ? '#fff' : value } ),
-                                    },
-                                    {
-                                        label: __( 'Overlay Color', 'advanced-gutenberg' ),
-                                        value: overlayColor,
-                                        onChange: ( value ) => setAttributes( { overlayColor: value === undefined ? '#000' : value } ),
-                                    },
-                                ] }
-                            />
-                            <PanelBody title={ __( 'Text Alignment', 'advanced-gutenberg' ) } initialOpen={false}>
+                                    <ToolbarButton
+                                        label={__('Remove image', 'advanced-gutenberg')}
+                                        icon="no"
+                                        onClick={() => setAttributes({ imageUrl: undefined, imageID: undefined })}
+                                    />
+                                </ToolbarGroup>
+                            </BlockControls>
+                        )}
+                        <InspectorControls>
+                            <PanelBody title={__('Advanced Image', 'advanced-gutenberg')}>
                                 <SelectControl
-                                    label={ __( 'Vertical Alignment', 'advanced-gutenberg' ) }
-                                    value={vAlign}
-                                    options={ [
-                                        { label: __( 'Top', 'advanced-gutenberg' ), value: 'flex-start' },
-                                        { label: __( 'Center', 'advanced-gutenberg' ), value: 'center' },
-                                        { label: __( 'Bottom', 'advanced-gutenberg' ), value: 'flex-end' },
-                                    ] }
-                                    onChange={ (value) => setAttributes( { vAlign: value } ) }
+                                    label={__('Action on click', 'advanced-gutenberg')}
+                                    value={openOnClick}
+                                    options={[
+                                        { label: __('None', 'advanced-gutenberg'), value: 'none' },
+                                        { label: __('Open image in lightbox', 'advanced-gutenberg'), value: 'lightbox' },
+                                        { label: __('Open custom URL', 'advanced-gutenberg'), value: 'url' },
+                                    ]}
+                                    onChange={(value) => setAttributes({ openOnClick: value })}
                                 />
-                                <SelectControl
-                                    label={ __( 'Horizontal Alignment', 'advanced-gutenberg' ) }
-                                    value={hAlign}
-                                    options={ [
-                                        { label: __( 'Left', 'advanced-gutenberg' ), value: 'flex-start' },
-                                        { label: __( 'Center', 'advanced-gutenberg' ), value: 'center' },
-                                        { label: __( 'Right', 'advanced-gutenberg' ), value: 'flex-end' },
-                                    ] }
-                                    onChange={ (value) => setAttributes( { hAlign: value } ) }
+                                {openOnClick === 'url' &&
+                                    <Fragment>
+                                        <TextControl
+                                            label={[
+                                                __('Link URL', 'advanced-gutenberg'),
+                                                (openUrl && <a href={openUrl || '#'} key="advgb_image_link_url" target="_blank" style={{ float: 'right' }}>
+                                                    {__('Preview', 'advanced-gutenberg')}
+                                                </a>)
+                                            ]}
+                                            value={openUrl}
+                                            placeholder={__('Enter URL…', 'advanced-gutenberg')}
+                                            onChange={(text) => setAttributes({ openUrl: text })}
+                                        />
+                                        <ToggleControl
+                                            label={__('Open link in new tab', 'advanced-gutenberg')}
+                                            checked={linkInNewTab}
+                                            onChange={() => setAttributes({ linkInNewTab: !linkInNewTab })}
+                                        />
+                                    </Fragment>
+                                }
+                                <PanelBody title={__('Image Size', 'advanced-gutenberg')}>
+                                    <ToggleControl
+                                        label={__('Full width', 'advanced-gutenberg')}
+                                        checked={fullWidth}
+                                        onChange={() => setAttributes({ fullWidth: !fullWidth })}
+                                    />
+                                    <RangeControl
+                                        label={__('Height', 'advanced-gutenberg')}
+                                        value={height}
+                                        min={100}
+                                        max={1000}
+                                        onChange={(value) => setAttributes({ height: value })}
+                                    />
+                                    {!fullWidth &&
+                                        <RangeControl
+                                            label={__('Width', 'advanced-gutenberg')}
+                                            value={width}
+                                            min={200}
+                                            max={1300}
+                                            onChange={(value) => setAttributes({ width: value })}
+                                        />}
+                                    {imageUrl && (
+                                        <FocalPointPicker
+                                            label={__('Focal Point Picker', 'advanced-gutenberg')}
+                                            url={imageUrl}
+                                            value={focalPoint}
+                                            onChange={(value) => setAttributes({ focalPoint: value })}
+                                        />
+                                    )}
+                                    <RangeControl
+                                        label={__('Overlay opacity default', 'advanced-gutenberg')}
+                                        value={defaultOpacity}
+                                        min={0}
+                                        max={100}
+                                        onChange={(value) => setAttributes({ defaultOpacity: value })}
+                                    />
+                                    <RangeControl
+                                        label={__('Overlay opacity hover', 'advanced-gutenberg')}
+                                        value={overlayOpacity}
+                                        min={0}
+                                        max={100}
+                                        onChange={(value) => setAttributes({ overlayOpacity: value })}
+                                    />
+                                </PanelBody>
+                                <PanelColorSettings
+                                    title={__('Color Settings', 'advanced-gutenberg')}
+                                    initialOpen={false}
+                                    colorSettings={[
+                                        {
+                                            label: __('Title Color', 'advanced-gutenberg'),
+                                            value: titleColor,
+                                            onChange: (value) => setAttributes({ titleColor: value === undefined ? '#fff' : value }),
+                                        },
+                                        {
+                                            label: __('Subtitle Color', 'advanced-gutenberg'),
+                                            value: subtitleColor,
+                                            onChange: (value) => setAttributes({ subtitleColor: value === undefined ? '#fff' : value }),
+                                        },
+                                        {
+                                            label: __('Overlay Color', 'advanced-gutenberg'),
+                                            value: overlayColor,
+                                            onChange: (value) => setAttributes({ overlayColor: value === undefined ? '#000' : value }),
+                                        },
+                                    ]}
                                 />
+                                <PanelBody title={__('Text Alignment', 'advanced-gutenberg')} initialOpen={false}>
+                                    <SelectControl
+                                        label={__('Vertical Alignment', 'advanced-gutenberg')}
+                                        value={vAlign}
+                                        options={[
+                                            { label: __('Top', 'advanced-gutenberg'), value: 'flex-start' },
+                                            { label: __('Center', 'advanced-gutenberg'), value: 'center' },
+                                            { label: __('Bottom', 'advanced-gutenberg'), value: 'flex-end' },
+                                        ]}
+                                        onChange={(value) => setAttributes({ vAlign: value })}
+                                    />
+                                    <SelectControl
+                                        label={__('Horizontal Alignment', 'advanced-gutenberg')}
+                                        value={hAlign}
+                                        options={[
+                                            { label: __('Left', 'advanced-gutenberg'), value: 'flex-start' },
+                                            { label: __('Center', 'advanced-gutenberg'), value: 'center' },
+                                            { label: __('Right', 'advanced-gutenberg'), value: 'flex-end' },
+                                        ]}
+                                        onChange={(value) => setAttributes({ hAlign: value })}
+                                    />
+                                </PanelBody>
                             </PanelBody>
-                        </PanelBody>
-                    </InspectorControls>
-                    <div className={ blockClassName }
-                         style={ {
-                             backgroundImage: `url(${imageUrl || advgbBlocks.image_holder})`,
-                             backgroundPosition: focalPoint ? `${ focalPoint.x * 100 }% ${ focalPoint.y * 100 }%` : undefined,
-                             height: height,
-                             width: width,
-                             justifyContent: vAlign,
-                             alignItems: hAlign,
-                         } }
-                    >
-                        <span className="advgb-image-overlay"
-                              style={ { backgroundColor: overlayColor, opacity: defaultOpacity/100 } }
-                        />
-                        {!imageID &&
-                        <MediaUpload
-                            allowedTypes={ ['image'] }
-                            value={ imageID }
-                            onSelect={ (image) => setAttributes( { imageUrl: image.url, imageID: image.id, focalPoint: {"x":"0.50","y":"0.50"} } ) }
-                            render={ ( { open } ) => (
-                                <Button
-                                    className="button button-large advgb-browse-image-btn"
-                                    onClick={ open }
-                                >
-                                    { __( 'Open media library', 'advanced-gutenberg' ) }
-                                </Button>
-                            ) }
-                        />
-                        }
-                        <RichText
-                            tagName={ titleTag }
-                            className="advgb-image-title"
-                            value={ title }
-                            onChange={ (value) => setAttributes( { title: value.trim() } ) }
-                            style={ { color: titleColor } }
-                            isSelected={ isSelected && currentEdit === 'title' }
-                            unstableOnFocus={ () => this.setState( { currentEdit: 'title' } ) }
-                            unstableOnSplit={ () => null }
-                            placeholder={ __( 'Enter title…', 'advanced-gutenberg' ) }
-                            allowedFormats={ [] }
-                        />
-                        <RichText
-                            tagName={ subtitleTag }
-                            className="advgb-image-subtitle"
-                            value={ subtitle }
-                            onChange={ (value) => setAttributes( { subtitle: value.trim() } ) }
-                            style={ { color: subtitleColor } }
-                            isSelected={ isSelected && currentEdit === 'subtitle' }
-                            unstableOnFocus={ () => this.setState( { currentEdit: 'subtitle' } ) }
-                            unstableOnSplit={ () => null }
-                            placeholder={ __( 'Enter subtitle…', 'advanced-gutenberg' ) }
-                            allowedFormats={ [] }
-                        />
-                        <style>
-                            {`.${blockIDX}.advgb-image-block:hover .advgb-image-overlay {opacity: ${overlayOpacity/100} !important;}`}
-                        </style>
-                    </div>
-                </Fragment>
+                        </InspectorControls>
+                        <div className={blockClassName} style={{ width: fullWidth ? '100%' : width, height }}>
+                            <div className="advgb-image-wrapper" style={{
+                                justifyContent: vAlign,
+                                alignItems: hAlign,
+                                ...(!imageUrl && {
+                                    backgroundImage: `url(${advgbBlocks.image_holder})`,
+                                    backgroundPosition: focalPoint ? `${ focalPoint.x * 100 }% ${ focalPoint.y * 100 }%` : undefined,
+                                    height: height,
+                                    width: fullWidth ? '100%' : width,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    backgroundRepeat: 'no-repeat',
+                                })
+                            }}>
+                                {imageUrl ? (
+                                    <img
+                                        src={imageUrl}
+                                        alt={title || ''}
+                                        className="advgb-image"
+                                        style={{
+                                            width: fullWidth ? '100%' : width,
+                                            height,
+                                            objectPosition: focalPoint ? `${focalPoint.x * 100}% ${focalPoint.y * 100}%` : 'center',
+                                        }}
+                                    />
+                                ) : null }
+                                <span className="advgb-image-overlay"
+                                    style={{ backgroundColor: overlayColor, opacity: defaultOpacity / 100 }}
+                                />
+                                <div className="advgb-image-caption-wrap">
+                                    {!imageUrl && (
+                                        <MediaUpload
+                                            allowedTypes={['image']}
+                                            value={imageID}
+                                            onSelect={(image) => setAttributes({ imageUrl: image.url, imageID: image.id, focalPoint: { "x": "0.50", "y": "0.50" } })}
+                                            render={({ open }) => (
+                                                <Button
+                                                    className="button button-large advgb-browse-image-btn"
+                                                    onClick={open}
+                                                >
+                                                    {__('Open media library', 'advanced-gutenberg')}
+                                                </Button>
+                                            )}
+                                        />
+                                    )}
+                                    <RichText
+                                        tagName={titleTag}
+                                        className="advgb-image-title"
+                                        value={title}
+                                        onChange={(value) => setAttributes({ title: value.trim() })}
+                                        style={{ color: titleColor }}
+                                        isSelected={isSelected && currentEdit === 'title'}
+                                        unstableOnFocus={() => this.setState({ currentEdit: 'title' })}
+                                        unstableOnSplit={() => null}
+                                        placeholder={__('Enter title…', 'advanced-gutenberg')}
+                                        allowedFormats={[]}
+                                    />
+                                    <RichText
+                                        tagName={subtitleTag}
+                                        className="advgb-image-subtitle"
+                                        value={subtitle}
+                                        onChange={(value) => setAttributes({ subtitle: value.trim() })}
+                                        style={{ color: subtitleColor }}
+                                        isSelected={isSelected && currentEdit === 'subtitle'}
+                                        unstableOnFocus={() => this.setState({ currentEdit: 'subtitle' })}
+                                        unstableOnSplit={() => null}
+                                        placeholder={__('Enter subtitle…', 'advanced-gutenberg')}
+                                        allowedFormats={[]}
+                                    />
+                                </div>
+                                <style>
+                                    {`.${blockIDX}.advgb-image-block:hover .advgb-image-overlay {opacity: ${overlayOpacity / 100} !important;}`}
+                                </style>
+                            </div>
+                        </div>
+                    </Fragment>
             );
         }
     }
 
     const advImageBlockIcon = (
         <svg height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M1 5h2v14H1zm4 0h2v14H5zm17 0H10c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1zM11 17l2.5-3.15L15.29 16l2.5-3.22L21 17H11z"/>
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path d="M1 5h2v14H1zm4 0h2v14H5zm17 0H10c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1zM11 17l2.5-3.15L15.29 16l2.5-3.22L21 17H11z" />
         </svg>
     );
 
@@ -381,15 +401,15 @@
         }
     };
 
-    registerBlockType( 'advgb/image', {
-        title: __( 'Image - PublishPress', 'advanced-gutenberg' ),
-        description: __( 'Image/photo block with more options and styles.', 'advanced-gutenberg' ),
+    registerBlockType('advgb/image', {
+        title: __('Image - PublishPress', 'advanced-gutenberg'),
+        description: __('Image/photo block with more options and styles.', 'advanced-gutenberg'),
         icon: {
             src: advImageBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'image', 'advanced-gutenberg' ), __( 'advanced image', 'advanced-gutenberg' ), __( 'photo', 'advanced-gutenberg' ), __( 'box', 'advanced-gutenberg' ) ],
+        keywords: [__('image', 'advanced-gutenberg'), __('advanced image', 'advanced-gutenberg'), __('photo', 'advanced-gutenberg'), __('box', 'advanced-gutenberg')],
         attributes: blockAttrs,
         example: {
             attributes: {
@@ -401,7 +421,7 @@
             anchor: true
         },
         edit: AdvImage,
-        save: ( { attributes } ) => {
+        save: ({ attributes }) => {
             const {
                 blockIDX,
                 openOnClick,
@@ -422,48 +442,58 @@
                 titleTag,
                 subtitleTag
             } = attributes;
-            const linkURL = ( openOnClick === 'url' && !!openUrl ) ? openUrl : undefined;
+            const linkURL = (openOnClick === 'url' && !!openUrl) ? openUrl : undefined;
             const blockClassName = [
-                'advgb-image-block',
+                'advgb-image-block image-wrap',
                 fullWidth && 'full-width',
                 openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox',
                 blockIDX,
-            ].filter( Boolean ).join( ' ' );
+            ].filter(Boolean).join(' ');
 
             return (
-                <div className={ blockClassName }
-                     style={ {
-                         backgroundImage: `url(${imageUrl})`,
-                         backgroundPosition: focalPoint ? `${ focalPoint.x * 100 }% ${ focalPoint.y * 100 }%` : undefined,
-                         height: height,
-                         width: width,
-                         justifyContent: vAlign,
-                         alignItems: hAlign,
-                     } }
-                     data-image={ imageUrl }
-                >
-                    <a className="advgb-image-overlay"
-                       style={ { backgroundColor: overlayColor } }
-                       target={ linkInNewTab ? '_blank' : '_self' }
-                       rel="noopener noreferrer"
-                       href={ linkURL }
-                    />
-                    {title && (
-                        <RichText.Content
-                            tagName={ titleTag }
-                            className="advgb-image-title"
-                            style={ { color: titleColor } }
-                            value={ title }
+                <div className={blockClassName} style={{ width: fullWidth ? '100%' : width, height }}>
+                    <div className="advgb-image-wrapper" style={{
+                        justifyContent: vAlign,
+                        alignItems: hAlign,
+                    }}>
+                        {imageUrl && (
+                            <img
+                                src={imageUrl}
+                                alt={title || ''}
+                                className="advgb-image"
+                                style={{
+                                    width: fullWidth ? '100%' : width,
+                                    height,
+                                    objectPosition: focalPoint ? `${focalPoint.x * 100}% ${focalPoint.y * 100}%` : 'center',
+                                }}
+                                data-image={openOnClick === 'lightbox' ? imageUrl : undefined}
+                            />
+                        )}
+                        <a className="advgb-image-overlay"
+                            style={{ backgroundColor: overlayColor }}
+                            target={linkInNewTab ? '_blank' : '_self'}
+                            rel="noopener noreferrer"
+                            href={linkURL}
                         />
-                    ) }
-                    {subtitle && (
-                        <RichText.Content
-                            tagName={ subtitleTag }
-                            className="advgb-image-subtitle"
-                            style={ { color: subtitleColor } }
-                            value={ subtitle }
-                        />
-                    ) }
+                        <div className="advgb-image-caption-wrap">
+                            {title && (
+                                <RichText.Content
+                                    tagName={titleTag}
+                                    className="advgb-image-title"
+                                    style={{ color: titleColor }}
+                                    value={title}
+                                />
+                            )}
+                            {subtitle && (
+                                <RichText.Content
+                                    tagName={subtitleTag}
+                                    className="advgb-image-subtitle"
+                                    style={{ color: subtitleColor }}
+                                    value={subtitle}
+                                />
+                            )}
+                        </div>
+                    </div>
                 </div>
             );
         },
@@ -480,7 +510,7 @@
                         default: false,
                     },
                 },
-                save: ( { attributes } ) => {
+                save: ({ attributes }) => {
                     const {
                         blockIDX,
                         openOnClick,
@@ -499,49 +529,49 @@
                         hAlign,
                         focalPoint,
                     } = attributes;
-                    const linkURL = ( openOnClick === 'url' && !!openUrl ) ? openUrl : undefined;
+                    const linkURL = (openOnClick === 'url' && !!openUrl) ? openUrl : undefined;
                     const blockClassName = [
                         'advgb-image-block',
                         fullWidth && 'full-width',
                         openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox',
                         blockIDX,
-                    ].filter( Boolean ).join( ' ' );
+                    ].filter(Boolean).join(' ');
 
                     return (
-                        <div className={ blockClassName }
-                             style={ {
-                                 backgroundImage: `url(${imageUrl})`,
-                                 backgroundPosition: focalPoint ? `${ focalPoint.x * 100 }% ${ focalPoint.y * 100 }%` : undefined,
-                                 height: height,
-                                 width: width,
-                                 justifyContent: vAlign,
-                                 alignItems: hAlign,
-                             } }
-                             data-image={ imageUrl }
+                        <div className={blockClassName}
+                            style={{
+                                backgroundImage: `url(${imageUrl})`,
+                                backgroundPosition: focalPoint ? `${focalPoint.x * 100}% ${focalPoint.y * 100}%` : undefined,
+                                height: height,
+                                width: width,
+                                justifyContent: vAlign,
+                                alignItems: hAlign,
+                            }}
+                            data-image={imageUrl}
                         >
                             <a className="advgb-image-overlay"
-                               style={ { backgroundColor: overlayColor } }
-                               target={ linkInNewTab ? '_blank' : '_self' }
-                               rel="noopener noreferrer"
-                               href={ linkURL }
+                                style={{ backgroundColor: overlayColor }}
+                                target={linkInNewTab ? '_blank' : '_self'}
+                                rel="noopener noreferrer"
+                                href={linkURL}
                             />
                             {title && (
-                                <h4 className="advgb-image-title" style={ { color: titleColor } }>
+                                <h4 className="advgb-image-title" style={{ color: titleColor }}>
                                     {title}
                                 </h4>
-                            ) }
+                            )}
                             {subtitle && (
-                                <p className="advgb-image-subtitle" style={ { color: subtitleColor } }>
+                                <p className="advgb-image-subtitle" style={{ color: subtitleColor }}>
                                     {subtitle}
                                 </p>
-                            ) }
+                            )}
                         </div>
                     );
                 }
             },
             {
                 attributes: blockAttrs,
-                save: ( { attributes } ) => {
+                save: ({ attributes }) => {
                     const {
                         openOnClick,
                         openUrl,
@@ -558,44 +588,98 @@
                         vAlign,
                         hAlign,
                     } = attributes;
-                    const linkURL = ( openOnClick === 'url' && !!openUrl ) ? openUrl : undefined;
+                    const linkURL = (openOnClick === 'url' && !!openUrl) ? openUrl : undefined;
                     const blockClassName = [
                         'advgb-image-block',
                         fullWidth && 'full-width',
                         openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox',
-                    ].filter( Boolean ).join( ' ' );
+                    ].filter(Boolean).join(' ');
 
                     return (
-                        <div className={ blockClassName }
-                             style={ {
-                                 backgroundImage: `url(${imageUrl})`,
-                                 height: height,
-                                 width: width,
-                                 justifyContent: vAlign,
-                                 alignItems: hAlign,
-                             } }
-                             data-image={ imageUrl }
+                        <div className={blockClassName}
+                            style={{
+                                backgroundImage: `url(${imageUrl})`,
+                                height: height,
+                                width: width,
+                                justifyContent: vAlign,
+                                alignItems: hAlign,
+                            }}
+                            data-image={imageUrl}
                         >
                             <a className="advgb-image-overlay"
-                               style={ { backgroundColor: overlayColor } }
-                               target={ linkInNewTab ? '_blank' : '_self' }
-                               rel="noopener noreferrer"
-                               href={ linkURL }
+                                style={{ backgroundColor: overlayColor }}
+                                target={linkInNewTab ? '_blank' : '_self'}
+                                rel="noopener noreferrer"
+                                href={linkURL}
                             />
                             {title && (
-                                <h4 className="advgb-image-title" style={ { color: titleColor } }>
+                                <h4 className="advgb-image-title" style={{ color: titleColor }}>
                                     {title}
                                 </h4>
-                            ) }
+                            )}
                             {subtitle && (
-                                <p className="advgb-image-subtitle" style={ { color: subtitleColor } }>
+                                <p className="advgb-image-subtitle" style={{ color: subtitleColor }}>
                                     {subtitle}
                                 </p>
-                            ) }
+                            )}
                         </div>
                     );
                 },
+            },
+            {
+                attributes: blockAttrs,
+                save: ({ attributes }) => {
+                    const {
+                        blockIDX, openOnClick, openUrl, linkInNewTab, imageUrl, title,
+                        titleColor, subtitle, subtitleColor, overlayColor, fullWidth,
+                        width, height, vAlign, hAlign, focalPoint, titleTag, subtitleTag
+                    } = attributes;
+                    const linkURL = (openOnClick === 'url' && !!openUrl) ? openUrl : undefined;
+                    const blockClassName = [
+                        'advgb-image-block',
+                        fullWidth && 'full-width',
+                        openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox',
+                        blockIDX,
+                    ].filter(Boolean).join(' ');
+
+                    return (
+                        <div className={blockClassName}
+                            style={{
+                                backgroundImage: `url(${imageUrl})`,
+                                backgroundPosition: focalPoint ? `${focalPoint.x * 100}% ${focalPoint.y * 100}%` : undefined,
+                                height: height,
+                                width: width,
+                                justifyContent: vAlign,
+                                alignItems: hAlign,
+                            }}
+                            data-image={imageUrl}
+                        >
+                            <a className="advgb-image-overlay"
+                                style={{ backgroundColor: overlayColor }}
+                                target={linkInNewTab ? '_blank' : '_self'}
+                                rel="noopener noreferrer"
+                                href={linkURL}
+                            />
+                            {title && (
+                                <RichText.Content
+                                    tagName={titleTag}
+                                    className="advgb-image-title"
+                                    style={{ color: titleColor }}
+                                    value={title}
+                                />
+                            )}
+                            {subtitle && (
+                                <RichText.Content
+                                    tagName={subtitleTag}
+                                    className="advgb-image-subtitle"
+                                    style={{ color: subtitleColor }}
+                                    value={subtitle}
+                                />
+                            )}
+                        </div>
+                    );
+                }
             }
         ]
-    } );
-})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
