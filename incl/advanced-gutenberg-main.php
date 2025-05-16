@@ -1040,10 +1040,10 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			 * @return mixed
 			 */
 			function cleanupBlockList( array $block ) {
-				$block['icon']     = htmlentities( stripslashes( $block['icon'] ), ENT_QUOTES );
-				$block['name']     = sanitize_text_field( $block['name'] );
-				$block['title']    = sanitize_text_field( $block['title'] );
-				$block['category'] = sanitize_text_field( $block['category'] );
+				$block['icon']     = isset($block['icon']) ? htmlentities( stripslashes( $block['icon'] ), ENT_QUOTES ) : '';
+				$block['name']     = isset($block['name']) ? sanitize_text_field( $block['name'] ) : '';
+				$block['title']    = isset($block['title']) ? sanitize_text_field( $block['title'] ) : '';
+				$block['category'] = isset($block['category']) ? sanitize_text_field( $block['category'] ) : '';
 
 				return $block;
 			}
@@ -5138,8 +5138,8 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				case 'core/gallery':
 
 					// Assets
-					$saved_settings = get_option( 'advgb_settings' );
-					if ( $saved_settings['gallery_lightbox'] ) {
+					$saved_settings = get_option( 'advgb_settings', [] );
+					if ( isset($saved_settings['gallery_lightbox']) && $saved_settings['gallery_lightbox'] ) {
 						wp_enqueue_style( 'colorbox_style' );
 						wp_enqueue_script( 'colorbox_js' );
 						wp_enqueue_script(
