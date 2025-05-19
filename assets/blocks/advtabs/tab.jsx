@@ -3,7 +3,7 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InnerBlocks } = wpBlockEditor;
+    const { InnerBlocks, RichText } = wpBlockEditor;
     const { select } = wp.data;
 
     const tabsBlockIcon = (
@@ -209,7 +209,10 @@
                         aria-labelledby={`advgb-tab-${uniqueID}-${id}`}
                         tabIndex="0"
                     >
-                        {header}
+                        <RichText.Content
+                            tagName="span"
+                            value={header}
+                        />
                     </div>
                     <div
                         className={tabClassName}
@@ -222,6 +225,80 @@
             );
         },
         deprecated: [
+            {
+                attributes: {
+                    id: {
+                        type: 'number',
+                        default: 0
+                    },
+                    pid: {
+                        type: 'string',
+                    },
+                    header: {
+                        type: 'html',
+                    },
+                    anchor: {
+                        type: 'string',
+                    },
+                    tabActive: {
+                        type: 'number',
+                        default: 0,
+                    },
+                    changed: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                    tabHeaders: {
+                        type: 'array',
+                        default: [
+                            __( 'Tab 1', 'advanced-gutenberg' ),
+                            __( 'Tab 2', 'advanced-gutenberg' ),
+                            __( 'Tab 3', 'advanced-gutenberg' ),
+                        ]
+                    },
+                    tabAnchors: {
+                        type: 'array',
+                        default: [
+                            '',
+                            '',
+                            ''
+                        ]
+                    },
+                    uniqueID: {
+                        type: 'string',
+                        default: '',
+                    }
+                },
+                save: function( { attributes } ) {
+                    const { id, tabActive, header, uniqueID, anchor } = attributes;
+
+                    const tabClassName = [
+                        `advgb-tab-${uniqueID}`,
+                        'advgb-tab-body'
+                    ].filter(Boolean).join(' ');
+
+                    return (
+                        <div className="advgb-tab-body-container">
+                            <div
+                                className={`advgb-tab-body-header advgb-tab-class-${anchor} ${id === tabActive ? 'header-active' : ''}`}
+                                id={`advgb-tab-panel-${uniqueID}-${id}`}
+                                role="tabpanel"
+                                aria-labelledby={`advgb-tab-${uniqueID}-${id}`}
+                                tabIndex="0"
+                            >
+                                {header}
+                            </div>
+                            <div
+                                className={tabClassName}
+                                aria-labelledby={`advgb-tab-panel-${uniqueID}-${id}`}
+                                style={{ display: id === tabActive ? 'block' : 'none' }}
+                            >
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+                }
+            },
             {
                 attributes: {
                     id: {
