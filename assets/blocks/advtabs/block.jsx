@@ -93,10 +93,20 @@
                 } else {
                     advgbTabsUniqueIDs.push( this.props.attributes.uniqueID );
                 }
-
-                setAttributes( {
-                    pid: `advgb-tabs-${this.props.clientId}`,
-                } );
+                if (!prevProps.innerBlocks.length) {
+                    setAttributes({
+                        tabHeaders: [
+                            __('Tab 1', 'advanced-gutenberg'),
+                            __('Tab 2', 'advanced-gutenberg'),
+                            __('Tab 3', 'advanced-gutenberg')
+                        ],
+                        pid: `advgb-tabs-${this.props.clientId}`,
+                    });
+                } else {
+                    setAttributes( {
+                        pid: `advgb-tabs-${this.props.clientId}`,
+                    } );
+                }
 
                 this.updateTabHeaders();
                 this.updateTabAnchors();
@@ -302,16 +312,24 @@
             }
         }
 
-        onMove(index, newIndex, headers, header, anchors, anchor){
+        onMove(index, newIndex, headers, header, anchors, anchor) {
             const { attributes, setAttributes, clientId } = this.props;
-            const { moveBlockToPosition } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
-            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const { moveBlockToPosition } = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor');
+            const { getBlockOrder } = !wp.blockEditor ? select('core/editor') : select('core/block-editor');
             const childBlocks = getBlockOrder(clientId);
 
-            headers.splice( newIndex, 0, header[0] );
-            this.updateTabsHeader(attributes.tabHeaders[index], newIndex);
-            this.updateTabsHeader(attributes.tabHeaders[newIndex], newIndex);
-            anchors.splice( newIndex, 0, anchor[0] );
+            const newHeaders = [...attributes.tabHeaders];
+            newHeaders.splice(index, 1);
+            newHeaders.splice(newIndex, 0, header[0]);
+
+            const newAnchors = [...attributes.tabAnchors];
+            newAnchors.splice(index, 1);
+            newAnchors.splice(newIndex, 0, anchor[0]);
+
+            setAttributes({
+                tabHeaders: newHeaders,
+                tabAnchors: newAnchors
+            });
 
             moveBlockToPosition(
                 childBlocks[index],
@@ -323,7 +341,7 @@
             this.updateTabHeaders();
             this.updateTabAnchors();
             this.props.resetOrder();
-            this.props.updateTabActive( newIndex );
+            this.props.updateTabActive(newIndex);
         }
 
         translatableText(text) {
