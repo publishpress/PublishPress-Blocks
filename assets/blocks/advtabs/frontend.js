@@ -1,4 +1,32 @@
 jQuery(document).ready(function ($) {
+    // Fix display of tab headers in mobile view for existing content for https://github.com/publishpress/PublishPress-Blocks/issues/1483
+    $('.advgb-tabs-wrapper').each(function() {
+        var $wrapper = $(this);
+        var activeTab = parseInt($wrapper.data('tab-active')) || 0;
+        var $containers = $wrapper.find('.advgb-tab-body-container');
+
+        $containers.each(function(index) {
+            var $container = $(this);
+            var $body = $container.find('.advgb-tab-body');
+            var $header = $container.find('.advgb-tab-body-header');
+
+            // Remove display:none from all containers
+            if ($container.css('display') === 'none') {
+                $container.css('display', '');
+            }
+
+            // Set display for inner tab bodies based on active tab
+            if (index === activeTab) {
+                $body.css('display', 'block');
+                $header.addClass('header-active');
+            } else {
+                $body.css('display', 'none');
+                $header.removeClass('header-active');
+            }
+        });
+    });
+
+
     $(".advgb-tab a:not(.ui-tabs-anchor)").unbind("click");
     $(".advgb-tabs-block").tabs();
 
@@ -10,15 +38,18 @@ jQuery(document).ready(function ($) {
         var bodyHeaders = $wrapper.find('.advgb-tab-body-header');
         var bodyContainers = $wrapper.find('.advgb-tab-body-container');
 
-        // Get styles from first tab
-        var $firstTab = tabs.first();
+        // Get styles from first incative tab
+        var inactiveTab = $(this).find('li.advgb-tab:not(".advgb-tab-active")');
+        if($(this).prop('id') !== '') {
+            inactiveTab = $(this).find('li.advgb-tab:not(".ui-state-active")');
+        }
         var tabStyles = {
-            bgColor: $firstTab.css('background-color'),
-            borderColor: $firstTab.css('border-color'),
-            borderWidth: $firstTab.css('border-width'),
-            borderStyle: $firstTab.css('border-style'),
-            borderRadius: $firstTab.css('border-radius'),
-            textColor: $firstTab.find('a, button').css('color')
+            bgColor: inactiveTab.css('background-color'),
+            borderColor: inactiveTab.css('border-color'),
+            borderWidth: inactiveTab.css('border-width'),
+            borderStyle: inactiveTab.css('border-style'),
+            borderRadius: inactiveTab.css('border-radius'),
+            textColor: inactiveTab.find('a, button').css('color')
         };
 
         // Unified click handler for both <a> and <button> tabs
@@ -30,7 +61,7 @@ jQuery(document).ready(function ($) {
 
             tabs.removeClass('advgb-tab-active');
             $currentTab.addClass('advgb-tab-active');
-            bodyContainers.hide();
+            bodyContainers.find('.advgb-tab-body').hide();
 
             // Find target panel (supports multiple formats for legacy purpose)
             var $targetPanel = $wrapper.find(
@@ -40,7 +71,7 @@ jQuery(document).ready(function ($) {
             ).closest('.advgb-tab-body-container');
 
             if ($targetPanel.length) {
-                $targetPanel.show();
+                $targetPanel.find('.advgb-tab-body').show();
 
                 // IMAGE SLIDER REFRESH
                 if ($targetPanel.find('.advgb-images-slider-block').length && $.fn.slick) {
@@ -53,7 +84,7 @@ jQuery(document).ready(function ($) {
                 }
             } else {
                 // Fallback to index-based activation
-                bodyContainers.eq(tabs.index($currentTab)).show();
+                bodyContainers.eq(tabs.index($currentTab)).find('.advgb-tab-body').show();
             }
 
             // Update headers

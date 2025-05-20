@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "af424d2c899e87878362dbeff1b51455",
+    "content-hash": "24d3a1f851f1ac544b328e00793e83e1",
     "packages": [
         {
             "name": "matomo/device-detector",
-            "version": "6.4.5",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matomo-org/device-detector.git",
-                "reference": "270bbc41f80994e80805ac377b67324eba53c412"
+                "reference": "531f49182f0bfed32edfc6c3cd241d3239a8ccf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matomo-org/device-detector/zipball/270bbc41f80994e80805ac377b67324eba53c412",
-                "reference": "270bbc41f80994e80805ac377b67324eba53c412",
+                "url": "https://api.github.com/repos/matomo-org/device-detector/zipball/531f49182f0bfed32edfc6c3cd241d3239a8ccf7",
+                "reference": "531f49182f0bfed32edfc6c3cd241d3239a8ccf7",
                 "shasum": ""
             },
             "require": {
@@ -41,6 +41,7 @@
                 "doctrine/cache": "Can directly be used for caching purpose",
                 "ext-yaml": "Necessary for using the Pecl YAML parser"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -74,7 +75,7 @@
                 "source": "https://github.com/matomo-org/matomo",
                 "wiki": "https://dev.matomo.org/"
             },
-            "time": "2025-02-26T17:37:32+00:00"
+            "time": "2025-05-16T21:47:17+00:00"
         },
         {
             "name": "mustangostang/spyc",
@@ -544,7 +545,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "matomo/device-detector": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -1329,56 +1329,6 @@ import {
                                     )}
                                 </Fragment>
                             )}
-                            {isControlEnabled(advgb_block_controls_vars.controls.device_type) && (
-                                <Fragment>
-                                    <ToggleControl
-                                        label={__('Device Type', 'advanced-gutenberg')}
-                                        help={currentControlKey(advgbBlockControls, 'device_type', 'enabled')
-                                            ? __('Choose which devices this block should be visible on.', 'advanced-gutenberg')
-                                            : ''
-                                        }
-                                        checked={currentControlKey(advgbBlockControls, 'device_type', 'enabled')}
-                                        onChange={() => this.changeControlKey('device_type', 'enabled')}
-                                    />
-                                    {currentControlKey(advgbBlockControls, 'device_type', 'enabled') && (
-                                        <Fragment>
-                                            <ToggleControl
-                                                label={__('Desktop', 'advanced-gutenberg')}
-                                                checked={currentControlKey(advgbBlockControls, 'device_type', 'devices').includes('desktop')}
-                                                onChange={() => {
-                                                    const devices = currentControlKey(advgbBlockControls, 'device_type', 'devices');
-                                                    const newDevices = devices.includes('desktop')
-                                                        ? devices.filter(d => d !== 'desktop')
-                                                        : [...devices, 'desktop'];
-                                                    this.changeControlKey('device_type', 'devices', newDevices);
-                                                }}
-                                            />
-                                            <ToggleControl
-                                                label={__('Tablet', 'advanced-gutenberg')}
-                                                checked={currentControlKey(advgbBlockControls, 'device_type', 'devices').includes('tablet')}
-                                                onChange={() => {
-                                                    const devices = currentControlKey(advgbBlockControls, 'device_type', 'devices');
-                                                    const newDevices = devices.includes('tablet')
-                                                        ? devices.filter(d => d !== 'tablet')
-                                                        : [...devices, 'tablet'];
-                                                    this.changeControlKey('device_type', 'devices', newDevices);
-                                                }}
-                                            />
-                                            <ToggleControl
-                                                label={__('Mobile', 'advanced-gutenberg')}
-                                                checked={currentControlKey(advgbBlockControls, 'device_type', 'devices').includes('mobile')}
-                                                onChange={() => {
-                                                    const devices = currentControlKey(advgbBlockControls, 'device_type', 'devices');
-                                                    const newDevices = devices.includes('mobile')
-                                                        ? devices.filter(d => d !== 'mobile')
-                                                        : [...devices, 'mobile'];
-                                                    this.changeControlKey('device_type', 'devices', newDevices);
-                                                }}
-                                            />
-                                        </Fragment>
-                                    )}
-                                </Fragment>
-                            )}
 
                             {isControlEnabled(advgb_block_controls_vars.controls.device_width) && (
                                 <Fragment>
@@ -1411,6 +1361,60 @@ import {
                                     )}
                                 </Fragment>
                             )}
+
+                            {isControlEnabled(advgb_block_controls_vars.controls.device_type) && (
+                                <Fragment>
+                                    <ToggleControl
+                                        label={__('Device Type', 'advanced-gutenberg')}
+                                        help={currentControlKey(advgbBlockControls, 'device_type', 'enabled')
+                                            ? __('Choose which devices this block should be visible on.', 'advanced-gutenberg')
+                                            : ''
+                                        }
+                                        checked={currentControlKey(advgbBlockControls, 'device_type', 'enabled')}
+                                        onChange={() => this.changeControlKey('device_type', 'enabled')}
+                                    />
+                                    {currentControlKey(advgbBlockControls, 'device_type', 'enabled') && (
+                                        <Fragment>
+                                            <div style={{ paddingLeft: '17%' }}>
+                                                <ToggleControl
+                                                    label={__('Desktop', 'advanced-gutenberg')}
+                                                    checked={currentControlKey(advgbBlockControls, 'device_type', 'devices').includes('desktop')}
+                                                    onChange={() => {
+                                                        const devices = currentControlKey(advgbBlockControls, 'device_type', 'devices');
+                                                        const newDevices = devices.includes('desktop')
+                                                            ? devices.filter(d => d !== 'desktop')
+                                                            : [...devices, 'desktop'];
+                                                        this.changeControlKey('device_type', 'devices', newDevices);
+                                                    }}
+                                                />
+                                                <ToggleControl
+                                                    label={__('Tablet', 'advanced-gutenberg')}
+                                                    checked={currentControlKey(advgbBlockControls, 'device_type', 'devices').includes('tablet')}
+                                                    onChange={() => {
+                                                        const devices = currentControlKey(advgbBlockControls, 'device_type', 'devices');
+                                                        const newDevices = devices.includes('tablet')
+                                                            ? devices.filter(d => d !== 'tablet')
+                                                            : [...devices, 'tablet'];
+                                                        this.changeControlKey('device_type', 'devices', newDevices);
+                                                    }}
+                                                />
+                                                <ToggleControl
+                                                    label={__('Mobile', 'advanced-gutenberg')}
+                                                    checked={currentControlKey(advgbBlockControls, 'device_type', 'devices').includes('mobile')}
+                                                    onChange={() => {
+                                                        const devices = currentControlKey(advgbBlockControls, 'device_type', 'devices');
+                                                        const newDevices = devices.includes('mobile')
+                                                            ? devices.filter(d => d !== 'mobile')
+                                                            : [...devices, 'mobile'];
+                                                        this.changeControlKey('device_type', 'devices', newDevices);
+                                                    }}
+                                                />
+                                            </div>
+                                        </Fragment>
+                                    )}
+                                </Fragment>
+                            )}
+
                             {!this.isPost() && ( // Disabled in post edit
                                 <Fragment>
                                     {isControlEnabled(advgb_block_controls_vars.controls.archive) && (
