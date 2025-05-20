@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "matomo/device-detector",
-            "version": "6.4.5",
-            "version_normalized": "6.4.5.0",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matomo-org/device-detector.git",
-                "reference": "270bbc41f80994e80805ac377b67324eba53c412"
+                "reference": "531f49182f0bfed32edfc6c3cd241d3239a8ccf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matomo-org/device-detector/zipball/270bbc41f80994e80805ac377b67324eba53c412",
-                "reference": "270bbc41f80994e80805ac377b67324eba53c412",
+                "url": "https://api.github.com/repos/matomo-org/device-detector/zipball/531f49182f0bfed32edfc6c3cd241d3239a8ccf7",
+                "reference": "531f49182f0bfed32edfc6c3cd241d3239a8ccf7",
                 "shasum": ""
             },
             "require": {
@@ -36,7 +36,8 @@
                 "doctrine/cache": "Can directly be used for caching purpose",
                 "ext-yaml": "Necessary for using the Pecl YAML parser"
             },
-            "time": "2025-02-26T17:37:32+00:00",
+            "time": "2025-05-16T21:47:17+00:00",
+            "default-branch": true,
             "type": "library",
             "installation-source": "dist",
             "autoload": {
