@@ -71,7 +71,7 @@ if ( ! defined( 'ADVANCED_GUTENBERG_LOADED' ) ) {
 	define( 'ADVANCED_GUTENBERG_LOADED', true );
 
 	if ( ! defined( 'ADVANCED_GUTENBERG_VERSION' ) ) {
-		define( 'ADVANCED_GUTENBERG_VERSION', '3.3.0' );
+		define( 'ADVANCED_GUTENBERG_VERSION', '3.3.1-beta' );
 	}
 
 	if ( ! defined( 'ADVANCED_GUTENBERG_PLUGIN' ) ) {
