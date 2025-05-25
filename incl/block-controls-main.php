@@ -971,19 +971,17 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
 			 * as result of javascript method wp.blocks.getBlockTypes()
 			 * e.g. blocks registered only via PHP
 			 */
-			if (Utilities::settingIsEnabled('block_extend')) {
-				$advgb_blocks_list = get_option('advgb_blocks_list');
-				if ($advgb_blocks_list && is_array($advgb_blocks_list)) {
-					$saved_blocks = $advgb_blocks_list;
-				} else {
-					$saved_blocks = [];
-				}
-				wp_localize_script(
-					'advgb_main_js',
-					'advgb_blocks_list',
-					$saved_blocks
-				);
+			$advgb_blocks_list = get_option('advgb_blocks_list');
+			if ($advgb_blocks_list && is_array($advgb_blocks_list)) {
+				$saved_blocks = $advgb_blocks_list;
+			} else {
+				$saved_blocks = [];
 			}
+			wp_localize_script(
+				'advgb_main_js',
+				'advgb_blocks_list',
+				$saved_blocks
+			);
 
 			// Active and inactive blocks
 			$block_controls = get_option('advgb_block_controls');

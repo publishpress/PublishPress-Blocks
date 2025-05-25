@@ -649,7 +649,7 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 			$pp_series_slug       = isset( $pp_series_options['series_taxonomy_slug'] ) && ! empty( $pp_series_options['series_taxonomy_slug'] ) ? $pp_series_options['series_taxonomy_slug'] : 'series';
 			$pp_series_post_types = isset( $pp_series_options['post_types_for_series'] ) && ! empty( $pp_series_options['post_types_for_series'] ) ? $pp_series_options['post_types_for_series'] : [ 'post' ];
 			$block_controls       = Utilities::settingIsEnabled( 'block_controls' ) ? 1 : 0;
-			$block_extend         = Utilities::settingIsEnabled( 'block_extend' ) ? 1 : 0;
+			$block_extend         = 1;
 			$timezone             = function_exists( 'wp_timezone_string' ) ? wp_timezone_string() : 'UTC';
 			$timezones            = [];
 			$reusable_blocks      = Utilities::settingIsEnabled( 'reusable_blocks' ) ? 1 : 0;
@@ -1394,7 +1394,6 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
 				'block_controls',
 				'enable_block_access',
 				'enable_block_usage',
-				'block_extend',
 				'enable_custom_styles',
 				'enable_advgb_blocks',
 				'reusable_blocks'
@@ -3243,19 +3242,17 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
              * e.g. blocks registered only via PHP
              */
 			$saved_blocks = [];
-			if ( Utilities::settingIsEnabled( 'block_extend' ) ) {
-				$advgb_blocks_list = get_option( 'advgb_blocks_list' );
-				if ( $advgb_blocks_list && is_array( $advgb_blocks_list ) ) {
-					$saved_blocks = $advgb_blocks_list;
-				} else {
-					$saved_blocks = [];
-				}
-				wp_localize_script(
-					'advgb_main_js',
-					'advgb_blocks_list',
-					$saved_blocks
-				);
+			$advgb_blocks_list = get_option( 'advgb_blocks_list' );
+			if ( $advgb_blocks_list && is_array( $advgb_blocks_list ) ) {
+				$saved_blocks = $advgb_blocks_list;
+			} else {
+				$saved_blocks = [];
 			}
+			wp_localize_script(
+				'advgb_main_js',
+				'advgb_blocks_list',
+				$saved_blocks
+			);
 
 			$saved_blocks   = array_merge(
 				$saved_blocks,
@@ -3385,19 +3382,17 @@ if ( ! class_exists( 'AdvancedGutenbergMain' ) ) {
              * as result of javascript method wp.blocks.getBlockTypes()
              * e.g. blocks registered only via PHP
              */
-			if ( Utilities::settingIsEnabled( 'block_extend' ) ) {
-				$advgb_blocks_list = get_option( 'advgb_blocks_list' );
-				if ( $advgb_blocks_list && is_array( $advgb_blocks_list ) ) {
-					$saved_blocks = $advgb_blocks_list;
-				} else {
-					$saved_blocks = [];
-				}
-				wp_localize_script(
-					'advgb_main_js',
-					'advgb_blocks_list',
-					$saved_blocks
-				);
+			$advgb_blocks_list = get_option( 'advgb_blocks_list' );
+			if ( $advgb_blocks_list && is_array( $advgb_blocks_list ) ) {
+				$saved_blocks = $advgb_blocks_list;
+			} else {
+				$saved_blocks = [];
 			}
+			wp_localize_script(
+				'advgb_main_js',
+				'advgb_blocks_list',
+				$saved_blocks
+			);
 
 			// Current role
 			$current_user_role = $this->advgbBlocksFeatureCUserRole();

@@ -73,20 +73,6 @@ defined( 'ABSPATH' ) || die;
                             'access' => true
                         ],
                         [
-                            'name' => 'block_extend',
-                            'title' => sprintf(
-                                __( 'Extend Supported Blocks %sBeta%s', 'advanced-gutenberg' ),
-                                '<span class="advgb-label-beta">',
-                                '</span>'
-                            ),
-                            'description' => __(
-                                'If some blocks are not listed in Block Permissions, try enabling this feature.',
-                                'advanced-gutenberg'
-                            ),
-                            'default' => 0,
-                            'access' => true
-                        ],
-                        [
                             'name' => 'enable_core_blocks_features',
                             'title' => __( 'Core Blocks Features', 'advanced-gutenberg' ),
                             'description' => __(
