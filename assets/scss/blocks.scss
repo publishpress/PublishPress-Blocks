@@ -970,7 +970,9 @@ ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active {
 }
 
 ul.advgb-tabs-panel li.advgb-tab.ui-tabs-active a,
-ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active a {
+ul.advgb-tabs-panel li.advgb-tab.ui-tabs-active button.advgb-tab-button,
+ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active a,
+ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active button.advgb-tab-button {
   color: inherit !important;
 }
 
