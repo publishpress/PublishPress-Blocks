@@ -7,7 +7,7 @@ $setting_last_saved_role = $this->getOptionSetting('advgb_settings', 'setting_la
 ?>
 <form method="post">
      <?php
-     wp_nonce_field( 'advgb_settings_block_features_nonce', 'advgb_settings_block_features_nonce_field' ) ?>
+        wp_nonce_field('advgb_settings_block_features_nonce', 'advgb_settings_block_features_nonce_field') ?>
     <table class="form-table">
         <tbody>
             <tr>
@@ -124,7 +124,7 @@ $setting_last_saved_role = $this->getOptionSetting('advgb_settings', 'setting_la
                 name="save_settings_block_features"
         >
                <?php
-               esc_html_e( 'Save Image Settings', 'advanced-gutenberg' ) ?>
+                esc_html_e('Save Image Settings', 'advanced-gutenberg') ?>
         </button>
     </div>
 </form>
