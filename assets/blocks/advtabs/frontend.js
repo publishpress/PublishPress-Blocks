@@ -123,5 +123,7 @@ jQuery(document).ready(function ($) {
         tabsWrapper.find('.advgb-tab-body-header').removeClass('header-active');
         $header.addClass('header-active');
         tabs.eq(idx).find('a, button').first().trigger('click');
+
+        $header[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 });
