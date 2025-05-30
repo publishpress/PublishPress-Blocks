@@ -2347,6 +2347,15 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     margin: 0;
 }
 
+
+.pp-block-table-control-settings .components-range-control .components-range-control__slider::-webkit-slider-thumb {
+    cursor: grab;
+}
+
+.pp-block-table-control-settings .components-range-control .components-range-control__slider::-moz-range-thumb {
+    cursor: grab;
+}
+
 /*Responsive for Columns*/
 @media screen and (min-width: 1088px) {
     .advgb-column.advgb-is-default-desktop {
