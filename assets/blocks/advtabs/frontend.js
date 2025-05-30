@@ -30,19 +30,97 @@ jQuery(document).ready(function ($) {
     $(".advgb-tab a:not(.ui-tabs-anchor)").unbind("click");
     $(".advgb-tabs-block").tabs();
 
+    function activateTab($wrapper, index) {
+        var tabs = $wrapper.find('.advgb-tab');
+        var bodyContainers = $wrapper.find('.advgb-tab-body-container');
+        var bodyHeaders = $wrapper.find('.advgb-tab-body-header');
+
+        tabs.removeClass('advgb-tab-active ui-tabs-active ui-state-active');
+        bodyContainers.find('.advgb-tab-body').hide();
+        bodyHeaders.removeClass('header-active');
+
+        tabs.eq(index).addClass('advgb-tab-active ui-tabs-active ui-state-active');
+        bodyContainers.eq(index).find('.advgb-tab-body').show();
+        bodyHeaders.eq(index).addClass('header-active');
+
+        var $targetPanel = bodyContainers.eq(index);
+        if ($targetPanel.find('.advgb-images-slider-block').length && $.fn.slick) {
+            $targetPanel.find('.advgb-images-slider-block > .slick-initialized').slick(
+                'slickSetOption',
+                'refresh',
+                true,
+                true
+            );
+        }
+    }
+
+    function handleAnchorNavigation() {
+        var hash = window.location.hash;
+        if (!hash) return;
+
+        var anchor = hash.substring(1);
+        if (!anchor) return;
+
+        $('.advgb-tabs-wrapper').each(function() {
+            var $wrapper = $(this);
+
+            // Check both custom anchor classes and IDs
+            var $matches = $wrapper.find('.advgb-tab-class-' + anchor + ', [id="' + anchor + '"]');
+
+            if ($matches.length) {
+                var $target = $matches.first();
+                var index;
+                var $scrollTarget = null;
+
+                if ($target.is('.advgb-tab, .advgb-tab a, .advgb-tab button')) {
+                    // Handle tab buttons
+                    index = $wrapper.find('.advgb-tab').index($target.closest('.advgb-tab'));
+                    $scrollTarget = $target;
+                }
+                else if ($target.is('.advgb-tab-body-header, [role="tabpanel"]')) {
+                    // Handle tab body headers (mobile)
+                    index = $wrapper.find('.advgb-tab-body-container').index($target.closest('.advgb-tab-body-container'));
+
+                    // If this is a mobile header and it's hidden (on desktop view)
+                    if ($target.is(':hidden')) {
+                        // Find the corresponding desktop tab button using aria-controls
+                        var panelId = $target.attr('id') || $target.closest('[id]').attr('id');
+                        $scrollTarget = $wrapper.find('[aria-controls="' + panelId + '"]');
+                    } else {
+                        $scrollTarget = $target;
+                    }
+                }
+
+                if (typeof index !== 'undefined') {
+                    activateTab($wrapper, index);
+
+                    // Only scroll if we have a valid target and it's visible
+                    if ($scrollTarget && $scrollTarget.length && $scrollTarget.is(':visible')) {
+                        $scrollTarget[0].scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                    return false;
+                }
+            }
+        });
+    }
+
+    // Tab initialization
     $('.advgb-tabs-wrapper').each(function () {
         var $wrapper = $(this);
         var activeTab = parseInt($wrapper.data('tab-active')) || 0;
         var tabs = $wrapper.find('.advgb-tab');
-        var tabControls = $wrapper.find('.advgb-tab a, .advgb-tab button');
         var bodyHeaders = $wrapper.find('.advgb-tab-body-header');
         var bodyContainers = $wrapper.find('.advgb-tab-body-container');
 
-        // Get styles from first incative tab
-        var inactiveTab = $(this).find('li.advgb-tab:not(".advgb-tab-active")');
-        if($(this).prop('id') !== '') {
-            inactiveTab = $(this).find('li.advgb-tab:not(".ui-state-active")');
+        // Get styles from inactive tab
+        var inactiveTab = $wrapper.find('li.advgb-tab:not(".advgb-tab-active")');
+        if($wrapper.prop('id') !== '') {
+            inactiveTab = $wrapper.find('li.advgb-tab:not(".ui-state-active")');
         }
+
         var tabStyles = {
             bgColor: inactiveTab.css('background-color'),
             borderColor: inactiveTab.css('border-color'),
@@ -52,56 +130,24 @@ jQuery(document).ready(function ($) {
             textColor: inactiveTab.find('a, button').css('color')
         };
 
-        // Unified click handler for both <a> and <button> tabs
+        // Tab click handler
         tabs.on('click', 'a, button', function(event) {
             event.preventDefault();
-            var $control = $(this);
-            var $currentTab = $control.closest('.advgb-tab');
-            var panelId = $control.attr('aria-controls') || $control.attr('href').replace('#', '');
-
-            tabs.removeClass('advgb-tab-active');
-            $currentTab.addClass('advgb-tab-active');
-            bodyContainers.find('.advgb-tab-body').hide();
-
-            // Find target panel (supports multiple formats for legacy purpose)
-            var $targetPanel = $wrapper.find(
-                '#' + panelId + ', ' +
-                '[aria-labelledby="' + panelId + '"], ' +
-                '[id="' + panelId + '"]'
-            ).closest('.advgb-tab-body-container');
-
-            if ($targetPanel.length) {
-                $targetPanel.find('.advgb-tab-body').show();
-
-                // IMAGE SLIDER REFRESH
-                if ($targetPanel.find('.advgb-images-slider-block').length && $.fn.slick) {
-                    $targetPanel.find('.advgb-images-slider-block > .slick-initialized').slick(
-                        'slickSetOption',
-                        'refresh',
-                        true,
-                        true
-                    );
-                }
-            } else {
-                // Fallback to index-based activation
-                bodyContainers.eq(tabs.index($currentTab)).find('.advgb-tab-body').show();
-            }
-
-            // Update headers
-            bodyHeaders.removeClass('header-active');
-            bodyHeaders.eq(tabs.index($currentTab)).addClass('header-active');
+            var $currentTab = $(this).closest('.advgb-tab');
+            activateTab($wrapper, $wrapper.find('.advgb-tab').index($currentTab));
         });
 
-        // Initialize active tab
-        if (tabs.length > 0) {
-            var $initialTab = tabs.eq(activeTab);
-            var $initialControl = $initialTab.find('a, button').first();
+        // Header click handler (mobile)
+        bodyHeaders.on('click', function() {
+            var $header = $(this);
+            var index = bodyContainers.index($header.closest('.advgb-tab-body-container'));
+            activateTab($wrapper, index);
+            $header[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
 
-            if ($initialControl.length) {
-                $initialControl.trigger('click');
-            }
-
-            // Apply header styles
+        // Initialize
+        if (tabs.length) {
+            activateTab($wrapper, activeTab);
             bodyHeaders.css({
                 backgroundColor: tabStyles.bgColor,
                 color: tabStyles.textColor,
@@ -113,17 +159,7 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $('.advgb-tab-body-header').click(function() {
-        var $header = $(this);
-        var bodyContainer = $header.closest('.advgb-tab-body-container');
-        var tabsWrapper = $header.closest('.advgb-tabs-wrapper');
-        var tabs = tabsWrapper.find('.advgb-tab');
-        var idx = tabsWrapper.find('.advgb-tab-body-container').index(bodyContainer);
-
-        tabsWrapper.find('.advgb-tab-body-header').removeClass('header-active');
-        $header.addClass('header-active');
-        tabs.eq(idx).find('a, button').first().trigger('click');
-
-        $header[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+    // Initial anchor handling
+    handleAnchorNavigation();
+    $(window).on('hashchange', handleAnchorNavigation);
 });
