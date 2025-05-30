@@ -1224,7 +1224,7 @@
                             </ToolbarGroup>
                         </BlockControls>
                         <InspectorControls>
-                            <PanelBody title={__('Table Settings', 'advanced-gutenberg')}>
+                            <PanelBody className="pp-block-table-control-settings" title={__('Table Settings', 'advanced-gutenberg')}>
                                 <RangeControl
                                     label={__('Max width (px)', 'advanced-gutenberg')}
                                     help={__('Set this to 0 to make max-width is 100%', 'advanced-gutenberg')}
@@ -1254,7 +1254,7 @@
                                     onChange={() => setAttributes({tableCollapsed: !tableCollapsed})}
                                 />
                             </PanelBody>
-                            <PanelBody title={__('Cell Settings', 'advanced-gutenberg')}>
+                            <PanelBody className="pp-block-table-control-settings" title={__('Cell Settings', 'advanced-gutenberg')}>
                                 <PanelColorSettings
                                     title={__('Color Settings', 'advanced-gutenberg')}
                                     colorSettings={[
@@ -1270,7 +1270,7 @@
                                         },
                                     ]}
                                 />
-                                <PanelBody title={__('Border', 'advanced-gutenberg')} initialOpen={false}>
+                                <PanelBody className="pp-block-table-control-settings" title={__('Border', 'advanced-gutenberg')} initialOpen={false}>
                                     <div className="advgb-border-item-wrapper">
                                         {BORDER_SELECT.map((item, index) => (
                                             <div className="advgb-border-item" key={index}>
@@ -1309,7 +1309,7 @@
                                         ]}
                                     />
                                 </PanelBody>
-                                <PanelBody title={__('Padding', 'advanced-gutenberg')} initialOpen={false}>
+                                <PanelBody className="pp-block-table-control-settings" title={__('Padding', 'advanced-gutenberg')} initialOpen={false}>
                                     <RangeControl
                                         label={__('Padding Top', 'advanced-gutenberg')}
                                         value={this.getCellStyles('paddingTop') || 0}
@@ -1339,7 +1339,7 @@
                                         onChange={(value) => this.updateCellsStyles({paddingLeft: value})}
                                     />
                                 </PanelBody>
-                                <PanelBody title={__('Text Alignment', 'advanced-gutenberg')} initialOpen={false}>
+                                <PanelBody className="pp-block-table-control-settings" title={__('Text Alignment', 'advanced-gutenberg')} initialOpen={false}>
                                     <BaseControl help={__('Horizontal Align', 'advanced-gutenberg')}>
                                         <ToolbarGroup
                                             controls={HORZ_ALIGNMENT_CONTROLS.map((control) => {
