@@ -92,10 +92,6 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                     block_acess_restricted = false;
                 }
 
-                if (!block_acess_restricted) {
-                    // TODO: Write description
-                    return;
-                }
                 let list_blocks = [];
                 let granted_blocks = [];
                 let missing_block = false;
@@ -159,14 +155,16 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                         console.log('Reloading editor by PublishPress Blocks plugin');
                     }
 
-                    /* It seems the best approach to update editor settings, however is overriden
-                     * https://github.com/WordPress/gutenberg/issues/15993#issuecomment-1487007071
-                     * We're adding 3 seconds delay to bypass the override */
-                    setTimeout( function() {
-                        wp.data.dispatch('core/editor').updateEditorSettings({
-                            allowedBlockTypes: granted_blocks
-                        });
-                    }, 3000 );
+                    if (block_acess_restricted) {
+                        /* It seems the best approach to update editor settings, however is overriden
+                        * https://github.com/WordPress/gutenberg/issues/15993#issuecomment-1487007071
+                        * We're adding 3 seconds delay to bypass the override */
+                        setTimeout( function() {
+                            wp.data.dispatch('core/editor').updateEditorSettings({
+                                allowedBlockTypes: granted_blocks
+                            });
+                        }, 3000 );
+                    }
 
                     var list_categories = wp.blocks.getCategories();
 
