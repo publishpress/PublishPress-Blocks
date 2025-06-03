@@ -970,7 +970,9 @@ ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active {
 }
 
 ul.advgb-tabs-panel li.advgb-tab.ui-tabs-active a,
-ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active a {
+ul.advgb-tabs-panel li.advgb-tab.ui-tabs-active button.advgb-tab-button,
+ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active a,
+ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active button.advgb-tab-button {
   color: inherit !important;
 }
 
@@ -2343,6 +2345,15 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 .components-range-control.advgb-padding-margin-control .components-base-control__label {
     width: 30px;
     margin: 0;
+}
+
+
+.pp-block-table-control-settings .components-range-control .components-range-control__slider::-webkit-slider-thumb {
+    cursor: grab;
+}
+
+.pp-block-table-control-settings .components-range-control .components-range-control__slider::-moz-range-thumb {
+    cursor: grab;
 }
 
 /*Responsive for Columns*/

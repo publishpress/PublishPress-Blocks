@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, olatechpro
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks, accordion block, gallery block, slider block, tabs block, maps block, block controls
 Requires at least: 5.5
 Tested up to: 6.8
-Stable tag: 3.3.0
+Stable tag: 3.3.1
 Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -275,6 +275,16 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 16. Block Styles: You create custom CSS styles for blocks and make them available to end users.
 
 == Changelog ==
+
+= 3.3.1 - 03 June 2025 =
+  * Fixed: Tab Block Active tab text color not working, #1504
+  * Fixed: Tab Blocks Anchor not working, #1311
+  * Fixed: Tab Block mobile tabs not scrolling to view after click, #1511
+  * Fixed: Table Block Padding Slider Not Working, #1419
+  * Fixed: Blocks using metadata.name on their registration trigger error on PublishPress-Blocks, #1366
+  * Added: Add Loco.xml file for Pro version, #1506
+  * Update: Remove "Enable Extend Supported Blocks" from dashboard and enable feature by default, #1489
+  * Fixed: PHP Warning, #1503
 
 = 3.3.0 - 20 May 2025 =
   * Fixed: PublishPress Block (Tabs) not showing on mobile display, #1483

@@ -22,7 +22,7 @@
         'matomo/device-detector' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '531f49182f0bfed32edfc6c3cd241d3239a8ccf7',
+            'reference' => '6c42e0df626e3f182a46c4486ec494a083add1da',
             'type' => 'library',
             'install_path' => __DIR__ . '/../matomo/device-detector',
             'aliases' => array(
