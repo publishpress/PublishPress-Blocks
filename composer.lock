@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72e9667e7e891b18ec3985e409d715e3",
+    "content-hash": "b7eda9ec022ae933ff12a40d35d17f17",
     "packages": [],
     "packages-dev": [
         {
@@ -397,6 +397,53 @@
                 "source": "https://github.com/mck89/peast/tree/v1.17.0"
             },
             "time": "2025-03-07T19:44:14+00:00"
+        },
+        {
+            "name": "publishpress/publishpress-phpcs-standards",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/publishpress/publishpress-phpcs-standards.git",
+                "reference": "86201de97ad34090c462e2b29487abb907b80fa9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/publishpress/publishpress-phpcs-standards/zipball/86201de97ad34090c462e2b29487abb907b80fa9",
+                "reference": "86201de97ad34090c462e2b29487abb907b80fa9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.20"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "*",
+                "friendsofphp/php-cs-fixer": "^3.4",
+                "overtrue/phplint": "^2.1",
+                "phpcompatibility/php-compatibility": "*",
+                "phpmd/phpmd": "^2.8",
+                "sebastian/phpcpd": "^6.0",
+                "squizlabs/php_codesniffer": "^3.5",
+                "vimeo/psalm": "^4.17"
+            },
+            "default-branch": true,
+            "type": "phpcodesniffer-standard",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "PublishPress",
+                    "email": "help@publishpress.com",
+                    "homepage": "https://publishpress.com",
+                    "role": "Developer"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/publishpress/publishpress-phpcs-standards/issues",
+                "source": "https://github.com/publishpress/publishpress-phpcs-standards/tree/main"
+            },
+            "time": "2024-03-18T15:09:57+00:00"
         },
         {
             "name": "sirbrillig/phpcs-variable-analysis",
@@ -958,7 +1005,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "publishpress/publishpress-phpcs-standards": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
