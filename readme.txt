@@ -276,7 +276,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.3.1 - 2 June 2025 =
+= 3.3.1 - 03 June 2025 =
   * Fixed: Tab Block Active tab text color not working, #1504
   * Fixed: Tab Blocks Anchor not working, #1311
   * Fixed: Tab Block mobile tabs not scrolling to view after click, #1511
