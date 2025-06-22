@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "24d3a1f851f1ac544b328e00793e83e1",
+    "content-hash": "af424d2c899e87878362dbeff1b51455",
     "packages": [
         {
             "name": "matomo/device-detector",
-            "version": "dev-master",
+            "version": "6.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matomo-org/device-detector.git",
-                "reference": "6c42e0df626e3f182a46c4486ec494a083add1da"
+                "reference": "6f07f615199851548db47a900815d2ea2cdcde08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matomo-org/device-detector/zipball/6c42e0df626e3f182a46c4486ec494a083add1da",
-                "reference": "6c42e0df626e3f182a46c4486ec494a083add1da",
+                "url": "https://api.github.com/repos/matomo-org/device-detector/zipball/6f07f615199851548db47a900815d2ea2cdcde08",
+                "reference": "6f07f615199851548db47a900815d2ea2cdcde08",
                 "shasum": ""
             },
             "require": {
@@ -41,7 +41,6 @@
                 "doctrine/cache": "Can directly be used for caching purpose",
                 "ext-yaml": "Necessary for using the Pecl YAML parser"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -75,7 +74,7 @@
                 "source": "https://github.com/matomo-org/matomo",
                 "wiki": "https://dev.matomo.org/"
             },
-            "time": "2025-06-03T04:35:31+00:00"
+            "time": "2025-06-10T10:00:59+00:00"
         },
         {
             "name": "mustangostang/spyc",
@@ -545,9 +544,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "matomo/device-detector": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
