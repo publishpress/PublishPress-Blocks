@@ -128,7 +128,10 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
                 tabSelected: 'desktop',
                 updatePostSuggestions: true, // Backward compatibility 2.13.2 and lower
                 authorList: [],
-                isBlockIdSet: false // @since 3.2.3
+                isBlockIdSet: false, // @since 3.2.3
+                //@since 3.3.2
+                includePostsMethod: 'search', // 'search' or 'ids'
+                postIdsInputValue: ''
             }
 
             this.selectCategories = this.selectCategories.bind(this);
@@ -138,7 +141,7 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
             this.selectPostByTitle = this.selectPostByTitle.bind(this); // Backward compatibility 2.13.1 and lower
             this.updatePostType = this.updatePostType.bind(this);
             this.getPostIds = this.getPostIds.bind(this);
-            this.getPostTitles = this.getPostTitles.bind(this); 
+            this.getPostTitles = this.getPostTitles.bind(this);
         }
 
         componentWillMount() {
@@ -758,18 +761,49 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
                     { this.isPro() && (
                         <Fragment>
                             <PanelBody title={ __( 'Advanced Filters', 'advanced-gutenberg' ) } className="advgb-pro-icon">
-                                <FormTokenField
-                                    multiple
-                                    suggestions={ postSuggestionsInclude }
-                                    onInputChange={ ( value ) => {
-                                        setAttributes( { searchString: value } )
-                                    } }
-                                    maxSuggestions={ 10 }
-                                    value={ this.getPostTitles( includePosts, mergedPosts ) }
-                                    label={ __( 'Display these posts only', 'advanced-gutenberg' ) }
-                                    placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
-                                    onChange={ ( includePosts ) => this.getPostIds( includePosts, mergedPosts, 'include' ) }
-                                />
+                                <label className="components-base-control__label">
+                                    { __( 'Display these posts only', 'advanced-gutenberg' ) }
+                                </label>
+
+                                <div className="advgb-include-posts-tabs">
+                                    <div className="advgb-tab-buttons">
+                                        <button
+                                            className={`advgb-tab-button ${this.state.includePostsMethod === 'search' ? 'active' : ''}`}
+                                            onClick={() => this.setState({ includePostsMethod: 'search' })}
+                                        >
+                                            {__('Search Posts', 'advanced-gutenberg')}
+                                        </button>
+                                        <button
+                                            className={`advgb-tab-button ${this.state.includePostsMethod === 'ids' ? 'active' : ''}`}
+                                            onClick={() => this.setState({ includePostsMethod: 'ids' })}
+                                        >
+                                            {__('Enter Post IDs', 'advanced-gutenberg')}
+                                        </button>
+                                    </div>
+
+                                    <div className="advgb-tab-content">
+                                        {this.state.includePostsMethod === 'search' ? (
+                                            <FormTokenField
+                                                multiple
+                                                suggestions={ postSuggestionsInclude }
+                                                onInputChange={ ( value ) => {
+                                                    setAttributes( { searchString: value } )
+                                                } }
+                                                maxSuggestions={ 10 }
+                                                value={ this.getPostTitles( includePosts, mergedPosts ) }
+                                                placeholder={ __( 'Search by title', 'advanced-gutenberg' ) }
+                                                onChange={ ( includePosts ) => this.getPostIds( includePosts, mergedPosts, 'include' ) }
+                                            />
+                                        ) : (
+                                            <TextareaControl
+                                                help={ __( 'Enter post IDs separated by commas (e.g., 123, 456, 789)', 'advanced-gutenberg' ) }
+                                                value={ this.state.postIdsInputValue || (includePosts ? includePosts.join(', ') : '') }
+                                                onChange={ ( value ) => this.handlePostIdsInput( value ) }
+                                                placeholder={ __( '123, 456, 789', 'advanced-gutenberg' ) }
+                                            />
+                                        )}
+                                    </div>
+                                </div>
                             </PanelBody>
                         </Fragment>
                     ) }
@@ -1564,6 +1598,32 @@ import { AdvColorControl } from "../0-adv-components/components.jsx";
             if( 'include' === type ) {
                 this.props.setAttributes( { excludePosts: [], showCustomTaxList: [], taxonomies: {}, categories: [], tags: [], author: '', onlyFromCurrentUser: false, offset: 0 } );
             }
+        }
+
+        handlePostIdsInput( value ) {
+            this.setState({ postIdsInputValue: value });
+
+            if ( !value || value.trim() === '' ) {
+                this.props.setAttributes( { includePosts: [] } );
+                return;
+            }
+
+            const ids = value.split(',')
+                .map( id => parseInt( id.trim() ) )
+                .filter( id => !isNaN( id ) && id > 0 );
+
+            this.props.setAttributes( { includePosts: ids } );
+
+            this.props.setAttributes( {
+                excludePosts: [],
+                showCustomTaxList: [],
+                taxonomies: {},
+                categories: [],
+                tags: [],
+                author: '',
+                onlyFromCurrentUser: false,
+                offset: 0
+            } );
         }
 
         selectPostByTitle(tokens, type) {
