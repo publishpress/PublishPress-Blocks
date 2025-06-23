@@ -56,6 +56,52 @@
         )
     };
 
+    const HEADER_ICONS_OPENED = {
+        plus: (
+            <Fragment>
+                <path fill="none" d="M0,0h24v24H0V0z"/>
+                <path d="M19,13H5v-2h14V13z"/>
+            </Fragment>
+        ),
+        plusCircle: (
+            <Fragment>
+                <path fill="none" d="M0,0h24v24H0V0z"/>
+                <path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M17,13H7v-2h10V13z"/>
+            </Fragment>
+        ),
+        plusCircleOutline: (
+            <Fragment>
+                <path fill="none" d="M0,0h24v24H0V0z"/>
+                <path d="M7,11v2h10v-2H7z M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,20 c-4.41,0-8-3.59-8-8s3.59-8,8-8s8,3.59,8,8S16.41,20,12,20z"/>
+            </Fragment>
+        ),
+        plusBox: (
+            <Fragment>
+                <path fill="none" d="M0,0h24v24H0V0z"/>
+                <path d="M19,3H5C3.89,3,3,3.9,3,5v14c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,19H5V5h14V19z"/>
+                <polygon points="17,11 7,11 7,13 17,13"/>
+            </Fragment>
+        ),
+        unfold: (
+            <Fragment>
+                <path fill="none" d="M0,0h24v24H0V0z"/>
+                <path d="M7.41,18.59L8.83,20L12,16.83L15.17,20l1.41-1.41L12,14L7.41,18.59z M16.59,5.41L15.17,4L12,7.17L8.83,4L7.41,5.41L12,10L16.59,5.41z"/>
+            </Fragment>
+        ),
+        threeDots: (
+            <Fragment>
+                <path fill="none" d="M0,0h24v24H0V0z"/>
+                <path d="M6,10c-1.1,0-2,0.9-2,2s0.9,2,2,2s2-0.9,2-2S7.1,10,6,10z M18,10c-1.1,0-2,0.9-2,2s0.9,2,2,2s2-0.9,2-2S19.1,10,18,10z M12,10c-1.1,0-2,0.9-2,2s0.9,2,2,2s2-0.9,2-2S13.1,10,12,10z"/>
+            </Fragment>
+        ),
+        arrowDown: (
+            <Fragment>
+                <path opacity="0.87" fill="none" d="M24,24H0L0,0l24,0V24z"/>
+                <path d="M7.41,15.41L12,10.83l4.59,4.58L18,14l-6-6l-6,6L7.41,15.41z"/>
+            </Fragment>
+        )
+    };
+
     class AccordionItemEdit extends Component {
         constructor() {
             super( ...arguments );
@@ -139,12 +185,15 @@
                                 <div className="advgb-icon-items-wrapper">
                                     {Object.keys( HEADER_ICONS ).map( ( key, index ) => (
                                         <div className="advgb-icon-item" key={ index }>
-                                                <span className={ key === headerIcon ? 'active' : '' }
-                                                      onClick={ () => this.props.updateRootBlockAttrs( { headerIcon: key } ) }>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                                        { HEADER_ICONS[key] }
-                                                    </svg>
-                                                </span>
+                                            <span className={ key === headerIcon ? 'active' : '' }
+                                                onClick={ () => this.props.updateRootBlockAttrs( { headerIcon: key } ) }>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                    { HEADER_ICONS[key] }
+                                                </svg>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                    { HEADER_ICONS_OPENED[key] }
+                                                </svg>
+                                            </span>
                                         </div>
                                     ) ) }
                                 </div>
@@ -236,9 +285,12 @@
                                  borderRadius: borderRadius + 'px',
                              } }
                         >
-                        <span className="advgb-accordion-header-icon">
-                            <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <span className="advgb-accordion-header-icon accordion-state">
+                            <svg className="advgb-icon-closed" fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 { HEADER_ICONS[headerIcon] }
+                            </svg>
+                            <svg className="advgb-icon-opened" fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                { HEADER_ICONS_OPENED[headerIcon] }
                             </svg>
                         </span>
                             <RichText
@@ -304,7 +356,7 @@
             },
             headerIcon: {
                 type: 'string',
-                default: 'unfold',
+                default: 'plusCircle',
             },
             headerIconColor: {
                 type: 'string',
@@ -407,9 +459,12 @@
                              borderRadius: !!borderRadius ? borderRadius + 'px' : undefined,
                          } }
                     >
-                        <span className="advgb-accordion-header-icon">
-                            <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <span className="advgb-accordion-header-icon accordion-state">
+                            <svg className="advgb-icon-closed" fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 { HEADER_ICONS[headerIcon] }
+                            </svg>
+                            <svg className="advgb-icon-opened" fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                { HEADER_ICONS_OPENED[headerIcon] }
                             </svg>
                         </span>
                         <RichText.Content
@@ -436,6 +491,132 @@
             );
         },
         deprecated: [
+
+            {
+                attributes: {
+                    header: {
+                    type: 'string',
+                    default: __( 'Header text', 'advanced-gutenberg' ),
+                },
+                headerBgColor: {
+                    type: 'string',
+                    default: '#000',
+                },
+                headerTextColor: {
+                    type: 'string',
+                    default: '#eee',
+                },
+                headerIcon: {
+                    type: 'string',
+                    default: 'unfold',
+                },
+                headerIconColor: {
+                    type: 'string',
+                    default: '#fff',
+                },
+                bodyBgColor: {
+                    type: 'string',
+                },
+                bodyTextColor: {
+                    type: 'string',
+                },
+                borderStyle: {
+                    type: 'string',
+                    default: 'solid',
+                },
+                borderWidth: {
+                    type: 'number',
+                    default: 1,
+                },
+                borderColor: {
+                    type: 'string',
+                },
+                borderRadius: {
+                    type: 'number',
+                    default: 2,
+                },
+                marginBottom: {
+                    type: 'number',
+                    default: 15,
+                },
+                collapsedAll: {
+                    type: 'boolean',
+                    default: false,
+                },
+                headerTag: {
+                    type: 'string',
+                    default: 'h4',
+                },
+                changed: {
+                    type: 'boolean',
+                    default: false,
+                },
+                rootBlockId: {
+                    type: 'string',
+                    default: ''
+                }
+                },
+                save: function ( { attributes } ) {
+                    const {
+                        header,
+                        headerBgColor,
+                        headerTextColor,
+                        headerIcon,
+                        headerIconColor,
+                        bodyBgColor,
+                        bodyTextColor,
+                        borderStyle,
+                        borderWidth,
+                        borderColor,
+                        borderRadius,
+                        marginBottom,
+                        headerTag,
+                    } = attributes;
+
+                    return (
+                        <div className="advgb-accordion-item" style={ { marginBottom } }>
+                            <div className="advgb-accordion-header"
+                                style={ {
+                                    backgroundColor: headerBgColor,
+                                    color: headerTextColor,
+                                    borderStyle: borderStyle,
+                                    borderWidth: borderWidth + 'px',
+                                    borderColor: borderColor,
+                                    borderRadius: !!borderRadius ? borderRadius + 'px' : undefined,
+                                } }
+                            >
+                                <span className="advgb-accordion-header-icon">
+                                    <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        { HEADER_ICONS[headerIcon] }
+                                    </svg>
+                                </span>
+                                <RichText.Content
+                                    tagName={ headerTag }
+                                    className="advgb-accordion-header-title"
+                                    style={ { color: 'inherit' } }
+                                    value={ header }
+                                />
+                            </div>
+                            <div className="advgb-accordion-body"
+                                style={ {
+                                    backgroundColor: bodyBgColor,
+                                    color: bodyTextColor,
+                                    borderStyle: borderStyle + ' !important',
+                                    borderWidth: borderWidth + 'px !important',
+                                    borderColor: borderColor + ' !important',
+                                    borderTop: 'none !important',
+                                    borderRadius: !!borderRadius ? borderRadius + 'px !important' : undefined,
+                                } }
+                            >
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+                },
+                supports: {
+                    anchor: true,
+                },
+            },
             {
                 attributes: {
                     header: {
