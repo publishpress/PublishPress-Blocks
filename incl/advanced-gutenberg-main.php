@@ -180,6 +180,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 add_filter('admin_footer_text', [ $this, 'adminFooter' ]);
                 add_action('admin_enqueue_scripts', [ $this, 'adminMenuStyles' ]);
                 add_action('activated_plugin', [ $this, 'maybeNewBlocks' ], 9999, 2);
+                add_filter('plugin_row_meta', [$this, 'addPluginActionLinks'], 10, 2);
 
                 if ($wp_version >= 5.8) {
                     add_action('admin_enqueue_scripts', array( $this, 'addEditorAssetsWidgets' ), 9999);
@@ -5985,6 +5986,40 @@ if (! class_exists('AdvancedGutenbergMain')) {
             $style_html .= '}'; //end text style
 
             return $style_html;
+        }
+
+        public function addPluginActionLinks($links, $file) {
+            $plugin_files = [basename(ADVANCED_GUTENBERG_BASE_PATH) . '/advanced-gutenberg.php'];
+            $show_pro_banner = true;
+
+            if (defined('ADVANCED_GUTENBERG_BASE_PRO_PATH')) {
+                $plugin_files[] = basename(ADVANCED_GUTENBERG_BASE_PRO_PATH) . '/advanced-gutenberg-pro.php';
+                $show_pro_banner = false;
+            }
+
+            if (in_array($file, $plugin_files)) {
+                $links[] = sprintf(
+                    '<a href="%s">%s</a>',
+                    admin_url('admin.php?page=advgb_main'),
+                    __('Dashboard', 'advanced-gutenberg')
+                );
+
+                $links[] = sprintf(
+                    '<a href="%s">%s</a>',
+                    admin_url('admin.php?page=advgb_settings'),
+                    __('Settings', 'advanced-gutenberg')
+                );
+
+                if ($show_pro_banner) {
+                    $links[] = sprintf(
+                        '<a href="%s" target="_blank" class="pp-version-notice-upgrade-menu-item">%s</a>',
+                        admin_url('admin.php?page=advgb_settings'),
+                        __('Upgrade to Pro', 'advanced-gutenberg')
+                    );
+                }
+            }
+
+            return $links;
         }
     }
 }
