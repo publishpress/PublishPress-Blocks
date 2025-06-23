@@ -111,9 +111,17 @@
   }
 }
 
-.advgb-accordion-header[aria-expanded="true"] .advgb-accordion-header-icon {
+.advgb-accordion-header[aria-expanded="true"] .advgb-accordion-header-icon:not(.accordion-state),
+.advgb-accordion-header .advgb-accordion-header-icon.accordion-state svg {
     display: none;
 }
+
+.advgb-accordion-header[aria-expanded="false"] .advgb-accordion-header-icon.accordion-state svg.advgb-icon-closed,
+.advgb-accordion-header[aria-expanded="true"] .advgb-accordion-header-icon.accordion-state svg.advgb-icon-opened,
+#editor [data-type="advgb/accordions"] .advgb-accordion-header .advgb-accordion-header-icon.accordion-state svg.advgb-icon-opened {
+    display: initial;
+}
+
 .advgb-accordion-body,
 .advgb-accordion-wrapper .advgb-accordion-body.ui-widget-content {
     padding: 10px 10px 10px 15px;
