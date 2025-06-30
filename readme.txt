@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, olatechpro
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks, accordion block, gallery block, slider block, tabs block, maps block, block controls
 Requires at least: 5.5
 Tested up to: 6.8
-Stable tag: 3.3.1
+Stable tag: 3.3.2
 Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -275,6 +275,16 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 16. Block Styles: You create custom CSS styles for blocks and make them available to end users.
 
 == Changelog ==
+
+= 3.3.2 - 30 June 2025 =
+  * Update: Allow use of post IDs in the "Display these posts only" box in Content Display Block, #1502
+  * Update: Add "Dashboard", "Settings" and "Upgrade to Pro" links on Plugins screen, #1518
+  * Update: Icon for collapse in Accordion block, #1248
+  * Update: Set an “open state” and “close state” icon for Accordion Block, #129
+  * Fixed: PDF Embedder content not rendering inside Tabs Block, #1532
+  * Fixed: Implement proper validation for admin page tab parameter, #1523
+  * Update: Update jquery.colorbox.min.js, #1521
+  * Update: Upgrade device-detector to '^6.4'
 
 = 3.3.1 - 03 June 2025 =
   * Fixed: Tab Block Active tab text color not working, #1504

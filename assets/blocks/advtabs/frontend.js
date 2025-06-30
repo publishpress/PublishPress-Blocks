@@ -45,12 +45,18 @@ jQuery(document).ready(function ($) {
 
         var $targetPanel = bodyContainers.eq(index);
         if ($targetPanel.find('.advgb-images-slider-block').length && $.fn.slick) {
+            // refresh slick content
             $targetPanel.find('.advgb-images-slider-block > .slick-initialized').slick(
                 'slickSetOption',
                 'refresh',
                 true,
                 true
             );
+        }
+
+        if ($targetPanel.find('.pdfemb-viewer').length && $.fn.pdfEmbedder) {
+            // refresh pdf embedder content
+            $targetPanel.find('.pdfemb-viewer').pdfEmbedder(pdfemb_trans.cmap_url);
         }
     }
 

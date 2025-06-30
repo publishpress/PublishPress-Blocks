@@ -1,10 +1,14 @@
 <?php
 defined('ABSPATH') || die;
 
-// Check current tab parameter from URL. e.g. 'admin.php?page=lorem&tab=something'
-$current_tab = isset($_GET['tab']) && ! empty($_GET['tab'])
-                ? sanitize_text_field($_GET['tab'])
-                : 'general';
+$allowed_tabs = ['general', 'block-features', 'images', 'maps', 'forms', 'recaptcha', 'data', 'license'];
+$current_tab = 'general';
+if (isset($_GET['tab']) && !empty($_GET['tab'])) {
+    $requested_tab = sanitize_text_field($_GET['tab']);
+    if (in_array($requested_tab, $allowed_tabs, true)) {
+        $current_tab = $requested_tab;
+    }
+}
 ?>
 
 <div class="publishpress-admin pp-blocks-settings wrap">
