@@ -276,7 +276,7 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 
 == Changelog ==
 
-= 3.3.2 - 24 June 2025 =
+= 3.3.2 - 30 June 2025 =
   * Update: Allow use of post IDs in the "Display these posts only" box in Content Display Block, #1502
   * Update: Add "Dashboard", "Settings" and "Upgrade to Pro" links on Plugins screen, #1518
   * Update: Icon for collapse in Accordion block, #1248
