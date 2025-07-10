@@ -1840,11 +1840,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 );
 
                 // Register JS
-                $min = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true ? '' : '.min';
                 // @TODO - Check if we really need all the dependencies from 'advgb_main_js'
                 wp_register_script(
                     'advgb_main_js',
-                    ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/js/main' . $min . '.js',
+                    ADVANCED_GUTENBERG_PLUGIN_DIR_URL . 'assets/js/main.min.js',
                     array(
                         'jquery',
                         'wp-block-editor',
