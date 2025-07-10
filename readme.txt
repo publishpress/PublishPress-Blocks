@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, olatechpro
 Tags: gutenberg, gutenberg blocks, gutenberg block, block editor, blocks, accordion block, gallery block, slider block, tabs block, maps block, block controls
 Requires at least: 5.5
 Tested up to: 6.8
-Stable tag: 3.3.2
+Stable tag: 3.3.3
 Requires PHP: 7.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -275,6 +275,10 @@ Yes, we use the phrase "publishpress-advg-install" to share install links. You w
 16. Block Styles: You create custom CSS styles for blocks and make them available to end users.
 
 == Changelog ==
+
+= 3.3.3 - 10 July 2025 =
+  * Fixed: Block permission screen not loading, #1537
+  * Fixed: Pro Blocks not available inside editor if installed after free version installation, #1538
 
 = 3.3.2 - 30 June 2025 =
   * Update: Allow use of post IDs in the "Display these posts only" box in Content Display Block, #1502
