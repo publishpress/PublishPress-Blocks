@@ -31,12 +31,6 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
 
                 $show_block = true;
 
-                // Cache device type detection for performance
-                static $device_type = null;
-                if ($device_type === null) {
-                    $device_type = self::getDeviceType();
-                }
-
                 foreach ($controls as $key => $item) {
                     if (
                         isset($item['control'])
@@ -55,7 +49,7 @@ if (!class_exists('\\PublishPress\\Blocks\\Controls')) {
                             if (!self::checkPresetControls($block_content, $block, $item, $key)) {
                                 $show_block = false;
                             }
-                        } elseif (self::displayBlock($block, $item['control'], $key, $device_type) === false) {
+                        } elseif (self::displayBlock($block, $item['control'], $key) === false) {
                                 // Stop iteration; we reached a control that decides block shouln't be displayed
                                 $show_block = false;
                         }
