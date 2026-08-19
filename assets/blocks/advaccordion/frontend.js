@@ -83,13 +83,5 @@ jQuery(document).ready(function($){
         }
         restoreTabIndex();
         $wrapper.on('accordionactivate', restoreTabIndex);
-
-        // jQuery UI handles Enter; also support Space to activate
-        $headers.on('keydown', function(e) {
-            if (e.key === ' ') {
-                e.preventDefault();
-                $(this).trigger('click');
-            }
-        });
     });
 });
