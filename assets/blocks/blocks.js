@@ -2999,6 +2999,11 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       default: ''
     }
   };
+  var currentBlockAttrs = _objectSpread(_objectSpread({}, blockAttrs), {}, {
+    anchor: {
+      type: 'string'
+    }
+  });
   var deprecatedBlockAttrs = _objectSpread({}, blockAttrs);
   delete deprecatedBlockAttrs.expandAll;
   registerBlockType('advgb/accordions', {
@@ -3011,11 +3016,14 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     },
     category: 'advgb-category',
     keywords: [__('accordion', 'advanced-gutenberg'), __('advanced accordion', 'advanced-gutenberg'), __('list', 'advanced-gutenberg'), __('faq', 'advanced-gutenberg')],
-    attributes: blockAttrs,
+    attributes: currentBlockAttrs,
     example: {
       attributes: {
         isPreview: true
       }
+    },
+    supports: {
+      anchor: true
     },
     edit: compose(withDispatch(function (dispatch, _ref7, _ref8) {
       var clientId = _ref7.clientId;
@@ -3035,11 +3043,13 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
     }))(AccordionsEdit),
     save: function save(_ref9) {
       var attributes = _ref9.attributes;
-      var collapsedAll = attributes.collapsedAll,
+      var anchor = attributes.anchor,
+        collapsedAll = attributes.collapsedAll,
         expandAll = attributes.expandAll,
         id = attributes.id;
       var accordionsClassName = [id, 'advgb-accordion-wrapper'].filter(Boolean).join(' ');
       return /*#__PURE__*/React.createElement("div", {
+        id: anchor || undefined,
         className: accordionsClassName,
         "data-collapsed": collapsedAll ? collapsedAll : undefined,
         "data-expand-all": expandAll ? expandAll : undefined

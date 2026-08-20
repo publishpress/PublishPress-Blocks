@@ -1,8 +1,9 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-[3.7.5] - 19 August, 2026
+[3.7.5] - 20 August, 2026
 
+- Fixed: Accordion blocks not rendering their HTML anchor, #1856
 - Fixed: Updating to 3.7.4 Wipes className (Additional CSS Class(es)) on Existing Table Blocks, #1842
 - Fixed: Pressing Space on Accordion Header Opens and Immediately Closes It, #1840
 - Fixed: Block Controls: getDeviceType() runs on every request even when no device control is configured, #1850
