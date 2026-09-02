@@ -216,7 +216,10 @@ if ($filter_search) {
             <div class="tablenav top">
                 <div class="alignleft actions">
 
-                    <select name="post_type_filter">
+                    <label for="advgb-post-notes-post-type" class="screen-reader-text">
+                        <?php esc_html_e('Filter by post type', 'advanced-gutenberg') ?>
+                    </label>
+                    <select id="advgb-post-notes-post-type" name="post_type_filter">
                         <option value=""><?php esc_html_e('All post types', 'advanced-gutenberg') ?></option>
                         <?php foreach ($post_types as $pt) : ?>
                             <option value="<?php echo esc_attr($pt->name) ?>"
@@ -226,7 +229,10 @@ if ($filter_search) {
                         <?php endforeach ?>
                     </select>
 
-                    <select name="note_status">
+                    <label for="advgb-post-notes-status" class="screen-reader-text">
+                        <?php esc_html_e('Filter by note status', 'advanced-gutenberg') ?>
+                    </label>
+                    <select id="advgb-post-notes-status" name="note_status">
                         <option value=""><?php esc_html_e('All statuses', 'advanced-gutenberg') ?></option>
                         <option value="open" <?php selected($filter_status, 'open') ?>>
                             <?php esc_html_e('Open', 'advanced-gutenberg') ?>
@@ -236,7 +242,10 @@ if ($filter_search) {
                         </option>
                     </select>
 
-                    <input type="search"
+                    <label for="advgb-post-notes-search" class="screen-reader-text">
+                        <?php esc_html_e('Search by post title', 'advanced-gutenberg') ?>
+                    </label>
+                    <input id="advgb-post-notes-search" type="search"
                            name="s"
                            value="<?php echo esc_attr($filter_search) ?>"
                            placeholder="<?php esc_attr_e('Search by post title…', 'advanced-gutenberg') ?>"
