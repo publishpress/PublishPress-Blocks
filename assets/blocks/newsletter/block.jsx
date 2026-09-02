@@ -211,6 +211,7 @@
                                 <input type="text" disabled={ true }
                                        className="advgb-form-input"
                                        value={ emailLabel ? emailLabel : 'Email address' }
+                                       aria-label={ emailLabel ? emailLabel : 'Email address' }
                                        style={ {
                                            backgroundColor: bgColor,
                                            color: textColor,
@@ -241,6 +242,7 @@
                                     <input type="text" disabled={ true }
                                            className="advgb-form-input"
                                            value={ fnameLabel ? fnameLabel : __( 'First Name', 'advanced-gutenberg' ) }
+                                           aria-label={ fnameLabel ? fnameLabel : __( 'First Name', 'advanced-gutenberg' ) }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -254,6 +256,7 @@
                                     <input type="text" disabled={ true }
                                            className="advgb-form-input"
                                            value={ lnameLabel ? lnameLabel : __( 'Last Name', 'advanced-gutenberg' ) }
+                                           aria-label={ lnameLabel ? lnameLabel : __( 'Last Name', 'advanced-gutenberg' ) }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -267,6 +270,7 @@
                                     <input type="text" disabled={ true }
                                            className="advgb-form-input"
                                            value={ emailLabel ? emailLabel : 'Email address' }
+                                           aria-label={ emailLabel ? emailLabel : 'Email address' }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -405,6 +409,7 @@
                                 <input type="email"
                                        className="advgb-form-input advgb-form-input-email"
                                        placeholder={ emailLabel ? emailLabel : 'Email address' }
+                                       aria-label={ emailLabel ? emailLabel : 'Email address' }
                                        style={ {
                                            backgroundColor: bgColor,
                                            color: textColor,
@@ -437,6 +442,7 @@
                                     <input type="text"
                                            className="advgb-form-input advgb-form-input-fname"
                                            placeholder={ fnameLabel ? fnameLabel : __( 'First Name', 'advanced-gutenberg' ) }
+                                           aria-label={ fnameLabel ? fnameLabel : __( 'First Name', 'advanced-gutenberg' ) }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -450,6 +456,7 @@
                                     <input type="text"
                                            className="advgb-form-input advgb-form-input-lname"
                                            placeholder={ lnameLabel ? lnameLabel : __( 'Last Name', 'advanced-gutenberg' ) }
+                                           aria-label={ lnameLabel ? lnameLabel : __( 'Last Name', 'advanced-gutenberg' ) }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -463,6 +470,7 @@
                                     <input type="email"
                                            className="advgb-form-input advgb-form-input-email"
                                            placeholder={ emailLabel ? emailLabel : 'Email address' }
+                                           aria-label={ emailLabel ? emailLabel : 'Email address' }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,

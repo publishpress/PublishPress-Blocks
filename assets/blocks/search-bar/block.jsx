@@ -321,6 +321,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 <input type="text" disabled={true}
                                        className="advgb-search-bar-input"
                                        value={ searchPlaceholder ? searchPlaceholder : 'Type to search…' }
+                                       aria-label={ searchPlaceholder ? searchPlaceholder : 'Search' }
                                 />
                                 {searchIconOnRight && searchBarIcon}
                             </div>
@@ -516,6 +517,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                        className="advgb-search-bar-input"
                                        name="s"
                                        placeholder={ searchPlaceholder ? searchPlaceholder : 'Type to search…' }
+                                       aria-label={ searchPlaceholder ? searchPlaceholder : 'Search' }
                                 />
                                 {searchIconOnRight && searchBarIcon}
                             </div>
@@ -583,6 +585,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                className="advgb-search-bar-input"
                                                name="s"
                                                placeholder={ searchPlaceholder ? searchPlaceholder : 'Type to searchâ€¦' }
+                                               aria-label={ searchPlaceholder ? searchPlaceholder : 'Search' }
                                         />
                                         {searchIconOnRight && searchBarIcon}
                                     </div>

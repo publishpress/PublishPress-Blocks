@@ -202,6 +202,7 @@
                             <input type="text" disabled={ true }
                                    className="advgb-form-input"
                                    value={ nameLabel ? nameLabel : 'Name' }
+                                   aria-label={ nameLabel ? nameLabel : 'Name' }
                                    style={ {
                                        backgroundColor: bgColor,
                                        color: textColor,
@@ -215,6 +216,7 @@
                             <input type="text" disabled={ true }
                                    className="advgb-form-input"
                                    value={ emailLabel ? emailLabel : 'Email address' }
+                                   aria-label={ emailLabel ? emailLabel : 'Email address' }
                                    style={ {
                                        backgroundColor: bgColor,
                                        color: textColor,
@@ -228,6 +230,7 @@
                             <textarea className="advgb-form-input"
                                       disabled={ true }
                                       value={ msgLabel ? msgLabel : 'Message' }
+                                      aria-label={ msgLabel ? msgLabel : 'Message' }
                                       style={ {
                                           backgroundColor: bgColor,
                                           color: textColor,
@@ -360,6 +363,7 @@
                             <input type="text"
                                    className="advgb-form-input advgb-form-input-name"
                                    placeholder={ nameLabel ? nameLabel : 'Name' }
+                                   aria-label={ nameLabel ? nameLabel : 'Name' }
                                    name="contact_name"
                                    style={ {
                                        backgroundColor: bgColor,
@@ -374,6 +378,7 @@
                             <input type="email"
                                    className="advgb-form-input advgb-form-input-email"
                                    placeholder={ emailLabel ? emailLabel : 'Email address' }
+                                   aria-label={ emailLabel ? emailLabel : 'Email address' }
                                    name="contact_email"
                                    style={ {
                                        backgroundColor: bgColor,
@@ -387,6 +392,7 @@
                         <div className="advgb-form-field advgb-form-field-full">
                             <textarea className="advgb-form-input advgb-form-input-msg"
                                       placeholder={ msgLabel ? msgLabel : 'Message' }
+                                      aria-label={ msgLabel ? msgLabel : 'Message' }
                                       name="contact_message"
                                       style={ {
                                           backgroundColor: bgColor,

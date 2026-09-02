@@ -13745,6 +13745,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: nameLabel ? nameLabel : 'Name',
+          "aria-label": nameLabel ? nameLabel : 'Name',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -13759,6 +13760,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: emailLabel ? emailLabel : 'Email address',
+          "aria-label": emailLabel ? emailLabel : 'Email address',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -13772,6 +13774,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           className: "advgb-form-input",
           disabled: true,
           value: msgLabel ? msgLabel : 'Message',
+          "aria-label": msgLabel ? msgLabel : 'Message',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -13899,6 +13902,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "text",
         className: "advgb-form-input advgb-form-input-name",
         placeholder: nameLabel ? nameLabel : 'Name',
+        "aria-label": nameLabel ? nameLabel : 'Name',
         name: "contact_name",
         style: {
           backgroundColor: bgColor,
@@ -13913,6 +13917,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "email",
         className: "advgb-form-input advgb-form-input-email",
         placeholder: emailLabel ? emailLabel : 'Email address',
+        "aria-label": emailLabel ? emailLabel : 'Email address',
         name: "contact_email",
         style: {
           backgroundColor: bgColor,
@@ -13926,6 +13931,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       }, /*#__PURE__*/React.createElement("textarea", {
         className: "advgb-form-input advgb-form-input-msg",
         placeholder: msgLabel ? msgLabel : 'Message',
+        "aria-label": msgLabel ? msgLabel : 'Message',
         name: "contact_message",
         style: {
           backgroundColor: bgColor,
@@ -20661,6 +20667,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: emailLabel ? emailLabel : 'Email address',
+          "aria-label": emailLabel ? emailLabel : 'Email address',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -20686,6 +20693,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
+          "aria-label": fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -20700,6 +20708,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
+          "aria-label": lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -20714,6 +20723,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: emailLabel ? emailLabel : 'Email address',
+          "aria-label": emailLabel ? emailLabel : 'Email address',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -20847,6 +20857,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "email",
         className: "advgb-form-input advgb-form-input-email",
         placeholder: emailLabel ? emailLabel : 'Email address',
+        "aria-label": emailLabel ? emailLabel : 'Email address',
         style: {
           backgroundColor: bgColor,
           color: textColor,
@@ -20873,6 +20884,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "text",
         className: "advgb-form-input advgb-form-input-fname",
         placeholder: fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
+        "aria-label": fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
         style: {
           backgroundColor: bgColor,
           color: textColor,
@@ -20886,6 +20898,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "text",
         className: "advgb-form-input advgb-form-input-lname",
         placeholder: lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
+        "aria-label": lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
         style: {
           backgroundColor: bgColor,
           color: textColor,
@@ -20899,6 +20912,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "email",
         className: "advgb-form-input advgb-form-input-email",
         placeholder: emailLabel ? emailLabel : 'Email address',
+        "aria-label": emailLabel ? emailLabel : 'Email address',
         style: {
           backgroundColor: bgColor,
           color: textColor,
@@ -24624,7 +24638,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           type: "text",
           disabled: true,
           className: "advgb-search-bar-input",
-          value: searchPlaceholder ? searchPlaceholder : 'Type to search…'
+          value: searchPlaceholder ? searchPlaceholder : 'Type to search…',
+          "aria-label": searchPlaceholder ? searchPlaceholder : 'Search'
         }), searchIconOnRight && searchBarIcon), !searchButtonOnLeft && searchBarButton), /*#__PURE__*/React.createElement("style", null, ".".concat(searchBtnId, ":hover {\n                                color: ").concat(searchBtnHoverColor, " !important;\n                                background-color: ").concat(searchBtnHoverBgColor, " !important;\n                                box-shadow: ").concat(searchBtnHoverShadowH, "px ").concat(searchBtnHoverShadowV, "px ").concat(searchBtnHoverShadowBlur, "px ").concat(searchBtnHoverShadowSpread, "px ").concat(searchBtnHoverShadow, ";\n                                transition: all ").concat(searchBtnHoverTranSpeed, "s ease;\n                                opacity: ").concat(searchBtnHoverOpacity / 100, "\n                            }"))));
       }
     }]);
@@ -24808,7 +24823,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "text",
         className: "advgb-search-bar-input",
         name: "s",
-        placeholder: searchPlaceholder ? searchPlaceholder : 'Type to search…'
+        placeholder: searchPlaceholder ? searchPlaceholder : 'Type to search…',
+        "aria-label": searchPlaceholder ? searchPlaceholder : 'Search'
       }), searchIconOnRight && searchBarIcon), !searchButtonOnLeft && searchBarButton)));
     },
     deprecated: [{
@@ -24872,7 +24888,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           type: "text",
           className: "advgb-search-bar-input",
           name: "s",
-          placeholder: searchPlaceholder ? searchPlaceholder : 'Type to searchâ€¦'
+          placeholder: searchPlaceholder ? searchPlaceholder : 'Type to searchâ€¦',
+          "aria-label": searchPlaceholder ? searchPlaceholder : 'Search'
         }), searchIconOnRight && searchBarIcon), !searchButtonOnLeft && searchBarButton)));
       }
     }]
