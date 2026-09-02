@@ -18,8 +18,12 @@ defined('ABSPATH') || die;
             _e('Enable or disable controls for all blocks', 'advanced-gutenberg') ?>
             <div class="advgb-switch-button">
                 <label class="switch">
-                    <input type="checkbox" name="toggle_all_blocks" id="toggle_all_blocks">
-                    <span class="slider"></span>
+                    <input type="checkbox"
+                           name="toggle_all_blocks"
+                           id="toggle_all_blocks"
+                           aria-label="<?php esc_attr_e('Enable or disable controls for all blocks', 'advanced-gutenberg') ?>"
+                    >
+                    <span class="slider" aria-hidden="true"></span>
                 </label>
             </div>
         </div>
