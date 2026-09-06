@@ -1633,11 +1633,15 @@ function advgbGetPostIdsForTitles($titles, $post_type)
     global $wpdb;
     if (! empty($titles)) {
     // don't use post_name__in here because the title may be different from the slug
-        $placeholders = implode(',', array_fill(0, count($titles), '%s'));
         $params = $titles;
         $params[] = $post_type;
         return $wpdb->get_col(
-            $wpdb->prepare("SELECT DISTINCT ID FROM {$wpdb->posts} WHERE post_title IN ($placeholders) AND post_type = %s", $params)
+            $wpdb->prepare(
+                "SELECT DISTINCT ID FROM {$wpdb->posts} WHERE post_title IN ("
+                    . implode(',', array_fill(0, count($titles), '%s'))
+                    . ') AND post_type = %s',
+                $params
+            )
         );
     }
     return array();
