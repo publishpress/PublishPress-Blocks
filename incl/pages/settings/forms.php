@@ -2,7 +2,9 @@
 
 defined('ABSPATH') || die;
 
-$website_title = get_option('blogname');
+$website_title = is_multisite()
+    ? get_blog_option(get_current_blog_id(), 'blogname')
+    : get_bloginfo('name', 'raw');
 $admin_email   = get_option('admin_email');
 
 $contact_form_sender_name    = $this->getOptionSetting(
