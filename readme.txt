@@ -2,7 +2,7 @@
 Contributors: publishpress, stevejburge, htmgarcia, olatechpro
 Tags: conditional blocks, gutenberg blocks, block editor, block visibility, block permissions
 Requires at least: 5.5
-Tested up to: 7.0
+Tested up to: 7.1
 Stable tag: 3.7.5
 Requires PHP: 7.2.5
 License: GPLv2 or later
