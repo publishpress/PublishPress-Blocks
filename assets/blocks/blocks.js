@@ -9321,7 +9321,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           activeTabBgColor = attributes.activeTabBgColor,
           activeTabTextColor = attributes.activeTabTextColor,
           isPreview = attributes.isPreview;
-        var blockClass = ["advgb-tabs-wrapper", "advgb-tab-".concat(tabsStyleD, "-desktop"), "advgb-tab-".concat(tabsStyleT, "-tablet"), "advgb-tab-".concat(tabsStyleM, "-mobile")].filter(Boolean).join(' ');
+        var blockClass = ["advgb-tabs-wrapper", ['wide', 'full'].includes(attributes.align) && "align".concat(attributes.align), "advgb-tab-".concat(tabsStyleD, "-desktop"), "advgb-tab-".concat(tabsStyleT, "-tablet"), "advgb-tab-".concat(tabsStyleM, "-mobile")].filter(Boolean).join(' ');
         var deviceLetter = 'D';
         if (viewport === 'tablet') deviceLetter = 'T';
         if (viewport === 'mobile') deviceLetter = 'M';
@@ -9758,7 +9758,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       }
     },
     supports: {
-      anchor: true
+      anchor: true,
+      align: ['wide', 'full']
     },
     edit: compose(withSelect(function (select, ownProps) {
       var clientId = ownProps.clientId;
@@ -9820,7 +9821,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         borderRadius = attributes.borderRadius,
         pid = attributes.pid,
         uniqueID = attributes.uniqueID;
-      var blockClass = ["advgb-tabs-wrapper", "advgb-tab-".concat(tabsStyleD, "-desktop"), "advgb-tab-".concat(tabsStyleT, "-tablet"), "advgb-tab-".concat(tabsStyleM, "-mobile"), pid].filter(Boolean).join(' ');
+      var blockClass = ["advgb-tabs-wrapper", ['wide', 'full'].includes(attributes.align) && "align".concat(attributes.align), "advgb-tab-".concat(tabsStyleD, "-desktop"), "advgb-tab-".concat(tabsStyleT, "-tablet"), "advgb-tab-".concat(tabsStyleM, "-mobile"), pid].filter(Boolean).join(' ');
       return /*#__PURE__*/React.createElement("div", {
         className: blockClass,
         "data-tab-active": tabActiveFrontend
