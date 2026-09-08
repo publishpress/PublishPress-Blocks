@@ -379,6 +379,7 @@
             } = attributes;
             const blockClass = [
                 `advgb-tabs-wrapper`,
+                ['wide', 'full'].includes(attributes.align) && `align${attributes.align}`,
                 `advgb-tab-${tabsStyleD}-desktop`,
                 `advgb-tab-${tabsStyleT}-tablet`,
                 `advgb-tab-${tabsStyleM}-mobile`,
@@ -774,7 +775,8 @@
             },
         },
         supports: {
-            anchor: true
+            anchor: true,
+            align: ['wide', 'full'],
         },
         edit: compose(
             withSelect( (select, ownProps ) => {
@@ -840,6 +842,7 @@
 
             const blockClass = [
                 `advgb-tabs-wrapper`,
+                ['wide', 'full'].includes(attributes.align) && `align${attributes.align}`,
                 `advgb-tab-${tabsStyleD}-desktop`,
                 `advgb-tab-${tabsStyleT}-tablet`,
                 `advgb-tab-${tabsStyleM}-mobile`,
