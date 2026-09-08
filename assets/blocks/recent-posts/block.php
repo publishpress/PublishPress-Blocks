@@ -287,10 +287,10 @@ function advgbRenderBlockRecentPosts($attributes)
                                 } else {
                                     if ( $postDate === 'created' ) {
                                         $relativePrefix = $showPrefix ? (isset($attributes['relativeDateCreatedPrefix']) ? $attributes['relativeDateCreatedPrefix'] : esc_html__('Posted', 'advanced-gutenberg')) : '';
-                                        $dateDisplay = ($relativePrefix ? $relativePrefix . ' ' : '') . human_time_diff( get_the_date( 'U', $post->ID ) ) . ' ' . esc_html__( 'ago', 'advanced-gutenberg');
+                                        $dateDisplay = ($relativePrefix ? $relativePrefix . ' ' : '') . human_time_diff( (int) get_the_date( 'U', $post->ID ) ) . ' ' . esc_html__( 'ago', 'advanced-gutenberg');
                                     } else {
                                         $relativePrefix = $showPrefix ? (isset($attributes['relativeDateUpdatedPrefix']) ? $attributes['relativeDateUpdatedPrefix'] : esc_html__('Updated', 'advanced-gutenberg')) : '';
-                                        $dateDisplay = ($relativePrefix ? $relativePrefix . ' ' : '') . human_time_diff( get_the_modified_date( 'U', $post->ID ) ) . ' ' . esc_html__( 'ago', 'advanced-gutenberg');
+                                        $dateDisplay = ($relativePrefix ? $relativePrefix . ' ' : '') . human_time_diff( (int) get_the_modified_date( 'U', $post->ID ) ) . ' ' . esc_html__( 'ago', 'advanced-gutenberg');
                                     }
                                 }
 
@@ -1126,8 +1126,8 @@ function advgbAllowCPTQueryVars($query_params)
 function advgbGetRelativeDates($post)
 {
     return array(
-        'created' => __('Posted', 'advanced-gutenberg') . ' ' . human_time_diff(get_the_date('U', $post['id'])) . ' ' . __('ago', 'advanced-gutenberg'),
-        'modified' => __('Updated', 'advanced-gutenberg') . ' ' . human_time_diff(get_the_modified_date('U', $post['id'])) . ' ' . __('ago', 'advanced-gutenberg')
+        'created' => __('Posted', 'advanced-gutenberg') . ' ' . human_time_diff((int) get_the_date('U', $post['id'])) . ' ' . __('ago', 'advanced-gutenberg'),
+        'modified' => __('Updated', 'advanced-gutenberg') . ' ' . human_time_diff((int) get_the_modified_date('U', $post['id'])) . ' ' . __('ago', 'advanced-gutenberg')
     );
 }
 

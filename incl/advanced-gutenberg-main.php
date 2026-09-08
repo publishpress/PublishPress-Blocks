@@ -2642,6 +2642,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                             <div class="advgb-switch-button">
                                 <label class="switch">
                                     <input type="checkbox"
+                                           aria-label="<?php echo esc_attr(wp_strip_all_tags($feature['title'])); ?>"
                                            name=""
                                            value="1"
                                     <?php
@@ -4412,7 +4413,11 @@ if (! class_exists('AdvancedGutenbergMain')) {
                                 ?>
                                 <div class="advgb-switch-button">
                                     <label class="switch">
-                                        <input type="checkbox" name="toggle_all_blocks" id="toggle_all_blocks">
+                                        <input type="checkbox" name="toggle_all_blocks" id="toggle_all_blocks"
+                                               aria-label="<?php echo esc_attr(sprintf(
+                                                   __('Enable or disable all blocks for %s', 'advanced-gutenberg'),
+                                                   $current_user_role_name
+                                               )); ?>">
                                         <span class="slider"></span>
                                     </label>
                                 </div>
