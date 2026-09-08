@@ -13,18 +13,16 @@
     });
 
     // Toggle to save a single feature at the time
-    $('.advgb-feature-setting .slider').bind( 'click', function(e) {
+    $('.advgb-feature-setting input[type="checkbox"]').bind( 'change', function() {
         try {
-            e.preventDefault();
+            var checkbox = $(this);
 
-            // Don't execute in placeholder switch
-            if( $(this).hasClass('slider--disabled') ) {
+            // Ignore unavailable features and changes while a save is pending.
+            if( checkbox.prop('disabled') ) {
                 return false;
             }
 
-            var checkbox    = $(this).parent().find('input');
-            var isChecked   = checkbox.is(':checked') ? 1 : 0;
-            var newState    = isChecked == 1 ? 0 : 1; // Since is a toggle, we revert the state
+            var newState    = checkbox.is(':checked') ? 1 : 0;
             var feature     = checkbox.data('feature');
             var slider      = checkbox.parent().find('.slider');
             $.ajax({
@@ -37,6 +35,7 @@
                     nonce: advgb_main_dashboard.nonce
                 },
                 beforeSend: function(){
+                  checkbox.prop('disabled', true);
                   slider.css('opacity', 0.5);
                 },
                 success: function(){
@@ -95,8 +94,13 @@
                     statusMsgNotification = advgbTimerStatus();
                 },
                 error: function(jqXHR, textStatus, errorThrown){
+                    checkbox.prop('checked', !newState);
                     console.error(jqXHR.responseText);
                     statusMsgNotification = advgbTimerStatus( 'error' );
+                },
+                complete: function(){
+                    checkbox.prop('disabled', false);
+                    slider.css('opacity', 1);
                 }
             });
         } catch(e) {
