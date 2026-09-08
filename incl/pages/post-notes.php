@@ -9,6 +9,7 @@ $per_page = (int) get_user_meta($current_user->ID, 'advgb_post_notes_per_page', 
 if ($per_page < 1) {
     $per_page = 20;
 }
+$per_page = min(999, $per_page);
 
 // Column visibility from Screen Options; '_title' (Post) is always shown
 $advgb_screen  = get_current_screen();

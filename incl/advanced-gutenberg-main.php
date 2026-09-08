@@ -2909,7 +2909,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
             if ($option === 'advgb_post_notes_per_page') {
                 $value = (int) $value;
 
-                return ($value > 0) ? $value : $status;
+                return ($value > 0) ? min(999, $value) : $status;
             }
 
             return $status;
