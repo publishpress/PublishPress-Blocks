@@ -175,7 +175,11 @@ if (defined('ADVANCED_GUTENBERG_PRO_LOADED')) {
     ?>
     <div class="wrap">
         <div class="advgb-search-wrapper" style="padding-bottom: 20px;">
+            <label for="advgb-block-settings-search" class="screen-reader-text">
+                <?php esc_html_e('Search blocks', 'advanced-gutenberg') ?>
+            </label>
             <input type="text"
+                   id="advgb-block-settings-search"
                    class="advgb-search-input blocks-config-search"
                    placeholder="<?php esc_attr_e('Search blocks', 'advanced-gutenberg') ?>"
             >
