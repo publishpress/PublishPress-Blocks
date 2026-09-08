@@ -544,8 +544,11 @@
                                     } }
                                 >
                                     <a id={tabAnchors[index]} style={ { color: headerTextColor } }
-                                       onClick={ () => {
+                                       onClick={ ( event ) => {
+                                           // Headers live in the parent, but represent individual Tab Item blocks.
+                                           event.stopPropagation();
                                            this.props.updateTabActive( index );
+                                           this.props.selectTab( index );
                                        } }
                                     >
                                         <RichText
@@ -783,9 +786,16 @@
                 };
             } ),
             withDispatch( (dispatch, { clientId, innerBlocks }, { select } ) => {
-                const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+                const { updateBlockAttributes, selectBlock } = dispatch( 'core/block-editor' );
 
                 return {
+                    selectTab(index) {
+                        const childBlocks = select('core/block-editor').getBlockOrder(clientId);
+                        if (childBlocks[index]) {
+                            // Preserve the caret when clicking an editable tab title.
+                            selectBlock(childBlocks[index], null);
+                        }
+                    },
                     resetOrder() {
                         times( innerBlocks.length, n => {
                             updateBlockAttributes( innerBlocks[ n ].clientId, {
