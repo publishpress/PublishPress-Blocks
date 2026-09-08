@@ -171,7 +171,7 @@ function advgbRenderBlockRecentPosts($attributes)
             $postThumbID         = get_post_thumbnail_id($post->ID);
             $outputImage         = advgbCheckElementDisplay($attributes['displayFeaturedImage'], $attributes['displayFeaturedImageFor'], $key) && ( $postThumbID || $attributes['enablePlaceholderImage'] );
             $displayImageVsOrder = getDisplayImageVsOrder($attributes, $key);
-            $postThumb           = '<img src="' . esc_url($rp_default_thumb['url']) . '" />';
+            $postThumb           = '<img src="' . esc_url($rp_default_thumb['url']) . '" alt="' . esc_attr__('Post Image', 'advanced-gutenberg') . '" />';
             $postThumbCaption    = '';
             $postDate            = isset($attributes['displayDate']) && $attributes['displayDate'] ? 'created' : (isset($attributes['postDate']) ? esc_html($attributes['postDate']) : 'hide');
             $postDateDisplay     = null;
