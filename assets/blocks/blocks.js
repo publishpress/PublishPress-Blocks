@@ -13745,6 +13745,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: nameLabel ? nameLabel : 'Name',
+          "aria-label": nameLabel ? nameLabel : 'Name',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -13759,6 +13760,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: emailLabel ? emailLabel : 'Email address',
+          "aria-label": emailLabel ? emailLabel : 'Email address',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -13772,6 +13774,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           className: "advgb-form-input",
           disabled: true,
           value: msgLabel ? msgLabel : 'Message',
+          "aria-label": msgLabel ? msgLabel : 'Message',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -13899,6 +13902,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "text",
         className: "advgb-form-input advgb-form-input-name",
         placeholder: nameLabel ? nameLabel : 'Name',
+        "aria-label": nameLabel ? nameLabel : 'Name',
         name: "contact_name",
         style: {
           backgroundColor: bgColor,
@@ -13913,6 +13917,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "email",
         className: "advgb-form-input advgb-form-input-email",
         placeholder: emailLabel ? emailLabel : 'Email address',
+        "aria-label": emailLabel ? emailLabel : 'Email address',
         name: "contact_email",
         style: {
           backgroundColor: bgColor,
@@ -13926,6 +13931,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       }, /*#__PURE__*/React.createElement("textarea", {
         className: "advgb-form-input advgb-form-input-msg",
         placeholder: msgLabel ? msgLabel : 'Message',
+        "aria-label": msgLabel ? msgLabel : 'Message',
         name: "contact_message",
         style: {
           backgroundColor: bgColor,
@@ -13953,7 +13959,152 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           borderRadius: submitRadius
         }
       }, submitLabel ? submitLabel : 'Submit'))));
-    }
+    },
+    deprecated: [
+    // Saved markup before accessible field names were added. Keep this snapshot unchanged.
+    {
+      attributes: {
+        nameLabel: {
+          type: 'string'
+        },
+        emailLabel: {
+          type: 'string'
+        },
+        msgLabel: {
+          type: 'string'
+        },
+        submitLabel: {
+          type: 'string'
+        },
+        successLabel: {
+          type: 'string'
+        },
+        alertLabel: {
+          type: 'string'
+        },
+        bgColor: {
+          type: 'string'
+        },
+        textColor: {
+          type: 'string'
+        },
+        borderStyle: {
+          type: 'string'
+        },
+        borderColor: {
+          type: 'string'
+        },
+        borderRadius: {
+          type: 'number'
+        },
+        submitColor: {
+          type: 'string'
+        },
+        submitBgColor: {
+          type: 'string'
+        },
+        submitRadius: {
+          type: 'number'
+        },
+        submitPosition: {
+          type: 'string',
+          default: 'right'
+        },
+        changed: {
+          type: 'boolean',
+          default: false
+        },
+        isPreview: {
+          type: 'boolean',
+          default: false
+        }
+      },
+      supports: {
+        anchor: true
+      },
+      save: function save(_ref2) {
+        var attributes = _ref2.attributes;
+        var nameLabel = attributes.nameLabel,
+          emailLabel = attributes.emailLabel,
+          msgLabel = attributes.msgLabel,
+          submitLabel = attributes.submitLabel,
+          successLabel = attributes.successLabel,
+          alertLabel = attributes.alertLabel,
+          bgColor = attributes.bgColor,
+          textColor = attributes.textColor,
+          borderColor = attributes.borderColor,
+          borderStyle = attributes.borderStyle,
+          borderRadius = attributes.borderRadius,
+          submitColor = attributes.submitColor,
+          submitBgColor = attributes.submitBgColor,
+          submitRadius = attributes.submitRadius,
+          submitPosition = attributes.submitPosition;
+        return /*#__PURE__*/React.createElement("div", {
+          className: "advgb-contact-form"
+        }, /*#__PURE__*/React.createElement("form", {
+          method: "POST"
+        }, /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-field advgb-form-field-half"
+        }, /*#__PURE__*/React.createElement("input", {
+          type: "text",
+          className: "advgb-form-input advgb-form-input-name",
+          placeholder: nameLabel ? nameLabel : 'Name',
+          name: "contact_name",
+          style: {
+            backgroundColor: bgColor,
+            color: textColor,
+            borderColor: borderColor,
+            borderStyle: borderStyle,
+            borderRadius: borderRadius
+          }
+        })), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-field advgb-form-field-half"
+        }, /*#__PURE__*/React.createElement("input", {
+          type: "email",
+          className: "advgb-form-input advgb-form-input-email",
+          placeholder: emailLabel ? emailLabel : 'Email address',
+          name: "contact_email",
+          style: {
+            backgroundColor: bgColor,
+            color: textColor,
+            borderColor: borderColor,
+            borderStyle: borderStyle,
+            borderRadius: borderRadius
+          }
+        })), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-field advgb-form-field-full"
+        }, /*#__PURE__*/React.createElement("textarea", {
+          className: "advgb-form-input advgb-form-input-msg",
+          placeholder: msgLabel ? msgLabel : 'Message',
+          name: "contact_message",
+          style: {
+            backgroundColor: bgColor,
+            color: textColor,
+            borderColor: borderColor,
+            borderStyle: borderStyle,
+            borderRadius: borderRadius
+          }
+        })), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-grecaptcha clearfix position-".concat(submitPosition)
+        }), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-submit-wrapper",
+          style: {
+            textAlign: submitPosition
+          }
+        }, /*#__PURE__*/React.createElement("button", {
+          className: "advgb-form-submit",
+          type: "submit",
+          "data-success": successLabel ? successLabel : undefined,
+          "data-alert": alertLabel ? alertLabel : undefined,
+          style: {
+            borderColor: submitColor,
+            color: submitColor,
+            backgroundColor: submitBgColor,
+            borderRadius: submitRadius
+          }
+        }, submitLabel ? submitLabel : 'Submit'))));
+      }
+    }]
   });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
@@ -20661,6 +20812,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: emailLabel ? emailLabel : 'Email address',
+          "aria-label": emailLabel ? emailLabel : 'Email address',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -20686,6 +20838,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
+          "aria-label": fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -20700,6 +20853,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
+          "aria-label": lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -20714,6 +20868,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           disabled: true,
           className: "advgb-form-input",
           value: emailLabel ? emailLabel : 'Email address',
+          "aria-label": emailLabel ? emailLabel : 'Email address',
           style: {
             backgroundColor: bgColor,
             color: textColor,
@@ -20847,6 +21002,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "email",
         className: "advgb-form-input advgb-form-input-email",
         placeholder: emailLabel ? emailLabel : 'Email address',
+        "aria-label": emailLabel ? emailLabel : 'Email address',
         style: {
           backgroundColor: bgColor,
           color: textColor,
@@ -20873,6 +21029,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "text",
         className: "advgb-form-input advgb-form-input-fname",
         placeholder: fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
+        "aria-label": fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
         style: {
           backgroundColor: bgColor,
           color: textColor,
@@ -20886,6 +21043,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "text",
         className: "advgb-form-input advgb-form-input-lname",
         placeholder: lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
+        "aria-label": lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
         style: {
           backgroundColor: bgColor,
           color: textColor,
@@ -20899,6 +21057,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "email",
         className: "advgb-form-input advgb-form-input-email",
         placeholder: emailLabel ? emailLabel : 'Email address',
+        "aria-label": emailLabel ? emailLabel : 'Email address',
         style: {
           backgroundColor: bgColor,
           color: textColor,
@@ -20922,7 +21081,182 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       }, submitLabel ? submitLabel : 'Submit'))), /*#__PURE__*/React.createElement("div", {
         className: "advgb-grecaptcha clearfix"
       })));
-    }
+    },
+    deprecated: [
+    // Saved markup before accessible field names were added. Keep this snapshot unchanged.
+    {
+      attributes: {
+        formStyle: {
+          type: 'string',
+          default: 'default'
+        },
+        formWidth: {
+          type: 'number',
+          default: 400
+        },
+        fnameLabel: {
+          type: 'string'
+        },
+        lnameLabel: {
+          type: 'string'
+        },
+        emailLabel: {
+          type: 'string'
+        },
+        submitLabel: {
+          type: 'string'
+        },
+        successLabel: {
+          type: 'string'
+        },
+        alertLabel: {
+          type: 'string'
+        },
+        bgColor: {
+          type: 'string'
+        },
+        textColor: {
+          type: 'string'
+        },
+        borderStyle: {
+          type: 'string'
+        },
+        borderColor: {
+          type: 'string'
+        },
+        borderRadius: {
+          type: 'number'
+        },
+        submitColor: {
+          type: 'string'
+        },
+        submitBgColor: {
+          type: 'string'
+        },
+        submitRadius: {
+          type: 'number'
+        },
+        changed: {
+          type: 'boolean',
+          default: false
+        },
+        isPreview: {
+          type: 'boolean',
+          default: false
+        }
+      },
+      supports: {
+        anchor: true
+      },
+      save: function save(_ref2) {
+        var attributes = _ref2.attributes;
+        var formStyle = attributes.formStyle,
+          formWidth = attributes.formWidth,
+          fnameLabel = attributes.fnameLabel,
+          lnameLabel = attributes.lnameLabel,
+          emailLabel = attributes.emailLabel,
+          submitLabel = attributes.submitLabel,
+          successLabel = attributes.successLabel,
+          alertLabel = attributes.alertLabel,
+          bgColor = attributes.bgColor,
+          textColor = attributes.textColor,
+          borderColor = attributes.borderColor,
+          borderStyle = attributes.borderStyle,
+          borderRadius = attributes.borderRadius,
+          submitColor = attributes.submitColor,
+          submitBgColor = attributes.submitBgColor,
+          submitRadius = attributes.submitRadius;
+        return /*#__PURE__*/React.createElement("div", {
+          className: "advgb-newsletter clearfix style-".concat(formStyle),
+          style: {
+            maxWidth: formWidth
+          }
+        }, /*#__PURE__*/React.createElement("form", {
+          method: "POST",
+          className: "clearfix"
+        }, formStyle === 'default' && /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-field"
+        }, /*#__PURE__*/React.createElement("input", {
+          type: "email",
+          className: "advgb-form-input advgb-form-input-email",
+          placeholder: emailLabel ? emailLabel : 'Email address',
+          style: {
+            backgroundColor: bgColor,
+            color: textColor,
+            borderColor: borderColor,
+            borderStyle: borderStyle,
+            borderRadius: borderRadius
+          }
+        }), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-submit-wrapper"
+        }, /*#__PURE__*/React.createElement("button", {
+          className: "advgb-form-submit",
+          type: "submit",
+          "data-success": successLabel ? successLabel : undefined,
+          "data-alert": alertLabel ? alertLabel : undefined,
+          style: {
+            borderColor: submitColor,
+            color: submitColor,
+            backgroundColor: submitBgColor,
+            borderRadius: submitRadius
+          }
+        }, submitLabel ? submitLabel : 'Submit'))), formStyle === 'alt' && /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-field advgb-form-field-full"
+        }, /*#__PURE__*/React.createElement("input", {
+          type: "text",
+          className: "advgb-form-input advgb-form-input-fname",
+          placeholder: fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
+          style: {
+            backgroundColor: bgColor,
+            color: textColor,
+            borderColor: borderColor,
+            borderStyle: borderStyle,
+            borderRadius: borderRadius
+          }
+        })), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-field advgb-form-field-full"
+        }, /*#__PURE__*/React.createElement("input", {
+          type: "text",
+          className: "advgb-form-input advgb-form-input-lname",
+          placeholder: lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
+          style: {
+            backgroundColor: bgColor,
+            color: textColor,
+            borderColor: borderColor,
+            borderStyle: borderStyle,
+            borderRadius: borderRadius
+          }
+        })), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-field advgb-form-field-full"
+        }, /*#__PURE__*/React.createElement("input", {
+          type: "email",
+          className: "advgb-form-input advgb-form-input-email",
+          placeholder: emailLabel ? emailLabel : 'Email address',
+          style: {
+            backgroundColor: bgColor,
+            color: textColor,
+            borderColor: borderColor,
+            borderStyle: borderStyle,
+            borderRadius: borderRadius
+          }
+        })), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-form-submit-wrapper"
+        }, /*#__PURE__*/React.createElement("button", {
+          className: "advgb-form-submit",
+          type: "submit",
+          "data-success": successLabel ? successLabel : undefined,
+          "data-alert": alertLabel ? alertLabel : undefined,
+          style: {
+            borderColor: submitColor,
+            color: submitColor,
+            backgroundColor: submitBgColor,
+            borderRadius: submitRadius
+          }
+        }, submitLabel ? submitLabel : 'Submit'))), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-grecaptcha clearfix"
+        })));
+      }
+    }]
   });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
@@ -24624,7 +24958,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           type: "text",
           disabled: true,
           className: "advgb-search-bar-input",
-          value: searchPlaceholder ? searchPlaceholder : 'Type to search…'
+          value: searchPlaceholder ? searchPlaceholder : 'Type to search…',
+          "aria-label": searchPlaceholder ? searchPlaceholder : 'Search'
         }), searchIconOnRight && searchBarIcon), !searchButtonOnLeft && searchBarButton), /*#__PURE__*/React.createElement("style", null, ".".concat(searchBtnId, ":hover {\n                                color: ").concat(searchBtnHoverColor, " !important;\n                                background-color: ").concat(searchBtnHoverBgColor, " !important;\n                                box-shadow: ").concat(searchBtnHoverShadowH, "px ").concat(searchBtnHoverShadowV, "px ").concat(searchBtnHoverShadowBlur, "px ").concat(searchBtnHoverShadowSpread, "px ").concat(searchBtnHoverShadow, ";\n                                transition: all ").concat(searchBtnHoverTranSpeed, "s ease;\n                                opacity: ").concat(searchBtnHoverOpacity / 100, "\n                            }"))));
       }
     }]);
@@ -24808,11 +25143,105 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         type: "text",
         className: "advgb-search-bar-input",
         name: "s",
-        placeholder: searchPlaceholder ? searchPlaceholder : 'Type to search…'
+        placeholder: searchPlaceholder ? searchPlaceholder : 'Type to search…',
+        "aria-label": searchPlaceholder ? searchPlaceholder : 'Search'
       }), searchIconOnRight && searchBarIcon), !searchButtonOnLeft && searchBarButton)));
     },
-    deprecated: [{
-      attributes: blockAttrs,
+    deprecated: [
+    // Saved markup before accessible field names were added. Keep this snapshot unchanged.
+    {
+      attributes: {
+        fullWidth: {
+          type: 'boolean',
+          default: false
+        },
+        width: {
+          type: 'number',
+          default: 500
+        },
+        textColor: {
+          type: 'string'
+        },
+        backgroundColor: {
+          type: 'string'
+        },
+        searchIcon: {
+          type: 'string',
+          default: 'icon1'
+        },
+        searchIconOnRight: {
+          type: 'boolean'
+        },
+        searchPlaceholder: {
+          type: 'string'
+        },
+        searchButtonEnabled: {
+          type: 'boolean',
+          default: true
+        },
+        searchButtonText: {
+          type: 'string',
+          default: 'SEARCH'
+        },
+        searchButtonTextColor: {
+          type: 'string'
+        },
+        searchButtonBgColor: {
+          type: 'string'
+        },
+        searchButtonRadius: {
+          type: 'number',
+          default: 0
+        },
+        searchButtonOnLeft: {
+          type: 'boolean',
+          default: false
+        },
+        searchBtnId: {
+          type: 'string'
+        },
+        searchBtnHoverColor: {
+          type: 'string'
+        },
+        searchBtnHoverBgColor: {
+          type: 'string'
+        },
+        searchBtnHoverShadow: {
+          type: 'string'
+        },
+        searchBtnHoverShadowH: {
+          type: 'number',
+          default: 1
+        },
+        searchBtnHoverShadowV: {
+          type: 'number',
+          default: 1
+        },
+        searchBtnHoverShadowBlur: {
+          type: 'number',
+          default: 12
+        },
+        searchBtnHoverShadowSpread: {
+          type: 'number',
+          default: 0
+        },
+        searchBtnHoverOpacity: {
+          type: 'number',
+          default: 100
+        },
+        searchBtnHoverTranSpeed: {
+          type: 'number',
+          default: 200
+        },
+        changed: {
+          type: 'boolean',
+          default: false
+        },
+        isPreview: {
+          type: 'boolean',
+          default: false
+        }
+      },
       supports: {
         align: true,
         anchor: true
@@ -24820,6 +25249,73 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       save: function save(_ref2) {
         var attributes = _ref2.attributes,
           className = _ref2.className;
+        var fullWidth = attributes.fullWidth,
+          width = attributes.width,
+          textColor = attributes.textColor,
+          backgroundColor = attributes.backgroundColor,
+          searchIcon = attributes.searchIcon,
+          searchIconOnRight = attributes.searchIconOnRight,
+          searchPlaceholder = attributes.searchPlaceholder,
+          searchButtonEnabled = attributes.searchButtonEnabled,
+          searchButtonText = attributes.searchButtonText,
+          searchButtonTextColor = attributes.searchButtonTextColor,
+          searchButtonBgColor = attributes.searchButtonBgColor,
+          searchButtonRadius = attributes.searchButtonRadius,
+          searchButtonOnLeft = attributes.searchButtonOnLeft,
+          searchBtnId = attributes.searchBtnId;
+        var blockClassName = ['wp-block-advgb-search-bar', 'advgb-search-bar-wrapper', attributes.className, className].filter(Boolean).join(' ').split(' ').filter(function (value, index, self) {
+          return value && self.indexOf(value) === index;
+        }).join(' ');
+        var searchBarIcon = /*#__PURE__*/React.createElement("span", {
+          className: "advgb-search-bar-icon"
+        }, searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon);
+        var searchBarButton = !searchButtonEnabled ? '' : /*#__PURE__*/React.createElement("div", {
+          className: "advgb-search-button-wrapper"
+        }, /*#__PURE__*/React.createElement("button", {
+          type: "submit",
+          className: "advgb-search-bar-button ".concat(searchBtnId),
+          style: {
+            color: searchButtonTextColor,
+            borderColor: searchButtonTextColor,
+            backgroundColor: searchButtonBgColor,
+            borderRadius: searchButtonRadius
+          }
+        }, searchButtonText));
+        return /*#__PURE__*/React.createElement("div", {
+          className: blockClassName
+        }, /*#__PURE__*/React.createElement("form", {
+          method: "get",
+          action: advgbBlocks.home_url,
+          className: "advgb-search-bar-form",
+          role: "search"
+        }, /*#__PURE__*/React.createElement("div", {
+          className: "advgb-search-bar-inner",
+          style: {
+            width: fullWidth ? '100%' : width
+          }
+        }, searchButtonOnLeft && searchBarButton, /*#__PURE__*/React.createElement("div", {
+          className: "advgb-search-bar",
+          style: {
+            backgroundColor: backgroundColor,
+            color: textColor,
+            borderRadius: searchButtonRadius
+          }
+        }, !searchIconOnRight && searchBarIcon, /*#__PURE__*/React.createElement("input", {
+          type: "text",
+          className: "advgb-search-bar-input",
+          name: "s",
+          placeholder: searchPlaceholder ? searchPlaceholder : 'Type to search…'
+        }), searchIconOnRight && searchBarIcon), !searchButtonOnLeft && searchBarButton)));
+      }
+    }, {
+      attributes: blockAttrs,
+      supports: {
+        align: true,
+        anchor: true
+      },
+      save: function save(_ref3) {
+        var attributes = _ref3.attributes,
+          className = _ref3.className;
         var fullWidth = attributes.fullWidth,
           width = attributes.width,
           textColor = attributes.textColor,
