@@ -759,6 +759,17 @@ img.thumb-selected {
   display: inline;
 }
 
+.advgb-customstyles-items:focus-within a.trash,
+.advgb-customstyles-items:focus-within a.copy,
+.advgb-customstyles-items:focus-within a.edit {
+  display: inline;
+}
+
+.advgb-customstyles-items a:focus {
+  outline: 2px solid #2271b1;
+  outline-offset: 2px;
+}
+
 .advgb-customstyles-new {
 
   .dashicons {
