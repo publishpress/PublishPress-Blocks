@@ -1188,8 +1188,8 @@ class AdvGbCustomStyles {
                         <li class="advgb-customstyles-items" data-id-customstyle="${res.id}">
                             <a href="#"><i class="title-icon" aria-hidden="true"></i>
                             <span class="advgb-customstyles-items-title">${res.title}</span></a>
-                            <a href="#" class="copy" title="Copy" aria-label="Copy"><span class="dashicons dashicons-admin-page" aria-hidden="true"></span></a>
-                            <a href="#" class="trash" title="Delete" aria-label="Delete"><span class="dashicons dashicons-no" aria-hidden="true"></span></a>
+                            <a href="#" class="copy" title="${window.advgbCustomStyles.copyLabel}" aria-label="${window.advgbCustomStyles.copyLabel}"><span class="dashicons dashicons-admin-page" aria-hidden="true"></span></a>
+                            <a href="#" class="trash" title="${window.advgbCustomStyles.deleteLabel}" aria-label="${window.advgbCustomStyles.deleteLabel}"><span class="dashicons dashicons-no" aria-hidden="true"></span></a>
                             <ul style="margin-left: 30px">
                                 <li class="advgb-customstyles-items-class">(${res.name})</li>
                             </ul>
@@ -1234,7 +1234,19 @@ class AdvGbCustomStyles {
                         self.$('#customstyles-tab').append('<div class="advgb-overlay-box"></div>');
                     },
                     success: (res) => {
-                        self.$(that).parent().remove();
+                        const item = self.$(that).parent();
+                        const restoreFocus = item[0].contains(document.activeElement);
+                        let focusTarget = item.nextAll('.advgb-customstyles-items').first();
+                        if (!focusTarget.length) {
+                            focusTarget = item.prevAll('.advgb-customstyles-items').first();
+                        }
+                        focusTarget = focusTarget.length
+                            ? focusTarget.children('a').first()
+                            : self.$('.advgb-customstyles-new');
+                        item.remove();
+                        if (restoreFocus) {
+                            focusTarget.trigger('focus');
+                        }
                         if (res.id == self.styleId) {
                             self.customStylePreview();
                         } else {
@@ -1272,8 +1284,8 @@ class AdvGbCustomStyles {
                         `<li class="advgb-customstyles-items" data-id-customstyle="${res.id}">
                             <a href="#"><i class="title-icon" aria-hidden="true" style="background-color: ${res.identifyColor}"></i>
                             <span class="advgb-customstyles-items-title">${res.title}</span></a>
-                            <a href="#" class="copy" title="Copy" aria-label="Copy"><span class="dashicons dashicons-admin-page" aria-hidden="true"></span></a>
-                            <a href="#" class="trash" title="Delete" aria-label="Delete"><span class="dashicons dashicons-no" aria-hidden="true"></span></a>
+                            <a href="#" class="copy" title="${window.advgbCustomStyles.copyLabel}" aria-label="${window.advgbCustomStyles.copyLabel}"><span class="dashicons dashicons-admin-page" aria-hidden="true"></span></a>
+                            <a href="#" class="trash" title="${window.advgbCustomStyles.deleteLabel}" aria-label="${window.advgbCustomStyles.deleteLabel}"><span class="dashicons dashicons-no" aria-hidden="true"></span></a>
                             <ul style="margin-left: 30px">
                                 <li class="advgb-customstyles-items-class">(${res.name})</li>
                             </ul>

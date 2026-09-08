@@ -3045,6 +3045,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'advgbCustomStyles',
                 [
                     'isProActive' => Utilities::isProActive(),
+                    'copyLabel' => esc_attr__('Copy', 'advanced-gutenberg'),
+                    'deleteLabel' => esc_attr__('Delete', 'advanced-gutenberg'),
                 ]
             );
 
