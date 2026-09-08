@@ -9536,8 +9536,11 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             style: {
               color: headerTextColor
             },
-            onClick: function onClick() {
+            onClick: function onClick(event) {
+              // Headers live in the parent, but represent individual Tab Item blocks.
+              event.stopPropagation();
               _this2.props.updateTabActive(index);
+              _this2.props.selectTab(index);
             }
           }, /*#__PURE__*/React.createElement(RichText, {
             tagName: "p",
@@ -9769,8 +9772,16 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         innerBlocks = _ref16.innerBlocks;
       var select = _ref17.select;
       var _dispatch2 = dispatch('core/block-editor'),
-        updateBlockAttributes = _dispatch2.updateBlockAttributes;
+        updateBlockAttributes = _dispatch2.updateBlockAttributes,
+        selectBlock = _dispatch2.selectBlock;
       return {
+        selectTab: function selectTab(index) {
+          var childBlocks = select('core/block-editor').getBlockOrder(clientId);
+          if (childBlocks[index]) {
+            // Preserve the caret when clicking an editable tab title.
+            selectBlock(childBlocks[index], null);
+          }
+        },
         resetOrder: function resetOrder() {
           times(innerBlocks.length, function (n) {
             updateBlockAttributes(innerBlocks[n].clientId, {
@@ -13960,9 +13971,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         }
       }, submitLabel ? submitLabel : 'Submit'))));
     },
-    deprecated: [
-    // Saved markup before accessible field names were added. Keep this snapshot unchanged.
-    {
+    deprecated: [{
       attributes: {
         nameLabel: {
           type: 'string'
@@ -21082,9 +21091,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         className: "advgb-grecaptcha clearfix"
       })));
     },
-    deprecated: [
-    // Saved markup before accessible field names were added. Keep this snapshot unchanged.
-    {
+    deprecated: [{
       attributes: {
         formStyle: {
           type: 'string',
@@ -25147,9 +25154,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         "aria-label": searchPlaceholder ? searchPlaceholder : 'Search'
       }), searchIconOnRight && searchBarIcon), !searchButtonOnLeft && searchBarButton)));
     },
-    deprecated: [
-    // Saved markup before accessible field names were added. Keep this snapshot unchanged.
-    {
+    deprecated: [{
       attributes: {
         fullWidth: {
           type: 'boolean',
