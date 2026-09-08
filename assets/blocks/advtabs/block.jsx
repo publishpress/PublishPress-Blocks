@@ -537,14 +537,16 @@
                                 <li key={ index }
                                     className={`advgb-tab ${tabActive === index ? 'advgb-tab-active' : ''}`}
                                     style={ {
-                                        backgroundColor: headerBgColor,
+                                        backgroundColor: tabActive === index && activeTabBgColor ? activeTabBgColor : headerBgColor,
+                                        '--advgb-active-tab-bg': activeTabBgColor || undefined,
+                                        '--advgb-active-tab-color': activeTabTextColor || undefined,
                                         borderStyle: borderStyle,
                                         borderWidth: borderWidth + 'px',
                                         borderColor: borderColor,
                                         borderRadius: borderRadius + 'px',
                                     } }
                                 >
-                                    <a id={tabAnchors[index]} style={ { color: headerTextColor } }
+                                    <a id={tabAnchors[index]} style={ { color: tabActive === index && activeTabTextColor ? activeTabTextColor : headerTextColor } }
                                        onClick={ ( event ) => {
                                            // Headers live in the parent, but represent individual Tab Item blocks.
                                            event.stopPropagation();
@@ -641,17 +643,7 @@
                             />
                         </div>
                     </div>
-                    {!!pid &&
-                    <style>
-                        {activeTabBgColor && `#block-${clientId} li.advgb-tab.advgb-tab-active, #block-${clientId} li.advgb-tab.ui-tabs-active {
-                                background-color: ${activeTabBgColor} !important;
-                            }`}
-                        {activeTabTextColor && `#block-${clientId} li.advgb-tab.advgb-tab-active a, #block-${clientId} li.advgb-tab.ui-tabs-active button.advgb-tab-button,
-                        #block-${clientId} li.advgb-tab.advgb-tab-active a, #block-${clientId} li.advgb-tab.ui-tabs-active a {
-                                color: ${activeTabTextColor} !important;
-                            }`}
-                    </style>
-                    }
+
                 </Fragment>
             )
         }

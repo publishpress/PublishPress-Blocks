@@ -9525,7 +9525,9 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
             key: index,
             className: "advgb-tab ".concat(tabActive === index ? 'advgb-tab-active' : ''),
             style: {
-              backgroundColor: headerBgColor,
+              backgroundColor: tabActive === index && activeTabBgColor ? activeTabBgColor : headerBgColor,
+              '--advgb-active-tab-bg': activeTabBgColor || undefined,
+              '--advgb-active-tab-color': activeTabTextColor || undefined,
               borderStyle: borderStyle,
               borderWidth: borderWidth + 'px',
               borderColor: borderColor,
@@ -9534,7 +9536,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           }, /*#__PURE__*/React.createElement("a", {
             id: tabAnchors[index],
             style: {
-              color: headerTextColor
+              color: tabActive === index && activeTabTextColor ? activeTabTextColor : headerTextColor
             },
             onClick: function onClick(event) {
               // Headers live in the parent, but represent individual Tab Item blocks.
@@ -9639,7 +9641,7 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           template: [['advgb/tab'], ['advgb/tab'], ['advgb/tab']],
           templateLock: false,
           allowedBlocks: ['advgb/tab']
-        }))), !!pid && /*#__PURE__*/React.createElement("style", null, activeTabBgColor && "#block-".concat(clientId, " li.advgb-tab.advgb-tab-active, #block-").concat(clientId, " li.advgb-tab.ui-tabs-active {\n                                background-color: ").concat(activeTabBgColor, " !important;\n                            }"), activeTabTextColor && "#block-".concat(clientId, " li.advgb-tab.advgb-tab-active a, #block-").concat(clientId, " li.advgb-tab.ui-tabs-active button.advgb-tab-button,\n                        #block-").concat(clientId, " li.advgb-tab.advgb-tab-active a, #block-").concat(clientId, " li.advgb-tab.ui-tabs-active a {\n                                color: ").concat(activeTabTextColor, " !important;\n                            }")));
+        }))));
       }
     }]);
   }(Component);

@@ -972,9 +972,9 @@ ul.advgb-tabs-panel li.advgb-tab a p {
 
 ul.advgb-tabs-panel li.advgb-tab.ui-tabs-active,
 ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active {
-  background-color: #5954d6 !important;
+  background-color: var(--advgb-active-tab-bg, #5954d6) !important;
   border-color: transparent;
-  color: #fff !important;
+  color: var(--advgb-active-tab-color, #fff) !important;
 }
 
 ul.advgb-tabs-panel li.advgb-tab.ui-tabs-active a,
