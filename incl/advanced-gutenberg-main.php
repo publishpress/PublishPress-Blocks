@@ -218,6 +218,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'viewbox'             => true,
                 'xmlns'               => true,
                 'fill'                => true,
+                'class'               => true,
                 'styles'              => true,
                 'preserveAspectRatio' => true,
             );
@@ -232,6 +233,10 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 'd'            => true,
                 'fill'         => true,
                 'fill-opacity' => true,
+            );
+            $tags['polygon'] = array(
+                'points' => true,
+                'fill'   => true,
             );
 
             return $tags;

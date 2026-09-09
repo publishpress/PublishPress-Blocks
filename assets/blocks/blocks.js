@@ -1870,14 +1870,12 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         }, /*#__PURE__*/React.createElement("span", {
           className: "advgb-accordion-header-icon accordion-state"
         }, /*#__PURE__*/React.createElement("svg", {
-          className: "advgb-icon-closed",
           fill: headerIconColor,
           xmlns: "http://www.w3.org/2000/svg",
           width: "24",
           height: "24",
           viewBox: "0 0 24 24"
         }, HEADER_ICONS[headerIcon]), /*#__PURE__*/React.createElement("svg", {
-          className: "advgb-icon-opened",
           fill: headerIconColor,
           xmlns: "http://www.w3.org/2000/svg",
           width: "24",
@@ -2068,14 +2066,12 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       }, /*#__PURE__*/React.createElement("span", {
         className: "advgb-accordion-header-icon accordion-state"
       }, /*#__PURE__*/React.createElement("svg", {
-        className: "advgb-icon-closed",
         fill: headerIconColor,
         xmlns: "http://www.w3.org/2000/svg",
         width: "24",
         height: "24",
         viewBox: "0 0 24 24"
       }, HEADER_ICONS[headerIcon]), /*#__PURE__*/React.createElement("svg", {
-        className: "advgb-icon-opened",
         fill: headerIconColor,
         xmlns: "http://www.w3.org/2000/svg",
         width: "24",
@@ -2093,15 +2089,152 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         style: {
           backgroundColor: bodyBgColor,
           color: bodyTextColor,
-          borderStyle: borderStyle + ' !important',
-          borderWidth: borderWidth + 'px !important',
-          borderColor: borderColor + ' !important',
-          borderTop: 'none !important',
-          borderRadius: !!borderRadius ? borderRadius + 'px !important' : undefined
+          borderStyle: borderStyle,
+          borderWidth: borderWidth + 'px',
+          borderColor: borderColor,
+          borderTop: 'none',
+          borderRadius: !!borderRadius ? borderRadius + 'px' : undefined
         }
       }, /*#__PURE__*/React.createElement(InnerBlocks.Content, null)));
     },
     deprecated: [{
+      attributes: {
+        header: {
+          type: 'string',
+          default: __('Header text', 'advanced-gutenberg')
+        },
+        headerBgColor: {
+          type: 'string',
+          default: '#000'
+        },
+        headerTextColor: {
+          type: 'string',
+          default: '#eee'
+        },
+        headerIcon: {
+          type: 'string',
+          default: 'plusCircle'
+        },
+        headerIconColor: {
+          type: 'string',
+          default: '#fff'
+        },
+        bodyBgColor: {
+          type: 'string'
+        },
+        bodyTextColor: {
+          type: 'string'
+        },
+        borderStyle: {
+          type: 'string',
+          default: 'solid'
+        },
+        borderWidth: {
+          type: 'number',
+          default: 1
+        },
+        borderColor: {
+          type: 'string'
+        },
+        borderRadius: {
+          type: 'number',
+          default: 2
+        },
+        marginBottom: {
+          type: 'number',
+          default: 15
+        },
+        collapsedAll: {
+          type: 'boolean',
+          default: false
+        },
+        expandAll: {
+          type: 'boolean',
+          default: false
+        },
+        headerTag: {
+          type: 'string',
+          default: 'h4'
+        },
+        changed: {
+          type: 'boolean',
+          default: false
+        },
+        rootBlockId: {
+          type: 'string',
+          default: ''
+        }
+      },
+      save: function save(_ref5) {
+        var attributes = _ref5.attributes;
+        var header = attributes.header,
+          headerBgColor = attributes.headerBgColor,
+          headerTextColor = attributes.headerTextColor,
+          headerIcon = attributes.headerIcon,
+          headerIconColor = attributes.headerIconColor,
+          bodyBgColor = attributes.bodyBgColor,
+          bodyTextColor = attributes.bodyTextColor,
+          borderStyle = attributes.borderStyle,
+          borderWidth = attributes.borderWidth,
+          borderColor = attributes.borderColor,
+          borderRadius = attributes.borderRadius,
+          marginBottom = attributes.marginBottom,
+          headerTag = attributes.headerTag;
+        return /*#__PURE__*/React.createElement("div", {
+          className: "advgb-accordion-item",
+          style: {
+            marginBottom: marginBottom
+          }
+        }, /*#__PURE__*/React.createElement("div", {
+          className: "advgb-accordion-header",
+          style: {
+            backgroundColor: headerBgColor,
+            color: headerTextColor,
+            borderStyle: borderStyle,
+            borderWidth: borderWidth + 'px',
+            borderColor: borderColor,
+            borderRadius: !!borderRadius ? borderRadius + 'px' : undefined
+          }
+        }, /*#__PURE__*/React.createElement("span", {
+          className: "advgb-accordion-header-icon accordion-state"
+        }, /*#__PURE__*/React.createElement("svg", {
+          className: "advgb-icon-closed",
+          fill: headerIconColor,
+          xmlns: "http://www.w3.org/2000/svg",
+          width: "24",
+          height: "24",
+          viewBox: "0 0 24 24"
+        }, HEADER_ICONS[headerIcon]), /*#__PURE__*/React.createElement("svg", {
+          className: "advgb-icon-opened",
+          fill: headerIconColor,
+          xmlns: "http://www.w3.org/2000/svg",
+          width: "24",
+          height: "24",
+          viewBox: "0 0 24 24"
+        }, HEADER_ICONS_OPENED[headerIcon])), /*#__PURE__*/React.createElement(RichText.Content, {
+          tagName: headerTag,
+          className: "advgb-accordion-header-title",
+          style: {
+            color: 'inherit'
+          },
+          value: header
+        })), /*#__PURE__*/React.createElement("div", {
+          className: "advgb-accordion-body",
+          style: {
+            backgroundColor: bodyBgColor,
+            color: bodyTextColor,
+            borderStyle: borderStyle + ' !important',
+            borderWidth: borderWidth + 'px !important',
+            borderColor: borderColor + ' !important',
+            borderTop: 'none !important',
+            borderRadius: !!borderRadius ? borderRadius + 'px !important' : undefined
+          }
+        }, /*#__PURE__*/React.createElement(InnerBlocks.Content, null)));
+      },
+      supports: {
+        anchor: true
+      }
+    }, {
       attributes: {
         header: {
           type: 'string',
@@ -2165,8 +2298,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           default: ''
         }
       },
-      save: function save(_ref5) {
-        var attributes = _ref5.attributes;
+      save: function save(_ref6) {
+        var attributes = _ref6.attributes;
         var header = attributes.header,
           headerBgColor = attributes.headerBgColor,
           headerTextColor = attributes.headerTextColor,
@@ -2286,8 +2419,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           default: ''
         }
       },
-      save: function save(_ref6) {
-        var attributes = _ref6.attributes;
+      save: function save(_ref7) {
+        var attributes = _ref7.attributes;
         var header = attributes.header,
           headerBgColor = attributes.headerBgColor,
           headerTextColor = attributes.headerTextColor,
@@ -2404,8 +2537,8 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
           default: ''
         }
       },
-      save: function save(_ref7) {
-        var attributes = _ref7.attributes;
+      save: function save(_ref8) {
+        var attributes = _ref8.attributes;
         var header = attributes.header,
           headerBgColor = attributes.headerBgColor,
           headerTextColor = attributes.headerTextColor,
