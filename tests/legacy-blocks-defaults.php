@@ -29,6 +29,13 @@ function get_option(string $name, $default = false)
     return array_key_exists($name, $advgb_test_options) ? $advgb_test_options[$name] : $default;
 }
 
+function update_option(string $name, $value, bool $autoload = true): void
+{
+    global $advgb_test_options;
+
+    $advgb_test_options[$name] = $value;
+}
+
 require_once __DIR__ . '/../incl/advanced-gutenberg-main.php';
 
 $legacy_blocks = AdvancedGutenbergMain::legacyBlocksMap();
@@ -64,6 +71,26 @@ foreach ($expected_new_legacy_blocks as $slug) {
     assert(
         in_array('advgb/' . $slug, $disabled_blocks, true),
         sprintf('advgb/%s should be disabled when its legacy state is off.', $slug)
+    );
+}
+
+$advgb_test_options = [
+    'advgb_legacy_blocks' => [
+        'container'    => 1,
+        'contact-form' => 1,
+    ],
+];
+
+AdvancedGutenbergMain::fillMissingLegacyBlocksState(true);
+
+foreach ($expected_new_legacy_blocks as $slug) {
+    assert(
+        isset($advgb_test_options['advgb_legacy_blocks'][$slug]),
+        sprintf('%s should be added to existing legacy settings.', $slug)
+    );
+    assert(
+        $advgb_test_options['advgb_legacy_blocks'][$slug] === 1,
+        sprintf('%s should be enabled when added to existing installs.', $slug)
     );
 }
 
