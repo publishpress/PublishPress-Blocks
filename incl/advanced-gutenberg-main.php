@@ -2503,18 +2503,18 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     'enabled'  => true
                 ],
                 [
+                    'slug'     => 'advgb_block_controls',
+                    'title'    => esc_html__('Block Controls', 'advanced-gutenberg'),
+                    'callback' => 'loadBlockControlsPage',
+                    'order'    => 2,
+                    'enabled'  => Utilities::settingIsEnabled('block_controls')
+                ],
+                [
                     'slug'     => 'advgb_block_access',
                     'title'    => esc_html__('Block Permissions', 'advanced-gutenberg'),
                     'callback' => 'loadBlockAccessPage',
-                    'order'    => 2,
-                    'enabled'  => Utilities::settingIsEnabled('enable_block_access')
-                ],
-                [
-                    'slug'     => 'advgb_block_settings',
-                    'title'    => esc_html__('Extra Blocks', 'advanced-gutenberg'),
-                    'callback' => 'loadBlockSettingsPage',
                     'order'    => 3,
-                    'enabled'  => Utilities::settingIsEnabled('enable_advgb_blocks')
+                    'enabled'  => Utilities::settingIsEnabled('enable_block_access')
                 ],
                 [
                     'slug'     => 'advgb_custom_styles',
@@ -2522,13 +2522,6 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     'callback' => 'loadCustomStylesPage',
                     'order'    => 4,
                     'enabled'  => Utilities::settingIsEnabled('enable_custom_styles')
-                ],
-                [
-                    'slug'     => 'advgb_block_controls',
-                    'title'    => esc_html__('Block Controls', 'advanced-gutenberg'),
-                    'callback' => 'loadBlockControlsPage',
-                    'order'    => 5,
-                    'enabled'  => Utilities::settingIsEnabled('block_controls')
                 ],
                 [
                     'slug'     => 'advgb_block_usage',
@@ -2546,17 +2539,24 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     'enabled'  => Utilities::settingIsEnabled('reusable_blocks')
                 ],
                 [
-                'slug'     => 'edit.php?post_type=advgb_insert_block',
-                'title'    => esc_html__( 'Auto Insert Blocks', 'advanced-gutenberg' ),
-                'callback' => '',
-                'order'    => 8,
-                'enabled'  => Utilities::settingIsEnabled( 'auto_insert_blocks' )
+                    'slug'     => 'edit.php?post_type=advgb_insert_block',
+                    'title'    => esc_html__( 'Auto Insert Blocks', 'advanced-gutenberg' ),
+                    'callback' => '',
+                    'order'    => 8,
+                    'enabled'  => Utilities::settingIsEnabled( 'auto_insert_blocks' )
+                ],
+                [
+                    'slug'     => 'advgb_block_settings',
+                    'title'    => esc_html__('Extra Blocks', 'advanced-gutenberg'),
+                    'callback' => 'loadBlockSettingsPage',
+                    'order'    => 9,
+                    'enabled'  => Utilities::settingIsEnabled('enable_advgb_blocks')
                 ],
                 [
                     'slug'       => 'advgb_post_notes',
                     'title'      => esc_html__('Post Notes', 'advanced-gutenberg'),
                     'callback'   => 'loadPostNotesPage',
-                    'order'      => 9,
+                    'order'      => 10,
                     'enabled'    => Utilities::settingIsEnabled('enable_post_notes'),
                     'capability' => 'edit_posts',
                 ],
@@ -2564,7 +2564,7 @@ if (! class_exists('AdvancedGutenbergMain')) {
                     'slug'     => 'advgb_settings',
                     'title'    => esc_html__('Settings', 'advanced-gutenberg'),
                     'callback' => 'loadSettingsPage',
-                    'order'    => 10,
+                    'order'    => 11,
                     'enabled'  => true
                 ]
             ];
