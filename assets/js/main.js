@@ -163,8 +163,7 @@ function advgbGetCookie(cname) {
 }
 
 /**
- * Move the PublishPress Blocks category to the end on screens that should lead
- * with core/toolkit categories.
+ * Keep the Block Permissions category layout aligned with the editor inserter.
  *
  * @param {array}  categories The registered block categories.
  * @param {string} page       The current feature page.
@@ -176,15 +175,19 @@ function advgbOrderBlocksFeatureCategories( categories, page ) {
         return categories;
     }
 
-    var advgbCategories = categories.filter(function (category) {
+    var visibleCategories = categories.filter(function (category) {
+        return category.slug !== 'unsupported';
+    });
+
+    var advgbCategories = visibleCategories.filter(function (category) {
         return category.slug === 'advgb-category';
     });
 
     if (advgbCategories.length === 0) {
-        return categories;
+        return visibleCategories;
     }
 
-    return categories.filter(function (category) {
+    return visibleCategories.filter(function (category) {
         return category.slug !== 'advgb-category';
     }).concat(advgbCategories);
 }
@@ -364,7 +367,10 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
         listBlocks.forEach(function (block) {
 
             // Exclude block
-            if( exclude_blocks.length > 0 && exclude_blocks.indexOf(block.name) >= 0 ) {
+            if(
+                ( exclude_blocks.length > 0 && exclude_blocks.indexOf(block.name) >= 0 )
+                || block.category === 'unsupported'
+            ) {
                 return;
             }
 
