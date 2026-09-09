@@ -302,13 +302,13 @@
                                  borderWidth: borderWidth + 'px',
                                  borderColor: borderColor,
                                  borderRadius: borderRadius + 'px',
-                             } }
-                        >
+                        } }
+                    >
                         <span className="advgb-accordion-header-icon accordion-state">
-                            <svg className="advgb-icon-closed" fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 { HEADER_ICONS[headerIcon] }
                             </svg>
-                            <svg className="advgb-icon-opened" fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 { HEADER_ICONS_OPENED[headerIcon] }
                             </svg>
                         </span>
@@ -484,10 +484,10 @@
                          } }
                     >
                         <span className="advgb-accordion-header-icon accordion-state">
-                            <svg className="advgb-icon-closed" fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 { HEADER_ICONS[headerIcon] }
                             </svg>
-                            <svg className="advgb-icon-opened" fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 { HEADER_ICONS_OPENED[headerIcon] }
                             </svg>
                         </span>

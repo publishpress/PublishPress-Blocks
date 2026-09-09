@@ -6,7 +6,8 @@ const source = fs.readFileSync(
     'utf8'
 );
 
-const currentSaveStart = source.indexOf('save: function ( { attributes } ) {');
+const blockStart = source.indexOf("registerBlockType( 'advgb/accordion-item'");
+const currentSaveStart = source.indexOf('save: function ( { attributes } ) {', blockStart);
 const deprecatedStart = source.indexOf('deprecated: [', currentSaveStart);
 const currentSave = source.slice(currentSaveStart, deprecatedStart);
 const firstDeprecatedStart = source.indexOf('save: function ( { attributes } ) {', deprecatedStart);
@@ -17,7 +18,13 @@ if (currentSave.includes('!important')) {
     throw new Error('Accordion Item current save markup must not serialize !important inline styles.');
 }
 
+if (currentSave.includes('className="advgb-icon-')) {
+    throw new Error('Accordion Item current save markup must not serialize SVG icon class attributes.');
+}
+
 [
+    '{ HEADER_ICONS[headerIcon] }',
+    '{ HEADER_ICONS_OPENED[headerIcon] }',
     "borderStyle: borderStyle",
     "borderWidth: borderWidth + 'px'",
     "borderColor: borderColor",
@@ -30,6 +37,8 @@ if (currentSave.includes('!important')) {
 });
 
 [
+    'className="advgb-icon-closed"',
+    'className="advgb-icon-opened"',
     "borderStyle: borderStyle + ' !important'",
     "borderWidth: borderWidth + 'px !important'",
     "borderColor: borderColor + ' !important'",

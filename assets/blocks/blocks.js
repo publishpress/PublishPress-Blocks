@@ -1870,14 +1870,12 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
         }, /*#__PURE__*/React.createElement("span", {
           className: "advgb-accordion-header-icon accordion-state"
         }, /*#__PURE__*/React.createElement("svg", {
-          className: "advgb-icon-closed",
           fill: headerIconColor,
           xmlns: "http://www.w3.org/2000/svg",
           width: "24",
           height: "24",
           viewBox: "0 0 24 24"
         }, HEADER_ICONS[headerIcon]), /*#__PURE__*/React.createElement("svg", {
-          className: "advgb-icon-opened",
           fill: headerIconColor,
           xmlns: "http://www.w3.org/2000/svg",
           width: "24",
@@ -2068,14 +2066,12 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
       }, /*#__PURE__*/React.createElement("span", {
         className: "advgb-accordion-header-icon accordion-state"
       }, /*#__PURE__*/React.createElement("svg", {
-        className: "advgb-icon-closed",
         fill: headerIconColor,
         xmlns: "http://www.w3.org/2000/svg",
         width: "24",
         height: "24",
         viewBox: "0 0 24 24"
       }, HEADER_ICONS[headerIcon]), /*#__PURE__*/React.createElement("svg", {
-        className: "advgb-icon-opened",
         fill: headerIconColor,
         xmlns: "http://www.w3.org/2000/svg",
         width: "24",

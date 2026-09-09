@@ -116,8 +116,11 @@
     display: none;
 }
 
+.advgb-accordion-header[aria-expanded="false"] .advgb-accordion-header-icon.accordion-state svg:first-child,
 .advgb-accordion-header[aria-expanded="false"] .advgb-accordion-header-icon.accordion-state svg.advgb-icon-closed,
+.advgb-accordion-header[aria-expanded="true"] .advgb-accordion-header-icon.accordion-state svg:last-child,
 .advgb-accordion-header[aria-expanded="true"] .advgb-accordion-header-icon.accordion-state svg.advgb-icon-opened,
+#editor [data-type="advgb/accordions"] .advgb-accordion-header .advgb-accordion-header-icon.accordion-state svg:last-child,
 #editor [data-type="advgb/accordions"] .advgb-accordion-header .advgb-accordion-header-icon.accordion-state svg.advgb-icon-opened {
     display: initial;
 }
