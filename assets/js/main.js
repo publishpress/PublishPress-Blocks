@@ -314,11 +314,6 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
             promo_blocks.forEach(function (block) {
                 listBlocks.push(block);
             });
-            listBlocks.sort(function (a, b) {
-                if (a.title < b.title) return -1;
-                if (a.title > b.title) return 1;
-                return 0;
-            });
         }
 
         if (typeof updateListNonce !== 'undefined') {
@@ -370,6 +365,8 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
             if(
                 ( exclude_blocks.length > 0 && exclude_blocks.indexOf(block.name) >= 0 )
                 || block.category === 'unsupported'
+                || block.name === 'core/missing'
+                || block.title === 'Unsupported'
             ) {
                 return;
             }
