@@ -2310,14 +2310,18 @@ if (! class_exists('AdvancedGutenbergMain')) {
         {
             return [
                 'container'    => __('Container', 'advanced-gutenberg'),
-                'contact-form' => __('Contact Form', 'advanced-gutenberg'),
-                'login-form'   => __('Login and Register', 'advanced-gutenberg'),
-                'map'          => __('Map', 'advanced-gutenberg'),
-                'newsletter'   => __('Newsletter', 'advanced-gutenberg'),
-                'search-bar'   => __('Search Bar', 'advanced-gutenberg'),
-                'social-links' => __('Social Links', 'advanced-gutenberg'),
-                'testimonial'  => __('Testimonial', 'advanced-gutenberg'),
-                'woo-products' => __('Woo Products', 'advanced-gutenberg'),
+                'contact-form'  => __('Contact Form', 'advanced-gutenberg'),
+                'image'         => __('Image', 'advanced-gutenberg'),
+                'images-slider' => __('Images Slider', 'advanced-gutenberg'),
+                'login-form'    => __('Login and Register', 'advanced-gutenberg'),
+                'map'           => __('Map', 'advanced-gutenberg'),
+                'newsletter'    => __('Newsletter', 'advanced-gutenberg'),
+                'search-bar'    => __('Search Bar', 'advanced-gutenberg'),
+                'social-links'  => __('Social Links', 'advanced-gutenberg'),
+                'summary'       => __('Table of Contents', 'advanced-gutenberg'),
+                'testimonial'   => __('Testimonial', 'advanced-gutenberg'),
+                'video'         => __('Video', 'advanced-gutenberg'),
+                'woo-products'  => __('Woo Products', 'advanced-gutenberg'),
             ];
         }
 
@@ -2365,6 +2369,8 @@ if (! class_exists('AdvancedGutenbergMain')) {
                 || self::legacyBlocksOptionDisablesAllKnownBlocks($legacy_blocks)
             ) {
                 update_option('advgb_legacy_blocks', self::defaultLegacyBlocksState(true), false);
+            } elseif (is_array($legacy_blocks)) {
+                self::fillMissingLegacyBlocksState(true);
             }
 
             $updated_settings = false;
@@ -2380,6 +2386,33 @@ if (! class_exists('AdvancedGutenbergMain')) {
 
             if ($updated_settings) {
                 update_option('advgb_settings', $saved_settings, false);
+            }
+        }
+
+        /**
+         * Add newly introduced legacy block keys without changing saved choices.
+         *
+         * @param bool $enabled Whether missing legacy blocks should be enabled.
+         *
+         * @return void
+         */
+        public static function fillMissingLegacyBlocksState($enabled)
+        {
+            $legacy_blocks = get_option('advgb_legacy_blocks');
+            if (! is_array($legacy_blocks)) {
+                return;
+            }
+
+            $updated = false;
+            foreach (array_keys(self::legacyBlocksMap()) as $slug) {
+                if (! array_key_exists($slug, $legacy_blocks)) {
+                    $legacy_blocks[$slug] = $enabled ? 1 : 0;
+                    $updated              = true;
+                }
+            }
+
+            if ($updated) {
+                update_option('advgb_legacy_blocks', $legacy_blocks, false);
             }
         }
 
