@@ -2310,14 +2310,18 @@ if (! class_exists('AdvancedGutenbergMain')) {
         {
             return [
                 'container'    => __('Container', 'advanced-gutenberg'),
-                'contact-form' => __('Contact Form', 'advanced-gutenberg'),
-                'login-form'   => __('Login and Register', 'advanced-gutenberg'),
-                'map'          => __('Map', 'advanced-gutenberg'),
-                'newsletter'   => __('Newsletter', 'advanced-gutenberg'),
-                'search-bar'   => __('Search Bar', 'advanced-gutenberg'),
-                'social-links' => __('Social Links', 'advanced-gutenberg'),
-                'testimonial'  => __('Testimonial', 'advanced-gutenberg'),
-                'woo-products' => __('Woo Products', 'advanced-gutenberg'),
+                'contact-form'  => __('Contact Form', 'advanced-gutenberg'),
+                'image'         => __('Image', 'advanced-gutenberg'),
+                'images-slider' => __('Images Slider', 'advanced-gutenberg'),
+                'login-form'    => __('Login and Register', 'advanced-gutenberg'),
+                'map'           => __('Map', 'advanced-gutenberg'),
+                'newsletter'    => __('Newsletter', 'advanced-gutenberg'),
+                'search-bar'    => __('Search Bar', 'advanced-gutenberg'),
+                'social-links'  => __('Social Links', 'advanced-gutenberg'),
+                'summary'       => __('Table of Contents', 'advanced-gutenberg'),
+                'testimonial'   => __('Testimonial', 'advanced-gutenberg'),
+                'video'         => __('Video', 'advanced-gutenberg'),
+                'woo-products'  => __('Woo Products', 'advanced-gutenberg'),
             ];
         }
 
