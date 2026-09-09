@@ -171,7 +171,7 @@ function advgbRenderBlockRecentPosts($attributes)
             $postThumbID         = get_post_thumbnail_id($post->ID);
             $outputImage         = advgbCheckElementDisplay($attributes['displayFeaturedImage'], $attributes['displayFeaturedImageFor'], $key) && ( $postThumbID || $attributes['enablePlaceholderImage'] );
             $displayImageVsOrder = getDisplayImageVsOrder($attributes, $key);
-            $postThumb           = '<img src="' . esc_url($rp_default_thumb['url']) . '" />';
+            $postThumb           = '<img src="' . esc_url($rp_default_thumb['url']) . '" alt="' . esc_attr__('Post Image', 'advanced-gutenberg') . '" />';
             $postThumbCaption    = '';
             $postDate            = isset($attributes['displayDate']) && $attributes['displayDate'] ? 'created' : (isset($attributes['postDate']) ? esc_html($attributes['postDate']) : 'hide');
             $postDateDisplay     = null;
@@ -287,10 +287,10 @@ function advgbRenderBlockRecentPosts($attributes)
                                 } else {
                                     if ( $postDate === 'created' ) {
                                         $relativePrefix = $showPrefix ? (isset($attributes['relativeDateCreatedPrefix']) ? $attributes['relativeDateCreatedPrefix'] : esc_html__('Posted', 'advanced-gutenberg')) : '';
-                                        $dateDisplay = ($relativePrefix ? $relativePrefix . ' ' : '') . human_time_diff( get_the_date( 'U', $post->ID ) ) . ' ' . esc_html__( 'ago', 'advanced-gutenberg');
+                                        $dateDisplay = ($relativePrefix ? $relativePrefix . ' ' : '') . human_time_diff( (int) get_the_date( 'U', $post->ID ) ) . ' ' . esc_html__( 'ago', 'advanced-gutenberg');
                                     } else {
                                         $relativePrefix = $showPrefix ? (isset($attributes['relativeDateUpdatedPrefix']) ? $attributes['relativeDateUpdatedPrefix'] : esc_html__('Updated', 'advanced-gutenberg')) : '';
-                                        $dateDisplay = ($relativePrefix ? $relativePrefix . ' ' : '') . human_time_diff( get_the_modified_date( 'U', $post->ID ) ) . ' ' . esc_html__( 'ago', 'advanced-gutenberg');
+                                        $dateDisplay = ($relativePrefix ? $relativePrefix . ' ' : '') . human_time_diff( (int) get_the_modified_date( 'U', $post->ID ) ) . ' ' . esc_html__( 'ago', 'advanced-gutenberg');
                                     }
                                 }
 
@@ -1126,8 +1126,8 @@ function advgbAllowCPTQueryVars($query_params)
 function advgbGetRelativeDates($post)
 {
     return array(
-        'created' => __('Posted', 'advanced-gutenberg') . ' ' . human_time_diff(get_the_date('U', $post['id'])) . ' ' . __('ago', 'advanced-gutenberg'),
-        'modified' => __('Updated', 'advanced-gutenberg') . ' ' . human_time_diff(get_the_modified_date('U', $post['id'])) . ' ' . __('ago', 'advanced-gutenberg')
+        'created' => __('Posted', 'advanced-gutenberg') . ' ' . human_time_diff((int) get_the_date('U', $post['id'])) . ' ' . __('ago', 'advanced-gutenberg'),
+        'modified' => __('Updated', 'advanced-gutenberg') . ' ' . human_time_diff((int) get_the_modified_date('U', $post['id'])) . ' ' . __('ago', 'advanced-gutenberg')
     );
 }
 

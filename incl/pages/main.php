@@ -35,16 +35,6 @@ defined('ABSPATH') || die;
                             'access' => true
                         ],
                         [
-                            'name' => 'enable_advgb_blocks',
-                            'title' => __('Extra Blocks', 'advanced-gutenberg'),
-                            'description' => __(
-                                'Enable extra blocks including content displays, sliders, buttons, icons, tabs, accordions, and more.',
-                                'advanced-gutenberg'
-                            ),
-                            'default' => 1,
-                            'access' => true
-                        ],
-                        [
                             'name' => 'enable_custom_styles',
                             'title' => __('Block Styles', 'advanced-gutenberg'),
                             'description' => __(
@@ -98,6 +88,16 @@ defined('ABSPATH') || die;
                             'title' => __('Post Notes', 'advanced-gutenberg'),
                             'description' => __(
                                 'Adds an "Add Note" button to the block editor toolbar and a Post Notes admin page to review all notes across your posts (requires WordPress 6.9+).',
+                                'advanced-gutenberg'
+                            ),
+                            'default' => 1,
+                            'access' => true
+                        ],
+                        [
+                            'name' => 'enable_advgb_blocks',
+                            'title' => __('Extra Blocks', 'advanced-gutenberg'),
+                            'description' => __(
+                                'Enable extra blocks including content displays, sliders, buttons, icons, tabs, accordions, and more.',
                                 'advanced-gutenberg'
                             ),
                             'default' => 1,

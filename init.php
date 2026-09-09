@@ -143,6 +143,14 @@ if (! function_exists('advgb_some_specific_updates')) {
             update_option('advgb_legacy_settings_migrated', 1, false);
         }
 
+        if (
+            $advgb_current_version !== '0.0.0'
+            && version_compare($advgb_current_version, '3.7.6', 'lt')
+            && get_option('advgb_settings') !== false
+        ) {
+            AdvancedGutenbergMain::fillMissingLegacyBlocksState(true);
+        }
+
         // Set version if needed
         if ($advgb_current_version !== ADVANCED_GUTENBERG_VERSION) {
             update_option('advgb_version', ADVANCED_GUTENBERG_VERSION);
