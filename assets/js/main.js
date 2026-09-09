@@ -163,6 +163,33 @@ function advgbGetCookie(cname) {
 }
 
 /**
+ * Move the PublishPress Blocks category to the end on screens that should lead
+ * with core/toolkit categories.
+ *
+ * @param {array}  categories The registered block categories.
+ * @param {string} page       The current feature page.
+ *
+ * @return {array} The ordered block categories.
+ */
+function advgbOrderBlocksFeatureCategories( categories, page ) {
+    if ( page !== 'advgb_block_access' ) {
+        return categories;
+    }
+
+    var advgbCategories = categories.filter(function (category) {
+        return category.slug === 'advgb-category';
+    });
+
+    if (advgbCategories.length === 0) {
+        return categories;
+    }
+
+    return categories.filter(function (category) {
+        return category.slug !== 'advgb-category';
+    }).concat(advgbCategories);
+}
+
+/**
  * Output categories and blocks inside a form and add filters functionality
  *
  * @param {array}   inactive_blocks The inactive blocks - e.g. advgbCUserRole.access.inactive_blocks
@@ -178,7 +205,7 @@ function advgbGetBlocksFeature( inactive_blocks, nonce_field_id, page, exclude_b
 
         var $ = jQuery;
         var allBlocks = wp.blocks.getBlockTypes();
-        var allCategories = wp.blocks.getCategories();
+        var allCategories = advgbOrderBlocksFeatureCategories(wp.blocks.getCategories(), page);
         var listBlocks = [];
         var nonce = '';
         var promo_blocks = advgbMainI18n.promoBlocks;
@@ -490,7 +517,7 @@ function advgbGetBlockControls( inactive_blocks, nonce_field_id, page, exclude_b
 
         var $ = jQuery;
         var allBlocks = wp.blocks.getBlockTypes();
-        var allCategories = wp.blocks.getCategories();
+        var allCategories = advgbOrderBlocksFeatureCategories(wp.blocks.getCategories(), page);
         var listBlocks = [];
         var nonce = '';
         var promo_blocks = advgbMainI18n.promoBlocks;
